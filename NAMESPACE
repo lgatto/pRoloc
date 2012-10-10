@@ -1,0 +1,54 @@
+import(lattice)
+import(BiocGenerics)
+import(mclust)
+
+importFrom(RColorBrewer, brewer.pal)
+importFrom(stats4, plot)
+importFrom(proxy, simil)
+importFrom(MSBVAR, rmultnorm)
+importFrom(scales, col2hcl, alpha)
+importFrom(caret, createFolds, confusionMatrix, plsda, predict.plsda)
+importFrom(sampling, strata)
+importFrom(e1071, svm, naiveBayes)
+importFrom(kernlab, ksvm)
+importFrom(nnet, nnet)
+importFrom(randomForest, randomForest)
+
+exportClasses(GenRegRes)
+
+exportMethods(chi2,
+              exprsToRatios,
+              show,
+              ## machine learning
+              consensusPrediction,
+              MLearn,
+              getWarnings,
+              getSeed,
+              getF1Scores,
+              levelPlot,
+              plot)
+
+export(empPvalues,
+       getStockcol, getStockpch,
+       getUnknowncol, getUnknownpch,
+       ## machine learning
+       plsdaRegularisation,
+       plsdaPrediction,
+       svmRegularisation,
+       svmPrediction,
+       ksvmRegularisation,
+       ksvmPrediction,
+       knnRegularisation,
+       knnPrediction,
+       nbRegularisation,
+       nbPrediction,
+       nnetRegularisation,
+       nnetPrediction,
+       mblPrediction,
+       getRegularisedParams,
+       getRegularizedParams,
+       rfRegularisation,
+       rfPrediction,
+       phenoDisco
+       )
+

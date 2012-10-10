@@ -18,6 +18,6 @@ Suggests: pRolocdata, knitr
 Imports: mclust, MSBVAR, caret, e1071, sampling, 	 
 	 kernlab, lattice, nnet, randomForest, proxy, 
 	 BiocGenerics, stats4, tcltk,
-	 kRColorBrewer, scales
+	 RColorBrewer, scales
 Suggests: testthat, knitr
 License: Artistic-2.0

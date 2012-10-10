@@ -44,7 +44,6 @@ setMethod("show",
             invisible(NULL)            
           })
 
-setGeneric("getWarnings", function(object) standardGeneric("getWarnings"))
 setMethod("getWarnings", "GenRegRes",
           function(object) {
             w <- object@log$warnings
@@ -56,14 +55,9 @@ setMethod("getWarnings", "GenRegRes",
             }
           })
 
-setGeneric("getSeed", function(object) standardGeneric("getSeed"))
 setMethod("getSeed", "GenRegRes", function(object) object@seed)
 
-setGeneric("getF1Scores", function(object) standardGeneric("getF1Scores"))
 setMethod("getF1Scores", "GenRegRes", function(object) object@results)
-
-setGeneric("getRegularisedParams", function(object) standardGeneric("getRegularisedParams"))
-setGeneric("getRegularizedParams", function(object) standardGeneric("getRegularizedParams"))
 
 setMethod("getRegularisedParams", "GenRegRes",
           function(object) {
@@ -102,7 +96,6 @@ setMethod("plot", c("GenRegRes", "missing"),
           })
 
 
-setGeneric("levelPlot", function(object, ...) standardGeneric("levelPlot"))
 setMethod("levelPlot", "GenRegRes", 
           function(object, fun = mean, ...) {
             x <- summariseMatList(object@matrices, fun)            

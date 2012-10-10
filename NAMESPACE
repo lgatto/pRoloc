@@ -28,7 +28,9 @@ exportMethods(chi2,
               levelPlot,
               plot)
 
-export(empPvalues,
+export(getPredictions,
+       getMarkers,
+       empPvalues,
        getStockcol, getStockpch,
        getUnknowncol, getUnknownpch,
        ## machine learning

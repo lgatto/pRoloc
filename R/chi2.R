@@ -1,4 +1,3 @@
-setGeneric("chi2",function(x,y,...) standardGeneric("chi2"))
 
 setMethod("chi2",
           signature=c(x="numeric",y="numeric"),

@@ -1,3 +1,51 @@
+##' Plot organelle assignment data and results.
+##' 
+##' Generate 2 dimensional or feature distribution plots to illustrate
+##' localistation clusters. In \code{plot2D}, rows containing \code{NA}
+##' values are removed prior to dimention reduction.
+##' 
+##' TODO
+##' 
+##' @aliases plot2D plotDist addLegend
+##' @param object An instance of class \code{MSnSet}.
+##' @param fcol
+##' @param fpch
+##' @param unknown
+##' @param dims
+##' @param alpha
+##' @param score
+##' @param method
+##' @param axsSwitch
+##' @param mirrorX
+##' @param mirrorY
+##' @param col
+##' @param pch
+##' @param where (addLegend only)
+##' @param markers
+##' @param mcol
+##' @param pcol
+##' @param fractions
+##' @param \dots
+##' @return Used for their side effects of generating plots and
+##' adding legends. Invisibly returns the 2d data.
+##' @author Laurent Gatto <lg390@@cam.ac.uk>
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' plot2D(dunkley2006, fcol = NULL)
+##' plot2D(dunkley2006, fcol = "markers")
+##' addLegend(dunkley2006,
+##'           fcol = "markers",
+##'           where = "topright",
+##'           cex = 0.5, bty = "n", ncol = 3)
+##' title(main = "plot2D example")
+##' data(tan2009r1)
+##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
+##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
+##' plotDist(tan2009r1[i, ],
+##'          markers = featureNames(tan2009r1)[j],
+##'          main = "Mitochondrion")
+##' 
 plot2D <- function(object,
                    fcol = "markers",
                    fpch,

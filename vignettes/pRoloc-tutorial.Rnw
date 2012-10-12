@@ -391,8 +391,8 @@ The \Rfunction{plot2D} function, can, as previously, be utilised to visualise th
 
 \begin{figure}[!hbt]
 <<pdresfig, dev='pdf', fig.width=4, fig.height=4, echo=TRUE>>=
-plot2D(pdres, fcol = "phenoDiscoOutput", alpha = 0.5)
-addLegend(pdres, fcol = "phenoDiscoOutput", ncol = 2, 
+plot2D(pdres, fcol = "pd", alpha = 0.5)
+addLegend(pdres, fcol = "pd", ncol = 2, 
           where = "bottomright", bty = "n", cex = .5)
 @ 
 %% $
@@ -423,7 +423,7 @@ We anticipate to submit a fully documented version of the \Rpackage{pRoloc} pack
 
 All software and respective versions used to produce this document are listed below.
 
-<<label=sessioninfo, results=tex, echo=FALSE, cache=FALSE>>=
+<<label=sessioninfo, results='tex', echo=FALSE, cache=FALSE>>=
 toLatex(sessionInfo())
 @
 

@@ -4,31 +4,43 @@
 ##' localistation clusters. In \code{plot2D}, rows containing \code{NA}
 ##' values are removed prior to dimention reduction.
 ##' 
-##' TODO
-##' 
-##' @aliases plot2D plotDist addLegend
 ##' @param object An instance of class \code{MSnSet}.
-##' @param fcol
-##' @param fpch
-##' @param unknown
-##' @param dims
-##' @param alpha
-##' @param score
-##' @param method
-##' @param axsSwitch
-##' @param mirrorX
-##' @param mirrorY
-##' @param col
-##' @param pch
-##' @param where (addLegend only)
-##' @param markers
-##' @param mcol
-##' @param pcol
-##' @param fractions
-##' @param \dots
-##' @return Used for their side effects of generating plots and
-##' adding legends. Invisibly returns the 2d data.
+##' @param fcol Feature meta-data label (fData column name) defining
+##' the groups to be differentiated using different colours. Default
+##' is \code{markers}. Use \code{NULL} to suppress any colouring.
+##' @param fpch Featre meta-data label (fData column name) desining
+##' the groups to be differentiated using different point symbols.
+##' @param unknown A \code{character} (default is \code{"unknown"})
+##' defining how proteins of unknown localisation are labelled.
+##' @param dims A \code{numeric} of length 2 defining the dimensions
+##' to be plotted, i.e the PC/MDS axes. 
+##' @param alpha A numeric defining the alpha channel (transparency)
+##' of the points, where \code{0 <= alpha <= 1}, 0 and 1 being completely
+##' transparent and opaque.
+##' @param score A numeric specifying the minimum organelle assignment score
+##' to consider features to be assigned an organelle. (not yet implemented).
+##' @param method One of \code{PCA} (default) or \code{MDS}, defining
+##' if dimensionality reduction is done using principal component
+##' analysis (see \code{\link{prcomp}}) or classical multidimensional
+##' scaling  (see \code{\link{cmdscale}}). 
+##' @param axsSwitch A \code{logical} indicating whether the axes should be
+##' switched.
+##' @param mirrorX A \code{logical} indicating whether the x axis should be mirrored? 
+##' @param mirrorY A \code{logical} indicating whether the y axis should be mirrored? 
+##' @param col A \code{character} of appropriate length defining colours.
+##' @param pch A \code{character} of appropriate length defining point character.
+##' @param cex Character expansion.
+##' @param identify A logical (default is \code{TRUE}) defining if
+##' user interaction will be expected to identify individual data
+##' points on the plot. See also \code{\link{identify}}.
+##' @param ... Additional parameters passed to code{plot} and
+##' \code{points}.
+##' @return Used for its side effects of generating a plot.
+##' Invisibly returns the 2d data.
 ##' @author Laurent Gatto <lg390@@cam.ac.uk>
+##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
+##' figures and \code{\link{plotDist}} for alternative graphical
+##' representation of quantitative organelle proteomics data.
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
@@ -39,13 +51,6 @@
 ##'           where = "topright",
 ##'           cex = 0.5, bty = "n", ncol = 3)
 ##' title(main = "plot2D example")
-##' data(tan2009r1)
-##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
-##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-##' plotDist(tan2009r1[i, ],
-##'          markers = featureNames(tan2009r1)[j],
-##'          main = "Mitochondrion")
-##' 
 plot2D <- function(object,
                    fcol = "markers",
                    fpch,
@@ -185,7 +190,21 @@ plot2D <- function(object,
   invisible(.data)
 }
 
-
+##' Adds a legend to a \code{\link{plot2D}} figure.
+##'
+##' @title Adds a legend
+##' @param object An instance of class \code{MSnSet}
+##' @param fcol Feature meta-data label (fData column name) defining
+##' the groups to be differentiated using different colours. Default
+##' is \code{markers}. 
+##' @param where One of \code{"other"}, \code{"bottomleft"},
+##' \code{"bottomright"}, \code{"topleft"} or \code{"topright"} defining
+##' the location of the legend. \code{"other"} opens a new graphics device,
+##' while the other locations are passed to \code{\link{legend}}.
+##' @param col A \code{character} defining point colours.
+##' @param ... Additional parameters passed to \code{\link{legend}}.
+##' @return Invisibly returns \code{NULL}
+##' @author Laurent Gatto
 addLegend <- function(object,
                       fcol = "markers",
                       where = "other",
@@ -224,13 +243,44 @@ addLegend <- function(object,
     legend(where, txt, col = col,
            pch = pch, ...)
   }
+  invisible(NULL)
 }
 
 
+##' Produces a line plot showing the feature abundances
+##' across the fractions.
+##'
+##' @title Plots the distribution of features across fractions
+##' @param object An instance of class \code{MSnSet}.
+##' @param markers A \code{character}, \code{numeric} or \code{logical}
+##' of appropriate length and or content used to subset \code{object}
+##' and define the organelle markers.
+##' @param mcol A \code{character} define the colour of the marker features.
+##' Default is \code{"steelblue"}. 
+##' @param pcol A \code{character} define the colour of the non-markers features.
+##' Default is \code{"grey90"}. 
+##' @param alpha A numeric defining the alpha channel (transparency)
+##' of the points, where \code{0 <= alpha <= 1}, 0 and 1 being completely
+##' transparent and opaque.
+##' @param fractions An optional \code{character} defining the \code{phenoData}
+##' variable to be used to label the fraction along the x axis. If missing, the
+##' \code{phenoData} variables are searched for a match to \code{fraction}.
+##' If no match is found, the fractions are labelled as numericals.
+##' @param ... Additional parameters passed to \code{\link{plot}}.
+##' @return Used for its side effect of producing a feature distribution
+##' plot. Invisibly returns \code{NULL}.
+##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(tan2009r1)
+##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
+##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
+##' plotDist(tan2009r1[i, ],
+##'          markers = featureNames(tan2009r1)[j],
+##'          main = "Mitochondrion")
 plotDist <- function(object,
                      markers,
                      mcol = "steelblue",                     
-                     proteins,
                      pcol = "grey90",
                      alpha = 0.3,
                      fractions,
@@ -254,7 +304,7 @@ plotDist <- function(object,
        xlab = "Fractions",
        type = "n", xaxt = "n",
        ...)
-  axis(1, at = seq_len(m), label = .frac)
+  axis(1, at = seq_len(m), labels = .frac)
   pcol <- col2hcl(pcol, alpha = alpha)
   matlines(t(.data),
            lty = "solid",
@@ -268,5 +318,6 @@ plotDist <- function(object,
                type = "b",
                lty = "solid")
     }
+  invisible(NULL)
 }
 

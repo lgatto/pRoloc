@@ -10,14 +10,14 @@ Author@R: c(person(given = "Laurent", family = "Gatto",
 		   role = "aut"))
 Author: Laurent Gatto and Lisa M. Simpson
 Maintainer: Laurent Gatto <lg390@cam.ac.uk>
-Description: This package implements pattern recognition
-    techniques on quantitiative MS data to assess protein
+Description: This package implements pattern recognition 
+    techniques on quantitiative MS data to assess protein 
     sub-cellular localisation.
 Depends: R (>= 2.15), MSnbase, MLInterfaces (>= 1.37.1), methods
 Suggests: pRolocdata, knitr
-Imports: mclust, MSBVAR, caret, e1071, sampling, 	 
+Imports: mclust, MSBVAR, caret, e1071, sampling, class,
 	 kernlab, lattice, nnet, randomForest, proxy, 
-	 BiocGenerics, stats4, tcltk,
+	 BiocGenerics, stats4, 
 	 RColorBrewer, scales
 Suggests: testthat, knitr
 License: Artistic-2.0

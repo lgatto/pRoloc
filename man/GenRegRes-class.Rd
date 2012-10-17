@@ -1,6 +1,8 @@
 \name{GenRegRes-class}
 \Rdversion{1.1}
 \docType{class}
+\alias{GenRegRes}
+\alias{class:GenRegRes}
 \alias{GenRegRes-class}
 \alias{getF1Scores,GenRegRes-method}
 \alias{getRegularisedParams,GenRegRes-method}

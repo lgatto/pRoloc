@@ -2,6 +2,7 @@ import(lattice)
 import(BiocGenerics)
 import(mclust)
 
+importFrom(class, knn)
 importFrom(RColorBrewer, brewer.pal)
 importFrom(stats4, plot)
 importFrom(proxy, simil)
@@ -31,9 +32,13 @@ exportMethods(chi2,
 export(getPredictions,
        getMarkers,
        empPvalues,
-       getStockcol, getStockpch,
-       getUnknowncol, getUnknownpch,
-       ## machine learning
+       ## getStockcol, getStockpch,
+       ## getUnknowncol, getUnknownpch,
+       ## -- plotting
+       plot2D,
+       addLegend,
+       plotDist,
+       ## -- machine learning
        plsdaRegularisation,
        plsdaPrediction,
        svmRegularisation,

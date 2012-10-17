@@ -15,7 +15,6 @@ getRatios <- function(x, log = FALSE) {
 }
 
 
-
 setMethod("exprsToRatios",
           "MSnSet",
           function(object,log=FALSE) {            
@@ -58,6 +57,7 @@ setMethod("exprsToRatios",
 ##' @return A \code{character} of length \code{ncol(object)}.
 ##' @author Laurent Gatto
 ##' @examples
+##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' mymarkers <- getMarkers(dunkley2006)
 getMarkers <- function(object,

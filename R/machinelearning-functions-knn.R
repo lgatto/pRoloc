@@ -1,6 +1,24 @@
+##' Hyper-parameters regularisation for the k-nearest
+##' neighbours algorithm.
+##'
+##' @title knn regularisation
+##' @param object An instance of class code{"\linkS4class{MSnSet}"}.
+##' @param fcol The feature meta-data containing marker definitions.
+##' Default is \code{markers}.
+##' @param k The hyper-parameter. Default values are \code{3:12}.
+##' @param times The number of times internal cross-validation is performed.
+##' Default is 100.
+##' @param test.size The size of test data. Default is 0.2 (20 percent).
+##' @param xval The \code{n}-cross validation. Default is 5.
+##' @param fun The function used to summarise the \code{times} macro F1 matrices.
+##' @param seed The optional random number generator seed.
+##' @param verbose A \code{logical} defining whether a progress bar is displayed.
+##' @param ... Additional parameters passed to \code{\link{knn}} from package \code{class}.
+##' @return An instance of class code{"\linkS4class{GenRegRes}"}.
+##' @author Laurent Gatto
 knnRegularisation <- function(object,
                               fcol = "markers",
-                              k = 1:12,
+                              k = 3:12,
                               times = 100,
                               test.size = .2,
                               xval = 5,                               
@@ -43,7 +61,7 @@ knnRegularisation <- function(object,
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
     
     xfolds <- createFolds(.train1$markers, xval, returnTrain = TRUE)
-    ## strores the xval F1 matrices
+    ## stores the xval F1 matrices
     .matrixF1L <- vector("list", length = xval)  
 
     for (.xval in 1:xval) {    

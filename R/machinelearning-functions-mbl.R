@@ -1,3 +1,15 @@
+##' Multiple binary learning algorithm.
+##'
+##' @title mbl prediction
+##' @param object An instance of class code{"\linkS4class{MSnSet}"}.
+##' @param fcol The feature meta-data containing marker definitions.
+##' Default is \code{markers}.
+##' @param verbose A \code{logical} defining whether a progress bar is displayed.
+##' @param scores One of \code{"prediction"}, \code{"all"} or \code{"none"}.
+##' @param seed The optional random number generator seed.
+##' @param ... Additional parameters passed to \code{\link{svmRegularisation}}.
+##' @return An updated instance of class code{"\linkS4class{MSnSet}"}.
+##' @author Laurent Gatto
 mblPrediction <- function(object,
                           fcol = "markers",
                           verbose = TRUE,
@@ -56,7 +68,7 @@ mblPrediction <- function(object,
   reg2 <- svmRegularisation(object2, fcol = fcol, verbose = verbose, ...)
   object2 <- svmPrediction(object2, reg2, fcol = fcol, scores = scores)
   object2@processingData@processing <- c(processingData(object2)@processing,
-                                         paste0("Performed multiple binary learnig (mbl) prediction ",
+                                         paste0("Performed multiple binary learning (mbl) prediction ",
                                                 date()))
   if (validObject(object2))
     return(object2)

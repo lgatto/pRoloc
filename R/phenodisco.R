@@ -189,7 +189,7 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers") {
     ## (A)  Identify potential new members/candidates of organelle class k
     ## (B)  Get cluster IDs for defining phenotypes at a later stage  
     kUx <- rbind(L[[i]], X)
-    gmmCluster <- Mclust(kUx, modelName=c("EEE","EEV","VEV","VVV"))
+    gmmCluster <- Mclust(kUx, modelNames = c("EEE","EEV","VEV","VVV"))
     track[[i]] <- gmmCluster$classification # Get cluster number for each prot
     Nclass <- nrow(L[[i]])
     classifyL <- track[[i]][1:Nclass]  # Cluster number for each L
@@ -314,19 +314,25 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 
 ##' Runs the \code{phenoDisco} algorithm.
 ##' 
-##' \code{phenoDisco} is a semi-supervised iteratice approach to predict
+##' \code{phenoDisco} is a semi-supervised iterative approach to predict
 ##' protein localisation and detect new protein clusters. It is based on the
 ##' works of Yin et al. (2008).
 ##' 
-##' TODO - add description of algorithm.
+##' TODO - add description of the algorithm.
 ##' 
 ##' @param MSnSetObject An instance of class \code{MSnSet}.
-##' @param fcol A \code{character} indicating the organellar markers column
-##' name in feature meta-data. Default is \code{markers}.
+##' @param fcol A \code{character} indicating the organellar markers
+##' column name in feature meta-data. Default is \code{markers}.
 ##' @param times Number of runs of tracking. Default is 10.
-##' @param GS Group size, i.e how many proteins make a group. Default is 6.
-##' @param p Significance level for outlier detection. Default is 0.05.
+##' @param GS Group size, i.e how many proteins make a group. Default
+##' is 6.
+##' @param allIter \code{logical}, defining if predictions for
+##' all iterations should be saved. Default is \code{FALSE}.
+##' @param p Significance level for outlier detection. Default is
+##' 0.05.
 ##' @param r Correlation coefficent for Jaccard's Index. Default is 1.
+##' @param seed An optional \code{numeric} of length 1 specifing the
+##' random number generator seed to be used. 
 ##' @return An instance of class \code{MSnSet} containg the \code{phenoDisco}
 ##' predictions.
 ##' @author Lisa M. Simpson <lms79@@cam.ac.uk>

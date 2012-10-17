@@ -1,4 +1,3 @@
-
 setMethod("chi2",
           signature=c(x="numeric",y="numeric"),
           function(x, ## marker intensities - numeric

@@ -1,3 +1,6 @@
+%\VignetteIndexEntry{pRoloc tutorial}
+%\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
+%\VignettePackage{pRoloc}
 \documentclass[12pt]{article}
 \usepackage{tikz}
 \usepackage{hyperref}

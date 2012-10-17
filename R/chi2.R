@@ -4,15 +4,16 @@ setMethod("chi2",
                    y, ## correlater intensities - numeric
                    method = c("Andersen2003","Wiese2007"),
                    na.rm = FALSE) {
+            stopifnot(length(x) == length(y))
             method <- match.arg(method)
             if (length(x)!=length(y))
               stop("marker and correlater must be of same length")
             if (method == "Andersen2003") { ## default when no method specified
-              chi2 <- sum((y-x)^2/length(x), na.rm=na.rm)
+              ret <- sum((y-x)^2/length(x), na.rm = na.rm)
             } else {
-              chi2 <- sum((y-x)^2/x, na.rm=na.rm)
+              ret <- sum((y-x)^2/x, na.rm = na.rm)
             }
-            return(chi2)
+            return(ret)
           })
 
 setMethod("chi2",
@@ -64,8 +65,11 @@ empPvalues <- function(marker, corMatrix, n=100, ...) {
   empP <- rep(NA,nrow(corMatrix))
   chi2res <- chi2(marker, corMatrix, ...)
   for (i in 1:nrow(corMatrix)) {
-    rndChi2 <- replicate(n,chi2(marker,sample(corMatrix[i,]),method,na.rm))
-    empP[i] <- sum(chi2res[i]>=rndChi2)
+    rndChi2 <- replicate(n,
+                         chi2(sample(marker),
+                              corMatrix[i,] ,
+                              method, na.rm))
+    empP[i] <- sum(chi2res[i] >= rndChi2)
   }
   return(empP/n)
 }

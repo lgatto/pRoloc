@@ -21,29 +21,40 @@
   markers will have small \eqn{Chi^2} values. 
 
   The \code{chi2} methods implement this idea and compute such Chi^2
-  values for sets of proteins.
+  values for sets of proteins. 
 }
 
 \section{Methods}{
   \describe{
-    \item{\code{signature(x = "matrix", y = "matrix")}}{
+    \item{\code{signature(x = "matrix", y = "matrix", method =
+	"character", fun = "NULL", na.rm = "logical")}}{
       Compute \code{nrow(x)} times \code{nrow(y)} \eqn{Chi^2} values,
-      for each \code{x}, \code{y} feature pair.  
+      for each \code{x}, \code{y} feature pair. Method is one of
+      \code{"Andersen2003"} or \code{"Wiese2007"}; the former (default)
+      computed the \eqn{Chi^2} as \code{sum(y-x)^2/length(x)}, while the
+      latter uses \code{sum((y-x)^2/x)}. \code{na.rm} defines if missing
+      values (\code{NA} and \code{NaN}) should be removed prior to
+      summation. \code{fun} defines how to summarise the \eqn{Chi^2}
+      values; default, \code{NULL}, does not combine the \eqn{Chi^2}
+      values. 
     }
     
-    \item{\code{signature(x = "matrix", y = "numeric")}}{
+    \item{\code{signature(x = "matrix", y = "numeric", method =
+	"character", na.rm = "logical")}}{
       Computes \code{nrow(x)} \eqn{Chi^2} values, for all the \eqn{(x_i,
-      y)} pairs.
+	y)} pairs. See above for the other arguments.
     }
     
-    \item{\code{signature(x = "numeric", y = "matrix")}}{
+    \item{\code{signature(x = "numeric", y = "matrix", method =
+	"character", na.rm = "logical")}}{
       Computes \code{nrow(y)} \eqn{Chi^2} values, for all the \eqn{(x,
-      y_i)} pairs.
-
+	y_i)} pairs.  See above for the other arguments.
     }
     
-    \item{\code{signature(x = "numeric", y = "numeric")}}{
-      Computes the \eqn{Chi^2} value for the \eqn{(x, y)} pairs
+    \item{\code{signature(x = "numeric", y = "numeric", method =
+	"character", na.rm = "logical")}}{
+      Computes the \eqn{Chi^2} value for the \eqn{(x, y)} pairs.  See
+      above for the other arguments. 
     }
   }
 }
@@ -58,6 +69,24 @@
   spectrometry and protein correlation profiling. Mol. Cell. Proteomics
   2007, 6, 2045–2057. 
 
+}
+
+\seealso{ \code{\link{empPvalues}} }
+
+\examples{
+mrk <- rnorm(6)
+prot <- matrix(rnorm(60), ncol = 6)
+chi2(mrk, prot, method = "Andersen2003")
+chi2(mrk, prot, method = "Wiese2007")
+
+pepmark <- matrix(rnorm(18), ncol = 6)
+pepprot <- matrix(rnorm(60), ncol = 6)
+chi2(pepmark, pepprot)
+chi2(pepmark, pepprot, fun = sum)
+}
+
+\author{
+  Laurent Gatto <lg390@cam.ac.uk>
 }
 
 \keyword{methods}

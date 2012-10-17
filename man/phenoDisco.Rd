@@ -17,23 +17,30 @@
   \item{GS}{Group size, i.e how many proteins make a group.
   Default is 6.}
 
+  \item{allIter}{\code{logical}, defining if predictions
+  for all iterations should be saved. Default is
+  \code{FALSE}.}
+
   \item{p}{Significance level for outlier detection.
   Default is 0.05.}
 
   \item{r}{Correlation coefficent for Jaccard's Index.
   Default is 1.}
+
+  \item{seed}{An optional \code{numeric} of length 1
+  specifing the random number generator seed to be used.}
 }
 \value{
   An instance of class \code{MSnSet} containg the
   \code{phenoDisco} predictions.
 }
 \description{
-  \code{phenoDisco} is a semi-supervised iteratice approach
+  \code{phenoDisco} is a semi-supervised iterative approach
   to predict protein localisation and detect new protein
   clusters. It is based on the works of Yin et al. (2008).
 }
 \details{
-  TODO - add description of algorithm.
+  TODO - add description of the algorithm.
 }
 \author{
   Lisa M. Simpson <lms79@cam.ac.uk>

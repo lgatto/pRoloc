@@ -1,7 +1,5 @@
 \name{plot2D}
-\alias{addLegend}
 \alias{plot2D}
-\alias{plotDist}
 \title{Plot organelle assignment data and results.}
 \usage{
   plot2D(object, fcol = "markers", fpch,
@@ -13,54 +11,70 @@
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
 
-  \item{fcol}{}
+  \item{fcol}{Feature meta-data label (fData column name)
+  defining the groups to be differentiated using different
+  colours. Default is \code{markers}. Use \code{NULL} to
+  suppress any colouring.}
 
-  \item{fpch}{}
+  \item{fpch}{Featre meta-data label (fData column name)
+  desining the groups to be differentiated using different
+  point symbols.}
 
-  \item{unknown}{}
+  \item{unknown}{A \code{character} (default is
+  \code{"unknown"}) defining how proteins of unknown
+  localisation are labelled.}
 
-  \item{dims}{}
+  \item{dims}{A \code{numeric} of length 2 defining the
+  dimensions to be plotted, i.e the PC/MDS axes.}
 
-  \item{alpha}{}
+  \item{alpha}{A numeric defining the alpha channel
+  (transparency) of the points, where \code{0 <= alpha <=
+  1}, 0 and 1 being completely transparent and opaque.}
 
-  \item{score}{}
+  \item{score}{A numeric specifying the minimum organelle
+  assignment score to consider features to be assigned an
+  organelle. (not yet implemented).}
 
-  \item{method}{}
+  \item{method}{One of \code{PCA} (default) or \code{MDS},
+  defining if dimensionality reduction is done using
+  principal component analysis (see \code{\link{prcomp}})
+  or classical multidimensional scaling (see
+  \code{\link{cmdscale}}).}
 
-  \item{axsSwitch}{}
+  \item{axsSwitch}{A \code{logical} indicating whether the
+  axes should be switched.}
 
-  \item{mirrorX}{}
+  \item{mirrorX}{A \code{logical} indicating whether the x
+  axis should be mirrored?}
 
-  \item{mirrorY}{}
+  \item{mirrorY}{A \code{logical} indicating whether the y
+  axis should be mirrored?}
 
-  \item{col}{}
+  \item{col}{A \code{character} of appropriate length
+  defining colours.}
 
-  \item{pch}{}
+  \item{pch}{A \code{character} of appropriate length
+  defining point character.}
 
-  \item{where}{(addLegend only)}
+  \item{cex}{Character expansion.}
 
-  \item{markers}{}
+  \item{identify}{A logical (default is \code{TRUE})
+  defining if user interaction will be expected to identify
+  individual data points on the plot. See also
+  \code{\link{identify}}.}
 
-  \item{mcol}{}
-
-  \item{pcol}{}
-
-  \item{fractions}{}
-
-  \item{\dots}{}
+  \item{...}{Additional parameters passed to code{plot} and
+  \code{points}.}
 }
 \value{
-  Used for their side effects of generating plots and
-  adding legends. Invisibly returns the 2d data.
+  Used for its side effects of generating a plot. Invisibly
+  returns the 2d data.
 }
 \description{
   Generate 2 dimensional or feature distribution plots to
   illustrate localistation clusters. In \code{plot2D}, rows
   containing \code{NA} values are removed prior to
   dimention reduction.
-}
-\details{
-  TODO
 }
 \examples{
 library(pRolocdata)
@@ -72,14 +86,14 @@ addLegend(dunkley2006,
           where = "topright",
           cex = 0.5, bty = "n", ncol = 3)
 title(main = "plot2D example")
-data(tan2009r1)
-j <- which(fData(tan2009r1)$markers == "mitochondrion")
-i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-plotDist(tan2009r1[i, ],
-         markers = featureNames(tan2009r1)[j],
-         main = "Mitochondrion")
 }
 \author{
   Laurent Gatto <lg390@cam.ac.uk>
+}
+\seealso{
+  \code{\link{addLegend}} to add a legend to \code{plot2D}
+  figures and \code{\link{plotDist}} for alternative
+  graphical representation of quantitative organelle
+  proteomics data.
 }
 

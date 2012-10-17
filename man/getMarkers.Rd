@@ -24,6 +24,7 @@
   a marker table.
 }
 \examples{
+library(pRolocdata)
 data(dunkley2006)
 mymarkers <- getMarkers(dunkley2006)
 }

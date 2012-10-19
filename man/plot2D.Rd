@@ -77,7 +77,7 @@
   dimention reduction.
 }
 \examples{
-library(pRolocdata)
+library("pRolocdata")
 data(dunkley2006)
 plot2D(dunkley2006, fcol = NULL)
 plot2D(dunkley2006, fcol = "markers")

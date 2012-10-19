@@ -42,7 +42,7 @@
   across the fractions.
 }
 \examples{
-library(pRolocdata)
+library("pRolocdata")
 data(tan2009r1)
 j <- which(fData(tan2009r1)$markers == "mitochondrion")
 i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")

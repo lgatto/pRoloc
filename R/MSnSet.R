@@ -57,7 +57,7 @@ setMethod("exprsToRatios",
 ##' @return A \code{character} of length \code{ncol(object)}.
 ##' @author Laurent Gatto
 ##' @examples
-##' library(pRolocdata)
+##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' mymarkers <- getMarkers(dunkley2006)
 getMarkers <- function(object,

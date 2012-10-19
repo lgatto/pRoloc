@@ -2,7 +2,7 @@
 \alias{knnRegularisation}
 \title{knn regularisation}
 \usage{
-  knnRegularisation(object, fcol = "markers", k = 1:12,
+  knnRegularisation(object, fcol = "markers", k = 3:12,
     times = 100, test.size = 0.2, xval = 5, fun = mean,
     seed, verbose = TRUE, ...)
 }
@@ -14,7 +14,7 @@
   definitions. Default is \code{markers}.}
 
   \item{k}{The hyper-parameter. Default values are
-  \code{1:12}.}
+  \code{3:12}.}
 
   \item{times}{The number of times internal
   cross-validation is performed. Default is 100.}

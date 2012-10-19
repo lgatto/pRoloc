@@ -9,8 +9,8 @@
 \description{
   Andersen et al. (2003) used a fixed \eqn{Chi^2} threshold of 0.05 to
   identify organelle-specific candidates. This function computes
-  empirical p-values by permutation the markers relative intensities
-  and computed null \eqn{Chi^2} values. 
+  empirical p-values by permutation the markers relative intensities and
+  computed null \eqn{Chi^2} values.  
 }
 
 \usage{
@@ -61,5 +61,5 @@ empPvalues(mrk, prot)
 \references{
   Andersen, J. S., Wilkinson, C. J., Mayor, T., Mortensen, P. et al.,
   Proteomic characterization of the human centrosome by protein
-  correlation profiling. Nature 2003, 426, 570–574.
+  correlation profiling. Nature 2003, 426, 570 - 574.
 }

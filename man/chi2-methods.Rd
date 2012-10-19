@@ -13,9 +13,10 @@
   In the original protein correlation profiling (PCP), Andersen et
   al. use the peptide normalised profiles along gradient fractions and
   compared them with the reference profiles (or set of profiles) by
-  computing \eqn{Chi^2}-values, the \eqn{\frac{sum (x_i–x_p)^2}{x_p}},
+  computing \eqn{Chi^2} values,
+  \eqn{\frac{\sum (x_i - x_p)^2}{x_p}}{sum(x_i - x_p)^2 / x_p},
   where \eqn{x_i} is the normalised value of the peptide in fraction i
-  and \eqn{x_p} is the value of the marker (Wiese et al 2007). The
+  and \eqn{x_p} is the value of the marker (from Wiese et al., 2007). The
   protein \eqn{Chi^2} is then computed as the median of the peptide
   \eqn{Chi^2} values. Peptides and proteins with similar profiles to the
   markers will have small \eqn{Chi^2} values. 
@@ -60,14 +61,14 @@
 }
 
 \references{
-  Andersen, J. S., Wilkinson, C. J., Mayor, T., Mortensen, P. et al.,
-  Proteomic characterization of the human centrosome by protein
-  correlation profiling. Nature 2003, 426, 570–574.
+  Andersen, J. S., Wilkinson, C. J., Mayor, T., Mortensen, P. et al., 
+  Proteomic characterization of the human centrosome by protein 
+  correlation profiling. Nature 2003, 426, 570 - 574.
 
   Wiese, S., Gronemeyer, T., Ofman, R., Kunze, M. et al., Proteomics
   characterization of mouse kidney peroxisomes by tandem mass
   spectrometry and protein correlation profiling. Mol. Cell. Proteomics
-  2007, 6, 2045–2057. 
+  2007, 6, 2045 - 2057. 
 
 }
 

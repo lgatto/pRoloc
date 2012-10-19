@@ -44,7 +44,7 @@
 }
 \description{
   Hyper-parameters regularisation for the support vector
-  machines algorithm.
+  machine algorithm.
 }
 \author{
   Laurent Gatto

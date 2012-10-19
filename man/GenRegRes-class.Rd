@@ -4,11 +4,17 @@
 \alias{GenRegRes}
 \alias{class:GenRegRes}
 \alias{GenRegRes-class}
+\alias{getF1Scores}
 \alias{getF1Scores,GenRegRes-method}
+\alias{getRegularisedParams}
 \alias{getRegularisedParams,GenRegRes-method}
+\alias{getRegularizedParams}
 \alias{getRegularizedParams,GenRegRes-method}
+\alias{getSeed}
 \alias{getSeed,GenRegRes-method}
+\alias{getWarnings}
 \alias{getWarnings,GenRegRes-method}
+\alias{levelPlot}
 \alias{levelPlot,GenRegRes-method}
 \alias{plot,GenRegRes,missing-method}
 \alias{show,GenRegRes-method}

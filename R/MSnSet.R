@@ -17,8 +17,8 @@ getRatios <- function(x, log = FALSE) {
 
 setMethod("exprsToRatios",
           "MSnSet",
-          function(object,log=FALSE) {            
-            r <- apply(exprs(object),1,getRatios,log)
+          function(object, log = FALSE) {            
+            r <- apply(exprs(object), 1, getRatios, log)
             r <- t(r)
             rownames(r) <- featureNames(object)
             cmb <- combn(ncol(object),2)            

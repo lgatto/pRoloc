@@ -10,3 +10,5 @@ setGeneric("getRegularizedParams", function(object) standardGeneric("getRegulari
 setGeneric("levelPlot", function(object, ...) standardGeneric("levelPlot"))
 
 setGeneric("chi2",function(x,y,...) standardGeneric("chi2"))
+
+setGeneric("consensusPrediction",function(object,...) standardGeneric("consensusPrediction"))

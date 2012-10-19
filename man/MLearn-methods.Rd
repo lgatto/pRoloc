@@ -8,7 +8,7 @@
 
 \description{
   This method implements \code{MLInterfaces}'
-  \code{\link[MLInterfaces]{MLean}} method for instances of the class
+  \code{MLean} method for instances of the class
   code{"\linkS4class{MSnSet}"}. 
 }
 
@@ -27,6 +27,10 @@
       cross-validation. 
     }
   }
+}
+
+\seealso{
+  The \code{MLInterfaces} package documentation.
 }
 
 \keyword{methods}

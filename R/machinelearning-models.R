@@ -26,7 +26,7 @@ majorityConsensus <- function(object, fcols, filtered, fun) {
                       preds <- as.character(fData(object)[, fcol])
                       if (filtered) {
                         scrs <- fData(object)[, paste0(fcol, ".scores")]
-                        k <- apply(srcs, 2, fun)
+                        k <- apply(scrs, 2, fun)
                         preds[scrs < k] <- "unknown"
                       }
                       return(preds)

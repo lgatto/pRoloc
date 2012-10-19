@@ -42,7 +42,7 @@
 ##' figures and \code{\link{plotDist}} for alternative graphical
 ##' representation of quantitative organelle proteomics data.
 ##' @examples
-##' library(pRolocdata)
+##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' plot2D(dunkley2006, fcol = NULL)
 ##' plot2D(dunkley2006, fcol = "markers")
@@ -271,7 +271,7 @@ addLegend <- function(object,
 ##' plot. Invisibly returns \code{NULL}.
 ##' @author Laurent Gatto
 ##' @examples
-##' library(pRolocdata)
+##' library("pRolocdata")
 ##' data(tan2009r1)
 ##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
 ##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")

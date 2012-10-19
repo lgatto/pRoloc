@@ -66,7 +66,7 @@
     \item{levelPlot}{\code{signature(object = "GenRegRes")}: ... }
     \item{plot}{\code{signature(x = "GenRegRes", y = "missing")}: ... }
     \item{show}{\code{signature(object = "GenRegRes")}: ... }
-	 }
+  }
 }
 
 

@@ -431,8 +431,6 @@ This tutorial focuses on practical aspects of organelles proteomics data analysi
 
 Data analysis is not a trivial task, and in general, one can not assume that any off-the-shelf algorithm will perform well. As such, one of the emphasis of the software presented in this document is allowing users to track data processing and critically evaluate the results. 
 
-We anticipate to submit a fully documented version of the \Rpackage{pRoloc} package that will feature the functionality described above to Bioconductor\footnote{\url{http://www.bioconductor.org/}} by November 2012. 
-
 \clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

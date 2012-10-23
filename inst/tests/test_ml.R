@@ -1,6 +1,5 @@
 context("Machine learning tests")
 
-library("pRolocdata")
 data(dunkley2006)
 d2 <- d1 <- dunkley2006
 fvarLabels(d2)[1] <- "xx"

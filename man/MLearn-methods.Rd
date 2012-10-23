@@ -9,7 +9,7 @@
 \description{
   This method implements \code{MLInterfaces}'
   \code{MLean} method for instances of the class
-  code{"\linkS4class{MSnSet}"}. 
+  \code{"\linkS4class{MSnSet}"}. 
 }
 
 \section{Methods}{

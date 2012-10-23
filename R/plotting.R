@@ -33,7 +33,7 @@
 ##' @param identify A logical (default is \code{TRUE}) defining if
 ##' user interaction will be expected to identify individual data
 ##' points on the plot. See also \code{\link{identify}}.
-##' @param ... Additional parameters passed to code{plot} and
+##' @param ... Additional parameters passed to \code{plot} and
 ##' \code{points}.
 ##' @return Used for its side effects of generating a plot.
 ##' Invisibly returns the 2d data.

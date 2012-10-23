@@ -9,7 +9,7 @@
 
 \description{
   Calculations all possible ratios for the \code{assayData} columns in
-  an code{"\linkS4class{MSnSet}"}.
+  an \code{"\linkS4class{MSnSet}"}.
 }
 
 \section{Methods}{

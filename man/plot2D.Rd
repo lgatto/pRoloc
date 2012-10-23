@@ -63,8 +63,8 @@
   individual data points on the plot. See also
   \code{\link{identify}}.}
 
-  \item{...}{Additional parameters passed to code{plot} and
-  \code{points}.}
+  \item{...}{Additional parameters passed to \code{plot}
+  and \code{points}.}
 }
 \value{
   Used for its side effects of generating a plot. Invisibly

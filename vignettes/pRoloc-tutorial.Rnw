@@ -152,15 +152,15 @@ f0 <- dir(system.file("extdata", package = "pRolocdata"),
           full.names = TRUE, pattern = "pr800866n_si_004-rep1.csv")
 csv <- read.csv(f0)
 ## The quantitation data, from the original data
-f1 <- dir(system.file("data", package = "pRoloc"), 
+f1 <- dir(system.file("extdata", package = "pRoloc"), 
           full.names = TRUE, pattern = "exprsFile.csv")
 exprsCsv <- read.csv(f1)
 ## Feature meta-data, from the original data
-f2 <- dir(system.file("data", package = "pRoloc"), 
+f2 <- dir(system.file("extdata", package = "pRoloc"), 
           full.names = TRUE, pattern = "fdataFile.csv")
 fdataCsv <- read.csv(f2)
 ## Sample meta-data, new the file
-f3 <- dir(system.file("data", package = "pRoloc"), 
+f3 <- dir(system.file("extdata", package = "pRoloc"), 
           full.names = TRUE, pattern = "pdataFile.csv")
 pdataCsv <- read.csv(f3)
 @ 
@@ -394,7 +394,7 @@ pdres <- phenoDisco(tan2009r1, GS=10, times=10, fcol = "PLSDA")
 @ 
 
 <<loadpdres, echo=FALSE>>=
-fn <- dir(system.file("data", package = "pRoloc"), 
+fn <- dir(system.file("extdata", package = "pRoloc"), 
           full.names = TRUE, pattern = "pdres.rda")
 load(fn)
 @ 

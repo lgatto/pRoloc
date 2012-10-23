@@ -9,7 +9,7 @@
 }
 \arguments{
   \item{object}{An instance of class
-  code{"\linkS4class{MSnSet}"}.}
+  \code{"\linkS4class{MSnSet}"}.}
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
@@ -40,7 +40,7 @@
   \code{\link{nnet}} from package \code{nnet}.}
 }
 \value{
-  An instance of class code{"\linkS4class{GenRegRes}"}.
+  An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
   Hyper-parameters regularisation for artificial neural

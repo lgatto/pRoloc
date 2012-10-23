@@ -8,7 +8,7 @@
 }
 \arguments{
   \item{object}{An instance of class
-  code{"\linkS4class{MSnSet}"}.}
+  \code{"\linkS4class{MSnSet}"}.}
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
@@ -36,7 +36,7 @@
   \code{\link{naiveBayes}} from package \code{e1071}.}
 }
 \value{
-  An instance of class code{"\linkS4class{GenRegRes}"}.
+  An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
   Hyper-parameters regularisation for the naive Bayes

@@ -104,12 +104,3 @@ test_that("ksvm consistency", {
 })
 
 
-test_that("mbl consistency", {
-  ans1 <- mblPrediction(d1, fcol = "markers",
-                        seed = .seed,
-                        times = .times, verbose = FALSE)
-  ans2 <- mblPrediction(d2, fcol = "xx",
-                        seed = .seed,
-                        times = .times, verbose = FALSE)
-  expect_true(all(fData(ans1) == fData(ans2)))
-})

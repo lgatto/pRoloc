@@ -1,0 +1,34 @@
+citHeader("To cite pRoloc in publications use:")
+
+citEntry(entry="article",  
+         title  = "Mass-spectrometry based organelle proteomics data analysis with pRoloc",
+         author = personList(
+           person(given = "Laurent", family = "Gatto"),
+           person(given = "Lisa", family = "Simpson"),
+           person(given="Kathryn", family="Lilley")),
+         journal = "in prep",
+	 year = "2012",
+         textVersion = paste("Laurent Gatto, Lisa Simpson and Kathryn Lilley.",
+           "Mass-spectrometry based organelle proteomics data analysis with pRoloc", 
+           "in prep.")
+         )
+
+citEntry(entry="article",  
+         title  = "The Effect of Organelle Discovery upon Gradient-Based Sub-Cellular Protein Localization",
+         author = personList(
+           person(given = "Lisa", family = "Simpson"),
+           person(given = "Laurent", family = "Gatto"),
+           person(given = "Andy", family = "Christoforou"),
+           person(given = "Arnoud", family = "Groen"),
+           person(given="Kathryn", family="Lilley"),
+           person(given = "Matthew", family = "Trotter")),
+         journal = "in prep",
+	 year = "2012",
+         textVersion = paste("Lisa Simpson, Laurent Gatto, Andy Christoforou, Arnoud Groen, Kathryn Lilley and Matthew Trotter.",
+           "The Effect of Organelle Discovery upon Gradient-Based Sub-Cellular Protein Localization.",
+           "in prep.")
+         )
+
+
+
+

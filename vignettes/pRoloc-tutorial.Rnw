@@ -54,7 +54,7 @@
 }
 
 \author{
-  Lisa M. Simpson%%\thanks{\email{lms79@cam.ac.uk}}
+  Lisa M. Simpson
 }
 
 \affil{
@@ -94,14 +94,7 @@ opts_chunk$set(fig.align = 'center',
                comment = NA)
 options(replace.assign = TRUE, 
         width = 40)
-knit_hooks$set(par = function(before, options, envir) {
-  if (before && options$fig.show != 'none') 
-    par(mar = c(4,4,.1,.1),
-        cex.lab = .95,
-        cex.axis = .9,
-        mgp = c(2,.7,0),
-        tcl = -.3)
-})
+
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 set.seed(1)
@@ -131,7 +124,10 @@ Once \R is started, the first step to enable functionality of a specific package
 <<libraries>>=
 library("MSnbase")
 library("pRoloc")
+library("pRolocdata")
 @ 
+
+\Rpackage{MSnbase} implements the data containers that are used by \Rpackage{pRoloc}. \Rpackage{pRolocdata} is a data package that supplies several published organelle proteomics data sets.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -148,14 +144,23 @@ The data used in this tutorial has been published in \cite{Tan2009}. The LOPIT t
 This section starts by illustrating how to import data in comma-separated value (csv) format into an appropriate \R data structure. The first code chunk illustrates how to read such a file into \R using the \Rfunction{read.csv} function. The files are read in here to illustrate their content. The first file is the original file from the publication. The 2 following files contain a subset of the columns of original \texttt{pr800866n\_si\_004-rep1.csv} file, used later in this section. The last one has been created manually.
 
 <<readCsvData>>=
-## The original data for replicate 1
-csv <- read.csv("~/Data/OrganelleProteomics/Tan2009/pr800866n_si_004-rep1.csv")
-## The quantitation data, from original data
-exprsCsv <- read.csv("~/Data/OrganelleProteomics/Tan2009/exprsFile.csv")
-## Feature meta-data, from original data
-fdataCsv <- read.csv("~/Data/OrganelleProteomics/Tan2009/fdataFile.csv")
-## Sample meta-data, new file
-pdataCsv <- read.csv("~/Data/OrganelleProteomics/Tan2009/pdataFile.csv")
+## The original data for replicate 1, available
+## from the pRolocdata package
+f0 <- dir(system.file("extdata", package = "pRolocdata"), 
+          full.names = TRUE, pattern = "pr800866n_si_004-rep1.csv")
+csv <- read.csv(f0)
+## The quantitation data, from the original data
+f1 <- dir(system.file("data", package = "pRoloc"), 
+          full.names = TRUE, pattern = "exprsFile.csv")
+exprsCsv <- read.csv(f1)
+## Feature meta-data, from the original data
+f2 <- dir(system.file("data", package = "pRoloc"), 
+          full.names = TRUE, pattern = "fdataFile.csv")
+fdataCsv <- read.csv(f2)
+## Sample meta-data, new the file
+f3 <- dir(system.file("data", package = "pRoloc"), 
+          full.names = TRUE, pattern = "pdataFile.csv")
+pdataCsv <- read.csv(f3)
 @ 
 
 The three first lines of the original spreadsheet, containing the data for replicate one, is illustrated below (using the function \Rfunction{head}). It contains \Sexpr{nrow(csv)} rows and \Sexpr{ncol(csv)} columns.
@@ -183,9 +188,9 @@ pdataCsv
 A self-contained data structure, called \Robject{MSnSet} (defined in the \Rpackage{MSnbase} package) can now easily be generated using the \Rfunction{readMSnSet} constructor and providing the respective names of the files containing the quantitation data, the feature meta-data and the sample meta-data. Below, we call that object \Robject{tan2009r1}.
 
 <<makeMSnSet>>=
-tan2009r1 <- readMSnSet(exprsFile="~/Data/OrganelleProteomics/Tan2009/exprsFile.csv", 
-                        featureDataFile="~/Data/OrganelleProteomics/Tan2009/fdataFile.csv", 
-                        phenoDataFile="~/Data/OrganelleProteomics/Tan2009/pdataFile.csv", 
+tan2009r1 <- readMSnSet(exprsFile = f1,
+                        featureDataFile = f2,
+                        phenoDataFile = f3,
                         sep = ",")
 tan2009r1
 @ 
@@ -212,7 +217,6 @@ exprs(smallTan)
 Several data sets, including the 3 replicates from \cite{Tan2009}, are distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata} package. Others include the \textit{Arabidopsis thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006}) and the mouse PCP data from \cite{Foster2006} (\Robject{foster2006}). Each data set can be loaded with the \Rfunction{data} function, as show below for the first replicate from \cite{Tan2009}.
 
 <<loadTan1>>= 
-library(pRolocdata)
 data(tan2009r1)
 @ 
 
@@ -277,25 +281,29 @@ plotDist(tan2009r1[i, ],
 @ 
 
 \begin{figure}[!htb]
-<<plotdist1, dev='pdf', fig.width=6, fig.height=5, echo=FALSE>>=
-par(mfrow = c(2,2))
+<<plotdist1, dev='pdf', fig.width=9, fig.height=7, echo=FALSE>>=
+par(mfrow = c(2,2), mar = c(4, 4, 2, 0.1))
 cls <- getStockcol()[1:4]
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "mitochondrion"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "mitochondrion")],
-         mcol = cls[1])
+         mcol = cls[1], 
+         main = "mitochondrion")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "ER")],
-         mcol = cls[2])
+         mcol = cls[2],
+         main = "ER")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "Golgi")],
-         mcol = cls[3])
+         mcol = cls[3],
+         main = "Golgi")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "PM"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "PM")],
-         mcol = cls[4])
+         mcol = cls[4],
+         main = "PM")
 @ 
 %% $
 \caption{Distribution of protein intensities along the fractions of the separation gradient for 4 organelles: mitochondrion (red), ER/Golgi (blue, ER markers and green, Golgi markers) and plasma membrane (purple). }
@@ -306,7 +314,7 @@ plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "PM"), ],
 Alternatively, we can combine all organelle groups in one 2 dimensional figure by applying dimensionality reduction using the \Rfunction{plot2D} function (see figure \ref{fig:plot2d}).
 
 \begin{figure}[!hbt]
-<<plot2d, dev='pdf', fig.width=4, fig.height=4, echo=TRUE>>=
+<<plot2d, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
 plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers")
 addLegend(tan2009r1, fcol = "PLSDA", 
           where = "bottomright", bty = "n", cex = .5)
@@ -359,7 +367,7 @@ tail(fvarLabels(svmres), 4)
 We can now visualise these results using the plotting functions presented in section \ref{sec:usml}, as shown on figure \ref{fig:svmres}. We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores. 
 
 \begin{figure}[!hbt]
-<<svmresfig, dev='pdf', fig.width=4, fig.height=4, echo=TRUE>>=
+<<svmresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
 plot2D(svmres, fcol = "svm", fpch = "markers", 
        cex = exp(fData(svmres)$svm.score) - 1, alpha = 0.5)
 addLegend(svmres, fcol = "svm", 
@@ -377,13 +385,20 @@ addLegend(svmres, fcol = "svm",
 It is obvious that the set of markers initially used  (\Sexpr{paste(levels(fData(tan2009r1)$markers)[1:4], collapse = ", ")}) %%$
 is not a biologically realistic representation or the organellar diversity. Manually finding markers is however time consuming, as it requires careful verification of the annotation, and possibly critial for the subsequent analysis, as markers are direcly used in the training phase of the supervised ML approach. 
 
-As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm is an iterative method, that combines classification of proteins to known groups and detectio n of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function. 
+As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm is an iterative method, that combines classification of proteins to known groups and detectio n of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function\footnote{In the interest of time, \Rfunction{phenoDisco} is not executed when the vignette is dynamically build. The data object can be located with \Rfunction{dir(system.file("data", package = "pRoloc"), full.names = TRUE, pattern = "pdres.rda")} and loaded with \Rfunction{load}.}. 
 
-<<runPhenoDisco, eval=TRUE, cache = TRUE, warning=FALSE>>=
+<<runPhenoDisco, eval=FALSE, warning=FALSE>>=
 pdres <- phenoDisco(tan2009r1, GS=10, times=10, fcol = "PLSDA")
 @ 
 
+<<loadpdres, eval=TRUE, echo=FALSE>>=
+fn <- dir(system.file("data", package = "pRoloc"), 
+          full.names = TRUE, pattern = "pdres.rda")
+load(fn)
+@ 
+
 The results are also appended to the \Robject{feautreData} slot.
+
 
 <<phenoDiscoFvar>>=
 processingData(pdres)
@@ -393,7 +408,7 @@ tail(fvarLabels(pdres), 3)
 The \Rfunction{plot2D} function, can, as previously, be utilised to visualise the results, as shown on figure \ref{fig:pdres}.
 
 \begin{figure}[!hbt]
-<<pdresfig, dev='pdf', fig.width=4, fig.height=4, echo=TRUE>>=
+<<pdresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
 plot2D(pdres, fcol = "pd", alpha = 0.5)
 addLegend(pdres, fcol = "pd", ncol = 2, 
           where = "bottomright", bty = "n", cex = .5)

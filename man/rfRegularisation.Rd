@@ -46,4 +46,7 @@
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{rfPrediction}} and example therein.
+}
 

@@ -45,4 +45,7 @@
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{nbPrediction}} and example therein.
+}
 

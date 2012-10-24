@@ -34,6 +34,20 @@
   Classification using the partial least square
   distcriminant analysis algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- plsdaRegularisation(dunkley2006, ncomp = c(3, 10),  times = 2)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- plsdaPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "plsda")
+getPredictions(res, fcol = "pldsa", t = 0.75)
+plot2D(res, fcol = "plsda")
+}
 \author{
   Laurent Gatto
 }

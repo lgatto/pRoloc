@@ -15,6 +15,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{knn}} from package \code{class}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{knnPrediction}} and example therein.
 ##' @author Laurent Gatto
 knnRegularisation <- function(object,
                               fcol = "markers",
@@ -156,6 +157,19 @@ knnRegularisation <- function(object,
 ##' \code{knn} and \code{knn.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- knnRegularisation(dunkley2006, k = c(3, 10), times = 3)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- knnPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "knn")
+##' getPredictions(res, fcol = "knn", t = 0.75)
+##' plot2D(res, fcol = "knn")
 knnPrediction <- function(object,
                           assessRes,
                           scores = c("prediction", "all", "none"),
@@ -168,6 +182,9 @@ knnPrediction <- function(object,
     params <- c("k" = k)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["k"]))
+      stop("No 'k' found.")
+
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))

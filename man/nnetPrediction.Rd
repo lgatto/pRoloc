@@ -37,6 +37,20 @@
   Classification using the artificial neural network
   algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- nnetRegularisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- nnetPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "nnet")
+getPredictions(res, fcol = "nnet", t = 0.75)
+plot2D(res, fcol = "nnet")
+}
 \author{
   Laurent Gatto
 }

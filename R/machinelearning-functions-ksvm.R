@@ -15,6 +15,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{ksvm}} from package \code{kernlab}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{ksvmPrediction}} and example therein.
 ##' @author Laurent Gatto
 ksvmRegularisation <- function(object,
                                fcol = "markers",
@@ -164,6 +165,19 @@ ksvmRegularisation <- function(object,
 ##' \code{ksvm} and \code{ksvm.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- ksvmRegularisation(dunkley2006, cost = 2^seq(-1,4,5), times = 3)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- ksvmPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "ksvm")
+##' getPredictions(res, fcol = "ksvm", t = 0.75)
+##' plot2D(res, fcol = "ksvm")
 ksvmPrediction <- function(object,
                            assessRes,
                            scores = c("prediction", "all", "none"),
@@ -176,6 +190,8 @@ ksvmPrediction <- function(object,
     params <- c("cost" = cost)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["cost"]))
+      stop("No 'cost' found.")
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))

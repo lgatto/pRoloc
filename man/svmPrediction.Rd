@@ -37,6 +37,20 @@
   Classification using the support vector machine
   algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- svmRegularisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- svmPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "svm")
+getPredictions(res, fcol = "svm", t = 0.75)
+plot2D(res, fcol = "svm")
+}
 \author{
   Laurent Gatto
 }

@@ -34,6 +34,20 @@
   Classification using for the k-nearest neighbours
   algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- knnRegularisation(dunkley2006, k = c(3, 10), times = 3)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- knnPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "knn")
+getPredictions(res, fcol = "knn", t = 0.75)
+plot2D(res, fcol = "knn")
+}
 \author{
   Laurent Gatto
 }

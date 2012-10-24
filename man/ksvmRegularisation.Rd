@@ -45,4 +45,7 @@
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{ksvmPrediction}} and example therein.
+}
 

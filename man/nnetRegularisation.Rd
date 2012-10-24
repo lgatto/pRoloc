@@ -49,4 +49,7 @@
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{nnetPrediction}} and example therein.
+}
 

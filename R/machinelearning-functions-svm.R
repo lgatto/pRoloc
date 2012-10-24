@@ -16,6 +16,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{svm}} from package \code{e1071}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{svmPrediction}} and example therein.
 ##' @author Laurent Gatto
 svmRegularisation <- function(object,
                               fcol = "markers",
@@ -162,6 +163,19 @@ svmRegularisation <- function(object,
 ##' \code{svm} and \code{svm.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- svmRegularisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- svmPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "svm")
+##' getPredictions(res, fcol = "svm", t = 0.75)
+##' plot2D(res, fcol = "svm")
 svmPrediction <- function(object,                            
                           assessRes,
                           scores = c("prediction", "all", "none"),
@@ -176,6 +190,10 @@ svmPrediction <- function(object,
                 "sigma" = sigma)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["cost"]))
+      stop("No 'cost' found.")
+    if (is.na(params["sigma"]))
+      stop("No 'sigma' found.")
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))

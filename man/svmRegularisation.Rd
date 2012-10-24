@@ -49,4 +49,7 @@
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{svmPrediction}} and example therein.
+}
 

@@ -16,6 +16,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{nnet}} from package \code{nnet}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{nnetPrediction}} and example therein.
 ##' @author Laurent Gatto
 nnetRegularisation <- function(object,
                                fcol = "markers",
@@ -170,6 +171,19 @@ nnetRegularisation <- function(object,
 ##' \code{nnet} and \code{nnet.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- nnetRegularisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- nnetPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "nnet")
+##' getPredictions(res, fcol = "nnet", t = 0.75)
+##' plot2D(res, fcol = "nnet")
 nnetPrediction <- function(object,                            
                            assessRes,
                            scores = c("prediction", "all", "none"),
@@ -184,6 +198,10 @@ nnetPrediction <- function(object,
                 "size" = size)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["decay"]))
+      stop("No 'decay' found.")
+    if (is.na(params["size"]))
+      stop("No 'size' found.")    
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")  
   form <- as.formula(paste0(fcol, " ~ ."))

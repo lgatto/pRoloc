@@ -34,6 +34,20 @@
   Classification using the support vector machine
   algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- ksvmRegularisation(dunkley2006, cost = 2^seq(-1,4,5), times = 3)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- ksvmPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "ksvm")
+getPredictions(res, fcol = "ksvm", t = 0.75)
+plot2D(res, fcol = "ksvm")
+}
 \author{
   Laurent Gatto
 }

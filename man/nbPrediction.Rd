@@ -32,6 +32,20 @@
 \description{
   Classification using the naive Bayes algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- nbRegularisation(dunkley2006, laplace = c(0, 5),  times = 3)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- nbPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "naiveBayes")
+getPredictions(res, fcol = "naiveBayes", t = 1)
+plot2D(res, fcol = "naiveBayes")
+}
 \author{
   Laurent Gatto
 }

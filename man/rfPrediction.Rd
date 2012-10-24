@@ -32,6 +32,20 @@
 \description{
   Classification using the random forest algorithm.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and interations
+reg <- rfRegularisation(dunkley2006, mtry = c(2, 5, 10),  times = 3)
+reg
+plot(reg)
+levelPlot(reg)
+getRegularisedParams(reg)
+res <- rfPrediction(dunkley2006, reg)
+getPredictions(res, fcol = "rf")
+getPredictions(res, fcol = "rf", t = 0.75)
+plot2D(res, fcol = "rf")
+}
 \author{
   Laurent Gatto
 }

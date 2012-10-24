@@ -45,4 +45,7 @@
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{knnPrediction}} and example therein.
+}
 

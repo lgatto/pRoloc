@@ -15,6 +15,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{plsda}} from package \code{caret}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{plsdaPrediction}} and example therein.
 ##' @author Laurent Gatto
 plsdaRegularisation <- function(object,
                                 fcol = "markers",
@@ -160,6 +161,19 @@ plsdaRegularisation <- function(object,
 ##' \code{plsda} and \code{plsda.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- plsdaRegularisation(dunkley2006, ncomp = c(3, 10),  times = 2)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- plsdaPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "plsda")
+##' getPredictions(res, fcol = "pldsa", t = 0.75)
+##' plot2D(res, fcol = "plsda")
 plsdaPrediction <- function(object,
                             assessRes,
                             scores = c("prediction", "all", "none"),
@@ -172,6 +186,9 @@ plsdaPrediction <- function(object,
     params <- c("ncomp" = ncomp)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["ncomp"]))
+      stop("No 'ncomp' found.")
+
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))

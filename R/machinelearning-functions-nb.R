@@ -14,6 +14,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{naiveBayes}} from package \code{e1071}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{nbPrediction}} and example therein.
 ##' @author Laurent Gatto
 nbRegularisation <- function(object,
                              fcol = "markers",
@@ -153,6 +154,19 @@ nbRegularisation <- function(object,
 ##' \code{nb} and \code{nb.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- nbRegularisation(dunkley2006, laplace = c(0, 5),  times = 3)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- nbPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "naiveBayes")
+##' getPredictions(res, fcol = "naiveBayes", t = 1)
+##' plot2D(res, fcol = "naiveBayes")
 nbPrediction <- function(object,
                          assessRes,
                          scores = c("prediction", "all", "none"),
@@ -165,6 +179,8 @@ nbPrediction <- function(object,
     params <- c("laplace" = laplace)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["laplace"]))
+      stop("No 'laplace' found.")    
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))

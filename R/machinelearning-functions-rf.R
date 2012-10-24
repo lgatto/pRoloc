@@ -14,6 +14,7 @@
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{randomForest}} from package \code{randomForest}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
+##' @seealso \code{\link{rfPrediction}} and example therein.
 ##' @author Laurent Gatto
 rfRegularisation <- function(object,
                              fcol = "markers",
@@ -163,6 +164,19 @@ rfRegularisation <- function(object,
 ##' \code{rf} and \code{rf.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and interations 
+##' reg <- rfRegularisation(dunkley2006, mtry = c(2, 5, 10),  times = 3)
+##' reg
+##' plot(reg)
+##' levelPlot(reg)
+##' getRegularisedParams(reg)
+##' res <- rfPrediction(dunkley2006, reg)
+##' getPredictions(res, fcol = "rf")
+##' getPredictions(res, fcol = "rf", t = 0.75)
+##' plot2D(res, fcol = "rf")
 rfPrediction <- function(object,
                          assessRes,
                          scores = c("prediction", "all", "none"),
@@ -175,6 +189,8 @@ rfPrediction <- function(object,
     params <- c("mtry" = mtry)
   } else {
     params <- getRegularisedParams(assessRes)
+    if (is.na(params["mtry"]))
+      stop("No 'mtry' found.")
   }
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))

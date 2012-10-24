@@ -172,7 +172,7 @@ plsdaRegularisation <- function(object,
 ##' getRegularisedParams(reg)
 ##' res <- plsdaPrediction(dunkley2006, reg)
 ##' getPredictions(res, fcol = "plsda")
-##' getPredictions(res, fcol = "pldsa", t = 0.75)
+##' getPredictions(res, fcol = "plsda", t = 0.75)
 ##' plot2D(res, fcol = "plsda")
 plsdaPrediction <- function(object,
                             assessRes,

@@ -318,8 +318,6 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 ##' protein localisation and detect new protein clusters. It is based on the
 ##' works of Yin et al. (2008).
 ##' 
-##' TODO - add description of the algorithm.
-##' 
 ##' @param MSnSetObject An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.

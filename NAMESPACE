@@ -30,6 +30,7 @@ exportMethods(chi2,
 
 export(getPredictions,
        getMarkers,
+       updateClass,
        empPvalues,
        getStockcol, getStockpch,
        getUnknowncol, getUnknownpch,

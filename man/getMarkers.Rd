@@ -5,7 +5,8 @@
   getMarkers(object, fcol = "markers", verbose = TRUE)
 }
 \arguments{
-  \item{object}{An instance of class \code{MSnSet}.}
+  \item{object}{An instance of class
+  \code{"\linkS4class{MSnSet}"}.}
 
   \item{fcol}{The name of the markers column in the
   \code{featureData} slot. Default is \code{markers}.}

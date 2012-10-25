@@ -49,7 +49,7 @@ setMethod("exprsToRatios",
 ##' \code{MSnSet} instance. As a side effect, it print out a marker table.
 ##' 
 ##' @title Returns the organelle markers in an 'MSnSet'
-##' @param object An instance of class \code{MSnSet}.
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The name of the markers column in the \code{featureData}
 ##' slot. Default is \code{markers}.
 ##' @param verbose If \code{TRUE}, a marker table is printed and the markers
@@ -78,9 +78,9 @@ getMarkers <- function(object,
 ##' \code{MSnSet} instance. As a side effect, it prints out a prediction table.
 ##' 
 ##' @title Returns the predictions in an 'MSnSet'
-##' @param object An instance of class \code{MSnSet}.
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The name of the prediction column in the
-##' \code{featureData} slot. Default is \code{knn}.
+##' \code{featureData} slot. 
 ##' @param scol The name of the prediction score column in the
 ##' \code{featureData} slot. If missing, created by pasting
 ##' '.scores' after \code{fcol}.
@@ -92,10 +92,11 @@ getMarkers <- function(object,
 ##' @return A \code{character} of length \code{ncol(object)}. 
 ##' @author Laurent Gatto
 getPredictions <- function(object,
-                           fcol = "knn",
+                           fcol,
                            scol,
                            t = 0,
                            verbose = TRUE) {
+  stopifnot(!missing(fcol))  
   predictions <- as.character(fData(object)[, fcol])
   if (missing(scol))
     scol <- paste0(fcol, ".scores")
@@ -107,4 +108,48 @@ getPredictions <- function(object,
   } else {
     return(predictions)
   }
+}
+
+##' This functions updates the classification results in an \code{"\linkS4class{MSnSet}"}
+##' based on a prediction score threshold \code{t}. All features with a score < t are set
+##' to unknown. Note that the original levels are preserved.
+##'
+##' @title Updates classes based on prediction scores
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param fcol The name of the markers column in the \code{featureData} slot. 
+##' @param scol The name of the prediction score column in the
+##' \code{featureData} slot. If missing, created by pasting
+##' '.scores' after \code{fcol}.
+##' @param t The score threshold. Predictions with score < t are
+##' set to 'unknown'. Default is 0.
+##' @return The original \code{object} with a modified \code{fData(object)[, fcol]}
+##' feature variable.
+##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley)
+##' ## random scores
+##' fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
+##' getPredictions(dunkley2006, fcol = "assigned")
+##' getPredictions(dunkley2006, fcol = "assigned", t = 0.5) 
+##' x <- updateClass(dunkley2006, fcol = "assignes", t = 0.5)
+##' getPredictions(x, fcol = "assigned")
+##' all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
+##'           getPredictions(x, fcol = "assigned"))
+updateClass <- function(object,
+                        fcol,
+                        scol,
+                        t = 0) {
+  stopifnot(!missing(fcol))
+  lv <- levels(fData(object)[, fcol])
+  if (missing(scol)) {
+    preds <- getPredictions(object, fcol,
+                            t = t, verbose = FALSE)
+  } else {
+    preds <- getPredictions(object, fcol, scol,
+                            t = t, verbose = FALSE)
+  }
+  fData(object)[, fcol] <- factor(preds, levels = lv)
+  if (validObject(object))
+    object
 }

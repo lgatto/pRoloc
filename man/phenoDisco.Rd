@@ -39,9 +39,6 @@
   to predict protein localisation and detect new protein
   clusters. It is based on the works of Yin et al. (2008).
 }
-\details{
-  TODO - add description of the algorithm.
-}
 \author{
   Lisa M. Simpson <lms79@cam.ac.uk>
 }

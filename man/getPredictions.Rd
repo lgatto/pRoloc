@@ -2,14 +2,14 @@
 \alias{getPredictions}
 \title{Returns the predictions in an 'MSnSet'}
 \usage{
-  getPredictions(object, fcol = "knn", scol, t = 0,
-    verbose = TRUE)
+  getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
 }
 \arguments{
-  \item{object}{An instance of class \code{MSnSet}.}
+  \item{object}{An instance of class
+  \code{"\linkS4class{MSnSet}"}.}
 
   \item{fcol}{The name of the prediction column in the
-  \code{featureData} slot. Default is \code{knn}.}
+  \code{featureData} slot.}
 
   \item{scol}{The name of the prediction score column in
   the \code{featureData} slot. If missing, created by

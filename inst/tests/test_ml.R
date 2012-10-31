@@ -8,98 +8,123 @@ fvarLabels(d2)[1] <- "xx"
 .seed <- 1
 
 test_that("knn consistency", {
-  reg1.knn <- knnRegularisation(d1, fcol = "markers",
-                                times = .times, seed = .seed, verbose = FALSE)
-  reg2.knn <- knnRegularisation(d2, fcol = "xx",
-                                times = .times, seed = .seed, , verbose = FALSE)
-  expect_equal(reg1.knn, reg2.knn)  
-  ans1.knn <- knnPrediction(d1, reg1.knn, fcol = "markers")
-  ans2.knn <- knnPrediction(d2, reg1.knn, fcol = "xx")
-  expect_true(all(fData(ans1.knn) == fData(ans2.knn)))
+  .k <- c(3, 10)
+  reg1 <- knnRegularisation(d1, fcol = "markers",
+                            times = .times, k = .k,
+                            seed = .seed, verbose = FALSE)
+  reg2 <- knnRegularisation(d2, fcol = "xx",
+                            times = .times, k = .k,
+                            seed = .seed, , verbose = FALSE)
+  expect_equal(reg1, reg2)  
+  ans1 <- knnPrediction(d1, reg1, fcol = "markers")
+  ans2 <- knnPrediction(d2, reg1, fcol = "xx")
+  expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
 
 test_that("svm consistency", {
-  reg1.svm <- svmRegularisation(d1, fcol = "markers",
-                                times = .times, seed = .seed, verbose = FALSE)
-  reg2.svm <- svmRegularisation(d2, fcol = "xx",
-                                times = .times, seed = .seed, verbose = FALSE)
-  expect_equal(reg1.svm, reg2.svm)  
-  ans1.svm <- svmPrediction(d1, reg1.svm, fcol = "markers")
-  ans2.svm <- svmPrediction(d2, reg1.svm, fcol = "xx")
-  expect_true(all(fData(ans1.svm) == fData(ans2.svm)))
+  .cost <- 2^seq(-2, 2, 2)
+  .sigma <- 10^seq(-1, 1, 1)
+  reg1 <- svmRegularisation(d1, fcol = "markers",
+                            cost = .cost, sigma = .sigma,
+                            times = .times, 
+                            seed = .seed, verbose = FALSE)
+  reg2 <- svmRegularisation(d2, fcol = "xx",
+                            cost = .cost, sigma = .sigma,
+                            times = .times,
+                            seed = .seed, verbose = FALSE)
+  expect_equal(reg1, reg2)  
+  ans1 <- svmPrediction(d1, reg1, fcol = "markers")
+  ans2 <- svmPrediction(d2, reg1, fcol = "xx")
+  expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
 test_that("nb consistency", {
-  reg1.nb <- nbRegularisation(d1, fcol = "markers",
-                              times = .times, seed = .seed,
-                              verbose = FALSE)
-  reg2.nb <- nbRegularisation(d2, fcol = "xx",
-                              times = .times, seed = .seed,
-                              verbose = FALSE)
-  expect_equal(reg1.nb, reg2.nb)  
-  ans1.nb <- nbPrediction(d1, reg1.nb, fcol = "markers")
-  ans2.nb <- nbPrediction(d2, reg1.nb, fcol = "xx")
-  expect_true(all(fData(ans1.nb) == fData(ans2.nb)))
+  .laplace <- c(0, 5)
+  reg1 <- nbRegularisation(d1, fcol = "markers",
+                           laplace = .laplace,
+                           times = .times, seed = .seed,
+                           verbose = FALSE)
+  reg2 <- nbRegularisation(d2, fcol = "xx",
+                           laplace = .laplace,
+                           times = .times, seed = .seed,
+                           verbose = FALSE)
+  expect_equal(reg1, reg2)  
+  ans1 <- nbPrediction(d1, reg1, fcol = "markers")
+  ans2 <- nbPrediction(d2, reg1, fcol = "xx")
+  expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
 test_that("plsda consistency", {
-  reg1.pls <- plsdaRegularisation(d1, fcol = "markers",
-                                  times = 1, seed = .seed,
-                                  verbose = FALSE)
-  reg2.pls <- plsdaRegularisation(d2, fcol = "xx",
-                                  times = 1, seed = .seed,
-                                  verbose = FALSE)
-  expect_equal(reg1.pls, reg2.pls)  
-  ans1.pls <- plsdaPrediction(d1, reg1.pls, fcol = "markers")
-  ans2.pls <- plsdaPrediction(d2, reg1.pls, fcol = "xx")
-  expect_true(all(fData(ans1.pls) == fData(ans2.pls)))
+  .ncomp <- c(3, 10)
+  reg1 <- plsdaRegularisation(d1, fcol = "markers",
+                              ncomp = .ncomp,
+                              times = 1, seed = .seed,
+                              verbose = FALSE)
+  reg2 <- plsdaRegularisation(d2, fcol = "xx",
+                              ncomp = .ncomp,
+                              times = 1, seed = .seed,
+                              verbose = FALSE)
+  expect_equal(reg1, reg2)  
+  ans1 <- plsdaPrediction(d1, reg1, fcol = "markers")
+  ans2 <- plsdaPrediction(d2, reg1, fcol = "xx")
+  expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
 
 test_that("nnet consistency", {
-  reg1.nnet <- nnetRegularisation(d1, fcol = "markers",
-                                  times = .times, seed = .seed,
-                                  verbose = FALSE)
-  reg2.nnet <- nnetRegularisation(d2, fcol = "xx",
-                                  times = .times, seed = .seed,
-                                  verbose = FALSE)
-  expect_equal(reg1.nnet, reg2.nnet)
+  .decay <- 10^(c(-1, -5))
+  .size <- c(5, 10)
+  reg1 <- nnetRegularisation(d1, fcol = "markers",
+                             decay = .decay, size = .size,
+                             times = .times, seed = .seed,
+                             verbose = FALSE)
+  reg2 <- nnetRegularisation(d2, fcol = "xx",
+                             decay = .decay, size = .size,
+                             times = .times, seed = .seed,
+                             verbose = FALSE)
+  expect_equal(reg1, reg2)
   set.seed(.seed)
-  ans1.nnet <- nnetPrediction(d1, reg1.nnet, fcol = "markers")
+  ans1 <- nnetPrediction(d1, reg1, fcol = "markers")
   set.seed(.seed)
-  ans2.nnet <- nnetPrediction(d2, reg1.nnet, fcol = "xx")
-  expect_true(all(fData(ans1.nnet) == fData(ans2.nnet)))
+  ans2 <- nnetPrediction(d2, reg1, fcol = "xx")
+  expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 
 test_that("rf consistency", {
-  reg1.rf <- rfRegularisation(d1, fcol = "markers",
-                              times = .times, seed = .seed,
-                              verbose = FALSE)
-  reg2.rf <- rfRegularisation(d2, fcol = "xx",
-                              times = .times, seed = .seed,
-                              verbose = FALSE)
-  expect_equal(reg1.rf, reg2.rf)
+  .mtry <- c(2, 5, 10)
+  reg1 <- rfRegularisation(d1, fcol = "markers",
+                           mtry = .mtry,
+                           times = .times, seed = .seed,
+                           verbose = FALSE)
+  reg2 <- rfRegularisation(d2, fcol = "xx",
+                           mtry = .mtry,
+                           times = .times, seed = .seed,
+                           verbose = FALSE)
+  expect_equal(reg1, reg2)
   set.seed(.seed)
-  ans1.rf <- rfPrediction(d1, reg1.rf, fcol = "markers")
+  ans1 <- rfPrediction(d1, reg1, fcol = "markers")
   set.seed(.seed)
-  ans2.rf <- rfPrediction(d2, reg1.rf, fcol = "xx")  
-  expect_true(all(fData(ans1.rf) == fData(ans2.rf)))
+  ans2 <- rfPrediction(d2, reg1, fcol = "xx")  
+  expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 
 test_that("ksvm consistency", {
-  reg1.ksvm <- ksvmRegularisation(d1, fcol = "markers",
-                                  times = .times, seed = .seed,
-                                  verbose = FALSE)
-  reg2.ksvm <- ksvmRegularisation(d2, fcol = "xx",
-                                  times = .times, seed = .seed,
-                                  verbose = FALSE)
-  expect_equal(reg1.ksvm, reg2.ksvm)
+  .cost <- 2^seq(-1, 4, 5)
+  reg1 <- ksvmRegularisation(d1, fcol = "markers",
+                             cost = .cost,
+                             times = .times, seed = .seed,
+                             verbose = FALSE)
+  reg2 <- ksvmRegularisation(d2, fcol = "xx",
+                             cost = .cost,
+                             times = .times, seed = .seed,
+                             verbose = FALSE)
+  expect_equal(reg1, reg2)
   set.seed(.seed)
-  ans1.ksvm <- ksvmPrediction(d1, reg1.ksvm, fcol = "markers")
+  ans1 <- ksvmPrediction(d1, reg1, fcol = "markers")
   set.seed(.seed)
-  ans2.ksvm <- ksvmPrediction(d2, reg1.ksvm, fcol = "xx")  
-  expect_true(all(fData(ans1.ksvm) == fData(ans2.ksvm)))
+  ans2 <- ksvmPrediction(d2, reg1, fcol = "xx")  
+  expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 
 

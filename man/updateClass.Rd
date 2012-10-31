@@ -26,16 +26,17 @@
   This functions updates the classification results in an
   \code{"\linkS4class{MSnSet}"} based on a prediction score
   threshold \code{t}. All features with a score < t are set
-  to unknown. Note that the original levels are preserved.
+  to 'unknown'. Note that the original levels are preserved
+  while 'unknown' is added.
 }
 \examples{
 library(pRolocdata)
-data(dunkley)
+data(dunkley2006)
 ## random scores
 fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
 getPredictions(dunkley2006, fcol = "assigned")
 getPredictions(dunkley2006, fcol = "assigned", t = 0.5)
-x <- updateClass(dunkley2006, fcol = "assignes", t = 0.5)
+x <- updateClass(dunkley2006, fcol = "assigned", t = 0.5)
 getPredictions(x, fcol = "assigned")
 all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
           getPredictions(x, fcol = "assigned"))

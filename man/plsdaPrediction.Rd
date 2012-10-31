@@ -35,6 +35,8 @@
   distcriminant analysis algorithm.
 }
 \examples{
+\dontrun{
+## not running this one for time considerations
 library(pRolocdata)
 data(dunkley2006)
 ## reducing parameter search space and interations
@@ -47,6 +49,7 @@ res <- plsdaPrediction(dunkley2006, reg)
 getPredictions(res, fcol = "plsda")
 getPredictions(res, fcol = "plsda", t = 0.75)
 plot2D(res, fcol = "plsda")
+}
 }
 \author{
   Laurent Gatto

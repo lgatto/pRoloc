@@ -162,6 +162,8 @@ plsdaRegularisation <- function(object,
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
 ##' @examples
+##' \dontrun{
+##' ## not running this one for time considerations
 ##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' ## reducing parameter search space and interations 
@@ -174,6 +176,7 @@ plsdaRegularisation <- function(object,
 ##' getPredictions(res, fcol = "plsda")
 ##' getPredictions(res, fcol = "plsda", t = 0.75)
 ##' plot2D(res, fcol = "plsda")
+##' }
 plsdaPrediction <- function(object,
                             assessRes,
                             scores = c("prediction", "all", "none"),

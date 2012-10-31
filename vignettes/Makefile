@@ -17,28 +17,32 @@ LATEXFILES = *.aux\
 	*.makefile\
 	pRoloc-tutorial.tex
 
-all:
-	make tutorial
+all: 
+	make pRoloc-tutorial.pdf
 
 setvars:
 ifeq (${R_HOME},)
 R_HOME= $(shell R RHOME)
 endif
 
-tutorial:
-	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"
+pRoloc-tutorial.pdf: pRoloc-tutorial.tex 
 	bibtex pRoloc-tutorial
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
+
+pRoloc-tutorial.tex: pRoloc-tutorial.Rnw
+	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"
+
+
+.PHONY: clean allclean 
 
 clean:	
 	rm -f $(LATEXFILES)
 	rm -f .Rhistory
 	rm -f *~
 	rm -f */*~
-	# rm -rf figure/
-	# rm -rf cache/
 
-pdfclean:
-	rm -r pRoloc.pdf
-	rm tutorial.pdf
+allclean: clean
+	rm -f  pRoloc-tutorial.pdf
+	rm -rf figure/
+	rm -rf cache/

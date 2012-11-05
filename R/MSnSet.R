@@ -17,9 +17,16 @@ getRatios <- function(x, log = FALSE) {
 
 setMethod("exprsToRatios",
           "MSnSet",
-          function(object, log = FALSE) {            
-            r <- apply(exprs(object), 1, getRatios, log)
-            r <- t(r)
+          function(object, log = FALSE) {
+            if (ncol(object) == 2) {
+              ifelse(log,
+                     r <- exprs(object)[, 1] - exprs(object)[, 2],
+                     r <- exprs(object)[, 1] / exprs(object)[, 2])
+              dim(r) <- c(length(r), 1)
+            } else {
+              r <- apply(exprs(object), 1, getRatios, log)
+              r <- t(r)
+            }
             rownames(r) <- featureNames(object)
             cmb <- combn(ncol(object),2)            
             ratio.description <- apply(cmb,2, function(x)

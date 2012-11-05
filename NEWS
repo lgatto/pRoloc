@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.99.1
+-------------------------
+ o updated exprsToRatio when ncol(object) is 2 <2012-11-05 Mon>
+
 CHANGES IN VERSION 0.99.0
 -------------------------
  o Submission to Bioc <2012-11-04 Sun>

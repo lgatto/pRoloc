@@ -115,7 +115,7 @@ set.seed(1)
 
 \subsection{Organelle proteomics}
 
-Organelle proteomics is the study of the localisation of proteins inside cells. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of \Rpackage{pRoloc}, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using \Rpackage{pRoloc} is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT \citep{Dunkley2006} or PCP \citep{Foster2006} approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitiation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example \cite{Gatto2010} and references therein for a detailed review on organelle proteomics.
+Organelle proteomics is the study of the localisation of proteins inside cells. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of \Rpackage{pRoloc}, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using \Rpackage{pRoloc} is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT \citep{Dunkley2006} or PCP \citep{Foster2006} approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example \cite{Gatto2010} and references therein for a detailed review on organelle proteomics.
 
 It should be noted that large protein complexes, that are not necessarily separately enclosed within their own lipid bi-layer, can be detected by such techniques, as long as a distinct profile can be defined across the fractions. 
 
@@ -150,7 +150,7 @@ The data used in this tutorial has been published in \cite{Tan2009}. The LOPIT t
 
 This section illustrates how to import data in comma-separated value (csv) format into an appropriate \R data structure. The first section shows the original \texttt{csv} (comma separated values) spreadsheet, as published by the authors, and how one can read such a file into \R using the \Rfunction{read.csv} function. This spreadsheet file is similar to the output of many quantitation software.
 
-In the next section, we show 2 \texttt{csv} files containing a subset of the columns of original \texttt{pr800866n\_si\_004-rep1.csv} file and anotther short file, created manually, that will be used to create the appropriate \R data.
+In the next section, we show 2 \texttt{csv} files containing a subset of the columns of original \texttt{pr800866n\_si\_004-rep1.csv} file and another short file, created manually, that will be used to create the appropriate \R data.
 
 \subsubsection*{The original data file}\label{sec:orgcsv}
 
@@ -170,7 +170,7 @@ head(csv, n=3)
 
 \subsubsection*{From \texttt{csv} files to \R data}\label{sec:csv}
 
-There are several ways to create the desired \R data object, termed \Robject{MSnSet}, that will be used to perform the actual sub-cellular localisation prediction. Here, we illustrate a method that uses separate spreadsheet files for quantitation data, feature meta-data and sample (fraction) meta-data and the \Rfunction{readMSnSet} constructor function, that will hopfully be the most straightforward for new users. 
+There are several ways to create the desired \R data object, termed \Robject{MSnSet}, that will be used to perform the actual sub-cellular localisation prediction. Here, we illustrate a method that uses separate spreadsheet files for quantitation data, feature meta-data and sample (fraction) meta-data and the \Rfunction{readMSnSet} constructor function, that will hopefully be the most straightforward for new users. 
 
 <<readCsvData1>>=
 ## The quantitation data, from the original data
@@ -263,7 +263,7 @@ table(fData(tan2009r1)$PLSDA)
 
 \subsection{Data processing}
 
-The quantitation data obtained in the supplementary file is normalised to the sum of intensities of each protein; the sum of fraction quantitations for each protein equals 1 (considering rounding errors). This can quickly be verified by computing the row sums of the expression data. 
+The quantitation data obtained in the supplementary file is normalised to the sum of intensities of each protein; the sum of fraction quantitation for each protein equals 1 (considering rounding errors). This can quickly be verified by computing the row sums of the expression data. 
 
 <<realtiveQuants>>=
 summary(rowSums(exprs(tan2009r1)))
@@ -299,7 +299,7 @@ The different features (proteins in the \Robject{tan2009r1} data above, but thes
 head(featureNames(tan2009r1))
 @ 
 
-If we look back at section \ref{sec:csv}, we see that these have been automatically assigned using the first columns in the \texttt{exprsFile.csv} and \texttt{fdataFile.csv} files. It is thus crutial for these respective first columns to be identical. Similarly, the sample names can be retrieved with \Rfunction{sampleNames}.
+If we look back at section \ref{sec:csv}, we see that these have been automatically assigned using the first columns in the \texttt{exprsFile.csv} and \texttt{fdataFile.csv} files. It is thus crucial for these respective first columns to be identical. Similarly, the sample names can be retrieved with \Rfunction{sampleNames}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -380,7 +380,7 @@ addLegend(tan2009r1, fcol = "PLSDA",
 \subsection{Unsupervised ML}
 
 The \Rfunction{plot2D} can also be used to visualise the data on a PCA plot omitting any marker definitions, as shown below. 
-This approach avoids any biais towards marker definitions and concentrate on the data and its underlying structure itself.
+This approach avoids any bias towards marker definitions and concentrate on the data and its underlying structure itself.
 
 \begin{figure}[!hbt]
 <<plot2dnull, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
@@ -483,9 +483,9 @@ addLegend(svmres, fcol = "svm",
 \subsection{Semi-supervised ML}\label{sec:ssml}
 
 It is obvious that the set of markers initially used  (\Sexpr{paste(levels(fData(tan2009r1)$markers)[1:4], collapse = ", ")}) %%$
-is not a biologically realistic representation or the organellar diversity. Manually finding markers is however time consuming, as it requires careful verification of the annotation, and possibly critial for the subsequent analysis, as markers are direcly used in the training phase of the supervised ML approach. 
+is not a biologically realistic representation or the organellar diversity. Manually finding markers is however time consuming, as it requires careful verification of the annotation, and possibly critical for the subsequent analysis, as markers are directly used in the training phase of the supervised ML approach. 
 
-As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm is an iterative method, that combines classification of proteins to known groups and detectio n of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function\footnote{In the interest of time, \Rfunction{phenoDisco} is not executed when the vignette is dynamically built. The data object can be located with \Rfunction{dir(system.file("data", package = "pRoloc"), full.names = TRUE, pattern = "pdres.rda")} and loaded with \Rfunction{load}.}. 
+As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm is an iterative method, that combines classification of proteins to known groups and detection n of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function\footnote{In the interest of time, \Rfunction{phenoDisco} is not executed when the vignette is dynamically built. The data object can be located with \Rfunction{dir(system.file("data", package = "pRoloc"), full.names = TRUE, pattern = "pdres.rda")} and loaded with \Rfunction{load}.}. 
 
 <<runPhenoDisco, eval=FALSE, warning=FALSE>>=
 pdres <- phenoDisco(tan2009r1, GS=10, times=10, fcol = "PLSDA")

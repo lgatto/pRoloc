@@ -1,7 +1,7 @@
 CHANGES IN VERSION 0.99.1
 -------------------------
  o updated exprsToRatio when ncol(object) is 2 <2012-11-05 Mon>
- o typos in vignette <2012-11-09 Fri>
+ o typos in vignette <2012-11-09 Fri> <2012-11-10 Sat>
  o new MLearn method for signature 
    c("formula", "MSnSet", "clusteringSchema", "ANY") <2012-11-09 Fri>
  o Several vignette udpates <2012-11-10 Sat>

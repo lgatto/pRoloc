@@ -1,7 +1,7 @@
 setMethod("MLearn",
           c("formula", "MSnSet", "learnerSchema","numeric" ),          
-          function( formula, data, .method, trainInd, ...) {
-            data <- as(data,"ExpressionSet")
+          function(formula, data, .method, trainInd, ...) {
+            data <- as(data, "ExpressionSet")
             thecall <- match.call()
             ans <- MLearn(formula, data, .method, trainInd, ...)
             ans@call <- thecall
@@ -12,12 +12,34 @@ setMethod("MLearn",
 
 setMethod("MLearn",
           c("formula", "MSnSet", "learnerSchema", "xvalSpec" ),
-          function( formula, data, .method, trainInd, ...) {
+          function(formula, data, .method, trainInd, ...) {
             thecall <- match.call()
-            data <- as(data,"ExpressionSet")
+            data <- as(data, "ExpressionSet")
             data <- MLInterfaces:::es2df(data, keep=as.character(as.list(formula)[[2]]))
             ans <- MLearn(formula, data, .method, trainInd, ...)
             ans@call <- thecall
             ans@learnerSchema <- .method
             return(ans)
           })
+
+es2df2 <- function(x, keep = NULL) {
+  if (is.null(keep)) {
+    return(data.frame(exprs(x), fData(x)))
+  } else {
+    tmp <- data.frame(exprs(x), fData(x)[, keep])
+    names(tmp)[ncol(tmp)] <- keep
+    return(tmp)
+  }
+}
+
+
+setMethod("MLearn",
+          c("formula", "MSnSet", "clusteringSchema", "missing"),
+          function(formula, data, .method, ...) {
+            thecall <- match.call()
+            data <- es2df2(data, keep = as.character(as.list(formula)[[2]]))
+            ans <- MLearn(formula, data, .method, ...)
+            ans@call <- thecall
+            return(ans)
+          })
+

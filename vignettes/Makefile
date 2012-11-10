@@ -17,14 +17,15 @@ LATEXFILES = *.aux\
 	*.makefile\
 	pRoloc-tutorial.tex
 
-all: pRoloc-tutorial.pdf
+all: 
+	make pRoloc-tutorial
 
 setvars:
 ifeq (${R_HOME},)
 R_HOME= $(shell R RHOME)
 endif
 
-pRoloc-tutorial.pdf:
+pRoloc-tutorial:
 	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"
 	bibtex pRoloc-tutorial
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex

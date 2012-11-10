@@ -22,23 +22,13 @@ setMethod("MLearn",
             return(ans)
           })
 
-es2df2 <- function(x, keep = NULL) {
-  if (is.null(keep)) {
-    return(data.frame(exprs(x), fData(x)))
-  } else {
-    tmp <- data.frame(exprs(x), fData(x)[, keep])
-    names(tmp)[ncol(tmp)] <- keep
-    return(tmp)
-  }
-}
-
 
 setMethod("MLearn",
           c("formula", "MSnSet", "clusteringSchema", "missing"),
           function(formula, data, .method, ...) {
             thecall <- match.call()
-            data <- es2df2(data, keep = as.character(as.list(formula)[[2]]))
-            ans <- MLearn(formula, data, .method, ...)
+            data <- data.frame(exprs(data))
+            ans <- MLearn(formula( ~ .), data, .method, ...)
             ans@call <- thecall
             return(ans)
           })

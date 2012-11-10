@@ -101,7 +101,6 @@ options(replace.assign = TRUE,
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
-suppressPackageStartupMessages(library("class"))
 set.seed(1)
 @ 
 %%$
@@ -152,7 +151,7 @@ This section illustrates how to import data in comma-separated value (csv) forma
 
 In the next section, we show 2 \texttt{csv} files containing a subset of the columns of original \texttt{pr800866n\_si\_004-rep1.csv} file and another short file, created manually, that will be used to create the appropriate \R data.
 
-\subsubsection*{The original data file}\label{sec:orgcsv}
+\subsubsection{The original data file}\label{sec:orgcsv}
 
 <<readCsvData0>>=
 ## The original data for replicate 1, available
@@ -168,7 +167,7 @@ The three first lines of the original spreadsheet, containing the data for repli
 head(csv, n=3)
 @ 
 
-\subsubsection*{From \texttt{csv} files to \R data}\label{sec:csv}
+\subsubsection{From \texttt{csv} files to \R data}\label{sec:csv}
 
 There are several ways to create the desired \R data object, termed \Robject{MSnSet}, that will be used to perform the actual sub-cellular localisation prediction. Here, we illustrate a method that uses separate spreadsheet files for quantitation data, feature meta-data and sample (fraction) meta-data and the \Rfunction{readMSnSet} constructor function, that will hopefully be the most straightforward for new users. 
 
@@ -213,7 +212,7 @@ tan2009r1 <- readMSnSet(exprsFile = f1,
 tan2009r1
 @ 
 
-\subsubsection*{The \Robject{MSnSet} class}
+\subsubsection{The \Robject{MSnSet} class}
 
 Although there are additional specific sub-containers for additional meta-data (for instance to make the object MIAPE compliant), the feature (the sub-container, or slot \Robject{featureData}) and sample (the \Robject{phenoData} slot) are the most important ones. They need to meet the following validity requirements (see figure \ref{fig:msnset}): 
 
@@ -372,11 +371,6 @@ addLegend(tan2009r1, fcol = "PLSDA",
 \label{fig:plot2d}
 \end{figure}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% TODO
-%%  - hierarchical clustring and PCA plots
-%%  - maybe some mclust-inspired plots.
 \subsection{Unsupervised ML}
 
 The \Rfunction{plot2D} can also be used to visualise the data on a PCA plot omitting any marker definitions, as shown below. 
@@ -400,10 +394,12 @@ among others, unsupervised approaches using hierarchical, k-means and partitioni
 %% PCA plot
 %% hierarchical cluster
 
+%% ALSO
+%%  - maybe some mclust-inspired plots.
 
 \begin{figure}[!hbt]
 <<plotKmeans, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
-kcl <- MLearn(markers ~ ., tan2009r1,  kmeansI, centers=5)
+kcl <- MLearn( ~ ., tan2009r1,  kmeansI, centers=5)
 plot(kcl, exprs(tan2009r1))
 @ 
 \caption{k-means clustering on the \Robject{tan2009r1} data. }
@@ -412,7 +408,7 @@ plot(kcl, exprs(tan2009r1))
 
 \begin{figure}[!hbt]
 <<plotHclust, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
-hcl <- MLearn(markers ~ ., tan2009r1,  hclustI(distFun = dist, cutParm = list(k = 5)))
+hcl <- MLearn( ~ ., tan2009r1,  hclustI(distFun = dist, cutParm = list(k = 5)))
 plot(hcl, labels = FALSE)
 @ 
 \caption{Hierarchical clustering on the \Robject{tan2009r1} data.}
@@ -421,7 +417,7 @@ plot(hcl, labels = FALSE)
 
 \begin{figure}[!hbt]
 <<plotPam, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
-pcl <- MLearn(markers ~ ., tan2009r1,  pamI(dist), k = 5)
+pcl <- MLearn( ~ ., tan2009r1,  pamI(dist), k = 5)
 plot(pcl, data = exprs(tan2009r1))
 @ 
 \caption{Partitioning around medoids on the \Robject{tan2009r1} data.}
@@ -434,7 +430,12 @@ plot(pcl, data = exprs(tan2009r1))
 
 In this section, we show how to use \Rpackage{pRoloc} to run a typical supervised ML analysis. Several ML methods are available, including k-nearest neighbour (knn), partial least square discriminant analysis (plsda), random forest (rf), support vector machines (svm), \ldots The detailed description of each method is outside of the scope of this document. We will use support vector machines to illustrate a typical pipeline and the important points that should be paid attention to. These points are equally valid and work, from a \Rpackage{pRoloc} user perspective, exactly the same for the other approaches.
 
-Before actually generating a model on the new markers and classifying unknown residents, one has to take care of properly setting the model parameters. Wrongly set parameters can have a very negative impact on performance. To do so, we create testing (to model) and training (to predict) subsets using known residents. By comparing observed and expected classification prediction, we can assess how well a given model works using the macro F1 score (see below). This procedure is repeated for a range of possible model parameter values (this is called a grid search), and the best performing set of parameters is then used to construct a model on all markers and predict un-labelled proteins.
+\subsubsection{Hyper-parameters regularisation}
+
+Before actually generating a model on the new markers and classifying unknown residents, one has to take care of properly setting the model parameters. Wrongly set parameters can have a very negative impact on classification performance. To do so, we create testing (to model) and training (to predict) subsets using known residents. By comparing observed and expected classification prediction, we can assess how well a given model works using the macro F1 score (see below). This procedure is repeated for a range of possible model parameter values (this is called a grid search), and the best performing set of parameters is then used to construct a model on all markers and predict un-labelled proteins.
+
+%% TODO
+%% Describe our procedure in more details.
 
 Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \times recall}{precision + recall}$, calculated as the harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a measure of \textit{exactness} -- returned output is a relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of \textit{completeness} -- indicating how much was missed from the output). What we are aiming for are high generalisation accuracies, i.e high $F1$, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.
 
@@ -455,6 +456,10 @@ levelPlot(reg)
 \caption{ Assessing parameter regularisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. On the right, we see the full average result of the grid search, for the full range of parameter values.}
 \label{fig:reg}
 \end{figure}
+
+\clearpage
+
+\subsubsection{Classification}
 
 We can now re-use the result from our regularisation (a best cost/sigma pair is going to be automatically extracted, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents. New feature variables containing the organelle assignments and assignment scores are automatically added to the \Robject{featureData} slot.
 
@@ -478,7 +483,7 @@ addLegend(svmres, fcol = "svm",
 \label{fig:svmres}
 \end{figure}
 
-%% Possibly mention available ensemble method.
+\clearpage
 
 \subsection{Semi-supervised ML}\label{sec:ssml}
 
@@ -524,6 +529,7 @@ addLegend(pdres, fcol = "pd", ncol = 2,
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
+\clearpage
 
 \section{Conclusion}\label{sec:ccl}
 

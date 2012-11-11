@@ -3,7 +3,7 @@
 
 \alias{MLearn,formula,MSnSet,learnerSchema,numeric-method}
 \alias{MLearn,formula,MSnSet,learnerSchema,xvalSpec-method}
-\alias{MLearn,formula, MSnSet,clusteringSchema,missing-method}
+\alias{MLearn,formula,MSnSet,clusteringSchema,missing-method}
 \alias{MSnSetMLean}
 \alias{MLearnMSnSet}
 

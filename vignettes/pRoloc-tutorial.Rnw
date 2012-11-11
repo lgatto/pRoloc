@@ -488,6 +488,13 @@ p1 <- getPredictions(svmres, fcol = "svm")
 minprob <- median(fData(svmres)$svm.scores)
 p2 <- getPredictions(svmres, fcol = "svm", t = minprob)
 table(p1, p2)
+@ %%$
+
+To graphically illustrate the organelle-specific score distributions, use
+
+<<predscoresPlot, eval=FALSE>>=
+boxplot(svm.scores ~ svm,data = fData(svmres))
+abline(h = minprob)
 @ 
 
 We can now visualise these results using the plotting functions presented in section \ref{sec:usml}, as shown on figure \ref{fig:svmres}. We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores. 

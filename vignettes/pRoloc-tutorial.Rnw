@@ -96,7 +96,7 @@ opts_chunk$set(fig.align = 'center',
                eval = TRUE,
                comment = NA)
 options(replace.assign = TRUE, 
-        width = 50)
+        width = 55)
 
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
@@ -458,7 +458,7 @@ reg
 plot(reg)
 levelPlot(reg)
 @ 
-\caption{Assessing parameter regularisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. On the right, we see the full average result of the grid search, for the full range of parameter values.}
+\caption{Assessing parameter regularisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. On the right, we see the averaged macro F1 scores, for the full range of parameter values.}
 \label{fig:reg}
 \end{figure}
 
@@ -466,7 +466,12 @@ levelPlot(reg)
 
 \subsubsection{Classification}
 
-We can now re-use the result from our regularisation (a best cost/sigma pair is going to be automatically extracted, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmPrediction} function. By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment scores are automatically added to the \Robject{featureData} slot; in this case, using the \Robject{svm} and \Robject{svm.scores} labels.
+We can now re-use the result from our regularisation (a best cost/sigma pair is going to be automatically extracted, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmPrediction} function. By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment probabilities\footnote{%%
+The calculation of the classification probabilities is dependent on the classification algorithm. 
+These probabilities are not to be compared across algorithms; they do \textbf{not} reflect any 
+\textbf{biologically relevant} sub-cellular localistation probability but rather an 
+algorithm-specific classification confidence score.}%%
+, called scores hereafter, are automatically added to the \Robject{featureData} slot; in this case, using the \Robject{svm} and \Robject{svm.scores} labels.
 
 <<svmRes, warning=FALSE>>=
 svmres <- svmPrediction(tan2009r1, reg)
@@ -479,9 +484,10 @@ The original markers, classification results and scores can be accessed with the
 Two helper functions, \Rfunction{getMarkers} and \Rfunction{getPredictions} are available and add some level of automation and functionality, assuming that the default feature labels are used. Both (invisibly) return the corresponding feature variable (the markers or assigned classification) and print a summary table. The \Robject{fcol} parameter must be specified for \Rfunction{getPredictions}. It is also possible to defined a classification probability below which classifications are set to \texttt{"unknown"}.
 
 <<getPredictions>>=
-getPredictions(svmres, fcol = "svm")
+p1 <- getPredictions(svmres, fcol = "svm")
 minprob <- median(fData(svmres)$svm.scores)
-getPredictions(svmres, fcol = "svm", t = minprob)
+p2 <- getPredictions(svmres, fcol = "svm", t = minprob)
+table(p1, p2)
 @ 
 
 We can now visualise these results using the plotting functions presented in section \ref{sec:usml}, as shown on figure \ref{fig:svmres}. We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores. 
@@ -506,7 +512,7 @@ addLegend(svmres, fcol = "svm",
 It is obvious that the set of markers initially used  (\Sexpr{paste(levels(fData(tan2009r1)$markers)[1:4], collapse = ", ")}) %%$
 is not a biologically realistic representation or the organellar diversity. Manually finding markers is however time consuming, as it requires careful verification of the annotation, and possibly critical for the subsequent analysis, as markers are directly used in the training phase of the supervised ML approach. 
 
-As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm is an iterative method, that combines classification of proteins to known groups and detection n of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function\footnote{In the interest of time, \Rfunction{phenoDisco} is not executed when the vignette is dynamically built. The data object can be located with \Rfunction{dir(system.file("data", package = "pRoloc"), full.names = TRUE, pattern = "pdres.rda")} and loaded with \Rfunction{load}.}. 
+As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm is an iterative method, that combines classification of proteins to known groups and detection of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function\footnote{In the interest of time, \Rfunction{phenoDisco} is not executed when the vignette is dynamically built. The data object can be located with \Rfunction{dir(system.file("data", package = "pRoloc"), full.names = TRUE, pattern = "pdres.rda")} and loaded with \Rfunction{load}.}. 
 
 <<runPhenoDisco, eval=FALSE, warning=FALSE>>=
 pdres <- phenoDisco(tan2009r1, GS=10, times=10, fcol = "PLSDA")
@@ -556,6 +562,8 @@ This tutorial focuses on practical aspects of organelles proteomics data analysi
 Data analysis is not a trivial task, and in general, one can not assume that any off-the-shelf algorithm will perform well. As such, one of the emphasis of the software presented in this document is allowing users to track data processing and critically evaluate the results. 
 
 \clearpage
+
+\singlespacing
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section

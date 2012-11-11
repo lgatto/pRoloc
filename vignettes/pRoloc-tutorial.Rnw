@@ -96,11 +96,12 @@ opts_chunk$set(fig.align = 'center',
                eval = TRUE,
                comment = NA)
 options(replace.assign = TRUE, 
-        width = 40)
+        width = 50)
 
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
+suppressPackageStartupMessages(library("class"))
 set.seed(1)
 @ 
 %%$
@@ -122,7 +123,7 @@ It should be noted that large protein complexes, that are not necessarily separa
 
 \R \citep{Rstat} is a statistical programming language and interactive working environment. It can be expanded by so-called packages to confer new functionality to users. Many such packages have been developed for the analysis of high-throughput biology, notably through the Bioconductor project \citep{Gentleman2004}. Two packages are of particular interest here, namely \Rpackage{MSnbase} \citep{Gatto2012} and \Rpackage{pRoloc}. The former provides flexible infrastructure to store and manipulate quantitative proteomics data and the associated meta-data and the latter implements specific algorithmic technologies to analyse organelle proteomics data. 
 
-Among the advantages of \R are robust statistical procedures, good visualisation capabilities, excellent documentation, reproducible research\footnote{The content of this document is compiled (the code is executed and its output, text and figures, is displayed dynamically) to generate the pdf file.}, power and flexibility of the \R language and environment itself and a rich environment for specialised functionality in many domains of bioinformatics: tools for many omics technologies, including proteomics, bio-statistis, gene ontology and biological pathway analysis , \ldots Although there exists some specific graphical user interfaces (GUI) -- see for example the GUI implemented in the \Rpackage{synapter} package\footnote{\url{http://bioconductor.org/packages/devel/bioc/html/synapter.html}} for the analysis MS$^{E}$ data, interaction with \R is executed through a command line interface. Although this mode of interaction might look alien to new users, experience has proven that after a first steep (?) learning curve, great results can be achieved by non-programmers. Furthermore, specific and general documentation is plenty and beginners and advanced course material are also widely available.
+Among the advantages of \R are robust statistical procedures, good visualisation capabilities, excellent documentation, reproducible research\footnote{The content of this document is compiled (the code is executed and its output, text and figures, is displayed dynamically) to generate the pdf file.}, power and flexibility of the \R language and environment itself and a rich environment for specialised functionality in many domains of bioinformatics: tools for many omics technologies, including proteomics, bio-statistics, gene ontology and biological pathway analysis , \ldots Although there exists some specific graphical user interfaces (GUI) -- see for example the GUI implemented in the \Rpackage{synapter} package\footnote{\url{http://bioconductor.org/packages/devel/bioc/html/synapter.html}} for the analysis MS$^{E}$ data, interaction with \R is executed through a command line interface. Although this mode of interaction might look alien to new users, experience has proven that after a first steep (?) learning curve, great results can be achieved by non-programmers. Furthermore, specific and general documentation is plenty and beginners and advanced course material are also widely available.
 
 Once \R is started, the first step to enable functionality of a specific packages is to load them using the \Rfunction{library} function, as shown in the code chunk below:
 
@@ -373,7 +374,8 @@ addLegend(tan2009r1, fcol = "PLSDA",
 
 \subsection{Unsupervised ML}
 
-The \Rfunction{plot2D} can also be used to visualise the data on a PCA plot omitting any marker definitions, as shown below. 
+The \Rfunction{plot2D} can also be used to visualise the data on a PCA plot omitting any marker definitions, 
+as shown on figure \ref{fig:plot2dnull}. 
 This approach avoids any bias towards marker definitions and concentrate on the data and its underlying structure itself.
 
 \begin{figure}[!hbt]
@@ -385,7 +387,10 @@ plot2D(tan2009r1, fcol = NULL)
 \end{figure}
 
 Alternatively, \Rpackage{pRoloc} also gives access to \Rpackage{MLInterfaces}'s \Rfunction{MLean} unified interface for, 
-among others, unsupervised approaches using hierarchical, k-means and partitioning around medoids clustering. 
+among others, unsupervised approaches using k-means (figure \ref{fig:plotKmeans} on page \pageref{fig:plotKmeans}),
+hierarchical (figure \ref{fig:plotHclust} on page \pageref{fig:plotHclust}) 
+or partitioning around medoids (figure \ref{fig:plotPam} on page \pageref{fig:plotPam}), 
+clustering. 
 
 %% TODO - describe these plots in more details.
 %% partition plot (private from MLInterfaces)
@@ -441,7 +446,7 @@ Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \time
 
 \bigskip
 
-In the code chunk below, algorithmic performance is estimated using 5-fold stratified cross-validation (creating 5 test/train splits), which features an additional cross-validation on each training partition in order to optimise free parameters via a grid search. This process is repeated 10 times and best and averaged accuracies are shown in figure \ref{fig:reg}. This procedure is implemented in the \Rfunction{svmRegularisation}.
+In the code chunk below, algorithmic performance is estimated using 5-fold stratified cross-validation (creating 5 test/train splits), which features an additional cross-validation on each training partition in order to optimise free parameters via a grid search. This process is repeated 10 times and best and averaged accuracies are shown in figure \ref{fig:reg}. This procedure is implemented in the \Rfunction{svmRegularisation}. See \Rfunction{?svmRegularisation} for details, in particular how the relevant feature variable is defined by the \Robject{fcol} parameters, which defaults to \Robject{"markers"}.
 
 <<svmReg, cache = TRUE>>=
 reg <- svmRegularisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
@@ -453,7 +458,7 @@ reg
 plot(reg)
 levelPlot(reg)
 @ 
-\caption{ Assessing parameter regularisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. On the right, we see the full average result of the grid search, for the full range of parameter values.}
+\caption{Assessing parameter regularisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. On the right, we see the full average result of the grid search, for the full range of parameter values.}
 \label{fig:reg}
 \end{figure}
 
@@ -461,7 +466,7 @@ levelPlot(reg)
 
 \subsubsection{Classification}
 
-We can now re-use the result from our regularisation (a best cost/sigma pair is going to be automatically extracted, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents. New feature variables containing the organelle assignments and assignment scores are automatically added to the \Robject{featureData} slot.
+We can now re-use the result from our regularisation (a best cost/sigma pair is going to be automatically extracted, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmPrediction} function. By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment scores are automatically added to the \Robject{featureData} slot; in this case, using the \Robject{svm} and \Robject{svm.scores} labels.
 
 <<svmRes, warning=FALSE>>=
 svmres <- svmPrediction(tan2009r1, reg)
@@ -469,12 +474,23 @@ processingData(svmres)
 tail(fvarLabels(svmres), 4)
 @ 
 
+The original markers, classification results and scores can be accessed with the \Robject{fData} accessor method, e.g. 
+\Rfunction{fData(svmres)\$svm} or \Rfunction{fData(svmres)\$svm.scores}. 
+Two helper functions, \Rfunction{getMarkers} and \Rfunction{getPredictions} are available and add some level of automation and functionality, assuming that the default feature labels are used. Both (invisibly) return the corresponding feature variable (the markers or assigned classification) and print a summary table. The \Robject{fcol} parameter must be specified for \Rfunction{getPredictions}. It is also possible to defined a classification probability below which classifications are set to \texttt{"unknown"}.
+
+<<getPredictions>>=
+getPredictions(svmres, fcol = "svm")
+minprob <- median(fData(svmres)$svm.scores)
+getPredictions(svmres, fcol = "svm", t = minprob)
+@ 
+
 We can now visualise these results using the plotting functions presented in section \ref{sec:usml}, as shown on figure \ref{fig:svmres}. We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores. 
 
 \begin{figure}[!hbt]
 <<svmresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+ptsze <- exp(fData(svmres)$svm.score) - 1
 plot2D(svmres, fcol = "svm", fpch = "markers", 
-       cex = exp(fData(svmres)$svm.score) - 1, alpha = 0.5)
+       cex = ptsze, alpha = 0.5)
 addLegend(svmres, fcol = "svm", 
           where = "bottomright", bty = "n", cex = .5)
 @ 

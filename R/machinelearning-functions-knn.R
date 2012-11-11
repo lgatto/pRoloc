@@ -193,7 +193,8 @@ knnPrediction <- function(object,
   fData(object)$knn <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)
-    colnames(scoreMat) <- paste0(colnames(scoreMat), ".knn.scores")
+    ## colnames(scoreMat) <- paste0(colnames(scoreMat), ".knn.scores")
+    colnames(scoreMat) <- "knn.scores"
     fData(object) <- cbind(fData(object), scoreMat)
   } else if (scores == "prediction") {
     fData(object)$knn.scores <- predScore(ans)

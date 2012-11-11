@@ -3,6 +3,7 @@ CHANGES IN VERSION 0.99.2
  o fixed MLearn("formula", "MSnSet", "clusteringSchema", 
    "missing") - interface was wring <2012-11-10 Sat>
  o vignette updates <2012-11-10 Sat> <2012-11-11 Sun>
+ o nicer knn score names when scores = "all" <2012-11-11 Sun>
 
 CHANGES IN VERSION 0.99.1
 -------------------------

@@ -89,7 +89,7 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
     gmm0<- Mclust(L)
   }	
   if(gmm0$G==1) { 
-    mat<-mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1]) 		
+    mat <- mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1]) 		
     ## If the cluster number in the data is 1 use the Mahalanobis distance
   } else {
     W <- WN <- a<- vector()
@@ -321,11 +321,11 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 ##' @param MSnSetObject An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.
-##' @param times Number of runs of tracking. Default is 10.
+##' @param times Number of runs of tracking. Default is 50.
 ##' @param GS Group size, i.e how many proteins make a group. Default
-##' is 6.
-##' @param allIter \code{logical}, defining if predictions for
-##' all iterations should be saved. Default is \code{FALSE}.
+##' is 10.
+##' @param allIter \code{logical}, defining if predictions for all
+##' iterations should be saved. Default is \code{FALSE}.
 ##' @param p Significance level for outlier detection. Default is
 ##' 0.05.
 ##' @param r Correlation coefficent for Jaccard's Index. Default is 1.
@@ -342,8 +342,8 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 ##' PubMed PMID: 18534020; PubMed Central PMCID: PMC2443381.
 phenoDisco <- function(MSnSetObject,
                        fcol = "markers",
-                       times = 10,
-                       GS = 6,
+                       times = 50,
+                       GS = 10,
                        allIter = FALSE,
                        p = 0.05,
                        r = 1,

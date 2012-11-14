@@ -2,8 +2,8 @@
 \alias{phenoDisco}
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
-  phenoDisco(MSnSetObject, fcol = "markers", times = 10,
-    GS = 6, allIter = FALSE, p = 0.05, r = 1, seed)
+  phenoDisco(MSnSetObject, fcol = "markers", times = 50,
+    GS = 10, allIter = FALSE, p = 0.05, r = 1, seed)
 }
 \arguments{
   \item{MSnSetObject}{An instance of class \code{MSnSet}.}
@@ -12,10 +12,10 @@
   markers column name in feature meta-data. Default is
   \code{markers}.}
 
-  \item{times}{Number of runs of tracking. Default is 10.}
+  \item{times}{Number of runs of tracking. Default is 50.}
 
   \item{GS}{Group size, i.e how many proteins make a group.
-  Default is 6.}
+  Default is 10.}
 
   \item{allIter}{\code{logical}, defining if predictions
   for all iterations should be saved. Default is

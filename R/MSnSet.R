@@ -90,7 +90,7 @@ getMarkers <- function(object,
 ##' \code{featureData} slot. 
 ##' @param scol The name of the prediction score column in the
 ##' \code{featureData} slot. If missing, created by pasting
-##' '.scores' after \code{fcol}.
+##' '.scores' after \code{fcol}. If \code{NULL}, ignored.
 ##' @param t The score threshold. Predictions with score < t are
 ##' set to 'unknown'. Default is 0.
 ##' @param verbose If \code{TRUE}, a prediction table is printed and the
@@ -107,8 +107,10 @@ getPredictions <- function(object,
   predictions <- as.character(fData(object)[, fcol])
   if (missing(scol))
     scol <- paste0(fcol, ".scores")
-  scrs <- fData(object)[, scol]
-  predictions[scrs < t] <- "unknown"
+  if (!is.null(scol)) {
+    scrs <- fData(object)[, scol]
+    predictions[scrs < t] <- "unknown"
+  }  
   if (verbose) {
     print(table(predictions))
     invisible(predictions)

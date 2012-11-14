@@ -2,6 +2,7 @@ CHANGES IN VERSION 0.99.4
 -------------------------
  o Adding README file describing Rd generation
    and suggesting roxygen2 <2012-11-14 Wed>
+ o Added scol=NULL to ignore completely <2012-11-14 Wed>
 
 CHANGES IN VERSION 0.99.3
 -------------------------

@@ -1,6 +1,11 @@
+CHANGES IN VERSION 0.99.4
+-------------------------
+ o Adding README file describing Rd generation
+   and suggesting roxygen2 <2012-11-14 Wed>
+
 CHANGES IN VERSION 0.99.3
 -------------------------
- o moved pdres to data <2012-11-13 Tue>
+ o pdres in extdata - updated vignette <2012-11-14 Wed>
  o udpated pd's GS/times default <2012-11-14 Wed>
 
 CHANGES IN VERSION 0.99.2

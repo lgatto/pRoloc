@@ -37,7 +37,7 @@
 \examples{
 library(pRolocdata)
 data(dunkley2006)
-## reducing parameter search space and interations
+## reducing parameter search space and iterations
 reg <- knnRegularisation(dunkley2006, k = c(3, 10), times = 3)
 reg
 plot(reg)

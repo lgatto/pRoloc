@@ -13,7 +13,8 @@
 
   \item{scol}{The name of the prediction score column in
   the \code{featureData} slot. If missing, created by
-  pasting '.scores' after \code{fcol}.}
+  pasting '.scores' after \code{fcol}. If \code{NULL},
+  ignored.}
 
   \item{t}{The score threshold. Predictions with score < t
   are set to 'unknown'. Default is 0.}

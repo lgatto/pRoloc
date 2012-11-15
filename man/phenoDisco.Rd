@@ -39,6 +39,15 @@
   to predict protein localisation and detect new protein
   clusters. It is based on the works of Yin et al. (2008).
 }
+\examples{
+\dontrun{
+library(pRolocdata)
+data(tan2009r1)
+pdres <- phenoDisco(tan2009r1, markers = "PLSDA")
+getPredictions(pdres, fcol = "pd", scol = NULL)
+plot2D(pdres, fcol = "pd")
+}
+}
 \author{
   Lisa M. Simpson <lms79@cam.ac.uk>
 }

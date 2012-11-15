@@ -174,7 +174,7 @@ nnetRegularisation <- function(object,
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
-##' ## reducing parameter search space and interations 
+##' ## reducing parameter search space and iterations 
 ##' reg <- nnetRegularisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
 ##' reg
 ##' plot(reg)

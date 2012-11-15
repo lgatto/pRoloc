@@ -157,7 +157,7 @@ nbRegularisation <- function(object,
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
-##' ## reducing parameter search space and interations 
+##' ## reducing parameter search space and iterations 
 ##' reg <- nbRegularisation(dunkley2006, laplace = c(0, 5),  times = 3)
 ##' reg
 ##' plot(reg)

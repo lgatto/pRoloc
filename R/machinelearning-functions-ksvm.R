@@ -168,7 +168,7 @@ ksvmRegularisation <- function(object,
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
-##' ## reducing parameter search space and interations 
+##' ## reducing parameter search space and iterations 
 ##' reg <- ksvmRegularisation(dunkley2006, cost = 2^seq(-1,4,5), times = 3)
 ##' reg
 ##' plot(reg)

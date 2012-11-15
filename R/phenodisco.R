@@ -340,6 +340,14 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 ##' phenotype discovery in the context of high-throughput RNAi screens. BMC
 ##' Bioinformatics. 2008 Jun 5;9:264.
 ##' PubMed PMID: 18534020; PubMed Central PMCID: PMC2443381.
+##' @examples
+##' \dontrun{
+##' library(pRolocdata)
+##' data(tan2009r1)
+##' pdres <- phenoDisco(tan2009r1, markers = "PLSDA")
+##' getPredictions(pdres, fcol = "pd", scol = NULL)
+##' plot2D(pdres, fcol = "pd")
+##' }
 phenoDisco <- function(MSnSetObject,
                        fcol = "markers",
                        times = 50,

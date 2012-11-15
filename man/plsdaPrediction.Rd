@@ -39,7 +39,7 @@
 ## not running this one for time considerations
 library(pRolocdata)
 data(dunkley2006)
-## reducing parameter search space and interations
+## reducing parameter search space and iterations
 reg <- plsdaRegularisation(dunkley2006, ncomp = c(3, 10),  times = 2)
 reg
 plot(reg)

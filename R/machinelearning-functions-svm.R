@@ -166,7 +166,7 @@ svmRegularisation <- function(object,
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
-##' ## reducing parameter search space and interations 
+##' ## reducing parameter search space and iterations 
 ##' reg <- svmRegularisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
 ##' reg
 ##' plot(reg)

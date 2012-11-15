@@ -1,0 +1,29 @@
+CHANGES IN VERSION 0.99.4
+-------------------------
+ o Adding README file describing Rd generation
+   and suggesting roxygen2 <2012-11-14 Wed>
+ o Added scol=NULL to ignore completely <2012-11-14 Wed>
+
+CHANGES IN VERSION 0.99.3
+-------------------------
+ o pdres in extdata - updated vignette <2012-11-14 Wed>
+ o udpated pd's GS/times default <2012-11-14 Wed>
+
+CHANGES IN VERSION 0.99.2
+-------------------------
+ o fixed MLearn("formula", "MSnSet", "clusteringSchema", 
+   "missing") - interface was wrong <2012-11-10 Sat>
+ o vignette updates <2012-11-10 Sat> <2012-11-11 Sun>
+ o nicer knn score names when scores = "all" <2012-11-11 Sun>
+
+CHANGES IN VERSION 0.99.1
+-------------------------
+ o updated exprsToRatio when ncol(object) is 2 <2012-11-05 Mon>
+ o typos in vignette <2012-11-09 Fri> <2012-11-10 Sat>
+ o new MLearn method for signature 
+   c("formula", "MSnSet", "clusteringSchema", "missing") <2012-11-09 Fri>
+ o Several vignette udpates <2012-11-10 Sat>
+
+CHANGES IN VERSION 0.99.0
+-------------------------
+ o Submission to Bioc <2012-11-04 Sun>

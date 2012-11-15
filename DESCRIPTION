@@ -1,0 +1,19 @@
+Package: pRoloc
+Type: Package
+Title: A unifying bioinformatics framework for organelle proteomics
+Version: 0.99.4
+Author@R: c(person(given = "Laurent", family = "Gatto", email =
+        "lg390@cam.ac.uk", role = c("aut","cre")), person(given =
+        "Lisa", family ="Simpson", email = "lms79@cam.ac.uk", role =
+        "aut"))
+Author: Laurent Gatto and Lisa M. Simpson
+Maintainer: Laurent Gatto <lg390@cam.ac.uk>
+Description: This package implements pattern recognition 
+    techniques on quantitiative mass spectrometry data to 
+    infer protein sub-cellular localisation.
+Depends: R (>= 2.15), MSnbase, MLInterfaces (>= 1.37.1), methods
+Imports: mclust, MSBVAR, caret, e1071, sampling, class, kernlab,
+        lattice, nnet, randomForest, proxy, BiocGenerics, stats4,
+        RColorBrewer, scales
+Suggests: testthat, knitr, pRolocdata, roxygen2
+License: GPL-2

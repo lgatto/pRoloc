@@ -39,7 +39,8 @@ knnRegularisation <- function(object,
   
   ## initialise output
   .warnings <- NULL
-  .matrices <- vector("list", length = times) 
+  .matrices <- vector("list", length = times)
+  .cmMatrices <- vector("list", length = times) ## NEW
   .results <- matrix(NA, nrow = times, ncol = nparams + 1)
   colnames(.results) <- c("F1", "k") 
   
@@ -98,7 +99,7 @@ knnRegularisation <- function(object,
     ans <- class::knn(.train1[, -.clcol], .test1[, -.clcol],
                       k = .bestParams["k"],
                       cl = .train1[, .clcol], ...)
-    conf <- confusionMatrix(ans, .test1$markers)$table
+    .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
@@ -123,6 +124,7 @@ knnRegularisation <- function(object,
              design = .design,
              results = .results,
              matrices = .matrices,
+             cmMatrices = .cmMatrices, ## NEW
              datasize = list(
                "data" = dim(mydata),
                "data.markers" = table(mydata[, "markers"]),

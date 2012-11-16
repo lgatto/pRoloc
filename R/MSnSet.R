@@ -141,14 +141,14 @@ getPredictions <- function(object,
 ##' fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
 ##' getPredictions(dunkley2006, fcol = "assigned")
 ##' getPredictions(dunkley2006, fcol = "assigned", t = 0.5) 
-##' x <- updateClass(dunkley2006, fcol = "assigned", t = 0.5)
+##' x <- updateClassification(dunkley2006, fcol = "assigned", t = 0.5)
 ##' getPredictions(x, fcol = "assigned")
 ##' all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
 ##'           getPredictions(x, fcol = "assigned"))
-updateClass <- function(object,
-                        fcol,
-                        scol,
-                        t = 0) {
+updateClassification <- function(object,
+                                 fcol,
+                                 scol,
+                                 t = 0) {
   stopifnot(!missing(fcol))
   lv <- c(levels(fData(object)[, fcol]),
           "unknown")
@@ -162,4 +162,32 @@ updateClass <- function(object,
   fData(object)[, fcol] <- factor(preds, levels = lv)
   if (validObject(object))
     object
+}
+
+##' .. content for \description{} (no empty lines) ..
+##'
+##' @title Creates a reduced marker variable
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param n Minumum of marker instances per class.
+##' @param fcol The name of the markers column in the \code{featureData}
+##' slot. Default is \code{markers}.
+##' @return An instance of class \code{"\linkS4class{MSnSet}"} with a new
+##' feature variables, named after the original \code{fcol} variable and
+##' the \code{n} value. 
+##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' d2 <- minMarkers(dunkley2006, 20)
+##' getMarkers(dunkley2006)
+##' getMarkers(d2, fcol = "markers20")
+minMarkers <- function(object, n = 10, fcol = "markers") {
+  m <- as.character(fData(object)[, fcol])
+  tm <- table(m)
+  xx <- names(tm)[tm < n]
+  m[m %in% xx] <- "unknown"
+  fcol2 <- paste0(fcol, n)
+  fData(object)[, fcol2] <- factor(m)
+  if (validObject(object))
+    return(object)
 }

@@ -5,7 +5,8 @@ setClass("GenRegRes",
                         log = "list",
                         seed = "integer",
                         results = "matrix", 
-                        matrices = "list",
+                        matrices = "list", ## these are f1Matrices
+                        cmMatrices = "list",
                         datasize = "list")) 
 
 setMethod("show",

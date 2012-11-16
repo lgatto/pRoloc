@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.99.5
+-------------------------
+ o more reg data into GenRegRes objects <2012-11-15 Thu>
+ o new minMarkers function <2012-11-16 Fri>
+
 CHANGES IN VERSION 0.99.4
 -------------------------
  o Adding README file describing Rd generation

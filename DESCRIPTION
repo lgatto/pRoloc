@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for organelle proteomics
-Version: 0.99.4
+Version: 0.99.5
 Author@R: c(person(given = "Laurent", family = "Gatto",
 	           email = "lg390@cam.ac.uk",
  		   role = c("aut","cre")),

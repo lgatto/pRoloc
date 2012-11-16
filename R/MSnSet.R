@@ -141,14 +141,14 @@ getPredictions <- function(object,
 ##' fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
 ##' getPredictions(dunkley2006, fcol = "assigned")
 ##' getPredictions(dunkley2006, fcol = "assigned", t = 0.5) 
-##' x <- updateClassification(dunkley2006, fcol = "assigned", t = 0.5)
+##' x <- minClassScore(dunkley2006, fcol = "assigned", t = 0.5)
 ##' getPredictions(x, fcol = "assigned")
 ##' all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
 ##'           getPredictions(x, fcol = "assigned"))
-updateClassification <- function(object,
-                                 fcol,
-                                 scol,
-                                 t = 0) {
+minClassScore <- function(object,
+                          fcol,
+                          scol,
+                          t = 0) {
   stopifnot(!missing(fcol))
   lv <- c(levels(fData(object)[, fcol]),
           "unknown")

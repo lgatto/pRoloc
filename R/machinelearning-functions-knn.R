@@ -40,7 +40,7 @@ knnRegularisation <- function(object,
   ## initialise output
   .warnings <- NULL
   .matrices <- vector("list", length = times)
-  .cmMatrices <- vector("list", length = times) ## NEW
+  .testPartitions <- .cmMatrices <- vector("list", length = times) ## NEW
   .results <- matrix(NA, nrow = times, ncol = nparams + 1)
   colnames(.results) <- c("F1", "k") 
   
@@ -58,10 +58,10 @@ knnRegularisation <- function(object,
     test.idx <- strata(mydata, "markers",
                        size = .size,
                        method = "srswor")$ID_unit
+    .testPartitions[[.times]] <- test.idx ## NEW
     
     .test1   <- mydata[ test.idx, ] ## 'unseen' test set
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
-    
     xfolds <- createFolds(.train1$markers, xval, returnTrain = TRUE)
     ## stores the xval F1 matrices
     .matrixF1L <- vector("list", length = xval)  
@@ -125,6 +125,7 @@ knnRegularisation <- function(object,
              results = .results,
              matrices = .matrices,
              cmMatrices = .cmMatrices, ## NEW
+             testPartitions = .testPartitions, ## NEW
              datasize = list(
                "data" = dim(mydata),
                "data.markers" = table(mydata[, "markers"]),

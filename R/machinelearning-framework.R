@@ -7,6 +7,7 @@ setClass("GenRegRes",
                         results = "matrix", 
                         matrices = "list", ## these are f1Matrices
                         cmMatrices = "list",
+                        testPartitions = "list",
                         datasize = "list")) 
 
 setMethod("show",

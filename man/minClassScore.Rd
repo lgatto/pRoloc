@@ -1,8 +1,8 @@
-\name{updateClass}
-\alias{updateClass}
+\name{minClassScore}
+\alias{minClassScore}
 \title{Updates classes based on prediction scores}
 \usage{
-  updateClass(object, fcol, scol, t = 0)
+  minClassScore(object, fcol, scol, t = 0)
 }
 \arguments{
   \item{object}{An instance of class
@@ -36,7 +36,7 @@ data(dunkley2006)
 fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
 getPredictions(dunkley2006, fcol = "assigned")
 getPredictions(dunkley2006, fcol = "assigned", t = 0.5)
-x <- updateClass(dunkley2006, fcol = "assigned", t = 0.5)
+x <- minClassScore(dunkley2006, fcol = "assigned", t = 0.5)
 getPredictions(x, fcol = "assigned")
 all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
           getPredictions(x, fcol = "assigned"))

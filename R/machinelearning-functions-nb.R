@@ -9,7 +9,7 @@
 ##' Default is 100.
 ##' @param test.size The size of test data. Default is 0.2 (20 percent).
 ##' @param xval The \code{n}-cross validation. Default is 5.
-##' @param fun The function used to summarise the \code{times} macro F1 matrices.
+##' @param fun The function used to summarise the \code{xval} macro F1 matrices.
 ##' @param seed The optional random number generator seed.
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{naiveBayes}} from package \code{e1071}.

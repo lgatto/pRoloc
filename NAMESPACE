@@ -35,6 +35,8 @@ export(getPredictions,
        empPvalues,
        getStockcol, getStockpch,
        getUnknowncol, getUnknownpch,
+       minClassScore,
+       minMarkers,
        ## -- plotting
        plot2D,
        addLegend,

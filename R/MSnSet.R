@@ -164,7 +164,9 @@ minClassScore <- function(object,
     object
 }
 
-##' .. content for \description{} (no empty lines) ..
+##' This function updates an \code{MSnSet} instances and sets
+##' markers class to \code{unknown} if there are less than \code{n}
+##' instances. 
 ##'
 ##' @title Creates a reduced marker variable
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.

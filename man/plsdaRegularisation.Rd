@@ -24,8 +24,8 @@
 
   \item{xval}{The \code{n}-cross validation. Default is 5.}
 
-  \item{fun}{The function used to summarise the
-  \code{times} macro F1 matrices.}
+  \item{fun}{The function used to summarise the \code{xval}
+  macro F1 matrices.}
 
   \item{seed}{The optional random number generator seed.}
 

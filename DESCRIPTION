@@ -5,10 +5,10 @@ Version: 0.99.4
 Author@R: c(person(given = "Laurent", family = "Gatto",
 	           email = "lg390@cam.ac.uk",
  		   role = c("aut","cre")),
-            person(given = "Lisa", family ="Simpson",
+            person(given = "Lisa", family ="Breckels",
 	           email = "lms79@cam.ac.uk",
 		   role = "aut"))
-Author: Laurent Gatto and Lisa M. Simpson
+Author: Laurent Gatto and Lisa M. Breckels
 Maintainer: Laurent Gatto <lg390@cam.ac.uk>
 Description: This package implements pattern recognition 
     techniques on quantitiative mass spectrometry data to 

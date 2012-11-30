@@ -38,7 +38,8 @@ nbRegularisation <- function(object,
   
   ## initialise output
   .warnings <- NULL
-  .matrices <- vector("list", length = times) 
+  .f1Matrices <- vector("list", length = times)
+  .testPartitions <- .cmMatrices <- vector("list", length = times) ## NEW
   .results <- matrix(NA, nrow = times, ncol = nparams + 1)
   colnames(.results) <- c("F1", "laplace") 
   
@@ -56,6 +57,7 @@ nbRegularisation <- function(object,
     test.idx <- strata(mydata, "markers",
                        size = .size,
                        method = "srswor")$ID_unit
+    .testPartitions[[.times]] <- test.idx ## NEW    
     
     .test1   <- mydata[ test.idx, ] ## 'unseen' test set
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
@@ -90,12 +92,12 @@ nbRegularisation <- function(object,
       }
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
-    .matrices[[.times]] <- .summaryF1
+    .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     model <- naiveBayes(markers ~ ., .train1,
                         laplace = .bestParams["laplace"], ...)
     ans <- e1071:::predict.naiveBayes(model, .test1, type = "class") 
-    conf <- confusionMatrix(ans, .test1$markers)$table
+    .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW 
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                        tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
@@ -119,7 +121,9 @@ nbRegularisation <- function(object,
              hyperparameters = .hyperparams,
              design = .design,
              results = .results,
-             matrices = .matrices,
+             f1Matrices = .f1Matrices,
+             cmMatrices = .cmMatrices, ## NEW
+             testPartitions = .testPartitions, ## NEW
              datasize = list(
                "data" = dim(mydata),
                "data.markers" = table(mydata[, "markers"]),

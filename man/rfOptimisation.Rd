@@ -1,8 +1,10 @@
-\name{rfRegularisation}
+\name{rfOptimisation}
+\alias{rfOptimisation}
+\alias{rfOptimization}
 \alias{rfRegularisation}
-\title{svm regularisation}
+\title{svm parameter optimisation}
 \usage{
-  rfRegularisation(object, fcol = "markers", mtry = NULL,
+  rfOptimisation(object, fcol = "markers", mtry = NULL,
     times = 100, test.size = 0.2, xval = 5, fun = mean,
     seed, verbose = TRUE, ...)
 }
@@ -40,13 +42,13 @@
   An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Hyper-parameters regularisation for the random forest
-  algorithm.
+  Classification parameter optimisation for the random
+  forest algorithm.
 }
 \author{
   Laurent Gatto
 }
 \seealso{
-  \code{\link{rfPrediction}} and example therein.
+  \code{\link{rfClassification}} and example therein.
 }
 

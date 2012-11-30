@@ -5,6 +5,9 @@ CHANGES IN VERSION 0.99.5
    - testPartitions (knn) <2012-11-17 Sat> (other) <2012-11-30 Fri>
  o new minMarkers function <2012-11-16 Fri>
  o renamed updateClassification to minClassScore <2012-11-16 Fri>
+ o renamed xxxRegularisation to xxxOptimisation <2012-11-30 Fri>
+ o renamed xxxPrediction to xxxClassification <2012-11-30 Fri>
+ o renamed getRegularisedParams to getParams <2012-11-30 Fri>
 
 CHANGES IN VERSION 0.99.4
 -------------------------

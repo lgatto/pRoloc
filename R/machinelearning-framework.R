@@ -61,16 +61,12 @@ setMethod("getSeed", "GenRegRes", function(object) object@seed)
 
 setMethod("getF1Scores", "GenRegRes", function(object) object@results)
 
-setMethod("getRegularisedParams", "GenRegRes",
+setMethod("getParams", "GenRegRes",
           function(object) {
             res <- object@results
             best <- which.max(res[, "F1"])
             return(res[best, -1])
           })
-
-setMethod("getRegularizedParams", "GenRegRes",
-          function(object) getRegularisedParams(object))
-
 
 setMethod("plot", c("GenRegRes", "missing"),
           function(x, y, ...) {

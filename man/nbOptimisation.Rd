@@ -1,9 +1,11 @@
-\name{ksvmRegularisation}
-\alias{ksvmRegularisation}
-\title{ksvm regularisation}
+\name{nbOptimisation}
+\alias{nbOptimisation}
+\alias{nbOptimization}
+\alias{nbRegularisation}
+\title{nb paramter optimisation}
 \usage{
-  ksvmRegularisation(object, fcol = "markers",
-    cost = 2^(-4:4), times = 100, test.size = 0.2,
+  nbOptimisation(object, fcol = "markers",
+    laplace = seq(0, 5, 0.5), times = 100, test.size = 0.2,
     xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
@@ -13,8 +15,8 @@
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
 
-  \item{cost}{The hyper-parameter. Default values are
-  \code{2^-4:4}.}
+  \item{laplace}{The hyper-parameter. Default values are
+  \code{seq(0, 5, 0.5)}.}
 
   \item{times}{The number of times internal
   cross-validation is performed. Default is 100.}
@@ -33,19 +35,19 @@
   progress bar is displayed.}
 
   \item{...}{Additional parameters passed to
-  \code{\link{ksvm}} from package \code{kernlab}.}
+  \code{\link{naiveBayes}} from package \code{e1071}.}
 }
 \value{
   An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Hyper-parameters regularisation for the support vector
-  machine algorithm.
+  Classification algorithm parameter for the naive Bayes
+  algorithm.
 }
 \author{
   Laurent Gatto
 }
 \seealso{
-  \code{\link{ksvmPrediction}} and example therein.
+  \code{\link{nbClassification}} and example therein.
 }
 

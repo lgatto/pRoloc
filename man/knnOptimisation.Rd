@@ -1,8 +1,10 @@
-\name{knnRegularisation}
+\name{knnOptimisation}
+\alias{knnOptimisation}
+\alias{knnOptimization}
 \alias{knnRegularisation}
-\title{knn regularisation}
+\title{knn parameter optimisation}
 \usage{
-  knnRegularisation(object, fcol = "markers", k = 3:12,
+  knnOptimisation(object, fcol = "markers", k = 3:12,
     times = 100, test.size = 0.2, xval = 5, fun = mean,
     seed, verbose = TRUE, ...)
 }
@@ -39,13 +41,13 @@
   An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Hyper-parameters regularisation for the k-nearest
+  Classification parameter optimisation for the k-nearest
   neighbours algorithm.
 }
 \author{
   Laurent Gatto
 }
 \seealso{
-  \code{\link{knnPrediction}} and example therein.
+  \code{\link{knnClassification}} and example therein.
 }
 

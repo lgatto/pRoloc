@@ -1,11 +1,12 @@
-\name{nnetRegularisation}
-\alias{nnetRegularisation}
-\title{nnet regularisation}
+\name{ksvmOptimisation}
+\alias{ksvmOptimisation}
+\alias{ksvmOptimization}
+\alias{ksvmRegularisation}
+\title{ksvm parameter optimisation}
 \usage{
-  nnetRegularisation(object, fcol = "markers",
-    decay = c(0, 10^(-1:-5)), size = seq(1, 10, 2),
-    times = 100, test.size = 0.2, xval = 5, fun = mean,
-    seed, verbose = TRUE, ...)
+  ksvmOptimisation(object, fcol = "markers",
+    cost = 2^(-4:4), times = 100, test.size = 0.2,
+    xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -14,11 +15,8 @@
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
 
-  \item{decay}{The hyper-parameter. Default values are
-  \code{c(0, 10^(-1:-5))}.}
-
-  \item{size}{The hyper-parameter. Default values are
-  \code{seq(1, 10, 2)}.}
+  \item{cost}{The hyper-parameter. Default values are
+  \code{2^-4:4}.}
 
   \item{times}{The number of times internal
   cross-validation is performed. Default is 100.}
@@ -37,19 +35,19 @@
   progress bar is displayed.}
 
   \item{...}{Additional parameters passed to
-  \code{\link{nnet}} from package \code{nnet}.}
+  \code{\link{ksvm}} from package \code{kernlab}.}
 }
 \value{
   An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Hyper-parameters regularisation for artificial neural
-  network algorithm.
+  Classification parameter optimisation for the support
+  vector machine algorithm.
 }
 \author{
   Laurent Gatto
 }
 \seealso{
-  \code{\link{nnetPrediction}} and example therein.
+  \code{\link{ksvmClassification}} and example therein.
 }
 

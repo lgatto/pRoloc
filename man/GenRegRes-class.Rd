@@ -6,6 +6,8 @@
 \alias{GenRegRes-class}
 \alias{getF1Scores}
 \alias{getF1Scores,GenRegRes-method}
+\alias{getParams}
+\alias{getParams,GenRegRes-method}
 \alias{getRegularisedParams}
 \alias{getRegularisedParams,GenRegRes-method}
 \alias{getRegularizedParams}

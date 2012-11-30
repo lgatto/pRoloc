@@ -1,10 +1,12 @@
-\name{plsdaRegularisation}
+\name{plsdaOptimisation}
+\alias{plsdaOptimisation}
+\alias{plsdaOptimization}
 \alias{plsdaRegularisation}
-\title{plsda regularisation}
+\title{plsda parameter optimisation}
 \usage{
-  plsdaRegularisation(object, fcol = "markers",
-    ncomp = 1:6, times = 100, test.size = 0.2, xval = 5,
-    fun = mean, seed, verbose = TRUE, ...)
+  plsdaOptimisation(object, fcol = "markers", ncomp = 1:6,
+    times = 100, test.size = 0.2, xval = 5, fun = mean,
+    seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -39,13 +41,13 @@
   An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Hyper-parameters regularisation for the partial least
-  square distcriminant analysis algorithm.
+  Classification parameter optimisation for the partial
+  least square distcriminant analysis algorithm.
 }
 \author{
   Laurent Gatto
 }
 \seealso{
-  \code{\link{plsdaPrediction}} and example therein.
+  \code{\link{plsdaClassification}} and example therein.
 }
 

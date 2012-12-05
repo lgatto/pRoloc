@@ -18,7 +18,6 @@ importFrom(randomForest, randomForest)
 exportClasses(GenRegRes)
 
 exportMethods(chi2,
-              exprsToRatios,
               show,
               ## machine learning
               MLearn,

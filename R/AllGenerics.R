@@ -1,6 +1,3 @@
-## MSnSet
-setGeneric("exprsToRatios",function(object,...) standardGeneric("exprsToRatios"))
-
 ## machinelearning-framework
 setGeneric("getWarnings", function(object) standardGeneric("getWarnings"))
 setGeneric("getSeed", function(object) standardGeneric("getSeed"))

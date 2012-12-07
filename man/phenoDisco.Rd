@@ -2,11 +2,11 @@
 \alias{phenoDisco}
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
-  phenoDisco(MSnSetObject, fcol = "markers", times = 50,
-    GS = 10, allIter = FALSE, p = 0.05, r = 1, seed)
+  phenoDisco(object, fcol = "markers", times = 50, GS = 10,
+    allIter = FALSE, p = 0.05, r = 1, seed)
 }
 \arguments{
-  \item{MSnSetObject}{An instance of class \code{MSnSet}.}
+  \item{object}{An instance of class \code{MSnSet}.}
 
   \item{fcol}{A \code{character} indicating the organellar
   markers column name in feature meta-data. Default is
@@ -25,7 +25,7 @@
   Default is 0.05.}
 
   \item{r}{Correlation coefficent for Jaccard's Index.
-  Default is 1.}
+  Default is 1 (currently no other value is supported).}
 
   \item{seed}{An optional \code{numeric} of length 1
   specifing the random number generator seed to be used.}
@@ -36,8 +36,18 @@
 }
 \description{
   \code{phenoDisco} is a semi-supervised iterative approach
-  to predict protein localisation and detect new protein
-  clusters. It is based on the works of Yin et al. (2008).
+  to detect new protein clusters.
+}
+\details{
+  The algorithm performs a phenotype discovery analysis
+  which is based on the works of Yin et al. (2008). Using
+  this appoach one can identify putative subcellular
+  groupings in organelle proteomics experiments for for
+  more comprehensive validation in an unbiased fashion. The
+  method uses iterated rounds of Gaussian Mixture Modelling
+  using the Expectation Maximisation algorithm combined
+  with a non-parametric outlier detection test to identify
+  new phenotype clusters.
 }
 \examples{
 \dontrun{
@@ -49,7 +59,7 @@ plot2D(pdres, fcol = "pd")
 }
 }
 \author{
-  Lisa M. Simpson <lms79@cam.ac.uk>
+  Lisa M. Breckels <lms79@cam.ac.uk>
 }
 \references{
   Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong ST.

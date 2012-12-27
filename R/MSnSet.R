@@ -1,56 +1,3 @@
-getRatios <- function(x, log = FALSE) {
-  ## x: a vector of numerics
-  ## returns a vector of all xi/xj ratios
-  x <- as.numeric(x)
-  cmb <- combn(length(x),2)
-  r <- numeric(ncol(cmb))
-  for (i in 1:ncol(cmb)) {
-    j <- cmb[1,i]
-    k <- cmb[2,i]
-    ifelse(log,
-           r[i] <- x[j]-x[k],
-           r[i] <- x[j]/x[k])
-  }
-  return(r)
-}
-
-
-setMethod("exprsToRatios",
-          "MSnSet",
-          function(object, log = FALSE) {
-            if (ncol(object) == 2) {
-              ifelse(log,
-                     r <- exprs(object)[, 1] - exprs(object)[, 2],
-                     r <- exprs(object)[, 1] / exprs(object)[, 2])
-              dim(r) <- c(length(r), 1)
-            } else {
-              r <- apply(exprs(object), 1, getRatios, log)
-              r <- t(r)
-            }
-            rownames(r) <- featureNames(object)
-            cmb <- combn(ncol(object),2)            
-            ratio.description <- apply(cmb,2, function(x)
-                                       paste(sampleNames(object)[x[1]],
-                                             sampleNames(object)[x[2]],
-                                             sep="/"))
-            phenodata <- new("AnnotatedDataFrame",
-                             data=data.frame(ratio.description))
-            processingdata <- processingData(object)
-            processingdata@processing <- c(processingdata@processing,
-                                           paste("Intensities to ratios: ",date(),sep=""))
-            message("Dropping protocolData.")
-            res <- new("MSnSet",
-                       exprs = r,
-                       featureData = featureData(object),
-                       phenoData = phenodata,
-                       processingData = processingdata,
-                       experimentData = experimentData(object))
-            if (validObject(res))
-              return(res)
-          })
-
-
-
 ##' Convenience accessor to the organelle markers in an 'MSnSet'.
 ##' This function returns the organelle markers of an
 ##' \code{MSnSet} instance. As a side effect, it print out a marker table.
@@ -141,14 +88,14 @@ getPredictions <- function(object,
 ##' fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
 ##' getPredictions(dunkley2006, fcol = "assigned")
 ##' getPredictions(dunkley2006, fcol = "assigned", t = 0.5) 
-##' x <- updateClass(dunkley2006, fcol = "assigned", t = 0.5)
+##' x <- minClassScore(dunkley2006, fcol = "assigned", t = 0.5)
 ##' getPredictions(x, fcol = "assigned")
 ##' all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
 ##'           getPredictions(x, fcol = "assigned"))
-updateClass <- function(object,
-                        fcol,
-                        scol,
-                        t = 0) {
+minClassScore <- function(object,
+                          fcol,
+                          scol,
+                          t = 0) {
   stopifnot(!missing(fcol))
   lv <- c(levels(fData(object)[, fcol]),
           "unknown")
@@ -162,4 +109,34 @@ updateClass <- function(object,
   fData(object)[, fcol] <- factor(preds, levels = lv)
   if (validObject(object))
     object
+}
+
+##' This function updates an \code{MSnSet} instances and sets
+##' markers class to \code{unknown} if there are less than \code{n}
+##' instances. 
+##'
+##' @title Creates a reduced marker variable
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param n Minumum of marker instances per class.
+##' @param fcol The name of the markers column in the \code{featureData}
+##' slot. Default is \code{markers}.
+##' @return An instance of class \code{"\linkS4class{MSnSet}"} with a new
+##' feature variables, named after the original \code{fcol} variable and
+##' the \code{n} value. 
+##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' d2 <- minMarkers(dunkley2006, 20)
+##' getMarkers(dunkley2006)
+##' getMarkers(d2, fcol = "markers20")
+minMarkers <- function(object, n = 10, fcol = "markers") {
+  m <- as.character(fData(object)[, fcol])
+  tm <- table(m)
+  xx <- names(tm)[tm < n]
+  m[m %in% xx] <- "unknown"
+  fcol2 <- paste0(fcol, n)
+  fData(object)[, fcol2] <- factor(m)
+  if (validObject(object))
+    return(object)
 }

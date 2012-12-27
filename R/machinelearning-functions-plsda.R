@@ -1,7 +1,7 @@
-##' Hyper-parameters regularisation for the partial least square
+##' Classification parameter optimisation for the partial least square
 ##' distcriminant analysis algorithm.
 ##'
-##' @title plsda regularisation
+##' @title plsda parameter optimisation
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
@@ -10,23 +10,24 @@
 ##' Default is 100.
 ##' @param test.size The size of test data. Default is 0.2 (20 percent).
 ##' @param xval The \code{n}-cross validation. Default is 5.
-##' @param fun The function used to summarise the \code{times} macro F1 matrices.
+##' @param fun The function used to summarise the \code{xval} macro F1 matrices.
 ##' @param seed The optional random number generator seed.
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{plsda}} from package \code{caret}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
-##' @seealso \code{\link{plsdaPrediction}} and example therein.
+##' @seealso \code{\link{plsdaClassification}} and example therein.
+##' @aliases plsdaRegularisation plsdaOptimization
 ##' @author Laurent Gatto
-plsdaRegularisation <- function(object,
-                                fcol = "markers",
-                                ncomp = 1:6,
-                                times = 100,
-                                test.size = .2,
-                                xval = 5,                               
-                                fun = mean,
-                                seed,
-                                verbose = TRUE,
-                                ...) {
+plsdaOptimisation <- function(object,
+                              fcol = "markers",
+                              ncomp = 1:6,
+                              times = 100,
+                              test.size = .2,
+                              xval = 5,                               
+                              fun = mean,
+                              seed,
+                              verbose = TRUE,
+                              ...) {
 
   nparams <- 1 ## 2 or 1, depending on the algorithm
   mydata <- subsetAsDataFrame(object, fcol, train = TRUE)
@@ -39,7 +40,8 @@ plsdaRegularisation <- function(object,
 
   ## initialise output
   .warnings <- NULL
-  .matrices <- vector("list", length = times) 
+  .f1Matrices <- vector("list", length = times)
+  .testPartitions <- .cmMatrices <- vector("list", length = times) ## NEW
   .results <- matrix(NA, nrow = times, ncol = nparams + 1)
   colnames(.results) <- c("F1", "ncomp") 
   
@@ -57,6 +59,7 @@ plsdaRegularisation <- function(object,
     test.idx <- strata(mydata, "markers",
                        size = .size,
                        method = "srswor")$ID_unit
+    .testPartitions[[.times]] <- test.idx ## NEW
     
     .test1   <- mydata[ test.idx, ] ## 'unseen' test set
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
@@ -94,14 +97,15 @@ plsdaRegularisation <- function(object,
       }
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
-    .matrices[[.times]] <- .summaryF1
+    .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     .x <- which(names(.train1) == "markers")
     model <- caret::plsda(.train1[, -.x], .train1[, .x], 
                           probMethod = "Bayes", prior = NULL,
                           ncomp = .bestParams["ncomp"], ...)
     ans <- caret::predict.plsda(model, .test1[, -.x], type = "class") 
-    conf <- confusionMatrix(ans, .test1$markers)$table
+    .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW
+    
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
@@ -125,7 +129,9 @@ plsdaRegularisation <- function(object,
              hyperparameters = .hyperparams,
              design = .design,
              results = .results,
-             matrices = .matrices,
+             f1Matrices = .f1Matrices,
+             cmMatrices = .cmMatrices, ## NEW
+             testPartitions = .testPartitions, ## NEW
              datasize = list(
                "data" = dim(mydata),
                "data.markers" = table(mydata[, "markers"]),
@@ -143,6 +149,9 @@ plsdaRegularisation <- function(object,
   return(ans)
 }
 
+plsdaRegularisation <-
+  plsdaOptimization <-
+  plsdaOptimisation
 
 ##' Classification using the partial least square
 ##' distcriminant analysis algorithm.
@@ -150,7 +159,7 @@ plsdaRegularisation <- function(object,
 ##' @title plsda prediction
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param assessRes An instance of class \code{"\linkS4class{GenRegRes}"},
-##' as generated by \code{\link{plsdaRegularisation}}.
+##' as generated by \code{\link{plsdaOptimisation}}.
 ##' @param scores One of \code{"prediction"}, \code{"all"} or \code{"none"}
 ##' to report the score for the predicted class only, for all cluster
 ##' or none.
@@ -161,34 +170,35 @@ plsdaRegularisation <- function(object,
 ##' \code{plsda} and \code{plsda.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @aliases plsdaPrediction
 ##' @examples
 ##' \dontrun{
 ##' ## not running this one for time considerations
 ##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' ## reducing parameter search space and iterations 
-##' reg <- plsdaRegularisation(dunkley2006, ncomp = c(3, 10),  times = 2)
-##' reg
-##' plot(reg)
-##' levelPlot(reg)
-##' getRegularisedParams(reg)
-##' res <- plsdaPrediction(dunkley2006, reg)
+##' params <- plsdaOptimisation(dunkley2006, ncomp = c(3, 10),  times = 2)
+##' params
+##' plot(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- plsdaPrediction(dunkley2006, params)
 ##' getPredictions(res, fcol = "plsda")
 ##' getPredictions(res, fcol = "plsda", t = 0.75)
 ##' plot2D(res, fcol = "plsda")
 ##' }
-plsdaPrediction <- function(object,
-                            assessRes,
-                            scores = c("prediction", "all", "none"),
-                            ncomp,
-                            fcol = "markers") {
+plsdaClassification <- function(object,
+                                assessRes,
+                                scores = c("prediction", "all", "none"),
+                                ncomp,
+                                fcol = "markers") {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(ncomp))
-      stop("First run 'plsdaRegularisation' or set 'ncomp' manually.")
+      stop("First run 'plsdaOptimisation' or set 'ncomp' manually.")
     params <- c("ncomp" = ncomp)
   } else {
-    params <- getRegularisedParams(assessRes)
+    params <- getParams(assessRes)
     if (is.na(params["ncomp"]))
       stop("No 'ncomp' found.")
 
@@ -214,3 +224,4 @@ plsdaPrediction <- function(object,
     return(object)
 }
 
+plsdaPrediction <- plsdaClassification

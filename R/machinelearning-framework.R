@@ -5,7 +5,9 @@ setClass("GenRegRes",
                         log = "list",
                         seed = "integer",
                         results = "matrix", 
-                        matrices = "list",
+                        f1Matrices = "list", ## these are F1 matrices
+                        cmMatrices = "list", ## these are continengy mat
+                        testPartitions = "list",
                         datasize = "list")) 
 
 setMethod("show",
@@ -59,16 +61,12 @@ setMethod("getSeed", "GenRegRes", function(object) object@seed)
 
 setMethod("getF1Scores", "GenRegRes", function(object) object@results)
 
-setMethod("getRegularisedParams", "GenRegRes",
+setMethod("getParams", "GenRegRes",
           function(object) {
             res <- object@results
             best <- which.max(res[, "F1"])
             return(res[best, -1])
           })
-
-setMethod("getRegularizedParams", "GenRegRes",
-          function(object) getRegularisedParams(object))
-
 
 setMethod("plot", c("GenRegRes", "missing"),
           function(x, y, ...) {
@@ -98,7 +96,7 @@ setMethod("plot", c("GenRegRes", "missing"),
 
 setMethod("levelPlot", "GenRegRes", 
           function(object, fun = mean, ...) {
-            x <- summariseMatList(object@matrices, fun)            
+            x <- summariseMatList(object@f1Matrices, fun)            
             labs <- names(dimnames(x))
             p <- levelplot(x, ylab = labs[2], xlab = labs[1],
                            main = object@algorithm,

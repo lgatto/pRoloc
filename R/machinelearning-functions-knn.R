@@ -1,7 +1,7 @@
-##' Hyper-parameters regularisation for the k-nearest
+##' Classification parameter optimisation for the k-nearest
 ##' neighbours algorithm.
 ##'
-##' @title knn regularisation
+##' @title knn parameter optimisation
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
@@ -10,24 +10,25 @@
 ##' Default is 100.
 ##' @param test.size The size of test data. Default is 0.2 (20 percent).
 ##' @param xval The \code{n}-cross validation. Default is 5.
-##' @param fun The function used to summarise the \code{times} macro F1 matrices.
+##' @param fun The function used to summarise the \code{xval} macro F1 matrices.
 ##' @param seed The optional random number generator seed.
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{knn}} from package \code{class}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
-##' @seealso \code{\link{knnPrediction}} and example therein.
+##' @seealso \code{\link{knnClassification}} and example therein.
+##' @aliases knnOptimization knnRegularisation
 ##' @author Laurent Gatto
-knnRegularisation <- function(object,
-                              fcol = "markers",
-                              k = 3:12,
-                              times = 100,
-                              test.size = .2,
-                              xval = 5,                               
-                              fun = mean,
-                              seed,
-                              verbose = TRUE,
-                              ...) {
-
+knnOptimisation <- function(object,
+                            fcol = "markers",
+                            k = 3:12,
+                            times = 100,
+                            test.size = .2,
+                            xval = 5,                               
+                            fun = mean,
+                            seed,
+                            verbose = TRUE,
+                            ...) {
+  
   nparams <- 1 ## 2 or 1, depending on the algorithm
   mydata <- subsetAsDataFrame(object, fcol, train = TRUE)
 
@@ -39,7 +40,8 @@ knnRegularisation <- function(object,
   
   ## initialise output
   .warnings <- NULL
-  .matrices <- vector("list", length = times) 
+  .f1Matrices <- vector("list", length = times)
+  .testPartitions <- .cmMatrices <- vector("list", length = times) ## NEW
   .results <- matrix(NA, nrow = times, ncol = nparams + 1)
   colnames(.results) <- c("F1", "k") 
   
@@ -57,10 +59,10 @@ knnRegularisation <- function(object,
     test.idx <- strata(mydata, "markers",
                        size = .size,
                        method = "srswor")$ID_unit
+    .testPartitions[[.times]] <- test.idx ## NEW
     
     .test1   <- mydata[ test.idx, ] ## 'unseen' test set
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
-    
     xfolds <- createFolds(.train1$markers, xval, returnTrain = TRUE)
     ## stores the xval F1 matrices
     .matrixF1L <- vector("list", length = xval)  
@@ -92,13 +94,13 @@ knnRegularisation <- function(object,
       }
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
-    .matrices[[.times]] <- .summaryF1
+    .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     .clcol <- which(names(.train1) == "markers")
     ans <- class::knn(.train1[, -.clcol], .test1[, -.clcol],
                       k = .bestParams["k"],
                       cl = .train1[, .clcol], ...)
-    conf <- confusionMatrix(ans, .test1$markers)$table
+    .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW    
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
@@ -122,7 +124,9 @@ knnRegularisation <- function(object,
              hyperparameters = .hyperparams,
              design = .design,
              results = .results,
-             matrices = .matrices,
+             f1Matrices = .f1Matrices,
+             cmMatrices = .cmMatrices, ## NEW
+             testPartitions = .testPartitions, ## NEW
              datasize = list(
                "data" = dim(mydata),
                "data.markers" = table(mydata[, "markers"]),
@@ -140,13 +144,17 @@ knnRegularisation <- function(object,
   return(ans)
 }
 
-##' Classification using for the k-nearest
-##' neighbours algorithm.
+knnRegularisation <-
+  knnOptimization <-
+  knnOptimisation
+
+
+##' Classification using for the k-nearest neighbours algorithm.
 ##'
 ##' @title knn prediction
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param assessRes An instance of class \code{"\linkS4class{GenRegRes}"},
-##' as generated by \code{\link{knnRegularisation}}.
+##' as generated by \code{\link{knnOptimisation}}.
 ##' @param scores One of \code{"prediction"}, \code{"all"} or \code{"none"}
 ##' to report the score for the predicted class only, for all cluster
 ##' or none.
@@ -157,31 +165,32 @@ knnRegularisation <- function(object,
 ##' \code{knn} and \code{knn.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @aliases knnPrediction
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' ## reducing parameter search space and iterations 
-##' reg <- knnRegularisation(dunkley2006, k = c(3, 10), times = 3)
-##' reg
-##' plot(reg)
-##' levelPlot(reg)
-##' getRegularisedParams(reg)
-##' res <- knnPrediction(dunkley2006, reg)
+##' params <- knnOptimisation(dunkley2006, k = c(3, 10), times = 3)
+##' params
+##' plot(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- knnClassification(dunkley2006, params)
 ##' getPredictions(res, fcol = "knn")
 ##' getPredictions(res, fcol = "knn", t = 0.75)
 ##' plot2D(res, fcol = "knn")
-knnPrediction <- function(object,
-                          assessRes,
-                          scores = c("prediction", "all", "none"),
-                          k,
-                          fcol = "markers") {
+knnClassification <- function(object,
+                              assessRes,
+                              scores = c("prediction", "all", "none"),
+                              k,
+                              fcol = "markers") {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(k))
-      stop("First run 'knnRegularisation' or set 'k' manually.")
+      stop("First run 'knnOptimisation' or set 'k' manually.")
     params <- c("k" = k)
   } else {
-    params <- getRegularisedParams(assessRes)
+    params <- getParams(assessRes)
     if (is.na(params["k"]))
       stop("No 'k' found.")
 
@@ -208,3 +217,4 @@ knnPrediction <- function(object,
     return(object)
 }
 
+knnPrediction <- knnClassification

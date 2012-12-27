@@ -1,14 +1,14 @@
 ## Filter script
 ## Get rid of rows where there are missing values
-filter <- function(MSnSetObject) {
+filter <- function(object) {
   b <- NULL
-  for (j in 1:nrow(exprs(MSnSetObject))) {
+  for (j in 1:nrow(exprs(object))) {
     a <- NULL
-    for (i in 1:ncol(exprs(MSnSetObject))) {
-      if (is.nan(exprs(MSnSetObject)[j,i])) {
+    for (i in 1:ncol(exprs(object))) {
+      if (is.nan(exprs(object)[j,i])) {
         a <- c(a,j)
       }
-      if (is.na(exprs(MSnSetObject)[j,i])) {
+      if (is.na(exprs(object)[j,i])) {
         a <- c(a,j)
       }
     }
@@ -18,15 +18,15 @@ filter <- function(MSnSetObject) {
   }
   
   if (length(b > 0)) {
-    MSnSetObject <- MSnSetObject[-b, ]
+    object <- object[-b, ]
   }
-  return (MSnSetObject)
+  return (object)
 }
 
 ## Function to get new phenotypes
 ## Input is the output from phenoDisco and corresponding correlation matrix for 
 ## the unlabelledSet, r is the correlation coefficient
-## Created by L Simpson 09/08/2011
+## Created by L Breckels 09/08/2011
 ## INPUTS: phenoTrackOutput = output from phenoDiscoTracking, groupSize = needed
 ## to define the minimum group size size
 getNewClusters <- function(phenoTrackOutput, 
@@ -71,7 +71,7 @@ getNewClusters <- function(phenoTrackOutput,
        protIDs = group)
 }
 
-## Function for performing outlier detection - L. Simpson - 16/06/2011  
+## Function for performing outlier detection - L. Breckels - 16/06/2011  
 ## L: labelled, X: unlabelled, N: number of iterations, p: significance level 
 gmmOutlier <- function(L, X, N = 500, p=0.05) {
   ## Make X Matrix
@@ -151,7 +151,7 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
   }
 }
 
-## tracking.R (L Simpson - Date last modified 15/08/2012)
+## tracking.R (L Breckels - Date last modified 15/08/2012)
 ## 
 ## This is a core part of the phenoDisco algorihtm. This function (1) transforms 
 ## the data by PCA, then loops over k classes and (2) clusters each set k U X 
@@ -163,8 +163,6 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
 ## candidates are merged or rejected accordingly.
 ##
 tracking <- function(data, alpha = 0.05, markerCol = "markers") {
-  ## ===STAGE 0=== Filter data (check no missing values/remove rows with NA)
-  data <- filter(data)
   indexCol <- which(colnames(fData(data))==markerCol)
   ## ===STAGE 1=== TRANSFORM DATA by PCA to reduce data complexity
   k <- names(table(fData(data)[,indexCol]))
@@ -243,22 +241,22 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers") {
 }
 
 ## Convenience function for updating MSnSet with new phenotypes
-updateMSnSetObject  <- function(MSnSetToUpdate,
+updateobject  <- function(MSnSetToUpdate,
                                 newPhenotypes,
                                 newClasses,
                                 originalMarkerColumnName = "markers",
                                 oldMarkerColumnName = "markers",
                                 newMarkerColumnName = "newMarkers") {
-  newMSnSetObject <- MSnSetToUpdate
-  indexOld <- which(colnames(fData(newMSnSetObject)) == oldMarkerColumnName)
-  indexNew <- ncol(fData(newMSnSetObject)) + 1
-  indexOriginal <- which(colnames(fData(newMSnSetObject)) == originalMarkerColumnName)
+  newobject <- MSnSetToUpdate
+  indexOld <- which(colnames(fData(newobject)) == oldMarkerColumnName)
+  indexNew <- ncol(fData(newobject)) + 1
+  indexOriginal <- which(colnames(fData(newobject)) == originalMarkerColumnName)
   
   ## Now need to add new newPhenotypes and delete these proteins from unlabelled
   if (length(newPhenotypes$protIDs) > 0) {
     if (class(newPhenotypes$coords)!="NULL") {
-      indOrigM <- length(table(fData(newMSnSetObject)[,indexOriginal]))
-      indOldM <- length(table(fData(newMSnSetObject)[,indexOld]))
+      indOrigM <- length(table(fData(newobject)[,indexOriginal]))
+      indOldM <- length(table(fData(newobject)[,indexOld]))
       
       nInd <- indOldM - indOrigM
       newLabels <- sapply(1:length(newPhenotypes$coords), 
@@ -267,58 +265,67 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
       names(newPhenotypes$protIDs) <- newLabels
       
       index <- lapply(newPhenotypes$protIDs, function(z) 
-                      as.vector(sapply(z, function(x) which(featureNames(newMSnSetObject)==x))))
+                      as.vector(sapply(z, function(x) which(featureNames(newobject)==x))))
       
       
-      fData(newMSnSetObject)[,indexNew] <- 
-        as.character(fData(newMSnSetObject)[,indexOld])
+      fData(newobject)[,indexNew] <- 
+        as.character(fData(newobject)[,indexOld])
       
       for (i in 1:length(newPhenotypes$protIDs)) {
-        fData(newMSnSetObject)[index[[i]], indexNew] <- 
+        fData(newobject)[index[[i]], indexNew] <- 
           rep(x=names(index)[i], times=length(index[[i]]))
       }
       
       index <- lapply(newClasses, function(z) 
-                      as.vector(sapply(z, function(x) which(featureNames(newMSnSetObject)==x))))
+                      as.vector(sapply(z, function(x) which(featureNames(newobject)==x))))
       
       
       for (i in 1:length(newClasses)) {
-        fData(newMSnSetObject)[index[[i]], indexNew] <-
+        fData(newobject)[index[[i]], indexNew] <-
           rep(x=names(index)[i], times=length(index[[i]]))
       }
       
-      fData(newMSnSetObject)[,indexNew] <- 
-        as.factor(fData(newMSnSetObject)[,indexNew])
-      colnames(fData(newMSnSetObject))[indexNew] <- newMarkerColumnName
+      fData(newobject)[,indexNew] <- 
+        as.factor(fData(newobject)[,indexNew])
+      colnames(fData(newobject))[indexNew] <- newMarkerColumnName
     }
   } else {
     
-    fData(newMSnSetObject)[,indexNew] <- 
-      as.character(fData(newMSnSetObject)[,indexOld])
+    fData(newobject)[,indexNew] <- 
+      as.character(fData(newobject)[,indexOld])
     
     index <- lapply(newClasses, function(z) 
-                    as.vector(sapply(z, function(x) which(featureNames(newMSnSetObject)==x))))
+                    as.vector(sapply(z, function(x) which(featureNames(newobject)==x))))
     
     for (i in 1:length(newClasses)) {
-      fData(newMSnSetObject)[index[[i]], indexNew] <-
+      fData(newobject)[index[[i]], indexNew] <-
         rep(x=names(index)[i], times=length(index[[i]]))
     }
     
-    fData(newMSnSetObject)[,indexNew] <- 
-      as.factor(fData(newMSnSetObject)[,indexNew])
-    colnames(fData(newMSnSetObject))[indexNew] <- newMarkerColumnName
+    fData(newobject)[,indexNew] <- 
+      as.factor(fData(newobject)[,indexNew])
+    colnames(fData(newobject))[indexNew] <- newMarkerColumnName
   }
   
-  return(newMSnSetObject)
+  return(newobject)
 }
 
 ##' Runs the \code{phenoDisco} algorithm.
 ##' 
-##' \code{phenoDisco} is a semi-supervised iterative approach to predict
-##' protein localisation and detect new protein clusters. It is based on the
-##' works of Yin et al. (2008).
+##' \code{phenoDisco} is a semi-supervised iterative approach to detect new
+##' protein clusters. 
 ##' 
-##' @param MSnSetObject An instance of class \code{MSnSet}.
+##'
+##' The algorithm performs a phenotype discovery analysis which is based on
+##' the works of Yin et al. (2008). Using this appoach one can identify 
+##' putative subcellular groupings in organelle proteomics experiments for 
+##' for more comprehensive validation in an unbiased fashion. The method uses
+##' iterated rounds of Gaussian Mixture Modelling using the Expectation
+##' Maximisation algorithm combined with a non-parametric outlier detection
+##' test to identify new phenotype clusters.
+##'
+##'  
+##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.
 ##' @param times Number of runs of tracking. Default is 50.
@@ -328,12 +335,13 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 ##' iterations should be saved. Default is \code{FALSE}.
 ##' @param p Significance level for outlier detection. Default is
 ##' 0.05.
-##' @param r Correlation coefficent for Jaccard's Index. Default is 1.
+##' @param r Correlation coefficent for Jaccard's Index. Default is 1 
+##' (currently no other value is supported).
 ##' @param seed An optional \code{numeric} of length 1 specifing the
 ##' random number generator seed to be used. 
 ##' @return An instance of class \code{MSnSet} containg the \code{phenoDisco}
 ##' predictions.
-##' @author Lisa M. Simpson <lms79@@cam.ac.uk>
+##' @author Lisa M. Breckels <lms79@@cam.ac.uk>
 ##' @references
 ##' Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong ST. Using
 ##' iterative cluster merging with improved gap statistics to perform online
@@ -348,7 +356,7 @@ updateMSnSetObject  <- function(MSnSetToUpdate,
 ##' getPredictions(pdres, fcol = "pd", scol = NULL)
 ##' plot2D(pdres, fcol = "pd")
 ##' }
-phenoDisco <- function(MSnSetObject,
+phenoDisco <- function(object,
                        fcol = "markers",
                        times = 50,
                        GS = 10,
@@ -356,7 +364,7 @@ phenoDisco <- function(MSnSetObject,
                        p = 0.05,
                        r = 1,
                        seed) {
-  ## phenoDisco.R (Lisa's phenoDisco code - last updated 15/08/2012)
+  ## phenoDisco.R (Lisa's phenoDisco code - last updated 07/12/2012)
   ## fcol = feature column, times = number of runs of tracking, 
   ## GS = group size (how many proteins make a group?),
   ## p = significance level for outlier detection test,
@@ -366,17 +374,28 @@ phenoDisco <- function(MSnSetObject,
     set.seed(seed)
   }
 
-  if (!fcol %in% fvarLabels(MSnSetObject))
+  if (!fcol %in% fvarLabels(object))
     stop("'", fcol, "' not found in feature variables.")
   
   ## Initial settings
-  indexFcol <- which(colnames(fData(MSnSetObject)) == fcol)
+  indexFcol <- which(colnames(fData(object)) == fcol)
   track <- phenotypes <- vector("list")
   currentClasses <- list()
   cond1 <- cond2 <- TRUE
   original <- fcol
   i <- 0
-
+  ## Filter data (check no missing values/remove rows with NA)
+  object <- filter(object)
+  ## Remove duplicated rows (i.e. identical profiles and add back later)
+  duplicatedRows = FALSE
+  if (anyDuplicated(exprs(object))>0) {
+    duplicatedRows = TRUE
+    foo <- duplicated(exprs(object))
+    duplicateSet <- object[foo,]
+    fData(duplicateSet)$pd <- as.character(fData(duplicateSet)$markers)
+    uniqueSet <- object[!foo,]
+    object <- uniqueSet
+  }  
   ## Initiate while loop until no new merges or phenotypes
   while (cond1 & cond2) {
     i <- i+1
@@ -386,9 +405,9 @@ phenoDisco <- function(MSnSetObject,
     message(paste("Iteration", i)) 
     track[[i]] <- replicate(n = times, 
                             expr = tracking(
-                              data = MSnSetObject, 
-                              markerCol = fcol,
-                              alpha = p))
+                            data = object, 
+                            markerCol = fcol,
+                            alpha = p))
     ## Update known classes with members assigned to that class
     ## over all iterations of tracking
     classes <- track[[i]][,1]$k
@@ -421,7 +440,7 @@ phenoDisco <- function(MSnSetObject,
       cond2 <- length(phenotypes[[1]]$coords) > 0
     }
     ## Update MSnsetObject to include new phenotypes as classes
-    MSnSetObject <- updateMSnSetObject(MSnSetObject, 
+    object <- updateobject(object, 
                                        phenotypes[[i]],
                                        currentClasses[[i]],
                                        oldMarkerColumnName = fcol,
@@ -429,24 +448,38 @@ phenoDisco <- function(MSnSetObject,
                                        originalMarkerColumnName = original)
     fcol <- newPhenoName 
   } ## end of while
-  foo <- length(names(fData(MSnSetObject)))
-  names(fData(MSnSetObject))[foo] <- "pd"
-
+  foo <- length(names(fData(object)))
+  names(fData(object))[foo] <- "pd"
+  
+  # Add back in any duplicated rows with localisation assigned from pd
+  if (duplicatedRows) {
+  
+    ind <- apply(exprs(duplicateSet), 1, function(x) 
+      which(apply(exprs(object), 1, function(z) all(x==z))))
+    
+    for (i in 1:length(ind)){
+      fData(duplicateSet)$pd[i] <- as.character(fData(object)$pd[ind[i]])
+    }
+    
+    fData(object)$pd <- as.character(fData(object)$pd)
+    object <- combine(object, duplicateSet)
+  }
+  
   if (missing(seed)) {
     procmsg <- paste0("Run phenoDisco using '", original, "': ", date())
   } else {
     procmsg <- paste0("Run phenoDisco using '", original,
                       "' (seed, ", seed, "): ", date())
   }  
-  MSnSetObject@processingData@processing <-
-    c(processingData(MSnSetObject)@processing,
+  object@processingData@processing <-
+    c(processingData(object)@processing,
       procmsg)
 
   if (!allIter) {
-    idx <- grep(".pd", fvarLabels(MSnSetObject))
-    fData(MSnSetObject) <- fData(MSnSetObject)[, -idx]
+    idx <- grep(".pd", fvarLabels(object))
+    fData(object) <- fData(object)[, -idx]
   }
   
-  if (validObject(MSnSetObject))
-    return(MSnSetObject)
+  if (validObject(object))
+    return(object)
 }

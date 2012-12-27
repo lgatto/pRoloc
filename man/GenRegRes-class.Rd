@@ -6,6 +6,8 @@
 \alias{GenRegRes-class}
 \alias{getF1Scores}
 \alias{getF1Scores,GenRegRes-method}
+\alias{getParams}
+\alias{getParams,GenRegRes-method}
 \alias{getRegularisedParams}
 \alias{getRegularisedParams,GenRegRes-method}
 \alias{getRegularizedParams}
@@ -49,8 +51,12 @@
       dimenstions \code{times} (see \code{design}) by number of
       hyperparameters + 1 storing the macro F1 values for the respective
       best hyper-parameters for each replication. }
-    \item{\code{matrices}:}{Object of class \code{"list"} with
-      respective cross-validation F1 matrices.  }
+    \item{\code{f1Matrices}:}{Object of class \code{"list"} with
+      respective \code{times} cross-validation F1 matrices.  }
+    \item{\code{cmMatrices}:}{Object of class \code{"list"} with
+      respective \code{times} contingency matrices. }
+    \item{\code{testPartitions}:}{Object of class \code{"list"} with
+      respective \code{times} test partitions. }    
     \item{\code{datasize}:}{Object of class \code{"list"} with details
       about the respective inner and outter training and testing data
       sizes.  }

@@ -1,7 +1,7 @@
-##' Hyper-parameters regularisation for artificial neural network
+##' Classification parameter optimisation for artificial neural network
 ##' algorithm.
 ##'
-##' @title nnet regularisation
+##' @title nnet parameter optimisation
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
@@ -11,24 +11,25 @@
 ##' Default is 100.
 ##' @param test.size The size of test data. Default is 0.2 (20 percent).
 ##' @param xval The \code{n}-cross validation. Default is 5.
-##' @param fun The function used to summarise the \code{times} macro F1 matrices.
+##' @param fun The function used to summarise the \code{xval} macro F1 matrices.
 ##' @param seed The optional random number generator seed.
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
 ##' @param ... Additional parameters passed to \code{\link{nnet}} from package \code{nnet}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
-##' @seealso \code{\link{nnetPrediction}} and example therein.
+##' @seealso \code{\link{nnetClassification}} and example therein.
+##' @aliases nnetRegularisation nnetOptimization
 ##' @author Laurent Gatto
-nnetRegularisation <- function(object,
-                               fcol = "markers",
-                               decay = c(0, 10^(-1:-5)),
-                               size = seq(1, 10, 2),
-                               times = 100,
-                               test.size = .2,
-                               xval = 5,                               
-                               fun = mean,
-                               seed,
-                               verbose = TRUE,
-                               ...) {
+nnetOptimisation <- function(object,
+                             fcol = "markers",
+                             decay = c(0, 10^(-1:-5)),
+                             size = seq(1, 10, 2),
+                             times = 100,
+                             test.size = .2,
+                             xval = 5,                               
+                             fun = mean,
+                             seed,
+                             verbose = TRUE,
+                             ...) {
 
   nparams <- 2 ## 2 or 1, depending on the algorithm
   mydata <- subsetAsDataFrame(object, fcol, train = TRUE)
@@ -41,7 +42,8 @@ nnetRegularisation <- function(object,
 
   ## initialise output
   .warnings <- NULL
-  .matrices <- vector("list", length = times) 
+  .f1Matrices <- vector("list", length = times) 
+  .testPartitions <- .cmMatrices <- vector("list", length = times) ## NEW
   .results <- matrix(NA, nrow = times, ncol = nparams + 1)
   colnames(.results) <- c("F1", "decay", "size") 
   
@@ -59,6 +61,7 @@ nnetRegularisation <- function(object,
     test.idx <- strata(mydata, "markers",
                        size = .size,
                        method = "srswor")$ID_unit
+    .testPartitions[[.times]] <- test.idx ## NEW
     
     .test1   <- mydata[ test.idx, ] ## 'unseen' test set
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
@@ -101,7 +104,7 @@ nnetRegularisation <- function(object,
     }
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
-    .matrices[[.times]] <- .summaryF1
+    .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     model <- nnet(markers ~ ., .train1,
                   decay = .bestParams["decay"],
@@ -109,7 +112,7 @@ nnetRegularisation <- function(object,
                   trace = FALSE, ...)
     ans <- nnet:::predict.nnet(model, .test1, type = "class")
     ans <- factor(as.character(ans), levels = levels(.train1$markers)) ## see comment above
-    conf <- confusionMatrix(ans, .test1$markers)$table
+    .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW    
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
@@ -133,8 +136,10 @@ nnetRegularisation <- function(object,
              seed = .seed,
              hyperparameters = .hyperparams,
              design = .design,
-             results = .results,
-             matrices = .matrices,
+             results = .results,             
+             f1Matrices = .f1Matrices,
+             cmMatrices = .cmMatrices, ## NEW
+             testPartitions = .testPartitions, ## NEW
              datasize = list(
                "data" = dim(mydata),
                "data.markers" = table(mydata[, "markers"]),
@@ -152,6 +157,9 @@ nnetRegularisation <- function(object,
   return(ans)
 }
 
+nnetRegularisation <-
+  nnetOptimization <-
+  nnetOptimisation
 
 ##' Classification using the artificial neural network
 ##' algorithm.
@@ -159,7 +167,7 @@ nnetRegularisation <- function(object,
 ##' @title nnet prediction
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param assessRes An instance of class \code{"\linkS4class{GenRegRes}"},
-##' as generated by \code{\link{nnetRegularisation}}.
+##' as generated by \code{\link{nnetOptimisation}}.
 ##' @param scores One of \code{"prediction"}, \code{"all"} or \code{"none"}
 ##' to report the score for the predicted class only, for all cluster
 ##' or none.
@@ -171,33 +179,34 @@ nnetRegularisation <- function(object,
 ##' \code{nnet} and \code{nnet.scores} feature variables storing the
 ##' classification results and scores respectively.
 ##' @author Laurent Gatto
+##' @aliases nnetPrediction
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' ## reducing parameter search space and iterations 
-##' reg <- nnetRegularisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
-##' reg
-##' plot(reg)
-##' levelPlot(reg)
-##' getRegularisedParams(reg)
-##' res <- nnetPrediction(dunkley2006, reg)
+##' params <- nnetOptimisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
+##' params
+##' plot(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- nnetPrediction(dunkley2006, params)
 ##' getPredictions(res, fcol = "nnet")
 ##' getPredictions(res, fcol = "nnet", t = 0.75)
 ##' plot2D(res, fcol = "nnet")
-nnetPrediction <- function(object,                            
-                           assessRes,
-                           scores = c("prediction", "all", "none"),
-                           decay,
-                           size,
-                           fcol = "markers") {
+nnetClassification <- function(object,                            
+                               assessRes,
+                               scores = c("prediction", "all", "none"),
+                               decay,
+                               size,
+                               fcol = "markers") {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(decay) | missing(size))
-      stop("First run 'nnetRegularisation' or set 'decay' and 'size' manually.")
+      stop("First run 'nnetOptimisation' or set 'decay' and 'size' manually.")
     params <- c("decay" = decay,
                 "size" = size)
   } else {
-    params <- getRegularisedParams(assessRes)
+    params <- getParams(assessRes)
     if (is.na(params["decay"]))
       stop("No 'decay' found.")
     if (is.na(params["size"]))
@@ -225,3 +234,6 @@ nnetPrediction <- function(object,
   if (validObject(object))
     return(object)
 }
+
+nnetPrediction <- nnetClassification
+

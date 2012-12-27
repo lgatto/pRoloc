@@ -83,3 +83,13 @@ summariseMatList <- function(matList, fun = mean, ...) {
   ans
 }
 
+makePartList <- function(n, x) {
+  .mkList2 <- function(i, x) {
+    .res <- vector("list", length = x)
+    names(.res) <- paste0("xval", 1:x)
+    return(.res)
+  }
+  res <- lapply(seq_len(n), .mkList2, x)
+  names(res) <- paste0("n", seq_len(n))
+  return(res)
+}

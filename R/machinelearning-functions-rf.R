@@ -154,9 +154,15 @@ rfOptimisation <- function(object,
   return(ans)
 }
 
-rfRegularisation <-
-  rfOptimization <-
+rfOptimization <-
   rfOptimisation
+
+rfRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'rfOptimisation'.")
+  rfOptimisation(...)  
+}
+
+
 
 ##' Classification using the random forest algorithm.
 ##'
@@ -224,4 +230,7 @@ rfClassification <- function(object,
     return(object)
 }
 
-rfPrediction <- rfClassification
+rfPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'rfClassification'.")
+  rfClassification(...)
+}

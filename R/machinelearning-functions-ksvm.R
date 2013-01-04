@@ -153,10 +153,13 @@ ksvmOptimisation <- function(object,
   return(ans)
 }
 
-ksvmRegularisation <-
-  ksvmOptimization <-
+ksvmOptimization <-
   ksvmOptimisation
 
+ksvmRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'ksvmOptimisation'.")
+  ksvmOptimisation(...)  
+}
   
 
 ##' Classification using the support vector
@@ -226,4 +229,7 @@ ksvmClassification <- function(object,
     return(object)
 }
 
-ksvmPrediction <- ksvmClassification
+ksvmPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'ksvmClassification'.")
+  ksvmClassification(...)
+}

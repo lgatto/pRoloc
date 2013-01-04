@@ -142,9 +142,14 @@ nbOptimisation <- function(object,
   return(ans)
 }
 
-nbRegularisation <-
-  nbOptimization <-
+nbOptimization <-
   nbOptimisation
+
+nbRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'nbOptimisation'.")
+  nbOptimisation(...)  
+}
+
 
 ##' Classification using the naive Bayes algorithm.
 ##'
@@ -213,4 +218,8 @@ nbClassification <- function(object,
     return(object)
 }
 
-nbPrediction <- nbClassification
+nbPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'nbClassification'.")
+  nbClassification(...)
+}
+

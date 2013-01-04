@@ -157,9 +157,15 @@ nnetOptimisation <- function(object,
   return(ans)
 }
 
-nnetRegularisation <-
-  nnetOptimization <-
+nnetOptimization <-
   nnetOptimisation
+
+nnetRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'nnetOptimisation'.")
+  nnetOptimisation(...)  
+}
+
+
 
 ##' Classification using the artificial neural network
 ##' algorithm.
@@ -235,5 +241,8 @@ nnetClassification <- function(object,
     return(object)
 }
 
-nnetPrediction <- nnetClassification
+nnetPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'nnetClassification'.")
+  nnetClassification(...)
+}
 

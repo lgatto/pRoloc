@@ -150,9 +150,13 @@ svmOptimisation <- function(object,
   return(ans)
 }
 
-svmRegularisation <-
-  svmOptimization <-
+svmOptimization <-
   svmOptimisation
+
+svmRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'svmOptimisation'.")
+  svmOptimisation(...)  
+}
 
 ##' Classification using the support vector
 ##' machine algorithm.
@@ -228,4 +232,8 @@ svmClassification <- function(object,
     return(object)
 }
 
-svmPrediction <- svmClassification
+svmPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'svmClassification'.")
+  svmClassification(...)
+}
+

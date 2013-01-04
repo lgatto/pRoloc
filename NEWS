@@ -3,6 +3,7 @@ CHANGES IN VERSION 0.99.6
  o removed updateClass man <2013-01-03 Thu>
  o removed old Rd files <2013-01-03 Thu>
  o Deprecating *Regularisation and *Prediction function <2013-01-03 Thu>
+ o Updated new names in test_ml.R <2013-01-04 Fri>
 
 CHANGES IN VERSION 0.99.5
 -------------------------

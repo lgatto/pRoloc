@@ -149,9 +149,14 @@ plsdaOptimisation <- function(object,
   return(ans)
 }
 
-plsdaRegularisation <-
-  plsdaOptimization <-
+plsdaOptimization <-
   plsdaOptimisation
+
+plsdaRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'plsdaOptimisation'.")
+  plsdaOptimisation(...)  
+}
+
 
 ##' Classification using the partial least square
 ##' distcriminant analysis algorithm.
@@ -224,4 +229,7 @@ plsdaClassification <- function(object,
     return(object)
 }
 
-plsdaPrediction <- plsdaClassification
+plsdaPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'plsdaClassification'.")
+  plsdaClassification(...)
+}

@@ -144,9 +144,13 @@ knnOptimisation <- function(object,
   return(ans)
 }
 
-knnRegularisation <-
-  knnOptimization <-
+knnOptimization <-
   knnOptimisation
+
+knnRegularisation <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'knnOptimisation'.")
+  knnOptimisation(...)  
+}
 
 
 ##' Classification using for the k-nearest neighbours algorithm.
@@ -217,4 +221,7 @@ knnClassification <- function(object,
     return(object)
 }
 
-knnPrediction <- knnClassification
+knnPrediction <- function(...) {
+  .Deprecated(msg = "This function has been replaced by 'knnClassification'.")
+  knnClassification(...)
+}

@@ -12,9 +12,12 @@ If you do not have a recent R version, you can install
 the `pRoloc` dependencies as follow and install `pRoloc` manually.
 
 ```r
-source("http://proteome.sysbiol.cam.ac.uk/lgatto/src/getDependencies.R")
-source("http://proteome.sysbiol.cam.ac.uk/lgatto/src/installDependencie.R")
-installDependencies("pRoloc")
+deps <- c("MSnbase", "MLInterfaces", "mclust", "MSBVAR",
+	      "caret", "e1071", "sampling", "class", "kernlab",
+		  "nnet", "randomForest", "proxy", "BiocGenerics",
+		  "RColorBrewer", "scales", "pRolocdata")
+source("http://proteome.sysbiol.cam.ac.uk/lgatto/src/installPackages.R")
+installPackages("pRoloc")
 ```
 
 Download the appropriate package from the [Bioconductor landing page](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)

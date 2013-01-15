@@ -242,11 +242,7 @@ The individual parts of this data object can be accessed with their respective a
   
 The advantage of this structure is that it can be manipulated as a whole and the respective parts of the data object will remain compatible. The code chunk below, for example, shows how to extract the first 5 proteins and 2 first samples:
 
-<<<<<<< HEAD
-<<showSubset>>=
-=======
 <<showSubset>>= 
->>>>>>> knitr 1.0 compatibility
 smallTan <- tan2009r1[1:5, 1:2]
 dim(smallTan)
 exprs(smallTan)
@@ -254,11 +250,7 @@ exprs(smallTan)
 
 Several data sets, including the 3 replicates from \cite{Tan2009}, are distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata} package. Others include the \textit{Arabidopsis thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006}) and the mouse PCP data from \cite{Foster2006} (\Robject{foster2006}). Each data set can be loaded with the \Rfunction{data} function, as show below for the first replicate from \cite{Tan2009}.
 
-<<<<<<< HEAD
-<<loadTan1>>=
-=======
 <<loadTan1>>= 
->>>>>>> knitr 1.0 compatibility
 data(tan2009r1)
 @ 
 
@@ -462,11 +454,7 @@ params
 @ 
 
 \begin{figure}[!hbt]
-<<<<<<< HEAD
-<<params, dev='pdf', fig.width=4, fig.height=4, echo=TRUE, out.width='.49\\\\linewidth'>>=
-=======
 <<params, dev='pdf', fig.width=4, fig.height=4, echo=TRUE, out.width='.49\\linewidth'>>=
->>>>>>> knitr 1.0 compatibility
 plot(params)
 levelPlot(params)
 @ 

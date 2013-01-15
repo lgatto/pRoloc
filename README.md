@@ -1,5 +1,5 @@
 `pRoloc` is a Bioconductor package for the analysis of organelle proteomics data analysis.
-It is available from Bioconductor >= 2.12.
+It is available from Bioconductor `>= 2.12`.
 
 The preferred installation procedure uses the Bioconductor infrastructure:
 
@@ -18,4 +18,4 @@ installDependencies("pRoloc")
 ```
 
 Download the appropriate package from the [Bioconductor landing page](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
-and install manually using `install.packages(..., repos = "NULL")` or other the GUI front-end of your favourite R interface.
+and install manually using `install.packages(..., repos = "NULL")` or the GUI front-end of your favourite R interface.

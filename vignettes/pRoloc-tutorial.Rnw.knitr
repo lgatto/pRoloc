@@ -580,7 +580,7 @@ Data analysis is not a trivial task, and in general, one can not assume that any
 
 All software and respective versions used to produce this document are listed below.
 
-<<label='sessioninfo', results=tex, echo=FALSE>>=
+<<sessioninfo, results='asis', echo=FALSE>>=
 toLatex(sessionInfo())
 @
 

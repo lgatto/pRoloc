@@ -42,8 +42,8 @@
   The algorithm performs a phenotype discovery analysis
   which is based on the works of Yin et al. (2008). Using
   this appoach one can identify putative subcellular
-  groupings in organelle proteomics experiments for for
-  more comprehensive validation in an unbiased fashion. The
+  groupings in organelle proteomics experiments for more
+  comprehensive validation in an unbiased fashion. The
   method uses iterated rounds of Gaussian Mixture Modelling
   using the Expectation Maximisation algorithm combined
   with a non-parametric outlier detection test to identify

@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{hpar}
+%\VignetteIndexEntry{pRoloc tutorial}
 %\VignettePackage{pRoloc}
 \documentclass[10pt]{article}
 \begin{document}

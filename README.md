@@ -15,10 +15,13 @@ the `pRoloc` dependencies as follow and install `pRoloc` manually.
 deps <- c("MSnbase", "MLInterfaces", "mclust", "MSBVAR",
 	      "caret", "e1071", "sampling", "class", "kernlab",
 		  "nnet", "randomForest", "proxy", "BiocGenerics",
-		  "RColorBrewer", "scales", "pRolocdata")
+		  "RColorBrewer", "scales")
 source("http://proteome.sysbiol.cam.ac.uk/lgatto/src/installPackages.R")
-installPackages("pRoloc")
+installPackages(deps)
 ```
 
 Download the appropriate package from the [Bioconductor landing page](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
 and install manually using `install.packages(..., repos = "NULL")` or the GUI front-end of your favourite R interface.
+
+You can also install the associated data package [`pRolocdata'](http://bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html) 
+with multiple test data sets.

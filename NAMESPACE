@@ -1,6 +1,8 @@
 import(lattice)
 import(BiocGenerics)
 import(mclust)
+import(MASS)
+import(kernlab) ## previously only imported ksvm
 
 importFrom(class, knn)
 importFrom(RColorBrewer, brewer.pal)
@@ -11,7 +13,6 @@ importFrom(scales, col2hcl, alpha)
 importFrom(caret, createFolds, confusionMatrix, plsda, predict.plsda)
 importFrom(sampling, strata)
 importFrom(e1071, svm, naiveBayes)
-importFrom(kernlab, ksvm)
 importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
@@ -34,8 +35,6 @@ export(getPredictions,
        empPvalues,
        getStockcol, getStockpch,
        getUnknowncol, getUnknownpch,
-       minClassScore,
-       minMarkers,
        ## -- plotting
        plot2D,
        addLegend,
@@ -53,6 +52,7 @@ export(getPredictions,
        nbPrediction, nbClassification, 
        nnetRegularisation, nnetOptimisation, nnetOptimization, 
        nnetPrediction, nnetClassification,
+       perTurboOptimisation, perTurboOptimization, perTurboClassification, 
        getParams, 
        getRegularisedParams, getRegularizedParams,       
        rfRegularisation, rfOptimisation, rfOptimization, 

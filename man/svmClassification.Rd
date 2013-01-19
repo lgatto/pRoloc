@@ -47,7 +47,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- svmPrediction(dunkley2006, params)
+res <- svmClassification(dunkley2006, params)
 getPredictions(res, fcol = "svm")
 getPredictions(res, fcol = "svm", t = 0.75)
 plot2D(res, fcol = "svm")

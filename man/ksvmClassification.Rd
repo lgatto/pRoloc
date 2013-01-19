@@ -44,7 +44,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- ksvmPrediction(dunkley2006, params)
+res <- ksvmClassification(dunkley2006, params)
 getPredictions(res, fcol = "ksvm")
 getPredictions(res, fcol = "ksvm", t = 0.75)
 plot2D(res, fcol = "ksvm")

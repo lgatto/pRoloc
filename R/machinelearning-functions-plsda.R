@@ -187,7 +187,7 @@ plsdaRegularisation <- function(...) {
 ##' plot(params)
 ##' levelPlot(params)
 ##' getParams(params)
-##' res <- plsdaPrediction(dunkley2006, params)
+##' res <- plsdaClassification(dunkley2006, params)
 ##' getPredictions(res, fcol = "plsda")
 ##' getPredictions(res, fcol = "plsda", t = 0.75)
 ##' plot2D(res, fcol = "plsda")

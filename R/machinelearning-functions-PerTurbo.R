@@ -42,7 +42,7 @@ perTurboOptimisation <- function(object,
                                  inv = c("Inversion Cholesky",
                                    "Moore Penrose",
                                    "solve", "svd"),
-                                 reg = c("none", "trunc", "tikhonov"),
+                                 reg = c("tikhonov", "none", "trunc"),
                                  times = 1,
                                  test.size = .2,
                                  xval = 5,                               
@@ -54,8 +54,12 @@ perTurboOptimisation <- function(object,
   reg <- match.arg(reg)
   nparams <- 2 ## 2 or 1, depending on the algorithm
   mydata <- subsetAsDataFrame(object, fcol, train = TRUE)
-  if (reg == "none")
-    pRegul <- 1
+  if (reg == "none") {
+    if (verbose) {
+      message("Setting 'pRegul' to 1 when using 'reg' == 'none'")
+      pRegul <- 1
+    }
+  }
     
   ## Check whether the method of inversion 'inv'
   ## with the regularisation methode 'reg' is implemented
@@ -250,7 +254,7 @@ perTurboClassification <- function(object,
                                      "Moore Penrose",
                                      "solve", "svd"),
                                    ## should probably be retrieved from hyperparams  
-                                   reg = c("none", "trunc", "tikhonov"),
+                                   reg = c("tikhonov", "none", "trunc"),
                                    fcol = "markers") {
   scores <- match.arg(scores)
   inv <- match.arg(inv)

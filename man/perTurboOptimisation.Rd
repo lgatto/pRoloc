@@ -7,7 +7,7 @@
     pRegul = 10^(seq(from = -1, to = 0, by = 0.2)),
     sigma = 10^(seq(from = -1, to = 1, by = 0.5)),
     inv = c("Inversion Cholesky", "Moore Penrose", "solve", "svd"),
-    reg = c("none", "trunc", "tikhonov"), times = 1,
+    reg = c("tikhonov", "none", "trunc"), times = 1,
     test.size = 0.2, xval = 5, fun = mean, seed,
     verbose = TRUE, ...)
 }

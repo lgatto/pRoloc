@@ -5,7 +5,7 @@
   perTurboClassification(object, assessRes,
     scores = c("prediction", "all", "none"), pRegul, sigma,
     inv = c("Inversion Cholesky", "Moore Penrose", "solve", "svd"),
-    reg = c("none", "trunc", "tikhonov"), fcol = "markers")
+    reg = c("tikhonov", "none", "trunc"), fcol = "markers")
 }
 \arguments{
   \item{object}{An instance of class

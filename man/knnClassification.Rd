@@ -1,7 +1,7 @@
 \name{knnClassification}
 \alias{knnClassification}
 \alias{knnPrediction}
-\title{knn prediction}
+\title{knn classification}
 \usage{
   knnClassification(object, assessRes,
     scores = c("prediction", "all", "none"), k,

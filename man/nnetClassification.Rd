@@ -1,7 +1,7 @@
 \name{nnetClassification}
 \alias{nnetClassification}
 \alias{nnetPrediction}
-\title{nnet prediction}
+\title{nnet classification}
 \usage{
   nnetClassification(object, assessRes,
     scores = c("prediction", "all", "none"), decay, size,

@@ -299,5 +299,5 @@ testPerTurbo <- function(trModel, markers, testSet) {
 predictionPerTurbo <- function(trModel, markers, preTestSet) {
   testSet <- constructDataSet(preTestSet, markers)
   TestResult <- testStep(testSet, trModel)
-  return(TestResult
+  return(TestResult)
 }

@@ -1,7 +1,7 @@
 \name{svmClassification}
 \alias{svmClassification}
 \alias{svmPrediction}
-\title{ksvm prediction}
+\title{ksvm classification}
 \usage{
   svmClassification(object, assessRes,
     scores = c("prediction", "all", "none"), cost, sigma,

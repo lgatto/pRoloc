@@ -1,7 +1,7 @@
 \name{nbClassification}
 \alias{nbClassification}
 \alias{nbPrediction}
-\title{nb prediction}
+\title{nb classification}
 \usage{
   nbClassification(object, assessRes,
     scores = c("prediction", "all", "none"), laplace,

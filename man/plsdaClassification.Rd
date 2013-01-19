@@ -1,7 +1,7 @@
 \name{plsdaClassification}
 \alias{plsdaClassification}
 \alias{plsdaPrediction}
-\title{plsda prediction}
+\title{plsda classification}
 \usage{
   plsdaClassification(object, assessRes,
     scores = c("prediction", "all", "none"), ncomp,

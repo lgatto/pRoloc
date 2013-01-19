@@ -1,7 +1,7 @@
 \name{rfClassification}
 \alias{rfClassification}
 \alias{rfPrediction}
-\title{rf prediction}
+\title{rf classification}
 \usage{
   rfClassification(object, assessRes,
     scores = c("prediction", "all", "none"), mtry,

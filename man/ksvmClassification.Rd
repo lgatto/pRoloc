@@ -1,7 +1,7 @@
 \name{ksvmClassification}
 \alias{ksvmClassification}
 \alias{ksvmPrediction}
-\title{ksvm prediction}
+\title{ksvm classification}
 \usage{
   ksvmClassification(object, assessRes,
     scores = c("prediction", "all", "none"), cost,

@@ -64,7 +64,7 @@ params
 plot(params)
 levelPlot(params)
 getRegularisedParams(params)
-res <- perTurboPrediction(dunkley2006, params)
+res <- perTurboClassification(dunkley2006, params)
 getPredictions(res, fcol = "perTurbo")
 getPredictions(res, fcol = "perTurbo", t = 0.75)
 plot2D(res, fcol = "perTurbo")
@@ -79,7 +79,7 @@ plot2D(res, fcol = "perTurbo")
   European Conference on Machine Learning and Principles
   and Practice of Knowledge Discovery in Databases
   (ECML-PKDD 2011), D. Gunopulos et al. (Eds.): ECML PKDD
-  2011, Part I, LNAI 6911, pp. 359–374, Athens, Greece,
+  2011, Part I, LNAI 6911, pp. 359 - 374, Athens, Greece,
   September 2011.
 }
 

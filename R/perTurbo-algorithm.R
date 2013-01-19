@@ -1,9 +1,9 @@
-##' Constructor for datasets
-##' 
-##' @title constructDataSet
-##' @param theDataSet: the table (item x variables)
-##' @param theLabel (optional) : the label corresponding to items
-##' @return resultSet : a dataset
+## ##' Constructor for datasets
+## ##' 
+## ##' @title constructDataSet
+## ##' @param theDataSet: the table (item x variables)
+## ##' @param theLabel (optional) : the label corresponding to items
+## ##' @return resultSet : a dataset
 constructDataSet <- function(theDataSet, theLabel = NULL){
 	ncol <- dim(theDataSet)[2]
 	resultSet <- NULL;
@@ -19,15 +19,15 @@ constructDataSet <- function(theDataSet, theLabel = NULL){
  
 
 
-##' Control the validity of the matrix inversion method 
-##' combined with the regularisation method.
-##' 
-##' @title controlParameters
-##' @param inv The inversion method
-##' @param reg The type of regularisation
-##' @return A list of (reg, inv). Those are unchanged if the combinaison is implemented
-##' or set to default values (inv="Inversion Cholesky", reg = "tikhonov")
-##' @author Samuel Wieczorek
+## ##' Control the validity of the matrix inversion method 
+## ##' combined with the regularisation method.
+## ##' 
+## ##' @title controlParameters
+## ##' @param inv The inversion method
+## ##' @param reg The type of regularisation
+## ##' @return A list of (reg, inv). Those are unchanged if the combinaison is implemented
+## ##' or set to default values (inv="Inversion Cholesky", reg = "tikhonov")
+## ##' @author Samuel Wieczorek
 controlParameters <- function(inv, reg) {
   ## LG: inv and reg are arg.match'ed in the calling function.
   ## Verification de la bonne strategie d'inversion/regularisation.
@@ -51,15 +51,14 @@ controlParameters <- function(inv, reg) {
   return(list(inv=inv, reg=reg))
 }
 
-##' Learn a model from a dataset
-##' 
-##' @title learnOneClass
-##' @param oneClassLearningSet: the training examples to process
-##' @param pSigma: The variance of the kernel used to approximate the Laplace-Beltrami operator
-##' @param pRegul: a parameter to tune the importance of the regularization during matrix inversion
-##' @return A matrix which is the inverse of the Laplace-Beltrami proxy
-##' @author Thomas Burger, xxxxxx
-
+## ##' Learn a model from a dataset
+## ##' 
+## ##' @title learnOneClass
+## ##' @param oneClassLearningSet: the training examples to process
+## ##' @param pSigma: The variance of the kernel used to approximate the Laplace-Beltrami operator
+## ##' @param pRegul: a parameter to tune the importance of the regularization during matrix inversion
+## ##' @return A matrix which is the inverse of the Laplace-Beltrami proxy
+## ##' @author Thomas Burger, xxxxxx
 learnOneClass <- function(oneClassLearningSet, pSigma, inv, reg, pRegul) {
   learningSetSize <- dim(oneClassLearningSet)[1]
   rbfkernel <- rbfdot(1/pSigma^2)  
@@ -115,13 +114,13 @@ learnOneClass <- function(oneClassLearningSet, pSigma, inv, reg, pRegul) {
 }
 
 
-##' Gives the value k(x)^t K^{-1} k(x) for a set of points x
-##' 
-##' @title testStep
-##' @param testSet: a dataset structure
-##' @param trainingResults: a structure such as provided by trainingStep(), that contains K^{-1}
-##' @return setOfAllPerturbations: the "distance" of each point x to each class
-##' @author Thomas Burger, xxxxxx
+## ##' Gives the value k(x)^t K^{-1} k(x) for a set of points x
+## ##' 
+## ##' @title testStep
+## ##' @param testSet: a dataset structure
+## ##' @param trainingResults: a structure such as provided by trainingStep(), that contains K^{-1}
+## ##' @return setOfAllPerturbations: the "distance" of each point x to each class
+## ##' @author Thomas Burger, xxxxxx
 testStep <- function(testSet, trainingResults) {
   setOfAllPerturbations <- matrix(rep(0, trainingResults$nbLabel * testSet$nbInd),
                                   ncol = trainingResults$nbLabel)
@@ -163,20 +162,19 @@ estimateVariance <- function(learningSet, nbInd) {
 }
 
 
-##' Training step in which all the models are learned interatively 
-##' using function learnOneClass(). The variance of the kernel used to approximate the Laplace-Beltrami operator is 
-##' computed via estimateVariance() function
-##' 
-##' @title trainingStepAutoSigma
-##' @param learningSet: a dataset
-##' @param pRegul A parameter to tune the importance of the regularization during matrix inversion
-##' @return trainingResults : a structure containing several parts:
-##'      - trainingResults@nbLabel: nb of labels per class
-##'    	- trainingResults@listOfLearnedModels: K^{-1} computed for each class
-##'    	- trainingResults@trExPerCl: list of points per class
-##'    	- trainingResults@listOfSigma: list of Sigma used for each class
-##' @author Thomas Burger, xxxxxx
-##' 
+## ##' Training step in which all the models are learned interatively 
+## ##' using function learnOneClass(). The variance of the kernel used to approximate the Laplace-Beltrami operator is 
+## ##' computed via estimateVariance() function
+## ##' 
+## ##' @title trainingStepAutoSigma
+## ##' @param learningSet: a dataset
+## ##' @param pRegul A parameter to tune the importance of the regularization during matrix inversion
+## ##' @return trainingResults : a structure containing several parts:
+## ##'      - trainingResults@nbLabel: nb of labels per class
+## ##'    	- trainingResults@listOfLearnedModels: K^{-1} computed for each class
+## ##'    	- trainingResults@trExPerCl: list of points per class
+## ##'    	- trainingResults@listOfSigma: list of Sigma used for each class
+## ##' @author Thomas Burger, xxxxxx
 trainingStepAutoSigma <- function(theLearningSet, inv, reg, pRegul) {
   trainingResults <- NULL
   trainingResults$listOfLearnedModels <- list()
@@ -205,21 +203,20 @@ trainingStepAutoSigma <- function(theLearningSet, inv, reg, pRegul) {
   return(trainingResults)
 }
 
-##' Training step in which all the models are learned interatively
-##' using function learnOneClass(). Id but here we use sigma as an input instead of
-##' being computed inside the loop
-##' 
-##' @title trainingStep
-##' @param learningSet: a dataset
-##' @param pRegul A parameter to tune the importance of the regularization during matrix inversion
-##' @param pSigma The variance of the kernel used to approximate the Laplace-Beltrami operator
-##' @return trainingResults : a structure containing several parts:
-##'      - trainingResults@nbLabel: nb of labels per class
-##'      - trainingResults@listOfLearnedModels: K^{-1} computed for each class
-##'    	- trainingResults@trExPerCl: list of points per class
-##'    	- trainingResults@listOfSigma: list of Sigma used for each class
-##' @author Thomas Burger, xxxxxx
-##' 
+## ##' Training step in which all the models are learned interatively
+## ##' using function learnOneClass(). Id but here we use sigma as an input instead of
+## ##' being computed inside the loop
+## ##' 
+## ##' @title trainingStep
+## ##' @param learningSet: a dataset
+## ##' @param pRegul A parameter to tune the importance of the regularization during matrix inversion
+## ##' @param pSigma The variance of the kernel used to approximate the Laplace-Beltrami operator
+## ##' @return trainingResults : a structure containing several parts:
+## ##'      - trainingResults@nbLabel: nb of labels per class
+## ##'      - trainingResults@listOfLearnedModels: K^{-1} computed for each class
+## ##'    	- trainingResults@trExPerCl: list of points per class
+## ##'    	- trainingResults@listOfSigma: list of Sigma used for each class
+## ##' @author Thomas Burger, xxxxxx
 trainingStep <- function(theLearningSet, pSigma, inv, reg, pRegul) {
   trainingResults <- NULL
   trainingResults$listOfLearnedModels <- list()
@@ -237,25 +234,25 @@ trainingStep <- function(theLearningSet, pSigma, inv, reg, pRegul) {
 }
 
 
-##' Given a set of parameters, train perTurbo and 
-##' assess the accuracy rate on a training set.
-##' 
-##' @title trainingPerTurbo
-##' @param theDataSet: the table (num[1: nb points, 1: nb var]) (mandatory)
-##' @param theLabel : the label corresponding to the examples (mandatory)
-##' @param inv: method used to inverse the K matrix (mandatory)
-##' @param reg : type of regularisation method (mandatory)
-##' @param pRegul parameter for the regularisation (mandatory)
-##' @param propTraining: proportion of the training set to use for training,
-##' the other part is for testing. DEFAULT: 0.7. (optional)
-##' @param sigma:"AUTO" if we pick the "best" sigma, vector of sigma otherwise. Default: AUTO (optional)
-##' @param scaled: if the data are in [0,1]. DEFAULT: TRUE (optional)
-##' @return trainingResults : a structure containing several parts:
-##'      - trainingResults@nbLabel: nb of labels per class
-##'      - trainingResults@listOfLearnedModels: K^{-1} computed for each class
-##'      - trainingResults@trExPerCl: list of points per class
-##'    	- trainingResults@listOfSigma: list of Sigma used for each class
-##' @author Thomas Burger, xxxxxx
+## ##' Given a set of parameters, train perTurbo and 
+## ##' assess the accuracy rate on a training set.
+## ##' 
+## ##' @title trainingPerTurbo
+## ##' @param theDataSet: the table (num[1: nb points, 1: nb var]) (mandatory)
+## ##' @param theLabel : the label corresponding to the examples (mandatory)
+## ##' @param inv: method used to inverse the K matrix (mandatory)
+## ##' @param reg : type of regularisation method (mandatory)
+## ##' @param pRegul parameter for the regularisation (mandatory)
+## ##' @param propTraining: proportion of the training set to use for training,
+## ##' the other part is for testing. DEFAULT: 0.7. (optional)
+## ##' @param sigma:"AUTO" if we pick the "best" sigma, vector of sigma otherwise. Default: AUTO (optional)
+## ##' @param scaled: if the data are in [0,1]. DEFAULT: TRUE (optional)
+## ##' @return trainingResults : a structure containing several parts:
+## ##'      - trainingResults@nbLabel: nb of labels per class
+## ##'      - trainingResults@listOfLearnedModels: K^{-1} computed for each class
+## ##'      - trainingResults@trExPerCl: list of points per class
+## ##'    	- trainingResults@listOfSigma: list of Sigma used for each class
+## ##' @author Thomas Burger, xxxxxx
 trainingPerTurbo <- function(markers, train2, sigma , inv, reg, pRegul) {
   ## learningSet <- scale.default(learningSet$var,
   ##                              center = apply(learningSet$var, 2, min),
@@ -272,14 +269,14 @@ trainingPerTurbo <- function(markers, train2, sigma , inv, reg, pRegul) {
 }
 
 
-##' Given a set of parameters, test the model given by perTurbo on a test set.
-##' 
-##' @title testPerTurbo
-##' @param testSet: the table (num[1: nb points, 1: nb var]) (mandatory)
-##' @param trModel : the model learnt by TrainingPerTurbo
-##' @param markers: labels of testSet
-##' @return list of estimated classes for the test data
-##' @author Thomas Burger, xxxxxx
+## ##' Given a set of parameters, test the model given by perTurbo on a test set.
+## ##' 
+## ##' @title testPerTurbo
+## ##' @param testSet: the table (num[1: nb points, 1: nb var]) (mandatory)
+## ##' @param trModel : the model learnt by TrainingPerTurbo
+## ##' @param markers: labels of testSet
+## ##' @return list of estimated classes for the test data
+## ##' @author Thomas Burger, xxxxxx
 testPerTurbo <- function(trModel, markers, testSet) {
   testSet <- constructDataSet(testSet, markers)
   TestResult <- testStep(testSet, trModel)
@@ -288,14 +285,14 @@ testPerTurbo <- function(trModel, markers, testSet) {
 }
 
 
-##' Given a set of parameters, test the model given by perTurbo on a test set.
-##' 
-##' @title predictionPerTurbo
-##' @param trModel : the model learnt by TrainingPerTurbo
-##' @param testSet: the table (num[1: nb points, 1: nb var]) (mandatory)
-##' @param markers: labels of testSet
-##' @return xxxxx
-##' @author Thomas Burger, xxxxxx
+## ##' Given a set of parameters, test the model given by perTurbo on a test set.
+## ##' 
+## ##' @title predictionPerTurbo
+## ##' @param trModel : the model learnt by TrainingPerTurbo
+## ##' @param testSet: the table (num[1: nb points, 1: nb var]) (mandatory)
+## ##' @param markers: labels of testSet
+## ##' @return xxxxx
+## ##' @author Thomas Burger, xxxxxx
 predictionPerTurbo <- function(trModel, markers, preTestSet) {
   testSet <- constructDataSet(preTestSet, markers)
   TestResult <- testStep(testSet, trModel)

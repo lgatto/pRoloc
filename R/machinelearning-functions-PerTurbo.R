@@ -219,7 +219,8 @@ perTurboOptimization <-
 ##' based on the spectrum perturbations of the Laplace-Beltrami operator",
 ##' The European Conference on Machine Learning and Principles and Practice of
 ##' Knowledge Discovery in Databases (ECML-PKDD 2011), D. Gunopulos et al.
-##' (Eds.): ECML PKDD 2011, Part I, LNAI 6911, pp. 359–374, Athens, Greece, September 2011.
+##' (Eds.): ECML PKDD 2011, Part I, LNAI 6911, pp. 359 - 374,
+##' Athens, Greece, September 2011.
 ##' @author Thomas Burger and Samuel Wieczorek 
 ##' @examples
 ##' library(pRolocdata)
@@ -235,7 +236,7 @@ perTurboOptimization <-
 ##' plot(params)
 ##' levelPlot(params)
 ##' getRegularisedParams(params)
-##' res <- perTurboPrediction(dunkley2006, params)
+##' res <- perTurboClassification(dunkley2006, params)
 ##' getPredictions(res, fcol = "perTurbo")
 ##' getPredictions(res, fcol = "perTurbo", t = 0.75)
 ##' plot2D(res, fcol = "perTurbo")
@@ -297,7 +298,7 @@ perTurboClassification <- function(object,
   fData(object)$perTurbo <- temp  
   
   ## Would be better to check if these columns exist
-  if (score == "all") {
+  if (scores == "all") {
     nbLabels <- length(levels(trainSet$markers))
     tempScores <- matrix(rep(0, nbLabels*(length(trainInd)+length(testInd))),
                          ncol = nbLabels)
@@ -314,7 +315,7 @@ perTurboClassification <- function(object,
     colnames(scoreMat) <- paste0(colnames(scoreMat),
                                  ".perTurbo.scores")
     fData(object) <- cbind(fData(object), scoreMat)
-  } else if (score == "prediction") {
+  } else if (scores == "prediction") {
     nbLabels <- length(levels(trainSet$markers))
     tempScores <- rep(0,length(trainInd) + length(testInd))
     

@@ -23,5 +23,12 @@ installPackages(deps)
 Download the appropriate package from the [Bioconductor landing page](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
 and install manually using `install.packages(..., repos = "NULL")` or the GUI front-end of your favourite R interface.
 
+Alternatively, to install the non-official git version, you can proceed as follows. This method requires the package building mechanism to be readily available on your system.
+
+```r
+library("devtools")
+install_github("pRoloc", "lgatto")
+```
+
 You can also install the associated data package [`pRolocdata`](http://bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html) 
 with multiple test data sets.

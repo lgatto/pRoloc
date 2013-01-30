@@ -152,8 +152,10 @@ perTurboOptimisation <- function(object,
     close(pb)
   }
   
-  .hyperparams <- list(pRegul = .pRegul,
-                       sigma = .sigma)
+  .hyperparams <- list(pRegul = pRegul,
+                       sigma = sigma)
+  
+  .hyperparams$other <- c("inv" = inv, "reg" = reg)
   ## .hyperparams should probably also store inv and reg.
   .design <- c(xval = xval,
                test.size = test.size,
@@ -260,23 +262,32 @@ perTurboClassification <- function(object,
   inv <- match.arg(inv)
   reg <- match.arg(reg)
   if (missing(assessRes)) {
-    if (missing(pRegul) | missing(sigma))
-      stop("First run 'perTurboRegularisation' or set 'pRegul' and 'sigma' manually.")
+    if (missing(pRegul) | missing(sigma)| missing(inv)| missing(reg))
+      stop("First run 'perTurboRegularisation' or set 'pRegul', 'sigma', 'inv' and 'reg' manually.")
     params <- c("pRegul" = pRegul,
                 "sigma" = sigma)
+    inv <- inv
+    reg <- reg
+    ## Check whether the method of inversion 'inv'
+    ## with the regularisation method 'reg' is implemented
+    test <- controlParameters(inv, reg)
+    .inv <- test$inv
+    .reg <- test$reg
   } else {
     params <- getRegularisedParams(assessRes)
     if (is.na(params["pRegul"]))
       stop("No 'pRegul' found.")
     if (is.na(params["sigma"]))
       stop("No 'sigma' found.")
-  }
-  
-  ## Check whether the method of inversion 'inv'
-  ## with the regularisation methode 'reg' is implemented
-  test <- controlParameters(inv, reg)
-  .inv <- test$inv
-  .reg <- test$reg
+    
+    otherParams <- getOtherParams(assessRes)
+    if (is.na(otherParams["inv"]))
+      stop("No 'inv' found.")
+    if (is.na(otherParams["reg"]))
+      stop("No 'reg' found.")
+    .inv <- otherParams["inv"]
+    .reg <- otherParams["reg"]
+    }
   
   trainInd <- which(fData(object)[, fcol] != "unknown")
   testInd <- which(fData(object)[, fcol] == "unknown")
@@ -285,12 +296,13 @@ perTurboClassification <- function(object,
   
   .model <- trainingPerTurbo(trainSet$markers, trainSet,
                              params["sigma"],
-                             .inv, .reg,
+                             .inv,
+                             .reg,
                              params["pRegul"])
   ans <- predictionPerTurbo(.model, testSet$markers, testSet)
   
   temp <- rep("", length(trainInd) + length(testInd))
-  ## Add known labels (ie training data)
+  ## Add known labels (i.e. training data)
   i <- 1:length(trainInd)
   temp[trainInd[i]] <- as.character(trainSet$markers[i])
   

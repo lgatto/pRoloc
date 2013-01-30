@@ -5,16 +5,17 @@
 ## @param theLabel (optional) : the label corresponding to items
 ## @return resultSet : a dataset
 constructDataSet <- function(theDataSet, theLabel = NULL){
-	ncol <- dim(theDataSet)[2]
-	resultSet <- NULL;
-	resultSet$var <- as.matrix(theDataSet[,1:(ncol-1)]);
- 	resultSet$nbInd <- dim(resultSet$var)[1];
-	if (is.null(theLabel)==F){
-		resultSet$label <- theDataSet[,ncol] 
-		resultSet$liLabel <- unique(resultSet$label);
-		resultSet$nbLabel <- length(resultSet$liLabel); 
-	}
-	return(resultSet);	
+  ncol <- dim(theDataSet)[2]
+  nrow <- dim(theDataSet)[1]
+  resultSet <- NULL;
+  resultSet$var <- as.matrix(theDataSet[,1:(ncol-1)]);
+  resultSet$nbInd <- nrow;
+  if (is.null(theLabel)==F){
+    resultSet$label <- theLabel 
+    resultSet$liLabel <- unique(resultSet$label);
+    resultSet$nbLabel <- length(resultSet$liLabel); 
+  }
+  return(resultSet);	
 }
  
 

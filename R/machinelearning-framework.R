@@ -22,6 +22,7 @@ setMethod("show",
                   paste(object@hyperparameters[[i]], collapse = " "),
                   "\n", sep = "")              
             }
+          
             cat("Design:\n")
             cat(" Replication: ",
                 object@design["times"], " x ",
@@ -64,10 +65,18 @@ setMethod("getF1Scores", "GenRegRes", function(object) object@results)
 
 setMethod("getOtherParams", "GenRegRes",
           function(object) {
+            return(object@hyperparameters$other)
+          })
+
+setMethod("getRegularisedParams", "GenRegRes",
+          function(object) {
             res <- object@results
             best <- which.max(res[, "F1"])
             return(res[best, -1])
           })
+
+setMethod("getRegularizedParams", "GenRegRes",
+          function(object) getRegularisedParams(object))
 
 setMethod("plot", c("GenRegRes", "missing"),
           function(x, y, ...) {

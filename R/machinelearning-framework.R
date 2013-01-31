@@ -62,7 +62,6 @@ setMethod("getSeed", "GenRegRes", function(object) object@seed)
 
 setMethod("getF1Scores", "GenRegRes", function(object) object@results)
 
-setMethod("getParams", "GenRegRes",
 setMethod("getOtherParams", "GenRegRes",
           function(object) {
             res <- object@results

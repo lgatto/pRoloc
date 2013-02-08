@@ -63,7 +63,7 @@ params <- perTurboOptimisation(dunkley2006,
 params
 plot(params)
 levelPlot(params)
-getRegularisedParams(params)
+getParams(params)
 res <- perTurboClassification(dunkley2006, params)
 getPredictions(res, fcol = "perTurbo")
 getPredictions(res, fcol = "perTurbo", t = 0.75)

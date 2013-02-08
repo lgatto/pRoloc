@@ -239,7 +239,7 @@ perTurboOptimization <-
 ##' params
 ##' plot(params)
 ##' levelPlot(params)
-##' getRegularisedParams(params)
+##' getParams(params)
 ##' res <- perTurboClassification(dunkley2006, params)
 ##' getPredictions(res, fcol = "perTurbo")
 ##' getPredictions(res, fcol = "perTurbo", t = 0.75)
@@ -249,8 +249,10 @@ perTurboClassification <- function(object,
                                    scores = c("prediction", "all", "none"),
                                    pRegul,  
                                    sigma,
-                                   inv,
-                                   reg, 
+                                   inv = c("Inversion Cholesky",
+                                     "Moore Penrose",
+                                     "solve", "svd"),
+                                   reg = c("tikhonov", "none", "trunc"),
                                    fcol = "markers") {
   scores <- match.arg(scores)
   if (missing(assessRes)) {

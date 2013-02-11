@@ -3,7 +3,7 @@
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
   phenoDisco(object, fcol = "markers", times = 50, GS = 10,
-    allIter = FALSE, p = 0.05, r = 1, seed)
+    allIter = FALSE, p = 0.05, r = 1, seed, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -53,7 +53,7 @@
 \dontrun{
 library(pRolocdata)
 data(tan2009r1)
-pdres <- phenoDisco(tan2009r1, markers = "PLSDA")
+pdres <- phenoDisco(tan2009r1, fcol = "PLSDA")
 getPredictions(pdres, fcol = "pd", scol = NULL)
 plot2D(pdres, fcol = "pd")
 }

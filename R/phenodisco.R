@@ -468,11 +468,16 @@ phenoDisco <- function(object,
   }
   
   if (missing(seed)) {
-    procmsg <- paste0("Run phenoDisco using '", original, "': ", date())
+    procmsg <- paste0("Run phenoDisco using '", original, "': ", date())    
   } else {
     procmsg <- paste0("Run phenoDisco using '", original,
                       "' (seed, ", seed, "): ", date())
-  }  
+  }
+  procmsg <- c(procmsg,
+               paste0("  with parameters times=", times,
+                      ", GS=", GS,
+                      ", p=", p,
+                      ", r=", r, ".")
   object@processingData@processing <-
     c(processingData(object)@processing,
       procmsg)

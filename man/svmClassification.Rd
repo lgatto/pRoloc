@@ -1,7 +1,7 @@
 \name{svmClassification}
 \alias{svmClassification}
 \alias{svmPrediction}
-\title{ksvm prediction}
+\title{ksvm classification}
 \usage{
   svmClassification(object, assessRes,
     scores = c("prediction", "all", "none"), cost, sigma,
@@ -47,7 +47,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- svmPrediction(dunkley2006, params)
+res <- svmClassification(dunkley2006, params)
 getPredictions(res, fcol = "svm")
 getPredictions(res, fcol = "svm", t = 0.75)
 plot2D(res, fcol = "svm")

@@ -8,7 +8,8 @@ setClass("GenRegRes",
                         f1Matrices = "list", ## these are F1 matrices
                         cmMatrices = "list", ## these are continengy mat
                         testPartitions = "list",
-                        datasize = "list")) 
+                        datasize = "list"))
+## TODO: add a slot predictions = "list" with validation predictions.
 
 setMethod("show",
           signature(object = "GenRegRes"),

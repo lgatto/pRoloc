@@ -1,6 +1,12 @@
 getBestParams <- function(x) {
+  if (all(is.na(x))) {
+    msg <- paste0("[pRoloc:::getBestParams] Only NA's in F1 matrix.\n",
+                  "Try to use better suited ranges of parameters.\n")
+    print(x)
+    stop(msg)
+  }    
   if (any(is.na(x)))
-    warning("[pRoloc:::getBestParams] Found 'NA's in F1 matrix.")
+    warning("[pRoloc:::getBestParams] Found NA's in F1 matrix.")
   k <- arrayInd(which( x == max(x, na.rm = TRUE) ),
                 dim(x),
                 useNames = TRUE)
@@ -78,7 +84,7 @@ summariseMatList <- function(matList, fun = mean, ...) {
                        ncol(matList[[1]]),
                        length(matList))),
                c(1:2),
-               fun, ...)
+               fun, na.rm=TRUE, ...) ## assuming there is an na.rm
   dimnames(ans) <- dimnames(matList[[1]])  
   ans
 }

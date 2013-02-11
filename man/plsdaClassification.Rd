@@ -1,7 +1,7 @@
 \name{plsdaClassification}
 \alias{plsdaClassification}
 \alias{plsdaPrediction}
-\title{plsda prediction}
+\title{plsda classification}
 \usage{
   plsdaClassification(object, assessRes,
     scores = c("prediction", "all", "none"), ncomp,
@@ -46,7 +46,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- plsdaPrediction(dunkley2006, params)
+res <- plsdaClassification(dunkley2006, params)
 getPredictions(res, fcol = "plsda")
 getPredictions(res, fcol = "plsda", t = 0.75)
 plot2D(res, fcol = "plsda")

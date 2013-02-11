@@ -1,7 +1,7 @@
 \name{nnetClassification}
 \alias{nnetClassification}
 \alias{nnetPrediction}
-\title{nnet prediction}
+\title{nnet classification}
 \usage{
   nnetClassification(object, assessRes,
     scores = c("prediction", "all", "none"), decay, size,
@@ -47,7 +47,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- nnetPrediction(dunkley2006, params)
+res <- nnetClassification(dunkley2006, params)
 getPredictions(res, fcol = "nnet")
 getPredictions(res, fcol = "nnet", t = 0.75)
 plot2D(res, fcol = "nnet")

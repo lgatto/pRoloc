@@ -1,7 +1,7 @@
 \name{nbClassification}
 \alias{nbClassification}
 \alias{nbPrediction}
-\title{nb prediction}
+\title{nb classification}
 \usage{
   nbClassification(object, assessRes,
     scores = c("prediction", "all", "none"), laplace,
@@ -42,7 +42,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- nbPrediction(dunkley2006, params)
+res <- nbClassification(dunkley2006, params)
 getPredictions(res, fcol = "naiveBayes")
 getPredictions(res, fcol = "naiveBayes", t = 1)
 plot2D(res, fcol = "naiveBayes")

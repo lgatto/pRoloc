@@ -1,7 +1,7 @@
 \name{rfClassification}
 \alias{rfClassification}
 \alias{rfPrediction}
-\title{rf prediction}
+\title{rf classification}
 \usage{
   rfClassification(object, assessRes,
     scores = c("prediction", "all", "none"), mtry,
@@ -42,7 +42,7 @@ params
 plot(params)
 levelPlot(params)
 getParams(params)
-res <- rfPrediction(dunkley2006, params)
+res <- rfClassification(dunkley2006, params)
 getPredictions(res, fcol = "rf")
 getPredictions(res, fcol = "rf", t = 0.75)
 plot2D(res, fcol = "rf")

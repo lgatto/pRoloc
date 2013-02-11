@@ -249,10 +249,8 @@ perTurboClassification <- function(object,
                                    scores = c("prediction", "all", "none"),
                                    pRegul,  
                                    sigma,
-                                   inv = c("Inversion Cholesky",
-                                     "Moore Penrose",
-                                     "solve", "svd"),
-                                   reg = c("tikhonov", "none", "trunc"),
+                                   inv,
+                                   reg,
                                    fcol = "markers") {
   scores <- match.arg(scores)
   if (missing(assessRes)) {
@@ -260,8 +258,13 @@ perTurboClassification <- function(object,
       stop("First run 'perTurboRegularisation' or set 'pRegul', 'sigma', 'inv' and 'reg' manually.")
     params <- c("pRegul" = pRegul,
                 "sigma" = sigma)
-    inv <- match.arg(inv)
-    reg <- match.arg(reg)    
+    inv <- match.arg(inv,
+                     choices = c("Inversion Cholesky",
+                       "Moore Penrose",
+                       "solve", "svd"))
+    reg <- match.arg(reg,
+                     choices = c("tikhonov",
+                       "none", "trunc"))
     ## Check whether the method of inversion 'inv'
     ## with the regularisation method 'reg' is implemented
     test <- controlParameters(inv, reg)

@@ -352,7 +352,7 @@ updateobject  <- function(MSnSetToUpdate,
 ##' \dontrun{
 ##' library(pRolocdata)
 ##' data(tan2009r1)
-##' pdres <- phenoDisco(tan2009r1, markers = "PLSDA")
+##' pdres <- phenoDisco(tan2009r1, fcol = "PLSDA")
 ##' getPredictions(pdres, fcol = "pd", scol = NULL)
 ##' plot2D(pdres, fcol = "pd")
 ##' }
@@ -363,7 +363,8 @@ phenoDisco <- function(object,
                        allIter = FALSE,
                        p = 0.05,
                        r = 1,
-                       seed) {
+                       seed,
+                       verbose = TRUE) {
   ## phenoDisco.R (Lisa's phenoDisco code - last updated 07/12/2012)
   ## fcol = feature column, times = number of runs of tracking, 
   ## GS = group size (how many proteins make a group?),
@@ -402,7 +403,8 @@ phenoDisco <- function(object,
     ## ===> Call "tracking.R" to get - 
     ## (1) clusterIDs (from rounds of clustering using GMMs - could use hierarchical)
     ## (2) new members of known classes (from outlier detection using GMMs)
-    message(paste("Iteration", i)) 
+    if (verbose)
+      message(paste("Iteration", i)) 
     track[[i]] <- replicate(n = times, 
                             expr = tracking(
                             data = object, 

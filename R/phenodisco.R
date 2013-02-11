@@ -477,7 +477,7 @@ phenoDisco <- function(object,
                paste0("  with parameters times=", times,
                       ", GS=", GS,
                       ", p=", p,
-                      ", r=", r, ".")
+                      ", r=", r, "."))
   object@processingData@processing <-
     c(processingData(object)@processing,
       procmsg)

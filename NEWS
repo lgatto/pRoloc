@@ -3,6 +3,7 @@ CHANGES IN VERSION 0.99.8
  o Integration of the perTurbo algorithms, contributed 
    by Thomas Burger and Samuel Wieczorek <2013-01-18 Fri>
  o summariseMatList now has na.rm = TRUE by default <2013-01-19 Sat>
+ o PerTurbo's inv/reg now as other hyperparams <2013-02-11 Mon>
 
 CHANGES IN VERSION 0.99.7
 -------------------------

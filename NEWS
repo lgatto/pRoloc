@@ -2,6 +2,8 @@ CHANGES IN VERSION 0.99.9
 -------------------------
  o Updates to phenoDisco: verbose param, fixed error in example, 
    adding params to processingInfo <2013-02-11 Mon> 
+ o Unexported getOtherParams method <2013-02-12 Tue>
+ o adding export param documentation <2013-02-12 Tue>
 
 CHANGES IN VERSION 0.99.8
 -------------------------

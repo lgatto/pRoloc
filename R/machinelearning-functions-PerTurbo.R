@@ -279,7 +279,7 @@ perTurboClassification <- function(object,
     ## Here, we assume correct parameters are passed,
     ## and do not call controlParameters, as they
     ## have been explicitly tested in perTurboOptimisation
-    otherParams <- assessRes@hyperparameters$other
+    otherParams <- getOtherParams(assessRes)
     if (is.na(otherParams["inv"]))
       stop("No 'inv' found.")
     if (is.na(otherParams["reg"]))

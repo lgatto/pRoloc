@@ -338,7 +338,9 @@ updateobject  <- function(MSnSetToUpdate,
 ##' @param r Correlation coefficent for Jaccard's Index. Default is 1 
 ##' (currently no other value is supported).
 ##' @param seed An optional \code{numeric} of length 1 specifing the
-##' random number generator seed to be used. 
+##' random number generator seed to be used.
+##' @param verbose Logical, indicating if messages are to be
+##' printed out during execution of the algorithm.
 ##' @return An instance of class \code{MSnSet} containg the \code{phenoDisco}
 ##' predictions.
 ##' @author Lisa M. Breckels <lms79@@cam.ac.uk>

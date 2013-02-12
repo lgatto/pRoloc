@@ -29,6 +29,9 @@
 
   \item{seed}{An optional \code{numeric} of length 1
   specifing the random number generator seed to be used.}
+
+  \item{verbose}{Logical, indicating if messages are to be
+  printed out during execution of the algorithm.}
 }
 \value{
   An instance of class \code{MSnSet} containg the

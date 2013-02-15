@@ -2,8 +2,9 @@
 \alias{phenoDisco}
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
-  phenoDisco(object, fcol = "markers", times = 50, GS = 10,
-    allIter = FALSE, p = 0.05, r = 1, seed)
+  phenoDisco(object, fcol = "markers", times = 100,
+    GS = 10, allIter = FALSE, p = 0.05, r = 1, seed,
+    verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -12,7 +13,7 @@
   markers column name in feature meta-data. Default is
   \code{markers}.}
 
-  \item{times}{Number of runs of tracking. Default is 50.}
+  \item{times}{Number of runs of tracking. Default is 100.}
 
   \item{GS}{Group size, i.e how many proteins make a group.
   Default is 10.}
@@ -29,6 +30,9 @@
 
   \item{seed}{An optional \code{numeric} of length 1
   specifing the random number generator seed to be used.}
+
+  \item{verbose}{Logical, indicating if messages are to be
+  printed out during execution of the algorithm.}
 }
 \value{
   An instance of class \code{MSnSet} containg the
@@ -53,7 +57,7 @@
 \dontrun{
 library(pRolocdata)
 data(tan2009r1)
-pdres <- phenoDisco(tan2009r1, markers = "PLSDA")
+pdres <- phenoDisco(tan2009r1, fcol = "PLSDA")
 getPredictions(pdres, fcol = "pd", scol = NULL)
 plot2D(pdres, fcol = "pd")
 }

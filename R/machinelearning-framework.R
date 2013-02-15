@@ -69,6 +69,11 @@ setMethod("getParams", "GenRegRes",
             return(res[best, -1])
           })
 
+setMethod("getOtherParams", "GenRegRes",
+          function(object) {
+            object@hyperparameters$other
+          })
+
 setMethod("plot", c("GenRegRes", "missing"),
           function(x, y, ...) {
             d <- data.frame(x@results)

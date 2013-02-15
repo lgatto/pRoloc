@@ -546,7 +546,7 @@ The \Rfunction{plot2D} function, can, as previously, be utilised to visualise th
 <<pdresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
 plot2D(pdres, fcol = "pd", alpha = 0.5)
 addLegend(pdres, fcol = "pd", ncol = 2, 
-          where = "bottomright", bty = "n", cex = .7)
+          where = "bottomright", bty = "n", cex = .5)
 @ 
 %% $
 \caption{ Representation of the phenoDisco prediction and cluster discovery results. }

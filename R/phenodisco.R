@@ -242,11 +242,11 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers") {
 
 ## Convenience function for updating MSnSet with new phenotypes
 updateobject  <- function(MSnSetToUpdate,
-                                newPhenotypes,
-                                newClasses,
-                                originalMarkerColumnName = "markers",
-                                oldMarkerColumnName = "markers",
-                                newMarkerColumnName = "newMarkers") {
+                          newPhenotypes,
+                          newClasses,
+                          originalMarkerColumnName = "markers",
+                          oldMarkerColumnName = "markers",
+                          newMarkerColumnName = "newMarkers") {
   newobject <- MSnSetToUpdate
   indexOld <- which(colnames(fData(newobject)) == oldMarkerColumnName)
   indexNew <- ncol(fData(newobject)) + 1
@@ -328,7 +328,7 @@ updateobject  <- function(MSnSetToUpdate,
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.
-##' @param times Number of runs of tracking. Default is 50.
+##' @param times Number of runs of tracking. Default is 100.
 ##' @param GS Group size, i.e how many proteins make a group. Default
 ##' is 10.
 ##' @param allIter \code{logical}, defining if predictions for all
@@ -360,7 +360,7 @@ updateobject  <- function(MSnSetToUpdate,
 ##' }
 phenoDisco <- function(object,
                        fcol = "markers",
-                       times = 50,
+                       times = 100,
                        GS = 10,
                        allIter = FALSE,
                        p = 0.05,

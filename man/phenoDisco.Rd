@@ -2,8 +2,9 @@
 \alias{phenoDisco}
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
-  phenoDisco(object, fcol = "markers", times = 50, GS = 10,
-    allIter = FALSE, p = 0.05, r = 1, seed, verbose = TRUE)
+  phenoDisco(object, fcol = "markers", times = 100,
+    GS = 10, allIter = FALSE, p = 0.05, r = 1, seed,
+    verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -12,7 +13,7 @@
   markers column name in feature meta-data. Default is
   \code{markers}.}
 
-  \item{times}{Number of runs of tracking. Default is 50.}
+  \item{times}{Number of runs of tracking. Default is 100.}
 
   \item{GS}{Group size, i.e how many proteins make a group.
   Default is 10.}

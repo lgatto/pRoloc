@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.99.10
+--------------------------
+ o new default col/pch setters <2013-02-16 Sat>
+
 CHANGES IN VERSION 0.99.9
 -------------------------
  o Updates to phenoDisco: verbose param, fixed error in example, 

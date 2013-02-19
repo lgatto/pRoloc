@@ -41,42 +41,57 @@ assign("unknownpch", unknownpch, envir = .pRolocEnv)
 ##' plot2D(dunkley2006, fcol = "markers", main = 'Default colours')
 ##' setUnknowncol("black")
 ##' plot2D(dunkley2006, fcol = "markers", main = 'setUnknowncol("black")')
+##' getUnknowncol()
+##' setUnknowncol(NULL)
+##' getUnknowncol()
 getStockcol <- function() get("stockcol", envir=.pRolocEnv)
 
-##' @param cols A vector of colour \code{characters}.
+##' @param cols A vector of colour \code{characters} or \code{NULL},
+##' which sets the colours to the default values.
 ##' @return Invisibly returns \code{cols}.
 ##' @rdname getStockcol
-setStockcol <- function(cols)
-  assign("stockcol", cols, envir = .pRolocEnv)
+setStockcol <- function(cols) {
+  if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
+  else assign("stockcol", cols, envir = .pRolocEnv)
+}
 
 ##' @return A \code{numeric} vector.
 ##' @rdname getStockcol
 getStockpch <- function() get("stockpch", envir=.pRolocEnv)
 
-##' @param pchs A vector of \code{numeric}.
+##' @param pchs A vector of \code{numeric} or \code{NULL},
+##' which sets the point characters to the default values.
 ##' @return Invisibly returns \code{pchs}.
 ##' @rdname getStockcol
-setStockpch <- function(pchs)
-  assign("stockpch", pchs, envir = .pRolocEnv)
+setStockpch <- function(pchs) {
+  if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
+  else assign("stockpch", pchs, envir = .pRolocEnv)
+}
 
 ##' @return A \code{character} vector or length 1.
 ##' @rdname getStockcol
 getUnknowncol <- function() get("unknowncol", envir=.pRolocEnv)
 
 
-##' @param col A colour \code{character}.
+##' @param col A colour \code{character} or \code{NULL},
+##' which sets the colour to \code{#E7E7E7} (\code{grey91}),
+##' the default colour for unknown features.
 ##' @return Invisibly returns \code{col}.
 ##' @rdname getStockcol
-setUnknowncol <- function(col)
-  assign("unknowncol", col, envir = .pRolocEnv)
-
+setUnknowncol <- function(col) {
+  if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
+  else assign("unknowncol", col, envir = .pRolocEnv)
+}
 
 ##' @return A \code{numeric} vector of length 1.
 ##' @rdname getStockcol
 getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
 
-##' @param pch A \code{numeric} vector of length 1.
+##' @param pch A \code{numeric} vector of length 1 or \code{NULL},
+##' which sets the point character to 21, the default.
 ##' @return Invisibly returns \code{pch}.
 ##' @rdname getStockcol
-setUnknownpch <- function(pch)
-  assign("unknownpch", pch, envir = .pRolocEnv)
+setUnknownpch <- function(pch) {
+  if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
+  else assign("unknownpch", pch, envir = .pRolocEnv)
+}

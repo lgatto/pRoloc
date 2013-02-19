@@ -26,13 +26,20 @@
   setUnknownpch(pch)
 }
 \arguments{
-  \item{cols}{A vector of colour \code{characters}.}
+  \item{cols}{A vector of colour \code{characters} or
+  \code{NULL}, which sets the colours to the default
+  values.}
 
-  \item{pchs}{A vector of \code{numeric}.}
+  \item{pchs}{A vector of \code{numeric} or \code{NULL},
+  which sets the point characters to the default values.}
 
-  \item{col}{A colour \code{character}.}
+  \item{col}{A colour \code{character} or \code{NULL},
+  which sets the colour to \code{#E7E7E7} (\code{grey91}),
+  the default colour for unknown features.}
 
-  \item{pch}{A \code{numeric} vector of length 1.}
+  \item{pch}{A \code{numeric} vector of length 1 or
+  \code{NULL}, which sets the point character to 21, the
+  default.}
 }
 \value{
   A \code{character} vector.
@@ -71,6 +78,9 @@ par(mfrow = c(2, 1))
 plot2D(dunkley2006, fcol = "markers", main = 'Default colours')
 setUnknowncol("black")
 plot2D(dunkley2006, fcol = "markers", main = 'setUnknowncol("black")')
+getUnknowncol()
+setUnknowncol(NULL)
+getUnknowncol()
 }
 \author{
   Laurent Gatto

@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.99.11
+--------------------------
+ o setUnknowncol(NULL) and friedns reset to default 
+   values <2013-02-19 Tue>
+
 CHANGES IN VERSION 0.99.10
 --------------------------
  o new default col/pch setters <2013-02-16 Sat>

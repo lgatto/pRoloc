@@ -33,6 +33,8 @@
 ##' @param identify A logical (default is \code{TRUE}) defining if
 ##' user interaction will be expected to identify individual data
 ##' points on the plot. See also \code{\link{identify}}.
+##' @param plot A \code{logical} defining if the figure should be plotted.
+##' Useful when retrieving data only. Default is \code{TRUE}.
 ##' @param ... Additional parameters passed to \code{plot} and
 ##' \code{points}.
 ##' @return Used for its side effects of generating a plot.
@@ -66,6 +68,7 @@ plot2D <- function(object,
                    pch,
                    cex,
                    identify = FALSE,
+                   plot = TRUE,
                    ...) {
   if (!missing(col)) {
     stockcol <- col
@@ -126,66 +129,68 @@ plot2D <- function(object,
     .xlab <- paste("Dimension", dims[1])
     .ylab <- paste("Dimension", dims[2])    
   }
-  if (axsSwitch) {
-    .data <- .data[, 2:1]
-    .tmp <- .xlab
-    .xlab <- .ylab
-    .ylab <- .tmp
-  }
-  if (mirrorX)
-    .data[, 1] <- -.data[, 1]
-  if (mirrorY)
-    .data[, 2] <- -.data[, 2]
-
-  col <- rep(unknowncol, nrow(.data))
-  pch <- rep(unknownpch, nrow(.data))
-  if (missing(cex)) {
-    cex <- rep(1, nrow(.data))
-  } else {
-    if (length(cex) == 1) {
-      cex <- rep(cex, nrow(.data))
+  if (plot) {
+    if (axsSwitch) {
+      .data <- .data[, 2:1]
+      .tmp <- .xlab
+      .xlab <- .ylab
+      .ylab <- .tmp
+    }
+    if (mirrorX)
+      .data[, 1] <- -.data[, 1]
+    if (mirrorY)
+      .data[, 2] <- -.data[, 2]
+    
+    col <- rep(unknowncol, nrow(.data))
+    pch <- rep(unknownpch, nrow(.data))
+    if (missing(cex)) {
+      cex <- rep(1, nrow(.data))
+    } else {
+      if (length(cex) == 1) {
+        cex <- rep(cex, nrow(.data))
       } else {
         .n <- nrow(.data) %/% length(cex)
         .m <- nrow(.data) %% length(cex)
         cex <- c(rep(cex, .n),
                  cex[.m])        
       }
-  }
-  stopifnot(length(cex) == nrow(.data))
-  if (!is.null(fcol)) {
-    ukn <- fData(object)[, fcol] == unknown
-  } else {
-    ukn <- rep(TRUE, nrow(.data))
-  }
-  
-  if (!is.null(fcol)) {
-    .fcol <- factor(fData(object)[, fcol])    
-    col <- stockcol[as.numeric(.fcol)]
-    col[ukn] <- unknowncol
-  }
-  if (!missing(fpch)) {   
-    .fpch <- factor(fData(object)[, fpch])
-    pch <- stockpch[as.numeric(.fpch)]
-  } else {
-    pch <- rep(19, nrow(.data))
-  }
-  pch[ukn] <- unknownpch
-
-  if (is.null(fcol)) {
-    plot(.data, xlab = .xlab, ylab = .ylab)
-  } else {
-    plot(.data, xlab = .xlab, ylab = .ylab,
-         type = "n", ...)
-    points(.data[ukn, ], col = col[ukn],
-           pch = pch[ukn], cex = cex[ukn], ...)
-    points(.data[!ukn, ], col = col[!ukn],
-           pch = pch[!ukn], cex = cex[!ukn], ...)
-  }  
-  grid()
-  if (identify) {
-    ids <- identify(.data[, 1], .data[, 2],
-                    rownames(.data))
-    return(ids)    
+    }
+    stopifnot(length(cex) == nrow(.data))
+    if (!is.null(fcol)) {
+      ukn <- fData(object)[, fcol] == unknown
+    } else {
+      ukn <- rep(TRUE, nrow(.data))
+    }
+    
+    if (!is.null(fcol)) {
+      .fcol <- factor(fData(object)[, fcol])    
+      col <- stockcol[as.numeric(.fcol)]
+      col[ukn] <- unknowncol
+    }
+    if (!missing(fpch)) {   
+      .fpch <- factor(fData(object)[, fpch])
+      pch <- stockpch[as.numeric(.fpch)]
+    } else {
+      pch <- rep(19, nrow(.data))
+    }
+    pch[ukn] <- unknownpch
+    
+    if (is.null(fcol)) {
+      plot(.data, xlab = .xlab, ylab = .ylab)
+    } else {
+      plot(.data, xlab = .xlab, ylab = .ylab,
+           type = "n", ...)
+      points(.data[ukn, ], col = col[ukn],
+             pch = pch[ukn], cex = cex[ukn], ...)
+      points(.data[!ukn, ], col = col[!ukn],
+             pch = pch[!ukn], cex = cex[!ukn], ...)
+    }  
+    grid()
+    if (identify) {
+      ids <- identify(.data[, 1], .data[, 2],
+                      rownames(.data))
+      return(ids)    
+    }
   }
   invisible(.data)
 }

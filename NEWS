@@ -1,6 +1,7 @@
 CHANGES IN VERSION 0.99.11
 --------------------------
- o 
+ o setUnknowncol(NULL) and friedns reset to default 
+   values <2013-02-19 Tue>
 
 CHANGES IN VERSION 0.99.10
 --------------------------

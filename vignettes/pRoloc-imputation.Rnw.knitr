@@ -85,14 +85,14 @@ This document illustrates the some procedures that can be use as a quality contr
 
 <<env, include=FALSE, echo=FALSE, cache=FALSE>>=
 library("knitr")
-## opts_chunk$set(fig.align = 'center', 
-##                fig.show = 'hold', 
-##                par = TRUE,
-##                prompt = TRUE,
-##                eval = TRUE,
-##                comment = NA)
-## options(replace.assign = TRUE, 
-##         width = 55)
+opts_chunk$set(fig.align = 'center', 
+               fig.show = 'hold', 
+               par = TRUE,
+               prompt = TRUE,
+               eval = TRUE,
+               comment = NA)
+options(replace.assign = TRUE, 
+        width = 55)
 
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
@@ -110,7 +110,7 @@ suppressPackageStartupMessages(library("reshape2"))
 
 \section{Introduction}\label{sec:intro} 
 
-Data imputation is performed using the \Rfunction{impute} method, defined in the \Rpackage{MSnbase} package \citep{Gatto2012}. The difficulty in performing data imputation is not the imputation itself, but making sure that the imputation produces plausible results. These new values will be used for further data analysis and, eventually, interpretation of the underlying biology. As such, we advise users to assure that the imputation can be reasonably trusted and suggest some simple methods, mostly based on visualisation. 
+Data imputation is performed using the \Rfunction{impute} method, defined in the \Rpackage{MSnbase} package \citep{Gatto2012}. The difficulty in performing data imputation is not the imputation itself, but making sure that the imputation procedure produces plausible results. These new values will be used for further data analysis and, eventually, interpretation of the underlying biology. As such, we advise users to assure that the imputation can be reasonably trusted and suggest some simple methods, mostly based on visualisation. 
 
 For an introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, 
 available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}.
@@ -126,7 +126,7 @@ library("ggplot2")
 
 \subsubsection{Preparing test data}
 
-The \Rfunction{makeNaData} sets \Robject{nNA} values to \Robject{NA} in a certain \Robject{MSnSet} instance. 
+The \Rfunction{makeNaData} function sets \Robject{nNA} values to \Robject{NA} in a \Robject{MSnSet} instance. 
 It is used to generate data sets with randomly distributed missing values.
 
 <<testdata>>=
@@ -141,15 +141,15 @@ processingData(tan2009NA)
 \subsection{Data imputation}\label{sec:imp}
 
 Below, we perform data imputation and compare the original values from \Robject{tan2009r1} to the 
-imputed data from \Robject{tan2009imp}. The indices of the missing values are first extracted with 
-\Rfunction{tan2009NA} and the ratios between the original and imputed values are computed and stored 
-in the \Robject{r} variable.
+imputed data from \Robject{tan2009imp}. The indices of the missing values are extracted with the
+\Rfunction{whichNA} function and the $log_2$ ratios between the original and imputed values are 
+computed and stored in the \Robject{r} variable.
 
 <<impute>>=
 tan2009imp <- impute(tan2009NA)
 processingData(tan2009imp)
 naIdx <- whichNA(tan2009NA)
-r <- exprs(tan2009r1)[naIdx]/exprs(tan2009imp)[naIdx]
+r <- log2(exprs(tan2009r1)[naIdx]/exprs(tan2009imp)[naIdx])
 summary(r)
 @ 
 
@@ -157,12 +157,14 @@ summary(r)
 
 \subsection{Exploring missing data}
 
-See \Rfunction{MSnbase:::plotNA} and other plots in old missing data vignette.
+See \Rfunction{MSnbase::plotNA} and other plots in old missing data vignette.
 
-\subsection{Effect of imputation}
+\subsection{Patterns of missing data and imputation}
 
 We first prepare a \Robject{data.frame}, \Robject{rdf}, that stores the 
-$\frac{original}{imputed}$ ratios, calculated in section \ref{sec:imp}.
+$\frac{original}{imputed}$ $log_2$ ratios, calculated in section \ref{sec:imp}. 
+For visualisation purposes, the \Robject{rdf2} variable retains only 
+features that have missing values.
 
 <<rdf, tidy = FALSE>>=
 rdf <- matrix(NA, 
@@ -170,34 +172,51 @@ rdf <- matrix(NA,
               nrow = nrow(tan2009r1))
 colnames(rdf) <- sampleNames(tan2009r1)
 rdf[naIdx] <- r
+rdf2 <- rdf[!apply(rdf, 1, function(x) all(is.na(x))), ]
 rdf <- melt(rdf)
-colnames(rdf) <- c("y", "x", "z")
+rdf2 <- melt(rdf2)
+colnames(rdf2) <- colnames(rdf) <- c("y", "x", "z")
 @ 
 
 Below, we use \Rpackage{ggplot2} to colour code the ratios in the 
-expression matrix.
-
-
+expression matrix. These figures illustrate the extend of the effect 
+of imputation (divergence of the $log_2$ ratios from 0) as well as 
+the distribution of the missing values in the expression matrix, 
+inviting to reflect on the relation between possible patterns 
+of missing data and their effect on imputation.
 
 \begin{figure}[!hbt]
-<<tileplot, fig.width=3, fig.height=5, out.width='.5\\linewidth', fig.keep='last', message=FALSE>>=
+<<tileplot, fig.width=4, fig.height=6, out.width='.4\\linewidth', fig.keep='high', tidy = FALSE>>=
+colscale <- c("green", "yellow", "red")
+legtitle <- expression(log[2](frac(Orgiginal, Imputed)))
 p <- ggplot(rdf, aes(x = x, y = y, fill = z))
-p <- p + geom_tile() + theme_bw()
-p + scale_fill_gradientn(colours=c("darkred","yellow","darkred"),
-                         na.value = NA,
-                         name = expression(frac(Orgiginal, Imputed)))
+p2 <- ggplot(rdf2, aes(x = x, y = y, fill = z))
+p <- p + geom_tile() + theme_bw() + 
+  scale_fill_gradientn(colours=colscale, na.value = NA,
+                       name = legtitle)
+p2 <- p2 + geom_tile() + theme_bw() + 
+    scale_fill_gradientn(colours=colscale, na.value = NA,
+                       name = legtitle)
+print(p)
+print(p2)
 @ 
 \caption{Position of the missing values in the data matrix. The coloured tiles 
-represent the $\frac{original}{imputed}$ ratios.}
+represent the $\frac{original}{imputed}$ ratios. The figure on the right only
+shows features with missing values. }
 \label{fig:tile}
 \end{figure}
 
+\subsection{Effect of imputation on cluster resolution}
+
+Visualisation of spatial proteomics data
 
 \singlespacing
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
 
 \section*{Session information}\label{sec:sessionInfo} 
 

@@ -42,6 +42,7 @@ data(dunkley2006)
 params <- knnOptimisation(dunkley2006, k = c(3, 10), times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- knnClassification(dunkley2006, params)

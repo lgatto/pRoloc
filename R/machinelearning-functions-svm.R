@@ -184,6 +184,7 @@ svmRegularisation <- function(...) {
 ##' params <- svmOptimisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
 ##' params
 ##' plot(params)
+##' f1Count(params)
 ##' levelPlot(params)
 ##' getParams(params)
 ##' res <- svmClassification(dunkley2006, params)

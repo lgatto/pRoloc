@@ -40,6 +40,7 @@ data(dunkley2006)
 params <- rfOptimisation(dunkley2006, mtry = c(2, 5, 10),  times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- rfClassification(dunkley2006, params)

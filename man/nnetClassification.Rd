@@ -45,6 +45,7 @@ data(dunkley2006)
 params <- nnetOptimisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- nnetClassification(dunkley2006, params)

@@ -42,6 +42,7 @@ data(dunkley2006)
 params <- ksvmOptimisation(dunkley2006, cost = 2^seq(-1,4,5), times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- ksvmClassification(dunkley2006, params)

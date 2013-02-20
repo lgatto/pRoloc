@@ -44,6 +44,7 @@ data(dunkley2006)
 params <- plsdaOptimisation(dunkley2006, ncomp = c(3, 10),  times = 2)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- plsdaClassification(dunkley2006, params)

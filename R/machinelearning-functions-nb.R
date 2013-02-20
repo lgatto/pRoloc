@@ -175,6 +175,7 @@ nbRegularisation <- function(...) {
 ##' params <- nbOptimisation(dunkley2006, laplace = c(0, 5),  times = 3)
 ##' params
 ##' plot(params)
+##' f1Count(params)
 ##' levelPlot(params)
 ##' getParams(params)
 ##' res <- nbClassification(dunkley2006, params)

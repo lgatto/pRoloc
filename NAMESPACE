@@ -25,6 +25,7 @@ exportMethods(chi2,
               getWarnings,
               getSeed,
               getF1Scores,
+              f1Count,
               levelPlot,
               plot)
 

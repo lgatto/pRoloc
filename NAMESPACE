@@ -60,6 +60,7 @@ export(getPredictions,
        getRegularisedParams, getRegularizedParams,       
        rfRegularisation, rfOptimisation, rfOptimization, 
        rfPrediction, rfClassification, 
-       phenoDisco
+       phenoDisco,
+       makeNaData, whichNA
        )
 

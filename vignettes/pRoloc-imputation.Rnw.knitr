@@ -1,0 +1,214 @@
+%\VignetteIndexEntry{Missiing data imputation}
+%\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
+%\VignettePackage{pRoloc}
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage[authoryear,round]{natbib}
+\usepackage[auth-sc]{authblk}
+\usepackage{setspace}
+\onehalfspacing
+
+\renewcommand\Authands{ and }
+
+\newcommand{\R}{\texttt{R} }
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
+\newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
+%% colors
+\definecolor{Red}{rgb}{0.7,0,0}
+\definecolor{Blue}{rgb}{0,0,0.8}
+
+\usepackage{geometry}
+\geometry{verbose,
+  tmargin = 2.5cm,
+  bmargin = 2.5cm,
+  lmargin = 3.0cm,
+  rmargin = 3.0cm}
+
+\usepackage{hyperref}
+\usepackage{breakurl}
+\hypersetup{%
+  pdfusetitle,
+  bookmarks = {true},
+  bookmarksnumbered = {true},
+  bookmarksopen = {true},
+  bookmarksopenlevel = 2,
+  unicode = {true},
+  breaklinks = {false},
+  hyperindex = {true},
+  colorlinks = {true},
+  linktocpage = {true},
+  plainpages = {false},
+  linkcolor = {Blue},
+  citecolor = {Blue},
+  urlcolor = {Red},
+  pdfstartview = {Fit},
+  pdfpagemode = {UseOutlines},
+  pdfview = {XYZ null null null}
+}
+
+
+\author{
+  Laurent Gatto\thanks{\email{lg390@cam.ac.uk}}
+}
+
+\affil{
+  Cambridge Center for Proteomics\\
+  University of Cambridge
+}
+
+
+\begin{document}
+
+\title{Data imputation on spatial proteomics data}
+
+\maketitle
+
+%% Abstract and keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vskip 0.3in minus 0.1in
+\hrule
+\begin{abstract}
+This document illustrates the some procedures that can be use as a quality control when performing data imputation, with special emphasis on spatial/organelle proteomics data using the \Rpackage{pRoloc} package.
+\end{abstract}
+\textit{Keywords}: Bioinformatics, spatial/organelle proteomics, machine learning, visualisation
+\vskip 0.1in minus 0.05in
+\hrule
+\vskip 0.2in minus 0.1in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\tableofcontents
+
+<<env, include=FALSE, echo=FALSE, cache=FALSE>>=
+library("knitr")
+## opts_chunk$set(fig.align = 'center', 
+##                fig.show = 'hold', 
+##                par = TRUE,
+##                prompt = TRUE,
+##                eval = TRUE,
+##                comment = NA)
+## options(replace.assign = TRUE, 
+##         width = 55)
+
+suppressPackageStartupMessages(library("MSnbase"))
+suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
+suppressPackageStartupMessages(library("pRolocdata"))
+suppressPackageStartupMessages(library("class"))
+suppressPackageStartupMessages(library("ggplot2"))
+suppressPackageStartupMessages(library("reshape2"))
+@ 
+%%$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Introduction}\label{sec:intro} 
+
+Data imputation is performed using the \Rfunction{impute} method, defined in the \Rpackage{MSnbase} package \citep{Gatto2012}. The difficulty in performing data imputation is not the imputation itself, but making sure that the imputation produces plausible results. These new values will be used for further data analysis and, eventually, interpretation of the underlying biology. As such, we advise users to assure that the imputation can be reasonably trusted and suggest some simple methods, mostly based on visualisation. 
+
+For an introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, 
+available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}.
+
+<<loadpackages>>=
+library("pRoloc")
+library("pRolocdata")
+library("reshape2")
+library("ggplot2")
+@ 
+
+\section{Data imputation}
+
+\subsubsection{Preparing test data}
+
+The \Rfunction{makeNaData} sets \Robject{nNA} values to \Robject{NA} in a certain \Robject{MSnSet} instance. 
+It is used to generate data sets with randomly distributed missing values.
+
+<<testdata>>=
+data(tan2009r1)
+## for reproducibility
+set.seed(1) 
+nNA <- 70
+tan2009NA <- makeNaData(tan2009r1, nNA)
+processingData(tan2009NA)
+@ 
+
+\subsection{Data imputation}\label{sec:imp}
+
+Below, we perform data imputation and compare the original values from \Robject{tan2009r1} to the 
+imputed data from \Robject{tan2009imp}. The indices of the missing values are first extracted with 
+\Rfunction{tan2009NA} and the ratios between the original and imputed values are computed and stored 
+in the \Robject{r} variable.
+
+<<impute>>=
+tan2009imp <- impute(tan2009NA)
+processingData(tan2009imp)
+naIdx <- whichNA(tan2009NA)
+r <- exprs(tan2009r1)[naIdx]/exprs(tan2009imp)[naIdx]
+summary(r)
+@ 
+
+\section{Data visualistaion}
+
+\subsection{Exploring missing data}
+
+See \Rfunction{MSnbase:::plotNA} and other plots in old missing data vignette.
+
+\subsection{Effect of imputation}
+
+We first prepare a \Robject{data.frame}, \Robject{rdf}, that stores the 
+$\frac{original}{imputed}$ ratios, calculated in section \ref{sec:imp}.
+
+<<rdf, tidy = FALSE>>=
+rdf <- matrix(NA, 
+              ncol = ncol(tan2009r1), 
+              nrow = nrow(tan2009r1))
+colnames(rdf) <- sampleNames(tan2009r1)
+rdf[naIdx] <- r
+rdf <- melt(rdf)
+colnames(rdf) <- c("y", "x", "z")
+@ 
+
+Below, we use \Rpackage{ggplot2} to colour code the ratios in the 
+expression matrix.
+
+
+
+\begin{figure}[!hbt]
+<<tileplot, fig.width=3, fig.height=5, out.width='.5\\linewidth', fig.keep='last', message=FALSE>>=
+p <- ggplot(rdf, aes(x = x, y = y, fill = z))
+p <- p + geom_tile() + theme_bw()
+p + scale_fill_gradientn(colours=c("darkred","yellow","darkred"),
+                         na.value = NA,
+                         name = expression(frac(Orgiginal, Imputed)))
+@ 
+\caption{Position of the missing values in the data matrix. The coloured tiles 
+represent the $\frac{original}{imputed}$ ratios.}
+\label{fig:tile}
+\end{figure}
+
+
+\singlespacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Session information}\label{sec:sessionInfo} 
+
+All software and respective versions used to produce this document are listed below.
+
+<<sessioninfo, results='asis', echo=FALSE>>=
+toLatex(sessionInfo())
+@
+
+\bibliographystyle{plainnat}
+\bibliography{pRoloc}
+
+\end{document}
+

@@ -40,7 +40,6 @@ imp:
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-imputation.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-imputation.tex
 
-
 .PHONY: clean allclean 
 
 clean:	

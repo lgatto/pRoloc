@@ -330,28 +330,25 @@ effect of the imputation.
 <<loadpar1, echo = FALSE>>=
 tan2009filt <- filterNA(tan2009NA)
 load(dir(system.file("extdata", package = "pRoloc"), 
-         full.names = TRUE, pattern = "par1.rda"))
+         full.names = TRUE, pattern = "par.rda"))
 @ 
 
 We first filter the data containing \Robject{NA} values with the 
-\Rfunction{filterNA} method, that will remove fetaures that contain 
+\Rfunction{filterNA} method, that will remove features that contain 
 missing values (see \Rfunction{?filterNA} for further parametrisation).
 Before proceeding with the actual classification, we optimise the 
 \Robject{sigma} and \Robject{cost} parameters using 
 \Rfunction{svmOptimisation}\footnote{%%
 In the interest of time, \Rfunction{svmOptimisation} is not executed when the 
-vignette is dynamically built. The \Robject{par1} object can be located with 
+vignette is dynamically built. The \Robject{par} object can be located with 
 \Rfunction{dir(system.file("extdata", package = "pRoloc"), full.names = TRUE, pattern = "par1.rda")} 
 and loaded with \Rfunction{load}.}%%
-(see \Rfunction{vignette("pRoloc-tutorial")} 
-and \Rfunction{?svmOptimisation} for details). 
-We set the random number generator 
-seed to 1, as we will do later, to assure comparability of 
-optimisation routines.
+(see \Rfunction{vignette("pRoloc-tutorial")} and \Rfunction{?svmOptimisation} for details). 
+
 
 <<par1, tidy = FALSE, eval = FALSE>>=
 tan2009filt <- filterNA(tan2009NA)
-par1 <- svmOptimisation(tan2009filt, seed = 1, verbose = FALSE)
+par <- svmOptimisation(tan2009filt, verbose = FALSE)
 ## checking levelPlot(par1), plot(par1), getParams(par1) and f1Count(par1)
 @ 
 
@@ -362,7 +359,7 @@ support vector machines, as implemented in \Rpackage{pRoloc}
 
 <<cl1, tidy = FALSE, warning = FALSE>>=
 
-cl1 <- svmClassification(tan2009filt, cost = 1, sigma = 0.1)
+cl1 <- svmClassification(tan2009filt, par)
 summary(fData(cl1)$svm.scores)
 ## plot2D(cl1, fcol = "svm", fpch = "markers", 
 ##        cex = fData(cl1)$svm.scores + 0.2)
@@ -374,24 +371,13 @@ fData(cl1)$pred1 <- pred1
 
 \subsubsection{Classification of the imputed data}
 
-<<loadpar2, echo = FALSE>>=
-load(dir(system.file("extdata", package = "pRoloc"), 
-         full.names = TRUE, pattern = "par2.rda"))
-@ 
-
-Below we repeat the parameter optimisation using \Rfunction{svmOptimisation}\footnote{%%
-  As previously, the results are pre-computed and loaded in the interest of time.
-}.
-
-<<par2, tidy = FALSE, eval = FALSE>>=
-par2 <- svmOptimisation(tan2009imp, seed = 1, verbose = FALSE)
-## checking levelPlot(par2), plot(par2), getParams(par2) and f1Count(par2)
-@ 
-
-Here we classify the imputed data, setting \Robject{sigma} and \Robject{cost} to 1.
+The parameter optimisation relies solely on the markers set. As these are 
+identical in \Robject{tan2009imp} and \Robject{tan2009filt} 
+(both being generated from \Robject{tan2009NA}), we can use \Robject{par} 
+for the classification of the imputed data.
 
 <<cl2, tidy = FALSE, warning = FALSE>>=
-cl2 <- svmClassification(tan2009imp, sigma = 1, cost = 1)
+cl2 <- svmClassification(tan2009imp, par)
 summary(fData(cl2)$svm.scores)
 ## plot2D(cl2, fcol = "svm", fpch = "markers", 
 ##        cex = fData(cl2)$svm.scores + 0.2)

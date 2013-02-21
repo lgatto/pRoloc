@@ -189,23 +189,23 @@ makeNaData2 <- function(object,
     .sel <- cbind(.rw, .cl)
     exprs(object)[.sel] <- NA
   }
-
+  
   fData(object)$nNA <-
-    apply(exprs(object), 1, function(.x) sum(is.na(.x)))  
+    colSums(apply(exprs(object), 1, is.na))
   
-  object@processingData@processing <-
-    c(object@processingData@processing,
-      paste0("Set (", paste(nNAs, collapse = ","), ") NAs in (",
-             paste(nRows, collapse = ","), ") rows,\n  respectively ",
-             date()))
-  
+  msg <-  paste0("Set (", paste(nNAs, collapse = ","), ") NAs in (",
+                 paste(nRows, collapse = ","), ") rows,\n  respectively ",
+                 date())
   if (!missing(exclude)) {
     msg <- paste0(msg, "\n  (excluding ", nrow(objectX) ," features)" )
     object <- combine(object, objectX)
-    object <- object[fn0, ]
+    object <- object[fn0, ]    
     object <- MSnbase:::nologging(object, n = 2)
   }
-  
+
+  object@processingData@processing <-
+    c(object@processingData@processing, msg)
+
   if (validObject(object))
     return(object)
 }

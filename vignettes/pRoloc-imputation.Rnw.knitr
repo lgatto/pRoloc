@@ -235,7 +235,7 @@ shows features with missing values. }
 \end{figure}
 
 
-\subsection{Effect of imputation on cluster resolution}
+\subsection{Effect of imputation on cluster resolution}\label{sec:clusterres}
 
 Visualisation of spatial proteomics data on a 2 dimensional plot using 
 dimensionality reduction techniques such as principal component analysis
@@ -270,7 +270,7 @@ To fully appreciate the effect of the imputation on the data, we are going to
 combine the original and imputed data on the same figure.
 
 <<prepdata1>>=
-sel <- unique(naIdx[, 1])
+sel <- which(fData(tan2009imp)$nNA > 0)
 d1 <- plot2D(tan2009r1, plot = FALSE)
 d2 <- plot2D(tan2009imp, plot = FALSE)
 d1 <- d1[sel, ]; d2 <- d2[sel, ]
@@ -457,8 +457,7 @@ xt <- xtable(tab,
              label="tab:compclass",
              caption = "Details of the features showing different classification after imputation.")
 align(xt) <- rep('p{.65in}', ncol(tab) + 1)
-print(xt)
-      
+print(xt)   
 @ 
 
 \clearpage
@@ -468,8 +467,11 @@ print(xt)
 \subsubsection{Another test data}\label{sec:testdata2}
 
 In this case, we use only the first membrane preparation of the \cite{Dunkley2006} data set. 
-Addition of missing data is performed with the \Rfunction{makeNaData2}, which allows to 
-specify
+Here, we use\Rfunction{makeNaData2}, which allows to specify the number of missing values to 
+be added for a certain number of lines. We choose to set 1 to 5 \texttt{NA} values to 
+35 features respectively, avoiding the organelle markers. 
+In total, we end up with \Sexpr{round(100 * sum(is.na(dunkleyNA))/prod(dim(dunkleyNA)), 1)}\% 
+of missing values over the full data set.
 
 <<testdata2>>=
 data(dunkley2006)
@@ -477,11 +479,72 @@ prep1 <- dunkley2006$membrane.prep == 1
 mrk <- fData(dunkley2006)$markers != "unknown"
 set.seed(1)
 dunkleyNA <- makeNaData2(dunkley2006[, prep1],
-                         nRows = rep(10, 5),
+                         nRows = rep(35, 5),
                          nNAs = 1:5, 
                          exclude = mrk)
 processingData(dunkleyNA)
+table(fData(dunkleyNA)$nNA)
+dunkleyImp <- impute(dunkleyNA)
 @ 
+
+The original data set and the markers are illustrated on figure \ref{fig:dunkley}.
+
+\begin{figure}[!htp]
+<<distdunkley, out.width='.55\\linewidth', fig.keep='high', tidy = FALSE>>=
+plot2D(dunkley2006, main = "Original Dunkey 2006 data")
+addLegend(dunkley2006, where = "bottomright", bty = "n", ncol = 6, cex = .75)
+@ 
+\caption{ PCA plot of the original \Robject{dunkley2006} data set. }
+\label{fig:dunkley}
+\end{figure}
+
+
+\subsubsection{Iterative imputation}
+
+In section \ref{sec:clusterres} and \ref{sec:class}, we have illustrated 
+how the number of missing values increases the imputation distance and how 
+these features are more likely to be mis-classified. 
+Instead of imputing all values at once, we are going to impute features 
+with 1 missing value, then use this updated data to impute features with 
+2 missing values, \ldots and see if this approach leads to any improvements.
+
+\begin{figure}[!htp]
+<<distdunkley, out.width='.45\\linewidth', fig.keep='high', tidy = FALSE>>=
+d1 <- plot2D(dunkley2006, plot = FALSE)
+d2 <- plot2D(dunkleyImp, plot = FALSE)
+sel <- which(fData(dunkleyImp)$nNA > 0)
+
+cls <- paste0(c(getUnknowncol(), 
+                getStockcol()[1:5]),
+              80)
+
+plot(d1, col = cls[fData(dunkleyImp)$nNA + 1], 
+     pch = ifelse(fData(dunkleyImp)$nNA == 0,
+       1, 19)) 
+grid()
+x <- unique(fData(dunkleyImp)$nNA)
+arrows(d1[sel, 1], d1[sel, 2], 
+       d2[sel, 1], d2[sel, 2],
+       col = "grey50", length = 0.1,
+       lty = "dotted")
+legend("bottom", bty = "n", ncol = 6, 
+       legend = sort(x), 
+       col = cls[order(x)], pch = c(1, rep(19, 5)))
+
+p1 <- exprs(dunkley2006)[sel, ]
+p2 <- exprs(dunkleyImp)[sel, ]
+impdists <- sapply(1:nrow(p1),
+                   function(i) dist(rbind(p1[i, ], p2[i, ])))
+ddf <- data.frame(nNA = factor(fData(dunkleyImp)$nNA[sel]),
+                  distance = impdists)
+rownames(ddf) <- rownames(p1)
+pp <- qplot(nNA, distance, data = ddf, geom = "boxplot")
+
+@ 
+\caption{ }
+\label{fig:distdunkley}
+\end{figure}
+
 
 \singlespacing
 

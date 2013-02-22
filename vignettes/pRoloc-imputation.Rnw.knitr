@@ -84,7 +84,6 @@ This document illustrates the some procedures that can be use as a quality contr
 \tableofcontents
 
 <<env, include=FALSE, echo=FALSE, cache=FALSE>>=
-options(warn = 2)
 library("knitr")
 opts_chunk$set(fig.align = 'center', 
                fig.show = 'hold', 
@@ -110,9 +109,24 @@ suppressPackageStartupMessages(library("xtable"))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
+\section*{Foreword}
+
+Please take into account that this document is work in progress.
+
+\bigskip
+\begin{itemize}
+\item TODO -- use root mean square to compare methods
+\item TODO -- compare different $k$ in $nn$-imputation.
+\end{itemize}
+
 \section{Introduction}\label{sec:intro} 
 
-Data imputation is performed using the \Rfunction{impute} method, defined in the \Rpackage{MSnbase} package \citep{Gatto2012}. The difficulty in performing data imputation is not the imputation itself, but making sure that the imputation procedure produces plausible results. These new values will be used for further data analysis and, eventually, interpretation of the underlying biology. As such, we advise users to assure that the imputation can be reasonably trusted and suggest some simple methods, mostly based on visualisation. 
+Data imputation is performed using the \Rfunction{impute} method, defined in the \Rpackage{MSnbase} package \citep{Gatto2012}. 
+The default imputation method is nearest neighbour imputation \citep{Troyanskaya2001}.
+The difficulty in performing data imputation is not the imputation itself, but making sure that the imputation procedure 
+produces plausible results. These new values will be used for further data analysis and, eventually, interpretation of the 
+underlying biology. As such, we advise users to assure that the imputation can be reasonably trusted and suggest some simple 
+methods, mostly based on visualisation. 
 
 For an introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, 
 available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}.
@@ -466,12 +480,26 @@ print(xt)
 
 \subsubsection{Another test data}\label{sec:testdata2}
 
+<<pretestdata2, echo=FALSE>>=
+data(dunkley2006)
+prep1 <- dunkley2006$membrane.prep == 1
+mrk <- fData(dunkley2006)$markers != "unknown"
+set.seed(1)
+dunkleyNA <- makeNaData2(dunkley2006[, prep1],
+                         nRows = rep(35, 5),
+                         nNAs = 1:5, 
+                         exclude = mrk)
+@ 
+
 In this case, we use only the first membrane preparation of the \cite{Dunkley2006} data set. 
 Here, we use\Rfunction{makeNaData2}, which allows to specify the number of missing values to 
 be added for a certain number of lines. We choose to set 1 to 5 \texttt{NA} values to 
 35 features respectively, avoiding the organelle markers. 
 In total, we end up with \Sexpr{round(100 * sum(is.na(dunkleyNA))/prod(dim(dunkleyNA)), 1)}\% 
 of missing values over the full data set.
+
+When performing imputation, the algorithm informs that 35 rows have more than 50\% of missing 
+values, as defined in out missing data strategy, in which cases, mean imputation has been applied.
 
 <<testdata2>>=
 data(dunkley2006)
@@ -490,34 +518,29 @@ dunkleyImp <- impute(dunkleyNA)
 The original data set and the markers are illustrated on figure \ref{fig:dunkley}.
 
 \begin{figure}[!htp]
-<<distdunkley, out.width='.55\\linewidth', fig.keep='high', tidy = FALSE>>=
+<<dunkley, out.width='.55\\linewidth', fig.keep='high', tidy = FALSE>>=
 plot2D(dunkley2006, main = "Original Dunkey 2006 data")
-addLegend(dunkley2006, where = "bottomright", bty = "n", ncol = 6, cex = .75)
+addLegend(dunkley2006, where = "bottomright", 
+          bty = "n", ncol = 6, cex = .75)
 @ 
 \caption{ PCA plot of the original \Robject{dunkley2006} data set. }
 \label{fig:dunkley}
 \end{figure}
 
-
-\subsubsection{Iterative imputation}
-
-In section \ref{sec:clusterres} and \ref{sec:class}, we have illustrated 
-how the number of missing values increases the imputation distance and how 
-these features are more likely to be mis-classified. 
-Instead of imputing all values at once, we are going to impute features 
-with 1 missing value, then use this updated data to impute features with 
-2 missing values, \ldots and see if this approach leads to any improvements.
+We first illustrate the effect of imputation on the complete data on figure 
+\ref{fig:distdunkley}. The effect of the number of missing values seems 
+to be distinctive for 4 and 5 (out of \Sexpr{ncol(dunkleyImp)} imputations. 
+The PCA plot seems to indicate a concentration of points toward the 
+centre of the plot as a result of imputation. 
 
 \begin{figure}[!htp]
-<<distdunkley, out.width='.45\\linewidth', fig.keep='high', tidy = FALSE>>=
+<<distdunkley, out.width='.49\\linewidth', fig.keep='high', echo = FALSE>>=
 d1 <- plot2D(dunkley2006, plot = FALSE)
 d2 <- plot2D(dunkleyImp, plot = FALSE)
 sel <- which(fData(dunkleyImp)$nNA > 0)
-
-cls <- paste0(c(getUnknowncol(), 
+cls <- paste0(c("#999999",
                 getStockcol()[1:5]),
               80)
-
 plot(d1, col = cls[fData(dunkleyImp)$nNA + 1], 
      pch = ifelse(fData(dunkleyImp)$nNA == 0,
        1, 19)) 
@@ -539,11 +562,74 @@ ddf <- data.frame(nNA = factor(fData(dunkleyImp)$nNA[sel]),
                   distance = impdists)
 rownames(ddf) <- rownames(p1)
 pp <- qplot(nNA, distance, data = ddf, geom = "boxplot")
-
+print(pp)
 @ 
-\caption{ }
+\caption{ Effect of imputation on the dunkley data set.  }
 \label{fig:distdunkley}
 \end{figure}
+
+\subsubsection{Iterative imputation}
+
+Instead of imputing all values at once, we are going to impute features 
+with 1 missing value, then use this updated data to impute features with 
+2 missing values, \ldots and see if this approach leads to any improvements.
+
+<<iterimp>>=
+nas <- lapply(0:5, function(k)
+              which(fData(dunkleyNA)$nNA == k))
+
+## Impute features with 1 NA
+dunkleyImp1 <- impute(dunkleyNA[unlist(nas[1:2])])
+## Impute features with 2 NA
+dunkleyImp2 <- impute(combine(dunkleyImp1, dunkleyNA[nas[[3]]]))
+## Impute features with 3 NA
+dunkleyImp3 <- impute(combine(dunkleyImp2, dunkleyNA[nas[[4]]]))
+## Impute features with 4 NA
+dunkleyImp4 <- impute(combine(dunkleyImp3, dunkleyNA[nas[[5]]]))
+## Impute features with 5 NA
+dunkleyImp5 <- impute(combine(dunkleyImp4, dunkleyNA[nas[[6]]]))
+@ 
+
+
+\begin{figure}[!htp]
+<<distdunkley2, out.width='.49\\linewidth', fig.keep='high', echo = FALSE, warning = FALSE>>=
+
+dunkleyImp5 <- dunkleyImp5[featureNames(dunkley2006)]
+d1 <- plot2D(dunkley2006, plot = FALSE)
+d2 <- plot2D(dunkleyImp5, plot = FALSE)
+sel <- which(fData(dunkleyImp5)$nNA > 0)
+plot(d1, col = cls[fData(dunkleyImp5)$nNA + 1], 
+     pch = ifelse(fData(dunkleyImp5)$nNA == 0, 1, 19),
+     main = "Iterative imputation vs. original data") 
+grid()
+arrows(d1[sel, 1], d1[sel, 2], 
+       d2[sel, 1], d2[sel, 2],
+       col = "grey50", length = 0.1,
+       lty = "dotted")
+legend("bottom", bty = "n", ncol = 6, 
+       legend = sort(x), 
+       col = cls[order(x)], pch = c(1, rep(19, 5)))
+
+d1 <- plot2D(dunkleyImp, plot = FALSE)
+d2 <- plot2D(dunkleyImp5, plot = FALSE)
+sel <- which(fData(dunkleyImp5)$nNA > 0)
+plot(d1, col = cls[fData(dunkleyImp5)$nNA + 1], 
+     pch = ifelse(fData(dunkleyImp5)$nNA == 0, 1, 19),
+     main = "Iterative imputation vs. complete imputation.") 
+grid()
+arrows(d1[sel, 1], d1[sel, 2], 
+       d2[sel, 1], d2[sel, 2],
+       col = "grey50", length = 0.1,
+       lty = "dotted")
+legend("bottom", bty = "n", ncol = 6, 
+       legend = sort(x), 
+       col = cls[order(x)], pch = c(1, rep(19, 5)))
+
+@ 
+\caption{ Effect of iterative imputation on the dunkley data set.  }
+\label{fig:distdunkley2}
+\end{figure}
+
 
 
 \singlespacing

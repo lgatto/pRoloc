@@ -6,7 +6,6 @@ CHANGES IN VERSION 0.99.12
  o new makeNaData2 function <2013-02-21 Thu>
  o new whichNAfunction <2013-02-20 Wed>
  o updated tutorial vignette <2013-02-20 Wed>
- o new imputation vignette <2013-02-20 Wed>
 
 CHANGES IN VERSION 0.99.11
 --------------------------

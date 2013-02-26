@@ -7,6 +7,7 @@ setGeneric("getParams", function(object) standardGeneric("getParams"))
 setGeneric("getOtherParams", function(object) standardGeneric("getOtherParams"))
 setGeneric("getRegularisedParams", function(object) getParams(object))
 setGeneric("getRegularizedParams", function(object) getParams(object))
+setGeneric("f1Count", function(object, ...) standardGeneric("f1Count"))
 
 setGeneric("chi2",function(x,y,...) standardGeneric("chi2"))
 

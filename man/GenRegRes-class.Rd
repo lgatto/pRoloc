@@ -6,6 +6,8 @@
 \alias{GenRegRes-class}
 \alias{getF1Scores}
 \alias{getF1Scores,GenRegRes-method}
+\alias{f1Count}
+\alias{f1Count,GenRegRes-method}
 \alias{getParams}
 \alias{getParams,GenRegRes-method}
 \alias{getRegularisedParams}
@@ -65,6 +67,12 @@
 \section{Methods}{
   \describe{
     \item{getF1Scores}{\code{signature(object = "GenRegRes")}: ... }
+    \item{f1Count}{\code{signature(object = "GenRegRes", t =
+	"numeric")}: Constructs a table of all possible parameter
+      combination and count how many have an F1 scores greater or equal
+      than \code{t}. When \code{t} is missing (default), the best F1
+      score is used. This method is useful in conjunctin with
+      \code{plot}. }
     \item{getRegularisedParams}{\code{signature(object = "GenRegRes")}: ... }
     \item{getRegularizedParams}{\code{signature(object = "GenRegRes")}: ... }
     \item{getSeed}{\code{signature(object = "GenRegRes")}: ... }

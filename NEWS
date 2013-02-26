@@ -1,3 +1,14 @@
+CHANGES IN VERSION 0.99.12
+--------------------------
+ o plot2D has gained a plot argument <2013-02-19 Tue>
+ o new f1Count method <2013-02-20 Wed>
+ o new makeNaData function <2013-02-20 Wed>
+ o new makeNaData2 function <2013-02-21 Thu>
+ o new whichNAfunction <2013-02-20 Wed>
+ o updated tutorial vignette <2013-02-20 Wed>
+ o Now passing ... to predictor functions in 
+   xxxClassification (reported by Marianne Sandin) <2013-02-26 Tue>
+
 CHANGES IN VERSION 0.99.11
 --------------------------
  o setUnknowncol(NULL) and friedns reset to default 

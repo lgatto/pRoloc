@@ -172,6 +172,7 @@ svmRegularisation <- function(...) {
 ##' @param sigma If \code{assessRes} is missing, a \code{sigma} must be provided.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{svm}} from package \code{e1071}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{svm} and \code{svm.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -184,6 +185,7 @@ svmRegularisation <- function(...) {
 ##' params <- svmOptimisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
 ##' params
 ##' plot(params)
+##' f1Count(params)
 ##' levelPlot(params)
 ##' getParams(params)
 ##' res <- svmClassification(dunkley2006, params)
@@ -195,7 +197,8 @@ svmClassification <- function(object,
                               scores = c("prediction", "all", "none"),
                               cost,
                               sigma,
-                              fcol = "markers") {
+                              fcol = "markers",
+                              ...) {
   scores <- match.arg(scores)
   if (missing(assessRes)) {
     if (missing(cost) | missing(sigma))
@@ -213,7 +216,8 @@ svmClassification <- function(object,
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), svmI, trainInd,
                 gamma = params["sigma"],
-                cost = params["cost"])
+                cost = params["cost"],
+                ...)
   ## Would be better to check of these columns exist
   fData(object)$svm <- predictions(ans)
   if (scores == "all") {

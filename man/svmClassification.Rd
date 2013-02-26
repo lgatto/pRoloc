@@ -5,7 +5,7 @@
 \usage{
   svmClassification(object, assessRes,
     scores = c("prediction", "all", "none"), cost, sigma,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -27,6 +27,9 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{svm}} from package \code{e1071}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with
@@ -45,6 +48,7 @@ data(dunkley2006)
 params <- svmOptimisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- svmClassification(dunkley2006, params)

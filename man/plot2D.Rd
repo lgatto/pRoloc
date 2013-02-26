@@ -6,7 +6,7 @@
     unknown = "unknown", dims = 1:2, alpha, score = 1,
     method = c("PCA", "MDS"), axsSwitch = FALSE,
     mirrorX = FALSE, mirrorY = FALSE, col, pch, cex,
-    identify = FALSE, ...)
+    identify = FALSE, plot = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -62,6 +62,10 @@
   defining if user interaction will be expected to identify
   individual data points on the plot. See also
   \code{\link{identify}}.}
+
+  \item{plot}{A \code{logical} defining if the figure
+  should be plotted. Useful when retrieving data only.
+  Default is \code{TRUE}.}
 
   \item{...}{Additional parameters passed to \code{plot}
   and \code{points}.}

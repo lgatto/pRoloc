@@ -67,7 +67,7 @@
 
 \begin{document}
 
-\title{A short tutorial on using \Rpackage{pRoloc} for organelle proteomics data analysis}
+\title{A short tutorial on using \Rpackage{pRoloc} for spatial proteomics data analysis}
 
 \maketitle
 
@@ -75,7 +75,7 @@
 \vskip 0.3in minus 0.1in
 \hrule
 \begin{abstract}
-This tutorial illustrates the usage of the \Rpackage{pRoloc} \R package for the analysis and interpretation of organelle proteomics data. It walks the reader through the creation of \Robject{MSnSet} instances, that hold the quantitative proteomics data and meta-data and introduces several aspects of data analysis, including data visualisation and application of machine learning to predict protein localisation. 
+This tutorial illustrates the usage of the \Rpackage{pRoloc} \R package for the analysis and interpretation of spatial proteomics data. It walks the reader through the creation of \Robject{MSnSet} instances, that hold the quantitative proteomics data and meta-data and introduces several aspects of data analysis, including data visualisation and application of machine learning to predict protein localisation. 
 \end{abstract}
 \textit{Keywords}: Bioinformatics, organelle proteomics, machine learning, visualisation 
 \vskip 0.1in minus 0.05in
@@ -113,9 +113,9 @@ set.seed(1)
 
 \section{Introduction}\label{sec:intro} 
 
-\subsection{Organelle proteomics}
+\subsection{Spatial proteomics}
 
-Organelle proteomics is the study of the localisation of proteins inside cells. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of \Rpackage{pRoloc}, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using \Rpackage{pRoloc} is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT \citep{Dunkley2006} or PCP \citep{Foster2006} approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example \cite{Gatto2010} and references therein for a detailed review on organelle proteomics.
+Spatial (or organelle) proteomics is the study of the localisation of proteins inside cells. The sub-cellular compartment can be organelles, i.e. structures defined by lipid bi-layers,macro-molecular assemblies of proteins and nucleic acids or large protein complexes. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of \Rpackage{pRoloc}, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using \Rpackage{pRoloc} is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT \citep{Dunkley2006} or PCP \citep{Foster2006} approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example \cite{Gatto2010} and references therein for a detailed review on organelle proteomics.
 
 It should be noted that large protein complexes, that are not necessarily separately enclosed within their own lipid bi-layer, can be detected by such techniques, as long as a distinct profile can be defined across the fractions. 
 
@@ -458,9 +458,16 @@ params
 plot(params)
 levelPlot(params)
 @ 
-\caption{Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. On the right, we see the averaged macro F1 scores, for the full range of parameter values.}
+\caption{Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of \Rfunction{f1Count} in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values.}
 \label{fig:params}
 \end{figure}
+
+In addition to the plots on figure \ref{fig:params}, \Rfunction{f1Count(params)} returns, for each combination of parameters, the number of best (highest) F1 observations. One can use \Rfunction{getParams} to see the default set of parameters that are chosen based on the executed optimisation. Currently, the first best set is automatically extracted, and users are advised to critically assess whether this is the most wise choice. 
+
+<<f1count>>=
+f1Count(params)
+getParams(params)
+@ 
 
 \clearpage
 
@@ -473,7 +480,13 @@ These probabilities are not to be compared across algorithms; they do \textbf{no
 algorithm-specific classification confidence score.}%%
 , called scores hereafter, are automatically added to the \Robject{featureData} slot; in this case, using the \Robject{svm} and \Robject{svm.scores} labels.
 
-<<svmRes, warning=FALSE>>=
+<<svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE>>=
+## manual setting of parameters
+svmres <- svmClassification(tan2009r1, sigma = 1, cost = 1)
+@ 
+
+<<svmRes, warning=FALSE, tidy = FALSE>>=
+## using default best parameters
 svmres <- svmClassification(tan2009r1, params)
 processingData(svmres)
 tail(fvarLabels(svmres), 4)

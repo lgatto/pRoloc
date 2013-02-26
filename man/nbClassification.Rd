@@ -24,6 +24,9 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{naiveBayes}} from package \code{e1071}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with

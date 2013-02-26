@@ -27,6 +27,9 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{nnet}} from package \code{nnet}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with

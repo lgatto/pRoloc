@@ -175,6 +175,7 @@ ksvmRegularisation <- function(...) {
 ##' @param cost If \code{assessRes} is missing, a \code{cost} must be provided.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{ksvm}} from package \code{kernlab}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{ksvm} and \code{ksvm.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -212,7 +213,7 @@ ksvmClassification <- function(object,
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), ksvmI, trainInd,
-                C = params["cost"])
+                C = params["cost"], ...)
   fData(object)$ksvm <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

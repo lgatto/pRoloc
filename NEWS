@@ -6,6 +6,8 @@ CHANGES IN VERSION 0.99.12
  o new makeNaData2 function <2013-02-21 Thu>
  o new whichNAfunction <2013-02-20 Wed>
  o updated tutorial vignette <2013-02-20 Wed>
+ o Now passing ... to predictor functions in 
+   xxxClassification (reported by Marianne Sandin) <2013-02-26 Tue>
 
 CHANGES IN VERSION 0.99.11
 --------------------------

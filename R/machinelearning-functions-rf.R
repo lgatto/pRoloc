@@ -176,6 +176,7 @@ rfRegularisation <- function(...) {
 ##' @param mtry If \code{assessRes} is missing, a \code{mtry} must be provided.
 ##' @param fcol  The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{randomForest}} from package \code{randomForest}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{rf} and \code{rf.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -213,7 +214,8 @@ rfClassification <- function(object,
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), randomForestI, trainInd,
-                mtry = params["mtry"])
+                mtry = params["mtry"],
+                ...)
   fData(object)$rf <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

@@ -30,7 +30,6 @@
 ##' @param fun The function used to summarise the \code{times} macro F1 matrices.
 ##' @param seed The optional random number generator seed.
 ##' @param verbose A \code{logical} defining whether a progress bar is displayed.
-##' @param ... Additional parameters passed to \code{\link{svm}} from package \code{e1071}.
 ##' @return An instance of class \code{"\linkS4class{GenRegRes}"}.
 ##' @seealso \code{\link{perTurboClassification}} and example therein.
 ##' @aliases perTurboOptimization 
@@ -48,8 +47,7 @@ perTurboOptimisation <- function(object,
                                  xval = 5,                               
                                  fun = mean,
                                  seed,
-                                 verbose = TRUE,
-                                 ...) {
+                                 verbose = TRUE ) {
   inv <- match.arg(inv)
   reg <- match.arg(reg)
   nparams <- 2 ## 2 or 1, depending on the algorithm
@@ -136,7 +134,10 @@ perTurboOptimisation <- function(object,
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
     .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
-    .model <- trainingPerTurbo(.train1$markers, .train1,sigma = .bestParams["sigma"], .inv, .reg, pRegul = .bestParams["pRegul"])
+    .model <- trainingPerTurbo(.train1$markers, .train1,
+                               sigma = .bestParams["sigma"],
+                               .inv, .reg,
+                               pRegul = .bestParams["pRegul"])
     ans <- testPerTurbo(.model, .test1$markers, .test1)
     
     .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table

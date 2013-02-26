@@ -24,6 +24,10 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{randomForest}} from package
+  \code{randomForest}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with

@@ -171,6 +171,7 @@ plsdaRegularisation <- function(...) {
 ##' @param ncomp If \code{assessRes} is missing, a \code{ncomp} must be provided.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{plsda}} from package \code{caret}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{plsda} and \code{plsda.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -212,7 +213,8 @@ plsdaClassification <- function(object,
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), plsdaI, trainInd,
-                ncomp = params["ncomp"])
+                ncomp = params["ncomp"],
+                ...)
   fData(object)$plsda <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

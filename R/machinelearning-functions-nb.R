@@ -163,6 +163,7 @@ nbRegularisation <- function(...) {
 ##' @param laplace If \code{assessRes} is missing, a \code{laplace} must be provided.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{naiveBayes}} from package \code{e1071}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{nb} and \code{nb.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -201,7 +202,8 @@ nbClassification <- function(object,
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), naiveBayesI,
                 trainInd,
-                laplave = params["laplace"])
+                laplave = params["laplace"],
+                ...)
   fData(object)$naiveBayes <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

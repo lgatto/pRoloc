@@ -16,6 +16,7 @@ LATEXFILES = *.aux\
 	*.dpth\
 	*.makefile\
 	pRoloc-imputation.tex\
+	pRoloc-ml.tex\
 	pRoloc-tutorial.tex
 
 all: 
@@ -40,6 +41,14 @@ imp:
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-imputation.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-imputation.tex
 
+ml:
+	cp pRoloc-ml.Rnw.knitr pRoloc-ml.Rnw
+	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-ml.Rnw');"
+	bibtex pRoloc-ml
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+
+
 .PHONY: clean allclean 
 
 clean:	
@@ -49,9 +58,11 @@ clean:
 	rm -f */*~
 	cp pRoloc-tutorial.Rnw.stub pRoloc-tutorial.Rnw
 	## cp pRoloc-imputation.Rnw.stub pRoloc-imputation.Rnw
+	## cp pRoloc-ml.Rnw.stub pRoloc-ml.Rnw
 
 allclean: clean
 	rm -f  pRoloc-tutorial.pdf
 	rm -f  pRoloc-imputation.pdf
+	rm -f  pRoloc-ml.pdf
 	rm -rf figure/
 	rm -rf cache/

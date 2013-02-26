@@ -189,7 +189,8 @@ knnClassification <- function(object,
                               assessRes,
                               scores = c("prediction", "all", "none"),
                               k,
-                              fcol = "markers") {
+                              fcol = "markers",
+                              ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(k))

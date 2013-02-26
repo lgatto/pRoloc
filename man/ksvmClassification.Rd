@@ -5,7 +5,7 @@
 \usage{
   ksvmClassification(object, assessRes,
     scores = c("prediction", "all", "none"), cost,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class

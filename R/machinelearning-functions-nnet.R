@@ -206,7 +206,8 @@ nnetClassification <- function(object,
                                scores = c("prediction", "all", "none"),
                                decay,
                                size,
-                               fcol = "markers") {
+                               fcol = "markers",
+                               ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(decay) | missing(size))

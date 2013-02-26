@@ -197,10 +197,11 @@ rfRegularisation <- function(...) {
 ##' getPredictions(res, fcol = "rf", t = 0.75)
 ##' plot2D(res, fcol = "rf")
 rfClassification <- function(object,
-                         assessRes,
-                         scores = c("prediction", "all", "none"),
-                         mtry,
-                         fcol = "markers") {
+                             assessRes,
+                             scores = c("prediction", "all", "none"),
+                             mtry,
+                             fcol = "markers",
+                             ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(mtry))

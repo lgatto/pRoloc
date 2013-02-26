@@ -187,7 +187,8 @@ nbClassification <- function(object,
                              assessRes,
                              scores = c("prediction", "all", "none"),
                              laplace,
-                             fcol = "markers") {
+                             fcol = "markers",
+                             ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(laplace))

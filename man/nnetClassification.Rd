@@ -5,7 +5,7 @@
 \usage{
   nnetClassification(object, assessRes,
     scores = c("prediction", "all", "none"), decay, size,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class

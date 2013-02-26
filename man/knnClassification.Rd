@@ -5,7 +5,7 @@
 \usage{
   knnClassification(object, assessRes,
     scores = c("prediction", "all", "none"), k,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class

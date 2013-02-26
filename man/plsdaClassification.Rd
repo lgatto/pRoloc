@@ -5,7 +5,7 @@
 \usage{
   plsdaClassification(object, assessRes,
     scores = c("prediction", "all", "none"), ncomp,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class

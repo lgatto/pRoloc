@@ -5,7 +5,7 @@
 \usage{
   rfClassification(object, assessRes,
     scores = c("prediction", "all", "none"), mtry,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class

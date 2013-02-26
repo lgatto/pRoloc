@@ -199,7 +199,8 @@ ksvmClassification <- function(object,
                                assessRes,
                                scores = c("prediction", "all", "none"),
                                cost,
-                               fcol = "markers") {
+                               fcol = "markers",
+                               ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(cost))

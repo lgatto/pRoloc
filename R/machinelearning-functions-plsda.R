@@ -198,7 +198,8 @@ plsdaClassification <- function(object,
                                 assessRes,
                                 scores = c("prediction", "all", "none"),
                                 ncomp,
-                                fcol = "markers") {
+                                fcol = "markers",
+                                ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(ncomp))

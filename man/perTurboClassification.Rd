@@ -61,6 +61,7 @@ params <- perTurboOptimisation(dunkley2006,
                                times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- perTurboClassification(dunkley2006, params)

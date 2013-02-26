@@ -181,6 +181,7 @@ nnetRegularisation <- function(...) {
 ##' @param size If \code{assessRes} is missing, a \code{size} must be provided.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{nnet}} from package \code{nnet}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{nnet} and \code{nnet.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -193,6 +194,7 @@ nnetRegularisation <- function(...) {
 ##' params <- nnetOptimisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
 ##' params
 ##' plot(params)
+##' f1Count(params)
 ##' levelPlot(params)
 ##' getParams(params)
 ##' res <- nnetClassification(dunkley2006, params)
@@ -204,7 +206,8 @@ nnetClassification <- function(object,
                                scores = c("prediction", "all", "none"),
                                decay,
                                size,
-                               fcol = "markers") {
+                               fcol = "markers",
+                               ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(decay) | missing(size))
@@ -222,7 +225,8 @@ nnetClassification <- function(object,
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), nnetI, trainInd,
                 decay = params["decay"],
-                size = params["size"])  
+                size = params["size"],
+                ...)  
   fData(object)$nnet <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

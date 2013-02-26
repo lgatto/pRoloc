@@ -25,6 +25,7 @@ exportMethods(chi2,
               getWarnings,
               getSeed,
               getF1Scores,
+              f1Count,
               levelPlot,
               plot)
 
@@ -59,6 +60,7 @@ export(getPredictions,
        getRegularisedParams, getRegularizedParams,       
        rfRegularisation, rfOptimisation, rfOptimization, 
        rfPrediction, rfClassification, 
-       phenoDisco
+       phenoDisco,
+       makeNaData, makeNaData2, whichNA
        )
 

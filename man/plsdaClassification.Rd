@@ -5,7 +5,7 @@
 \usage{
   plsdaClassification(object, assessRes,
     scores = c("prediction", "all", "none"), ncomp,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -24,6 +24,9 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{plsda}} from package \code{caret}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with
@@ -44,6 +47,7 @@ data(dunkley2006)
 params <- plsdaOptimisation(dunkley2006, ncomp = c(3, 10),  times = 2)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- plsdaClassification(dunkley2006, params)

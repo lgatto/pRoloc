@@ -9,7 +9,7 @@
     inv = c("Inversion Cholesky", "Moore Penrose", "solve", "svd"),
     reg = c("tikhonov", "none", "trunc"), times = 1,
     test.size = 0.2, xval = 5, fun = mean, seed,
-    verbose = TRUE, ...)
+    verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class
@@ -55,9 +55,6 @@
 
   \item{verbose}{A \code{logical} defining whether a
   progress bar is displayed.}
-
-  \item{...}{Additional parameters passed to
-  \code{\link{svm}} from package \code{e1071}.}
 }
 \value{
   An instance of class \code{"\linkS4class{GenRegRes}"}.

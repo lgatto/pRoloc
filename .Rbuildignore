@@ -2,3 +2,5 @@ vignettes/cache
 vignettes/figure
 README.md
 vignettes/pRoloc-tutorial.pdf
+vignettes/pRoloc-imputation.Rnw.knitr
+vignettes/pRoloc-imputation.Rnw.stub

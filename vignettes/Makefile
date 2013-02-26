@@ -48,7 +48,7 @@ clean:
 	rm -f *~
 	rm -f */*~
 	cp pRoloc-tutorial.Rnw.stub pRoloc-tutorial.Rnw
-	cp pRoloc-imputation.Rnw.stub pRoloc-imputation.Rnw
+	## cp pRoloc-imputation.Rnw.stub pRoloc-imputation.Rnw
 
 allclean: clean
 	rm -f  pRoloc-tutorial.pdf

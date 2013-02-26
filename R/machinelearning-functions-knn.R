@@ -165,6 +165,7 @@ knnRegularisation <- function(...) {
 ##' @param k If \code{assessRes} is missing, a \code{k} must be provided.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{knn}} from package \code{class}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{knn} and \code{knn.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -177,6 +178,7 @@ knnRegularisation <- function(...) {
 ##' params <- knnOptimisation(dunkley2006, k = c(3, 10), times = 3)
 ##' params
 ##' plot(params)
+##' f1Count(params)
 ##' levelPlot(params)
 ##' getParams(params)
 ##' res <- knnClassification(dunkley2006, params)
@@ -187,7 +189,8 @@ knnClassification <- function(object,
                               assessRes,
                               scores = c("prediction", "all", "none"),
                               k,
-                              fcol = "markers") {
+                              fcol = "markers",
+                              ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(k))
@@ -201,7 +204,7 @@ knnClassification <- function(object,
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), knnI(params["k"]),
-                trainInd)
+                trainInd, ...)
   fData(object)$knn <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

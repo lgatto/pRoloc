@@ -5,7 +5,7 @@
 \usage{
   rfClassification(object, assessRes,
     scores = c("prediction", "all", "none"), mtry,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -24,6 +24,10 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{randomForest}} from package
+  \code{randomForest}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with
@@ -40,6 +44,7 @@ data(dunkley2006)
 params <- rfOptimisation(dunkley2006, mtry = c(2, 5, 10),  times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- rfClassification(dunkley2006, params)

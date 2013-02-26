@@ -62,6 +62,25 @@ setMethod("getSeed", "GenRegRes", function(object) object@seed)
 
 setMethod("getF1Scores", "GenRegRes", function(object) object@results)
 
+setMethod("f1Count", "GenRegRes",
+          function(object, t) {
+            f1tab <- getF1Scores(object)
+            .f1 <- colnames(f1tab) == "F1"
+            f1 <- f1tab[, .f1]
+            if (missing(t))
+              t <- max(f1)
+            p <- f1tab[, !.f1, drop = FALSE]
+            if (ncol(p) == 1) {
+              res <- table(p[f1 >= t, ])
+            } else {
+              ## if ncol(p) != 1, then 2
+              res <- tapply(f1,
+                            list(factor(p[, 1]), factor(p[, 2])),
+                            function(x) sum(x >= t))
+            }
+            return(res)
+          })
+
 setMethod("getParams", "GenRegRes",
           function(object) {
             res <- object@results

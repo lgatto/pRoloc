@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.99.13
+--------------------------
+ o depending on MSnbase >= 1.7.23 as makeNaData 
+   needs MSnbase:::nologging <2013-02-27 Wed>
+
 CHANGES IN VERSION 0.99.12
 --------------------------
  o plot2D has gained a plot argument <2013-02-19 Tue>

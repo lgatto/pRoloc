@@ -316,27 +316,27 @@ updateobject  <- function(MSnSetToUpdate,
 ##' protein clusters. 
 ##' 
 ##'
-##' The algorithm performs a phenotype discovery analysis which is based on
-##' the works of Yin et al. (2008). Using this appoach one can identify 
-##' putative subcellular groupings in organelle proteomics experiments for 
-##' more comprehensive validation in an unbiased fashion. The method uses
-##' iterated rounds of Gaussian Mixture Modelling using the Expectation
-##' Maximisation algorithm combined with a non-parametric outlier detection
-##' test to identify new phenotype clusters.
+##' The algorithm performs a phenotype discovery analysis as described in
+##' Breckels et al. Using this approach one can identify putative subcellular 
+##' groupings in organelle proteomics experiments for more comprehensive 
+##' validation in an unbiased fashion. The method is based on the work of Yin 
+##' et al. and used iterated rounds of Gaussian Mixture Modelling using the 
+##' Expectation Maximisation algorithm combined with a non-parametric outlier
+##' detection test to identify new phenotype clusters.
 ##'
-##'  
+##' Note: One requires at least 2 or more classes to be labelled in the data 
+##' and at a very minimum of 6 markers per class to run the algorithm.
+##'
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.
 ##' @param times Number of runs of tracking. Default is 100.
 ##' @param GS Group size, i.e how many proteins make a group. Default
-##' is 10.
+##' is 10 (the minimum group size is 4).
 ##' @param allIter \code{logical}, defining if predictions for all
 ##' iterations should be saved. Default is \code{FALSE}.
 ##' @param p Significance level for outlier detection. Default is
 ##' 0.05.
-##' @param r Correlation coefficent for Jaccard's Index. Default is 1 
-##' (currently no other value is supported).
 ##' @param seed An optional \code{numeric} of length 1 specifing the
 ##' random number generator seed to be used.
 ##' @param verbose Logical, indicating if messages are to be
@@ -350,6 +350,10 @@ updateobject  <- function(MSnSetToUpdate,
 ##' phenotype discovery in the context of high-throughput RNAi screens. BMC
 ##' Bioinformatics. 2008 Jun 5;9:264.
 ##' PubMed PMID: 18534020; PubMed Central PMCID: PMC2443381.
+##' 
+##' Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS and Trotter MWB.
+##' The Effect of Organelle Discovery upon Sub-Cellular Protein Localisation. 
+##' J Proteomics. In Press.  
 ##' @examples
 ##' \dontrun{
 ##' library(pRolocdata)
@@ -364,14 +368,17 @@ phenoDisco <- function(object,
                        GS = 10,
                        allIter = FALSE,
                        p = 0.05,
-                       r = 1,
                        seed,
                        verbose = TRUE) {
-  ## phenoDisco.R (Lisa's phenoDisco code - last updated 07/12/2012)
-  ## fcol = feature column, times = number of runs of tracking, 
-  ## GS = group size (how many proteins make a group?),
-  ## p = significance level for outlier detection test,
-  ## r = correlation coefficent for Jaccard's Index
+  ## phenoDisco.R (Lisa's phenoDisco code - last updated 27/02/2013)
+  ## fcol = feature column
+  ## times = number of runs of tracking 
+  ## GS = group size 
+  ## p = significance level for outlier detection test
+
+  if (GS < 4) 
+    stop("Group size specified too small")
+
   if (!missing(seed)) {
     seed <- as.integer(seed)
     set.seed(seed)
@@ -382,6 +389,15 @@ phenoDisco <- function(object,
   
   ## Initial settings
   indexFcol <- which(colnames(fData(object)) == fcol)
+  test <- table(fData(object)[,indexFcol])
+  
+  if (any(sapply(test, function(x) x<6)))
+    stop("Not enough markers to run phenoDisco: Require > 6 markers per classes")
+  
+  if (length(test) < 3)
+    stop("Not enough classes specified to run phenoDisco: Require a 
+          minimum of 2 labelled classes")
+
   track <- phenotypes <- vector("list")
   currentClasses <- list()
   cond1 <- cond2 <- TRUE
@@ -432,7 +448,7 @@ phenoDisco <- function(object,
     currentClasses[[i]] <- update
     
     ## Any new phenotypes?
-    phenotypes[[i]] <- getNewClusters(track[[i]], groupSize = GS, jc = r)
+    phenotypes[[i]] <- getNewClusters(track[[i]], groupSize = GS, jc = 1)
     newPhenoName = paste(".pd", i, sep="")
     
     ## CONDITIONS TO STOP LOOP

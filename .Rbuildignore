@@ -4,3 +4,5 @@ README.md
 vignettes/pRoloc-tutorial.pdf
 vignettes/pRoloc-imputation.Rnw.knitr
 vignettes/pRoloc-imputation.Rnw.stub
+vignettes/pRoloc-ml.Rnw.knitr
+vignettes/pRoloc-ml.Rnw.stub

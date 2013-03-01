@@ -4,7 +4,8 @@ CHANGES IN VERSION 0.99.13
    needs MSnbase:::nologging <2013-02-27 Wed>
  o updated phenoDisco parameters, added error messages when an 
    insufficient number of markers per class and/or number of
-   classes are used and updated phenoDisco help file <2012-02-28>
+   classes are used and updated phenoDisco help file <2012-02-28 Thu>
+ o added first belief diffscores function <2013-03-01 Fri>
 
 CHANGES IN VERSION 0.99.12
 --------------------------

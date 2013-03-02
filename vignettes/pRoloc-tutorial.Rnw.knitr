@@ -248,7 +248,7 @@ dim(smallTan)
 exprs(smallTan)
 @ 
 
-Several data sets, including the 3 replicates from \cite{Tan2009}, are distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata} package. Others include the \textit{Arabidopsis thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006}) and the mouse PCP data from \cite{Foster2006} (\Robject{foster2006}). Each data set can be loaded with the \Rfunction{data} function, as show below for the first replicate from \cite{Tan2009}.
+Several data sets, including the 3 replicates from \cite{Tan2009}, are distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata} package. Others include, among others, the \textit{Arabidopsis thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006}) and the mouse PCP data from \cite{Foster2006} (\Robject{foster2006}). Each data set can be loaded with the \Rfunction{data} function, as show below for the first replicate from \cite{Tan2009}.
 
 <<loadTan1>>= 
 data(tan2009r1)
@@ -269,7 +269,15 @@ The quantitation data obtained in the supplementary file is normalised to the su
 summary(rowSums(exprs(tan2009r1)))
 @ 
 
-The \Rfunction{normalise} method from the \Rpackage{MSnbase} package can be used to obtain relative quantitation data, as illustrated below on another iTRAQ test data set, available from \Rpackage{MSnbase}.
+The \Rfunction{normalise} method (also available as \Rfunction{normalize}) 
+from the \Rpackage{MSnbase} package can be used 
+to obtain relative quantitation data, as illustrated below on another iTRAQ test 
+data set, available from \Rpackage{MSnbase}. Several normalisation \Robject{methods} 
+are available and described in \Rfunction{?normalise}. 
+For many algorithms, including classifiers in general and support vector machines in 
+particular, it is important to properly per-process the data. 
+Simple centering and scaling is available with the \Rfunction{scale} method, 
+descibed in the \Rfunction{scale} manual.
 
 <<dummydata, echo=FALSE, message=FALSE, cache=TRUE>>=
 data(itraqdata)
@@ -287,7 +295,6 @@ processingData(itraqnorm)
 head(exprs(itraqnorm), n = 3)
 summary(rowSums(exprs(itraqnorm)))
 @ 
-
 
 Note above how the processing undergone by the \Robject{MSnSet} instances \Robject{itraqdata} and \Robject{itraqnorm} is stored in another such specific sub-container, the \Robject{processingData} slot.
 
@@ -448,7 +455,7 @@ Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \time
 
 In the code chunk below, algorithmic performance is estimated using 5-fold stratified cross-validation (creating 5 test/train splits), which features an additional cross-validation on each training partition in order to optimise free parameters via a grid search. This process is repeated 10 times and best and averaged accuracies are shown in figure \ref{fig:params}. This procedure is implemented in the \Rfunction{svmOptimisation}. See \Rfunction{?svmOptimisation} for details, in particular how the relevant feature variable is defined by the \Robject{fcol} parameters, which defaults to \Robject{"markers"}. Note that here, we only perform 10 iteratons (\Robject{times = 10}) and would rather recommend 100 (which is the default value).
 
-<<svmParamOptim, cache = TRUE>>=
+<<svmParamOptim, cache = TRUE, message = FALSE>>=
 params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
 params
 @ 

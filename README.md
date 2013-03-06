@@ -3,7 +3,7 @@ It is available from Bioconductor `>= 2.12`.
 
 The preferred installation procedure uses the Bioconductor infrastructure:
 
-```r
+```c
 source("http://bioconductor.org/biocLite.R")
 biocLite("pRoloc")
 ```  
@@ -11,7 +11,7 @@ biocLite("pRoloc")
 If you do not have a recent R version (R-devel), you can install 
 the `pRoloc` dependencies as follow and install `pRoloc` manually.
 
-```r
+```c
 deps <- c("MSnbase", "MLInterfaces", "mclust", "MSBVAR", 
           "caret", "e1071", "sampling", "class", "kernlab",
           "nnet", "randomForest", "proxy", "BiocGenerics",
@@ -27,7 +27,7 @@ and install manually using `install.packages(..., repos = "NULL")` or the GUI fr
 
 Alternatively, to install the non-official git version, you can proceed as follows. This method requires the package building mechanism to be readily available on your system.
 
-```r
+```c
 library("devtools")
 install_github("pRoloc", "lgatto")
 ```

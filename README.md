@@ -8,7 +8,7 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("pRoloc")
 ```
 
-If you do not have a recent R version, you can install 
+If you do not have a recent R version (R-devel), you can install 
 the `pRoloc` dependencies as follow and install `pRoloc` manually.
 
 ```r
@@ -19,6 +19,8 @@ deps <- c("MSnbase", "MLInterfaces", "mclust", "MSBVAR",
 source("http://proteome.sysbiol.cam.ac.uk/lgatto/src/installPackages.R")
 installPackages(deps)
 ```
+
+Note that you will also need the devel version of `MSnbase`, available on its [Bioconductor landing page](http://www.bioconductor.org/packages/2.12/bioc/html/MSnbase.html).
 
 Download the appropriate package from the [Bioconductor landing page](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
 and install manually using `install.packages(..., repos = "NULL")` or the GUI front-end of your favourite R interface.

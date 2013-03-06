@@ -20,8 +20,7 @@ source("http://proteome.sysbiol.cam.ac.uk/lgatto/src/installPackages.R")
 installPackages(deps)
 ```
 
-<!-- Note that you will also need the devel version of `MSnbase`, available on its  -->
-<!-- [Bioconductor landing page](http://www.bioconductor.org/packages/2.12/bioc/html/MSnbase.html). -->
+Note that you will also need the devel version of `MSnbase`, available on its [Bioconductor landing page](http://www.bioconductor.org/packages/2.12/bioc/html/MSnbase.html).
 
 Download the appropriate package from the [Bioconductor landing page](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
 and install manually using `install.packages(..., repos = "NULL")` or the GUI front-end of your favourite R interface.
@@ -33,5 +32,4 @@ library("devtools")
 install_github("pRoloc", "lgatto")
 ```
 
-You can also install the associated data package [`pRolocdata`](http://bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html) 
-with multiple test data sets.
+You can also install the associated data package [`pRolocdata`](http://bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html) with multiple test data sets.

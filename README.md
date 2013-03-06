@@ -6,7 +6,7 @@ The preferred installation procedure uses the Bioconductor infrastructure:
 ```r
 source("http://bioconductor.org/biocLite.R")
 biocLite("pRoloc")
-```
+```  
 
 If you do not have a recent R version (R-devel), you can install 
 the `pRoloc` dependencies as follow and install `pRoloc` manually.

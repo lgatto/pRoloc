@@ -12,7 +12,7 @@ diffscores <- function(object, scols = "svm.scores") {
   stopifnot(inherits(object, "MSnSet"))
   sidx <- grep(scols, fvarLabels(object))
   if (length(sidx) == 0)
-    stop("No score 'svm.scores' columns found.")
+    stop("No '", scols , "' scores columns found.")
   if (length(sidx) == 1) {
     msg <- c("\nOnly 1 ", fvarLabels(object)[sidx] , " column found.\n",
              "Are you sure you specified 'scores = \"all\"' when ",
@@ -24,11 +24,12 @@ diffscores <- function(object, scols = "svm.scores") {
     .prob <- sort(x, decreasing = TRUE)[1:2]
     (.prob[1] - .prob[2])/.prob[1]    
   })
-  if (missing(diffcol))
-    diffcol <- sub("scores", "diff", scols)
-  fData(x)[, diffcol] <- ans
-  if (validObject(x))
-    return(x)
+  ## if (missing(diffcol))
+  ##   diffcol <- sub("scores", "diff", scols)
+  ## fData(x)[, diffcol] <- ans
+  ## if (validObject(x))
+  ##   return(x)
+  return(ans)
 }
 
 
@@ -47,7 +48,7 @@ viction <- function(object, scols = "svm.scores") {
   stopifnot(inherits(object, "MSnSet"))
   sidx <- grep(scols, fvarLabels(object))
   if (length(sidx) == 0)
-    stop("No score 'svm.scores' columns found.")
+    stop("No '", scols , "' scores columns found.")
   if (length(sidx) == 1) {
     msg <- c("\nOnly 1 ", fvarLabels(object)[sidx] , " column found.\n",
              "Are you sure you specified 'scores = \"all\"' when ",
@@ -77,13 +78,16 @@ difftorand <- function(object, scols = "svm.scores") {
   stopifnot(inherits(object, "MSnSet"))
   sidx <- grep(scols, fvarLabels(object))
   if (length(sidx) == 0)
-    stop("No score 'svm.scores' columns found.")
+    stop("No '", scols , "' scores columns found.")
   if (length(sidx) == 1) {
     msg <- c("\nOnly 1 ", fvarLabels(object)[sidx] , " column found.\n",
              "Are you sure you specified 'scores = \"all\"' when ",
              "running you classification?")
     stop(msg)
   }
-  ## stub
+  smat <- fData(object)[, sidx]
+  prand <- 1/ncol(smat)
+  ## smat > prand
+  smat
 }
 

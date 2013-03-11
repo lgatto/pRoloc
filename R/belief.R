@@ -29,6 +29,12 @@ difftorand <- function(object, scols = "svm.scores") {
   as.matrix(smat / prand)
 }
 
+.diffscore <- function(p) {
+  if (length(p) < 2)
+    stop("must have a least 2 probabilities to compute the diff scores")
+  p <- sort(p, decreasing = TRUE)[1:2]
+  (p[1] - p[2])/p[1]    
+}
 
 diffscores <- function(object, scols = "svm.scores") {
   ## See Diff in [1]
@@ -45,10 +51,7 @@ diffscores <- function(object, scols = "svm.scores") {
     stop(msg)
   }
   smat <- fData(object)[, sidx]
-  ans <- apply(smat, 1, function(x) {
-    .prob <- sort(x, decreasing = TRUE)[1:2]
-    (.prob[1] - .prob[2])/.prob[1]    
-  })
+  ans <- apply(smat, 1, .diffscore)
   ## if (missing(diffcol))
   ##   diffcol <- sub("scores", "diff", scols)
   ## fData(x)[, diffcol] <- ans
@@ -82,6 +85,7 @@ powerset <- function(n) {
   unlist(ans, recursive = FALSE)
 }
 
+
 pl <- function(Phat, A, B) {
   ## pl(A) = \sum_{(B \cap A) \not= \emptyset} m(B), \forall A \subseteq \Omega
   if (missing(A))
@@ -91,7 +95,7 @@ pl <- function(Phat, A, B) {
   idx <- sapply(A, function(a)
                 sapply(B, function(b)
                        ifelse(length(intersect(b, a) > 0),
-                              TRUE, FALSE)))
+                              TRUE, FALSE)))  
   apply(idx, 2, function(i) sum(Phat[i]))
 }
 
@@ -109,7 +113,8 @@ bel <- function(Phat = NULL, A, B) {
 }
 
 
-.viction <- function(Phat) {
+.viction <- function(P) {
+  Phat <- phat(P)
   A <- powerset(Phat)
   B <- sapply(1:length(Phat), function(i) c(1:i))
   .pl <- pl(Phat, A, B)
@@ -141,8 +146,7 @@ viction <- function(object, scols = "svm.scores") {
     stop(msg)
   }
   smat <- fData(object)[, sidx]
-  phatmat <- t(apply(smat, 1, phat))
-  ans <- apply(phatmat, 1, .viction)  
+  t(apply(smat, 1, .viction))
 }
 
 

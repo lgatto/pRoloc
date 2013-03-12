@@ -146,7 +146,7 @@ viction <- function(object, scols = "svm.scores") {
     stop(msg)
   }
   smat <- fData(object)[, sidx]
-  t(apply(smat, 1, .viction))
+  apply(smat, 1, .viction)
 }
 
 

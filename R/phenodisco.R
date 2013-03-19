@@ -461,11 +461,11 @@ phenoDisco <- function(object,
     }
     ## Update MSnsetObject to include new phenotypes as classes
     object <- updateobject(object, 
-                                       phenotypes[[i]],
-                                       currentClasses[[i]],
-                                       oldMarkerColumnName = fcol,
-                                       newMarkerColumnName = newPhenoName,
-                                       originalMarkerColumnName = original)
+                           phenotypes[[i]],
+                           currentClasses[[i]],
+                           oldMarkerColumnName = fcol,
+                           newMarkerColumnName = newPhenoName,
+                           originalMarkerColumnName = original)
     fcol <- newPhenoName 
   } ## end of while
   foo <- length(names(fData(object)))
@@ -494,8 +494,8 @@ phenoDisco <- function(object,
   procmsg <- c(procmsg,
                paste0("  with parameters times=", times,
                       ", GS=", GS,
-                      ", p=", p,
-                      ", r=", r, "."))
+                      ", p=", p, "."))
+                      ## ", r=", r, "."))
   object@processingData@processing <-
     c(processingData(object)@processing,
       procmsg)

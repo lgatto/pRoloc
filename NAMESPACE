@@ -3,6 +3,7 @@ import(BiocGenerics)
 import(mclust)
 import(MASS)
 import(kernlab) ## previously only imported ksvm
+import(knitr)
 
 importFrom(class, knn)
 importFrom(RColorBrewer, brewer.pal)

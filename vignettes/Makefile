@@ -33,7 +33,8 @@ tut:
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 
-tut2:
+## manual building
+tut2: 
 	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"
 	bibtex pRoloc-tutorial
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex

@@ -266,15 +266,25 @@ exprs(smallTan)
 
 Several data sets, including the 3 replicates from \cite{Tan2009}, are distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata} package. Others include, among others, the \textit{Arabidopsis thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006}) and the mouse PCP data from \cite{Foster2006} (\Robject{foster2006}). Each data set can be loaded with the \Rfunction{data} function, as show below for the first replicate from \cite{Tan2009}.
 
+<<rmtan, echo=FALSE>>=
+## remove manullay constructred data
+rm(tan2009r1)
+data(tan2009r1)
+@ 
+
 <<loadTan1>>= 
 data(tan2009r1)
 @ 
 
-The original marker proteins are available as a feature meta-data variables called \Robject{markers} and the output of the partial least square discriminant analysis, applied in the original publication, in the \Robject{PLSDA} variable.
+The original marker proteins are available as a feature meta-data variables called \Robject{markers} 
+and the output of the partial least square discriminant analysis, applied in the original publication, 
+in the \Robject{PLSDA} feature variable. 
+This is illustrated below using the convenience function \Rfunction{getMarkers}, but could also be done 
+manually with \Rfunction{table(fData(tan2009r1)$markers)} and \Rfunction{table(fData(tan2009r1)$PLSDA)}.
 
 <<lookAtTan>>=
-table(fData(tan2009r1)$markers)
-table(fData(tan2009r1)$PLSDA)
+getMarkers(tan2009r1)
+getMarkers(tan2009r1, fcol = "PLSDA")
 @ 
 
 \subsection{Data processing}
@@ -389,7 +399,7 @@ Alternatively, we can combine all organelle groups in one 2 dimensional figure b
 <<plot2d, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
 plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers")
 addLegend(tan2009r1, fcol = "PLSDA", 
-          where = "bottomright", bty = "n", cex = .5)
+          where = "bottomright", bty = "n", cex = .7)
 @ 
 \caption{ Representation of the \Sexpr{nrow(tan2009r1)} protein of \Robject{tan2009r1} after reduction the 4 reporter quantitation data to 2 principal components.}
 \label{fig:plot2d}

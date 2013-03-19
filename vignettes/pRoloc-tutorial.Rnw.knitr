@@ -1,13 +1,21 @@
+%\VignetteEngine{knitr}
 %\VignetteIndexEntry{pRoloc tutorial}
 %\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
 %\VignettePackage{pRoloc}
-\documentclass[12pt]{article}
+
+\documentclass[12pt,a4paper,english]{scrartcl}
+\usepackage{amsmath,amsfonts,amssymb}
 \usepackage{tikz}
 \usepackage{hyperref}
 \usepackage[authoryear,round]{natbib}
 \usepackage[auth-sc]{authblk}
 \usepackage{setspace}
 \onehalfspacing
+
+% caption formatting
+\setcapindent{0em}
+\setkomafont{captionlabel}{\sffamily\bfseries}
+\setkomafont{caption}{\sffamily}
 
 \renewcommand\Authands{ and }
 
@@ -63,7 +71,6 @@
   Cambridge Center for Proteomics\\
   University of Cambridge
 }
-
 
 \begin{document}
 
@@ -478,7 +485,7 @@ getParams(params)
 
 \clearpage
 
-\subsubsection{Classification}
+\subsubsection{Classification}\label{sec:sml}
 
 We can now re-use the result from our parameter optimisation (a best cost/sigma pair is going to be automatically extracted, using the \Rfunction{getParams} method, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmClassification} function. By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment probabilities\footnote{%%
 The calculation of the classification probabilities is dependent on the classification algorithm. 
@@ -554,7 +561,6 @@ rm(fn)
 
 The results are also appended to the \Robject{feautreData} slot.
 
-
 <<phenoDiscoFvar>>=
 processingData(pdres)
 tail(fvarLabels(pdres), 3)
@@ -573,6 +579,55 @@ addLegend(pdres, fcol = "pd", ncol = 2,
 \label{fig:pdres}
 \end{figure}
 
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Following up on novelty discovery}\label{sec:followup}
+
+The newly discovered phenotypes need to be carefully validated prior to further analysis.
+Indeed, as the strucutre of the data is made use of in the discovery algorithm, 
+some might represent peculiar structure in the data and not match with biologically relevant groups. 
+The \Robject{tan2009r1} data has been submitted to a carfull \Rfunction{phenodisco} analysis 
+and validation in \cite{Breckels2013}. The results of this new, augmented marker set is 
+available in the \Robject{pd.markers} feature data. These markers represent a combined 
+set of the original markers and validated proteins from the new phenotypes. 
+
+<<pdmarkers>>=
+getMarkers(tan2009r1, fcol = "pd.markers")
+@ 
+
+The augmented set of markers is now employed to repeat the classification using the 
+support vector machine setup described in section \ref{sec:sml} (page \pageref{sec:sml}). 
+Below, we replace the existing \Robject{tan2009r1} object by a copy that includes the 
+svm results.
+
+<<pdsvm, cache = TRUE, message = FALSE, warning = FALSE, tidy = FALSE>>=
+params2 <- svmOptimisation(tan2009r1, fcol = "pd.markers", 
+                           times = 10, xval = 5, verbose = FALSE)
+tan2009r1 <- svmClassification(tan2009r1, params2, 
+                               fcol = "pd.markers")
+@ 
+
+The data is visualised as described previously. In addition to using the svm classification 
+a-posteriory probability to set the point size, we modify the cluster palette to use 
+semi-transparent colours (see \Rfunction{?setStockcol} for details). 
+
+\begin{figure}[!hbt]
+<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE>>=
+ptsze <- exp(fData(tan2009r1)$svm.score) - 1
+setStockcol(paste0(getStockcol(), 70))
+plot2D(tan2009r1, fcol = "svm", cex = ptsze)
+addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", cex = .5)
+@ 
+%% $
+\caption{ Second round of classification using the augmented set of markers obtained 
+  using \Rfunction{phenodisco}, as detailed in \cite{Breckels2013}. }
+\label{fig:pdres2}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -582,11 +637,17 @@ addLegend(pdres, fcol = "pd", ncol = 2,
 
 \section{Conclusion}\label{sec:ccl}
 
-This tutorial focuses on practical aspects of organelles proteomics data analysis using \Rpackage{pRoloc}. Two important aspects have been illustrates: (1) data generation, manipulation and visualisation and (2) application of contemporary and novel machine learning techniques. Other crucial parts of a full analysis pipeline that were not covered here are raw mass-spectrometry quality control, quantitation, post-analysis and data validation. 
+This tutorial focuses on practical aspects of organelles proteomics data analysis using \Rpackage{pRoloc}. 
+Two important aspects have been illustrates: (1) data generation, manipulation and visualisation and 
+(2) application of contemporary and novel machine learning techniques. 
+Other crucial parts of a full analysis pipeline that were not covered here are raw mass-spectrometry 
+quality control, quantitation, post-analysis and data validation. 
 
 \bigskip
 
-Data analysis is not a trivial task, and in general, one can not assume that any off-the-shelf algorithm will perform well. As such, one of the emphasis of the software presented in this document is allowing users to track data processing and critically evaluate the results. 
+Data analysis is not a trivial task, and in general, one can not assume that any off-the-shelf algorithm will perform well. 
+As such, one of the emphasis of the software presented in this document is allowing users to track data processing and 
+critically evaluate the results. 
 
 \clearpage
 

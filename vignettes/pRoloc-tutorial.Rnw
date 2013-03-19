@@ -1,6 +1,688 @@
+%\VignetteEngine{knitr}
 %\VignetteIndexEntry{pRoloc tutorial}
+%\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
 %\VignettePackage{pRoloc}
-\documentclass[10pt]{article}
+
+\documentclass[12pt,a4paper,english]{scrartcl}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage[authoryear,round]{natbib}
+\usepackage[auth-sc]{authblk}
+\usepackage{setspace}
+\onehalfspacing
+
+% caption formatting
+\setcapindent{0em}
+\setkomafont{captionlabel}{\sffamily\bfseries}
+\setkomafont{caption}{\sffamily}
+
+\renewcommand\Authands{ and }
+
+\newcommand{\R}{\texttt{R} }
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
+\newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
+%% colors
+\definecolor{Red}{rgb}{0.7,0,0}
+\definecolor{Blue}{rgb}{0,0,0.8}
+
+\usepackage{geometry}
+\geometry{verbose,
+  tmargin = 2.5cm,
+  bmargin = 2.5cm,
+  lmargin = 3.0cm,
+  rmargin = 3.0cm}
+
+\usepackage{hyperref}
+\usepackage{breakurl}
+\hypersetup{%
+  pdfusetitle,
+  bookmarks = {true},
+  bookmarksnumbered = {true},
+  bookmarksopen = {true},
+  bookmarksopenlevel = 2,
+  unicode = {true},
+  breaklinks = {false},
+  hyperindex = {true},
+  colorlinks = {true},
+  linktocpage = {true},
+  plainpages = {false},
+  linkcolor = {Blue},
+  citecolor = {Blue},
+  urlcolor = {Red},
+  pdfstartview = {Fit},
+  pdfpagemode = {UseOutlines},
+  pdfview = {XYZ null null null}
+}
+
+
+\author{
+  Laurent Gatto\thanks{\email{lg390@cam.ac.uk}}
+}
+
+\author{
+  Lisa M. Breckels
+}
+
+\affil{
+  Cambridge Center for Proteomics\\
+  University of Cambridge
+}
+
 \begin{document}
-This vignette is just a stub. 
+
+\title{A short tutorial on using \Rpackage{pRoloc} for spatial proteomics data analysis}
+
+\maketitle
+
+%% Abstract and keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vskip 0.3in minus 0.1in
+\hrule
+\begin{abstract}
+This tutorial illustrates the usage of the \Rpackage{pRoloc} \R package for the analysis and interpretation of spatial proteomics data. It walks the reader through the creation of \Robject{MSnSet} instances, that hold the quantitative proteomics data and meta-data and introduces several aspects of data analysis, including data visualisation and application of machine learning to predict protein localisation. 
+\end{abstract}
+\textit{Keywords}: Bioinformatics, organelle proteomics, machine learning, visualisation 
+\vskip 0.1in minus 0.05in
+\hrule
+\vskip 0.2in minus 0.1in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\tableofcontents
+
+<<env, include=FALSE, echo=FALSE, cache=FALSE>>=
+library("knitr")
+opts_chunk$set(fig.align = 'center', 
+               fig.show = 'hold', 
+               par = TRUE,
+               prompt = TRUE,
+               eval = TRUE,
+               comment = NA)
+options(replace.assign = TRUE, 
+        width = 55)
+
+suppressPackageStartupMessages(library("MSnbase"))
+suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
+suppressPackageStartupMessages(library("pRolocdata"))
+suppressPackageStartupMessages(library("class"))
+set.seed(1)
+@ 
+%%$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Introduction}\label{sec:intro} 
+
+\subsection{Spatial proteomics}
+
+Spatial (or organelle) proteomics is the study of the localisation of proteins inside cells. The sub-cellular compartment can be organelles, i.e. structures defined by lipid bi-layers,macro-molecular assemblies of proteins and nucleic acids or large protein complexes. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of \Rpackage{pRoloc}, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using \Rpackage{pRoloc} is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT \citep{Dunkley2006} or PCP \citep{Foster2006} approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example \cite{Gatto2010} and references therein for a detailed review on organelle proteomics.
+
+It should be noted that large protein complexes, that are not necessarily separately enclosed within their own lipid bi-layer, can be detected by such techniques, as long as a distinct profile can be defined across the fractions. 
+
+\subsection{About \R and \Rpackage{pRoloc}}
+
+\R \citep{Rstat} is a statistical programming language and interactive working environment. It can be expanded by so-called packages to confer new functionality to users. Many such packages have been developed for the analysis of high-throughput biology, notably through the Bioconductor project \citep{Gentleman2004}. Two packages are of particular interest here, namely \Rpackage{MSnbase} \citep{Gatto2012} and \Rpackage{pRoloc}. The former provides flexible infrastructure to store and manipulate quantitative proteomics data and the associated meta-data and the latter implements specific algorithmic technologies to analyse organelle proteomics data. 
+
+Among the advantages of \R are robust statistical procedures, good visualisation capabilities, excellent documentation, reproducible research\footnote{The content of this document is compiled (the code is executed and its output, text and figures, is displayed dynamically) to generate the pdf file.}, power and flexibility of the \R language and environment itself and a rich environment for specialised functionality in many domains of bioinformatics: tools for many omics technologies, including proteomics, bio-statistics, gene ontology and biological pathway analysis, \ldots 
+Although there exists some specific graphical user interfaces (GUI) -- see for example the GUI implemented in the \Rpackage{synapter} package\footnote{\url{http://bioconductor.org/packages/devel/bioc/html/synapter.html}} for the analysis MS$^{E}$ data, interaction with \R is executed through a command line interface. Although this mode of interaction might look alien to new users, experience has proven that after a first steep learning curve, great results can be achieved by non-programmers. Furthermore, specific and general documentation is plenty and beginners and advanced course material are also widely available.
+
+Once \R is started, the first step to enable functionality of a specific packages is to load them using the \Rfunction{library} function, as shown in the code chunk below:
+
+<<libraries>>=
+library("MSnbase")
+library("pRoloc")
+library("pRolocdata")
+@ 
+
+\Rpackage{MSnbase} implements the data containers that are used by \Rpackage{pRoloc}. \Rpackage{pRolocdata} is a data package that supplies several published organelle proteomics data sets.
+
+As a final setup step, we set the default colour palette for some of our custom plotting functionality 
+to use semi-transparent colours in the code chunk below (see \Rfunction{?setStockcol} for details). 
+This facilitates visualisation of overlapping points.
+
+<<setcols>>=
+setStockcol(paste0(getStockcol(), 70))
+@ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Data structures}\label{sec:data}
+
+\subsection{Test data description}
+
+The data used in this tutorial has been published in \cite{Tan2009}. The LOPIT technique \citep{Dunkley2006} is used to localise integral and associated membrane proteins in \textit{Drosophila melanogaster} embryos. Briefly, embryos were collected at 0 -- 16 hours, homogenised and centrifuged to collect the supernatant, removing cell debris and nuclei. Membrane fractionation was performed on a iodixanol gradient and fractions were quantified using iTRAQ isobaric tags \citep{Ross2004} as follows: fractions 4/5, 114; fractions 12/13, 115; fraction 19, 116 and fraction 21, 117. Labelled peptides were then separated using cation exchange chromatography and analysed by LS-MS/MS on a QSTAR XL quadrupole-time-of-flight mass spectrometer (Applied Biosystems). The original localisation analysis was performed using partial least square discriminant analysis (PLS-DA). Relative quantitation data was retrieved from the supplementary file \texttt{pr800866n\_si\_004.xls}\footnote{\url{http://pubs.acs.org/doi/suppl/10.1021/pr800866n/suppl\_file/pr800866n\_si\_004.xls}} and imported into \R as described below. We will concentrate on the first replicate.
+
+\subsection{Importing and loading data}
+
+This section illustrates how to import data in comma-separated value (csv) format into an appropriate \R data structure. The first section shows the original \texttt{csv} (comma separated values) spreadsheet, as published by the authors, and how one can read such a file into \R using the \Rfunction{read.csv} function. This spreadsheet file is similar to the output of many quantitation software.
+
+In the next section, we show 2 \texttt{csv} files containing a subset of the columns of original \texttt{pr800866n\_si\_004-rep1.csv} file and another short file, created manually, that will be used to create the appropriate \R data.
+
+\subsubsection{The original data file}\label{sec:orgcsv}
+
+<<readCsvData0>>=
+## The original data for replicate 1, available
+## from the pRolocdata package
+f0 <- dir(system.file("extdata", package = "pRolocdata"), 
+          full.names = TRUE, pattern = "pr800866n_si_004-rep1.csv")
+csv <- read.csv(f0)
+@ 
+
+The three first lines of the original spreadsheet, containing the data for replicate one, are illustrated below (using the function \Rfunction{head}). It contains \Sexpr{nrow(csv)} rows (proteins) and \Sexpr{ncol(csv)} columns, including protein identifiers, database accession numbers, gene symbols, reporter ion quantitation values, information related to protein identification, \ldots
+
+<<showOrgCsv>>=
+head(csv, n=3)
+@ 
+
+\subsubsection{From \texttt{csv} files to \R data}\label{sec:csv}
+
+There are several ways to create the desired \R data object, termed \Robject{MSnSet}, that will be used to perform the actual sub-cellular localisation prediction. Here, we illustrate a method that uses separate spreadsheet files for quantitation data, feature meta-data and sample (fraction) meta-data and the \Rfunction{readMSnSet} constructor function, that will hopefully be the most straightforward for new users. 
+
+<<readCsvData1, tidy = FALSE>>=
+## The quantitation data, from the original data
+f1 <- dir(system.file("extdata", package = "pRoloc"), 
+          full.names = TRUE, pattern = "exprsFile.csv")
+exprsCsv <- read.csv(f1)
+## Feature meta-data, from the original data
+f2 <- dir(system.file("extdata", package = "pRoloc"), 
+          full.names = TRUE, pattern = "fdataFile.csv")
+fdataCsv <- read.csv(f2)
+## Sample meta-data, a new file
+f3 <- dir(system.file("extdata", package = "pRoloc"), 
+          full.names = TRUE, pattern = "pdataFile.csv")
+pdataCsv <- read.csv(f3)
+@ 
+
+\begin{description}
+
+\item[\texttt{exprsFile.csv}] containing the quantitation (expression) data for the \Sexpr{nrow(exprsCsv)} proteins and 4 reporter tags.
+<<showExprsFile>>=
+head(exprsCsv, n=3)
+@
+\item[\texttt{fdataFile.csv}] containing meta-data for the \Sexpr{nrow(fdataCsv)} features (here proteins).
+<<showFdFile>>=
+head(fdataCsv, n=3)
+@
+\item[\texttt{pdataFile.csv}] containing samples (here fractions) meta-data. This simple file has been created manually.
+<<showPdFile>>=
+pdataCsv
+@
+\end{description}
+
+A self-contained data structure, called \Robject{MSnSet} (defined in the \Rpackage{MSnbase} package) can now easily be generated using the \Rfunction{readMSnSet} constructor, providing the respective \texttt{csv} file names shown above and specifying that the data is comma-separated (with \Robject{sep = ","}). Below, we call that object \Robject{tan2009r1} and display its content.
+
+<<makeMSnSet>>=
+tan2009r1 <- readMSnSet(exprsFile = f1,
+                        featureDataFile = f2,
+                        phenoDataFile = f3,
+                        sep = ",")
+tan2009r1
+@ 
+
+\subsubsection{The \Robject{MSnSet} class}
+
+Although there are additional specific sub-containers for additional meta-data (for instance to make the object MIAPE compliant), the feature (the sub-container, or slot \Robject{featureData}) and sample (the \Robject{phenoData} slot) are the most important ones. They need to meet the following validity requirements (see figure \ref{fig:msnset}): 
+
+\begin{itemize}
+\item the number of row in the expression/quantitation data and feature data must be equal and the row names must match exactly, and  
+\item the number of columns in the expression/quantitation data and number of row in the sample meta-data must be equal and the column/row names must match exactly. 
+\end{itemize}
+  
+It is common, in the context of \Rpackage{pRoloc} to update the feature meta-data (described in section \ref{sec:analysis}) by adding new columns, without breaking the objects validity. Similarly, the sample meta-data can also be updated by adding new sample variables. A detailed description of the \Robject{MSnSet} class is available by typing \Rfunction{?MSnSet} in the \R console. 
+
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=0.5\textwidth]{./Figures/msnset.png}
+\caption{Dimension requirements for the respective expression, feature and sample meta-data slots. }
+\label{fig:msnset}
+\end{figure}
+
+
+The individual parts of this data object can be accessed with their respective accessor methods: 
+
+\begin{itemize}
+\item the quantitation data can be retrieved with \Rfunction{exprs(tan2009r1)}, 
+\item the feature meta-data with \Rfunction{fData(tan2009r1)} and 
+\item the sample meta-data with \Rfunction{pData(tan2009r1)}. 
+\end{itemize}
+  
+The advantage of this structure is that it can be manipulated as a whole and the respective parts of the data object will remain compatible. The code chunk below, for example, shows how to extract the first 5 proteins and 2 first samples:
+
+<<showSubset>>= 
+smallTan <- tan2009r1[1:5, 1:2]
+dim(smallTan)
+exprs(smallTan)
+@ 
+
+Several data sets, including the 3 replicates from \cite{Tan2009}, are distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata} package. Others include, among others, the \textit{Arabidopsis thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006}) and the mouse PCP data from \cite{Foster2006} (\Robject{foster2006}). Each data set can be loaded with the \Rfunction{data} function, as show below for the first replicate from \cite{Tan2009}.
+
+<<rmtan, echo=FALSE>>=
+## remove manullay constructred data
+rm(tan2009r1)
+data(tan2009r1)
+@ 
+
+<<loadTan1>>= 
+data(tan2009r1)
+@ 
+
+The original marker proteins are available as a feature meta-data variables called \Robject{markers} 
+and the output of the partial least square discriminant analysis, applied in the original publication, 
+in the \Robject{PLSDA} feature variable. 
+This is illustrated below using the convenience function \Rfunction{getMarkers}, but could also be done 
+manually with \Rfunction{table(fData(tan2009r1)\$markers)} and \Rfunction{table(fData(tan2009r1)\$PLSDA)} 
+respectively.
+
+<<lookAtTan>>=
+getMarkers(tan2009r1)
+getMarkers(tan2009r1, fcol = "PLSDA")
+@ 
+
+\subsection{Data processing}
+
+The quantitation data obtained in the supplementary file is normalised to the sum of intensities of each protein; the sum of fraction quantitation for each protein equals 1 (considering rounding errors). This can quickly be verified by computing the row sums of the expression data. 
+
+<<realtiveQuants>>=
+summary(rowSums(exprs(tan2009r1)))
+@ 
+
+The \Rfunction{normalise} method (also available as \Rfunction{normalize}) 
+from the \Rpackage{MSnbase} package can be used 
+to obtain relative quantitation data, as illustrated below on another iTRAQ test 
+data set, available from \Rpackage{MSnbase}. Several normalisation \Robject{methods} 
+are available and described in \Rfunction{?normalise}. 
+For many algorithms, including classifiers in general and support vector machines in 
+particular, it is important to properly per-process the data. 
+Simple centering and scaling is available with the \Rfunction{scale} method, 
+descibed in the \Rfunction{scale} manual.
+
+<<dummydata, echo=FALSE, message=FALSE, cache=TRUE>>=
+data(itraqdata)
+itraqdata <- quantify(itraqdata, method = "trap", 
+                      verbose = FALSE, reporters = iTRAQ4, 
+                      parallel = FALSE)
+itraqdata <- itraqdata[1:25, ]
+@ 
+
+<<norm>>=
+head(exprs(itraqdata), n = 3)
+summary(rowSums(exprs(itraqdata)))
+itraqnorm <- normalise(itraqdata, method = "sum")
+processingData(itraqnorm)
+head(exprs(itraqnorm), n = 3)
+summary(rowSums(exprs(itraqnorm)))
+@ 
+
+Note above how the processing undergone by the \Robject{MSnSet} instances \Robject{itraqdata} and \Robject{itraqnorm} is stored in another such specific sub-container, the \Robject{processingData} slot.
+
+\bigskip
+
+The different features (proteins in the \Robject{tan2009r1} data above, but these could also represent peptides or MS$^2$ spectra) are characterised by unique names. These can be retrieved with the \Rfunction{featureNames} function. 
+
+<<featurenames>>=
+head(featureNames(tan2009r1))
+@ 
+
+If we look back at section \ref{sec:csv}, we see that these have been automatically assigned using the first columns in the \texttt{exprsFile.csv} and \texttt{fdataFile.csv} files. It is thus crucial for these respective first columns to be identical. Similarly, the sample names can be retrieved with \Rfunction{sampleNames}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Data analysis}\label{sec:analysis}
+
+This section will focus on two closely related aspects, data visualisation and organelle assignments. Data visualisation is used in the context on quality control, to convince ourselves that the data displays the expected properties so that the output of further processing can be trusted. Visualising results of the localisation prediction is also essential, to control the validity of these results, before proceeding with orthogonal (and often expensive) \textit{dry} or \textit{wet} validation.
+
+\bigskip
+
+Classification of proteins, i.e. assigning sub-cellular localisation to proteins, is the main aspect of the present data analysis. The principle is the following and is, in its basic form, a 2 step process. First, an algorithm learns from the known markers that are shown to him and models the data space accordingly. This phase is also called the training phase. In the second phase, un-labelled proteins, i.e. those that have not been labelled as resident of any organelle, are matched to the model and assigned to a group (an organelle). This 2 step process is called machine learning (ML), because the computer (machine) learns by itself how to recognise instances that possess certain characteristics and classifies them without human intervention. That does however not mean that results can be trusted blindly. 
+
+In the above paragraph, we have defined what is called supervised ML, because the algorithm is presented with some know instances from which it learns (see section \ref{sec:sml}). Alternatively, un-supervised ML does not make any assumptions about the group memberships, and uses the structure of the data itself to defined sub-groups (see section \ref{sec:usml}). It is of course possible to classify data based on labelled and unlabelled data. This extension of the supervised classification problem described above is called semi-supervised learning. In this case, the training data consists of both labelled and unlabelled instances with the obvious goal of generating a better classifier than would be possible with the labelled data only. The \textit{phenoDisco} algorithm, will be illustrated in that context (section \ref{sec:ssml}). 
+
+\subsection{Data visualisation}\label{sec:usml}
+
+The underlying principle of gradient approaches is that we have separated organelles along the gradient and by doing so, generated organelle-specific protein distributions along the gradient fractions. The most natural visualisation is shown on figure \ref{fig:plotdist1}, obtained using the sub-setting functionality of \Robject{MSnSet} instances and the \Rfunction{plotDist} function, as illustrated below.
+
+<<showplotdist, echo=TRUE, eval=FALSE, prompt=FALSE>>=
+## indices of the mito markers
+j <- which(fData(tan2009r1)$markers == "mitochondrion")
+## indices of all proteins assigned to the mito
+i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
+plotDist(tan2009r1[i, ],
+         markers = featureNames(tan2009r1)[j])
+@ 
+
+\begin{figure}[!htb]
+<<plotdist1, dev='pdf', fig.width=9, fig.height=7, echo=FALSE>>=
+par(mfrow = c(2,2), mar = c(4, 4, 2, 0.1))
+cls <- getStockcol()[1:4]
+plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "mitochondrion"), ],
+         markers = featureNames(tan2009r1)
+         [which(fData(tan2009r1)$markers == "mitochondrion")],
+         mcol = cls[1], 
+         main = "mitochondrion")
+plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
+         markers = featureNames(tan2009r1)
+         [which(fData(tan2009r1)$markers == "ER")],
+         mcol = cls[2],
+         main = "ER")
+plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
+         markers = featureNames(tan2009r1)
+         [which(fData(tan2009r1)$markers == "Golgi")],
+         mcol = cls[3],
+         main = "Golgi")
+plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "PM"), ],
+         markers = featureNames(tan2009r1)
+         [which(fData(tan2009r1)$markers == "PM")],
+         mcol = cls[4],
+         main = "PM")
+@ 
+%% $
+\caption{Distribution of protein intensities along the fractions of the separation gradient for 4 organelles: mitochondrion (red), ER/Golgi (blue, ER markers and green, Golgi markers) and plasma membrane (purple). }
+\label{fig:plotdist1}
+\end{figure}
+
+
+Alternatively, we can combine all organelle groups in one 2 dimensional figure by applying dimensionality reduction using the \Rfunction{plot2D} function (see figure \ref{fig:plot2d}).
+
+\begin{figure}[!hbt]
+<<plot2d, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers")
+addLegend(tan2009r1, fcol = "PLSDA", 
+          where = "bottomright", bty = "n", cex = .7)
+@ 
+\caption{ Representation of the \Sexpr{nrow(tan2009r1)} protein of \Robject{tan2009r1} after reduction the 4 reporter quantitation data to 2 principal components.}
+\label{fig:plot2d}
+\end{figure}
+
+\subsection{Unsupervised ML}
+
+The \Rfunction{plot2D} can also be used to visualise the data on a PCA plot omitting any marker definitions, 
+as shown on figure \ref{fig:plot2dnull}. 
+This approach avoids any bias towards marker definitions and concentrate on the data and its underlying structure itself.
+
+\begin{figure}[!hbt]
+<<plot2dnull, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+plot2D(tan2009r1, fcol = NULL)
+@ 
+\caption{Plain PCA representation of the \Robject{tan2009r1} data.}
+\label{fig:plot2dnull}
+\end{figure}
+
+Alternatively, \Rpackage{pRoloc} also gives access to \Rpackage{MLInterfaces}'s \Rfunction{MLean} unified interface for, 
+among others, unsupervised approaches using k-means (figure \ref{fig:plotKmeans} on page \pageref{fig:plotKmeans}),
+hierarchical (figure \ref{fig:plotHclust} on page \pageref{fig:plotHclust}) 
+or partitioning around medoids (figure \ref{fig:plotPam} on page \pageref{fig:plotPam}), 
+clustering. 
+
+%% TODO - describe these plots in more details.
+%% partition plot (private from MLInterfaces)
+%% silhouette plot
+%% screeplot
+%% PCA plot
+%% hierarchical cluster
+
+%% ALSO
+%%  - maybe some mclust-inspired plots.
+
+\begin{figure}[!hbt]
+<<plotKmeans, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
+kcl <- MLearn( ~ ., tan2009r1,  kmeansI, centers=5)
+plot(kcl, exprs(tan2009r1))
+@ 
+\caption{k-means clustering on the \Robject{tan2009r1} data. }
+\label{fig:plotKmeans}
+\end{figure}
+
+\begin{figure}[!hbt]
+<<plotHclust, dev='pdf', fig.width=8, fig.height=6, echo=TRUE, tidy = FALSE>>=
+hcl <- MLearn( ~ ., tan2009r1,  
+              hclustI(distFun = dist, cutParm = list(k = 5)))
+plot(hcl, labels = FALSE)
+@ 
+\caption{Hierarchical clustering on the \Robject{tan2009r1} data.}
+\label{fig:plotHclust}
+\end{figure}
+
+\begin{figure}[!hbt]
+<<plotPam, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
+pcl <- MLearn( ~ ., tan2009r1,  pamI(dist), k = 5)
+plot(pcl, data = exprs(tan2009r1))
+@ 
+\caption{Partitioning around medoids on the \Robject{tan2009r1} data.}
+\label{fig:plotPam}
+\end{figure}
+
+\clearpage
+
+\subsection{Supervised ML}\label{sec:sml}
+
+In this section, we show how to use \Rpackage{pRoloc} to run a typical supervised ML analysis. Several ML methods are available, including k-nearest neighbour (knn), partial least square discriminant analysis (plsda), random forest (rf), support vector machines (svm), \ldots The detailed description of each method is outside of the scope of this document. We will use support vector machines to illustrate a typical pipeline and the important points that should be paid attention to. These points are equally valid and work, from a \Rpackage{pRoloc} user perspective, exactly the same for the other approaches.
+
+\subsubsection{Classification algorithm parameters optimisation}
+
+Before actually generating a model on the new markers and classifying unknown residents, one has to take care of properly setting the model parameters. Wrongly set parameters can have a very negative impact on classification performance. To do so, we create testing (to model) and training (to predict) subsets using known residents. By comparing observed and expected classification prediction, we can assess how well a given model works using the macro F1 score (see below). This procedure is repeated for a range of possible model parameter values (this is called a grid search), and the best performing set of parameters is then used to construct a model on all markers and predict un-labelled proteins.
+
+%% TODO
+%% Describe our procedure in more details.
+
+Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \times recall}{precision + recall}$, calculated as the harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a measure of \textit{exactness} -- returned output is a relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of \textit{completeness} -- indicating how much was missed from the output). What we are aiming for are high generalisation accuracies, i.e high $F1$, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.
+
+\bigskip
+
+In the code chunk below, algorithmic performance is estimated using 5-fold stratified cross-validation (creating 5 test/train splits), which features an additional cross-validation on each training partition in order to optimise free parameters via a grid search. This process is repeated 10 times and best and averaged accuracies are shown in figure \ref{fig:params}. This procedure is implemented in the \Rfunction{svmOptimisation}. See \Rfunction{?svmOptimisation} for details, in particular how the relevant feature variable is defined by the \Robject{fcol} parameters, which defaults to \Robject{"markers"}. Note that here, we only perform 10 iteratons (\Robject{times = 10}) and would rather recommend 100 (which is the default value).
+
+<<svmParamOptim, cache = TRUE, message = FALSE>>=
+params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
+params
+@ 
+
+\begin{figure}[!hbt]
+<<params, dev='pdf', fig.width=4, fig.height=4, echo=TRUE, out.width='.49\\linewidth'>>=
+plot(params)
+levelPlot(params)
+@ 
+\caption{Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of \Rfunction{f1Count} in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values.}
+\label{fig:params}
+\end{figure}
+
+In addition to the plots on figure \ref{fig:params}, \Rfunction{f1Count(params)} returns, for each combination of parameters, the number of best (highest) F1 observations. One can use \Rfunction{getParams} to see the default set of parameters that are chosen based on the executed optimisation. Currently, the first best set is automatically extracted, and users are advised to critically assess whether this is the most wise choice. 
+
+<<f1count>>=
+f1Count(params)
+getParams(params)
+@ 
+
+\subsubsection{Classification}\label{sec:sml}
+
+We can now re-use the result from our parameter optimisation (a best cost/sigma pair is going to be automatically extracted, using the \Rfunction{getParams} method, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmClassification} function. By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment probabilities\footnote{%%
+The calculation of the classification probabilities is dependent on the classification algorithm. 
+These probabilities are not to be compared across algorithms; they do \textbf{not} reflect any 
+\textbf{biologically relevant} sub-cellular localistation probability but rather an 
+algorithm-specific classification confidence score.}%%
+, called scores hereafter, are automatically added to the \Robject{featureData} slot; in this case, using the \Robject{svm} and \Robject{svm.scores} labels.
+
+<<svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE>>=
+## manual setting of parameters
+svmres <- svmClassification(tan2009r1, sigma = 1, cost = 1)
+@ 
+
+<<svmRes, warning=FALSE, tidy = FALSE>>=
+## using default best parameters
+svmres <- svmClassification(tan2009r1, params)
+processingData(svmres)
+tail(fvarLabels(svmres), 4)
+@ 
+
+The original markers, classification results and scores can be accessed with the \Robject{fData} accessor method, e.g. 
+\Rfunction{fData(svmres)\$svm} or \Rfunction{fData(svmres)\$svm.scores}. 
+Two helper functions, \Rfunction{getMarkers} and \Rfunction{getPredictions} are available and add some level of automation and functionality, assuming that the default feature labels are used. Both (invisibly) return the corresponding feature variable (the markers or assigned classification) and print a summary table. The \Robject{fcol} parameter must be specified for \Rfunction{getPredictions}. It is also possible to defined a classification probability below which classifications are set to \texttt{"unknown"}.
+
+<<getPredictions>>=
+p1 <- getPredictions(svmres, fcol = "svm")
+minprob <- median(fData(svmres)$svm.scores)
+p2 <- getPredictions(svmres, fcol = "svm", t = minprob)
+table(p1, p2)
+@ %%$
+
+To graphically illustrate the organelle-specific score distributions, use
+
+<<predscoresPlot, eval=FALSE>>=
+boxplot(svm.scores ~ svm,data = fData(svmres))
+abline(h = minprob)
+@ 
+
+We can now visualise these results using the plotting functions presented in section \ref{sec:usml}, as shown on figure \ref{fig:svmres}. We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores. 
+
+\begin{figure}[!hbt]
+<<svmresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+ptsze <- exp(fData(svmres)$svm.score) - 1
+plot2D(svmres, fcol = "svm", fpch = "markers", cex = ptsze)
+addLegend(svmres, fcol = "svm", 
+          where = "bottomright", bty = "n", cex = .5)
+@ 
+%% $
+\caption{ Representation of the svm prediction on the \Sexpr{nrow(tan2009r1)} data set. The full symbols represent the original cluster markers. The svm scores have been used to set the point size (the scores have been transformed to emphasise the extremes). }
+\label{fig:svmres}
+\end{figure}
+
+\clearpage
+
+\subsection{Semi-supervised ML}\label{sec:ssml}
+
+It is obvious that the set of markers initially used  (\Sexpr{paste(levels(fData(tan2009r1)$markers)[1:4], collapse = ", ")}) %%$
+is not a biologically realistic representation or the organellar diversity. Manually finding markers is however time consuming, as it requires careful verification of the annotation, and possibly critical for the subsequent analysis, as markers are directly used in the training phase of the supervised ML approach. 
+
+As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The \textit{phenoDisco} algorithm \citep{Breckels2013} is an iterative method, that combines classification of proteins to known groups and detection of new clusters. It is available in \Rpackage{pRoloc} though the \Rfunction{phenoDisco} function\footnote{In the interest of time, \Rfunction{phenoDisco} is not executed when the vignette is dynamically built. The data object can be located with \Rfunction{dir(system.file("extdata", package = "pRoloc"), full.names = TRUE, pattern = "pdres.rda")} and loaded with \Rfunction{load}.}. 
+
+<<runPhenoDisco, eval=FALSE, warning=FALSE>>=
+pdres <- phenoDisco(tan2009r1, GS = 10, times = 100, fcol = "PLSDA")
+@ 
+
+<<loadpdres, echo=FALSE>>=
+fn <- dir(system.file("extdata", package = "pRoloc"), 
+          full.names = TRUE, pattern = "pdres.rda")
+load(fn)
+rm(fn)
+@ 
+
+The results are also appended to the \Robject{feautreData} slot.
+
+<<phenoDiscoFvar>>=
+processingData(pdres)
+tail(fvarLabels(pdres), 3)
+@ 
+
+The \Rfunction{plot2D} function, can, as previously, be utilised to visualise the results, as shown on figure \ref{fig:pdres}.
+
+\begin{figure}[!hbt]
+<<pdresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+plot2D(pdres, fcol = "pd")
+addLegend(pdres, fcol = "pd", ncol = 2, 
+          where = "bottomright", bty = "n", cex = .5)
+@ 
+%% $
+\caption{ Representation of the phenoDisco prediction and cluster discovery results. }
+\label{fig:pdres}
+\end{figure}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Following up on novelty discovery}\label{sec:followup}
+
+The newly discovered phenotypes need to be carefully validated prior to further analysis.
+Indeed, as the structure of the data is made use of in the discovery algorithm, 
+some might represent peculiar structure in the data and not match with biologically relevant groups. 
+The \Robject{tan2009r1} data has been submitted to a careful \Rfunction{phenodisco} analysis 
+and validation in \cite{Breckels2013}. The results of this new, augmented marker set is 
+available in the \Robject{pd.markers} feature data. These markers represent a combined 
+set of the original markers and validated proteins from the new phenotypes. 
+
+<<pdmarkers>>=
+getMarkers(tan2009r1, fcol = "pd.markers")
+@ 
+
+The augmented set of markers is now employed to repeat the classification using the 
+support vector machine setup described in section \ref{sec:sml} (page \pageref{sec:sml}). 
+Below, we replace the existing \Robject{tan2009r1} object by a copy that includes the 
+svm results.
+
+<<pdsvm, cache = TRUE, message = FALSE, warning = FALSE, tidy = FALSE>>=
+params <- svmOptimisation(tan2009r1, fcol = "pd.markers", 
+                          times = 10, xval = 5, verbose = FALSE)
+tan2009r1 <- svmClassification(tan2009r1, params, 
+                               fcol = "pd.markers")
+@ 
+
+The data is visualised as described previously, were we use the svm classification 
+a-posteriori probability to set the point size. 
+
+\begin{figure}[!hbt]
+<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE>>=
+ptsze <- exp(fData(tan2009r1)$svm.score) - 1
+plot2D(tan2009r1, fcol = "svm", cex = ptsze)
+addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", cex = .5)
+@ 
+%% $
+\caption{ Second round of classification using the augmented set of markers obtained 
+  using \Rfunction{phenoDisco}, as detailed in \cite{Breckels2013}. }
+\label{fig:pdres2}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\clearpage
+
+\section{Conclusions}\label{sec:ccl}
+
+This tutorial focuses on practical aspects of organelles proteomics data analysis using \Rpackage{pRoloc}. 
+Two important aspects have been illustrates: (1) data generation, manipulation and visualisation and 
+(2) application of contemporary and novel machine learning techniques. 
+Other crucial parts of a full analysis pipeline that were not covered here are raw mass-spectrometry 
+quality control, quantitation, post-analysis and data validation. 
+
+\bigskip
+
+Data analysis is not a trivial task, and in general, one can not assume that any off-the-shelf algorithm will perform well. 
+As such, one of the emphasis of the software presented in this document is allowing users to track data processing and 
+critically evaluate the results. 
+
+\clearpage
+
+\singlespacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Session information}\label{sec:sessionInfo} 
+
+All software and respective versions used to produce this document are listed below.
+
+<<sessioninfo, results='asis', echo=FALSE>>=
+toLatex(sessionInfo())
+@
+
+\bibliographystyle{plainnat}
+\bibliography{pRoloc}
+
 \end{document}
+

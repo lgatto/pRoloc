@@ -23,3 +23,5 @@ Imports: mclust, MSBVAR, caret, e1071, sampling, class,
 	 BiocGenerics, stats4, RColorBrewer, scales, MASS
 Suggests: testthat, knitr, pRolocdata, roxygen2
 License: GPL-2
+VignetteBuilder: knitr
+

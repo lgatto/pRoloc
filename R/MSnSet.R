@@ -175,6 +175,9 @@ addMarkers <- function(object, markerfile, verbose = TRUE) {
     message("Markers in data: ", length(cmn), " out of ", nrow(object))
   fData(object)$markers <- "unknown"
   fData(object)[cmn, "markers"] <- mrk[cmn, 1]
+  object@processingData@processing <-
+    c(object@processingData@processing,
+      paste0("Added markers from ", basename(markerfile),". ", date()))  
   if (validObject(object)) {
     if (verbose) getMarkers(object)
     return(object)

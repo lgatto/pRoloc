@@ -303,20 +303,25 @@ data set, available from \Rpackage{MSnbase}. Several normalisation \Robject{meth
 are available and described in \Rfunction{?normalise}. 
 For many algorithms, including classifiers in general and support vector machines in 
 particular, it is important to properly per-process the data. 
-Simple centering and scaling is available with the \Rfunction{scale} method, 
+Centering and scaling of the data is also available with the \Rfunction{scale} method, 
 descibed in the \Rfunction{scale} manual.
 
-<<dummydata, echo=FALSE, message=FALSE, cache=TRUE>>=
+
+In the code chunk below, we first create a test \Robject{MSnSet} instance\footnote{%%
+Briefly, the \Robject{itraqdata} raw iTRAQ4-plex data is quantified by trapezoidation 
+using \Rpackage{MSnbase} functionality. See the \Robject{MSnbase-demo} vignette for 
+details.} and illustrate the effect of \Rfunction{normalise(..., method = "sum")}. 
+
+<<norm, echo=TRUE, message=FALSE, cache=TRUE>>=
+## create a small illustrative test data
 data(itraqdata)
 itraqdata <- quantify(itraqdata, method = "trap", 
-                      verbose = FALSE, reporters = iTRAQ4, 
-                      parallel = FALSE)
-itraqdata <- itraqdata[1:25, ]
-@ 
-
-<<norm>>=
+                      reporters = iTRAQ4, 
+                      verbose = FALSE, parallel = FALSE)
+## the quantification data
 head(exprs(itraqdata), n = 3)
 summary(rowSums(exprs(itraqdata)))
+## normalising to the sum of feature intensitites
 itraqnorm <- normalise(itraqdata, method = "sum")
 processingData(itraqnorm)
 head(exprs(itraqnorm), n = 3)
@@ -333,12 +338,11 @@ The different features (proteins in the \Robject{tan2009r1} data above, but thes
 head(featureNames(tan2009r1))
 @ 
 
-If we look back at section \ref{sec:csv}, we see that these have been automatically assigned using the first columns in the \texttt{exprsFile.csv} and \texttt{fdataFile.csv} files. It is thus crucial for these respective first columns to be identical. Similarly, the sample names can be retrieved with \Rfunction{sampleNames}.
+If we look back at section \ref{sec:csv}, we see that these have been automatically assigned using the first columns in the \texttt{exprsFile.csv} and \texttt{fdataFile.csv} files. It is thus crucial for these respective first columns to be identical. Similarly, the sample names can be retrieved with \Rfunction{sampleNames(tan2009r1)}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 
 \section{Data analysis}\label{sec:analysis}
 
@@ -547,7 +551,7 @@ We can now visualise these results using the plotting functions presented in sec
 
 \begin{figure}[!hbt]
 <<svmresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
-ptsze <- exp(fData(svmres)$svm.score) - 1
+ptsze <- exp(fData(svmres)$svm.scores) - 1
 plot2D(svmres, fcol = "svm", fpch = "markers", cex = ptsze)
 addLegend(svmres, fcol = "svm", 
           where = "bottomright", bty = "n", cex = .5)
@@ -634,7 +638,7 @@ a-posteriori probability to set the point size.
 
 \begin{figure}[!hbt]
 <<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE>>=
-ptsze <- exp(fData(tan2009r1)$svm.score) - 1
+ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
 plot2D(tan2009r1, fcol = "svm", cex = ptsze)
 addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", cex = .5)
 @ 

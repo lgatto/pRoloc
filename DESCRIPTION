@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 0.99.16
+Version: 0.99.99
 Author@R: c(person(given = "Laurent", family = "Gatto",
 	           email = "lg390@cam.ac.uk",
  		   role = c("aut","cre")),
@@ -21,7 +21,7 @@ Depends: R (>= 2.15), MSnbase (>= 1.7.23), MLInterfaces (>= 1.37.1), methods
 Imports: mclust, MSBVAR, caret, e1071, sampling, class,
 	 kernlab, lattice, nnet, randomForest, proxy, 
 	 BiocGenerics, stats4, RColorBrewer, scales, MASS, knitr
-Suggests: testthat, pRolocdata, roxygen2
+Suggests: testthat, pRolocdata, roxygen2, synapter
 License: GPL-2
 VignetteBuilder: knitr
 

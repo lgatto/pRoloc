@@ -510,7 +510,7 @@ getParams(params)
 
 \subsubsection{Classification}\label{sec:sml}
 
-We can now re-use the result from our parameter optimisation (a best cost/sigma pair is going to be automatically extracted, using the \Rfunction{getParams} method, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmClassification} function. By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment probabilities\footnote{%%
+We can now re-use the result from our parameter optimisation (a best cost/sigma pair is going to be automatically extracted, using the \Rfunction{getParams} method, although it is possible to set them manually), and use them to build a model with all the marker proteins and predict unknown residents using the \Rfunction{svmClassification} function (see the manual page for more details). By default, the organellar markers will be defined by the \Robject{"markers"} feature variables (and can be defined by the \Robject{fcol} parameter). New feature variables containing the organelle assignments and assignment probabilities\footnote{%%
 The calculation of the classification probabilities is dependent on the classification algorithm. 
 These probabilities are not to be compared across algorithms; they do \textbf{not} reflect any 
 \textbf{biologically relevant} sub-cellular localistation probability but rather an 
@@ -622,14 +622,20 @@ getMarkers(tan2009r1, fcol = "pd.markers")
 @ 
 
 The augmented set of markers is now employed to repeat the classification using the 
-support vector machine setup described in section \ref{sec:sml} (page \pageref{sec:sml}). 
-Below, we replace the existing \Robject{tan2009r1} object by a copy that includes the 
-svm results.
+support vector machine classifier. We apply a slightly different analysis than described 
+in section \ref{sec:sml} (page \pageref{sec:sml}). In the code chunk below, we use class 
+specific weights when creating the svm model; the weights are set to be 
+inversely proportional to class frequencies. 
 
 <<pdsvm, cache = TRUE, message = FALSE, warning = FALSE, tidy = FALSE>>=
-params <- svmOptimisation(tan2009r1, fcol = "pd.markers", 
-                          times = 10, xval = 5, verbose = FALSE)
+w <- table(fData(tan2009r1)[, "pd.markers"])
+(w <- 1/w[names(w) != "unknown"])
+params <- svmOptimisation(tan2009r1, fcol = "pd.markers",                           
+                          times = 10, xval = 5, 
+                          class.weights = w,
+                          verbose = FALSE)
 tan2009r1 <- svmClassification(tan2009r1, params, 
+                               class.weights = w,
                                fcol = "pd.markers")
 @ 
 
@@ -644,7 +650,8 @@ addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", c
 @ 
 %% $
 \caption{ Second round of classification using the augmented set of markers obtained 
-  using \Rfunction{phenoDisco}, as detailed in \cite{Breckels2013}. }
+  using \Rfunction{phenoDisco} as detailed in \cite{Breckels2013} 
+  and a weighted svm classifier. }
 \label{fig:pdres2}
 \end{figure}
 

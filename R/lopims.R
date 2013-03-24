@@ -57,27 +57,36 @@
 .lopims4 <- function(xx) {
   ## remove rows with only NAs
   xx <- xx[!apply(exprs(xx), 1, function(x) all(is.na(x))), ]
-  ref <- which.min(apply(exprs(xx), 2, function(x) sum(is.na(x))))
-  message("[LOPIMS 4] Calculate ratios to reference column ", sampleNames(xx)[ref])
-  res <- by(exprs(xx), fData(xx)$protein.Accession.LOPIMS1,
-            function(x) {
-              x <- as.matrix(x)
-              .res <- apply(x, 1, function(.x) {
-                .xref <- .x[ref]
-                .x <- .x[-ref]
-                .x/.xref
-              })
-              res <- t(.res)
-              apply(res, 2, mean, na.rm = TRUE)
-            })
-  
+  message("[LOPIMS 4] Calculate ratios to reference peptide")
+  refNorm <- function(x) {
+    ## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., 
+    ## DAnTE: a statistical tool for quantitative analysis of -omics data. 
+    ## Bioinformatics 2008, 24, 1556–1558.
+    ##
+    ## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269
+    ## Ratio all peptides to the peptide with the least amount of missing values;
+    ## Protein abundance is the median of the scaled peptide abundances
+    ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
+    x <- as.matrix(x)
+    .res <- apply(x, 1, function(.x) {
+      .xref <- .x[ref]
+      .x/.xref
+    })
+    res <- t(.res)
+    apply(res, 2, mean, na.rm = TRUE)
+  }  
+  res <- by(exprs(xx),
+            fData(xx)$protein.Accession.LOPIMS1,
+            refNorm)  
   res2 <- Reduce(rbind, res)
   rownames(res2) <- names(res)
-
-  xx2 <- combineFeatures(xx, fData(xx)$protein.Accession.LOPIMS1, fun = mean)
-  xx2 <- xx2[, -ref]
-  xx2 <- MSnbase:::nologging(xx2)
+  xx2 <- combineFeatures(xx, fData(xx)$protein.Accession.LOPIMS1, fun = median)
+  xx2 <- MSnbase:::nologging(xx2) 
   exprs(xx2) <- res2
+  xx2@processingData@processing <-
+    c(xx2@processingData@processing,
+      paste0("Normalised intensities to reference peptide: ",
+             date()))
   if (validObject(xx2))
     return(xx2)
 }

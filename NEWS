@@ -2,6 +2,11 @@ CHANGES IN VERSION 0.99.99
 --------------------------
  o new MSe pipeline <2013-03-22 Fri>
 
+CHANGES IN VERSION 0.99.17
+--------------------------
+ o illustrating class.weights in the 
+   vignette <2013-03-24 Sun>
+
 CHANGES IN VERSION 0.99.16
 --------------------------
  o new addMarkers function <2013-03-22 Fri>

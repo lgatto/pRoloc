@@ -73,7 +73,7 @@
       .x/.xref
     })
     res <- t(.res)
-    apply(res, 2, mean, na.rm = TRUE)
+    apply(res, 2, median, na.rm = TRUE)
   }  
   res <- by(exprs(xx),
             fData(xx)$protein.Accession.LOPIMS1,
@@ -81,7 +81,7 @@
   res2 <- Reduce(rbind, res)
   rownames(res2) <- names(res)
   xx2 <- combineFeatures(xx, fData(xx)$protein.Accession.LOPIMS1, fun = median)
-  xx2 <- MSnbase:::nologging(xx2) 
+  ## xx2 <- MSnbase:::nologging(xx2) 
   exprs(xx2) <- res2
   xx2@processingData@processing <-
     c(xx2@processingData@processing,

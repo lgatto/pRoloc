@@ -5,7 +5,7 @@
 \usage{
   nnetClassification(object, assessRes,
     scores = c("prediction", "all", "none"), decay, size,
-    fcol = "markers")
+    fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -27,6 +27,9 @@
 
   \item{fcol}{The feature meta-data containing marker
   definitions. Default is \code{markers}.}
+
+  \item{...}{Additional parameters passed to
+  \code{\link{nnet}} from package \code{nnet}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with
@@ -45,6 +48,7 @@ data(dunkley2006)
 params <- nnetOptimisation(dunkley2006, decay = 10^(c(-1, -5)), size = c(5, 10), times = 3)
 params
 plot(params)
+f1Count(params)
 levelPlot(params)
 getParams(params)
 res <- nnetClassification(dunkley2006, params)

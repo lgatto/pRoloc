@@ -140,3 +140,46 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
   if (validObject(object))
     return(object)
 }
+
+
+##' The function adds a 'markers' feature variable. These markers are read
+##' from a comma separated values (csv) spreadsheet file. This markers file 
+##' is expected to have 2 columns (others are ignored) where the first
+##' is the name of the marker features and the second the group label.
+##' It is essential to assure that  \code{featureNames(object)} and
+##' marker names (first column) match, i.e. the same feature identifiers
+##' and case fold are used.
+##'
+##' @title Adds markers to the data
+##' @param object An instance of class \code{MSnSet}.
+##' @param markerfile A \code{character} with the name the markers' csv file.
+##' @param verbose A \code{logical} indicating if number of markers
+##' and marker table should be printed to the console.
+##' @return A new instance of class \code{MSnSet} with an additional
+##' \code{markers} feature variable.
+##' @author Laurent Gatto
+addMarkers <- function(object, markerfile, verbose = TRUE) {
+  if ("markers" %in% fvarLabels(object))
+    stop("Detected a feature 'markers' column.")
+  mrk <- read.csv(markerfile, stringsAsFactors = FALSE, row.names = 1)
+  cmn <- intersect(rownames(mrk), featureNames(object))
+  if (length(cmn) == 0) {    
+    msg <- paste0("No markers found. Are you sure that the feature names match?\n",
+                  "  Feature names: ",
+                  paste0(paste(featureNames(object)[1:3], collapse = ", "), "...\n"),
+                  "  Markers names: ",
+                  paste0(paste(rownames(mrk)[1:3], collapse = ", "), "...\n"))    
+    stop(msg)
+  }
+  if (verbose)
+    message("Markers in data: ", length(cmn), " out of ", nrow(object))
+  fData(object)$markers <- "unknown"
+  fData(object)[cmn, "markers"] <- mrk[cmn, 1]
+  object@processingData@processing <-
+    c(object@processingData@processing,
+      paste0("Added markers from ", basename(markerfile),". ", date()))  
+  if (validObject(object)) {
+    if (verbose) getMarkers(object)
+    return(object)
+  }  
+}

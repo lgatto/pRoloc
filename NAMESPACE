@@ -1,3 +1,5 @@
+useDynLib(pRoloc)
+
 import(lattice)
 import(BiocGenerics)
 import(mclust)
@@ -17,6 +19,8 @@ importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
 exportClasses(GenRegRes)
+export(loopInTestStep)
+
 
 exportMethods(chi2,
               show,

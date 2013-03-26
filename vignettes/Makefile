@@ -15,22 +15,31 @@ LATEXFILES = *.aux\
 	*.dep\
 	*.dpth\
 	*.makefile\
+	pRoloc-imputation.tex\
+	pRoloc-ml.tex\
 	pRoloc-tutorial.tex
 
 all: 
-	make pRoloc-tutorial
+	make tut
 
 setvars:
 ifeq (${R_HOME},)
 R_HOME= $(shell R RHOME)
 endif
 
-pRoloc-tutorial:
-	cp pRoloc-tutorial.Rnw.knitr pRoloc-tutorial.Rnw
+tut:
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
+	bibtex pRoloc-tutorial
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
+
+## manual building
+tut2: 
 	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"
 	bibtex pRoloc-tutorial
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
+
 
 .PHONY: clean allclean 
 
@@ -39,7 +48,7 @@ clean:
 	rm -f .Rhistory
 	rm -f *~
 	rm -f */*~
-	cp pRoloc-tutorial.Rnw.stub pRoloc-tutorial.Rnw
+
 
 allclean: clean
 	rm -f  pRoloc-tutorial.pdf

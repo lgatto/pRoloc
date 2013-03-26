@@ -1,8 +1,66 @@
+CHANGES IN VERSION 0.99.17
+--------------------------
+ o illustrating class.weights in the 
+   vignette <2013-03-24 Sun>
+
+CHANGES IN VERSION 0.99.16
+--------------------------
+ o new addMarkers function <2013-03-22 Fri>
+
+CHANGES IN VERSION 0.99.15
+--------------------------
+ o Fixing issues in vignette <2013-03-22 Fri>
+
+CHANGES IN VERSION 0.99.14
+--------------------------
+ o Added scale in tutorial <2013-03-02 Sat>
+ o implemented viction <2013-03-09 Sat>
+ o New vignette section on phenoDisco follow 
+   up classification <2013-03-19 Tue>
+ o Using knitr engine <2013-03-19 Tue>
+
+CHANGES IN VERSION 0.99.13
+--------------------------
+ o depending on MSnbase >= 1.7.23 as makeNaData 
+   needs MSnbase:::nologging <2013-02-27 Wed>
+ o updated phenoDisco parameters, added error messages when an 
+   insufficient number of markers per class and/or number of
+   classes are used and updated phenoDisco help file <2012-02-28 Thu>
+ o added first belief diffscores function <2013-03-01 Fri>
+
+CHANGES IN VERSION 0.99.12
+--------------------------
+ o plot2D has gained a plot argument <2013-02-19 Tue>
+ o new f1Count method <2013-02-20 Wed>
+ o new makeNaData function <2013-02-20 Wed>
+ o new makeNaData2 function <2013-02-21 Thu>
+ o new whichNAfunction <2013-02-20 Wed>
+ o updated tutorial vignette <2013-02-20 Wed>
+ o Now passing ... to predictor functions in 
+   xxxClassification (reported by Marianne Sandin) <2013-02-26 Tue>
+
+CHANGES IN VERSION 0.99.11
+--------------------------
+ o setUnknowncol(NULL) and friedns reset to default 
+   values <2013-02-19 Tue>
+
+CHANGES IN VERSION 0.99.10
+--------------------------
+ o new default col/pch setters <2013-02-16 Sat>
+
+CHANGES IN VERSION 0.99.9
+-------------------------
+ o Updates to phenoDisco: verbose param, fixed error in example, 
+   adding params to processingInfo <2013-02-11 Mon> 
+ o Unexported getOtherParams method <2013-02-12 Tue>
+ o adding export param documentation <2013-02-12 Tue>
+
 CHANGES IN VERSION 0.99.8
 -------------------------
  o Integration of the perTurbo algorithms, contributed 
    by Thomas Burger and Samuel Wieczorek <2013-01-18 Fri>
  o summariseMatList now has na.rm = TRUE by default <2013-01-19 Sat>
+ o PerTurbo's inv/reg now as other hyperparams <2013-02-11 Mon>
 
 CHANGES IN VERSION 0.99.7
 -------------------------

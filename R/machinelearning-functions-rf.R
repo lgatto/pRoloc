@@ -176,6 +176,7 @@ rfRegularisation <- function(...) {
 ##' @param mtry If \code{assessRes} is missing, a \code{mtry} must be provided.
 ##' @param fcol  The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
+##' @param ... Additional parameters passed to \code{\link{randomForest}} from package \code{randomForest}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with
 ##' \code{rf} and \code{rf.scores} feature variables storing the
 ##' classification results and scores respectively.
@@ -188,6 +189,7 @@ rfRegularisation <- function(...) {
 ##' params <- rfOptimisation(dunkley2006, mtry = c(2, 5, 10),  times = 3)
 ##' params
 ##' plot(params)
+##' f1Count(params)
 ##' levelPlot(params)
 ##' getParams(params)
 ##' res <- rfClassification(dunkley2006, params)
@@ -195,10 +197,11 @@ rfRegularisation <- function(...) {
 ##' getPredictions(res, fcol = "rf", t = 0.75)
 ##' plot2D(res, fcol = "rf")
 rfClassification <- function(object,
-                         assessRes,
-                         scores = c("prediction", "all", "none"),
-                         mtry,
-                         fcol = "markers") {
+                             assessRes,
+                             scores = c("prediction", "all", "none"),
+                             mtry,
+                             fcol = "markers",
+                             ...) {
   scores <- match.arg(scores)  
   if (missing(assessRes)) {
     if (missing(mtry))
@@ -212,7 +215,8 @@ rfClassification <- function(object,
   trainInd <- which(fData(object)[, fcol] != "unknown")
   form <- as.formula(paste0(fcol, " ~ ."))
   ans <- MLearn(form, t(object), randomForestI, trainInd,
-                mtry = params["mtry"])
+                mtry = params["mtry"],
+                ...)
   fData(object)$rf <- predictions(ans)
   if (scores == "all") {
     scoreMat <- predScores(ans)

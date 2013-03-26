@@ -22,7 +22,6 @@ setMethod("show",
                   paste(object@hyperparameters[[i]], collapse = " "),
                   "\n", sep = "")              
             }
-          
             cat("Design:\n")
             cat(" Replication: ",
                 object@design["times"], " x ",
@@ -63,20 +62,36 @@ setMethod("getSeed", "GenRegRes", function(object) object@seed)
 
 setMethod("getF1Scores", "GenRegRes", function(object) object@results)
 
-setMethod("getOtherParams", "GenRegRes",
-          function(object) {
-            return(object@hyperparameters$other)
+setMethod("f1Count", "GenRegRes",
+          function(object, t) {
+            f1tab <- getF1Scores(object)
+            .f1 <- colnames(f1tab) == "F1"
+            f1 <- f1tab[, .f1]
+            if (missing(t))
+              t <- max(f1)
+            p <- f1tab[, !.f1, drop = FALSE]
+            if (ncol(p) == 1) {
+              res <- table(p[f1 >= t, ])
+            } else {
+              ## if ncol(p) != 1, then 2
+              res <- tapply(f1,
+                            list(factor(p[, 1]), factor(p[, 2])),
+                            function(x) sum(x >= t))
+            }
+            return(res)
           })
 
-setMethod("getRegularisedParams", "GenRegRes",
+setMethod("getParams", "GenRegRes",
           function(object) {
             res <- object@results
             best <- which.max(res[, "F1"])
             return(res[best, -1])
           })
 
-setMethod("getRegularizedParams", "GenRegRes",
-          function(object) getRegularisedParams(object))
+setMethod("getOtherParams", "GenRegRes",
+          function(object) {
+            object@hyperparameters$other
+          })
 
 setMethod("plot", c("GenRegRes", "missing"),
           function(x, y, ...) {

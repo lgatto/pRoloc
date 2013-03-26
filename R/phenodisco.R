@@ -242,11 +242,11 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers") {
 
 ## Convenience function for updating MSnSet with new phenotypes
 updateobject  <- function(MSnSetToUpdate,
-                                newPhenotypes,
-                                newClasses,
-                                originalMarkerColumnName = "markers",
-                                oldMarkerColumnName = "markers",
-                                newMarkerColumnName = "newMarkers") {
+                          newPhenotypes,
+                          newClasses,
+                          originalMarkerColumnName = "markers",
+                          oldMarkerColumnName = "markers",
+                          newMarkerColumnName = "newMarkers") {
   newobject <- MSnSetToUpdate
   indexOld <- which(colnames(fData(newobject)) == oldMarkerColumnName)
   indexNew <- ncol(fData(newobject)) + 1
@@ -316,29 +316,31 @@ updateobject  <- function(MSnSetToUpdate,
 ##' protein clusters. 
 ##' 
 ##'
-##' The algorithm performs a phenotype discovery analysis which is based on
-##' the works of Yin et al. (2008). Using this appoach one can identify 
-##' putative subcellular groupings in organelle proteomics experiments for 
-##' more comprehensive validation in an unbiased fashion. The method uses
-##' iterated rounds of Gaussian Mixture Modelling using the Expectation
-##' Maximisation algorithm combined with a non-parametric outlier detection
-##' test to identify new phenotype clusters.
+##' The algorithm performs a phenotype discovery analysis as described in
+##' Breckels et al. Using this approach one can identify putative subcellular 
+##' groupings in organelle proteomics experiments for more comprehensive 
+##' validation in an unbiased fashion. The method is based on the work of Yin 
+##' et al. and used iterated rounds of Gaussian Mixture Modelling using the 
+##' Expectation Maximisation algorithm combined with a non-parametric outlier
+##' detection test to identify new phenotype clusters.
 ##'
-##'  
+##' Note: One requires at least 2 or more classes to be labelled in the data 
+##' and at a very minimum of 6 markers per class to run the algorithm.
+##'
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.
-##' @param times Number of runs of tracking. Default is 50.
+##' @param times Number of runs of tracking. Default is 100.
 ##' @param GS Group size, i.e how many proteins make a group. Default
-##' is 10.
+##' is 10 (the minimum group size is 4).
 ##' @param allIter \code{logical}, defining if predictions for all
 ##' iterations should be saved. Default is \code{FALSE}.
 ##' @param p Significance level for outlier detection. Default is
 ##' 0.05.
-##' @param r Correlation coefficent for Jaccard's Index. Default is 1 
-##' (currently no other value is supported).
 ##' @param seed An optional \code{numeric} of length 1 specifing the
-##' random number generator seed to be used. 
+##' random number generator seed to be used.
+##' @param verbose Logical, indicating if messages are to be
+##' printed out during execution of the algorithm.
 ##' @return An instance of class \code{MSnSet} containg the \code{phenoDisco}
 ##' predictions.
 ##' @author Lisa M. Breckels <lms79@@cam.ac.uk>
@@ -348,27 +350,35 @@ updateobject  <- function(MSnSetToUpdate,
 ##' phenotype discovery in the context of high-throughput RNAi screens. BMC
 ##' Bioinformatics. 2008 Jun 5;9:264.
 ##' PubMed PMID: 18534020; PubMed Central PMCID: PMC2443381.
+##' 
+##' Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS and Trotter MWB.
+##' The Effect of Organelle Discovery upon Sub-Cellular Protein Localisation. 
+##' J Proteomics. In Press.  
 ##' @examples
 ##' \dontrun{
 ##' library(pRolocdata)
 ##' data(tan2009r1)
-##' pdres <- phenoDisco(tan2009r1, markers = "PLSDA")
+##' pdres <- phenoDisco(tan2009r1, fcol = "PLSDA")
 ##' getPredictions(pdres, fcol = "pd", scol = NULL)
 ##' plot2D(pdres, fcol = "pd")
 ##' }
 phenoDisco <- function(object,
                        fcol = "markers",
-                       times = 50,
+                       times = 100,
                        GS = 10,
                        allIter = FALSE,
                        p = 0.05,
-                       r = 1,
-                       seed) {
-  ## phenoDisco.R (Lisa's phenoDisco code - last updated 07/12/2012)
-  ## fcol = feature column, times = number of runs of tracking, 
-  ## GS = group size (how many proteins make a group?),
-  ## p = significance level for outlier detection test,
-  ## r = correlation coefficent for Jaccard's Index
+                       seed,
+                       verbose = TRUE) {
+  ## phenoDisco.R (Lisa's phenoDisco code - last updated 27/02/2013)
+  ## fcol = feature column
+  ## times = number of runs of tracking 
+  ## GS = group size 
+  ## p = significance level for outlier detection test
+
+  if (GS < 4) 
+    stop("Group size specified too small")
+
   if (!missing(seed)) {
     seed <- as.integer(seed)
     set.seed(seed)
@@ -379,6 +389,15 @@ phenoDisco <- function(object,
   
   ## Initial settings
   indexFcol <- which(colnames(fData(object)) == fcol)
+  test <- table(fData(object)[,indexFcol])
+  
+  if (any(sapply(test, function(x) x<6)))
+    stop("Not enough markers to run phenoDisco: Require > 6 markers per classes")
+  
+  if (length(test) < 3)
+    stop("Not enough classes specified to run phenoDisco: Require a 
+          minimum of 2 labelled classes")
+
   track <- phenotypes <- vector("list")
   currentClasses <- list()
   cond1 <- cond2 <- TRUE
@@ -402,7 +421,8 @@ phenoDisco <- function(object,
     ## ===> Call "tracking.R" to get - 
     ## (1) clusterIDs (from rounds of clustering using GMMs - could use hierarchical)
     ## (2) new members of known classes (from outlier detection using GMMs)
-    message(paste("Iteration", i)) 
+    if (verbose)
+      message(paste("Iteration", i)) 
     track[[i]] <- replicate(n = times, 
                             expr = tracking(
                             data = object, 
@@ -428,7 +448,7 @@ phenoDisco <- function(object,
     currentClasses[[i]] <- update
     
     ## Any new phenotypes?
-    phenotypes[[i]] <- getNewClusters(track[[i]], groupSize = GS, jc = r)
+    phenotypes[[i]] <- getNewClusters(track[[i]], groupSize = GS, jc = 1)
     newPhenoName = paste(".pd", i, sep="")
     
     ## CONDITIONS TO STOP LOOP
@@ -441,11 +461,11 @@ phenoDisco <- function(object,
     }
     ## Update MSnsetObject to include new phenotypes as classes
     object <- updateobject(object, 
-                                       phenotypes[[i]],
-                                       currentClasses[[i]],
-                                       oldMarkerColumnName = fcol,
-                                       newMarkerColumnName = newPhenoName,
-                                       originalMarkerColumnName = original)
+                           phenotypes[[i]],
+                           currentClasses[[i]],
+                           oldMarkerColumnName = fcol,
+                           newMarkerColumnName = newPhenoName,
+                           originalMarkerColumnName = original)
     fcol <- newPhenoName 
   } ## end of while
   foo <- length(names(fData(object)))
@@ -466,11 +486,16 @@ phenoDisco <- function(object,
   }
   
   if (missing(seed)) {
-    procmsg <- paste0("Run phenoDisco using '", original, "': ", date())
+    procmsg <- paste0("Run phenoDisco using '", original, "': ", date())    
   } else {
     procmsg <- paste0("Run phenoDisco using '", original,
                       "' (seed, ", seed, "): ", date())
-  }  
+  }
+  procmsg <- c(procmsg,
+               paste0("  with parameters times=", times,
+                      ", GS=", GS,
+                      ", p=", p, "."))
+                      ## ", r=", r, "."))
   object@processingData@processing <-
     c(processingData(object)@processing,
       procmsg)

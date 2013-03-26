@@ -18,41 +18,80 @@ assign("unknowncol", unknowncol, envir = .pRolocEnv)
 unknownpch <- 21
 assign("unknownpch", unknownpch, envir = .pRolocEnv)
 
-
-
-##' Returns the default cluster colours.
+##' These functions allow to get/set the default colours and
+##' point character that are used when plotting organelle clusters
+##' and unknown features. These values are parametrised at the
+##' session level.
 ##'
-##' @title Default cluster colours
+##' @title Manage default colours and point characters
 ##' @return A \code{character} vector.
 ##' @author Laurent Gatto
 ##' @rdname getStockcol
 ##' @examples
+##' ## defaults for clusters
 ##' getStockcol()
+##' getStockpch()
+##' ## unknown features
+##' getUnknownpch()
+##' getUnknowncol()
+##' ## an example
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' par(mfrow = c(2, 1))
+##' plot2D(dunkley2006, fcol = "markers", main = 'Default colours')
+##' setUnknowncol("black")
+##' plot2D(dunkley2006, fcol = "markers", main = 'setUnknowncol("black")')
+##' getUnknowncol()
+##' setUnknowncol(NULL)
+##' getUnknowncol()
 getStockcol <- function() get("stockcol", envir=.pRolocEnv)
 
-##' Returns the default cluster point symbols.
-##'
-##' @title Default cluster point symbols
+##' @param cols A vector of colour \code{characters} or \code{NULL},
+##' which sets the colours to the default values.
+##' @return Invisibly returns \code{cols}.
+##' @rdname getStockcol
+setStockcol <- function(cols) {
+  if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
+  else assign("stockcol", cols, envir = .pRolocEnv)
+}
+
 ##' @return A \code{numeric} vector.
 ##' @rdname getStockcol
-##' @examples
-##' getStockpch()
 getStockpch <- function() get("stockpch", envir=.pRolocEnv)
 
-##' Returns the default colour for unknown features.
-##'
-##' @title Default colour for unknown features
+##' @param pchs A vector of \code{numeric} or \code{NULL},
+##' which sets the point characters to the default values.
+##' @return Invisibly returns \code{pchs}.
+##' @rdname getStockcol
+setStockpch <- function(pchs) {
+  if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
+  else assign("stockpch", pchs, envir = .pRolocEnv)
+}
+
 ##' @return A \code{character} vector or length 1.
 ##' @rdname getStockcol
-##' @examples
-##' getUnknowncol()
 getUnknowncol <- function() get("unknowncol", envir=.pRolocEnv)
 
-##' Returns the default point character for unknown features.
-##'
-##' @title Default point character for unknown features
+
+##' @param col A colour \code{character} or \code{NULL},
+##' which sets the colour to \code{#E7E7E7} (\code{grey91}),
+##' the default colour for unknown features.
+##' @return Invisibly returns \code{col}.
+##' @rdname getStockcol
+setUnknowncol <- function(col) {
+  if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
+  else assign("unknowncol", col, envir = .pRolocEnv)
+}
+
 ##' @return A \code{numeric} vector of length 1.
 ##' @rdname getStockcol
-##' @examples
-##' getUnknownpch()
 getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
+
+##' @param pch A \code{numeric} vector of length 1 or \code{NULL},
+##' which sets the point character to 21, the default.
+##' @return Invisibly returns \code{pch}.
+##' @rdname getStockcol
+setUnknownpch <- function(pch) {
+  if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
+  else assign("unknownpch", pch, envir = .pRolocEnv)
+}

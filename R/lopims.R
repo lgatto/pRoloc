@@ -76,9 +76,18 @@ refNormMeanOfNonNAPepSum <- function(x) {
   ## For each protein:
   ## (1) Find ref fraction with least amount of missing values
   ## (2) For each (frac_i, frac_ref), consider only peptides
-  ##     without missing values and
-  ##     calculate mean(sum(frac_i), sum(frac_ref))
-  ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
+  ##     without missing values, break ties using max(sum(int))
+  ## (3) Calculate mean(sum(frac_i), sum(frac_ref))
+  ref <- apply(x, 2, function(.x) sum(is.na(.x)))
+  idx <- which(ref == min(ref)) ## indices if min na columns 
+  if (length(idx) > 1) {
+    sms <- colSums(x, na.rm = TRUE)
+    ## index of max sum from the min na columns
+    jdx <- which.max(sms[idx]) 
+    ref <- idx[jdx]
+  } else {
+    ref <- which.min(ref)
+  }
   x <- as.matrix(x)
   .res <- rep(-1, ncol(x))
   for (i in 1:ncol(x)) {

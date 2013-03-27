@@ -7,19 +7,20 @@
 ## @param fcol : if exists, the name of the column in theDataSet corresponding to the labels
 ## @return resultSet : a dataset (matrix) and the labels (vector)
 separateDataSet <- function(theDataSet, fcol = NULL){
-  theData <- NULL
-  theLabels <- NULL
+  .theData <- NULL
+  .theLabels <- NULL
   
   if (is.null(fcol) == FALSE)
     {
-    theData <- theDataSet[,which(colnames(theDataSet) != fcol)]
-    theLabels <- theDataSet[,which(colnames(theDataSet) == fcol)]
+    ind <-which(colnames(theDataSet) != fcol)
+      .theData <- theDataSet[,ind]
+    .theLabels <- theDataSet[,-ind]
   }
   else{
-    theData <- theDataSet
+    .theData <- theDataSet
   }
   
-  return(list(theData = theData, theLabels = theLabels))
+  return(list(theData = .theData, theLabels = .theLabels))
 }
 
 

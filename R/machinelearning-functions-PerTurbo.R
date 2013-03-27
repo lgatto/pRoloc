@@ -126,8 +126,6 @@ perTurboOptimisation <- function(object,
         for (.sigma in sigma) {
           .model <- trainingPerTurbo(.train2Sep$theLabels, .train2Sep$theData, .sigma, .inv, .reg, .pRegul )
           ans <- testPerTurbo(.model, .test2Sep$theLabels, .test2Sep$theData)
-          
-          conf <- confusionMatrix(ans, .test2Sep$theLabels,)$table
           conf <- confusionMatrix(ans, .test2Sep$theLabels)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))

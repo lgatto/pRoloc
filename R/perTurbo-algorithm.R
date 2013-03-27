@@ -13,7 +13,7 @@ separateDataSet <- function(theDataSet, fcol = NULL){
   if (is.null(fcol) == FALSE)
     {
     ind <-which(colnames(theDataSet) != fcol)
-      .theData <- theDataSet[,ind]
+    .theData <- theDataSet[,ind]
     .theLabels <- theDataSet[,-ind]
   }
   else{

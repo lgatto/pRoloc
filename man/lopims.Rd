@@ -33,7 +33,7 @@
   \item{mfdr}{The master FDR value. Default is 0.025.}
 
   \item{...}{Additional paramters passed to
-  \code{\link{synergise}}.}
+  \code{\link[synapter]{synergise}}.}
 }
 \value{
   An instance of class \code{"\linkS4class{MSnSet}"} with
@@ -42,11 +42,11 @@
 }
 \description{
   The function processes MSe data using the
-  \code{\link{synergise}} function of the
-  \code{\link{synapter}} package and combines resulting
-  \code{\link{Synapter}} instances into one
-  \code{"\linkS4class{MSnSet}"} and organelle marker data
-  is added as a feature-level annotation variable.
+  \code{\link[synapter]{synergise}} function of the
+  \code{\link[synapter]{synapter}} package and combines
+  resulting \code{\link[synapter]{Synapter}} instances into
+  one \code{"\linkS4class{MSnSet}"} and organelle marker
+  data is added as a feature-level annotation variable.
 }
 \details{
   The \code{LOPIMS} pipeline is composed of 5 steps:
@@ -54,12 +54,12 @@
   to compute false discovery rates uppon all possible
   combinations of HDMSe final peptides files and the best
   combination smaller or equal to \code{mfdr} is chosen.
-  See \code{\link{estimateMasterFdr}} for details. The
-  corresponding master run is then created as descibed in
-  \code{\link{makeMaster}}.
+  See \code{\link[synapter]{estimateMasterFdr}} for
+  details. The corresponding master run is then created as
+  descibed in \code{\link[synapter]{makeMaster}}.
 
   \item Each MSe/pep3D pair is processed using the HDMSe
-  master file using \code{\link{synergise}}.
+  master file using \code{\link[synapter]{synergise}}.
 
   \item The respective peptide-level \code{synergise}
   output objects are converted and combined into an single

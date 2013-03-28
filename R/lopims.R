@@ -10,15 +10,20 @@
   master <- makeMaster(HDMSeFinalPeptideFiles[bestComb(cmb)],
                        verbose = TRUE)
   print(master)
-  return(master)
+  return(list(master = master,
+              cmb = cmb))
 }
 
 .lopims2 <- function(msedir, pep3ddir, fasta,
                      master, outdir,
                      ...) {
+  cmb <- master$cmb
+  master <- master$master
   ## master file
   masterfile <- file.path(outdir, "master.rds")
+  cmbfile <- file.path(outdir, "cmb.rds")
   saveRDS(master, file = masterfile)
+  save(cmb, file = cmbfile)
   ## mse files
   msefiles <- dir(msedir, full.names = TRUE)
   pep3dfiles <- dir(pep3ddir, full.names = TRUE)
@@ -249,7 +254,8 @@ lopims <- function(hdmsedir = "HDMSE",
   message("[LOPIMS  ] Results will be saved to ", mainoutputdir)  
   
   master <- .lopims1(hdmsedir, fastafile, mfdr)
-  res <- .lopims2(msedir, pep3ddir, fastafile, master,
+  res <- .lopims2(msedir, pep3ddir, fastafile,
+                  master,
                   mainoutputdir, ...)
   msn <- .lopims3(res)
   msn <- .lopims4(msn)

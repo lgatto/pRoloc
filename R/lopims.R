@@ -127,9 +127,9 @@ refNormMeanOfNonNAPepSum <- function(x) {
   addMarkers(x, markerfile, verbose = TRUE)
 }
 
-##' The function processes MSe data using the \code{\link{synergise}}
-##' function of the \code{\link{synapter}} package and combines resulting
-##' \code{\link{Synapter}} instances into one \code{"\linkS4class{MSnSet}"}
+##' The function processes MSe data using the \code{\link[synapter]{synergise}}
+##' function of the \code{\link[synapter]{synapter}} package and combines resulting
+##' \code{\link[synapter]{Synapter}} instances into one \code{"\linkS4class{MSnSet}"}
 ##' and organelle marker data is added as a feature-level annotation variable.
 ##' 
 ##' The \code{LOPIMS} pipeline is composed of 5 steps:
@@ -138,12 +138,12 @@ refNormMeanOfNonNAPepSum <- function(x) {
 ##' false discovery rates uppon all possible combinations of
 ##' HDMSe final peptides files and the best combination smaller
 ##' or equal to \code{mfdr} is chosen.
-##' See \code{\link{estimateMasterFdr}} for details.
+##' See \code{\link[synapter]{estimateMasterFdr}} for details.
 ##' The corresponding master run is then created as descibed in
-##' \code{\link{makeMaster}}.
+##' \code{\link[synapter]{makeMaster}}.
 ##' 
 ##' \item Each MSe/pep3D pair is processed using the HDMSe master
-##' file using \code{\link{synergise}}.
+##' file using \code{\link[synapter]{synergise}}.
 ##'
 ##' \item The respective peptide-level \code{synergise} output objects
 ##' are converted and combined into an single \code{"\linkS4class{MSnSet}"}
@@ -194,7 +194,7 @@ refNormMeanOfNonNAPepSum <- function(x) {
 ##' starting with \code{marker} in the current directory.
 ##' If several such files exist, the function reports an error.
 ##' @param mfdr The master FDR value. Default is 0.025.
-##' @param ... Additional paramters passed to \code{\link{synergise}}.
+##' @param ... Additional paramters passed to \code{\link[synapter]{synergise}}.
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with protein
 ##' level quantitation and respective organelle markers.
 ##' @author Laurent Gatto
@@ -204,7 +204,9 @@ lopims <- function(hdmsedir = "HDMSE",
                    fastafile,
                    markerfile,
                    mfdr = 0.025,
-                   ...) {
+                   ...) {  
+  library("synapter")
+  
   msg0 <-
     paste("\n ------------------------------------------------------------\n",
           "This free open-source software implements academic research. \n",

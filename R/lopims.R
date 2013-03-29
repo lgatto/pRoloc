@@ -228,8 +228,8 @@ lopims <- function(hdmsedir = "HDMSE",
           "------------------------------------------------------------\n\n")
   message(msg0)
   
-  version <- "0.1.0"
-  released <- "2013/03/22"  
+  version <- "0.1.1"
+  released <- "2013/03/29"  
   msg1 <- paste0("LOPIMS pipline version ", version, " (", released, "), using\n",
                  "synapter ", packageVersion("synapter"),
                  ", MSnbase ", packageVersion("MSnbase"), 
@@ -249,7 +249,8 @@ lopims <- function(hdmsedir = "HDMSE",
   stopifnot(file.exists(hdmsedir))
   stopifnot(file.exists(msedir))
   stopifnot(file.exists(pep3ddir))
-  mainoutputdir <- paste0("LOPIMS_pipeline_", gsub(" ", "_", date()))
+  mainoutputdir <- paste0("LOPIMS_pipeline_",
+                          format(Sys.time(), "%a_%b_%d_%H.%M.%S_%Y"))
   dir.create(mainoutputdir)
   message("[LOPIMS  ] Results will be saved to ", mainoutputdir)  
   

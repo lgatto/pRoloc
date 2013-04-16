@@ -19,8 +19,6 @@ importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
 exportClasses(GenRegRes)
-export(loopInTestStep)
-
 
 exportMethods(chi2,
               show,
@@ -57,7 +55,6 @@ export(getPredictions,
        nnetRegularisation, nnetOptimisation, nnetOptimization, 
        nnetPrediction, nnetClassification,
        perTurboOptimisation, perTurboOptimization, perTurboClassification, 
-       getOtherParams, 
        getRegularisedParams, getRegularizedParams,       
        rfRegularisation, rfOptimisation, rfOptimization, 
        rfPrediction, rfClassification, 

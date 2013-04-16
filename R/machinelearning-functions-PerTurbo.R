@@ -143,7 +143,10 @@ perTurboOptimisation <- function(object,
     .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     
-    .model <- trainingPerTurbo(.train1Sep$theLabels, .train1Sep$theData,sigma = .bestParams["sigma"], .inv, .reg, pRegul = .bestParams["pRegul"])
+    .model <- trainingPerTurbo(.train1Sep$theLabels,
+                               .train1Sep$theData,
+                               sigma = .bestParams["sigma"],
+                               .inv, .reg, pRegul = .bestParams["pRegul"])
     ans <- testPerTurbo(.model, .test2Sep$theLabels, .test2Sep$theData)
     
     conf <- confusionMatrix(ans, .test2Sep$theLabels)$table

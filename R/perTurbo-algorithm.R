@@ -10,13 +10,11 @@ separateDataSet <- function(theDataSet, fcol = NULL){
   .theData <- NULL
   .theLabels <- NULL
   
-  if (is.null(fcol) == FALSE)
-    {
+  if (is.null(fcol) == FALSE) {
     ind <-which(colnames(theDataSet) != fcol)
     .theData <- theDataSet[,ind]
     .theLabels <- theDataSet[,-ind]
-  }
-  else{
+  } else {
     .theData <- theDataSet
   }
   
@@ -157,8 +155,7 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
   #browser()
   setOfAllPerturbations <- matrix(rep(0, trainingResults$nbLabel * testSet$nbInd),
                                   ncol = trainingResults$nbLabel)
-	if (loop =="LOOP_R")
-  {
+  if (loop =="LOOP_R") {
     for (iClass in 1:trainingResults$nbLabel) {
       ## We begin with the class that have the smaller sigma value
       i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
@@ -170,8 +167,7 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
       }
     } 
     
-  }
-  else if  (loop =="MATRIX_R"){
+  } else if  (loop =="MATRIX_R"){
     for (iClass in 1:trainingResults$nbLabel) {
       ## We begin with the class that have the smaller sigma value
       i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
@@ -184,8 +180,7 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
        setOfAllPerturbations[, iClass] <-
           diag(t(kTestPoints) %*% trainingResults$listOfLearnedModels[[i]] %*% kTestPoints)
       }
-  }
-  else if (loop =="LOOP_CXX"){
+  } else if (loop =="LOOP_CXX"){
     for (iClass in 1:trainingResults$nbLabel) {
       ## We begin with the class that have the smaller sigma value
       i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
@@ -197,12 +192,10 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
       ## Here, we record only the 'p' value in order to have one operation less
       ## and each sample will be associated to the class with the bigger perturbation value
       setOfAllPerturbations[, iClass] <- loopInTestStep(kTestPoints,trainingResults$listOfLearnedModels[[i]],testSet$nbInd)
-          }
-  }
-  else if (loop =="BLOCKS_R"){
+    }
+  } else if (loop =="BLOCKS_R"){
     if (nbBlocks > testSet$nbInd){
-      print ("The number of decomposition blocks must be greater or equal to the number of individuals in the dataset.")
-      stop()
+      stop("The number of decomposition blocks must be greater or equal to the number of individuals in the dataset.")
     }
     
     for (iClass in 1:trainingResults$nbLabel) {
@@ -214,22 +207,21 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
       sizeBlock <- ceiling(testSet$nbInd /nbBlocks)
     
       for (k in 1:nbBlocks){
-        if (k == nbBlocks){
+        if (k == nbBlocks) {
           rangeblock <- seq(from = (k-1)*sizeBlock + 1, to = testSet$nbInd)
-          }else{
-        rangeblock <- seq(from = (k-1)*sizeBlock + 1, to = k*sizeBlock)
-          }
+        } else {
+          rangeblock <- seq(from = (k-1)*sizeBlock + 1, to = k*sizeBlock)
+        }
         #utile pour reformer une matrice avec les dimensions compatibles avec trainingResults$trExPerCl[[i]]
         #sinon, testSet$var[rangeblock,] renvoie un vecteur-colonne
-        if (length(rangeblock) == 1)
-          {
+        if (length(rangeblock) == 1) {
           kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], as.matrix(t(testSet$var[rangeblock,])))
-          }else{
+        } else {
           kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var[rangeblock,])
-          }
-         
-        setOfAllPerturbations[rangeblock,iClass] <- diag(t(kTestPoints) %*% trainingResults$listOfLearnedModels[[i]] %*% kTestPoints);
-        }
+        }        
+        setOfAllPerturbations[rangeblock,iClass] <-
+          diag(t(kTestPoints) %*% trainingResults$listOfLearnedModels[[i]] %*% kTestPoints);
+      }
     }
   }
  
@@ -345,14 +337,16 @@ trainingStep <- function(theLearningSet, pSigma, inv, reg, pRegul) {
 ##      - trainingResults@trExPerCl: list of points per class
 ##    	- trainingResults@listOfSigma: list of Sigma used for each class
 ## @author Thomas Burger, xxxxxx
-trainingPerTurbo <- function(markers, train2, sigma , inv, reg, pRegul, scaled=FALSE) {
-  
+trainingPerTurbo <- function(markers, train2,
+                             sigma , inv, reg, pRegul,
+                             scaled = FALSE) {  
   learningSet <- constructDataSet(train2, markers)
- if (scaled == TRUE) {
-    learningSet$var <- scale.default(learningSet$var,
-                       center = apply(learningSet$var, 2, min),
-                       scale = apply(learningSet$var, 2, max, na.rm = TRUE) - apply(learningSet$var, 2, min, na.rm = TRUE))
-    }
+  if (scaled) {
+    learningSet$var <-
+      scale.default(learningSet$var,
+                    center = apply(learningSet$var, 2, min),
+                    scale = apply(learningSet$var, 2, max, na.rm = TRUE) - apply(learningSet$var, 2, min, na.rm = TRUE))
+  }
   
   ## Training with fixed sigma or a sigma given by the user
   if (sigma == "AUTO") {
@@ -393,3 +387,18 @@ predictionPerTurbo <- function(trModel, markers, preTestSet) {
   TestResult <- testStep(testSet, trModel)
   return(TestResult)
 }
+
+# Calculus of the perturbations for one label and for each individuals
+# Called from testStep function
+# 
+# @title loopInTestStep
+# @param A a matrix
+# @param B the kernel matrix
+# @param ind an integer that corresponds to the number of individuals in the testSet
+# @return a column-vector that corresponds to the perturbation for each of 
+#         the 'ind' individuals
+# @author Samuel Wieczorek
+# 
+loopInTestStep <- function (A, B, ind) 
+  .Call("C_setOfOnePerturbation", A, B, ind, PACKAGE = "pRoloc")
+

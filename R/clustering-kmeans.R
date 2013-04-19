@@ -71,8 +71,7 @@ kmeansOptimization <-
   kmeansOptimisation
 
 setMethod("kmeansOptimisation",
-          signature(object = "MSnSet",
-                    model = "missing"),
+          signature(object = "MSnSet"), 
           function(object, k = 1:20, ...) {
             x <- lapply(k, .optim, exprs(object), ...)
             .criteria <- names(x[[1]])

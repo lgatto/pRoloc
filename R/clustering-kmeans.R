@@ -57,18 +57,20 @@ setMethod("kmeansClustering",
           signature(object = "MSnSet",
                     params = "ClustRegRes"), 
           function(object, params, criterion = "BIC"){
-            k <- getParams(params, criterion)            
-            cl <- kmeans(exprs(object),
-                         centers = getParams(params, criterion),
-                         as.pairlist(params@algoparams))
+            k <- getParams(params, criterion)
+            if (length(params@algoparams) == 0) {
+              cl <- kmeans(exprs(object),
+                           centers = getParams(params, criterion))
+            } else {
+              cl <- kmeans(exprs(object),
+                           centers = getParams(params, criterion),
+                           as.pairlist(params@algoparams))
+            }
             fData(object)$kmeans <- cl$cluster
             if (validObject(object))
               return(object)
           })
 
-
-kmeansOptimization <-
-  kmeansOptimisation
 
 setMethod("kmeansOptimisation",
           signature(object = "MSnSet"), 

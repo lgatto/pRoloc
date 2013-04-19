@@ -338,10 +338,11 @@ trainingPerTurbo <- function(markers, train2,
                              sigma , inv, reg, pRegul,
                              scaled = FALSE) {  
   learningSet <- constructDataSet(train2, markers)
+  ## only for internal devel
   if (scaled) {
     learningSet$var <-
       scale.default(learningSet$var,
-                    center = apply(learningSet$var, 2, min),
+                    center = apply(learningSet$var, 2, min), ## mean
                     scale = apply(learningSet$var, 2, max, na.rm = TRUE) - apply(learningSet$var, 2, min, na.rm = TRUE))
   }
   

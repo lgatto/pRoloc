@@ -71,7 +71,8 @@ kmeansOptimization <-
   kmeansOptimisation
 
 setMethod("kmeansOptimisation",
-          signature(object = "MSnSet"),
+          signature(object = "MSnSet",
+                    model = "missing"),
           function(object, k = 1:20, ...) {
             x <- lapply(k, .optim, exprs(object), ...)
             .criteria <- names(x[[1]])
@@ -87,11 +88,15 @@ setMethod("kmeansOptimisation",
               return(ans)
           })
 
+## - compare/contrast 2 clusters - could be 2 fcols
+## - estimate parameters - use 1 fcol
+
+## setGeneric("kmeansOptimisation",
+##             function(object, fcol, ...) standardGeneric("kmeansOptimisation"))
 ## setMethod("kmeansOptimisation",
-##           signature(object = "MSnSet"),
-##           function(object, fcol, cl, ...) {
-##             if (missing(cl))
-##               cl <- kmeansClustering(object, ...)
+##           signature(object = "MSnSet",
+##                     fcol = "character"),
+##           function(object, model, ...) {
 ##             ## compare results of cl and fData(object)[, fcol]
 ##             return(NULL)
 ##           })

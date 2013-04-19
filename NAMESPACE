@@ -19,8 +19,8 @@ importFrom(e1071, svm, naiveBayes)
 importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
-exportClasses(GenRegRes)
-##              ClustRegRes)
+exportClasses(GenRegRes,
+              ClustRegRes)
 
 exportMethods(chi2,
               show,
@@ -31,10 +31,10 @@ exportMethods(chi2,
               getF1Scores,
               f1Count,
               levelPlot,
-              plot)
+              plot,
               ## clustering
-##              kmeansClustering,
-##              kmeansOptimisation, kmeansOptimization)
+              kmeansClustering,
+              kmeansOptimisation, kmeansOptimization)
 
 export(getPredictions,
        getMarkers,

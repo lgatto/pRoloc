@@ -198,7 +198,7 @@ addMarkers <- function(object, markerfile, verbose = TRUE) {
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
-##' data(dunkley)
+##' data(dunkley2006)
 ##' mrk <- markerSet(dunkley2006)
 ##' dim(dunkley2006)
 ##' dim(mrk)

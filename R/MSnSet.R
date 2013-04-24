@@ -206,7 +206,7 @@ addMarkers <- function(object, markerfile, verbose = TRUE) {
 ##' table(fData(mrk)$markers)
 markerSet <- function(object, fcol = "markers") {
   mrk <- fData(object)[, fcol]
-  object <- object[mrk != "markers", ]
+  object <- object[mrk != "unknown", ]
   ## drop "unknown" level
   fData(object)[, fcol] <- factor(fData(object)[, fcol])
   if (validObject(object))

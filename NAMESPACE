@@ -36,11 +36,13 @@ exportMethods(chi2,
               kmeansClustering,
               kmeansOptimisation, kmeansOptimization)
 
-export(getPredictions,
+export(## MSnSet manipulation
+       markerSet,
+       getPredictions,
        getMarkers,
        minClassScore,
        minMarkers,
-       addMarkers,
+       addMarkers,       
        empPvalues,
        getStockcol, getStockpch,
        setStockcol, setStockpch,

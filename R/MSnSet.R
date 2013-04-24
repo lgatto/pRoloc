@@ -183,3 +183,33 @@ addMarkers <- function(object, markerfile, verbose = TRUE) {
     return(object)
   }  
 }
+
+##' This function extracts the marker proteins into a new
+##' \code{MSnSet}. 
+##' 
+##' @title Extract marker subset
+##' @param object An instance of class \code{MSnSet}
+##' @param fcol The name of the feature data column, that
+##' will be used to separate the markers from the proteins
+##' of unknown localisation (with
+##' \code{fData(object)[, fcol] == "unknown")}).
+##' Default is to use \code{"markers"}.
+##' @return An new \code{MSnSet} with marker proteins only.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley)
+##' mrk <- markerSet(dunkley2006)
+##' dim(dunkley2006)
+##' dim(mrk)
+##' table(fData(dunkley2006)$markers)
+##' table(fData(mrk)$markers)
+markerSet <- function(object, fcol = "markers") {
+  mrk <- fData(object)[, fcol]
+  sel <- mrk != "markers"
+  object[sel, ]
+  ## drop "unknown" level
+  fData(object)[, fcol] <- factor(fData(object)[, fcol])
+  if (validObject(object))
+    return(object)
+}

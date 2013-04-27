@@ -6,6 +6,7 @@ CHANGES IN VERSION 1.1.1
  o perTurbo using Rcpp <2013-04-16 Tue>
  o initial clustering infrastructure <2013-04-17 Wed>
  o new markerSet function <2013-04-24 Wed>
+ o plsaOptim's ncomp is now 2:6 <2013-04-27 Sat>
 
 CHANGES IN VERSION 1.1.0
 ------------------------

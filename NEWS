@@ -7,6 +7,7 @@ CHANGES IN VERSION 1.1.1
  o initial clustering infrastructure <2013-04-17 Wed>
  o new markerSet function <2013-04-24 Wed>
  o plsaOptim's ncomp is now 2:6 <2013-04-27 Sat>
+ o added forword to vignette <2013-04-29 Mon>
 
 CHANGES IN VERSION 1.1.0
 ------------------------

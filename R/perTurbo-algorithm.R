@@ -1,23 +1,44 @@
+## Separator for datasets
+##
+## @title separateDataSet
+## @param theDataSet: the table (item x variables)
+## @param fcol : if exists, the name of the column in theDataSet corresponding to the labels
+## @return resultSet : a dataset (matrix) and the labels (vector)
+separateDataSet <- function(theDataSet, fcol = NULL){
+  .theData <- .theLabels <- NULL
+  
+  if (!is.null(fcol)) {
+    ind <-which(colnames(theDataSet) != fcol)
+    .theData <- theDataSet[,ind]
+    .theLabels <- theDataSet[,-ind]
+  } else {
+    .theData <- theDataSet
+  }
+  
+  return(list(theData = .theData, theLabels = .theLabels))
+}
+
 ## Constructor for datasets
-## 
+##
 ## @title constructDataSet
 ## @param theDataSet: the table (item x variables)
 ## @param theLabel (optional) : the label corresponding to items
 ## @return resultSet : a dataset
 constructDataSet <- function(theDataSet, theLabel = NULL){
-  ncol <- dim(theDataSet)[2]
-  nrow <- dim(theDataSet)[1]
+  nCol <- dim(theDataSet)[2]
+  nRow <- dim(theDataSet)[1]
+  theDataSet <- matrix(unlist(theDataSet), ncol=nCol, byrow=FALSE)
+  
   resultSet <- NULL;
-  resultSet$var <- as.matrix(theDataSet[,1:(ncol-1)]);
-  resultSet$nbInd <- nrow;
-  if (is.null(theLabel)==F){
-    resultSet$label <- theLabel 
+  resultSet$var <- theDataSet;
+  resultSet$nbInd <- nRow;
+  if (!is.null(theLabel)){
+    resultSet$label <- theLabel
     resultSet$liLabel <- unique(resultSet$label);
-    resultSet$nbLabel <- length(resultSet$liLabel); 
+    resultSet$nbLabel <- length(resultSet$liLabel);
   }
-  return(resultSet);	
+  return(resultSet);
 }
- 
 
 
 ## Control the validity of the matrix inversion method 
@@ -120,28 +141,87 @@ learnOneClass <- function(oneClassLearningSet, pSigma, inv, reg, pRegul) {
 ## @title testStep
 ## @param testSet: a dataset structure
 ## @param trainingResults: a structure such as provided by trainingStep(), that contains K^{-1}
+## @param loop: a string that indicates the type of implementation for the loop
+## Available values are :'LOOP_R', 'MATRIX_R', 'LOOP_CXX' and 'BLOCKS_R'. Default is 'LOOP_CXX'
+## @param nbBlocks: number of blocks of data to decompose the calculus in the BLOCKS_R implementation
 ## @return setOfAllPerturbations: the "distance" of each point x to each class
-## @author Thomas Burger, xxxxxx
-testStep <- function(testSet, trainingResults) {
+## @author Thomas Burger, Laetitia Chapel, Samuel Wieczorek
+testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) {
+  #browser()
   setOfAllPerturbations <- matrix(rep(0, trainingResults$nbLabel * testSet$nbInd),
                                   ncol = trainingResults$nbLabel)
-	
-  for (iClass in 1:trainingResults$nbLabel) {
-    ## We begin with the class that have the smaller sigma value
-    i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
-    rbfkernel <- rbfdot(1/trainingResults$listOfSigma[iClass]^2)
+  if (loop =="LOOP_R") {
+    for (iClass in 1:trainingResults$nbLabel) {
+      ## We begin with the class that have the smaller sigma value
+      i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
+      rbfkernel <- rbfdot(1/trainingResults$listOfSigma[i]^2)
+      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);  	 
+      for (k in 1:testSet$nbInd){
+        setOfAllPerturbations[k, iClass] <-
+          t(kTestPoints[,k]) %*% trainingResults$listOfLearnedModels[[i]] %*% (kTestPoints[,k])
+      }
+    } 
     
-    kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);		 
-    ## In the perTurbo paper [ref], the perturbation is calculated as 1-p
-    ## and each sample is associated to the class with the least perturbation
-    ## Here, we record only the 'p' value in order to have one operation less
-    ## and each sample will be associated to the class with the bigger perturbation value
-		      
-    for (k in 1:testSet$nbInd){
-      setOfAllPerturbations[k, iClass] <-
-        t(kTestPoints[,k]) %*% trainingResults$listOfLearnedModels[[i]] %*% (kTestPoints[,k])
+  } else if  (loop =="MATRIX_R"){
+    for (iClass in 1:trainingResults$nbLabel) {
+      ## We begin with the class that have the smaller sigma value
+      i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
+      rbfkernel <- rbfdot(1/trainingResults$listOfSigma[i ]^2)
+      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);     
+      ## In the perTurbo paper [ref], the perturbation is calculated as 1-p
+      ## and each sample is associated to the class with the least perturbation
+      ## Here, we record only the 'p' value in order to have one operation less
+      ## and each sample will be associated to the class with the bigger perturbation value
+       setOfAllPerturbations[, iClass] <-
+          diag(t(kTestPoints) %*% trainingResults$listOfLearnedModels[[i]] %*% kTestPoints)
+      }
+  } else if (loop =="LOOP_CXX"){
+    for (iClass in 1:trainingResults$nbLabel) {
+      ## We begin with the class that have the smaller sigma value
+      i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
+      rbfkernel <- rbfdot(1/trainingResults$listOfSigma[i]^2)
+      
+      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);  	 
+      ## In the perTurbo paper [ref], the perturbation is calculated as 1-p
+      ## and each sample is associated to the class with the least perturbation
+      ## Here, we record only the 'p' value in order to have one operation less
+      ## and each sample will be associated to the class with the bigger perturbation value
+      setOfAllPerturbations[, iClass] <- loopInTestStep(kTestPoints,
+                                                        trainingResults$listOfLearnedModels[[i]],
+                                                        testSet$nbInd)
+    }
+  } else if (loop =="BLOCKS_R"){
+    if (nbBlocks > testSet$nbInd){
+      stop("The number of decomposition blocks must be greater or equal to the number of individuals in the dataset.")
+    }
+    
+    for (iClass in 1:trainingResults$nbLabel) {
+      ## We begin with the class that have the smaller sigma value
+      i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
+      rbfkernel <- rbfdot(1/trainingResults$listOfSigma[i]^2)
+      
+      #nbBlocks <- 3
+      sizeBlock <- ceiling(testSet$nbInd /nbBlocks)
+    
+      for (k in 1:nbBlocks){
+        if (k == nbBlocks) {
+          rangeblock <- seq(from = (k-1)*sizeBlock + 1, to = testSet$nbInd)
+        } else {
+          rangeblock <- seq(from = (k-1)*sizeBlock + 1, to = k*sizeBlock)
+        }
+        #utile pour reformer une matrice avec les dimensions compatibles avec trainingResults$trExPerCl[[i]]
+        #sinon, testSet$var[rangeblock,] renvoie un vecteur-colonne
+        if (length(rangeblock) == 1) {
+          kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], as.matrix(t(testSet$var[rangeblock,])))
+        } else {
+          kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var[rangeblock,])
+        }        
+        setOfAllPerturbations[rangeblock,iClass] <-
+          diag(t(kTestPoints) %*% trainingResults$listOfLearnedModels[[i]] %*% kTestPoints);
+      }
     }
   }
+ 
   return(setOfAllPerturbations)
 }
 
@@ -254,11 +334,16 @@ trainingStep <- function(theLearningSet, pSigma, inv, reg, pRegul) {
 ##      - trainingResults@trExPerCl: list of points per class
 ##    	- trainingResults@listOfSigma: list of Sigma used for each class
 ## @author Thomas Burger, xxxxxx
-trainingPerTurbo <- function(markers, train2, sigma , inv, reg, pRegul) {
-  ## learningSet <- scale.default(learningSet$var,
-  ##                              center = apply(learningSet$var, 2, min),
-  ##                              scale = apply(learningSet$var, 2, max, na.rm = TRUE) - apply(learningSet$var, 2, min, na.rm = TRUE))
+trainingPerTurbo <- function(markers, train2,
+                             sigma , inv, reg, pRegul,
+                             scaled = FALSE) {  
   learningSet <- constructDataSet(train2, markers)
+  if (scaled) {
+    learningSet$var <-
+      scale.default(learningSet$var,
+                    center = apply(learningSet$var, 2, min),
+                    scale = apply(learningSet$var, 2, max, na.rm = TRUE) - apply(learningSet$var, 2, min, na.rm = TRUE))
+  }
   
   ## Training with fixed sigma or a sigma given by the user
   if (sigma == "AUTO") {
@@ -280,7 +365,7 @@ trainingPerTurbo <- function(markers, train2, sigma , inv, reg, pRegul) {
 ## @author Thomas Burger, xxxxxx
 testPerTurbo <- function(trModel, markers, testSet) {
   testSet <- constructDataSet(testSet, markers)
-  TestResult <- testStep(testSet, trModel)
+  TestResult <- testStep(testSet, trModel, loop="LOOP_R")
   ListOfEstimatedClasses <- testSet$liLabel[apply(TestResult, 1, which.max)]
   return(ListOfEstimatedClasses)
 }
@@ -299,3 +384,18 @@ predictionPerTurbo <- function(trModel, markers, preTestSet) {
   TestResult <- testStep(testSet, trModel)
   return(TestResult)
 }
+
+# Calculus of the perturbations for one label and for each individuals
+# Called from testStep function
+# 
+# @title loopInTestStep
+# @param A a matrix
+# @param B the kernel matrix
+# @param ind an integer that corresponds to the number of individuals in the testSet
+# @return a column-vector that corresponds to the perturbation for each of 
+#         the 'ind' individuals
+# @author Samuel Wieczorek
+# 
+loopInTestStep <- function (A, B, ind) 
+  .Call("C_setOfOnePerturbation", A, B, ind, PACKAGE = "pRoloc")
+

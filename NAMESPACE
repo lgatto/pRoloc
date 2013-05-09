@@ -1,3 +1,5 @@
+useDynLib(pRoloc)
+
 import(lattice)
 import(BiocGenerics)
 import(mclust)
@@ -57,8 +59,8 @@ export(getPredictions,
        nbPrediction, nbClassification, 
        nnetRegularisation, nnetOptimisation, nnetOptimization, 
        nnetPrediction, nnetClassification,
-       perTurboOptimisation, perTurboOptimization, perTurboClassification, 
-       getParams, 
+       perTurboOptimisation, perTurboOptimization, perTurboClassification,
+       getParams,
        getRegularisedParams, getRegularizedParams,       
        rfRegularisation, rfOptimisation, rfOptimization, 
        rfPrediction, rfClassification, 

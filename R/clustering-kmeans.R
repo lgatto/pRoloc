@@ -76,10 +76,10 @@ setMethod("kmeansOptimisation",
             sapply(1:20, .optim, object, ...)
           })
 
-setMethod("kmeansOptimisation",
-          signature(object = "MSnSet"),
-          function(object, cl, cl0, ...) {
-            if (missing(cl0))
-              cl0 <- kmeansClustering(object, ...)
-            ## compare cl and cl0
-          })
+## setMethod("kmeansOptimisation",
+##           signature(object = "MSnSet"),
+##           function(object, cl, cl0, ...) {
+##             if (missing(cl0))
+##               cl0 <- kmeansClustering(object, ...)
+##             ## compare cl and cl0
+##           })

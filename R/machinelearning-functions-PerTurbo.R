@@ -97,7 +97,11 @@ perTurboOptimisation <- function(object,
     .test1   <- mydata[ test.idx, ] ## 'unseen' test set
     .train1  <- mydata[-test.idx, ] ## to be used for parameter optimisation
     
-    xfolds <- createFolds(.train1$markers, xval, returnTrain = TRUE)
+    .train1Sep <- separateDataSet(.train1, fcol)
+    .test1Sep <- separateDataSet(.test1, fcol)
+    
+    
+    xfolds <- createFolds(.train1Sep$theLabels, xval, returnTrain = TRUE)
     ## stores the xval F1 matrices
     .matrixF1L <- vector("list", length = xval)  
     
@@ -109,16 +113,18 @@ perTurboOptimisation <- function(object,
       .train2 <- .train1[ xfolds[[.xval]], ]
       .test2  <- .train1[-xfolds[[.xval]], ]    
       
+      .train2Sep <- separateDataSet(.train2, fcol)
+      .test2Sep <- separateDataSet(.test2, fcol)
+      
       ## The second argument in makeF1matrix will be
       ## used as rows, the first one for columns
       .matrixF1 <- makeF1matrix(list(pRegul = pRegul, sigma = sigma))
       ## grid search for parameter selection
       for (.pRegul in pRegul) {
-        for (.sigma in sigma) {          
-          .model <- trainingPerTurbo(.train2$markers, .train2, .sigma, .inv, .reg, .pRegul )
-          ans <- testPerTurbo(.model, .test2$markers, .test2)
-          
-          conf <- confusionMatrix(ans, .test2$markers)$table
+        for (.sigma in sigma) {
+          .model <- trainingPerTurbo(.train2Sep$theLabels, .train2Sep$theData, .sigma, .inv, .reg, .pRegul )
+          ans <- testPerTurbo(.model, .test2Sep$theLabels, .test2Sep$theData)
+          conf <- confusionMatrix(ans, .test2Sep$theLabels)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))
           .f1 <- MLInterfaces:::.macroF1(.p, .r)
@@ -134,13 +140,14 @@ perTurboOptimisation <- function(object,
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
     .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
-    .model <- trainingPerTurbo(.train1$markers, .train1,
-                               sigma = .bestParams["sigma"],
-                               .inv, .reg,
-                               pRegul = .bestParams["pRegul"])
-    ans <- testPerTurbo(.model, .test1$markers, .test1)
     
-    .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table
+    .model <- trainingPerTurbo(.train1Sep$theLabels,
+                               .train1Sep$theData,
+                               sigma = .bestParams["sigma"],
+                               .inv, .reg, pRegul = .bestParams["pRegul"])
+    ans <- testPerTurbo(.model, .test2Sep$theLabels, .test2Sep$theData)
+    
+    conf <- confusionMatrix(ans, .test2Sep$theLabels)$table
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
@@ -154,8 +161,10 @@ perTurboOptimisation <- function(object,
   }
   
   .hyperparams <- list(pRegul = pRegul,
-                       sigma = sigma)  
+                       sigma = sigma)    
   .hyperparams$other <- c("inv" = inv, "reg" = reg)
+  ## .hyperparams should probably also store inv and reg.
+  
   .design <- c(xval = xval,
                test.size = test.size,
                times = times)
@@ -278,6 +287,7 @@ perTurboClassification <- function(object,
       stop("No 'pRegul' found.")
     if (is.na(params["sigma"]))
       stop("No 'sigma' found.")
+
     ## Here, we assume correct parameters are passed,
     ## and do not call controlParameters, as they
     ## have been explicitly tested in perTurboOptimisation
@@ -288,6 +298,7 @@ perTurboClassification <- function(object,
       stop("No 'reg' found.")
     .inv <- otherParams["inv"]
     .reg <- otherParams["reg"]
+
   }
   
   trainInd <- which(fData(object)[, fcol] != "unknown")
@@ -295,20 +306,24 @@ perTurboClassification <- function(object,
   trainSet <- subsetAsDataFrame(object, fcol, train = TRUE)
   testSet <- subsetAsDataFrame(object, fcol, train = FALSE)
   
-  .model <- trainingPerTurbo(trainSet$markers, trainSet,
+  .trainSep <- separateDataSet(trainSet, fcol)
+  .testSep <- separateDataSet(testSet, fcol)
+  
+  
+  .model <- trainingPerTurbo(.trainSep$theLabels, .trainSep$theData,
                              params["sigma"],
                              .inv,
                              .reg,
                              params["pRegul"])
-  ans <- predictionPerTurbo(.model, testSet$markers, testSet)
+  ans <- predictionPerTurbo(.model, .testSep$theLabels, .testSep$theData)
   
   temp <- rep("", length(trainInd) + length(testInd))
   ## Add known labels (i.e. training data)
   i <- 1:length(trainInd)
-  temp[trainInd[i]] <- as.character(trainSet$markers[i])
+  temp[trainInd[i]] <- as.character(.trainSep$theLabels[i])
   
   ## Add predicted labels
-  labels <- levels(trainSet$markers)
+  labels <- levels(.trainSep$theLabels)
   predictedLabels <- labels[apply(ans, 1, which.max)]
   i <- 1:length(testInd)
   temp[testInd[i]] <- as.character(predictedLabels[i])
@@ -316,7 +331,7 @@ perTurboClassification <- function(object,
   
   ## Would be better to check if these columns exist
   if (scores == "all") {
-    nbLabels <- length(levels(trainSet$markers))
+    nbLabels <- length(levels(.trainSep$theLabels))
     tempScores <- matrix(rep(0, nbLabels*(length(trainInd)+length(testInd))),
                          ncol = nbLabels)
     
@@ -327,13 +342,13 @@ perTurboClassification <- function(object,
     i <- 1:length(testInd)
     tempScores[testInd[i],] <- ans[i,]
     
-    colnames(tempScores) <- levels(trainSet$markers)
+    colnames(tempScores) <- levels(.trainSep$theLabels)
     scoreMat <- tempScores
     colnames(scoreMat) <- paste0(colnames(scoreMat),
                                  ".perTurbo.scores")
     fData(object) <- cbind(fData(object), scoreMat)
   } else if (scores == "prediction") {
-    nbLabels <- length(levels(trainSet$markers))
+    nbLabels <- length(levels(.trainSep$theLabels))
     tempScores <- rep(0,length(trainInd) + length(testInd))
     
     ## Add scores of training data

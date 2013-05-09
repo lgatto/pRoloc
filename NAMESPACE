@@ -63,6 +63,8 @@ export(getPredictions,
        rfRegularisation, rfOptimisation, rfOptimization, 
        rfPrediction, rfClassification, 
        phenoDisco,
-       makeNaData, makeNaData2, whichNA
+       makeNaData, makeNaData2, whichNA,
+       ## -- pipelines
+       lopims
        )
 

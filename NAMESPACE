@@ -20,7 +20,7 @@ importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
 exportClasses(GenRegRes)
-##              ClustRegRes)
+              ## ClustRegRes)
 
 exportMethods(chi2,
               show,
@@ -32,15 +32,17 @@ exportMethods(chi2,
               f1Count,
               levelPlot,
               plot)
-              ## clustering
-##              kmeansClustering,
-##              kmeansOptimisation, kmeansOptimization)
+              ## ## clustering
+              ## kmeansClustering,
+              ## kmeansOptimisation, kmeansOptimization)
 
-export(getPredictions,
+export(## MSnSet manipulation
+       markerSet,
+       getPredictions,
        getMarkers,
        minClassScore,
        minMarkers,
-       addMarkers,
+       addMarkers,       
        empPvalues,
        getStockcol, getStockpch,
        setStockcol, setStockpch,

@@ -4,9 +4,9 @@
 \alias{knnRegularisation}
 \title{knn parameter optimisation}
 \usage{
-  knnOptimisation(object, fcol = "markers", k = 3:12,
-    times = 100, test.size = 0.2, xval = 5, fun = mean,
-    seed, verbose = TRUE, ...)
+  knnOptimisation(object, fcol = "markers",
+    k = seq(3, 15, 2), times = 100, test.size = 0.2,
+    xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -16,7 +16,7 @@
   definitions. Default is \code{markers}.}
 
   \item{k}{The hyper-parameter. Default values are
-  \code{3:12}.}
+  \code{seq(3, 15, 2)}.}
 
   \item{times}{The number of times internal
   cross-validation is performed. Default is 100.}

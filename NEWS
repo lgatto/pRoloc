@@ -4,7 +4,11 @@ CHANGES IN VERSION 1.1.1
    and biocLite installation <2013-04-07 Sun>
  o new MSe pipeline <2013-04-07 Sun>
  o perTurbo using Rcpp <2013-04-16 Tue>
- o initial clustering infrastructure <2013-04-17 Wed>
+ o initial clustering infrastructure (not exported) <2013-04-17 Wed>
+ o new markerSet function <2013-04-24 Wed>
+ o plsaOptim's ncomp is now 2:6 <2013-04-27 Sat>
+ o added forword to vignette <2013-04-29 Mon>
+ o default k is now seq(3, 15, 2) in knnOptim. <2013-05-09 Thu>
 
 CHANGES IN VERSION 1.1.0
 ------------------------

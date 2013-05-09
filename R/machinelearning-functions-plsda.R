@@ -5,7 +5,7 @@
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
-##' @param ncomp The hyper-parameter. Default values are \code{1:6}.
+##' @param ncomp The hyper-parameter. Default values are \code{2:6}.
 ##' @param times The number of times internal cross-validation is performed.
 ##' Default is 100.
 ##' @param test.size The size of test data. Default is 0.2 (20 percent).
@@ -20,7 +20,7 @@
 ##' @author Laurent Gatto
 plsdaOptimisation <- function(object,
                               fcol = "markers",
-                              ncomp = 1:6,
+                              ncomp = 2:6,
                               times = 100,
                               test.size = .2,
                               xval = 5,                               

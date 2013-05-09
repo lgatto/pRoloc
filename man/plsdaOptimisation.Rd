@@ -4,7 +4,7 @@
 \alias{plsdaRegularisation}
 \title{plsda parameter optimisation}
 \usage{
-  plsdaOptimisation(object, fcol = "markers", ncomp = 1:6,
+  plsdaOptimisation(object, fcol = "markers", ncomp = 2:6,
     times = 100, test.size = 0.2, xval = 5, fun = mean,
     seed, verbose = TRUE, ...)
 }
@@ -16,7 +16,7 @@
   definitions. Default is \code{markers}.}
 
   \item{ncomp}{The hyper-parameter. Default values are
-  \code{1:6}.}
+  \code{2:6}.}
 
   \item{times}{The number of times internal
   cross-validation is performed. Default is 100.}

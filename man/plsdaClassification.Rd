@@ -52,7 +52,7 @@ levelPlot(params)
 getParams(params)
 res <- plsdaClassification(dunkley2006, params)
 getPredictions(res, fcol = "plsda")
-getPredictions(res, fcol = "plsda", t = 0.75)
+getPredictions(res, fcol = "plsda", t = 0.9)
 plot2D(res, fcol = "plsda")
 }
 }

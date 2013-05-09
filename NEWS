@@ -4,6 +4,7 @@ CHANGES IN VERSION 1.1.1
    in stable release and biocLite installation 
    <2013-04-07 Sun>
  o new MSe pipeline <2013-04-07 Sun>
+ o perTurbo using Rcpp <2013-04-16 Tue>
 
 CHANGES IN VERSION 1.1.0
 ------------------------

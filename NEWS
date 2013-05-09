@@ -1,10 +1,10 @@
 CHANGES IN VERSION 1.1.1
 ------------------------
- o Update README.md to reflect availability 
-   in stable release and biocLite installation 
-   <2013-04-07 Sun>
+ o Update README.md to reflect availability in stable release 
+   and biocLite installation <2013-04-07 Sun>
  o new MSe pipeline <2013-04-07 Sun>
  o perTurbo using Rcpp <2013-04-16 Tue>
+ o initial clustering infrastructure <2013-04-17 Wed>
 
 CHANGES IN VERSION 1.1.0
 ------------------------

@@ -11,4 +11,7 @@ setGeneric("f1Count", function(object, ...) standardGeneric("f1Count"))
 
 setGeneric("chi2",function(x,y,...) standardGeneric("chi2"))
 
-setGeneric("consensusPrediction",function(object,...) standardGeneric("consensusPrediction"))
+## clustering
+setGeneric("kmeansOptimisation", function(object, ...) standardGeneric("kmeansOptimisation"))
+setGeneric("kmeansOptimiztion", function(object, ...) kmeansOptimisation(object, ...))
+

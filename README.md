@@ -5,7 +5,6 @@ The recommended installation procedure uses the Bioconductor infrastructure:
 
 The preferred installation procedure uses the Bioconductor infrastructure:
 
->>>>>>> new-version-of-perTurbo
 ```c
 source("http://bioconductor.org/biocLite.R")
 biocLite("pRoloc")

@@ -41,6 +41,7 @@ export(## MSnSet manipulation
        getPredictions,
        getMarkers,
        minClassScore,
+       testMarkers, 
        minMarkers,
        addMarkers,       
        empPvalues,

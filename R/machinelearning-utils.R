@@ -1,7 +1,7 @@
 getBestParams <- function(x) {
   if (all(is.na(x))) {
     msg <- paste0("[pRoloc:::getBestParams] Only NA's in F1 matrix.\n",
-                  "Try to use better suited ranges of parameters.\n")
+                  "Try to use better suited ranges of parameters or check the marker class sizes with 'testMarkers(object)'.\n")
     print(x)
     stop(msg)
   }    

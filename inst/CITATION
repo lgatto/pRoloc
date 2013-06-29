@@ -27,7 +27,7 @@ citEntry(entry = "article",
          year = "2013",
          textVersion =
          paste0("Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS, Trotter MW. ",
-                "The effect of organelle discovery upon sub-cellular protein localisation. ".
+                "The effect of organelle discovery upon sub-cellular protein localisation. ",
                 "J Proteomics. 2013 Mar 21. doi:pii: S1874-3919(13)00094-8. ",
                 "10.1016/j.jprot.2013.02.019. [Epub ahead of print] PubMed PMID: 23523639.")
          )

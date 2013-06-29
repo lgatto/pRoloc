@@ -10,6 +10,7 @@
 ##' are returned invisibly. If \code{FALSE}, the markers are returned.
 ##' @return A \code{character} of length \code{ncol(object)}.
 ##' @author Laurent Gatto
+##' @seealso \code{\link{testMarkers}} and \code{\link{minMarkers}}
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
@@ -30,6 +31,12 @@ getMarkers <- function(object,
 ##' where the default \code{xval} is 5 and \code{n} is 2. If the test
 ##' is unsuccessful, a warning is thrown.
 ##'
+##' In case the test indicates that a class contains too few examples,
+##' it is advised to either add some or, if not possible, to remove
+##' the class altogether (see \code{\link{minMarkers}})
+##' as the parameter optimisation is likely to fail or, at least,
+##' produce unreliable results for that class.
+##' 
 ##' @title Tests marker class sizes
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param xval The number cross-validation partitions. See the
@@ -41,6 +48,7 @@ getMarkers <- function(object,
 ##' @return If successfull, the test invisibly returns \code{NULL}. Else,
 ##' it invisibly returns the names of the classes that have too few examples.
 ##' @author Laurent Gatto
+##' @seealso \code{\link{getMarkers}} and \code{\link{minMarkers}}
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)

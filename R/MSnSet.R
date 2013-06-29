@@ -63,7 +63,11 @@ testMarkers <- function(object, xval = 5, n = 2, fcol = "markers") {
     ans <- NULL
     if (any(k)) {
         ans <- names(mrktab)[k]
-        warning(paste(ans, collapse = ", "), " have less than ", N, " markers.")        
+        if (length(ans) == 1) {
+            warning(paste(ans, collapse = ", "), " has less than ", N, " markers.")
+        } else {
+            warning(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
+        }
     } 
     invisible(ans)
 }

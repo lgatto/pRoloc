@@ -30,6 +30,11 @@
 ##' @param col A \code{character} of appropriate length defining colours.
 ##' @param pch A \code{character} of appropriate length defining point character.
 ##' @param cex Character expansion.
+##' @param index A \code{logical} (default is FALSE), indicating of the feature
+##' indices should be plotted on top of the symbols.
+##' @param idx.cex A \code{numeric} specifying the character expansion
+##' (default is 0.75) for the feature indices. Only relevant when \code{index}
+##' is TRUE.
 ##' @param identify A logical (default is \code{TRUE}) defining if
 ##' user interaction will be expected to identify individual data
 ##' points on the plot. See also \code{\link{identify}}.
@@ -67,6 +72,8 @@ plot2D <- function(object,
                    col,
                    pch,
                    cex,
+                   index = FALSE,
+                   idx.cex = 0.75,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
@@ -186,6 +193,9 @@ plot2D <- function(object,
              pch = pch[!ukn], cex = cex[!ukn], ...)
     }  
     grid()
+    if (index) {
+        text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
+    }
     if (identify) {
       ids <- identify(.data[, 1], .data[, 2],
                       rownames(.data))

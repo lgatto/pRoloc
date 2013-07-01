@@ -36,7 +36,9 @@ exportMethods(chi2,
               plot)
               ## clustering
               # kmeansClustering,
-              # kmeansOptimisation, kmeansOptimization)
+              # kmeansOptimisation, kmeansOptimization,
+              ## distances
+              # nndist)
 
 export(## MSnSet manipulation
        markerSet,

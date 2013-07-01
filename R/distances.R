@@ -17,7 +17,6 @@ nndist_matrix <- function(object, k = 3,
         ans[, m] <- res$nn.index
         ans[, m + 1] <- res$nn.dist
     } else { ## mahalanobis   
-
         S <- cov(object)
         res <- apply(object, 1, ## n by n distance matrix
                      function(x) .mahalanobis(object, x, S))

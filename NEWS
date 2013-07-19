@@ -6,6 +6,8 @@ CHANGES IN VERSION 1.1.2
  o new testMarkers function <2013-06-29 Sat>
  o error message in getBestParams suggests to use testMarkers <2013-06-29 Sat>
  o nndist methods (see issue #23) <2013-07-01 Mon>
+ o remove unnecessary as.matrix in plot2D's cmdscale <2013-07-19 Fri>
+ o added plot2D(..., method = "MDS") example <2013-07-19 Fri>
 
 CHANGES IN VERSION 1.1.1
 ------------------------

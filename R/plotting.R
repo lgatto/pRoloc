@@ -52,6 +52,7 @@
 ##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' plot2D(dunkley2006, fcol = NULL)
+##' plot2D(dunkley2006, fcol = NULL, method = "MDS")
 ##' plot2D(dunkley2006, fcol = "markers")
 ##' addLegend(dunkley2006,
 ##'           fcol = "markers",
@@ -125,7 +126,7 @@ plot2D <- function(object,
     .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
     .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
   } else { ## MDS
-    .data <- cmdscale(dist(as.matrix(exprs(object)), 
+    .data <- cmdscale(dist(exprs(object), 
                            method = "euclidean",
                            diag = FALSE,
                            upper = FALSE,

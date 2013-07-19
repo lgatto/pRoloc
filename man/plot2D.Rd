@@ -93,6 +93,7 @@
 library("pRolocdata")
 data(dunkley2006)
 plot2D(dunkley2006, fcol = NULL)
+plot2D(dunkley2006, fcol = NULL, method = "MDS")
 plot2D(dunkley2006, fcol = "markers")
 addLegend(dunkley2006,
           fcol = "markers",

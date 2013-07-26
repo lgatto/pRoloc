@@ -1,8 +1,8 @@
 setMethod("nndist", "matrix",
-          function(object, k = 3, dist = c("euclidian", "mahalanobis"), ...)
+          function(object, k = 3, dist = c("euclidean", "mahalanobis"), ...)
           nndist_matrix(object, k, match.arg(dist), ...))
 setMethod("nndist", "MSnSet",
-          function(object, k = 3, dist = c("euclidian", "mahalanobis"), ...)
+          function(object, k = 3, dist = c("euclidean", "mahalanobis"), ...)
           nndist_msnset(object, k, match.arg(dist), ...))
 
 .mahalanobis <- function(X, y, S = cov(X)) mahalanobis(X, y, S)
@@ -13,7 +13,7 @@ nndist_matrix <- function(object, k, dist = dist, ...) {
     rownames(ans) <- rownames(object)
     colnames(ans) <- paste0(rep(c("index", "dist"), k),
                             rep(1:k, each = 2)) 
-    if (dist == "euclidian") {
+    if (dist == "euclidean") {
         res <- get.knn(object, k = k, ...) # n by k matrix
         ans[, m] <- res$nn.index
         ans[, m + 1] <- res$nn.dist

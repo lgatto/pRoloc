@@ -8,6 +8,7 @@ CHANGES IN VERSION 1.1.2
  o nndist methods (see issue #23) <2013-07-01 Mon>
  o remove unnecessary as.matrix in plot2D's cmdscale <2013-07-19 Fri>
  o added plot2D(..., method = "MDS") example <2013-07-19 Fri>
+ o changed 'euclidian' to 'euclidean' in nndist_matrix <2013-07-26 Fri>
 
 CHANGES IN VERSION 1.1.1
 ------------------------

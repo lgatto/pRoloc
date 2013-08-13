@@ -1,27 +1,3 @@
-## Filter script
-## Get rid of rows where there are missing values
-filter <- function(object) {
-  b <- NULL
-  for (j in 1:nrow(exprs(object))) {
-    a <- NULL
-    for (i in 1:ncol(exprs(object))) {
-      if (is.nan(exprs(object)[j,i])) {
-        a <- c(a,j)
-      }
-      if (is.na(exprs(object)[j,i])) {
-        a <- c(a,j)
-      }
-    }
-    if (length(a) > 0) {
-      b <- c(b,j)
-    }
-  }
-  if (length(b > 0)) {
-    object <- object[-b, ]
-  }
-  return (object)
-}
-
 ## Function to get new phenotypes
 ## INPUTS: object = output from phenoDiscoTracking, groupSize = default is 5 
 ## which is used to define minimum number of proteins per new phenotype
@@ -319,13 +295,14 @@ updateobject  <- function(MSnSetToUpdate,
 ##' Expectation Maximisation algorithm combined with a non-parametric outlier
 ##' detection test to identify new phenotype clusters.
 ##'
-##' Note: One requires at least 2 or more classes to be labelled in the data 
+##' One requires 2 or more classes to be labelled in the data 
 ##' and at a very minimum of 6 markers per class to run the algorithm.
+##' The function will check and remove feature with missing values using
+##' the \code{\link{filterNA}} method. 
 ##'
-##' Note 2: Prior to version 1.1.2 the row order in the output was not equal to
+##' Important: Prior to version 1.1.2 the row order in the output was different from
 ##' the row order in the input. This has now been fixed and row ordering is now
 ##' the same in both input and output objects.
-##' 
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
@@ -375,9 +352,7 @@ phenoDisco <- function(object,
   ## times = number of runs of tracking 
   ## GS = group size 
   ## p = significance level for outlier detection test
-  
-  ## Note row order
-  fnames <- featureNames(object)
+
   ## Check GS not outside limits
   if (GS < 4) 
     stop("Group size specified too small")
@@ -389,6 +364,15 @@ phenoDisco <- function(object,
 
   if (!fcol %in% fvarLabels(object))
     stop("'", fcol, "' not found in feature variables.")
+
+  ## Filter data (check no missing values/remove rows with NA)
+  if (any(is.na(exprs(object)))) {
+      warning("Removing features with missing values.")
+      object <- filterNA(object, pNA = 0)
+  }
+    
+  ## Note row order
+  fnames <- featureNames(object)
   
   ## Initial settings
   indexFcol <- which(colnames(fData(object)) == fcol)
@@ -405,12 +389,10 @@ phenoDisco <- function(object,
   cond1 <- cond2 <- TRUE
   original <- fcol
   i <- 0
-  ## Filter data (check no missing values/remove rows with NA)
-  object <- filter(object)
   ## Remove duplicated rows (i.e. identical profiles and add back later)
-  duplicatedRows = FALSE
+  duplicatedRows <- FALSE
   if (anyDuplicated(exprs(object))>0) {
-    duplicatedRows = TRUE
+    duplicatedRows <- TRUE
     foo <- duplicated(exprs(object))
     duplicateSet <- object[foo,]
     fData(duplicateSet)$pd <- as.character(fData(duplicateSet)$markers)
@@ -475,7 +457,6 @@ phenoDisco <- function(object,
   
   # Add back in any duplicated rows with localisation assigned from pd
   if (duplicatedRows) {
-  
     ind <- apply(exprs(duplicateSet), 1, function(x) 
       which(apply(exprs(object), 1, function(z) all(x==z))))
     
@@ -503,13 +484,15 @@ phenoDisco <- function(object,
       procmsg)
 
   if (!allIter) {
-    idx <- grep(".pd", fvarLabels(object))
-    fData(object) <- fData(object)[, -idx]
+      ## FIXME there could be an issue here 
+      ## if there were other matching columns
+      idx <- grep(".pd", fvarLabels(object))
+      fData(object) <- fData(object)[, -idx]
   }
   a <- match(fnames, featureNames(object))
   object <- object[a,]
-  if (!all(featureNames(object)==fnames))
-    message("Note: Rows have been reordered")
+  object <- MSnbase:::nologging(object, n = 1)
+  stopifnot(featureNames(object)==fnames)
   if (validObject(object))
-    return(object)
+      return(object)
 }

@@ -16,7 +16,6 @@ filter <- function(object) {
       b <- c(b,j)
     }
   }
-  
   if (length(b > 0)) {
     object <- object[-b, ]
   }
@@ -24,26 +23,22 @@ filter <- function(object) {
 }
 
 ## Function to get new phenotypes
-## Input is the output from phenoDisco and corresponding correlation matrix for 
-## the unlabelledSet, r is the correlation coefficient
-## Created by L Breckels 09/08/2011
-## INPUTS: phenoTrackOutput = output from phenoDiscoTracking, groupSize = needed
-## to define the minimum group size size
-getNewClusters <- function(phenoTrackOutput, 
+## INPUTS: object = output from phenoDiscoTracking, groupSize = default is 5 
+## which is used to define minimum number of proteins per new phenotype
+## jc = correlation cooefficient, currently no other value but 1 is supported
+getNewClusters <- function(object, 
                            groupSize = 5,
                            jc = 1) {  
-  unlabelledSet <- phenoTrackOutput[,1]$originalX
-  getNamesUnlabelled <- table(unlist(apply(phenoTrackOutput, 2, 
-                                           function(z) rownames(z$X))))
-  getNamesUnlabelled <-names(which(getNamesUnlabelled == dim(phenoTrackOutput)[2]))
-  trackingIndex <- unlist(phenoTrackOutput[1,])
-  historyMatrix <- sapply(getNamesUnlabelled,
-                          function(z) as.vector(trackingIndex[which(names(trackingIndex) == z)]), 
+  X <- object[,1]$originalX
+  namesX <- table(unlist(apply(object, 2, function(z) rownames(z$X))))
+  namesX <- names(which(namesX == dim(object)[2]))
+  index <- unlist(object[1,])
+  history <- sapply(namesX,
+                          function(z) as.vector(index[which(names(index) == z)]), 
                           simplify = TRUE)
-  historyMatrix <- t(historyMatrix)
-  rownames(historyMatrix) <- getNamesUnlabelled
-  corMatrix <- simil(historyMatrix, historyMatrix, method="eJaccard")
-  
+  history <- t(history)
+  rownames(history) <- namesX
+  corMatrix <- simil(history, history, method="eJaccard")
   ## Here we look at the correlation between profiles
   ## We start look at the 1st protein & identify which proteins are highly 
   ## correlated with in i.e. that has a correlation coefficent > jc
@@ -58,16 +53,16 @@ getNewClusters <- function(phenoTrackOutput,
       getNamesUnique <- unique(getNames)
       group <- getNamesUnique[unlist(lapply(getNamesUnique, 
                                             function(z) length(z) >= groupSize))]
-      getMDScoords <- lapply(group, function(x) 
-                             t(sapply(x, function(z) unlabelledSet[rownames(unlabelledSet) == z,])))
+      coords <- lapply(group, function(x) 
+                             t(sapply(x, function(z) X[rownames(X) == z,])))
     } else {
       group <- NULL
-      getMDScoords <- NULL
+      coords <- NULL
     }
   } else {
-    getMDScoords <- NULL
+    coords <- NULL
   }
-  list(coords = getMDScoords, 
+  list(coords = coords, 
        protIDs = group)
 }
 
@@ -327,6 +322,11 @@ updateobject  <- function(MSnSetToUpdate,
 ##' Note: One requires at least 2 or more classes to be labelled in the data 
 ##' and at a very minimum of 6 markers per class to run the algorithm.
 ##'
+##' Note 2: Prior to version 1.1.2 the row order in the output was not equal to
+##' the row order in the input. This has now been fixed and row ordering is now
+##' the same in both input and output objects.
+##' 
+##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
 ##' column name in feature meta-data. Default is \code{markers}.
@@ -375,7 +375,10 @@ phenoDisco <- function(object,
   ## times = number of runs of tracking 
   ## GS = group size 
   ## p = significance level for outlier detection test
-
+  
+  ## Note row order
+  fnames <- featureNames(object)
+  ## Check GS not outside limits
   if (GS < 4) 
     stop("Group size specified too small")
 
@@ -395,9 +398,8 @@ phenoDisco <- function(object,
     stop("Not enough markers to run phenoDisco: Require > 6 markers per classes")
   
   if (length(test) < 3)
-    stop("Not enough classes specified to run phenoDisco: Require a 
-          minimum of 2 labelled classes")
-
+    stop("Not enough classes specified to run phenoDisco: 
+          Require a minimum of 2 labelled classes")
   track <- phenotypes <- vector("list")
   currentClasses <- list()
   cond1 <- cond2 <- TRUE
@@ -504,7 +506,10 @@ phenoDisco <- function(object,
     idx <- grep(".pd", fvarLabels(object))
     fData(object) <- fData(object)[, -idx]
   }
-  
+  a <- match(fnames, featureNames(object))
+  object <- object[a,]
+  if (!all(featureNames(object)==fnames))
+    message("Note: Rows have been reordered")
   if (validObject(object))
     return(object)
 }

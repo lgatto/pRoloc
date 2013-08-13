@@ -9,6 +9,7 @@ CHANGES IN VERSION 1.1.2
  o remove unnecessary as.matrix in plot2D's cmdscale <2013-07-19 Fri>
  o added plot2D(..., method = "MDS") example <2013-07-19 Fri>
  o changed 'euclidian' to 'euclidean' in nndist_matrix <2013-07-26 Fri>
+ o fixed row ordering in phenoDisco, input and output rownames are now the same <2013-08-13 Tue>
 
 CHANGES IN VERSION 1.1.1
 ------------------------

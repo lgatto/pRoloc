@@ -50,9 +50,16 @@
   algorithm combined with a non-parametric outlier
   detection test to identify new phenotype clusters.
 
-  Note: One requires at least 2 or more classes to be
-  labelled in the data and at a very minimum of 6 markers
-  per class to run the algorithm.
+  One requires 2 or more classes to be labelled in the data
+  and at a very minimum of 6 markers per class to run the
+  algorithm. The function will check and remove feature
+  with missing values using the \code{\link{filterNA}}
+  method.
+
+  Important: Prior to version 1.1.2 the row order in the
+  output was different from the row order in the input.
+  This has now been fixed and row ordering is now the same
+  in both input and output objects.
 }
 \examples{
 \dontrun{

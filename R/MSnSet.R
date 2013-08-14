@@ -10,6 +10,7 @@
 ##' are returned invisibly. If \code{FALSE}, the markers are returned.
 ##' @return A \code{character} of length \code{ncol(object)}.
 ##' @author Laurent Gatto
+##' @seealso \code{\link{testMarkers}} and \code{\link{minMarkers}}
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
@@ -25,7 +26,51 @@ getMarkers <- function(object,
     return(organelleMarkers)
   }
 }
-
+##' Tests if the marker class sizes are large enough for the parameter
+##' optimisation scheme, i.e. the size is greater that \code{xval + n},
+##' where the default \code{xval} is 5 and \code{n} is 2. If the test
+##' is unsuccessful, a warning is thrown.
+##'
+##' In case the test indicates that a class contains too few examples,
+##' it is advised to either add some or, if not possible, to remove
+##' the class altogether (see \code{\link{minMarkers}})
+##' as the parameter optimisation is likely to fail or, at least,
+##' produce unreliable results for that class.
+##' 
+##' @title Tests marker class sizes
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param xval The number cross-validation partitions. See the
+##' \code{xval} argument in the parameter optimisation function(s).
+##' Default is 5.
+##' @param n Number of additional examples. 
+##' @param fcol The name of the prediction column in the
+##' \code{featureData} slot. Default is \code{"markers"}. 
+##' @return If successfull, the test invisibly returns \code{NULL}. Else,
+##' it invisibly returns the names of the classes that have too few examples.
+##' @author Laurent Gatto
+##' @seealso \code{\link{getMarkers}} and \code{\link{minMarkers}}
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' getMarkers(dunkley2006)
+##' testMarkers(dunkley2006)
+##' toosmall <- testMarkers(dunkley2006, xval = 15)
+##' toosmall
+testMarkers <- function(object, xval = 5, n = 2, fcol = "markers") {
+    mrktab <- table(fData(object)[, fcol])
+    N <- xval + 2
+    k <- mrktab < N
+    ans <- NULL
+    if (any(k)) {
+        ans <- names(mrktab)[k]
+        if (length(ans) == 1) {
+            warning(paste(ans, collapse = ", "), " has less than ", N, " markers.")
+        } else {
+            warning(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
+        }
+    } 
+    invisible(ans)
+}
 
 ##' Convenience accessor to the predicted feature localisation in an 'MSnSet'.
 ##' This function returns the predictions of an

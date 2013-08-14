@@ -6,7 +6,8 @@
     unknown = "unknown", dims = 1:2, alpha, score = 1,
     method = c("PCA", "MDS"), axsSwitch = FALSE,
     mirrorX = FALSE, mirrorY = FALSE, col, pch, cex,
-    identify = FALSE, plot = TRUE, ...)
+    index = FALSE, idx.cex = 0.75, identify = FALSE,
+    plot = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -58,6 +59,14 @@
 
   \item{cex}{Character expansion.}
 
+  \item{index}{A \code{logical} (default is FALSE),
+  indicating of the feature indices should be plotted on
+  top of the symbols.}
+
+  \item{idx.cex}{A \code{numeric} specifying the character
+  expansion (default is 0.75) for the feature indices. Only
+  relevant when \code{index} is TRUE.}
+
   \item{identify}{A logical (default is \code{TRUE})
   defining if user interaction will be expected to identify
   individual data points on the plot. See also
@@ -84,6 +93,7 @@
 library("pRolocdata")
 data(dunkley2006)
 plot2D(dunkley2006, fcol = NULL)
+plot2D(dunkley2006, fcol = NULL, method = "MDS")
 plot2D(dunkley2006, fcol = "markers")
 addLegend(dunkley2006,
           fcol = "markers",

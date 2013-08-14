@@ -12,7 +12,9 @@ setGeneric("f1Count", function(object, ...) standardGeneric("f1Count"))
 setGeneric("chi2", function(x,y,...) standardGeneric("chi2"))
 
 ## clustering
-## setGeneric("kmeansClustering", function(object, params, ...) standardGeneric("kmeansClustering"))
-## setGeneric("kmeansOptimisation", function(object, ...) standardGeneric("kmeansOptimisation"))
-## setGeneric("kmeansOptimization", function(object, ...) kmeansOptimisation(object, ...))
+setGeneric("kmeansClustering", function(object, params, ...) standardGeneric("kmeansClustering"))
+setGeneric("kmeansOptimisation", function(object, ...) standardGeneric("kmeansOptimisation"))
+setGeneric("kmeansOptimization", function(object, ...) kmeansOptimisation(object, ...))
 
+## distances
+setGeneric("nndist", function(object, ...) standardGeneric("nndist"))

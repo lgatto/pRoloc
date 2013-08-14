@@ -8,6 +8,7 @@ import(kernlab) ## previously only imported ksvm
 import(knitr)
 
 importFrom(class, knn)
+importFrom(FNN, get.knn)
 importFrom(RColorBrewer, brewer.pal)
 importFrom(stats4, plot)
 importFrom(proxy, simil)
@@ -19,8 +20,9 @@ importFrom(e1071, svm, naiveBayes)
 importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
+
 exportClasses(GenRegRes)
-              ## ClustRegRes)
+              # ClustRegRes)
 
 exportMethods(chi2,
               show,
@@ -32,15 +34,18 @@ exportMethods(chi2,
               f1Count,
               levelPlot,
               plot)
-              ## ## clustering
-              ## kmeansClustering,
-              ## kmeansOptimisation, kmeansOptimization)
+              ## clustering
+              # kmeansClustering,
+              # kmeansOptimisation, kmeansOptimization,
+              ## distances
+              # nndist)
 
 export(## MSnSet manipulation
        markerSet,
        getPredictions,
        getMarkers,
        minClassScore,
+       testMarkers, 
        minMarkers,
        addMarkers,       
        empPvalues,

@@ -68,7 +68,7 @@ setMethod("f1Count", "GenRegRes",
             .f1 <- colnames(f1tab) == "F1"
             f1 <- f1tab[, .f1]
             if (missing(t))
-              t <- max(f1)
+              t <- max(f1, na.rm = TRUE)
             p <- f1tab[, !.f1, drop = FALSE]
             if (ncol(p) == 1) {
               res <- table(p[f1 >= t, ])

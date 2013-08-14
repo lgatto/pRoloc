@@ -32,4 +32,7 @@ mymarkers <- getMarkers(dunkley2006)
 \author{
   Laurent Gatto
 }
+\seealso{
+  \code{\link{testMarkers}} and \code{\link{minMarkers}}
+}
 

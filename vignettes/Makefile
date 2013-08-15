@@ -40,6 +40,12 @@ tut2:
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 
+ml2: 
+	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-ml.Rnw');"
+	bibtex pRoloc-ml
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+
 
 .PHONY: clean allclean 
 

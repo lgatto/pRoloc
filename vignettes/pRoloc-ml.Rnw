@@ -102,7 +102,7 @@ options(replace.assign = TRUE,
 
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
-## suppressPackageStartupMessages(library("pRolocdata"))
+suppressPackageStartupMessages(library("pRolocdata"))
 ## suppressPackageStartupMessages(library("class"))
 suppressPackageStartupMessages(library("xtable"))
 @ 
@@ -120,119 +120,85 @@ TODO
 
 \section{Introduction}\label{sec:intro} 
 
-For a general practical introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, 
-available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}.
-The following document provides a overview of the algorithms available in the package. 
-The respective section describe unsupervised machine learning (USML), 
-supervised machine learning (SML), and semi-supervised machine learning (SSML) 
-as implemented in the novetly detection algorithm. 
+For a general practical introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), and semi-supervised machine learning (SSML) as implemented in the novetly detection algorithm. 
+
+\section{Data sets}
+
+We provide \Sexpr{nrow(pRolocdata()$results)} test data sets in the \Rpackage{pRolocdata} package%$
+that can be readily used with \Rpackage{pRoloc}. The data set can be listed with \Rfunction{pRolocdata} and loaded with the \Rfunction{data} function. Each data set, including its origin, is individually documented.
+
+The data sets are distributed as \Robject{MSnSet} instances. Briefly, these are dedicated containers for quantitation data as well as feature and sample meta-data. More details about \Robject{MSnSet}s are available in the \Rpackage{pRoloc} tutorial and in the \Rpackage{MSnbase} package, that defined the class.
+
+<<pRolocdata>>=
+library("pRolocdat")
+data(tan2009r1)
+tan2009r1
+@
 
 \section{Unsupervised machine learning}\label{sec:usml}
 
-Currently, unsupervised clustering facilities are available through the \Rfunction{plot2D} function 
-and the \Rpackage{MLInterfaces} package \cite{MLInterfaces}. 
-The former takes an \Robject{MSnSet} instance and represents the data on a scatter plot along the 
-first two principal components. Arbitrary feature meta-data can be represented using different 
-colours and point characters. The reader is referred to the manual page for more details 
-and examples: \Rfunction{?plot2D}.
+Unsupervised machine learning refers to clustering, i.e. finding structure in a quantitative, generally multi-dimensional data set of unlabelled data. 
+
+Currently, unsupervised clustering facilities are available through the \Rfunction{plot2D} function and the \Rpackage{MLInterfaces} package \cite{MLInterfaces}. The former takes an \Robject{MSnSet} instance and represents the data on a scatter plot along the first two principal components. Arbitrary feature meta-data can be represented using different colours and point characters. The reader is referred to the manual page available through \Rfunction{?plot2D} for more details and examples.
 
 \Rpackage{pRoloc} also implements a \Rfunction{MLean} method for \Robject{MSnSet} instances, allowing to use the relevant infrastructure with the organelle proteomics framework. Although provides a common interface to unsupervised and numerous supervised algorithms, we refer to the \Rpackage{pRoloc} tutorial for its usage to several clustering algorithms.
 
-\paragraph{Note} Current developments in terms of clustering are described on the \textit{Clustering infrastructure} wiki 
-page\footnote{\url{https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure}} and will be incorporated in future version of the package.
+% \paragraph{Note} Current developments in terms of clustering are described on the \textit{Clustering infrastructure} wiki page\footnote{\url{https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure}} and will be incorporated in future version of the package.
 
 \section{Supervised machine learning}\label{sec:sml}
 
-Provide here a general description: training and testing, parameter optimisation.
+Supervised machine learning refers to a broad family of classification algorithms. The algorithms learns from a modest set of labelled data points called the training data. Each training data example consists of a pair of inputs: the actual data, generally represented as a vector of numbers and a class label, representing the membership to exactly 1 of multiple possible classes. When there are only two possible classes, on refers to binary classification. The training data is used to construct a model that can be used to classifier new, unlabelled examples. The model takes the numeric vectors of the unlabelles data points and return, for each of these inputs, the corresponding mapped class.   
 
 \subsection{Algorithms used}\label{sec:algo}
 
-\paragraph{k-nearest neighbour} Function \Rfunction{knn} from package \Rpackage{class}. 
-$k$-nearest neighbour classification for test set from training set. For each row of the 
-test set, the $k$ nearest (in Euclidean distance) training set vectors are found, and the 
-classification is decided by majority vote, with ties broken at random. If there are ties 
-for the $k^{th}$ nearest vector, all candidates are included in the vote.
+\paragraph{k-nearest neighbour} Function \Rfunction{knn} from package \Rpackage{class}. For each row of the test set, the $k$ nearest (in Euclidean distance) training set vectors are found, and the classification is decided by majority vote over the $k$ classes, with ties broken at random. This is a simple algorithm that is often used as baseline classifier.
+%% If there are ties for the $k^{th}$ nearest vector, all candidates are included in the vote.
 
-\paragraph{Partial least square DA} Function \Rfunction{plsda} from package \Rpackage{caret}. 
-Partial least square discriminant analysis is used to fit standard PLS models for classification.
+\paragraph{Partial least square DA} Function \Rfunction{plsda} from package \Rpackage{caret}. Partial least square discriminant analysis is used to fit a standard PLS model for classification. 
 
 \paragraph{Support vector machine} 
-A support vector machine constructs a hyperplane (or set of hyperplanes for multiple-class problem), 
-which are then used for classification. The best separation is defined 
-as the hyperplane that has the largest distance (the margin) to the nearest data points in any class, 
-which also reduces the classifiation generalisation error. To assure liner separation of the 
-classes, the data is transformed using a \textit{kernel function} into a high-dimensional space, 
-permitting liner separation of the classes.
+A support vector machine constructs a hyperplane (or set of hyperplanes for multiple-class problem), which are then used for classification. The best separation is defined as the hyperplane that has the largest distance (the margin) to the nearest data points in any class, which also reduces the classifiation generalisation error. To assure liner separation of the classes, the data is transformed using a \textit{kernel function} into a high-dimensional space, permitting liner separation of the classes.
 
-\Rpackage{pRoloc} makes use of the functions \Rfunction{svm} from package \Rpackage{e1071} 
-and \Rfunction{ksvm} from \Rpackage{kernlab}. 
+\Rpackage{pRoloc} makes use of the functions \Rfunction{svm} from package \Rpackage{e1071} and \Rfunction{ksvm} from \Rpackage{kernlab}. 
 
-\paragraph{Articifial neural network} Function \Rfunction{nnet} from package \Rpackage{nnet}. 
-Fits a single-hidden-layer neural network, possibly with skip-layer connections.
+\paragraph{Articifial neural network} Function \Rfunction{nnet} from package \Rpackage{nnet}. Fits a single-hidden-layer neural network, possibly with skip-layer connections.
 
-\paragraph{Naive Bayes} Function \Rfunction{naiveBayes} from package \Rpackage{e1071}. 
-Naive Bayes classifier that computes the conditional a-posterior probabilities of a 
-categorical class variable given independent predictor variables using the Bayes rule. 
-Assumes independence of the predictor variables, and Gaussian distribution 
-(given the target class) of metric predictors.
+\paragraph{Naive Bayes} Function \Rfunction{naiveBayes} from package \Rpackage{e1071}. Naive Bayes classifier that computes the conditional a-posterior probabilities of a categorical class variable given independent predictor variables using the Bayes rule. Assumes independence of the predictor variables, and Gaussian distribution (given the target class) of metric predictors.
 
 \paragraph{Random Forest} Function \Rfunction{randomRandom} from package \Rpackage{randomForest}.
 
-\paragraph{Chi-square} Assingnment based on squared differences between a labelled marker and a 
-new feature to be classified. Canonical protein correlation profile method (PCP) uses sqaured 
-differences between a labelled marker and new features. In \citep{Andersen2003}, $\chi^2$ is 
-defined as \emph{the [summed] squared deviation of the normalized profile [from the marker] for 
-  all peptides divided by the number of data points}, 
-i.e. $\chi^{2} = \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007} divide 
-by the value the squared value by the value of the reference feature in each fraction, 
-i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i - m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity 
-of feature $x$ in fraction $i$,  $m_i$ is the normalised intensity of marker $m$ in fraction 
-$i$ and $n$ is the number of fractions available. We will use the former definition.
+\paragraph{Chi-square} Assingnment based on squared differences between a labelled marker and a new feature to be classified. Canonical protein correlation profile method (PCP) uses sqaured differences between a labelled marker and new features. In \citep{Andersen2003}, $\chi^2$ is defined as \emph{the [summed] squared deviation of the normalized profile [from the marker] for all peptides divided by the number of data points}, i.e. $\chi^{2} = \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007} divide by the value the squared value by the value of the reference feature in each fraction, i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i - m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity of feature $x$ in fraction $i$,  $m_i$ is the normalised intensity of marker $m$ in fraction $i$ and $n$ is the number of fractions available. We will use the former definition.
 
 \paragraph{PerTurbo}
-From \cite{perturbo}: 
-PerTurbo, [is] an original, non-parametric and efficient classification method [...]. 
-In our framework, the manifold of each class is characterized by its Laplace-Beltrami operator, 
-which is evaluated with classical methods involving the graph Laplacian. 
-The classification criterion is established thanks to a measure of the magnitude of the spectrum perturbation of this operator. 
-The first experiments show good performances against classical algorithms of the state-of-the-art.
-Moreover, from this measure is derived an efficient policy to design sampling queries in a context of active learning. 
-Performances collected over toy examples and real world datasets assess the qualities of this strategy.
+From \cite{perturbo}: PerTurbo, an original, non-parametric and efficient classification method is presented here. In our framework, the manifold of each class is characterized by its Laplace-Beltrami operator, which is evaluated with classical methods involving the graph Laplacian. The classification criterion is established thanks to a measure of the magnitude of the spectrum perturbation of this operator. The first experiments show good performances against classical algorithms of the state-of-the-art. Moreover, from this measure is derived an efficient policy to design sampling queries in a context of active learning. Performances collected over toy examples and real world datasets assess the qualities of this strategy.
 
-<<getmlfunction, echo=FALSE>>=
-## Add chi^2.
-tab <- data.frame('parameter optimisation' = grep("Optimisation", ls("package:pRoloc"), value = TRUE), 
-                  'classification' = grep("Classification", ls("package:pRoloc"), value = TRUE))
-tab$algorithm <- c("nearest neighbour", "support vector machine", "naive bayes",
-                   "neural networks", "PerTurbo", "partial least square", 
-                   "random forest", "support vector machine")
-tab$package <- c("class", "kernlab", "e1071",
-                 "nnet", "pRoloc", "caret",
-                 "randomForest", "e1071")
-colnames(tab)[1] <- c("parameter optimisation")
-@ 
+The PerTurno implementation comes from the \Rpackage{pRoloc} packages.
 
-<<comptab, results='asis', echo=FALSE>>=
-xt <- xtable(tab, label = "tab:algo",
-             caption = "Supervised ML algorithm available in \\Rpackage{pRoloc}.")
-print(xt, include.rownames = FALSE, size = "small")
-@ 
-
+ 
 \subsection{Default analysis scheme}
+
+We present below a typical classification using \Rpackage{pRoloc}. The analaysis typically consists of two steps. The first one is to optimise the classifier parameters to be used for training and testing (see beginning of this section). A range of parameters are tested using the labelled data, for which the labels are known. For each set of parameters, we hide the labels of a subset of labelled data and use the other part to train a model and apply in on the data with hidden labels. The comparison of the estimated and expected labels enables to assess the validity of the model and hence the adequacy if the parameters. Once adequate parameters have been identified, they are used to infer a model on the complete test set and use of to infer the labels of the unlabelled examples. 
 
 \minisec{Parameter optimisation}
 
-The first step of our analysis scheme is a parameter optimisation. Algorithmic performance is estimated using 5-fold (default, see \Robject{xval} function parameter) stratified cross-validation (creating 5 test/train splits), which features an additional cross-validation on each training partition in order to optimise free parameters via a grid search. This process is repeated 10 times below (default is 100, see parameter \Robject{times}) and best and averaged accuracies are computed and stored in an instance of class \Robject{GenRegRes}. The object can be inspected, plotted and best parameter pairs can be extracted.
+Agorithmic performance is estimated using a stratified 20/80 partitioning. The 80\% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20\%. The procedure is repeated $n = 100$ \texttt{times} to sample $n$ accuracy metrics (see below) values using $n$, possibly different, optimised parameters for evaluation.
 
-<<svmParamOptim, cache = TRUE, eval = FALSE>>=
+Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \times recall}{precision + recall}$, calculated as the harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a measure of \textit{exactness} -- returned output is a relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of \textit{completeness} -- indicating how much was missed from the output). What we are aiming for are high generalisation accuracies, i.e high $F1$, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.
+
+The result of the optimisation procedure are stored in an \Robject{GenRegRes} object that can be inspected, plotted and best parameter pairs can be extracted.
+
+For a given algorithm \texttt{alg}, the corresponding parameter optimisation function is names \Rfunction{algOptimisation} or, equivalently, \Rfunction{olgOptimization}. See table \ref{tab:algo} for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through \Rfunction{?algOptimisation}. 
+
+<<svmParamOptim, cache = TRUE, warning = FALSE, message = FALSE>>=
 params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
 params
 @ 
 
 \minisec{Classification}
 
-<<svmRes, warning=FALSE, tidy = FALSE, eval = FALSE>>=
-svmres <- svmClassification(tan2009r1, params)
+<<svmRes, warning=FALSE, tidy = FALSE, eval = TRUE>>=
+tan2009r1 <- svmClassification(tan2009r1, param = params)
+tan2009r1
 @ 
 
 \subsection{Customising model parameters}
@@ -248,7 +214,34 @@ wpar <- svmOptimisation(dunkley2006, class.weights = w)
 wres <- svmClassification(dunkley2006, pw, class.weights = w)
 @ 
 
-\section{Semi-supervised machine learning and noverly detection}\label{sec:ssml}
+
+<<getmlfunction, echo=FALSE>>=
+## Add chi^2.
+tab <- data.frame('parameter optimisation' = grep("Optimisation", ls("package:pRoloc"), value = TRUE), 
+                  'classification' = grep("Classification", ls("package:pRoloc"), value = TRUE))
+tab$algorithm <- c("nearest neighbour", "support vector machine", "naive bayes",
+                   "neural networks", "PerTurbo", "partial least square", 
+                   "random forest", "support vector machine")
+tab$package <- c("class", "kernlab", "e1071",
+                 "nnet", "pRoloc", "caret",
+                 "randomForest", "e1071")
+colnames(tab)[1] <- c("parameter optimisation")
+@ 
+
+
+<<comptab, results='asis', echo=FALSE>>=
+xt <- xtable(tab, label = "tab:algo",
+             caption = "Supervised ML algorithm available in \\Rpackage{pRoloc}.")
+print(xt, include.rownames = FALSE, size = "small")
+@ 
+
+\section{Comparison of different classifiers}
+
+All the most famous supervised machine learning algorithms have already been applied to organelle proteomics data classification: 
+partial least square discriminant analysis in \cite{Dunkley2006, Tan2009}, support vector machines (SVMs) in \cite{Trotter2010}, random forest in \cite{Ohta2010}, neural networks in \cite{Tardif2012}, naive Bayes \cite{Nikolovski2012}.
+
+\section{Semi-supervised machine learning and noverlty detection}\label{sec:ssml}
+
 
 \singlespacing
 

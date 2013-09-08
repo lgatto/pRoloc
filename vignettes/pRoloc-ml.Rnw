@@ -113,10 +113,9 @@ suppressPackageStartupMessages(library("xtable"))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-TODO
-\begin{itemize}
-\item Define nomenclature
-\end{itemize}
+\paragraph{NB} This document is currently under construction.
+\paragraph{TODO} Define nomenclature
+
 
 \section{Introduction}\label{sec:intro} 
 
@@ -130,7 +129,7 @@ that can be readily used with \Rpackage{pRoloc}. The data set can be listed with
 The data sets are distributed as \Robject{MSnSet} instances. Briefly, these are dedicated containers for quantitation data as well as feature and sample meta-data. More details about \Robject{MSnSet}s are available in the \Rpackage{pRoloc} tutorial and in the \Rpackage{MSnbase} package, that defined the class.
 
 <<pRolocdata>>=
-library("pRolocdat")
+library("pRolocdata")
 data(tan2009r1)
 tan2009r1
 @
@@ -196,8 +195,8 @@ params
 
 \minisec{Classification}
 
-<<svmRes, warning=FALSE, tidy = FALSE, eval = TRUE>>=
-tan2009r1 <- svmClassification(tan2009r1, param = params)
+<<svmRes, warning=FALSE, tidy=FALSE, eval=TRUE>>=
+tan2009r1 <- svmClassification(tan2009r1, params)
 tan2009r1
 @ 
 

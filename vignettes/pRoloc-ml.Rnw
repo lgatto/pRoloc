@@ -113,7 +113,8 @@ suppressPackageStartupMessages(library("xtable"))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-\paragraph{NB} This document is currently under construction.
+\paragraph{NB} This document is currently under construction; please see the \Rpackage{pRoloc} tutorial for details.
+
 \paragraph{TODO} Define nomenclature
 
 

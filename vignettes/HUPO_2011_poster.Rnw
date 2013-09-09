@@ -1,0 +1,7 @@
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{pRoloc -- A unifying bioinformatics framework for organelle proteomics}
+%\VignetteKeywords{bioinformatics, organelle proteomics, mass spectrometry, HUPO, poster}
+
+\documentclass[10pt]{article}
+\begin{document}
+\end{document}

@@ -17,10 +17,12 @@ LATEXFILES = *.aux\
 	*.makefile\
 	pRoloc-imputation.tex\
 	pRoloc-ml.tex\
-	pRoloc-tutorial.tex
+	pRoloc-tutorial.tex\
+	HUPO_2011_poster.tex
 
 all: 
 	make tut
+	make poster
 
 setvars:
 ifeq (${R_HOME},)
@@ -32,6 +34,10 @@ tut:
 	bibtex pRoloc-tutorial
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
+
+poster:
+	"$(R_HOME)/bin/R" CMD Sweave HUPO_2011_poster.Rnw
+	cp vigsrc/HUPO_2011_poster.pdf .
 
 ## manual building
 tut2: 

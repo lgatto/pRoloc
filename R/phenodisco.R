@@ -355,8 +355,11 @@ phenoDisco <- function(object,
 
   ## Check GS not outside limits
   if (GS < 4) 
-    stop("Group size specified too small")
-
+      stop("Group size specified too small.")
+  
+  if (!anyUnknown(object))
+      stop("No unlabelled features (conventionally marked 'unknown') in your data.")
+  
   if (!missing(seed)) {
     seed <- as.integer(seed)
     set.seed(seed)

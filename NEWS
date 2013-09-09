@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.1.3
+------------------------
+ o new private anyUnknown function, used in phenoDisco, to check 
+   for the presence of unlabelled ('unknown') data <2013-08-27 Tue>
+ o added a note in vignette about "unknown" convention to define 
+   protein with unknown localisation <2013-08-28 Wed>
+ o Added HUPO 2011 poster <2013-09-09 Mon>
+
 CHANGES IN VERSION 1.1.2
 ------------------------
  o fixed Author[s]@R <2013-05-16 Thu>

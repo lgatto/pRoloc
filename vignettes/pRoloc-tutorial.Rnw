@@ -295,6 +295,9 @@ getMarkers(tan2009r1)
 getMarkers(tan2009r1, fcol = "PLSDA")
 @ 
 
+
+\paragraph*{Important} As can be seen above, some proteins are labelled \texttt{"unknown"}, defining non marker proteins. This is a convention in many \Rpackage{pRoloc} functions. Missing annotations (empty string) will not be considered as of unknown localisation; we prefer to avoid empty strings and make the absence of known localisation explicit by using the \texttt{"unknown"} tag. This information will be used to separate marker and non-marker proteins when proceeding with data visulisation and clustering (sections \ref{sec:viz} and \ref{sec:usml}) and classification analysis (section \ref{sec:sml}).
+
 \subsection{Data processing}
 
 The quantitation data obtained in the supplementary file is normalised to the sum of intensities of each protein; the sum of fraction quantitation for each protein equals 1 (considering rounding errors). This can quickly be verified by computing the row sums of the expression data. 
@@ -361,7 +364,7 @@ Classification of proteins, i.e. assigning sub-cellular localisation to proteins
 
 In the above paragraph, we have defined what is called supervised ML, because the algorithm is presented with some know instances from which it learns (see section \ref{sec:sml}). Alternatively, un-supervised ML does not make any assumptions about the group memberships, and uses the structure of the data itself to defined sub-groups (see section \ref{sec:usml}). It is of course possible to classify data based on labelled and unlabelled data. This extension of the supervised classification problem described above is called semi-supervised learning. In this case, the training data consists of both labelled and unlabelled instances with the obvious goal of generating a better classifier than would be possible with the labelled data only. The \textit{phenoDisco} algorithm, will be illustrated in that context (section \ref{sec:ssml}). 
 
-\subsection{Data visualisation}\label{sec:usml}
+\subsection{Data visualisation}\label{sec:viz}
 
 The underlying principle of gradient approaches is that we have separated organelles along the gradient and by doing so, generated organelle-specific protein distributions along the gradient fractions. The most natural visualisation is shown on figure \ref{fig:plotdist1}, obtained using the sub-setting functionality of \Robject{MSnSet} instances and the \Rfunction{plotDist} function, as illustrated below.
 
@@ -417,7 +420,7 @@ addLegend(tan2009r1, fcol = "PLSDA",
 \label{fig:plot2d}
 \end{figure}
 
-\subsection{Unsupervised ML}
+\subsection{Unsupervised ML}\label{sec:usml}
 
 The \Rfunction{plot2D} can also be used to visualise the data on a PCA plot omitting any marker definitions, 
 as shown on figure \ref{fig:plot2dnull}. 

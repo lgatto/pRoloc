@@ -39,6 +39,12 @@ poster:
 	"$(R_HOME)/bin/R" CMD Sweave HUPO_2011_poster.Rnw
 	cp vigsrc/HUPO_2011_poster.pdf .
 
+ml: 
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+	bibtex pRoloc-ml
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
+
 ## manual building
 tut2: 
 	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"

@@ -23,6 +23,7 @@ LATEXFILES = *.aux\
 all: 
 	make tut
 	make poster
+	make ml
 
 setvars:
 ifeq (${R_HOME},)

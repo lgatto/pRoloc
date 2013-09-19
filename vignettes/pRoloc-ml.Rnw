@@ -1,3 +1,4 @@
+%\VignetteEngine{knitr}
 %\VignetteIndexEntry{Machine learning techniques available in pRoloc}
 %\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
 %\VignettePackage{pRoloc}

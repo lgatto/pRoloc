@@ -1,5 +1,11 @@
 useDynLib(pRoloc)
 
+## Depends
+import(MSnbase)
+import(MLInterfaces)
+import(methods)
+import(Rcpp)
+
 import(lattice)
 import(BiocGenerics)
 import(mclust)

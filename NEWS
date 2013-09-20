@@ -2,6 +2,7 @@ CHANGES IN VERSION 1.1.5
 ------------------------
  o added biocViews <2013-09-19 Thu>
  o added knitr vig engine in ml <2013-09-19 Thu>
+ o import dependencies <2013-09-20 Fri>
 
 CHANGES IN VERSION 1.1.4
 ------------------------

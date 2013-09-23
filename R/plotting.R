@@ -19,9 +19,9 @@
 ##' transparent and opaque.
 ##' @param score A numeric specifying the minimum organelle assignment score
 ##' to consider features to be assigned an organelle. (not yet implemented).
-##' @param outliers A logical specifying weather outliers should be plotted
-##' or ignored (default is TRUE, i.e. all points are plotted). Useful the 
-##' presence of outliers masks the structure of the rest of the data.
+##' @param outliers A logical specifying whether outliers should be plotted
+##' or ignored (default is TRUE, i.e. all points are plotted). Useful when 
+##' the presence of outliers masks the structure of the rest of the data.
 ##' Outliers are defined by the 2.5 and 97.5 percentiles. 
 ##' @param method One of \code{PCA} (default) or \code{MDS}, defining
 ##' if dimensionality reduction is done using principal component

@@ -36,9 +36,9 @@
   assignment score to consider features to be assigned an
   organelle. (not yet implemented).}
 
-  \item{outliers}{A logical specifying weather outliers
+  \item{outliers}{A logical specifying whether outliers
   should be plotted or ignored (default is TRUE, i.e. all
-  points are plotted). Useful the presence of outliers
+  points are plotted). Useful when the presence of outliers
   masks the structure of the rest of the data. Outliers are
   defined by the 2.5 and 97.5 percentiles.}
 

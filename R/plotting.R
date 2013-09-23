@@ -188,7 +188,7 @@ plot2D <- function(object,
     }
     pch[ukn] <- unknownpch
     if (!outliers) {
-        qntls <- apply(xx, 2, quantile, c(0.025, 0.971))
+        qntls <- apply(.data, 2, quantile, c(0.025, 0.971))
         selqtls <- .data[, 1] > qntls[1, 1] &
             .data[, 1] < qntls[2, 1] &
                 .data[, 2] > qntls[1, 2] &

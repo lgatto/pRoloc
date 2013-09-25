@@ -194,6 +194,7 @@ plot2D <- function(object,
                 .data[, 2] > qntls[1, 2] &
                     .data[, 2] < qntls[2, 2] 
         .data <- .data[selqtls, ]
+        ukn <- ukn[selqtls]
     }
     
     if (is.null(fcol)) {

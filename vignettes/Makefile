@@ -37,7 +37,6 @@ tut:
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 
 poster:
-	"$(R_HOME)/bin/R" CMD Sweave HUPO_2011_poster.Rnw
 	cp vigsrc/HUPO_2011_poster.pdf .
 
 ml: 

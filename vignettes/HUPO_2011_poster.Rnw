@@ -4,4 +4,13 @@
 
 \documentclass[10pt]{article}
 \begin{document}
+
+
+\begin{document}
+This vignette is a stub. The poster is only available in pdf.
+
+<<session>>=
+sessionInfo()
+@
+
 \end{document}

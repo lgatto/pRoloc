@@ -285,10 +285,11 @@ data(tan2009r1)
 
 The original marker proteins are available as a feature meta-data variables called \Robject{markers} 
 and the output of the partial least square discriminant analysis, applied in the original publication, 
-in the \Robject{PLSDA} feature variable. 
-This is illustrated below using the convenience function \Rfunction{getMarkers}, but could also be done 
-manually with \Rfunction{table(fData(tan2009r1)\$markers)} and \Rfunction{table(fData(tan2009r1)\$PLSDA)} 
-respectively.
+in the \Robject{PLSDA} feature variable. This feature meta-data column can be added from a simple 
+\texttt{csv} markers files using the \Rfunction{addMarkers} function - see \Rfunction{?addMarkers} for details.
+
+The organelle markers are illustrated below using the convenience function \Rfunction{getMarkers}, but could also be done 
+manually with \Rfunction{table(fData(tan2009r1)\$markers)} and \Rfunction{table(fData(tan2009r1)\$PLSDA)} respectively.
 
 <<lookAtTan>>=
 getMarkers(tan2009r1)

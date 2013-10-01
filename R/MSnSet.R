@@ -6,6 +6,8 @@
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The name of the markers column in the \code{featureData}
 ##' slot. Default is \code{markers}.
+##' @param names A \code{logical} indicating if the markers vector should
+##' be named.
 ##' @param verbose If \code{TRUE}, a marker table is printed and the markers
 ##' are returned invisibly. If \code{FALSE}, the markers are returned.
 ##' @return A \code{character} of length \code{ncol(object)}.
@@ -17,8 +19,11 @@
 ##' mymarkers <- getMarkers(dunkley2006)
 getMarkers <- function(object,
                        fcol = "markers",
+                       names = TRUE,
                        verbose = TRUE) {
   organelleMarkers <- as.character(fData(object)[, fcol])
+  if (names)
+      names(organelleMarkers) <- featureNames(object)
   if (verbose) {
     print(table(organelleMarkers))
     invisible(organelleMarkers)

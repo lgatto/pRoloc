@@ -2,7 +2,8 @@
 \alias{getMarkers}
 \title{Returns the organelle markers in an 'MSnSet'}
 \usage{
-  getMarkers(object, fcol = "markers", verbose = TRUE)
+  getMarkers(object, fcol = "markers", names = TRUE,
+    verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class
@@ -10,6 +11,9 @@
 
   \item{fcol}{The name of the markers column in the
   \code{featureData} slot. Default is \code{markers}.}
+
+  \item{names}{A \code{logical} indicating if the markers
+  vector should be named.}
 
   \item{verbose}{If \code{TRUE}, a marker table is printed
   and the markers are returned invisibly. If \code{FALSE},

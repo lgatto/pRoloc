@@ -238,11 +238,27 @@ print(xt, include.rownames = FALSE, size = "small")
 
 \section{Comparison of different classifiers}
 
-All the most famous supervised machine learning algorithms have already been applied to organelle proteomics data classification: 
-partial least square discriminant analysis in \cite{Dunkley2006, Tan2009}, support vector machines (SVMs) in \cite{Trotter2010}, random forest in \cite{Ohta2010}, neural networks in \cite{Tardif2012}, naive Bayes \cite{Nikolovski2012}.
+Several supervised machine learning algorithms have already been applied to organelle proteomics data classification: 
+partial least square discriminant analysis in \cite{Dunkley2006, Tan2009}, support vector machines (SVMs) in \cite{Trotter2010}, random forest in \cite{Ohta2010}, neural networks in \cite{Tardif2012}, naive Bayes \cite{Nikolovski2012}. In our HUPO 2011 poster (see \Rfunction{vignette("HUPO\_2011\_poster", package = "pRoloc")}), we show that different classification algorithms provide very similar performance. We have extended this comparison on various datasets distributed in the \Rpackage{pRolocdata package}. On figure \ref{fig:f1box}, we illustrate how different algorithms reach very similar performances on most of our test datasets. 
 
-\section{Semi-supervised machine learning and noverlty detection}\label{sec:ssml}
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=0.7\textwidth]{./Figures/F1boxplots.pdf}
+\caption{Comparison of classification performances of several contemporaty classification algorithms on data from the \Rpackage{pRolocdata} package.}
+\label{fig:f1box}
+\end{figure}
 
+
+\section{Semi-supervised machine learning and novelty detection}\label{sec:ssml}
+
+The PhenoDisco algorithm is a semi-supervised novelty detection method by \cite{Breckels2013} (figure \ref{fig:pd}). It uses the labelled (i.e. markers, noted $D_L$) and unlabelled (i.e. proteins of unknown localisation, noted $D_U$) sets of the input data. The algorithm is repeated $N$ times (the \Robject{code} argument in the \Rfunction{phenoDisco} function). At each iteration, each organelle class $D_{L}^{i}$ and the unlabelled complement are clustered using Gaussian mixture modelling. While unlabelled members that systematically cluster with $D_{L}^{i}$ and pass outlier detection are labelled as new putative members of class $i$, any example of $D_U$ which are not merged with any any of the $D_{L}^{i}$ and are consistently clustered together throughout the $N$ iterations are considered members of a new phenotype. 
+
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=0.7\textwidth]{./Figures/phenodisco.pdf}
+\caption{The PhenoDisco iterative algorithm.}
+\label{fig:pd}
+\end{figure}
 
 \singlespacing
 

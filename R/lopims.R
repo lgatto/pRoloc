@@ -113,7 +113,8 @@ refNormMeanOfNonNAPepSum <- function(x) {
             refNormMeanOfNonNAPepSum)  
   res2 <- Reduce(rbind, res)
   rownames(res2) <- names(res)
-  xx2 <- combineFeatures(xx, fData(xx)$protein.Accession.LOPIMS1, fun = median)
+  xx2 <- combineFeatures(xx, fData(xx)$protein.Accession.LOPIMS1,
+                         fun = median, na.rm=TRUE)
   ## xx2 <- MSnbase:::nologging(xx2) 
   exprs(xx2) <- res2
   xx2@processingData@processing <-

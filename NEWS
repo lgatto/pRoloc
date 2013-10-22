@@ -1,6 +1,6 @@
 CHANGES IN VERSION 1.3.1
 ------------------------
- o 
+ o using combineFeatures(..., na.rm=TRUE) in lopims pipeine [2013-10-22 Tue]
 
 CHANGES IN VERSION 1.3.0
 ------------------------
@@ -8,61 +8,61 @@ CHANGES IN VERSION 1.3.0
 
 CHANGES IN VERSION 1.1.8
 ------------------------
- o semi-sup and sup comparison sections in ml vig <2013-10-09 Wed>
+ o semi-sup and sup comparison sections in ml vig [2013-10-09 Wed]
 
 CHANGES IN VERSION 1.1.7
 ------------------------
- o getMarkers has names arg <2013-10-01 Tue>
+ o getMarkers has names arg [2013-10-01 Tue]
 
 CHANGES IN VERSION 1.1.6
 ------------------------
- o new outliers arg to plot2D <2013-09-23 Mon>
- o cite addMarkers in vignette <2013-09-26 Thu>
- o add code chunk in poster vig <2013-09-26 Thu>
+ o new outliers arg to plot2D [2013-09-23 Mon]
+ o cite addMarkers in vignette [2013-09-26 Thu]
+ o add code chunk in poster vig [2013-09-26 Thu]
 
 CHANGES IN VERSION 1.1.5
 ------------------------
- o added biocViews <2013-09-19 Thu>
- o added knitr vig engine in ml <2013-09-19 Thu>
- o import dependencies <2013-09-20 Fri>
+ o added biocViews [2013-09-19 Thu]
+ o added knitr vig engine in ml [2013-09-19 Thu]
+ o import dependencies [2013-09-20 Fri]
 
 CHANGES IN VERSION 1.1.4
 ------------------------
- o building ml vignette in Makefile <2013-09-11 Wed>
+ o building ml vignette in Makefile [2013-09-11 Wed]
 
 CHANGES IN VERSION 1.1.3
 ------------------------
  o new private anyUnknown function, used in phenoDisco, to check 
-   for the presence of unlabelled ('unknown') data <2013-08-27 Tue>
+   for the presence of unlabelled ('unknown') data [2013-08-27 Tue]
  o added a note in vignette about "unknown" convention to define 
-   protein with unknown localisation <2013-08-28 Wed>
- o Added HUPO 2011 poster <2013-09-09 Mon>
+   protein with unknown localisation [2013-08-28 Wed]
+ o Added HUPO 2011 poster [2013-09-09 Mon]
 
 CHANGES IN VERSION 1.1.2
 ------------------------
- o fixed Author[s]@R <2013-05-16 Thu>
- o na.rm=TRUE in f1Count <2013-05-19 Sun>
- o added CITATION file <2013-06-07 Fri>
- o new testMarkers function <2013-06-29 Sat>
- o error message in getBestParams suggests to use testMarkers <2013-06-29 Sat>
- o nndist methods (see issue #23) <2013-07-01 Mon>
- o remove unnecessary as.matrix in plot2D's cmdscale <2013-07-19 Fri>
- o added plot2D(..., method = "MDS") example <2013-07-19 Fri>
- o changed 'euclidian' to 'euclidean' in nndist_matrix <2013-07-26 Fri>
- o fixed row ordering in phenoDisco, input and output rownames are now the same <2013-08-13 Tue>
- o Using filterNA in phenoDisco <2013-08-13 Tue>
+ o fixed Author[s]@R [2013-05-16 Thu]
+ o na.rm=TRUE in f1Count [2013-05-19 Sun]
+ o added CITATION file [2013-06-07 Fri]
+ o new testMarkers function [2013-06-29 Sat]
+ o error message in getBestParams suggests to use testMarkers [2013-06-29 Sat]
+ o nndist methods (see issue #23) [2013-07-01 Mon]
+ o remove unnecessary as.matrix in plot2D's cmdscale [2013-07-19 Fri]
+ o added plot2D(..., method = "MDS") example [2013-07-19 Fri]
+ o changed 'euclidian' to 'euclidean' in nndist_matrix [2013-07-26 Fri]
+ o fixed row ordering in phenoDisco, input and output rownames are now the same [2013-08-13 Tue]
+ o Using filterNA in phenoDisco [2013-08-13 Tue]
 
 CHANGES IN VERSION 1.1.1
 ------------------------
  o Update README.md to reflect availability in stable release 
-   and biocLite installation <2013-04-07 Sun>
- o new MSe pipeline <2013-04-07 Sun>
- o perTurbo using Rcpp <2013-04-16 Tue>
- o initial clustering infrastructure (not exported) <2013-04-17 Wed>
- o new markerSet function <2013-04-24 Wed>
- o plsaOptim's ncomp is now 2:6 <2013-04-27 Sat>
- o added forword to vignette <2013-04-29 Mon>
- o default k is now seq(3, 15, 2) in knnOptim <2013-05-09 Thu>
+   and biocLite installation [2013-04-07 Sun]
+ o new MSe pipeline [2013-04-07 Sun]
+ o perTurbo using Rcpp [2013-04-16 Tue]
+ o initial clustering infrastructure (not exported) [2013-04-17 Wed]
+ o new markerSet function [2013-04-24 Wed]
+ o plsaOptim's ncomp is now 2:6 [2013-04-27 Sat]
+ o added forword to vignette [2013-04-29 Mon]
+ o default k is now seq(3, 15, 2) in knnOptim [2013-05-09 Thu]
 
 CHANGES IN VERSION 1.1.0
 ------------------------
@@ -75,119 +75,119 @@ CHANGES IN VERSION 1.0.0
 CHANGES IN VERSION 0.99.17
 --------------------------
  o illustrating class.weights in the 
-   vignette <2013-03-24 Sun>
+   vignette [2013-03-24 Sun]
 
 CHANGES IN VERSION 0.99.16
 --------------------------
- o new addMarkers function <2013-03-22 Fri>
+ o new addMarkers function [2013-03-22 Fri]
 
 CHANGES IN VERSION 0.99.15
 --------------------------
- o Fixing issues in vignette <2013-03-22 Fri>
+ o Fixing issues in vignette [2013-03-22 Fri]
 
 CHANGES IN VERSION 0.99.14
 --------------------------
- o Added scale in tutorial <2013-03-02 Sat>
- o implemented viction <2013-03-09 Sat>
+ o Added scale in tutorial [2013-03-02 Sat]
+ o implemented viction [2013-03-09 Sat]
  o New vignette section on phenoDisco follow 
-   up classification <2013-03-19 Tue>
- o Using knitr engine <2013-03-19 Tue>
+   up classification [2013-03-19 Tue]
+ o Using knitr engine [2013-03-19 Tue]
 
 CHANGES IN VERSION 0.99.13
 --------------------------
- o depending on MSnbase >= 1.7.23 as makeNaData 
-   needs MSnbase:::nologging <2013-02-27 Wed>
+ o depending on MSnbase ]= 1.7.23 as makeNaData 
+   needs MSnbase:::nologging [2013-02-27 Wed]
  o updated phenoDisco parameters, added error messages when an 
    insufficient number of markers per class and/or number of
-   classes are used and updated phenoDisco help file <2012-02-28 Thu>
- o added first belief diffscores function <2013-03-01 Fri>
+   classes are used and updated phenoDisco help file [2012-02-28 Thu]
+ o added first belief diffscores function [2013-03-01 Fri]
 
 CHANGES IN VERSION 0.99.12
 --------------------------
- o plot2D has gained a plot argument <2013-02-19 Tue>
- o new f1Count method <2013-02-20 Wed>
- o new makeNaData function <2013-02-20 Wed>
- o new makeNaData2 function <2013-02-21 Thu>
- o new whichNAfunction <2013-02-20 Wed>
- o updated tutorial vignette <2013-02-20 Wed>
+ o plot2D has gained a plot argument [2013-02-19 Tue]
+ o new f1Count method [2013-02-20 Wed]
+ o new makeNaData function [2013-02-20 Wed]
+ o new makeNaData2 function [2013-02-21 Thu]
+ o new whichNAfunction [2013-02-20 Wed]
+ o updated tutorial vignette [2013-02-20 Wed]
  o Now passing ... to predictor functions in 
-   xxxClassification (reported by Marianne Sandin) <2013-02-26 Tue>
+   xxxClassification (reported by Marianne Sandin) [2013-02-26 Tue]
 
 CHANGES IN VERSION 0.99.11
 --------------------------
  o setUnknowncol(NULL) and friedns reset to default 
-   values <2013-02-19 Tue>
+   values [2013-02-19 Tue]
 
 CHANGES IN VERSION 0.99.10
 --------------------------
- o new default col/pch setters <2013-02-16 Sat>
+ o new default col/pch setters [2013-02-16 Sat]
 
 CHANGES IN VERSION 0.99.9
 -------------------------
  o Updates to phenoDisco: verbose param, fixed error in example, 
-   adding params to processingInfo <2013-02-11 Mon> 
- o Unexported getOtherParams method <2013-02-12 Tue>
- o adding export param documentation <2013-02-12 Tue>
+   adding params to processingInfo [2013-02-11 Mon] 
+ o Unexported getOtherParams method [2013-02-12 Tue]
+ o adding export param documentation [2013-02-12 Tue]
 
 CHANGES IN VERSION 0.99.8
 -------------------------
  o Integration of the perTurbo algorithms, contributed 
-   by Thomas Burger and Samuel Wieczorek <2013-01-18 Fri>
- o summariseMatList now has na.rm = TRUE by default <2013-01-19 Sat>
- o PerTurbo's inv/reg now as other hyperparams <2013-02-11 Mon>
+   by Thomas Burger and Samuel Wieczorek [2013-01-18 Fri]
+ o summariseMatList now has na.rm = TRUE by default [2013-01-19 Sat]
+ o PerTurbo's inv/reg now as other hyperparams [2013-02-11 Mon]
 
 CHANGES IN VERSION 0.99.7
 -------------------------
- o knitr 1.0 compatibility <2013-01-15 Tue>
- o Updated phenoDisco documentation and README <2013-01-10 Thu>
+ o knitr 1.0 compatibility [2013-01-15 Tue]
+ o Updated phenoDisco documentation and README [2013-01-10 Thu]
 
 CHANGES IN VERSION 0.99.6
 -------------------------
- o removed updateClass man <2013-01-03 Thu>
- o removed old Rd files <2013-01-03 Thu>
- o Deprecating *Regularisation and *Prediction function <2013-01-03 Thu>
- o Updated new names in test_ml.R <2013-01-04 Fri>
+ o removed updateClass man [2013-01-03 Thu]
+ o removed old Rd files [2013-01-03 Thu]
+ o Deprecating *Regularisation and *Prediction function [2013-01-03 Thu]
+ o Updated new names in test_ml.R [2013-01-04 Fri]
 
 CHANGES IN VERSION 0.99.5
 -------------------------
  o more reg data into GenRegRes objects 
-   - cmMatrices (knn) <2012-11-15 Thu> (other) <2012-11-30 Fri>
-   - testPartitions (knn) <2012-11-17 Sat> (other) <2012-11-30 Fri>
- o new minMarkers function <2012-11-16 Fri>
- o renamed updateClass to minClassScore <2012-11-16 Fri>
- o renamed xxxRegularisation to xxxOptimisation <2012-11-30 Fri>
- o renamed xxxPrediction to xxxClassification <2012-11-30 Fri>
- o renamed getRegularisedParams to getParams <2012-11-30 Fri>
- o moved exprsToRatios to MSnbase <2012-12-05 Wed>
- o updated phenoDisco help file <2012-12-07 Fri>
- o updated phenoDisco code to cope with identical protein profiles <2012-12-07 Fri>
+   - cmMatrices (knn) [2012-11-15 Thu] (other) [2012-11-30 Fri]
+   - testPartitions (knn) [2012-11-17 Sat] (other) [2012-11-30 Fri]
+ o new minMarkers function [2012-11-16 Fri]
+ o renamed updateClass to minClassScore [2012-11-16 Fri]
+ o renamed xxxRegularisation to xxxOptimisation [2012-11-30 Fri]
+ o renamed xxxPrediction to xxxClassification [2012-11-30 Fri]
+ o renamed getRegularisedParams to getParams [2012-11-30 Fri]
+ o moved exprsToRatios to MSnbase [2012-12-05 Wed]
+ o updated phenoDisco help file [2012-12-07 Fri]
+ o updated phenoDisco code to cope with identical protein profiles [2012-12-07 Fri]
 
 CHANGES IN VERSION 0.99.4
 -------------------------
  o Adding README file describing Rd generation
-   and suggesting roxygen2 <2012-11-14 Wed>
- o Added scol=NULL to ignore completely <2012-11-14 Wed>
+   and suggesting roxygen2 [2012-11-14 Wed]
+ o Added scol=NULL to ignore completely [2012-11-14 Wed]
 
 CHANGES IN VERSION 0.99.3
 -------------------------
- o pdres in extdata - updated vignette <2012-11-14 Wed>
- o udpated pd's GS/times default <2012-11-14 Wed>
+ o pdres in extdata - updated vignette [2012-11-14 Wed]
+ o udpated pd's GS/times default [2012-11-14 Wed]
 
 CHANGES IN VERSION 0.99.2
 -------------------------
  o fixed MLearn("formula", "MSnSet", "clusteringSchema", 
-   "missing") - interface was wrong <2012-11-10 Sat>
- o vignette updates <2012-11-10 Sat> <2012-11-11 Sun>
- o nicer knn score names when scores = "all" <2012-11-11 Sun>
+   "missing") - interface was wrong [2012-11-10 Sat]
+ o vignette updates [2012-11-10 Sat] [2012-11-11 Sun]
+ o nicer knn score names when scores = "all" [2012-11-11 Sun]
 
 CHANGES IN VERSION 0.99.1
 -------------------------
- o updated exprsToRatio when ncol(object) is 2 <2012-11-05 Mon>
- o typos in vignette <2012-11-09 Fri> <2012-11-10 Sat>
+ o updated exprsToRatio when ncol(object) is 2 [2012-11-05 Mon]
+ o typos in vignette [2012-11-09 Fri] [2012-11-10 Sat]
  o new MLearn method for signature 
-   c("formula", "MSnSet", "clusteringSchema", "missing") <2012-11-09 Fri>
- o Several vignette udpates <2012-11-10 Sat>
+   c("formula", "MSnSet", "clusteringSchema", "missing") [2012-11-09 Fri]
+ o Several vignette udpates [2012-11-10 Sat]
 
 CHANGES IN VERSION 0.99.0
 -------------------------
- o Submission to Bioc <2012-11-04 Sun>
+ o Submission to Bioc [2012-11-04 Sun]

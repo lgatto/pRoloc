@@ -19,6 +19,14 @@
   and \code{MSnSet} using the \code{\link{addMarkers}}
   function.
 }
+\details{
+  The markers have been contributed by various members of
+  the Cambridge Centre for proteomics, in particular Dan
+  Nightingale for yeast, Dr Andy Christoforou for human, Dr
+  Arnoud Groen for Arabodopsis. In addition, markers from
+  the \code{pRolocdata} datasets have been extracted. See
+  \code{pRolocdata} for details and references.
+}
 \examples{
 pRolocmarkers()
 table(pRolocmarkers("atha"))

@@ -31,6 +31,7 @@ getMarkers <- function(object,
     return(organelleMarkers)
   }
 }
+
 ##' Tests if the marker class sizes are large enough for the parameter
 ##' optimisation scheme, i.e. the size is greater that \code{xval + n},
 ##' where the default \code{xval} is 5 and \code{n} is 2. If the test
@@ -198,21 +199,41 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' is the name of the marker features and the second the group label.
 ##' It is essential to assure that  \code{featureNames(object)} and
 ##' marker names (first column) match, i.e. the same feature identifiers
-##' and case fold are used.
+##' and case fold are used. Alternatively, a markers named vector as provided
+##' by the \code{\link{pRolocmarkers}} function can also be used.
 ##'
 ##' @title Adds markers to the data
 ##' @param object An instance of class \code{MSnSet}.
-##' @param markerfile A \code{character} with the name the markers' csv file.
+##' @param markers A \code{character} with the name the markers' csv
+##' file of a named character of markers as provided by \code{\link{pRolocmarkers}}. 
 ##' @param verbose A \code{logical} indicating if number of markers
 ##' and marker table should be printed to the console.
 ##' @return A new instance of class \code{MSnSet} with an additional
 ##' \code{markers} feature variable.
 ##' @author Laurent Gatto
-addMarkers <- function(object, markerfile, verbose = TRUE) {
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' atha <- pRolocmarkers("atha")
+##' try(addMarkers(dunkley2006, atha)) ## markers already exists
+##' fData(dunkley2006)$markers.org <- fData(dunkley2006)$markers
+##' fData(dunkley2006)$markers <- NULL
+##' marked <- addMarkers(dunkley2006, atha)
+##' fvarLabels(marked)
+##' plot2D(marked)
+##' addLegend(marked, where = "topleft", cex = .7)
+addMarkers <- function(object, markers, verbose = TRUE) {
   if ("markers" %in% fvarLabels(object))
     stop("Detected an existing 'markers' feature column.")
-  
-  mrk <- read.csv(markerfile, stringsAsFactors = FALSE, row.names = 1)
+  if (length(markers) == 1 && file.exists(markers)) {
+      mrk <- read.csv(markers, stringsAsFactors = FALSE, row.names = 1)
+      mfrom <- basename(markers)
+  } else {
+      mrk <- cbind(markers)
+      mfrom <- paste0(" '",
+                      MSnbase:::getVariableName(match.call(), "markers"),
+                      "' marker vector")
+  } 
   cmn <- intersect(rownames(mrk), featureNames(object))
   if (length(cmn) == 0) {    
     msg <- paste0("No markers found. Are you sure that the feature names match?\n",
@@ -228,7 +249,7 @@ addMarkers <- function(object, markerfile, verbose = TRUE) {
   fData(object)[cmn, "markers"] <- mrk[cmn, 1]
   object@processingData@processing <-
     c(object@processingData@processing,
-      paste0("Added markers from ", basename(markerfile),". ", date()))  
+      paste0("Added markers from ", mfrom,". ", date()))  
   if (validObject(object)) {
     if (verbose) getMarkers(object)
     return(object)

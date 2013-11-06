@@ -297,7 +297,7 @@ updateobject  <- function(MSnSetToUpdate,
 ##'
 ##' One requires 2 or more classes to be labelled in the data 
 ##' and at a very minimum of 6 markers per class to run the algorithm.
-##' The function will check and remove feature with missing values using
+##' The function will check and remove features with missing values using
 ##' the \code{\link{filterNA}} method. 
 ##'
 ##' Important: Prior to version 1.1.2 the row order in the output was different from
@@ -318,7 +318,7 @@ updateobject  <- function(MSnSetToUpdate,
 ##' random number generator seed to be used.
 ##' @param verbose Logical, indicating if messages are to be
 ##' printed out during execution of the algorithm.
-##' @return An instance of class \code{MSnSet} containg the \code{phenoDisco}
+##' @return An instance of class \code{MSnSet} containing the \code{phenoDisco}
 ##' predictions.
 ##' @author Lisa M. Breckels <lms79@@cam.ac.uk>
 ##' @references

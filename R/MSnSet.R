@@ -210,7 +210,8 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' @author Laurent Gatto
 addMarkers <- function(object, markerfile, verbose = TRUE) {
   if ("markers" %in% fvarLabels(object))
-    stop("Detected a feature 'markers' column.")
+    stop("Detected an existing 'markers' feature column.")
+  
   mrk <- read.csv(markerfile, stringsAsFactors = FALSE, row.names = 1)
   cmn <- intersect(rownames(mrk), featureNames(object))
   if (length(cmn) == 0) {    

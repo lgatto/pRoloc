@@ -299,6 +299,18 @@ getMarkers(tan2009r1, fcol = "PLSDA")
 
 \paragraph*{Important} As can be seen above, some proteins are labelled \texttt{"unknown"}, defining non marker proteins. This is a convention in many \Rpackage{pRoloc} functions. Missing annotations (empty string) will not be considered as of unknown localisation; we prefer to avoid empty strings and make the absence of known localisation explicit by using the \texttt{"unknown"} tag. This information will be used to separate marker and non-marker proteins when proceeding with data visulisation and clustering (sections \ref{sec:viz} and \ref{sec:usml}) and classification analysis (section \ref{sec:sml}).
 
+\subsection{\Rpackage{pRoloc}'s organelle markers}
+
+The \Rpackage{pRoloc} package distributes a set of markers that have been obtained by mining the \Rpackage{pRolocdata} datasets and curation by various members of the Cambridge Centre for Proteomics. The available marker sets can be obtained and loaded using the \Rfunction{pRolocmarkers} functions:
+
+<<markers>>=
+pRolocmarkers()
+head(pRolocmarkers("dmel"))
+table(pRolocmarkers("dmel"))
+@
+
+These markers can then be added to a new \Robject{MSnSet} using the \Rfunction{addMarkers} function by matching the marker names (protein identifiers) and the feature names of the \Robject{MSnSet}. See \Rfunction{?addMarkers} for examples.
+
 \subsection{Data processing}
 
 The quantitation data obtained in the supplementary file is normalised to the sum of intensities of each protein; the sum of fraction quantitation for each protein equals 1 (considering rounding errors). This can quickly be verified by computing the row sums of the expression data. 
@@ -725,6 +737,10 @@ As such, one of the emphasis of the software presented in this document is allow
 critically evaluate the results. 
 
 \clearpage
+
+\section*{Acknowledgement}
+
+We would like to thank Mr Daniel J.H. Nightingale, Dr Arnoud J. Groen, Dr Claire M. Mulvey and Dr Andy Christoforou for their organelle marker contributions. 
 
 \singlespacing
 

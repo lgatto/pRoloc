@@ -47,7 +47,7 @@
   using principal component analysis (see
   \code{\link{prcomp}}), classical multidimensional scaling
   (see \code{\link{cmdscale}}) or kernel PCA (see
-  \code{\link{kernal::kpca}}).}
+  \code{kernlab::kpca}).}
 
   \item{methargs}{A \code{list} of arguments to be passed
   when \code{method} is called. If missing, the data will

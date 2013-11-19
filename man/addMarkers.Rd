@@ -2,13 +2,14 @@
 \alias{addMarkers}
 \title{Adds markers to the data}
 \usage{
-  addMarkers(object, markerfile, verbose = TRUE)
+  addMarkers(object, markers, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
 
-  \item{markerfile}{A \code{character} with the name the
-  markers' csv file.}
+  \item{markers}{A \code{character} with the name the
+  markers' csv file of a named character of markers as
+  provided by \code{\link{pRolocmarkers}}.}
 
   \item{verbose}{A \code{logical} indicating if number of
   markers and marker table should be printed to the
@@ -27,6 +28,20 @@
   is essential to assure that \code{featureNames(object)}
   and marker names (first column) match, i.e. the same
   feature identifiers and case fold are used.
+  Alternatively, a markers named vector as provided by the
+  \code{\link{pRolocmarkers}} function can also be used.
+}
+\examples{
+library("pRolocdata")
+data(dunkley2006)
+atha <- pRolocmarkers("atha")
+try(addMarkers(dunkley2006, atha)) ## markers already exists
+fData(dunkley2006)$markers.org <- fData(dunkley2006)$markers
+fData(dunkley2006)$markers <- NULL
+marked <- addMarkers(dunkley2006, atha)
+fvarLabels(marked)
+plot2D(marked)
+addLegend(marked, where = "topleft", cex = .7)
 }
 \author{
   Laurent Gatto

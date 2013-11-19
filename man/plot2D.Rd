@@ -4,10 +4,10 @@
 \usage{
   plot2D(object, fcol = "markers", fpch,
     unknown = "unknown", dims = 1:2, alpha, score = 1,
-    outliers = TRUE, method = c("PCA", "MDS"),
-    axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE,
-    col, pch, cex, index = FALSE, idx.cex = 0.75,
-    identify = FALSE, plot = TRUE, ...)
+    outliers = TRUE, method = c("PCA", "MDS", "kpca"),
+    methargs, axsSwitch = FALSE, mirrorX = FALSE,
+    mirrorY = FALSE, col, pch, cex, index = FALSE,
+    idx.cex = 0.75, identify = FALSE, plot = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -26,7 +26,7 @@
   localisation are labelled.}
 
   \item{dims}{A \code{numeric} of length 2 defining the
-  dimensions to be plotted, i.e the PC/MDS axes.}
+  dimensions to be plotted. Always 1:2 for MDS.}
 
   \item{alpha}{A numeric defining the alpha channel
   (transparency) of the points, where \code{0 <= alpha <=
@@ -42,11 +42,16 @@
   masks the structure of the rest of the data. Outliers are
   defined by the 2.5 and 97.5 percentiles.}
 
-  \item{method}{One of \code{PCA} (default) or \code{MDS},
-  defining if dimensionality reduction is done using
-  principal component analysis (see \code{\link{prcomp}})
-  or classical multidimensional scaling (see
-  \code{\link{cmdscale}}).}
+  \item{method}{One of \code{PCA} (default), \code{MDS} or
+  \code{kpca}, defining if dimensionality reduction is done
+  using principal component analysis (see
+  \code{\link{prcomp}}), classical multidimensional scaling
+  (see \code{\link{cmdscale}}) or kernel PCA (see
+  \code{kernlab::kpca}).}
+
+  \item{methargs}{A \code{list} of arguments to be passed
+  when \code{method} is called. If missing, the data will
+  be scaled and centred prior to PCA.}
 
   \item{axsSwitch}{A \code{logical} indicating whether the
   axes should be switched.}
@@ -99,7 +104,9 @@
 library("pRolocdata")
 data(dunkley2006)
 plot2D(dunkley2006, fcol = NULL)
-plot2D(dunkley2006, fcol = NULL, method = "MDS")
+plot2D(dunkley2006, fcol = NULL, method = "kpca")
+plot2D(dunkley2006, fcol = NULL, method = "kpca",
+       methargs = list(kpar = list(sigma = 1)))
 plot2D(dunkley2006, fcol = "markers")
 addLegend(dunkley2006,
           fcol = "markers",

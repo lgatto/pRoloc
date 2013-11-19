@@ -13,7 +13,7 @@
 ##' @param unknown A \code{character} (default is \code{"unknown"})
 ##' defining how proteins of unknown localisation are labelled.
 ##' @param dims A \code{numeric} of length 2 defining the dimensions
-##' to be plotted, i.e the PC/MDS axes. 
+##' to be plotted. Always 1:2 for MDS.
 ##' @param alpha A numeric defining the alpha channel (transparency)
 ##' of the points, where \code{0 <= alpha <= 1}, 0 and 1 being completely
 ##' transparent and opaque.
@@ -23,10 +23,14 @@
 ##' or ignored (default is TRUE, i.e. all points are plotted). Useful when 
 ##' the presence of outliers masks the structure of the rest of the data.
 ##' Outliers are defined by the 2.5 and 97.5 percentiles. 
-##' @param method One of \code{PCA} (default) or \code{MDS}, defining
-##' if dimensionality reduction is done using principal component
-##' analysis (see \code{\link{prcomp}}) or classical multidimensional
-##' scaling  (see \code{\link{cmdscale}}). 
+##' @param method One of \code{PCA} (default), \code{MDS} or
+##' \code{kpca}, defining if dimensionality reduction is done using
+##' principal component analysis (see \code{\link{prcomp}}), classical
+##' multidimensional scaling (see \code{\link{cmdscale}}) or kernel
+##' PCA (see \code{\link{kernal::kpca}}).
+##' @param methargs A \code{list} of arguments to be passed when
+##' \code{method} is called. If missing, the data will be scaled and
+##' centred prior to PCA.
 ##' @param axsSwitch A \code{logical} indicating whether the axes should be
 ##' switched.
 ##' @param mirrorX A \code{logical} indicating whether the x axis should be mirrored? 
@@ -56,7 +60,9 @@
 ##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' plot2D(dunkley2006, fcol = NULL)
-##' plot2D(dunkley2006, fcol = NULL, method = "MDS")
+##' plot2D(dunkley2006, fcol = NULL, method = "kpca")
+##' plot2D(dunkley2006, fcol = NULL, method = "kpca",
+##'        methargs = list(kpar = list(sigma = 1)))
 ##' plot2D(dunkley2006, fcol = "markers")
 ##' addLegend(dunkley2006,
 ##'           fcol = "markers",
@@ -71,7 +77,8 @@ plot2D <- function(object,
                    alpha,
                    score = 1, ## TODO
                    outliers = TRUE,
-                   method = c("PCA", "MDS"),
+                   method = c("PCA", "MDS", "kpca"),
+                   methargs,
                    axsSwitch = FALSE,
                    mirrorX = FALSE,
                    mirrorY = FALSE,
@@ -123,25 +130,40 @@ plot2D <- function(object,
       warning("Removed ", length(narows), " row(s) with 'NA' values.")    
   } 
   if (method == "PCA") {
-    .pca <- prcomp(exprs(object), scale=TRUE, center=TRUE)
-    .data <- .pca$x[, dims]
-    .vars <- (.pca$sdev)^2
-    .vars <- (.vars / sum(.vars))[dims]
-    .vars <- round(100 * .vars, 2)
-    .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-    .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-  } else { ## MDS
-    .data <- cmdscale(dist(exprs(object), 
-                           method = "euclidean",
-                           diag = FALSE,
-                           upper = FALSE,
-                           p = 2),
-                      eig = TRUE,
-                      k = k)$points
-    .data <- .data[, dims]
-    .xlab <- paste("Dimension", dims[1])
-    .ylab <- paste("Dimension", dims[2])    
-  }
+      if (missing(methargs))
+          methargs <- list(scale = TRUE, center = TRUE)
+      .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                methargs))
+      .data <- .pca$x[, dims]
+      .vars <- (.pca$sdev)^2
+      .vars <- (.vars / sum(.vars))[dims]
+      .vars <- round(100 * .vars, 2)
+      .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+      .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+  } else if (method == "MDS")  { ## MDS
+      if (!missing(methargs))
+          warning("'methargs' ignored for MDS")
+      ## TODO - use other distances
+      .data <- cmdscale(dist(exprs(object), 
+                             method = "euclidean",
+                             diag = FALSE,
+                             upper = FALSE),
+                        k = 2)    
+      .xlab <- paste("Dimension 1")
+      .ylab <- paste("Dimension 2")
+  } else { ## kpca
+      if (missing(methargs)) {
+          .kpca <- kpca(exprs(object))
+      } else {
+          .kpca <- do.call(kpca, c(list(x = exprs(object)),
+                                   methargs))
+      }
+      .data <- rotated(.kpca)[, dims]
+      .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
+      .vars <- round(100 * .vars, 2)
+      .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+      .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+  } 
   if (plot) {
     if (axsSwitch) {
       .data <- .data[, 2:1]

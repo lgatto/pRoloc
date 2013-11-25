@@ -121,7 +121,7 @@ suppressPackageStartupMessages(library("xtable"))
 
 \section{Introduction}\label{sec:intro} 
 
-For a general practical introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), and semi-supervised machine learning (SSML) as implemented in the novetly detection algorithm. 
+For a general practical introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), and semi-supervised machine learning (SSML) as implemented in the novelty detection algorithm. 
 
 \section{Data sets}
 
@@ -148,7 +148,7 @@ Currently, unsupervised clustering facilities are available through the \Rfuncti
 
 \section{Supervised machine learning}\label{sec:sml}
 
-Supervised machine learning refers to a broad family of classification algorithms. The algorithms learns from a modest set of labelled data points called the training data. Each training data example consists of a pair of inputs: the actual data, generally represented as a vector of numbers and a class label, representing the membership to exactly 1 of multiple possible classes. When there are only two possible classes, on refers to binary classification. The training data is used to construct a model that can be used to classifier new, unlabelled examples. The model takes the numeric vectors of the unlabelles data points and return, for each of these inputs, the corresponding mapped class.   
+Supervised machine learning refers to a broad family of classification algorithms. The algorithms learns from a modest set of labelled data points called the training data. Each training data example consists of a pair of inputs: the actual data, generally represented as a vector of numbers and a class label, representing the membership to exactly 1 of multiple possible classes. When there are only two possible classes, on refers to binary classification. The training data is used to construct a model that can be used to classifier new, unlabelled examples. The model takes the numeric vectors of the unlabelled data points and return, for each of these inputs, the corresponding mapped class.   
 
 \subsection{Algorithms used}\label{sec:algo}
 
@@ -158,37 +158,37 @@ Supervised machine learning refers to a broad family of classification algorithm
 \paragraph{Partial least square DA} Function \Rfunction{plsda} from package \Rpackage{caret}. Partial least square discriminant analysis is used to fit a standard PLS model for classification. 
 
 \paragraph{Support vector machine} 
-A support vector machine constructs a hyperplane (or set of hyperplanes for multiple-class problem), which are then used for classification. The best separation is defined as the hyperplane that has the largest distance (the margin) to the nearest data points in any class, which also reduces the classifiation generalisation error. To assure liner separation of the classes, the data is transformed using a \textit{kernel function} into a high-dimensional space, permitting liner separation of the classes.
+A support vector machine constructs a hyperplane (or set of hyperplanes for multiple-class problem), which are then used for classification. The best separation is defined as the hyperplane that has the largest distance (the margin) to the nearest data points in any class, which also reduces the classification generalisation error. To assure liner separation of the classes, the data is transformed using a \textit{kernel function} into a high-dimensional space, permitting liner separation of the classes.
 
 \Rpackage{pRoloc} makes use of the functions \Rfunction{svm} from package \Rpackage{e1071} and \Rfunction{ksvm} from \Rpackage{kernlab}. 
 
-\paragraph{Articifial neural network} Function \Rfunction{nnet} from package \Rpackage{nnet}. Fits a single-hidden-layer neural network, possibly with skip-layer connections.
+\paragraph{Artificial neural network} Function \Rfunction{nnet} from package \Rpackage{nnet}. Fits a single-hidden-layer neural network, possibly with skip-layer connections.
 
 \paragraph{Naive Bayes} Function \Rfunction{naiveBayes} from package \Rpackage{e1071}. Naive Bayes classifier that computes the conditional a-posterior probabilities of a categorical class variable given independent predictor variables using the Bayes rule. Assumes independence of the predictor variables, and Gaussian distribution (given the target class) of metric predictors.
 
-\paragraph{Random Forest} Function \Rfunction{randomRandom} from package \Rpackage{randomForest}.
+\paragraph{Random Forest} Function \Rfunction{randomForest} from package \Rpackage{randomForest}.
 
-\paragraph{Chi-square} Assingnment based on squared differences between a labelled marker and a new feature to be classified. Canonical protein correlation profile method (PCP) uses sqaured differences between a labelled marker and new features. In \citep{Andersen2003}, $\chi^2$ is defined as \emph{the [summed] squared deviation of the normalized profile [from the marker] for all peptides divided by the number of data points}, i.e. $\chi^{2} = \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007} divide by the value the squared value by the value of the reference feature in each fraction, i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i - m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity of feature $x$ in fraction $i$,  $m_i$ is the normalised intensity of marker $m$ in fraction $i$ and $n$ is the number of fractions available. We will use the former definition.
+\paragraph{Chi-square} Assignment based on squared differences between a labelled marker and a new feature to be classified. Canonical protein correlation profile method (PCP) uses squared differences between a labelled marker and new features. In \citep{Andersen2003}, $\chi^2$ is defined as \emph{the [summed] squared deviation of the normalized profile [from the marker] for all peptides divided by the number of data points}, i.e. $\chi^{2} = \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007} divide by the value the squared value by the value of the reference feature in each fraction, i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i - m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity of feature $x$ in fraction $i$,  $m_i$ is the normalised intensity of marker $m$ in fraction $i$ and $n$ is the number of fractions available. We will use the former definition.
 
 \paragraph{PerTurbo}
-From \cite{perturbo}: PerTurbo, an original, non-parametric and efficient classification method is presented here. In our framework, the manifold of each class is characterized by its Laplace-Beltrami operator, which is evaluated with classical methods involving the graph Laplacian. The classification criterion is established thanks to a measure of the magnitude of the spectrum perturbation of this operator. The first experiments show good performances against classical algorithms of the state-of-the-art. Moreover, from this measure is derived an efficient policy to design sampling queries in a context of active learning. Performances collected over toy examples and real world datasets assess the qualities of this strategy.
+From \cite{perturbo}: PerTurbo, an original, non-parametric and efficient classification method is presented here. In our framework, the manifold of each class is characterised by its Laplace-Beltrami operator, which is evaluated with classical methods involving the graph Laplacian. The classification criterion is established thanks to a measure of the magnitude of the spectrum perturbation of this operator. The first experiments show good performances against classical algorithms of the state-of-the-art. Moreover, from this measure is derived an efficient policy to design sampling queries in a context of active learning. Performances collected over toy examples and real world datasets assess the qualities of this strategy.
 
-The PerTurno implementation comes from the \Rpackage{pRoloc} packages.
+The PerTurbo implementation comes from the \Rpackage{pRoloc} packages.
 
  
 \subsection{Default analysis scheme}
 
-We present below a typical classification using \Rpackage{pRoloc}. The analaysis typically consists of two steps. The first one is to optimise the classifier parameters to be used for training and testing (see beginning of this section). A range of parameters are tested using the labelled data, for which the labels are known. For each set of parameters, we hide the labels of a subset of labelled data and use the other part to train a model and apply in on the data with hidden labels. The comparison of the estimated and expected labels enables to assess the validity of the model and hence the adequacy if the parameters. Once adequate parameters have been identified, they are used to infer a model on the complete test set and use of to infer the labels of the unlabelled examples. 
+We present below a typical classification using \Rpackage{pRoloc}. The analysis typically consists of two steps. The first one is to optimise the classifier parameters to be used for training and testing (see beginning of this section). A range of parameters are tested using the labelled data, for which the labels are known. For each set of parameters, we hide the labels of a subset of labelled data and use the other part to train a model and apply in on the data with hidden labels. The comparison of the estimated and expected labels enables to assess the validity of the model and hence the adequacy if the parameters. Once adequate parameters have been identified, they are used to infer a model on the complete test set and use of to infer the labels of the unlabelled examples. 
 
 \minisec{Parameter optimisation}
 
-Agorithmic performance is estimated using a stratified 20/80 partitioning. The 80\% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20\%. The procedure is repeated $n = 100$ \texttt{times} to sample $n$ accuracy metrics (see below) values using $n$, possibly different, optimised parameters for evaluation.
+Algorithmic performance is estimated using a stratified 20/80 partitioning. The 80\% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20\%. The procedure is repeated $n = 100$ \texttt{times} to sample $n$ accuracy metrics (see below) values using $n$, possibly different, optimised parameters for evaluation.
 
-Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \times recall}{precision + recall}$, calculated as the harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a measure of \textit{exactness} -- returned output is a relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of \textit{completeness} -- indicating how much was missed from the output). What we are aiming for are high generalisation accuracies, i.e high $F1$, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.
+Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \times recall}{precision + recall}$, calculated as the harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a measure of \textit{exactness} -- returned output is a relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of \textit{completeness} -- indicating how much was missed from the output). What we are aiming for are high generalisation accuracy, i.e high $F1$, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.
 
 The result of the optimisation procedure are stored in an \Robject{GenRegRes} object that can be inspected, plotted and best parameter pairs can be extracted.
 
-For a given algorithm \texttt{alg}, the corresponding parameter optimisation function is names \Rfunction{algOptimisation} or, equivalently, \Rfunction{olgOptimization}. See table \ref{tab:algo} for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through \Rfunction{?algOptimisation}. 
+For a given algorithm \texttt{alg}, the corresponding parameter optimisation function is names \Rfunction{algOptimisation} or, equivalently, \Rfunction{algOptimization}. See table \ref{tab:algo} for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through \Rfunction{?algOptimisation}. 
 
 <<svmParamOptim, cache = TRUE, warning = FALSE, message = FALSE>>=
 params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
@@ -244,14 +244,14 @@ partial least square discriminant analysis in \cite{Dunkley2006, Tan2009}, suppo
 \begin{figure}[!hbt]
 \centering
     \includegraphics[width=0.7\textwidth]{./Figures/F1boxplots.pdf}
-\caption{Comparison of classification performances of several contemporaty classification algorithms on data from the \Rpackage{pRolocdata} package.}
+\caption{Comparison of classification performances of several contemporary classification algorithms on data from the \Rpackage{pRolocdata} package.}
 \label{fig:f1box}
 \end{figure}
 
 
 \section{Semi-supervised machine learning and novelty detection}\label{sec:ssml}
 
-The PhenoDisco algorithm is a semi-supervised novelty detection method by \cite{Breckels2013} (figure \ref{fig:pd}). It uses the labelled (i.e. markers, noted $D_L$) and unlabelled (i.e. proteins of unknown localisation, noted $D_U$) sets of the input data. The algorithm is repeated $N$ times (the \Robject{code} argument in the \Rfunction{phenoDisco} function). At each iteration, each organelle class $D_{L}^{i}$ and the unlabelled complement are clustered using Gaussian mixture modelling. While unlabelled members that systematically cluster with $D_{L}^{i}$ and pass outlier detection are labelled as new putative members of class $i$, any example of $D_U$ which are not merged with any any of the $D_{L}^{i}$ and are consistently clustered together throughout the $N$ iterations are considered members of a new phenotype. 
+The \emph{phenoDisco} algorithm is a semi-supervised novelty detection method by \cite{Breckels2013} (figure \ref{fig:pd}). It uses the labelled (i.e. markers, noted $D_L$) and unlabelled (i.e. proteins of unknown localisation, noted $D_U$) sets of the input data. The algorithm is repeated $N$ times (the \Robject{code} argument in the \Rfunction{phenoDisco} function). At each iteration, each organelle class $D_{L}^{i}$ and the unlabelled complement are clustered using Gaussian mixture modelling. While unlabelled members that systematically cluster with $D_{L}^{i}$ and pass outlier detection are labelled as new putative members of class $i$, any example of $D_U$ which are not merged with any any of the $D_{L}^{i}$ and are consistently clustered together throughout the $N$ iterations are considered members of a new phenotype. 
 
 \begin{figure}[!hbt]
 \centering

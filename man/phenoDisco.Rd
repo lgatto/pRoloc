@@ -78,12 +78,12 @@ plot2D(pdres, fcol = "pd")
   Using iterative cluster merging with improved gap
   statistics to perform online phenotype discovery in the
   context of high-throughput RNAi screens. BMC
-  Bioinformatics. 2008 Jun 5;9:264. PubMed PMID: 18534020;
-  PubMed Central PMCID: PMC2443381.
+  Bioinformatics. 2008 Jun 5;9:264.  PubMed PMID: 18534020.
 
   Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS
-  and Trotter MWB. The Effect of Organelle Discovery upon
-  Sub-Cellular Protein Localisation. J Proteomics. In
-  Press.
+  and Trotter MWB.  The Effect of Organelle Discovery upon
+  Sub-Cellular Protein Localisation.  J Proteomics. 2013
+  Aug 2;88:129-40. doi: 10.1016/j.jprot.2013.02.019. Epub
+  2013 Mar 21.  PubMed PMID: 23523639.
 }
 

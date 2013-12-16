@@ -4,9 +4,8 @@
 \alias{knnRegularisation}
 \title{knn parameter optimisation}
 \usage{
-  knnOptimisation(object, fcol = "markers",
-    k = seq(3, 15, 2), times = 100, test.size = 0.2,
-    xval = 5, fun = mean, seed, verbose = TRUE, ...)
+knnOptimisation(object, fcol = "markers", k = seq(3, 15, 2), times = 100,
+  test.size = 0.2, xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -38,16 +37,16 @@
   \code{\link{knn}} from package \code{class}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for the k-nearest
-  neighbours algorithm.
+Classification parameter optimisation for the k-nearest
+neighbours algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{knnClassification}} and example therein.
+\code{\link{knnClassification}} and example therein.
 }
 

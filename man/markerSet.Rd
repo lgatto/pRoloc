@@ -3,9 +3,9 @@
 \alias{unknownSet}
 \title{Extract marker subset}
 \usage{
-  markerSet(object, fcol = "markers")
+markerSet(object, fcol = "markers")
 
-  unknownSet(object, fcol = "markers")
+unknownSet(object, fcol = "markers")
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}}
@@ -16,11 +16,11 @@
   "unknown")}). Default is to use \code{"markers"}.}
 }
 \value{
-  An new \code{MSnSet} with marker/unknown proteins only.
+An new \code{MSnSet} with marker/unknown proteins only.
 }
 \description{
-  This function extracts the marker proteins into a new
-  \code{MSnSet}.
+This function extracts the marker proteins into a new
+\code{MSnSet}.
 }
 \examples{
 library("pRolocdata")
@@ -35,6 +35,6 @@ table(fData(mrk)$markers)
 table(fData(unk)$markers)
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

@@ -4,10 +4,9 @@
 \alias{svmRegularisation}
 \title{svm parameter optimisation}
 \usage{
-  svmOptimisation(object, fcol = "markers",
-    cost = 2^(-4:4), sigma = 10^(-2:3), times = 100,
-    test.size = 0.2, xval = 5, fun = mean, seed,
-    verbose = TRUE, ...)
+svmOptimisation(object, fcol = "markers", cost = 2^(-4:4),
+  sigma = 10^(-2:3), times = 100, test.size = 0.2, xval = 5,
+  fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -42,16 +41,16 @@
   \code{\link{svm}} from package \code{e1071}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for the support
-  vector machine algorithm.
+Classification parameter optimisation for the support
+vector machine algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{svmClassification}} and example therein.
+\code{\link{svmClassification}} and example therein.
 }
 

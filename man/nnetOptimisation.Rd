@@ -4,10 +4,9 @@
 \alias{nnetRegularisation}
 \title{nnet parameter optimisation}
 \usage{
-  nnetOptimisation(object, fcol = "markers",
-    decay = c(0, 10^(-1:-5)), size = seq(1, 10, 2),
-    times = 100, test.size = 0.2, xval = 5, fun = mean,
-    seed, verbose = TRUE, ...)
+nnetOptimisation(object, fcol = "markers", decay = c(0, 10^(-1:-5)),
+  size = seq(1, 10, 2), times = 100, test.size = 0.2, xval = 5,
+  fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -42,16 +41,16 @@
   \code{\link{nnet}} from package \code{nnet}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for artificial
-  neural network algorithm.
+Classification parameter optimisation for artificial neural
+network algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{nnetClassification}} and example therein.
+\code{\link{nnetClassification}} and example therein.
 }
 

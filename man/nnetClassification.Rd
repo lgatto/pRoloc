@@ -3,9 +3,8 @@
 \alias{nnetPrediction}
 \title{nnet classification}
 \usage{
-  nnetClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), decay, size,
-    fcol = "markers", ...)
+nnetClassification(object, assessRes, scores = c("prediction", "all", "none"),
+  decay, size, fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -32,14 +31,13 @@
   \code{\link{nnet}} from package \code{nnet}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{nnet} and \code{nnet.scores} feature variables
-  storing the classification results and scores
-  respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{nnet} and \code{nnet.scores} feature variables
+storing the classification results and scores respectively.
 }
 \description{
-  Classification using the artificial neural network
-  algorithm.
+Classification using the artificial neural network
+algorithm.
 }
 \examples{
 library(pRolocdata)
@@ -57,6 +55,6 @@ getPredictions(res, fcol = "nnet", t = 0.75)
 plot2D(res, fcol = "nnet")
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

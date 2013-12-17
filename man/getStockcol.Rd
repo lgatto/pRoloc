@@ -9,21 +9,21 @@
 \alias{setUnknownpch}
 \title{Manage default colours and point characters}
 \usage{
-  getStockcol()
+getStockcol()
 
-  setStockcol(cols)
+setStockcol(cols)
 
-  getStockpch()
+getStockpch()
 
-  setStockpch(pchs)
+setStockpch(pchs)
 
-  getUnknowncol()
+getUnknowncol()
 
-  setUnknowncol(col)
+setUnknowncol(col)
 
-  getUnknownpch()
+getUnknownpch()
 
-  setUnknownpch(pch)
+setUnknownpch(pch)
 }
 \arguments{
   \item{cols}{A vector of colour \code{characters} or
@@ -42,27 +42,27 @@
   default.}
 }
 \value{
-  A \code{character} vector.
+A \code{character} vector.
 
-  Invisibly returns \code{cols}.
+Invisibly returns \code{cols}.
 
-  A \code{numeric} vector.
+A \code{numeric} vector.
 
-  Invisibly returns \code{pchs}.
+Invisibly returns \code{pchs}.
 
-  A \code{character} vector or length 1.
+A \code{character} vector or length 1.
 
-  Invisibly returns \code{col}.
+Invisibly returns \code{col}.
 
-  A \code{numeric} vector of length 1.
+A \code{numeric} vector of length 1.
 
-  Invisibly returns \code{pch}.
+Invisibly returns \code{pch}.
 }
 \description{
-  These functions allow to get/set the default colours and
-  point character that are used when plotting organelle
-  clusters and unknown features. These values are
-  parametrised at the session level.
+These functions allow to get/set the default colours and
+point character that are used when plotting organelle
+clusters and unknown features. These values are
+parametrised at the session level.
 }
 \examples{
 ## defaults for clusters
@@ -83,6 +83,6 @@ setUnknowncol(NULL)
 getUnknowncol()
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

@@ -3,9 +3,8 @@
 \alias{rfPrediction}
 \title{rf classification}
 \usage{
-  rfClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), mtry,
-    fcol = "markers", ...)
+rfClassification(object, assessRes, scores = c("prediction", "all", "none"),
+  mtry, fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -30,12 +29,12 @@
   \code{randomForest}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{rf} and \code{rf.scores} feature variables storing
-  the classification results and scores respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{rf} and \code{rf.scores} feature variables storing
+the classification results and scores respectively.
 }
 \description{
-  Classification using the random forest algorithm.
+Classification using the random forest algorithm.
 }
 \examples{
 library(pRolocdata)
@@ -53,6 +52,6 @@ getPredictions(res, fcol = "rf", t = 0.75)
 plot2D(res, fcol = "rf")
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

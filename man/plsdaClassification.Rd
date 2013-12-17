@@ -3,9 +3,8 @@
 \alias{plsdaPrediction}
 \title{plsda classification}
 \usage{
-  plsdaClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), ncomp,
-    fcol = "markers", ...)
+plsdaClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), ncomp, fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -29,14 +28,13 @@
   \code{\link{plsda}} from package \code{caret}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{plsda} and \code{plsda.scores} feature variables
-  storing the classification results and scores
-  respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{plsda} and \code{plsda.scores} feature variables
+storing the classification results and scores respectively.
 }
 \description{
-  Classification using the partial least square
-  distcriminant analysis algorithm.
+Classification using the partial least square distcriminant
+analysis algorithm.
 }
 \examples{
 \dontrun{
@@ -57,6 +55,6 @@ plot2D(res, fcol = "plsda")
 }
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

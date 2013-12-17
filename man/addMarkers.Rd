@@ -2,7 +2,7 @@
 \alias{addMarkers}
 \title{Adds markers to the data}
 \usage{
-  addMarkers(object, markers, verbose = TRUE)
+addMarkers(object, markers, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -16,20 +16,20 @@
   console.}
 }
 \value{
-  A new instance of class \code{MSnSet} with an additional
-  \code{markers} feature variable.
+A new instance of class \code{MSnSet} with an additional
+\code{markers} feature variable.
 }
 \description{
-  The function adds a 'markers' feature variable. These
-  markers are read from a comma separated values (csv)
-  spreadsheet file. This markers file is expected to have 2
-  columns (others are ignored) where the first is the name
-  of the marker features and the second the group label. It
-  is essential to assure that \code{featureNames(object)}
-  and marker names (first column) match, i.e. the same
-  feature identifiers and case fold are used.
-  Alternatively, a markers named vector as provided by the
-  \code{\link{pRolocmarkers}} function can also be used.
+The function adds a 'markers' feature variable. These
+markers are read from a comma separated values (csv)
+spreadsheet file. This markers file is expected to have 2
+columns (others are ignored) where the first is the name of
+the marker features and the second the group label. It is
+essential to assure that \code{featureNames(object)} and
+marker names (first column) match, i.e. the same feature
+identifiers and case fold are used. Alternatively, a
+markers named vector as provided by the
+\code{\link{pRolocmarkers}} function can also be used.
 }
 \examples{
 library("pRolocdata")
@@ -44,6 +44,6 @@ plot2D(marked)
 addLegend(marked, where = "topleft", cex = .7)
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

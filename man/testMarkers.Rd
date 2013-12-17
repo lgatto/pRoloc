@@ -2,7 +2,7 @@
 \alias{testMarkers}
 \title{Tests marker class sizes}
 \usage{
-  testMarkers(object, xval = 5, n = 2, fcol = "markers")
+testMarkers(object, xval = 5, n = 2, fcol = "markers")
 }
 \arguments{
   \item{object}{An instance of class
@@ -18,24 +18,24 @@
   \code{featureData} slot. Default is \code{"markers"}.}
 }
 \value{
-  If successfull, the test invisibly returns \code{NULL}.
-  Else, it invisibly returns the names of the classes that
-  have too few examples.
+If successfull, the test invisibly returns \code{NULL}.
+Else, it invisibly returns the names of the classes that
+have too few examples.
 }
 \description{
-  Tests if the marker class sizes are large enough for the
-  parameter optimisation scheme, i.e. the size is greater
-  that \code{xval + n}, where the default \code{xval} is 5
-  and \code{n} is 2. If the test is unsuccessful, a warning
-  is thrown.
+Tests if the marker class sizes are large enough for the
+parameter optimisation scheme, i.e. the size is greater
+that \code{xval + n}, where the default \code{xval} is 5
+and \code{n} is 2. If the test is unsuccessful, a warning
+is thrown.
 }
 \details{
-  In case the test indicates that a class contains too few
-  examples, it is advised to either add some or, if not
-  possible, to remove the class altogether (see
-  \code{\link{minMarkers}}) as the parameter optimisation
-  is likely to fail or, at least, produce unreliable
-  results for that class.
+In case the test indicates that a class contains too few
+examples, it is advised to either add some or, if not
+possible, to remove the class altogether (see
+\code{\link{minMarkers}}) as the parameter optimisation is
+likely to fail or, at least, produce unreliable results for
+that class.
 }
 \examples{
 library("pRolocdata")
@@ -46,9 +46,9 @@ toosmall <- testMarkers(dunkley2006, xval = 15)
 toosmall
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{getMarkers}} and \code{\link{minMarkers}}
+\code{\link{getMarkers}} and \code{\link{minMarkers}}
 }
 

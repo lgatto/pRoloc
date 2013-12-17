@@ -3,9 +3,8 @@
 \alias{ksvmPrediction}
 \title{ksvm classification}
 \usage{
-  ksvmClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), cost,
-    fcol = "markers", ...)
+ksvmClassification(object, assessRes, scores = c("prediction", "all", "none"),
+  cost, fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -29,14 +28,12 @@
   \code{\link{ksvm}} from package \code{kernlab}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{ksvm} and \code{ksvm.scores} feature variables
-  storing the classification results and scores
-  respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{ksvm} and \code{ksvm.scores} feature variables
+storing the classification results and scores respectively.
 }
 \description{
-  Classification using the support vector machine
-  algorithm.
+Classification using the support vector machine algorithm.
 }
 \examples{
 library(pRolocdata)
@@ -54,6 +51,6 @@ getPredictions(res, fcol = "ksvm", t = 0.75)
 plot2D(res, fcol = "ksvm")
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

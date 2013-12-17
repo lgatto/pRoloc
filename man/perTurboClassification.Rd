@@ -2,9 +2,8 @@
 \alias{perTurboClassification}
 \title{perTurbo classification}
 \usage{
-  perTurboClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), pRegul, sigma,
-    inv, reg, fcol = "markers")
+perTurboClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), pRegul, sigma, inv, reg, fcol = "markers")
 }
 \arguments{
   \item{object}{An instance of class
@@ -41,13 +40,13 @@
   definitions. Default is \code{markers}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{perTurbo} and \code{perTurbo.scores} feature
-  variables storing the classification results and scores
-  respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{perTurbo} and \code{perTurbo.scores} feature
+variables storing the classification results and scores
+respectively.
 }
 \description{
-  Classification using the PerTurbo algorithm.
+Classification using the PerTurbo algorithm.
 }
 \examples{
 library(pRolocdata)
@@ -70,16 +69,15 @@ getPredictions(res, fcol = "perTurbo", t = 0.75)
 plot2D(res, fcol = "perTurbo")
 }
 \author{
-  Thomas Burger and Samuel Wieczorek
+Thomas Burger and Samuel Wieczorek
 }
 \references{
-  N. Courty, T. Burger, J. Laurent. "PerTurbo: a new
-  classification algorithm based on the spectrum
-  perturbations of the Laplace-Beltrami operator", The
-  European Conference on Machine Learning and Principles
-  and Practice of Knowledge Discovery in Databases
-  (ECML-PKDD 2011), D. Gunopulos et al. (Eds.): ECML PKDD
-  2011, Part I, LNAI 6911, pp. 359 - 374, Athens, Greece,
-  September 2011.
+N. Courty, T. Burger, J. Laurent. "PerTurbo: a new
+classification algorithm based on the spectrum
+perturbations of the Laplace-Beltrami operator", The
+European Conference on Machine Learning and Principles and
+Practice of Knowledge Discovery in Databases (ECML-PKDD
+2011), D. Gunopulos et al. (Eds.): ECML PKDD 2011, Part I,
+LNAI 6911, pp. 359 - 374, Athens, Greece, September 2011.
 }
 

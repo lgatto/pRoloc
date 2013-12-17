@@ -2,9 +2,8 @@
 \alias{phenoDisco}
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
-  phenoDisco(object, fcol = "markers", times = 100,
-    GS = 10, allIter = FALSE, p = 0.05, seed,
-    verbose = TRUE)
+phenoDisco(object, fcol = "markers", times = 100, GS = 10,
+  allIter = FALSE, p = 0.05, seed, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -32,34 +31,33 @@
   printed out during execution of the algorithm.}
 }
 \value{
-  An instance of class \code{MSnSet} containing the
-  \code{phenoDisco} predictions.
+An instance of class \code{MSnSet} containing the
+\code{phenoDisco} predictions.
 }
 \description{
-  \code{phenoDisco} is a semi-supervised iterative approach
-  to detect new protein clusters.
+\code{phenoDisco} is a semi-supervised iterative approach
+to detect new protein clusters.
 }
 \details{
-  The algorithm performs a phenotype discovery analysis as
-  described in Breckels et al. Using this approach one can
-  identify putative subcellular groupings in organelle
-  proteomics experiments for more comprehensive validation
-  in an unbiased fashion. The method is based on the work
-  of Yin et al. and used iterated rounds of Gaussian
-  Mixture Modelling using the Expectation Maximisation
-  algorithm combined with a non-parametric outlier
-  detection test to identify new phenotype clusters.
+The algorithm performs a phenotype discovery analysis as
+described in Breckels et al. Using this approach one can
+identify putative subcellular groupings in organelle
+proteomics experiments for more comprehensive validation in
+an unbiased fashion. The method is based on the work of Yin
+et al. and used iterated rounds of Gaussian Mixture
+Modelling using the Expectation Maximisation algorithm
+combined with a non-parametric outlier detection test to
+identify new phenotype clusters.
 
-  One requires 2 or more classes to be labelled in the data
-  and at a very minimum of 6 markers per class to run the
-  algorithm. The function will check and remove features
-  with missing values using the \code{\link{filterNA}}
-  method.
+One requires 2 or more classes to be labelled in the data
+and at a very minimum of 6 markers per class to run the
+algorithm. The function will check and remove features with
+missing values using the \code{\link{filterNA}} method.
 
-  Important: Prior to version 1.1.2 the row order in the
-  output was different from the row order in the input.
-  This has now been fixed and row ordering is now the same
-  in both input and output objects.
+Important: Prior to version 1.1.2 the row order in the
+output was different from the row order in the input. This
+has now been fixed and row ordering is now the same in both
+input and output objects.
 }
 \examples{
 \dontrun{
@@ -71,19 +69,19 @@ plot2D(pdres, fcol = "pd")
 }
 }
 \author{
-  Lisa M. Breckels <lms79@cam.ac.uk>
+Lisa M. Breckels <lms79@cam.ac.uk>
 }
 \references{
-  Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong ST.
-  Using iterative cluster merging with improved gap
-  statistics to perform online phenotype discovery in the
-  context of high-throughput RNAi screens. BMC
-  Bioinformatics. 2008 Jun 5;9:264.  PubMed PMID: 18534020.
+Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong ST.
+Using iterative cluster merging with improved gap
+statistics to perform online phenotype discovery in the
+context of high-throughput RNAi screens. BMC
+Bioinformatics. 2008 Jun 5;9:264.  PubMed PMID: 18534020.
 
-  Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS
-  and Trotter MWB.  The Effect of Organelle Discovery upon
-  Sub-Cellular Protein Localisation.  J Proteomics. 2013
-  Aug 2;88:129-40. doi: 10.1016/j.jprot.2013.02.019. Epub
-  2013 Mar 21.  PubMed PMID: 23523639.
+Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS
+and Trotter MWB.  The Effect of Organelle Discovery upon
+Sub-Cellular Protein Localisation.  J Proteomics. 2013 Aug
+2;88:129-40. doi: 10.1016/j.jprot.2013.02.019. Epub 2013
+Mar 21.  PubMed PMID: 23523639.
 }
 

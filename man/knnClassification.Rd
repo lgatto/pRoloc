@@ -3,9 +3,8 @@
 \alias{knnPrediction}
 \title{knn classification}
 \usage{
-  knnClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), k,
-    fcol = "markers", ...)
+knnClassification(object, assessRes, scores = c("prediction", "all", "none"),
+  k, fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -29,14 +28,13 @@
   \code{\link{knn}} from package \code{class}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{knn} and \code{knn.scores} feature variables
-  storing the classification results and scores
-  respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{knn} and \code{knn.scores} feature variables storing
+the classification results and scores respectively.
 }
 \description{
-  Classification using for the k-nearest neighbours
-  algorithm.
+Classification using for the k-nearest neighbours
+algorithm.
 }
 \examples{
 library(pRolocdata)
@@ -54,6 +52,6 @@ getPredictions(res, fcol = "knn", t = 0.75)
 plot2D(res, fcol = "knn")
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

@@ -4,9 +4,8 @@
 \alias{ksvmRegularisation}
 \title{ksvm parameter optimisation}
 \usage{
-  ksvmOptimisation(object, fcol = "markers",
-    cost = 2^(-4:4), times = 100, test.size = 0.2,
-    xval = 5, fun = mean, seed, verbose = TRUE, ...)
+ksvmOptimisation(object, fcol = "markers", cost = 2^(-4:4), times = 100,
+  test.size = 0.2, xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -38,16 +37,16 @@
   \code{\link{ksvm}} from package \code{kernlab}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for the support
-  vector machine algorithm.
+Classification parameter optimisation for the support
+vector machine algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{ksvmClassification}} and example therein.
+\code{\link{ksvmClassification}} and example therein.
 }
 

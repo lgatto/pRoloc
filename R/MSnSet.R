@@ -266,20 +266,32 @@ addMarkers <- function(object, markers, verbose = TRUE) {
 ##' of unknown localisation (with
 ##' \code{fData(object)[, fcol] == "unknown")}).
 ##' Default is to use \code{"markers"}.
-##' @return An new \code{MSnSet} with marker proteins only.
+##' @return An new \code{MSnSet} with marker/unknown proteins only.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' mrk <- markerSet(dunkley2006)
+##' unk <- unknownSet(dunkley2006)
 ##' dim(dunkley2006)
 ##' dim(mrk)
+##' dim(unk)
 ##' table(fData(dunkley2006)$markers)
 ##' table(fData(mrk)$markers)
+##' table(fData(unk)$markers)
 markerSet <- function(object, fcol = "markers") {
   mrk <- fData(object)[, fcol]
   object <- object[mrk != "unknown", ]
   ## drop "unknown" level
+  fData(object)[, fcol] <- factor(fData(object)[, fcol])
+  if (validObject(object))
+    return(object)
+}
+
+##' @rdname markerSet
+unknownSet <- function(object, fcol = "markers") {
+  mrk <- fData(object)[, fcol]
+  object <- object[mrk == "unknown", ]
   fData(object)[, fcol] <- factor(fData(object)[, fcol])
   if (validObject(object))
     return(object)

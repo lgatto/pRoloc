@@ -4,9 +4,9 @@
 \alias{nbRegularisation}
 \title{nb paramter optimisation}
 \usage{
-  nbOptimisation(object, fcol = "markers",
-    laplace = seq(0, 5, 0.5), times = 100, test.size = 0.2,
-    xval = 5, fun = mean, seed, verbose = TRUE, ...)
+nbOptimisation(object, fcol = "markers", laplace = seq(0, 5, 0.5),
+  times = 100, test.size = 0.2, xval = 5, fun = mean, seed,
+  verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -38,16 +38,16 @@
   \code{\link{naiveBayes}} from package \code{e1071}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification algorithm parameter for the naive Bayes
-  algorithm.
+Classification algorithm parameter for the naive Bayes
+algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{nbClassification}} and example therein.
+\code{\link{nbClassification}} and example therein.
 }
 

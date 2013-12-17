@@ -3,13 +3,11 @@
 \alias{perTurboOptimization}
 \title{PerTurbo parameter optimisation}
 \usage{
-  perTurboOptimisation(object, fcol = "markers",
-    pRegul = 10^(seq(from = -1, to = 0, by = 0.2)),
-    sigma = 10^(seq(from = -1, to = 1, by = 0.5)),
-    inv = c("Inversion Cholesky", "Moore Penrose", "solve", "svd"),
-    reg = c("tikhonov", "none", "trunc"), times = 1,
-    test.size = 0.2, xval = 5, fun = mean, seed,
-    verbose = TRUE)
+perTurboOptimisation(object, fcol = "markers", pRegul = 10^(seq(from = -1,
+  to = 0, by = 0.2)), sigma = 10^(seq(from = -1, to = 1, by = 0.5)),
+  inv = c("Inversion Cholesky", "Moore Penrose", "solve", "svd"),
+  reg = c("tikhonov", "none", "trunc"), times = 1, test.size = 0.2,
+  xval = 5, fun = mean, seed, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class
@@ -57,16 +55,16 @@
   progress bar is displayed.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for the PerTurbo
-  algorithm
+Classification parameter optimisation for the PerTurbo
+algorithm
 }
 \author{
-  Thomas Burger and Samuel Wieczorek
+Thomas Burger and Samuel Wieczorek
 }
 \seealso{
-  \code{\link{perTurboClassification}} and example therein.
+\code{\link{perTurboClassification}} and example therein.
 }
 

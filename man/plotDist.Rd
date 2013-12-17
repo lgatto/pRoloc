@@ -2,8 +2,8 @@
 \alias{plotDist}
 \title{Plots the distribution of features across fractions}
 \usage{
-  plotDist(object, markers, mcol = "steelblue",
-    pcol = "grey90", alpha = 0.3, fractions, ...)
+plotDist(object, markers, mcol = "steelblue", pcol = "grey90",
+  alpha = 0.3, fractions, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -34,12 +34,12 @@
   \code{\link{plot}}.}
 }
 \value{
-  Used for its side effect of producing a feature
-  distribution plot. Invisibly returns \code{NULL}.
+Used for its side effect of producing a feature
+distribution plot. Invisibly returns \code{NULL}.
 }
 \description{
-  Produces a line plot showing the feature abundances
-  across the fractions.
+Produces a line plot showing the feature abundances across
+the fractions.
 }
 \examples{
 library("pRolocdata")
@@ -51,6 +51,6 @@ plotDist(tan2009r1[i, ],
          main = "Mitochondrion")
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

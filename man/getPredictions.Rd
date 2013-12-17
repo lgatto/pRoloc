@@ -2,7 +2,7 @@
 \alias{getPredictions}
 \title{Returns the predictions in an 'MSnSet'}
 \usage{
-  getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
+getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class
@@ -24,15 +24,15 @@
   \code{FALSE}, the predictions are returned.}
 }
 \value{
-  A \code{character} of length \code{ncol(object)}.
+A \code{character} of length \code{ncol(object)}.
 }
 \description{
-  Convenience accessor to the predicted feature
-  localisation in an 'MSnSet'. This function returns the
-  predictions of an \code{MSnSet} instance. As a side
-  effect, it prints out a prediction table.
+Convenience accessor to the predicted feature localisation
+in an 'MSnSet'. This function returns the predictions of an
+\code{MSnSet} instance. As a side effect, it prints out a
+prediction table.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

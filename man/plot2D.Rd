@@ -2,12 +2,11 @@
 \alias{plot2D}
 \title{Plot organelle assignment data and results.}
 \usage{
-  plot2D(object, fcol = "markers", fpch,
-    unknown = "unknown", dims = 1:2, alpha, score = 1,
-    outliers = TRUE, method = c("PCA", "MDS", "kpca"),
-    methargs, axsSwitch = FALSE, mirrorX = FALSE,
-    mirrorY = FALSE, col, pch, cex, index = FALSE,
-    idx.cex = 0.75, identify = FALSE, plot = TRUE, ...)
+plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
+  alpha, score = 1, outliers = TRUE, method = c("PCA", "MDS", "kpca"),
+  methargs, axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch,
+  cex, index = FALSE, idx.cex = 0.75, identify = FALSE, plot = TRUE,
+  ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -91,14 +90,14 @@
   and \code{points}.}
 }
 \value{
-  Used for its side effects of generating a plot. Invisibly
-  returns the 2d data.
+Used for its side effects of generating a plot. Invisibly
+returns the 2d data.
 }
 \description{
-  Generate 2 dimensional or feature distribution plots to
-  illustrate localistation clusters. In \code{plot2D}, rows
-  containing \code{NA} values are removed prior to
-  dimention reduction.
+Generate 2 dimensional or feature distribution plots to
+illustrate localistation clusters. In \code{plot2D}, rows
+containing \code{NA} values are removed prior to dimention
+reduction.
 }
 \examples{
 library("pRolocdata")
@@ -115,12 +114,12 @@ addLegend(dunkley2006,
 title(main = "plot2D example")
 }
 \author{
-  Laurent Gatto <lg390@cam.ac.uk>
+Laurent Gatto <lg390@cam.ac.uk>
 }
 \seealso{
-  \code{\link{addLegend}} to add a legend to \code{plot2D}
-  figures and \code{\link{plotDist}} for alternative
-  graphical representation of quantitative organelle
-  proteomics data.
+\code{\link{addLegend}} to add a legend to \code{plot2D}
+figures and \code{\link{plotDist}} for alternative
+graphical representation of quantitative organelle
+proteomics data.
 }
 

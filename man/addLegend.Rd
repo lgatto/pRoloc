@@ -2,8 +2,7 @@
 \alias{addLegend}
 \title{Adds a legend}
 \usage{
-  addLegend(object, fcol = "markers", where = "other", col,
-    ...)
+addLegend(object, fcol = "markers", where = "other", col, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}}
@@ -24,12 +23,12 @@
   \code{\link{legend}}.}
 }
 \value{
-  Invisibly returns \code{NULL}
+Invisibly returns \code{NULL}
 }
 \description{
-  Adds a legend to a \code{\link{plot2D}} figure.
+Adds a legend to a \code{\link{plot2D}} figure.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

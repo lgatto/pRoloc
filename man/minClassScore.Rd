@@ -2,7 +2,7 @@
 \alias{minClassScore}
 \title{Updates classes based on prediction scores}
 \usage{
-  minClassScore(object, fcol, scol, t = 0)
+minClassScore(object, fcol, scol, t = 0)
 }
 \arguments{
   \item{object}{An instance of class
@@ -19,15 +19,15 @@
   are set to 'unknown'. Default is 0.}
 }
 \value{
-  The original \code{object} with a modified
-  \code{fData(object)[, fcol]} feature variable.
+The original \code{object} with a modified
+\code{fData(object)[, fcol]} feature variable.
 }
 \description{
-  This functions updates the classification results in an
-  \code{"\linkS4class{MSnSet}"} based on a prediction score
-  threshold \code{t}. All features with a score < t are set
-  to 'unknown'. Note that the original levels are preserved
-  while 'unknown' is added.
+This functions updates the classification results in an
+\code{"\linkS4class{MSnSet}"} based on a prediction score
+threshold \code{t}. All features with a score < t are set
+to 'unknown'. Note that the original levels are preserved
+while 'unknown' is added.
 }
 \examples{
 library(pRolocdata)
@@ -42,6 +42,6 @@ all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
           getPredictions(x, fcol = "assigned"))
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

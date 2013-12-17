@@ -4,9 +4,8 @@
 \alias{plsdaRegularisation}
 \title{plsda parameter optimisation}
 \usage{
-  plsdaOptimisation(object, fcol = "markers", ncomp = 2:6,
-    times = 100, test.size = 0.2, xval = 5, fun = mean,
-    seed, verbose = TRUE, ...)
+plsdaOptimisation(object, fcol = "markers", ncomp = 2:6, times = 100,
+  test.size = 0.2, xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -38,16 +37,16 @@
   \code{\link{plsda}} from package \code{caret}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for the partial
-  least square distcriminant analysis algorithm.
+Classification parameter optimisation for the partial least
+square distcriminant analysis algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{plsdaClassification}} and example therein.
+\code{\link{plsdaClassification}} and example therein.
 }
 

@@ -4,9 +4,8 @@
 \alias{rfRegularisation}
 \title{svm parameter optimisation}
 \usage{
-  rfOptimisation(object, fcol = "markers", mtry = NULL,
-    times = 100, test.size = 0.2, xval = 5, fun = mean,
-    seed, verbose = TRUE, ...)
+rfOptimisation(object, fcol = "markers", mtry = NULL, times = 100,
+  test.size = 0.2, xval = 5, fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -39,16 +38,16 @@
   \code{randomForest}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{GenRegRes}"}.
+An instance of class \code{"\linkS4class{GenRegRes}"}.
 }
 \description{
-  Classification parameter optimisation for the random
-  forest algorithm.
+Classification parameter optimisation for the random forest
+algorithm.
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 \seealso{
-  \code{\link{rfClassification}} and example therein.
+\code{\link{rfClassification}} and example therein.
 }
 

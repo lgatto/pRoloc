@@ -3,9 +3,8 @@
 \alias{nbPrediction}
 \title{nb classification}
 \usage{
-  nbClassification(object, assessRes,
-    scores = c("prediction", "all", "none"), laplace,
-    fcol = "markers", ...)
+nbClassification(object, assessRes, scores = c("prediction", "all", "none"),
+  laplace, fcol = "markers", ...)
 }
 \arguments{
   \item{object}{An instance of class
@@ -29,12 +28,12 @@
   \code{\link{naiveBayes}} from package \code{e1071}.}
 }
 \value{
-  An instance of class \code{"\linkS4class{MSnSet}"} with
-  \code{nb} and \code{nb.scores} feature variables storing
-  the classification results and scores respectively.
+An instance of class \code{"\linkS4class{MSnSet}"} with
+\code{nb} and \code{nb.scores} feature variables storing
+the classification results and scores respectively.
 }
 \description{
-  Classification using the naive Bayes algorithm.
+Classification using the naive Bayes algorithm.
 }
 \examples{
 library(pRolocdata)
@@ -52,6 +51,6 @@ getPredictions(res, fcol = "naiveBayes", t = 1)
 plot2D(res, fcol = "naiveBayes")
 }
 \author{
-  Laurent Gatto
+Laurent Gatto
 }
 

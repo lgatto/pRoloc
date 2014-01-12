@@ -1,23 +1,25 @@
 citHeader("To cite package 'pRoloc' in publications use:")
 
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
-vers <- paste("R package version", meta$Version)
-
-citEntry(entry = "Manual",
-         title = "pRoloc: A unifying bioinformatics framework for spatial proteomics",
+citEntry(entry = "article",
+         title = "Mass-spectrometry based spatial proteomics data analysis using pRoloc and pRolocdata",
          author = personList(
              as.person("Laurent Gatto"),
-             as.person("Lisa Breckels")),
-         year = year,
-         note = vers,         
+             as.person("Lisa M. Breckels"),
+             as.person("Samuel Wieczorek"),
+             as.person("Thomas Burger"),
+             as.person("Kathryn S. Lilley")),
+         journal = "Bioinformatics",
+         year = "2014",
          textVersion =
-         paste0("Laurent Gatto and Lisa Breckels (", year,
-                "). pRoloc: A unifying bioinformatics framework for spatial proteomics ", 
-                vers, "."))
+         paste0("Gatto L, Breckels LM, Wieczorek S, Burger T and Lilley KS, ",
+                "Mass-spectrometry based spatial proteomics data analysis using pRoloc and pRolocdata. ",
+                "Bioinformatics. 2014 doi: 10.1093/bioinformatics/btu013.")
+         )
 
 citEntry(entry = "article",
          title = "The effect of organelle discovery upon sub-cellular protein localisation",
-         author = personList(as.person("Lisa M. Breckels"),
+         author = personList(
+             as.person("Lisa M. Breckels"),
              as.person("Laurent Gatto"),
              as.person("Andy Christoforou"),
              as.person("Arnoud J. Groen"),

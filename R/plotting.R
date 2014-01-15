@@ -210,7 +210,7 @@ plot2D <- function(object,
     }
     pch[ukn] <- unknownpch
     if (!outliers) {
-        qntls <- apply(.data, 2, quantile, c(0.025, 0.971))
+        qntls <- apply(.data, 2, quantile, c(0.025, 0.975))
         selqtls <- .data[, 1] > qntls[1, 1] &
             .data[, 1] < qntls[2, 1] &
                 .data[, 2] > qntls[1, 2] &
@@ -373,3 +373,205 @@ plotDist <- function(object,
   invisible(NULL)
 }
 
+
+
+
+plot2D_ <- function(object,
+                    fcol = "markers",
+                    fpch,
+                    unknown = "unknown",
+                    dims = 1:2,
+                    alpha,
+                    score = 1, ## TODO
+                    outliers = TRUE,
+                    method = c("PCA", "MDS", "kpca"),
+                    methargs,
+                    axsSwitch = FALSE,
+                    mirrorX = FALSE,
+                    mirrorY = FALSE,
+                    col,
+                    pch,
+                    cex,
+                    index = FALSE,
+                    idx.cex = 0.75,
+                    identify = FALSE,
+                    plot = TRUE,
+                    ...) {
+    if (!missing(col)) {
+        stockcol <- col
+    } else {
+        stockcol <- getStockcol()  
+    }
+    if (!missing(pch)) {
+        stockpch <- pch
+    } else {
+        stockpch <- getStockpch()  
+    }
+    unknowncol <- getUnknowncol()
+    unknownpch <- getUnknownpch()
+    if (all(substr(stockcol,1 ,1) == "#") & !missing(alpha)) {
+        if (alpha < 0)
+            alpha <- 0
+        if (alpha > 1)
+            alpha <- 1
+        alpha <- as.hexmode(as.integer(alpha * 255))
+        stockcol <- paste0(stockcol, alpha)
+    }  
+    if (!is.null(fcol) && !fcol %in% fvarLabels(object))
+        stop("'", fcol, "' not found in feature variables.")
+    if (!missing(fpch) && !fpch %in% fvarLabels(object))
+        stop("'", fpch, "' not found in feature variables.")
+    method <- match.arg(method)
+    if (length(dims) > 2) {
+        warning("Using first two dimensions of ", dims)
+        dims <- dims[1:2]
+    }
+    k <- max(dims)
+    if (any(is.na(exprs(object)))) {
+        narows <- unique(which(is.na(exprs(object)),
+                               arr.ind = TRUE)[, "row"])
+        object <- object[-narows, ]
+        if (nrow(object) == 0)
+            stop("No rows left after removing NAs!")
+        else
+            warning("Removed ", length(narows), " row(s) with 'NA' values.")    
+    } 
+    if (method == "PCA") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                  methargs))
+        .data <- .pca$x[, dims]
+        .vars <- (.pca$sdev)^2
+        .vars <- (.vars / sum(.vars))[dims]
+        .vars <- round(100 * .vars, 2)
+        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+    } else if (method == "MDS")  { ## MDS
+        if (!missing(methargs))
+            warning("'methargs' ignored for MDS")
+        ## TODO - use other distances
+        .data <- cmdscale(dist(exprs(object), 
+                               method = "euclidean",
+                               diag = FALSE,
+                               upper = FALSE),
+                          k = 2)    
+        .xlab <- paste("Dimension 1")
+        .ylab <- paste("Dimension 2")
+    } else { ## kpca
+        if (missing(methargs)) {
+            .kpca <- kpca(exprs(object))
+        } else {
+            .kpca <- do.call(kpca, c(list(x = exprs(object)),
+                                     methargs))
+        }
+        .data <- rotated(.kpca)[, dims]
+        .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
+        .vars <- round(100 * .vars, 2)
+        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+    } 
+    if (plot) {
+        if (axsSwitch) {
+            .data <- .data[, 2:1]
+            .tmp <- .xlab
+            .xlab <- .ylab
+            .ylab <- .tmp
+        }
+        if (mirrorX)
+            .data[, 1] <- -.data[, 1]
+        if (mirrorY)
+            .data[, 2] <- -.data[, 2]
+        
+        col <- rep(unknowncol, nrow(.data))
+        pch <- rep(unknownpch, nrow(.data))
+        if (missing(cex)) {
+            cex <- rep(1, nrow(.data))
+        } else {
+            if (length(cex) == 1) {
+                cex <- rep(cex, nrow(.data))
+            } else {
+                .n <- nrow(.data) %/% length(cex)
+                .m <- nrow(.data) %% length(cex)
+                cex <- c(rep(cex, .n),
+                         cex[.m])        
+            }
+        }
+        stopifnot(length(cex) == nrow(.data))
+        
+        if (!is.null(fcol)) {
+            ukn <- fData(object)[, fcol] == unknown
+        } else {
+            ukn <- rep(TRUE, nrow(.data))
+        }
+        
+        if (!is.null(fcol)) {
+            .fcol <- factor(fData(object)[, fcol])    
+            col <- stockcol[as.numeric(.fcol)]
+            col[ukn] <- unknowncol
+        }
+        if (!missing(fpch)) {   
+            .fpch <- factor(fData(object)[, fpch])
+            pch <- stockpch[as.numeric(.fpch)]
+        } else {
+            pch <- rep(19, nrow(.data))
+        }
+        pch[ukn] <- unknownpch
+        if (!outliers) {
+            qntls <- apply(.data, 2, quantile, c(0.025, 0.975))
+            selqtls <- .data[, 1] > qntls[1, 1] &
+                .data[, 1] < qntls[2, 1] &
+                    .data[, 2] > qntls[1, 2] &
+                        .data[, 2] < qntls[2, 2] 
+            .data <- .data[selqtls, ]
+            ukn <- ukn[selqtls]
+        }
+
+        nclst <- length(unique(fData(object)[, fcol])) - 1
+        ncol <- length(stockpch)
+        npch <- length(stockpch)
+        if (is.null(fcol)) {
+            plot(.data, xlab = .xlab, ylab = .ylab)
+        } else if (nclst > ncol) {
+            warning("Not enough colours: using colours and pch.")
+            if (nclst > ncol * npch)
+                warning(paste0("Not enough colours and pch.\n",
+                               "Some classes will not be coloured."))
+            k <- nclst / ncol
+            ## pchs for each cluster
+            kk <- rep(1:ceiling(k), each = ncol)[1:nclst]
+            ## cols for each cluster
+            jj <- rep(1:ncol, ceiling(k))[1:nclst]
+            plot(.data, xlab = .xlab, ylab = .ylab,
+                 type = "n", ...)
+            points(.data[ukn, ], col = col[ukn],
+                   pch = pch[ukn], cex = cex[ukn], ...)
+            clst <- unique(fData(object)[, fcol])
+            clst <- clst[clst != "unknown"]            
+            for (i in 1:nclst) {
+                sel <- fData(object)[, fcol] == clst[i]
+                points(.data[sel, ],
+                       cex = cex[!ukn],
+                       col = stockcol[jj[i]],
+                       pch = stockpch[kk[i]]) 
+            }            
+        } else {
+            plot(.data, xlab = .xlab, ylab = .ylab,
+                 type = "n", ...)
+            points(.data[ukn, ], col = col[ukn],
+                   pch = pch[ukn], cex = cex[ukn], ...)
+            points(.data[!ukn, ], col = col[!ukn],
+                   pch = pch[!ukn], cex = cex[!ukn], ...)
+        }  
+        grid()
+        if (index) {
+            text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
+        }
+        if (identify) {
+            ids <- identify(.data[, 1], .data[, 2],
+                            rownames(.data))
+            return(ids)    
+        }
+    }
+    invisible(.data)
+}

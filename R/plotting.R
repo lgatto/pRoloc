@@ -389,7 +389,8 @@ plotDist <- function(object,
 ##' @author Laurent Gatto
 .isbig <- function(object, fcol, stockcol, stockpch) {
     ## number of clusters to be coloured
-    nclst <- length(unique(fData(object)[, fcol]))
+    clsts <- unique(fData(object)[, fcol])    
+    nclst <- length(clsts[clsts != "unknown"])
     ## number of available colours
     ncol <- length(stockcol)
     ## number of available plotting characters
@@ -644,7 +645,9 @@ addLegend_ <- function(object,
     unknownpch <- getUnknownpch()
     stockpch <- getStockpch()
     txt <- levels(factor(fData(object)[, fcol]))
-    isbig <- .isbig(object, fcol, stockpch, stockcol)    
+    if ("unknown" %in% txt)
+        txt <- c(txt[txt != "unknown"], "unknown")
+    isbig <- .isbig(object, fcol, stockcol, stockpch)    
     if (isbig[["big"]]) {
         col <- stockcol[isbig[["jj"]]]
         pch <- stockpch[isbig[["kk"]]]

@@ -374,6 +374,46 @@ plotDist <- function(object,
 }
 
 
+##' The function checks if the number of clusters to be highlighted is
+##' larger than the number of available colours and plotting
+##' characters and returns the necessary variables to use both to
+##' distinguish all clusters.
+##'
+##' @title Are there many clusters to plot?
+##' @param object An \code{MSnSet} instance
+##' @param fcol Feature variable name used as markers
+##' @param stockcol Vector of colours.
+##' @param stockpch Vector of plotting characters.
+##' @return A \code{list} of necessary variables for plot and legend
+##' printing. See code for details.
+##' @author Laurent Gatto
+.isbig <- function(object, fcol, stockcol, stockpch) {
+    ## number of clusters to be coloured
+    nclst <- length(unique(fData(object)[, fcol]))
+    ## number of available colours
+    ncol <- length(stockcol)
+    ## number of available plotting characters
+    npch <- length(stockpch)
+    big <- (nclst > ncol)
+    toobig <- (nclst > ncol * npch)
+    if (big) {
+        if (toobig) warning(paste0("Not enough colours and pch.\n",
+                                   "Some classes will not be coloured."),
+                            call. = FALSE)
+        else warning("Not enough colours: using colours and pch.",
+                     call. = FALSE)
+    }
+    k <- nclst / ncol
+    ## pch indices
+    kk <- rep(1:ceiling(k), each = ncol)[1:nclst]
+    ## colour indices
+    jj <- rep(1:ncol, ceiling(k))[1:nclst]
+    return(list(big = big, toobig = toobig,
+                nclst = nclst,
+                ncol = ncol, npch = npch,
+                k = k, kk = kk, jj = jj))
+}
+
 
 ## TODO: apply similar changes to addLegend
 plot2D_ <- function(object,
@@ -441,8 +481,8 @@ plot2D_ <- function(object,
             methargs <- list(scale = TRUE, center = TRUE)
         .pca <- do.call(prcomp, c(list(x = exprs(object)), 
                                   methargs))
-        plot(.pca)
         .data <- .pca$x
+        plot(.pca, npcs = ncol(.data))
         plot <- FALSE
     } else if (method == "PCA") {
         if (missing(methargs))
@@ -535,33 +575,23 @@ plot2D_ <- function(object,
             ukn <- ukn[selqtls]
         }
 
-        nclst <- length(unique(fData(object)[, fcol])) - 1
-        ncol <- length(stockpch)
-        npch <- length(stockpch)
+        isbig <- .isbig(object, fcol, stockcol, stockpch)
+        
         if (is.null(fcol)) {
-            plot(.data, xlab = .xlab, ylab = .ylab)
-        } else if (nclst > ncol) {
-            warning("Not enough colours: using colours and pch.")
-            if (nclst > ncol * npch)
-                warning(paste0("Not enough colours and pch.\n",
-                               "Some classes will not be coloured."))
-            k <- nclst / ncol
-            ## pchs for each cluster
-            kk <- rep(1:ceiling(k), each = ncol)[1:nclst]
-            ## cols for each cluster
-            jj <- rep(1:ncol, ceiling(k))[1:nclst]
+            plot(.data, xlab = .xlab, ylab = .ylab, ...)
+        } else if (isbig[["big"]]) {
             plot(.data, xlab = .xlab, ylab = .ylab,
                  type = "n", ...)
             points(.data[ukn, ], col = col[ukn],
                    pch = pch[ukn], cex = cex[ukn], ...)
             clst <- unique(fData(object)[, fcol])
-            clst <- clst[clst != "unknown"]            
-            for (i in 1:nclst) {
+            clst <- clst[clst != "unknown"]
+            for (i in 1:isbig[["nclst"]]) {
                 sel <- fData(object)[, fcol] == clst[i]
                 points(.data[sel, ],
                        cex = cex[!ukn],
-                       col = stockcol[jj[i]],
-                       pch = stockpch[kk[i]]) 
+                       col = stockcol[isbig[["jj"]][i]],
+                       pch = stockpch[isbig[["kk"]][i]]) 
             }            
         } else {
             plot(.data, xlab = .xlab, ylab = .ylab,
@@ -582,4 +612,48 @@ plot2D_ <- function(object,
         }
     }
     invisible(.data)
+}
+
+
+addLegend_ <- function(object,
+                       fcol = "markers",
+                       where = c("other", "bottomright", "bottom",
+                           "bottomleft", "left", "topleft",
+                           "top", "topright", "right", "center"),
+                       col,
+                       ...) {
+    where <- match.arg(where)
+    if (where == "other") {
+        dev.new()
+        where <- "center"
+        plot(0, type = "n", bty = "n",
+             xaxt = "n", yaxt = "n",
+             xlab = "", ylab = "")
+    }
+    
+    if (is.null(fcol))
+        fcol <- "markers"
+    if (!fcol %in% fvarLabels(object))
+        stop("'", fcol, "' not found in feature variables.")
+    if (missing(col)) {
+        stockcol <- getStockcol()
+    } else {
+        stockcol <- col
+    }  
+    unknowncol <- getUnknowncol()
+    unknownpch <- getUnknownpch()
+    stockpch <- getStockpch()
+    txt <- levels(factor(fData(object)[, fcol]))
+    isbig <- .isbig(object, fcol, stockpch, stockcol)    
+    if (isbig[["big"]]) {
+        col <- stockcol[isbig[["jj"]]]
+        pch <- stockpch[isbig[["kk"]]]
+    } else {
+        col <- stockcol[seq_len(length(txt))]
+        pch <- rep(19, length(txt))
+    }    
+    col[txt == "unknown"] <- unknowncol
+    pch[txt == "unknown"] <- unknownpch    
+    legend(where, txt, col = col, pch = pch, ...)    
+    invisible(NULL)
 }

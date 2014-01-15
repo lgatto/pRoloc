@@ -375,7 +375,7 @@ plotDist <- function(object,
 
 
 
-
+## TODO: apply similar changes to addLegend
 plot2D_ <- function(object,
                     fcol = "markers",
                     fpch,
@@ -384,7 +384,7 @@ plot2D_ <- function(object,
                     alpha,
                     score = 1, ## TODO
                     outliers = TRUE,
-                    method = c("PCA", "MDS", "kpca"),
+                    method = c("PCA", "MDS", "kpca", "scree"),
                     methargs,
                     axsSwitch = FALSE,
                     mirrorX = FALSE,
@@ -435,8 +435,16 @@ plot2D_ <- function(object,
             stop("No rows left after removing NAs!")
         else
             warning("Removed ", length(narows), " row(s) with 'NA' values.")    
-    } 
-    if (method == "PCA") {
+    }
+    if (method == "scree") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                  methargs))
+        plot(.pca)
+        .data <- .pca$x
+        plot <- FALSE
+    } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
         .pca <- do.call(prcomp, c(list(x = exprs(object)), 

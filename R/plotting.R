@@ -388,6 +388,11 @@ plotDist <- function(object,
 ##' printing. See code for details.
 ##' @author Laurent Gatto
 .isbig <- function(object, fcol, stockcol, stockpch) {
+    if (is.null(fcol))
+        return(list(big = FALSE, toobig = FALSE,
+                    nclst = NA,
+                    ncol = NA, npch = NA,
+                    k = NA, kk = NA, jj = NA))
     ## number of clusters to be coloured
     clsts <- unique(fData(object)[, fcol])    
     nclst <- length(clsts[clsts != "unknown"])
@@ -416,7 +421,6 @@ plotDist <- function(object,
 }
 
 
-## TODO: apply similar changes to addLegend
 plot2D_ <- function(object,
                     fcol = "markers",
                     fpch,
@@ -563,7 +567,8 @@ plot2D_ <- function(object,
             .fpch <- factor(fData(object)[, fpch])
             pch <- stockpch[as.numeric(.fpch)]
         } else {
-            pch <- rep(19, nrow(.data))
+            ## pch <- rep(19, nrow(.data))
+            pch <- rep(stockpch[1], nrow(.data))
         }
         pch[ukn] <- unknownpch
         if (!outliers) {

@@ -424,7 +424,6 @@ plotDist <- function(object,
 }
 
 
-
 ##' Plot organelle assignment data and results.
 ##' 
 ##' Generate 2 dimensional or feature distribution plots to illustrate
@@ -435,7 +434,10 @@ plotDist <- function(object,
 ##' support more more orgnalle classes than colours defined in
 ##' \code{\link{getStockcol}}. In such cases, the defauly colours are
 ##' recycled using the default plotting characters defined in
-##' \code{\link{getStockpch}}. See the example for an illustration.
+##' \code{\link{getStockpch}}. See the example for an
+##' illustration. The \code{alpha} argument is also depreciated in
+##' version 1.3.6. Use \code{setStockcol} to set colours with
+##' transparency instead. See example below.
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol Feature meta-data label (fData column name) defining
@@ -447,8 +449,6 @@ plotDist <- function(object,
 ##' defining how proteins of unknown localisation are labelled.
 ##' @param dims A \code{numeric} of length 2 defining the dimensions
 ##' to be plotted. Always 1:2 for MDS.
-##' @param alpha Depreciated in version 1.3.6. Use \code{setStockcol}
-##' to set colours with transparency instead. See example below.
 ##' @param score A numeric specifying the minimum organelle assignment score
 ##' to consider features to be assigned an organelle. (not yet implemented).
 ##' @param outliers A logical specifying whether outliers should be plotted

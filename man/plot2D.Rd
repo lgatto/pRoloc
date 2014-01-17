@@ -27,10 +27,6 @@ plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
   \item{dims}{A \code{numeric} of length 2 defining the
   dimensions to be plotted. Always 1:2 for MDS.}
 
-  \item{alpha}{Depreciated in version 1.3.6. Use
-  \code{setStockcol} to set colours with transparency
-  instead. See example below.}
-
   \item{score}{A numeric specifying the minimum organelle
   assignment score to consider features to be assigned an
   organelle. (not yet implemented).}
@@ -105,7 +101,9 @@ support more more orgnalle classes than colours defined in
 \code{\link{getStockcol}}. In such cases, the defauly
 colours are recycled using the default plotting characters
 defined in \code{\link{getStockpch}}. See the example for
-an illustration.
+an illustration. The \code{alpha} argument is also
+depreciated in version 1.3.6. Use \code{setStockcol} to set
+colours with transparency instead. See example below.
 }
 \examples{
 library("pRolocdata")

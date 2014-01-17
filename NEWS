@@ -1,3 +1,15 @@
+CHANGES IN VERSION 1.3.6
+------------------------
+ o updated human markers: keep new pd.markers phenotypes, 
+   validated by Lisa and remove singletons [2014-01-14 Tue]
+ o first stockpch is noe 19 [2014-01-16 Thu]
+ o plot2D(.., pch) now taken into account for labelled 
+   data [2014-01-16 Thu]
+ o removed alpha plot2D argument [2014-01-17 Fri]
+ o updated plot2D and addLegend function with support for more 
+   orgnalle groups than colours. The previous versions are 
+   available as plot2D_v1 and addLegend_v1. [2014-01-17 Fri]
+
 CHANGES IN VERSION 1.3.5
 ------------------------
  o pRoloc citation [2014-01-12 Sun]

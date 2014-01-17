@@ -9,7 +9,7 @@ stockcol <-  c(brewer.pal(9, "Set1"),
                "#FF6347") ## tomato
 assign("stockcol", stockcol, envir = .pRolocEnv)
 
-stockpch <- c(15, 17,19, 18, 23:25, 7, 9, 13, 3:4,  8)
+stockpch <- c(19, 15, 17, 18, 23:25, 7, 9, 13, 3:4,  8)
 assign("stockpch", stockpch, envir = .pRolocEnv)
 
 unknowncol <- "#E7E7E7" ## grey91

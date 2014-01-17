@@ -1,10 +1,8 @@
-\name{addLegend}
-\alias{addLegend}
+\name{addLegend_v1}
+\alias{addLegend_v1}
 \title{Adds a legend}
 \usage{
-addLegend(object, fcol = "markers", where = c("other", "bottomright",
-  "bottom", "bottomleft", "left", "topleft", "top", "topright", "right",
-  "center"), col, ...)
+addLegend_v1(object, fcol = "markers", where = "other", col, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}}
@@ -28,12 +26,7 @@ addLegend(object, fcol = "markers", where = c("other", "bottomright",
 Invisibly returns \code{NULL}
 }
 \description{
-Adds a legend to a \code{\link{plot2D}} figure.
-}
-\details{
-The function has been updated in version 1.3.6 to recycle
-the default colours when more organelle classes are
-provided. See \code{\link{plot2D}} for details.
+Adds a legend to a \code{\link{plot2D_v1}} figure.
 }
 \author{
 Laurent Gatto

@@ -1,9 +1,9 @@
-\name{plot2D}
-\alias{plot2D}
+\name{plot2D_v1}
+\alias{plot2D_v1}
 \title{Plot organelle assignment data and results.}
 \usage{
-plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
-  score = 1, outliers = TRUE, method = c("PCA", "MDS", "kpca", "scree"),
+plot2D_v1(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
+  alpha, score = 1, outliers = TRUE, method = c("PCA", "MDS", "kpca"),
   methargs, axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch,
   cex, index = FALSE, idx.cex = 0.75, identify = FALSE, plot = TRUE,
   ...)
@@ -26,6 +26,10 @@ plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
 
   \item{dims}{A \code{numeric} of length 2 defining the
   dimensions to be plotted. Always 1:2 for MDS.}
+
+  \item{alpha}{A numeric defining the alpha channel
+  (transparency) of the points, where \code{0 <= alpha <=
+  1}, 0 and 1 being completely transparent and opaque.}
 
   \item{score}{A numeric specifying the minimum organelle
   assignment score to consider features to be assigned an
@@ -90,48 +94,33 @@ Used for its side effects of generating a plot. Invisibly
 returns the 2d data.
 }
 \description{
-Generate 2 dimensional or feature distribution plots to
-illustrate localistation clusters. In \code{plot2D}, rows
-containing \code{NA} values are removed prior to dimention
-reduction.
+This is the documentation for the pre-v 1.3.6 function.
 }
 \details{
-Note that \code{plot2D} has been update in version 1.3.6 to
-support more more orgnalle classes than colours defined in
-\code{\link{getStockcol}}. In such cases, the defauly
-colours are recycled using the default plotting characters
-defined in \code{\link{getStockpch}}. See the example for
-an illustration. The \code{alpha} argument is also
-depreciated in version 1.3.6. Use \code{setStockcol} to set
-colours with transparency instead. See example below.
+Generate 2 dimensional or feature distribution plots to
+illustrate localistation clusters. In \code{plot2D_v1},
+rows containing \code{NA} values are removed prior to
+dimention reduction.
 }
 \examples{
 library("pRolocdata")
 data(dunkley2006)
-plot2D(dunkley2006, fcol = NULL)
-plot2D(dunkley2006, fcol = NULL, method = "kpca")
-plot2D(dunkley2006, fcol = NULL, method = "kpca",
-       methargs = list(kpar = list(sigma = 1)))
-plot2D(dunkley2006, fcol = "markers")
-addLegend(dunkley2006,
-          fcol = "markers",
-          where = "topright",
-          cex = 0.5, bty = "n", ncol = 3)
+pRoloc:::plot2D_v1(dunkley2006, fcol = NULL)
+pRoloc:::plot2D_v1(dunkley2006, fcol = NULL, method = "kpca")
+pRoloc:::plot2D_v1(dunkley2006, fcol = NULL, method = "kpca",
+                   methargs = list(kpar = list(sigma = 1)))
+pRoloc:::plot2D_v1(dunkley2006, fcol = "markers")
+pRoloc:::addLegend_v1(dunkley2006,
+                      fcol = "markers",
+                      where = "topright",
+                      cex = 0.5, bty = "n", ncol = 3)
 title(main = "plot2D example")
-## Using transparent colours
-setStockcol(paste0(getStockcol(), "80"))
-plot2D(dunkley2006, fcol = "markers")
-## New behavious in 1.3.6 when not enough colours
-setStockcol(c("blue", "red", "green"))
-getStockcol() ## only 3 colours to be recycled
-getMarkers(dunkley2006)
-plot2D(dunkley2006)
 }
 \author{
 Laurent Gatto <lg390@cam.ac.uk>
 }
 \seealso{
-\code{\link{addLegend}} to add a legend to \code{plot2D}
+\code{\link{addLegend}} to add a legend to \code{plot2D_v1}
 figures and \code{\link{plotDist}} for alternative
 graphical representation of quantitative organelle
 proteomics data.

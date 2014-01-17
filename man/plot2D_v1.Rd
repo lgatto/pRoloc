@@ -105,15 +105,15 @@ dimention reduction.
 \examples{
 library("pRolocdata")
 data(dunkley2006)
-plot2D_v1(dunkley2006, fcol = NULL)
-plot2D_v1(dunkley2006, fcol = NULL, method = "kpca")
-plot2D_v1(dunkley2006, fcol = NULL, method = "kpca",
-          methargs = list(kpar = list(sigma = 1)))
-plot2D_v1(dunkley2006, fcol = "markers")
-addLegend_v1(dunkley2006,
-             fcol = "markers",
-             where = "topright",
-             cex = 0.5, bty = "n", ncol = 3)
+pRoloc:::plot2D_v1(dunkley2006, fcol = NULL)
+pRoloc:::plot2D_v1(dunkley2006, fcol = NULL, method = "kpca")
+pRoloc:::plot2D_v1(dunkley2006, fcol = NULL, method = "kpca",
+                   methargs = list(kpar = list(sigma = 1)))
+pRoloc:::plot2D_v1(dunkley2006, fcol = "markers")
+pRoloc:::addLegend_v1(dunkley2006,
+                      fcol = "markers",
+                      where = "topright",
+                      cex = 0.5, bty = "n", ncol = 3)
 title(main = "plot2D example")
 }
 \author{

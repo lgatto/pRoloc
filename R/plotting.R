@@ -1,8 +1,10 @@
 ##' Plot organelle assignment data and results.
+##'
+##' This is the documentation for the pre-v 1.3.6 function.
 ##' 
 ##' Generate 2 dimensional or feature distribution plots to illustrate
-##' localistation clusters. In \code{plot2D}, rows containing \code{NA}
-##' values are removed prior to dimention reduction.
+##' localistation clusters. In \code{plot2D_v1}, rows containing
+##' \code{NA} values are removed prior to dimention reduction.
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol Feature meta-data label (fData column name) defining
@@ -53,196 +55,197 @@
 ##' @return Used for its side effects of generating a plot.
 ##' Invisibly returns the 2d data.
 ##' @author Laurent Gatto <lg390@@cam.ac.uk>
-##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
-##' figures and \code{\link{plotDist}} for alternative graphical
-##' representation of quantitative organelle proteomics data.
+##' @seealso \code{\link{addLegend}} to add a legend to
+##' \code{plot2D_v1} figures and \code{\link{plotDist}} for
+##' alternative graphical representation of quantitative organelle
+##' proteomics data.
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
-##' plot2D(dunkley2006, fcol = NULL)
-##' plot2D(dunkley2006, fcol = NULL, method = "kpca")
-##' plot2D(dunkley2006, fcol = NULL, method = "kpca",
-##'        methargs = list(kpar = list(sigma = 1)))
-##' plot2D(dunkley2006, fcol = "markers")
-##' addLegend(dunkley2006,
-##'           fcol = "markers",
-##'           where = "topright",
-##'           cex = 0.5, bty = "n", ncol = 3)
+##' plot2D_v1(dunkley2006, fcol = NULL)
+##' plot2D_v1(dunkley2006, fcol = NULL, method = "kpca")
+##' plot2D_v1(dunkley2006, fcol = NULL, method = "kpca",
+##'           methargs = list(kpar = list(sigma = 1)))
+##' plot2D_v1(dunkley2006, fcol = "markers")
+##' addLegend_v1(dunkley2006,
+##'              fcol = "markers",
+##'              where = "topright",
+##'              cex = 0.5, bty = "n", ncol = 3)
 ##' title(main = "plot2D example")
-plot2D <- function(object,
-                   fcol = "markers",
-                   fpch,
-                   unknown = "unknown",
-                   dims = 1:2,
-                   alpha,
-                   score = 1, ## TODO
-                   outliers = TRUE,
-                   method = c("PCA", "MDS", "kpca"),
-                   methargs,
-                   axsSwitch = FALSE,
-                   mirrorX = FALSE,
-                   mirrorY = FALSE,
-                   col,
-                   pch,
-                   cex,
-                   index = FALSE,
-                   idx.cex = 0.75,
-                   identify = FALSE,
-                   plot = TRUE,
-                   ...) {
-  if (!missing(col)) {
-    stockcol <- col
-  } else {
-    stockcol <- getStockcol()  
-  }
-  if (!missing(pch)) {
-    stockpch <- pch
-  } else {
-    stockpch <- getStockpch()  
-  }
-  unknowncol <- getUnknowncol()
-  unknownpch <- getUnknownpch()
-  if (all(substr(stockcol,1 ,1) == "#") & !missing(alpha)) {
-    if (alpha < 0)
-      alpha <- 0
-    if (alpha > 1)
-      alpha <- 1
-    alpha <- as.hexmode(as.integer(alpha * 255))
-    stockcol <- paste0(stockcol, alpha)
-  }  
-  if (!is.null(fcol) && !fcol %in% fvarLabels(object))
-    stop("'", fcol, "' not found in feature variables.")
-  if (!missing(fpch) && !fpch %in% fvarLabels(object))
-    stop("'", fpch, "' not found in feature variables.")
-  method <- match.arg(method)
-  if (length(dims) > 2) {
-    warning("Using first two dimensions of ", dims)
-    dims <- dims[1:2]
-  }
-  k <- max(dims)
-  if (any(is.na(exprs(object)))) {
-    narows <- unique(which(is.na(exprs(object)),
-                           arr.ind = TRUE)[, "row"])
-    object <- object[-narows, ]
-    if (nrow(object) == 0)
-      stop("No rows left after removing NAs!")
-    else
-      warning("Removed ", length(narows), " row(s) with 'NA' values.")    
-  } 
-  if (method == "PCA") {
-      if (missing(methargs))
-          methargs <- list(scale = TRUE, center = TRUE)
-      .pca <- do.call(prcomp, c(list(x = exprs(object)), 
-                                methargs))
-      .data <- .pca$x[, dims]
-      .vars <- (.pca$sdev)^2
-      .vars <- (.vars / sum(.vars))[dims]
-      .vars <- round(100 * .vars, 2)
-      .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-      .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-  } else if (method == "MDS")  { ## MDS
-      if (!missing(methargs))
-          warning("'methargs' ignored for MDS")
-      ## TODO - use other distances
-      .data <- cmdscale(dist(exprs(object), 
-                             method = "euclidean",
-                             diag = FALSE,
-                             upper = FALSE),
-                        k = 2)    
-      .xlab <- paste("Dimension 1")
-      .ylab <- paste("Dimension 2")
-  } else { ## kpca
-      if (missing(methargs)) {
-          .kpca <- kpca(exprs(object))
-      } else {
-          .kpca <- do.call(kpca, c(list(x = exprs(object)),
-                                   methargs))
-      }
-      .data <- rotated(.kpca)[, dims]
-      .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
-      .vars <- round(100 * .vars, 2)
-      .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-      .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-  } 
-  if (plot) {
-    if (axsSwitch) {
-      .data <- .data[, 2:1]
-      .tmp <- .xlab
-      .xlab <- .ylab
-      .ylab <- .tmp
-    }
-    if (mirrorX)
-      .data[, 1] <- -.data[, 1]
-    if (mirrorY)
-      .data[, 2] <- -.data[, 2]
-    
-    col <- rep(unknowncol, nrow(.data))
-    pch <- rep(unknownpch, nrow(.data))
-    if (missing(cex)) {
-      cex <- rep(1, nrow(.data))
+plot2D_v1 <- function(object,
+                      fcol = "markers",
+                      fpch,
+                      unknown = "unknown",
+                      dims = 1:2,
+                      alpha,
+                      score = 1, ## TODO
+                      outliers = TRUE,
+                      method = c("PCA", "MDS", "kpca"),
+                      methargs,
+                      axsSwitch = FALSE,
+                      mirrorX = FALSE,
+                      mirrorY = FALSE,
+                      col,
+                      pch,
+                      cex,
+                      index = FALSE,
+                      idx.cex = 0.75,
+                      identify = FALSE,
+                      plot = TRUE,
+                      ...) {
+    if (!missing(col)) {
+        stockcol <- col
     } else {
-      if (length(cex) == 1) {
-        cex <- rep(cex, nrow(.data))
-      } else {
-        .n <- nrow(.data) %/% length(cex)
-        .m <- nrow(.data) %% length(cex)
-        cex <- c(rep(cex, .n),
-                 cex[.m])        
-      }
+        stockcol <- getStockcol()  
     }
-    stopifnot(length(cex) == nrow(.data))
-    if (!is.null(fcol)) {
-      ukn <- fData(object)[, fcol] == unknown
+    if (!missing(pch)) {
+        stockpch <- pch
     } else {
-      ukn <- rep(TRUE, nrow(.data))
+        stockpch <- getStockpch()  
     }
-    
-    if (!is.null(fcol)) {
-      .fcol <- factor(fData(object)[, fcol])    
-      col <- stockcol[as.numeric(.fcol)]
-      col[ukn] <- unknowncol
-    }
-    if (!missing(fpch)) {   
-      .fpch <- factor(fData(object)[, fpch])
-      pch <- stockpch[as.numeric(.fpch)]
-    } else {
-      pch <- rep(19, nrow(.data))
-    }
-    pch[ukn] <- unknownpch
-    if (!outliers) {
-        qntls <- apply(.data, 2, quantile, c(0.025, 0.975))
-        selqtls <- .data[, 1] > qntls[1, 1] &
-            .data[, 1] < qntls[2, 1] &
-                .data[, 2] > qntls[1, 2] &
-                    .data[, 2] < qntls[2, 2] 
-        .data <- .data[selqtls, ]
-        ukn <- ukn[selqtls]
-    }
-    
-    if (is.null(fcol)) {
-      plot(.data, xlab = .xlab, ylab = .ylab)
-    } else {
-      plot(.data, xlab = .xlab, ylab = .ylab,
-           type = "n", ...)
-      points(.data[ukn, ], col = col[ukn],
-             pch = pch[ukn], cex = cex[ukn], ...)
-      points(.data[!ukn, ], col = col[!ukn],
-             pch = pch[!ukn], cex = cex[!ukn], ...)
+    unknowncol <- getUnknowncol()
+    unknownpch <- getUnknownpch()
+    if (all(substr(stockcol,1 ,1) == "#") & !missing(alpha)) {
+        if (alpha < 0)
+            alpha <- 0
+        if (alpha > 1)
+            alpha <- 1
+        alpha <- as.hexmode(as.integer(alpha * 255))
+        stockcol <- paste0(stockcol, alpha)
     }  
-    grid()
-    if (index) {
-        text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
+    if (!is.null(fcol) && !fcol %in% fvarLabels(object))
+        stop("'", fcol, "' not found in feature variables.")
+    if (!missing(fpch) && !fpch %in% fvarLabels(object))
+        stop("'", fpch, "' not found in feature variables.")
+    method <- match.arg(method)
+    if (length(dims) > 2) {
+        warning("Using first two dimensions of ", dims)
+        dims <- dims[1:2]
     }
-    if (identify) {
-      ids <- identify(.data[, 1], .data[, 2],
-                      rownames(.data))
-      return(ids)    
+    k <- max(dims)
+    if (any(is.na(exprs(object)))) {
+        narows <- unique(which(is.na(exprs(object)),
+                               arr.ind = TRUE)[, "row"])
+        object <- object[-narows, ]
+        if (nrow(object) == 0)
+            stop("No rows left after removing NAs!")
+        else
+            warning("Removed ", length(narows), " row(s) with 'NA' values.")    
+    } 
+    if (method == "PCA") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                  methargs))
+        .data <- .pca$x[, dims]
+        .vars <- (.pca$sdev)^2
+        .vars <- (.vars / sum(.vars))[dims]
+        .vars <- round(100 * .vars, 2)
+        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+    } else if (method == "MDS")  { ## MDS
+        if (!missing(methargs))
+            warning("'methargs' ignored for MDS")
+        ## TODO - use other distances
+        .data <- cmdscale(dist(exprs(object), 
+                               method = "euclidean",
+                               diag = FALSE,
+                               upper = FALSE),
+                          k = 2)    
+        .xlab <- paste("Dimension 1")
+        .ylab <- paste("Dimension 2")
+    } else { ## kpca
+        if (missing(methargs)) {
+            .kpca <- kpca(exprs(object))
+        } else {
+            .kpca <- do.call(kpca, c(list(x = exprs(object)),
+                                     methargs))
+        }
+        .data <- rotated(.kpca)[, dims]
+        .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
+        .vars <- round(100 * .vars, 2)
+        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+    } 
+    if (plot) {
+        if (axsSwitch) {
+            .data <- .data[, 2:1]
+            .tmp <- .xlab
+            .xlab <- .ylab
+            .ylab <- .tmp
+        }
+        if (mirrorX)
+            .data[, 1] <- -.data[, 1]
+        if (mirrorY)
+            .data[, 2] <- -.data[, 2]
+        
+        col <- rep(unknowncol, nrow(.data))
+        pch <- rep(unknownpch, nrow(.data))
+        if (missing(cex)) {
+            cex <- rep(1, nrow(.data))
+        } else {
+            if (length(cex) == 1) {
+                cex <- rep(cex, nrow(.data))
+            } else {
+                .n <- nrow(.data) %/% length(cex)
+                .m <- nrow(.data) %% length(cex)
+                cex <- c(rep(cex, .n),
+                         cex[.m])        
+            }
+        }
+        stopifnot(length(cex) == nrow(.data))
+        if (!is.null(fcol)) {
+            ukn <- fData(object)[, fcol] == unknown
+        } else {
+            ukn <- rep(TRUE, nrow(.data))
+        }
+        
+        if (!is.null(fcol)) {
+            .fcol <- factor(fData(object)[, fcol])    
+            col <- stockcol[as.numeric(.fcol)]
+            col[ukn] <- unknowncol
+        }
+        if (!missing(fpch)) {   
+            .fpch <- factor(fData(object)[, fpch])
+            pch <- stockpch[as.numeric(.fpch)]
+        } else {
+            pch <- rep(19, nrow(.data))
+        }
+        pch[ukn] <- unknownpch
+        if (!outliers) {
+            qntls <- apply(.data, 2, quantile, c(0.025, 0.975))
+            selqtls <- .data[, 1] > qntls[1, 1] &
+                .data[, 1] < qntls[2, 1] &
+                    .data[, 2] > qntls[1, 2] &
+                        .data[, 2] < qntls[2, 2] 
+            .data <- .data[selqtls, ]
+            ukn <- ukn[selqtls]
+        }
+        
+        if (is.null(fcol)) {
+            plot(.data, xlab = .xlab, ylab = .ylab)
+        } else {
+            plot(.data, xlab = .xlab, ylab = .ylab,
+                 type = "n", ...)
+            points(.data[ukn, ], col = col[ukn],
+                   pch = pch[ukn], cex = cex[ukn], ...)
+            points(.data[!ukn, ], col = col[!ukn],
+                   pch = pch[!ukn], cex = cex[!ukn], ...)
+        }  
+        grid()
+        if (index) {
+            text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
+        }
+        if (identify) {
+            ids <- identify(.data[, 1], .data[, 2],
+                            rownames(.data))
+            return(ids)    
+        }
     }
-  }
-  invisible(.data)
+    invisible(.data)
 }
 
-##' Adds a legend to a \code{\link{plot2D}} figure.
+##' Adds a legend to a \code{\link{plot2D_v1}} figure.
 ##'
 ##' @title Adds a legend
 ##' @param object An instance of class \code{MSnSet}
@@ -257,11 +260,11 @@ plot2D <- function(object,
 ##' @param ... Additional parameters passed to \code{\link{legend}}.
 ##' @return Invisibly returns \code{NULL}
 ##' @author Laurent Gatto
-addLegend <- function(object,
-                      fcol = "markers",
-                      where = "other",
-                      col,
-                      ...) {
+addLegend_v1 <- function(object,
+                         fcol = "markers",
+                         where = "other",
+                         col,
+                         ...) {
   if (is.null(fcol))
     fcol <- "markers"
   if (!fcol %in% fvarLabels(object))
@@ -421,27 +424,111 @@ plotDist <- function(object,
 }
 
 
-plot2D_ <- function(object,
-                    fcol = "markers",
-                    fpch,
-                    unknown = "unknown",
-                    dims = 1:2,
-                    alpha,
-                    score = 1, ## TODO
-                    outliers = TRUE,
-                    method = c("PCA", "MDS", "kpca", "scree"),
-                    methargs,
-                    axsSwitch = FALSE,
-                    mirrorX = FALSE,
-                    mirrorY = FALSE,
-                    col,
-                    pch,
-                    cex,
-                    index = FALSE,
-                    idx.cex = 0.75,
-                    identify = FALSE,
-                    plot = TRUE,
-                    ...) {
+
+##' Plot organelle assignment data and results.
+##' 
+##' Generate 2 dimensional or feature distribution plots to illustrate
+##' localistation clusters. In \code{plot2D}, rows containing \code{NA}
+##' values are removed prior to dimention reduction.
+##'
+##' Note that \code{plot2D} has been update in version 1.3.6 to
+##' support more more orgnalle classes than colours defined in
+##' \code{\link{getStockcol}}. In such cases, the defauly colours are
+##' recycled using the default plotting characters defined in
+##' \code{\link{getStockpch}}. See the example for an illustration.
+##' 
+##' @param object An instance of class \code{MSnSet}.
+##' @param fcol Feature meta-data label (fData column name) defining
+##' the groups to be differentiated using different colours. Default
+##' is \code{markers}. Use \code{NULL} to suppress any colouring.
+##' @param fpch Featre meta-data label (fData column name) desining
+##' the groups to be differentiated using different point symbols.
+##' @param unknown A \code{character} (default is \code{"unknown"})
+##' defining how proteins of unknown localisation are labelled.
+##' @param dims A \code{numeric} of length 2 defining the dimensions
+##' to be plotted. Always 1:2 for MDS.
+##' @param alpha Depreciated in version 1.3.6. Use \code{setStockcol}
+##' to set colours with transparency instead. See example below.
+##' @param score A numeric specifying the minimum organelle assignment score
+##' to consider features to be assigned an organelle. (not yet implemented).
+##' @param outliers A logical specifying whether outliers should be plotted
+##' or ignored (default is TRUE, i.e. all points are plotted). Useful when 
+##' the presence of outliers masks the structure of the rest of the data.
+##' Outliers are defined by the 2.5 and 97.5 percentiles. 
+##' @param method One of \code{PCA} (default), \code{MDS} or
+##' \code{kpca}, defining if dimensionality reduction is done using
+##' principal component analysis (see \code{\link{prcomp}}), classical
+##' multidimensional scaling (see \code{\link{cmdscale}}) or kernel
+##' PCA (see \code{kernlab::kpca}).
+##' @param methargs A \code{list} of arguments to be passed when
+##' \code{method} is called. If missing, the data will be scaled and
+##' centred prior to PCA.
+##' @param axsSwitch A \code{logical} indicating whether the axes should be
+##' switched.
+##' @param mirrorX A \code{logical} indicating whether the x axis should be mirrored? 
+##' @param mirrorY A \code{logical} indicating whether the y axis should be mirrored? 
+##' @param col A \code{character} of appropriate length defining colours.
+##' @param pch A \code{character} of appropriate length defining point character.
+##' @param cex Character expansion.
+##' @param index A \code{logical} (default is FALSE), indicating of the feature
+##' indices should be plotted on top of the symbols.
+##' @param idx.cex A \code{numeric} specifying the character expansion
+##' (default is 0.75) for the feature indices. Only relevant when \code{index}
+##' is TRUE.
+##' @param identify A logical (default is \code{TRUE}) defining if
+##' user interaction will be expected to identify individual data
+##' points on the plot. See also \code{\link{identify}}.
+##' @param plot A \code{logical} defining if the figure should be plotted.
+##' Useful when retrieving data only. Default is \code{TRUE}.
+##' @param ... Additional parameters passed to \code{plot} and
+##' \code{points}.
+##' @return Used for its side effects of generating a plot.
+##' Invisibly returns the 2d data.
+##' @author Laurent Gatto <lg390@@cam.ac.uk>
+##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
+##' figures and \code{\link{plotDist}} for alternative graphical
+##' representation of quantitative organelle proteomics data.
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' plot2D(dunkley2006, fcol = NULL)
+##' plot2D(dunkley2006, fcol = NULL, method = "kpca")
+##' plot2D(dunkley2006, fcol = NULL, method = "kpca",
+##'        methargs = list(kpar = list(sigma = 1)))
+##' plot2D(dunkley2006, fcol = "markers")
+##' addLegend(dunkley2006,
+##'           fcol = "markers",
+##'           where = "topright",
+##'           cex = 0.5, bty = "n", ncol = 3)
+##' title(main = "plot2D example")
+##' ## Using transparent colours
+##' setStockcol(paste0(getStockcol(), "80"))
+##' plot2D(dunkley2006, fcol = "markers")
+##' ## New behavious in 1.3.6 when not enough colours
+##' setStockcol(c("blue", "red", "green"))
+##' getStockcol() ## only 3 colours to be recycled
+##' getMarkers(dunkley2006)
+##' plot2D(dunkley2006)
+plot2D <- function(object,
+                   fcol = "markers",
+                   fpch,
+                   unknown = "unknown",
+                   dims = 1:2,
+                   score = 1, ## TODO
+                   outliers = TRUE,
+                   method = c("PCA", "MDS", "kpca", "scree"),
+                   methargs,
+                   axsSwitch = FALSE,
+                   mirrorX = FALSE,
+                   mirrorY = FALSE,
+                   col,
+                   pch,
+                   cex,
+                   index = FALSE,
+                   idx.cex = 0.75,
+                   identify = FALSE,
+                   plot = TRUE,
+                   ...) {
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -454,14 +541,6 @@ plot2D_ <- function(object,
     }
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
-    if (all(substr(stockcol,1 ,1) == "#") & !missing(alpha)) {
-        if (alpha < 0)
-            alpha <- 0
-        if (alpha > 1)
-            alpha <- 1
-        alpha <- as.hexmode(as.integer(alpha * 255))
-        stockcol <- paste0(stockcol, alpha)
-    }  
     if (!is.null(fcol) && !fcol %in% fvarLabels(object))
         stop("'", fcol, "' not found in feature variables.")
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
@@ -621,13 +700,33 @@ plot2D_ <- function(object,
 }
 
 
-addLegend_ <- function(object,
-                       fcol = "markers",
-                       where = c("other", "bottomright", "bottom",
-                           "bottomleft", "left", "topleft",
-                           "top", "topright", "right", "center"),
-                       col,
-                       ...) {
+
+##' Adds a legend to a \code{\link{plot2D}} figure.
+##'
+##' The function has been updated in version 1.3.6 to recycle the
+##' default colours when more organelle classes are provided. See
+##' \code{\link{plot2D}} for details.
+##'
+##' @title Adds a legend
+##' @param object An instance of class \code{MSnSet}
+##' @param fcol Feature meta-data label (fData column name) defining
+##' the groups to be differentiated using different colours. Default
+##' is \code{markers}. 
+##' @param where One of \code{"other"}, \code{"bottomleft"},
+##' \code{"bottomright"}, \code{"topleft"} or \code{"topright"} defining
+##' the location of the legend. \code{"other"} opens a new graphics device,
+##' while the other locations are passed to \code{\link{legend}}.
+##' @param col A \code{character} defining point colours.
+##' @param ... Additional parameters passed to \code{\link{legend}}.
+##' @return Invisibly returns \code{NULL}
+##' @author Laurent Gatto
+addLegend <- function(object,
+                      fcol = "markers",
+                      where = c("other", "bottomright", "bottom",
+                          "bottomleft", "left", "topleft",
+                          "top", "topright", "right", "center"),
+                      col,
+                      ...) {
     where <- match.arg(where)
     if (where == "other") {
         dev.new()

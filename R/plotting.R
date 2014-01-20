@@ -749,8 +749,11 @@ addLegend <- function(object,
     unknownpch <- getUnknownpch()
     stockpch <- getStockpch()
     txt <- unique(as.character(fData(object)[, fcol]))
-    if ("unknown" %in% txt)
+    o <- order(txt)
+    if ("unknown" %in% txt) {
         txt <- c(txt[txt != "unknown"], "unknown")
+        o <- c(order(txt[-length(txt)]), length(txt))
+    }
     isbig <- .isbig(object, fcol, stockcol, stockpch)    
     if (isbig[["big"]]) {
         col <- stockcol[isbig[["jj"]]]
@@ -761,6 +764,6 @@ addLegend <- function(object,
     }    
     col[txt == "unknown"] <- unknowncol
     pch[txt == "unknown"] <- unknownpch    
-    legend(where, txt, col = col, pch = pch, ...)    
+    legend(where, txt[o], col = col[o], pch = pch[o], ...)    
     invisible(NULL)
 }

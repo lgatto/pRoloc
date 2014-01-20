@@ -748,7 +748,7 @@ addLegend <- function(object,
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
     stockpch <- getStockpch()
-    txt <- levels(factor(fData(object)[, fcol]))
+    txt <- unique(fData(object)[, fcol])
     if ("unknown" %in% txt)
         txt <- c(txt[txt != "unknown"], "unknown")
     isbig <- .isbig(object, fcol, stockcol, stockpch)    

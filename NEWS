@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.3.7
 ------------------------
- o 
+ o fixed allLegend to use corrocrt colours (order) [2014-01-20 Mon]
+ o fix typo in addMarkers man [2014-01-20 Mon]
 
 CHANGES IN VERSION 1.3.6
 ------------------------

@@ -205,7 +205,7 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' @title Adds markers to the data
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param markers A \code{character} with the name the markers' csv
-##' file of a named character of markers as provided by \code{\link{pRolocmarkers}}. 
+##' file or a named character of markers as provided by \code{\link{pRolocmarkers}}. 
 ##' @param verbose A \code{logical} indicating if number of markers
 ##' and marker table should be printed to the console.
 ##' @return A new instance of class \code{MSnSet} with an additional

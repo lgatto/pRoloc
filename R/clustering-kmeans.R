@@ -1,6 +1,6 @@
-.optim <- function(k, X, 
-                   criterion = c("BIC", "AIC"),
-                   ...) {
+.optim.kmeans <- function(k, X, 
+                          criterion = c("BIC", "AIC"),
+                          ...) {
   ## value must a named vector
   criterion <- match.arg(criterion, several.ok = TRUE) 
   .var <- function(x) 
@@ -75,7 +75,7 @@ setMethod("kmeansClustering",
 setMethod("kmeansOptimisation",
           signature(object = "MSnSet"), 
           function(object, k = 1:20, ...) {
-            x <- lapply(k, .optim, exprs(object), ...)
+            x <- lapply(k, .optim.kmeans, exprs(object), ...)
             .criteria <- names(x[[1]])
             x <- do.call(rbind, x)
             x <- cbind(k, x)

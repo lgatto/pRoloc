@@ -39,6 +39,9 @@ setMethod("getParams", "ClustRegRes",
           })
 
 setMethod("plot", c("ClustRegRes", "missing"),
+          ## currently works for kmeans
+          ## what if we have two parameters, like cmeans?
+          ## other algorithms: spetral clustering, hyperspherical clustering
           function(x, y, ...) {
             cls <- c("steelblue", "red")
             res <- x@results[, x@criteria]            
@@ -66,12 +69,4 @@ setMethod("levelPlot", "ClustRegRes",
                            ...)
             p
           })
-
-
-
-
-
-
-
-
 

@@ -16,5 +16,10 @@ setGeneric("kmeansClustering", function(object, params, ...) standardGeneric("km
 setGeneric("kmeansOptimisation", function(object, ...) standardGeneric("kmeansOptimisation"))
 setGeneric("kmeansOptimization", function(object, ...) kmeansOptimisation(object, ...))
 
+## setGeneric("cmeansClustering", function(object, params, ...) standardGeneric("cmeansClustering"))
+## setGeneric("cmeansOptimisation", function(object, ...) standardGeneric("cmeansOptimisation"))
+## setGeneric("cmeansOptimization", function(object, ...) kmeansOptimisation(object, ...))
+
+
 ## distances
 setGeneric("nndist", function(object, ...) standardGeneric("nndist"))

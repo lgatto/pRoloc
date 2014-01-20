@@ -5,11 +5,11 @@ stockcol <-  c(brewer.pal(9, "Set1"),
                "#333333", ## grey20
                "#A021EF", ## purple
                "#008A45", ## springgreen4
-               "#00008A", ## blue4
-               "#FF6347") ## tomato
+               "#00008A") ## blue4
+
 assign("stockcol", stockcol, envir = .pRolocEnv)
 
-stockpch <- c(19, 15, 17, 18, 23:25, 7, 9, 13, 3:4,  8)
+stockpch <- c(19, 1, 15, 0, 17, 2, 18, 5, 7, 9, 13, 3:4,  8)
 assign("stockpch", stockpch, envir = .pRolocEnv)
 
 unknowncol <- "#E7E7E7" ## grey91

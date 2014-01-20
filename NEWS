@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.3.7
+------------------------
+ o fixed allLegend to use corrocrt colours (order) [2014-01-20 Mon]
+ o fix typo in addMarkers man [2014-01-20 Mon]
+ o re-arranged stockpch so that interleave full and empty 
+   pletting character [2014-01-20 Mon]
+ 0 Removed last stockcol (tomato), too cose to "#FF7F00" [2014-01-20 Mon]
+
 CHANGES IN VERSION 1.3.6
 ------------------------
  o updated human markers: keep new pd.markers phenotypes, 

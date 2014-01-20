@@ -22,7 +22,7 @@ importFrom(MSBVAR, rmultnorm)
 importFrom(scales, col2hcl, alpha)
 importFrom(caret, createFolds, confusionMatrix, plsda, predict.plsda)
 importFrom(sampling, strata)
-importFrom(e1071, svm, naiveBayes)
+importFrom(e1071, svm, naiveBayes, cmeans)
 importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 

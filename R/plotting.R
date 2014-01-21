@@ -551,14 +551,14 @@ plot2D <- function(object,
         dims <- dims[1:2]
     }
     k <- max(dims)
-    if (any(is.na(exprs(object)))) {
-        narows <- unique(which(is.na(exprs(object)),
-                               arr.ind = TRUE)[, "row"])
-        object <- object[-narows, ]
-        if (nrow(object) == 0)
+    if (any(is.na(object))) {
+        n0 <- now(object)
+        object <- filterNA(object)
+        n1 <- nrow(object)
+        if (n1)
             stop("No rows left after removing NAs!")
         else
-            warning("Removed ", length(narows), " row(s) with 'NA' values.")    
+            warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
     }
     if (method == "scree") {
         if (missing(methargs))

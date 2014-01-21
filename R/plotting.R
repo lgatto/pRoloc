@@ -552,10 +552,10 @@ plot2D <- function(object,
     }
     k <- max(dims)
     if (any(is.na(object))) {
-        n0 <- now(object)
+        n0 <- nrow(object)
         object <- filterNA(object)
         n1 <- nrow(object)
-        if (n1)
+        if (n1 == 0)
             stop("No rows left after removing NAs!")
         else
             warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    

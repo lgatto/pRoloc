@@ -8,7 +8,7 @@ addMarkers(object, markers, verbose = TRUE)
   \item{object}{An instance of class \code{MSnSet}.}
 
   \item{markers}{A \code{character} with the name the
-  markers' csv file of a named character of markers as
+  markers' csv file or a named character of markers as
   provided by \code{\link{pRolocmarkers}}.}
 
   \item{verbose}{A \code{logical} indicating if number of

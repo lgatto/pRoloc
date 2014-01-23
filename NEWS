@@ -3,13 +3,14 @@ CHANGES IN VERSION 1.3.8
  o Removed trailing space in mmus nucleus markers [2014-01-21 Tue]
  o using filterNA to remove features with missing values 
    in plot2D [2014-01-21 Tue]
+ o fixed plot2D/addLegend [2014-01-23 Thu]
 
 CHANGES IN VERSION 1.3.7
 ------------------------
- o fixed allLegend to use corrocrt colours (order) [2014-01-20 Mon]
+ o fixed addLegend to use correct colours (order) [2014-01-20 Mon]
  o fix typo in addMarkers man [2014-01-20 Mon]
  o re-arranged stockpch so that interleave full and empty 
-   pletting character [2014-01-20 Mon]
+   plotting character [2014-01-20 Mon]
  0 Removed last stockcol (tomato), too cose to "#FF7F00" [2014-01-20 Mon]
 
 CHANGES IN VERSION 1.3.6
@@ -21,7 +22,7 @@ CHANGES IN VERSION 1.3.6
    data [2014-01-16 Thu]
  o removed alpha plot2D argument [2014-01-17 Fri]
  o updated plot2D and addLegend function with support for more 
-   orgnalle groups than colours. The previous versions are 
+   organelle groups than colours. The previous versions are 
    available as plot2D_v1 and addLegend_v1. [2014-01-17 Fri]
 
 CHANGES IN VERSION 1.3.5

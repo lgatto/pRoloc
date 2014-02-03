@@ -315,8 +315,8 @@ updateobject  <- function(MSnSetToUpdate,
 ##' iterations should be saved. Default is \code{FALSE}.
 ##' @param p Significance level for outlier detection. Default is
 ##' 0.05.
-##' @param ndims Number of principal components to use as input for the 
-##' disocvery analysis. Defualt is the first 2 components.
+##' @param ndims Number of principal components to use as input for
+##' the disocvery analysis. Default is 2. Added in version 1.3.9.
 ##' @param seed An optional \code{numeric} of length 1 specifing the
 ##' random number generator seed to be used.
 ##' @param verbose Logical, indicating if messages are to be

@@ -541,6 +541,17 @@ plot2D <- function(object,
     }
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
+
+    lvs <- levels(fData(object)[, fcol])
+    if ("unknown" %in% lvs) {
+        i <- which(lvs == "unknown")
+        lvs <- c(lvs[-i], lvs[i])        
+        fData(object)[, fcol] <- factor(fData(object)[, fcol],
+                                        levels = lvs)
+    } else {
+        fData(object)[, fcol] <- factor(fData(object)[, fcol])
+    }
+
     if (!is.null(fcol) && !fcol %in% fvarLabels(object))
         stop("'", fcol, "' not found in feature variables.")
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
@@ -616,7 +627,7 @@ plot2D <- function(object,
             .data[, 2] <- -.data[, 2]
         
         col <- rep(unknowncol, nrow(.data))
-        pch <- rep(unknownpch, nrow(.data))
+        pch <- rep(unknownpch, nrow(.data))        
         if (missing(cex)) {
             cex <- rep(1, nrow(.data))
         } else {
@@ -630,7 +641,6 @@ plot2D <- function(object,
             }
         }
         stopifnot(length(cex) == nrow(.data))
-        
         if (!is.null(fcol)) {
             ukn <- fData(object)[, fcol] == unknown
         } else {
@@ -638,7 +648,7 @@ plot2D <- function(object,
         }
         
         if (!is.null(fcol)) {
-            .fcol <- factor(fData(object)[, fcol])    
+            .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
             col[ukn] <- unknowncol
         }
@@ -678,15 +688,15 @@ plot2D <- function(object,
                        col = stockcol[isbig[["jj"]][i]],
                        pch = stockpch[isbig[["kk"]][i]]) 
             }            
-        } else {
+        } else {            
             plot(.data, xlab = .xlab, ylab = .ylab,
                  type = "n", ...)
             points(.data[ukn, 1], .data[ukn, 2],
                    col = col[ukn],
-                   pch = pch[ukn], cex = cex[ukn], ...)
+                   pch = pch[ukn], cex = cex[ukn])
             points(.data[!ukn, 1], .data[!ukn, 2],
                    col = col[!ukn],
-                   pch = pch[!ukn], cex = cex[!ukn], ...)
+                   pch = pch[!ukn], cex = cex[!ukn])
         }  
         grid()
         if (index) {
@@ -730,6 +740,17 @@ addLegend <- function(object,
                       col, 
                       ...) {
     where <- match.arg(where)
+
+    lvs <- levels(fData(object)[, fcol])
+    if ("unknown" %in% lvs) {
+        i <- which(lvs == "unknown")
+        lvs <- c(lvs[-i], lvs[i])        
+        fData(object)[, fcol] <- factor(fData(object)[, fcol],
+                                        levels = lvs)
+    } else {
+        fData(object)[, fcol] <- factor(fData(object)[, fcol])
+    }
+
     if (where == "other") {
         dev.new()
         where <- "center"
@@ -749,7 +770,7 @@ addLegend <- function(object,
     stockpch <- getStockpch()
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
-    txt <- levels(as.factor(fData(object)[, fcol]))
+    txt <- levels(as.factor(fData(object)[, fcol])) 
     isbig <- .isbig(object, fcol, stockcol, stockpch)    
     if (isbig[["big"]]) {
         col <- stockcol[isbig[["jj"]]]
@@ -769,7 +790,6 @@ addLegend <- function(object,
             pch[i] <- unknownpch            
         }
     }
-    ## TODO put unknown at the end and order alphabetically
     legend(where, txt, col = col, pch = pch, ...)    
     invisible(NULL)
 }

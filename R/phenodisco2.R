@@ -430,10 +430,10 @@ phenoDisco2 <- function(object,
       message(paste("Iteration", i)) 
     track[[i]] <- replicate(n = times, 
                             expr = tracking(
-                            data = object, 
-                            markerCol = fcol,
-                            alpha = p,
-                            ndims = ndims))
+                                data = object, 
+                                markerCol = fcol,
+                                alpha = p,
+                                ndims = ndims))
     ## Update known classes with members assigned to that class
     ## over all iterations of tracking
     classes <- track[[i]][,1]$k
@@ -455,7 +455,7 @@ phenoDisco2 <- function(object,
     
     ## Any new phenotypes?
     phenotypes[[i]] <- getNewClusters(track[[i]], groupSize = GS, jc = 1)
-    newPhenoName = paste(".pd", i, sep="")
+    newPhenoName <- paste(".pd", i, sep="")
     
     ## CONDITIONS TO STOP LOOP
     if (i != 1) {
@@ -465,7 +465,7 @@ phenoDisco2 <- function(object,
         length(unlist(currentClasses[[i]][order2]))
       cond2 <- length(phenotypes[[1]]$coords) > 0
     }
-    ## Update MSnsetObject to include new phenotypes as classes
+    ## Update MSnSetObject to include new phenotypes as classes
     object <- updateobject(object, 
                            phenotypes[[i]],
                            currentClasses[[i]],
@@ -496,14 +496,12 @@ phenoDisco2 <- function(object,
     procmsg <- paste0("Run phenoDisco using '", original,
                       "' (seed, ", seed, "): ", date())
   }
-  procmsg <- c(procmsg,
-               paste0("  with parameters times=", times,
-                      ", GS=", GS,
-                      ", p=", p, "."))
-                      ## ", r=", r, "."))
-  object@processingData@processing <-
-    c(processingData(object)@processing,
-      procmsg)
+  procmsg <- paste0(procmsg,
+                    "\n   with parameters times=", times,
+                    ", GS=", GS,
+                    ", p=", p,
+                    ", ndims=", ndims, ".")    
+  object <- MSnbase:::logging(object,  procmsg, date. = FALSE)
 
   if (!allIter) {
       ## FIXME there could be an issue here 
@@ -514,7 +512,7 @@ phenoDisco2 <- function(object,
   a <- match(fnames, featureNames(object))
   object <- object[a,]
   object <- MSnbase:::nologging(object, n = 1)
-  stopifnot(featureNames(object)==fnames)
+  stopifnot(featureNames(object) == fnames)
   if (validObject(object))
       return(object)
 }

@@ -203,15 +203,15 @@ phenoDisco2 <- function(object,
       object <- filterNA(object, pNA = 0)
   }
   ## Check ndims is sensible
-  .pca <- prcomp(exprs(object), scale=T)$x
+  .pca <- prcomp(exprs(object), center = TRUE, scale = TRUE)$x
   if (ndims > ncol(.pca)) {
-    warning("ndims > number of principal components available, using maximim 
+    warning("ndims > number of principal components available, using maximum 
           number of components (ndims = ", ncol(.pca), ")")
-    ndims = 2
+    ndims <- ncol(.pca)
   }
   if (ndims <= 1) {
     warning("ndims <= 1, using ndims = 2")
-    ndims = 2
+    ndims <- 2
   }
   ## Check we have enough labelled data to start
   test <- table(fData(object)[,fcol])

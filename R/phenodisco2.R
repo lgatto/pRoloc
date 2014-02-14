@@ -80,9 +80,6 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers", ndims=2) {
         } else {
           L[[i]] <- L[[i]]
         }
-        #rmID <- names(which(outliers==TRUE))
-        #torm <- sapply(memID, function(z) which(outliers(X)==z))
-        #X <- X[-torm, ]
       }
     } else {
       gmmCluster <- Mclust(L[[i]], modelNames = c("EEE","EEV","VEV","VVV"))
@@ -90,9 +87,6 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers", ndims=2) {
       L[[i]] <- L[[i]]
     }    
   }
-  #for (i in 1:length(L)) {
-  #  L[[i]] <- newClassData[[i]]
-  #}
   
   list(trackHistory = track, 
        X = X,
@@ -310,16 +304,6 @@ phenoDisco2 <- function(object,
     .tmp <- track[[i]]["originalX", 1][[1]]
     indX <- sapply(idX, function(z) which(rownames(.tmp)==z))
     candidatesX <- .tmp[indX, ]
-    
-    
-    #X <- unknownSet(object, fcol)
-    #.tmp <- unlist(currentClasses[[i]])
-    #torm <- intersect(.tmp, rownames(X))
-    #if (length(torm) > 0) {
-    #  t <- sapply(torm, function(z) which(rownames(X)==z))
-    #  X <- track[[i]][, 1]$X[-t, ]
-    #}
-    #ids <- rownames(X)
     
     ## Get track history for X members
     trackingStats <- track[[i]][1,]

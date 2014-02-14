@@ -1,19 +1,21 @@
 ## Function to get new phenotypes
-## INPUTS: object = output from phenoDiscoTracking, groupSize = default is 5 
+## INPUTS: history = output from phenoDiscoTracking, groupSize = default is 5 
 ## which is used to define minimum number of proteins per new phenotype
 ## jc = correlation cooefficient, currently no other value but 1 is supported
-getNewClusters <- function(object, 
+getNewClusters <- function(history, X,
                            groupSize = 5,
                            jc = 1) {  
-  X <- object[,1]$originalX
-  namesX <- table(unlist(apply(object, 2, function(z) rownames(z$X))))
-  namesX <- names(which(namesX == dim(object)[2]))
-  index <- unlist(object[1,])
-  history <- sapply(namesX,
-                          function(z) as.vector(index[which(names(index) == z)]), 
-                          simplify = TRUE)
-  history <- t(history)
-  rownames(history) <- namesX
+  
+  #ids <- rownames(history)
+  #X <- history[,1]$originalX
+  #namesX <- table(unlist(apply(history, 2, function(z) rownames(z$X))))
+  #namesX <- names(which(namesX == dim(history)[2]))
+  #index <- unlist(history[1,])
+  #history <- sapply(namesX, function(z) as.vector(index[which(names(index) == z)]), 
+  #                        simplify = TRUE)
+  #history <- t(history)
+  #rownames(history) <- namesX
+  #corMatrix <- simil(history, history, method="eJaccard")
   corMatrix <- simil(history, history, method="eJaccard")
   ## Here we look at the correlation between profiles
   ## We start look at the 1st protein & identify which proteins are highly 
@@ -43,10 +45,13 @@ getNewClusters <- function(object,
 }
 
 ## Function for performing outlier detection - L. Breckels - 16/06/2011  
-## L: labelled, X: unlabelled, N: number of iterations, p: significance level 
+## L: labelled, X: unlabelled (MUST BE A MATRIX), N: number of iterations, p: significance level 
 gmmOutlier <- function(L, X, N = 500, p=0.05) {
+  if(!is.matrix(X)) {
+    stop("X must be a matrix to run gmmOutlier")
+  }
   ## Make X Matrix
-  X <- matrix(X, ncol=ncol(L), dimnames=list( c(rownames(X)), c(colnames(X))))
+  # X <- matrix(X, ncol=ncol(L), dimnames=list( c(rownames(X)), c(colnames(X))))
   ## Generate Null
   ## Need justification of options for selection G here
   ## Re-test
@@ -59,7 +64,7 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
   } else {
     gmm0<- Mclust(L)
   }	
-  if(gmm0$G==1) { 
+  if(gmm0$G==1) {
     mat <- mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1]) 		
     ## If the cluster number in the data is 1 use the Mahalanobis distance
   } else {
@@ -75,50 +80,54 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
       ## Generate the test statistic, W, for round N (build up a distribution 
       ## of W over N rounds)
     }
+    # Can plot to check normal using: plot(density(W))
   }
   ## Test unlabelled
   ## Test for G>1
-  if (gmm0$G!=1) {	
+  if (gmm0$G!=1) {
     WA<-W[order(W)][round((1-p)*length(W))] ## Determine W alpha 	
     for (i in (1:nrow(X)) ) {
-      esN<-do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0)) 	
+      esN<-do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0))	
       ## Use the estep of the EM algorithm to determine model 
       ## parameters for the unlabelled profile
       WN[i]<- (-2*(esN$loglik - gmm0$loglik)) 
       ## Calculate the test statistic, W, for the unlabelled profile
     }
     TF <- WN > WA
-    TF <- replace(TF, TF=="TRUE", "outlier")
-    TF <- replace(TF, TF=="FALSE", "classified")	
-    fullList <- data.frame(X, TF)
-    outliers <- fullList[which(fullList[,3]=="outlier"), 1:2]
-    outliers <- as.matrix(outliers)
-    classified <- fullList[which(fullList[,3]=="classified"), 1:2]
-    classified <- as.matrix(classified)    
-    if (length(outliers)==0) {outliers <- NULL}
-    if (length(classified)==0) {classified <- NULL}
-    list(outliers=outliers, classified=classified,fullList=fullList,gmm0=gmm0) 
+    names(TF) <- rownames(X)
+    #TF <- replace(TF, TF=="TRUE", "outlier")
+    #TF <- replace(TF, TF=="FALSE", "classified")	
+    #fullList <- data.frame(X, TF)
+    #outliers <- fullList[which(fullList[,"TF"]=="outlier"), 1:2]
+    #outliers <- as.matrix(outliers)
+    #classified <- as.matrix(classified)    
+    #classified <- fullList[which(fullList[,"TF"]=="classified"), 1:2]
+    #if (length(outliers)==0) {outliers <- NULL}
+    #if (length(classified)==0) {classified <- NULL}
+    return(TF)
+    #list(outliers=outliers, classified=classified,fullList=fullList,gmm0=gmm0) 
     ## Compare WN with WA to determine if outlier/class member
   } else {	## Test for G=1
     chi <- qchisq(df=ncol(L)-1, 1-p)
     TF <- mat > chi
-    TF <- replace(TF, TF=="TRUE", "outlier")
-    TF <- replace(TF, TF=="FALSE", "classified")
-    fullList <- data.frame(X, TF)
-    outliers <- fullList[which(fullList[,3]=="outlier"), 1:2]
-    outliers <- as.matrix(outliers)
-    classified <- fullList[which(fullList[,3]=="classified"), 1:2]
-    classified <- as.matrix(classified)    
-    if (length(outliers) == 0) {
-      outliers <- NULL
-    }
-    if (length(classified) == 0) {
-      classified <- NULL
-    }	
-    list(outliers = outliers, 
-         classified = classified, 
-         fullList = fullList, 
-         gmm0 = gmm0)
+    return(TF)
+    #TF <- replace(TF, TF=="TRUE", "outlier")
+    #TF <- replace(TF, TF=="FALSE", "classified")
+    #fullList <- data.frame(X, TF)
+    #outliers <- fullList[which(fullList[,"TF"]=="outlier"), 1:length]
+    #outliers <- as.matrix(outliers)
+    #classified <- fullList[which(fullList[,"TF"]=="classified"), 1:2]
+    #classified <- as.matrix(classified)    
+    #if (length(outliers) == 0) {
+    #  outliers <- NULL
+    #}
+    #  classified <- NULL
+    #if (length(classified) == 0) {
+    #}	
+    #list(outliers = outliers, 
+    #     classified = classified, 
+    #     fullList = fullList, 
+    #     gmm0 = gmm0)
   }
 }
  

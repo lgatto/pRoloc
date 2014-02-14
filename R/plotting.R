@@ -542,16 +542,6 @@ plot2D <- function(object,
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
 
-    lvs <- levels(fData(object)[, fcol])
-    if ("unknown" %in% lvs) {
-        i <- which(lvs == "unknown")
-        lvs <- c(lvs[-i], lvs[i])        
-        fData(object)[, fcol] <- factor(fData(object)[, fcol],
-                                        levels = lvs)
-    } else {
-        fData(object)[, fcol] <- factor(fData(object)[, fcol])
-    }
-
     if (!is.null(fcol) && !fcol %in% fvarLabels(object))
         stop("'", fcol, "' not found in feature variables.")
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
@@ -642,16 +632,25 @@ plot2D <- function(object,
         }
         stopifnot(length(cex) == nrow(.data))
         if (!is.null(fcol)) {
+            lvs <- levels(fData(object)[, fcol])
+            if ("unknown" %in% lvs) {
+                i <- which(lvs == "unknown")
+                lvs <- c(lvs[-i], lvs[i])        
+                fData(object)[, fcol] <- factor(fData(object)[, fcol],
+                                                levels = lvs)
+            } else {
+                fData(object)[, fcol] <- factor(fData(object)[, fcol])
+            }
+
             ukn <- fData(object)[, fcol] == unknown
-        } else {
-            ukn <- rep(TRUE, nrow(.data))
-        }
-        
-        if (!is.null(fcol)) {
             .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
             col[ukn] <- unknowncol
+            
+        } else {
+            ukn <- rep(TRUE, nrow(.data))
         }
+
         if (!missing(fpch)) {   
             .fpch <- factor(fData(object)[, fpch])
             pch <- stockpch[as.numeric(.fpch)]

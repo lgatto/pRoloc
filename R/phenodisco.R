@@ -6,16 +6,6 @@ getNewClusters <- function(history, X,
                            groupSize = 5,
                            jc = 1) {  
   
-  #ids <- rownames(history)
-  #X <- history[,1]$originalX
-  #namesX <- table(unlist(apply(history, 2, function(z) rownames(z$X))))
-  #namesX <- names(which(namesX == dim(history)[2]))
-  #index <- unlist(history[1,])
-  #history <- sapply(namesX, function(z) as.vector(index[which(names(index) == z)]), 
-  #                        simplify = TRUE)
-  #history <- t(history)
-  #rownames(history) <- namesX
-  #corMatrix <- simil(history, history, method="eJaccard")
   corMatrix <- simil(history, history, method="eJaccard")
   ## Here we look at the correlation between profiles
   ## We start look at the 1st protein & identify which proteins are highly 
@@ -50,8 +40,6 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
   if(!is.matrix(X)) {
     stop("X must be a matrix to run gmmOutlier")
   }
-  ## Make X Matrix
-  # X <- matrix(X, ncol=ncol(L), dimnames=list( c(rownames(X)), c(colnames(X))))
   ## Generate Null
   ## Need justification of options for selection G here
   ## Re-test
@@ -95,39 +83,12 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
     }
     TF <- WN > WA
     names(TF) <- rownames(X)
-    #TF <- replace(TF, TF=="TRUE", "outlier")
-    #TF <- replace(TF, TF=="FALSE", "classified")	
-    #fullList <- data.frame(X, TF)
-    #outliers <- fullList[which(fullList[,"TF"]=="outlier"), 1:2]
-    #outliers <- as.matrix(outliers)
-    #classified <- as.matrix(classified)    
-    #classified <- fullList[which(fullList[,"TF"]=="classified"), 1:2]
-    #if (length(outliers)==0) {outliers <- NULL}
-    #if (length(classified)==0) {classified <- NULL}
     return(TF)
-    #list(outliers=outliers, classified=classified,fullList=fullList,gmm0=gmm0) 
     ## Compare WN with WA to determine if outlier/class member
   } else {	## Test for G=1
     chi <- qchisq(df=ncol(L)-1, 1-p)
     TF <- mat > chi
     return(TF)
-    #TF <- replace(TF, TF=="TRUE", "outlier")
-    #TF <- replace(TF, TF=="FALSE", "classified")
-    #fullList <- data.frame(X, TF)
-    #outliers <- fullList[which(fullList[,"TF"]=="outlier"), 1:length]
-    #outliers <- as.matrix(outliers)
-    #classified <- fullList[which(fullList[,"TF"]=="classified"), 1:2]
-    #classified <- as.matrix(classified)    
-    #if (length(outliers) == 0) {
-    #  outliers <- NULL
-    #}
-    #  classified <- NULL
-    #if (length(classified) == 0) {
-    #}	
-    #list(outliers = outliers, 
-    #     classified = classified, 
-    #     fullList = fullList, 
-    #     gmm0 = gmm0)
   }
 }
  

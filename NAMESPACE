@@ -5,6 +5,7 @@ import(MSnbase)
 import(MLInterfaces)
 import(methods)
 import(Rcpp)
+importFrom(BiocParallel, bplapply)
 
 import(lattice)
 import(BiocGenerics)

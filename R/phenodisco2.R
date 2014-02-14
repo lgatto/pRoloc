@@ -287,7 +287,6 @@ updateobject  <- function(MSnSetToUpdate,
 ##' \code{phenoDisco} is a semi-supervised iterative approach to detect new
 ##' protein clusters. 
 ##' 
-##'
 ##' The algorithm performs a phenotype discovery analysis as described in
 ##' Breckels et al. Using this approach one can identify putative subcellular 
 ##' groupings in organelle proteomics experiments for more comprehensive 
@@ -299,7 +298,11 @@ updateobject  <- function(MSnSetToUpdate,
 ##' One requires 2 or more classes to be labelled in the data 
 ##' and at a very minimum of 6 markers per class to run the algorithm.
 ##' The function will check and remove features with missing values using
-##' the \code{\link{filterNA}} method. 
+##' the \code{\link{filterNA}} method.
+##'
+##' A parallel implementation, relying on the \code{BiocParallel}
+##' package, has been added in version 1.3.9. See the \code{BPPARAM}
+##' arguent for details.
 ##'
 ##' Important: Prior to version 1.1.2 the row order in the output was different from
 ##' the row order in the input. This has now been fixed and row ordering is now
@@ -317,6 +320,14 @@ updateobject  <- function(MSnSetToUpdate,
 ##' 0.05.
 ##' @param ndims Number of principal components to use as input for
 ##' the disocvery analysis. Default is 2. Added in version 1.3.9.
+##' @param BPPARAM Support for parallel processing using the
+##' \code{BiocParallel} infrastructure. When missing (default), the
+##' default registered \code{BiocParallelParam} parameters are
+##' used. Alternatively, one can pass a valid \code{BiocParallelParam}
+##' parameter instance: \code{SnowParam}, \code{MulticoreParam},
+##' \code{DoparParam}, \ldots see the \code{BiocParallel} package for
+##' details. To revert to the origianl serial implementation, use
+##' \code{NULL}.
 ##' @param seed An optional \code{numeric} of length 1 specifing the
 ##' random number generator seed to be used.
 ##' @param verbose Logical, indicating if messages are to be
@@ -345,14 +356,15 @@ updateobject  <- function(MSnSetToUpdate,
 ##' plot2D(pdres, fcol = "pd")
 ##' }
 phenoDisco2 <- function(object,
-                       fcol = "markers",
-                       times = 100,
-                       GS = 10,
-                       allIter = FALSE,
-                       p = 0.05,
-                       ndims = 2,
-                       seed,
-                       verbose = TRUE) {
+                        fcol = "markers",
+                        times = 100,
+                        GS = 10,
+                        allIter = FALSE,
+                        p = 0.05,
+                        ndims = 2,
+                        BPPARAM,
+                        seed,
+                        verbose = TRUE) {
   ## phenoDisco.R (Lisa's phenoDisco code - last updated 27/02/2013)
   ## fcol = feature column
   ## times = number of runs of tracking 
@@ -428,12 +440,36 @@ phenoDisco2 <- function(object,
     ## (2) new members of known classes (from outlier detection using GMMs)
     if (verbose)
       message(paste("Iteration", i)) 
-    track[[i]] <- replicate(n = times, 
-                            expr = tracking(
-                                data = object, 
-                                markerCol = fcol,
-                                alpha = p,
-                                ndims = ndims))
+
+    if (missing(BPPARAM)) {
+        ## default: taking first registered BiocParallelParam
+        track[[i]] <- simplify2array(bplapply(seq_len(times),
+                                              function(x) 
+                                              tracking(data = object,
+                                                       alpha = p,
+                                                       markerCol = fcol,
+                                                       ndims = ndims)))
+    } else if (inherits(BPPARAM, "BiocParallelParam")) {
+        ## using user-specified BiocParallelParam
+        track[[i]] <- simplify2array(bplapply(seq_len(times),
+                                              function(x) 
+                                              tracking(data = object,
+                                                       alpha = p,
+                                                       markerCol = fcol,
+                                                       ndims = ndims), 
+                                              BPPARAM = BPPARAM))
+    } else if (is.null(BPPARAM)) {
+        ## serialised version (original implementation)
+        track[[i]] <- replicate(n = times, 
+                                expr = tracking(
+                                    data = object, 
+                                    markerCol = fcol,
+                                    alpha = p,
+                                    ndims = ndims))
+    } else {
+        stop("Non valid BPPARAM. See ?phenoDisco for details.")
+    }
+    
     ## Update known classes with members assigned to that class
     ## over all iterations of tracking
     classes <- track[[i]][,1]$k

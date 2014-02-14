@@ -241,7 +241,7 @@ phenoDisco <- function(object,
   if (GS < 4) 
       stop("Group size specified too small.")
   
-  if (!anyUnknown(object))
+  if (!pRoloc:::anyUnknown(object))
       stop("No unlabelled features (conventionally marked 'unknown') in your data.")
   
   if (!missing(seed)) {

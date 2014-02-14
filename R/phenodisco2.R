@@ -329,7 +329,9 @@ updateobject  <- function(MSnSetToUpdate,
 ##' details. To revert to the origianl serial implementation, use
 ##' \code{NULL}.
 ##' @param seed An optional \code{numeric} of length 1 specifing the
-##' random number generator seed to be used.
+##' random number generator seed to be used. Only relevant when
+##' executed in serialised mode with \code{BPPARAM = NULL}. See
+##' \code{BPPARAM} for details.
 ##' @param verbose Logical, indicating if messages are to be
 ##' printed out during execution of the algorithm.
 ##' @return An instance of class \code{MSnSet} containing the \code{phenoDisco}
@@ -378,7 +380,7 @@ phenoDisco2 <- function(object,
   if (!anyUnknown(object))
       stop("No unlabelled features (conventionally marked 'unknown') in your data.")
   
-  if (!missing(seed)) {
+  if (!missing(seed) & is.null(BPPARAM)) {
     seed <- as.integer(seed)
     set.seed(seed)
   }

@@ -3,7 +3,7 @@
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
 phenoDisco(object, fcol = "markers", times = 100, GS = 10,
-  allIter = FALSE, p = 0.05, seed, verbose = TRUE)
+  allIter = FALSE, p = 0.05, ndims = 2, BPPARAM, seed, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -24,8 +24,25 @@ phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   \item{p}{Significance level for outlier detection.
   Default is 0.05.}
 
+  \item{ndims}{Number of principal components to use as
+  input for the disocvery analysis. Default is 2. Added in
+  version 1.3.9.}
+
+  \item{BPPARAM}{Support for parallel processing using the
+  \code{BiocParallel} infrastructure. When missing
+  (default), the default registered
+  \code{BiocParallelParam} parameters are used.
+  Alternatively, one can pass a valid
+  \code{BiocParallelParam} parameter instance:
+  \code{SnowParam}, \code{MulticoreParam},
+  \code{DoparParam}, \ldots see the \code{BiocParallel}
+  package for details. To revert to the origianl serial
+  implementation, use \code{NULL}.}
+
   \item{seed}{An optional \code{numeric} of length 1
-  specifing the random number generator seed to be used.}
+  specifing the random number generator seed to be used.
+  Only relevant when executed in serialised mode with
+  \code{BPPARAM = NULL}. See \code{BPPARAM} for details.}
 
   \item{verbose}{Logical, indicating if messages are to be
   printed out during execution of the algorithm.}
@@ -53,6 +70,10 @@ One requires 2 or more classes to be labelled in the data
 and at a very minimum of 6 markers per class to run the
 algorithm. The function will check and remove features with
 missing values using the \code{\link{filterNA}} method.
+
+A parallel implementation, relying on the
+\code{BiocParallel} package, has been added in version
+1.3.9. See the \code{BPPARAM} arguent for details.
 
 Important: Prior to version 1.1.2 the row order in the
 output was different from the row order in the input. This

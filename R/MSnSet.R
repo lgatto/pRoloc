@@ -233,7 +233,11 @@ addMarkers <- function(object, markers, verbose = TRUE) {
       mfrom <- paste0(" '",
                       MSnbase:::getVariableName(match.call(), "markers"),
                       "' marker vector")
-  } 
+  }
+  dups <- duplicated(rownames(mrk))
+  if (any(dups))
+      stop("Please remove duplicated entries in your markers:",
+           paste(rownames(mrk)[dups], collapse = " "))
   cmn <- intersect(rownames(mrk), featureNames(object))
   if (length(cmn) == 0) {    
     msg <- paste0("No markers found. Are you sure that the feature names match?\n",

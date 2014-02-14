@@ -4,7 +4,7 @@ CHANGES IN VERSION 1.3.9
    components as input for discovery analysis [2014-01-03 Mon] 
  o fixed and updated phenoDisco logging [2014-02-03 Mon]
  o added support for parallel phenoDisco execution. See BPPARAM
- argument [2014-02-03 Mon]
+   argument [2014-02-03 Mon]
  o fixed issues with using PD and ndims [2014-02-10 Mon]
  o fixed call to anyUnknown in PD code [2014-02-10 Mon]
 

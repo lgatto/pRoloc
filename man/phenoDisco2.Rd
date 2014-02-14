@@ -40,7 +40,9 @@ phenoDisco2(object, fcol = "markers", times = 100, GS = 10,
   implementation, use \code{NULL}.}
 
   \item{seed}{An optional \code{numeric} of length 1
-  specifing the random number generator seed to be used.}
+  specifing the random number generator seed to be used.
+  Only relevant when executed in serialised mode with
+  \code{BPPARAM = NULL}. See \code{BPPARAM} for details.}
 
   \item{verbose}{Logical, indicating if messages are to be
   printed out during execution of the algorithm.}

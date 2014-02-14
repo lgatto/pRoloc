@@ -25,8 +25,8 @@ phenoDisco2(object, fcol = "markers", times = 100, GS = 10,
   Default is 0.05.}
 
   \item{ndims}{Number of principal components to use as
-  input for the disocvery analysis. Defualt is the first 2
-  components.}
+  input for the disocvery analysis. Default is 2. Added in
+  version 1.3.9.}
 
   \item{seed}{An optional \code{numeric} of length 1
   specifing the random number generator seed to be used.}

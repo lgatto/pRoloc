@@ -1,6 +1,6 @@
 CHANGES IN VERSION 1.3.9
 ------------------------
- o Added phenoDisco2 which had the option to use more than two
+ o Added phenoDisco2 which has the option to use more than two
    two principal components as input for discovery analysis
    [2014-01-03 Mon] 
 

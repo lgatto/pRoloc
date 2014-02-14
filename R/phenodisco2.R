@@ -1,129 +1,7 @@
-## Function to get new phenotypes
-## INPUTS: object = output from phenoDiscoTracking, groupSize = default is 5 
-## which is used to define minimum number of proteins per new phenotype
-## jc = correlation cooefficient, currently no other value but 1 is supported
-getNewClusters <- function(object, 
-                           groupSize = 5,
-                           jc = 1) {  
-  X <- object[,1]$originalX
-  namesX <- table(unlist(apply(object, 2, function(z) rownames(z$X))))
-  namesX <- names(which(namesX == dim(object)[2]))
-  index <- unlist(object[1,])
-  history <- sapply(namesX,
-                          function(z) as.vector(index[which(names(index) == z)]), 
-                          simplify = TRUE)
-  history <- t(history)
-  rownames(history) <- namesX
-  corMatrix <- simil(history, history, method="eJaccard")
-  ## Here we look at the correlation between profiles
-  ## We start look at the 1st protein & identify which proteins are highly 
-  ## correlated with in i.e. that has a correlation coefficent > jc
-  ## We then group these proteins together to form a new phenotype
-  if (jc == 1) {
-    getNames <- apply(corMatrix, 1, function(z) names(z[z==1]))	
-  } else {
-    getNames <- apply(corMatrix, 1, function(z) names(z[z > jc])) 
-  } 
-  if (length(getNames) > 0) {
-    if (class(getNames) == "list") {
-      getNamesUnique <- unique(getNames)
-      group <- getNamesUnique[unlist(lapply(getNamesUnique, 
-                                            function(z) length(z) >= groupSize))]
-      coords <- lapply(group, function(x) 
-                             t(sapply(x, function(z) X[rownames(X) == z,])))
-    } else {
-      group <- NULL
-      coords <- NULL
-    }
-  } else {
-    coords <- NULL
-  }
-  list(coords = coords, 
-       protIDs = group)
-}
-
-## Function for performing outlier detection - L. Breckels - 16/06/2011  
-## L: labelled, X: unlabelled, N: number of iterations, p: significance level 
-gmmOutlier <- function(L, X, N = 500, p=0.05) {
-  ## Make X Matrix
-  X <- matrix(X, ncol=ncol(L), dimnames=list( c(rownames(X)), c(colnames(X))))
-  ## Generate Null
-  ## Need justification of options for selection G here
-  ## Re-test
-  if (nrow(L) < 30) {
-    if (nrow(L) < 10) {
-      gmm0<- Mclust(L, G=1) 
-    } else {
-      gmm0<- Mclust(L, G=1:3)
-    } 
-  } else {
-    gmm0<- Mclust(L)
-  }	
-  if(gmm0$G==1) { 
-    mat <- mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1]) 		
-    ## If the cluster number in the data is 1 use the Mahalanobis distance
-  } else {
-    W <- WN <- a<- vector()
-    for (i in 1:N) {
-      s<-which(rmultinom(1, size=1, prob=(gmm0$parameters$pro))==1)
-      NP<-rmultnorm(1, mu=gmm0$parameters$mean[,s], 
-                    vmat=gmm0$parameters$variance$sigma[,,s]) 		
-      ## Generate new profile (NP) from the data
-      es<-do.call("estep", c(list(data=rbind(NP, L)), gmm0))   					
-      ## ELSE use the estep of the EM algorithm to determine model parameters
-      W[i]<-(-2*(es$loglik - gmm0$loglik)) 
-      ## Generate the test statistic, W, for round N (build up a distribution 
-      ## of W over N rounds)
-    }
-  }
-  ## Test unlabelled
-  ## Test for G>1
-  if (gmm0$G!=1) {	
-    WA<-W[order(W)][round((1-p)*length(W))] ## Determine W alpha 	
-    for (i in (1:nrow(X)) ) {
-      esN<-do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0)) 	
-      ## Use the estep of the EM algorithm to determine model 
-      ## parameters for the unlabelled profile
-      WN[i]<- (-2*(esN$loglik - gmm0$loglik)) 
-      ## Calculate the test statistic, W, for the unlabelled profile
-    }
-    TF <- WN > WA
-    TF <- replace(TF, TF=="TRUE", "outlier")
-    TF <- replace(TF, TF=="FALSE", "classified")	
-    fullList <- data.frame(X, TF)
-    outliers <- fullList[which(fullList[,"TF"]=="outlier"), -ncol(fullList)]
-    outliers <- as.matrix(outliers)
-    classified <- fullList[which(fullList[,"TF"]=="classified"), -ncol(fullList)]
-    classified <- as.matrix(classified)    
-    if (length(outliers)==0) {outliers <- NULL}
-    if (length(classified)==0) {classified <- NULL}
-    list(outliers=outliers, classified=classified,fullList=fullList,gmm0=gmm0) 
-    ## Compare WN with WA to determine if outlier/class member
-  } else {	## Test for G=1
-    chi <- qchisq(df=ncol(L)-1, 1-p)
-    TF <- mat > chi
-    TF <- replace(TF, TF=="TRUE", "outlier")
-    TF <- replace(TF, TF=="FALSE", "classified")
-    fullList <- data.frame(X, TF)
-    outliers <- fullList[which(fullList[,3]=="outlier"), 1:2]
-    outliers <- as.matrix(outliers)
-    classified <- fullList[which(fullList[,3]=="classified"), 1:2]
-    classified <- as.matrix(classified)    
-    if (length(outliers) == 0) {
-      outliers <- NULL
-    }
-    if (length(classified) == 0) {
-      classified <- NULL
-    }	
-    list(outliers = outliers, 
-         classified = classified, 
-         fullList = fullList, 
-         gmm0 = gmm0)
-  }
-}
-
-## tracking.R (L Breckels - Date last modified 15/08/2012)
-## 
+## tracking.R (L Breckels)
+##
+## Changes: 2014-02-03 added ndims support
+##
 ## This is a core part of the phenoDisco algorihtm. This function (1) transforms 
 ## the data by PCA, then loops over k classes and (2) clusters each set k U X 
 ## using a GMM (NB: we should probably change to hierarchical so as not to confuse 
@@ -212,75 +90,6 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers", ndims=2) {
        k = k)
 }
 
-## Convenience function for updating MSnSet with new phenotypes
-updateobject  <- function(MSnSetToUpdate,
-                          newPhenotypes,
-                          newClasses,
-                          originalMarkerColumnName = "markers",
-                          oldMarkerColumnName = "markers",
-                          newMarkerColumnName = "newMarkers") {
-  newobject <- MSnSetToUpdate
-  indexOld <- which(colnames(fData(newobject)) == oldMarkerColumnName)
-  indexNew <- ncol(fData(newobject)) + 1
-  indexOriginal <- which(colnames(fData(newobject)) == originalMarkerColumnName)
-  
-  ## Now need to add new newPhenotypes and delete these proteins from unlabelled
-  if (length(newPhenotypes$protIDs) > 0) {
-    if (class(newPhenotypes$coords)!="NULL") {
-      indOrigM <- length(table(fData(newobject)[,indexOriginal]))
-      indOldM <- length(table(fData(newobject)[,indexOld]))
-      
-      nInd <- indOldM - indOrigM
-      newLabels <- sapply(1:length(newPhenotypes$coords), 
-                          function(z) paste("Phenotype", nInd+z)) 
-      names(newPhenotypes$coords) <- newLabels
-      names(newPhenotypes$protIDs) <- newLabels
-      
-      index <- lapply(newPhenotypes$protIDs, function(z) 
-                      as.vector(sapply(z, function(x) which(featureNames(newobject)==x))))
-      
-      
-      fData(newobject)[,indexNew] <- 
-        as.character(fData(newobject)[,indexOld])
-      
-      for (i in 1:length(newPhenotypes$protIDs)) {
-        fData(newobject)[index[[i]], indexNew] <- 
-          rep(x=names(index)[i], times=length(index[[i]]))
-      }
-      
-      index <- lapply(newClasses, function(z) 
-                      as.vector(sapply(z, function(x) which(featureNames(newobject)==x))))
-      
-      
-      for (i in 1:length(newClasses)) {
-        fData(newobject)[index[[i]], indexNew] <-
-          rep(x=names(index)[i], times=length(index[[i]]))
-      }
-      
-      fData(newobject)[,indexNew] <- 
-        as.factor(fData(newobject)[,indexNew])
-      colnames(fData(newobject))[indexNew] <- newMarkerColumnName
-    }
-  } else {
-    
-    fData(newobject)[,indexNew] <- 
-      as.character(fData(newobject)[,indexOld])
-    
-    index <- lapply(newClasses, function(z) 
-                    as.vector(sapply(z, function(x) which(featureNames(newobject)==x))))
-    
-    for (i in 1:length(newClasses)) {
-      fData(newobject)[index[[i]], indexNew] <-
-        rep(x=names(index)[i], times=length(index[[i]]))
-    }
-    
-    fData(newobject)[,indexNew] <- 
-      as.factor(fData(newobject)[,indexNew])
-    colnames(fData(newobject))[indexNew] <- newMarkerColumnName
-  }
-  
-  return(newobject)
-}
 
 ##' Runs the \code{phenoDisco} algorithm.
 ##' 
@@ -367,11 +176,14 @@ phenoDisco2 <- function(object,
                         BPPARAM,
                         seed,
                         verbose = TRUE) {
-  ## phenoDisco.R (Lisa's phenoDisco code - last updated 27/02/2013)
-  ## fcol = feature column
-  ## times = number of runs of tracking 
-  ## GS = group size 
-  ## p = significance level for outlier detection test
+    ## phenoDisco.R (Lisa's phenoDisco code - last updated 27/02/2013)
+    ## Changes:
+    ##   ndims  2014-02-03
+    ##   BPARAM 2014-02-03
+    ## fcol = feature column
+    ## times = number of runs of tracking 
+    ## GS = group size 
+    ## p = significance level for outlier detection test
 
   ## Check GS not outside limits
   if (GS < 4) 

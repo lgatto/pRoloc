@@ -11,17 +11,17 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
              person(given = "Samuel", family =" Wieczorek",
                     email = "samuel.wieczorek@cea.fr",
                     role = "ctb"))
-Author: Laurent Gatto and Lisa M. Breckels with contributions
-	from Thomas Burger and Samuel Wieczorek
+Author: Laurent Gatto and Lisa M. Breckels with contributions from
+	Thomas Burger and Samuel Wieczorek
 Maintainer: Laurent Gatto <lg390@cam.ac.uk>
-Description: This package implements pattern recognition
-	     techniques on quantitiative mass spectrometry data to
-	     infer protein sub-cellular localisation.
-Depends: R (>= 2.15), MSnbase (>= 1.7.23), MLInterfaces (>= 1.37.1), 
+Description: This package implements pattern recognition techniques on
+	     quantitiative mass spectrometry data to infer protein
+	     sub-cellular localisation.
+Depends: R (>= 2.15), MSnbase (>= 1.7.23), MLInterfaces (>= 1.37.1),
 	 methods, Rcpp (>= 0.10.3), BiocParallel
-Imports: mclust, MSBVAR, caret, e1071, sampling, class,
-	 kernlab, lattice, nnet, randomForest, proxy, FNN,
-	 BiocGenerics, stats4, RColorBrewer, scales, MASS, knitr
+Imports: mclust, MSBVAR, caret, e1071, sampling, class, kernlab,
+	 lattice, nnet, randomForest, proxy, FNN, BiocGenerics,
+	 stats4, RColorBrewer, scales, MASS, knitr
 Suggests: testthat, pRolocdata, roxygen2, synapter, xtable
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2

@@ -64,7 +64,6 @@
 
 \affil{
   Computational Proteomics Unit\\
-  Cambridge Center for Proteomics\\
   University of Cambridge
 }
 

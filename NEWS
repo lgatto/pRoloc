@@ -1,9 +1,15 @@
+
 CHANGES IN VERSION 1.3.11
 -------------------------
  o added phenoDisco2 for testing, allows choice of GMM 
    parameters [2014-02-26 Wed]
  o removed duplicated fly markers [2014-02-28 Fri]
  o updated affiliations in vignettes [2014-03-10 Mon]
+
+CHANGES IN VERSION 1.3.12
+-------------------------
+ o some change ... 
+
 
 CHANGES IN VERSION 1.3.10
 -------------------------

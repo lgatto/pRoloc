@@ -63,7 +63,7 @@
 }
 
 \affil{
-  Cambridge Center for Proteomics\\
+  Computational Proteomics Unit\\
   University of Cambridge
 }
 

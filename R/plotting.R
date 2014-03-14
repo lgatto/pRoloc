@@ -529,6 +529,7 @@ plot2D <- function(object,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
+    fData(object)[, fcol] <- as.factor(fData(object)[, fcol])
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -739,7 +740,7 @@ addLegend <- function(object,
                       col, 
                       ...) {
     where <- match.arg(where)
-
+    fData(object)[, fcol] <- as.factor(fData(object)[, fcol])
     lvs <- levels(fData(object)[, fcol])
     if ("unknown" %in% lvs) {
         i <- which(lvs == "unknown")

@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.3.13
 -------------------------
  o fixed a bug in addLegend [2014-03-14 Fri]
+ o updated testing to testthat 0.8 [2014-03-14 Fri]
 
 CHANGES IN VERSION 1.3.12
 -------------------------

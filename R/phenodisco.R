@@ -17,7 +17,7 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers", ndims=2) {
   k <- k[which(k!="unknown")]
   k <- sample(k) ## Sample k to avoid bias (order of classes *does* affect cluster 
                  ## members but should not affect the ID of new phenotypes)
-  pca <- prcomp(exprs(data), scale=T)$x
+  pca <- prcomp(exprs(data), scale=TRUE)$x
   pca <- pca[, 1:ndims]
   tmp <- lapply(k, function(z) fData(data)[, markerCol]==z)
   L <- lapply(tmp, function(z) pca[z , ])

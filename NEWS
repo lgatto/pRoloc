@@ -2,6 +2,8 @@ CHANGES IN VERSION 1.3.13
 -------------------------
  o fixed a bug in addLegend [2014-03-14 Fri]
  o updated testing to testthat 0.8 [2014-03-14 Fri]
+ o Fixing several warnings about symnbols being replaced upon pRoloc
+   loading and note about usage of ::: [2014-03-15 Sat]
 
 CHANGES IN VERSION 1.3.12
 -------------------------

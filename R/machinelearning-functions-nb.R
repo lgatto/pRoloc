@@ -81,7 +81,7 @@ nbOptimisation <- function(object,
         ## grid search for parameter selection
           for (.laplace in laplace) {
             model <- naiveBayes(markers ~ ., .train2, laplace = .laplace, ...)
-            ans <- e1071:::predict.naiveBayes(model, .test2, type = "class") 
+            ans <- predict(model, .test2, type = "class") 
             conf <- confusionMatrix(ans, .test2$markers)$table
             .p <- checkNumbers(MLInterfaces:::.precision(conf))
             .r <- checkNumbers(MLInterfaces:::.recall(conf))
@@ -97,7 +97,7 @@ nbOptimisation <- function(object,
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     model <- naiveBayes(markers ~ ., .train1,
                         laplace = .bestParams["laplace"], ...)
-    ans <- e1071:::predict.naiveBayes(model, .test1, type = "class") 
+    ans <- predict(model, .test1, type = "class") 
     .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW 
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                        tag = "precision", params = .bestParams)

@@ -92,8 +92,8 @@ rfOptimisation <- function(object,
         .matrixF1 <- makeF1matrix(list(mtry = mtry))
         ## grid search for parameter selection
           for (.mtry in mtry) {
-            model <- randomForest(markers ~ ., .train2, mtry = .mtry, ...)            
-            ans <- randomForest:::predict.randomForest(model, .test2, type = "response") 
+            model <- randomForest(markers ~ ., .train2, mtry = .mtry, ...)
+            ans <- predict(model, .test2, type = "response") 
             conf <- confusionMatrix(ans, .test2$markers)$table
             .p <- checkNumbers(MLInterfaces:::.precision(conf))
             .r <- checkNumbers(MLInterfaces:::.recall(conf))
@@ -108,7 +108,7 @@ rfOptimisation <- function(object,
     .f1Matrices[[.times]] <- .summaryF1
     .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
     model <- randomForest(markers ~ ., .train1, mtry = .bestParams["mtry"], ...)
-    ans <- randomForest:::predict.randomForest(model, .test1, type = "response") 
+    ans <- predict(model, .test1, type = "response") 
     conf <- confusionMatrix(ans, .test1$markers)$table
     .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW
     p <- checkNumbers(MLInterfaces:::.precision(conf),

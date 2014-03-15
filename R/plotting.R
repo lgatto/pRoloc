@@ -529,7 +529,6 @@ plot2D <- function(object,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
-    fData(object)[, fcol] <- as.factor(fData(object)[, fcol])
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -633,21 +632,18 @@ plot2D <- function(object,
         }
         stopifnot(length(cex) == nrow(.data))
         if (!is.null(fcol)) {
+            fData(object)[, fcol] <- factor(fData(object)[, fcol])
             lvs <- levels(fData(object)[, fcol])
             if ("unknown" %in% lvs) {
                 i <- which(lvs == "unknown")
                 lvs <- c(lvs[-i], lvs[i])        
                 fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                                 levels = lvs)
-            } else {
-                fData(object)[, fcol] <- factor(fData(object)[, fcol])
-            }
-
+            } 
             ukn <- fData(object)[, fcol] == unknown
             .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
-            col[ukn] <- unknowncol
-            
+            col[ukn] <- unknowncol            
         } else {
             ukn <- rep(TRUE, nrow(.data))
         }

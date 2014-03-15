@@ -2,4 +2,4 @@ library("testthat")
 library("pRoloc")
 library("pRolocdata")
 
-test_package("pRoloc")
+test_check("pRoloc")

@@ -2,10 +2,11 @@ useDynLib(pRoloc)
 
 ## Depends
 import(MSnbase)
-import(MLInterfaces)
 import(methods)
 import(Rcpp)
 importFrom(BiocParallel, bplapply)
+
+importMethodsFrom(MLInterfaces, MLearn, predScore)
 
 import(lattice)
 import(BiocGenerics)
@@ -20,7 +21,7 @@ importFrom(RColorBrewer, brewer.pal)
 importFrom(stats4, plot)
 importFrom(proxy, simil)
 importFrom(MSBVAR, rmultnorm)
-importFrom(scales, col2hcl, alpha)
+importFrom(scales, col2hcl) ##, alpha)
 importFrom(caret, createFolds, confusionMatrix, plsda, predict.plsda)
 importFrom(sampling, strata)
 importFrom(e1071, svm, naiveBayes, cmeans)

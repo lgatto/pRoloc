@@ -110,7 +110,7 @@ getNewClusters <- function(history, X,
   ## correlated with in i.e. that has a correlation coefficent > jc
   ## We then group these proteins together to form a new phenotype
   if (jc == 1) {
-    getNames <- apply(corMatrix, 1, function(z) names(z[z==1]))	
+    getNames <- apply(corMatrix, 1, function(z) names(z[z==1]))
   } else {
     getNames <- apply(corMatrix, 1, function(z) names(z[z > jc])) 
   } 
@@ -149,18 +149,18 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
     } 
   } else {
     gmm0<- Mclust(L)
-  }	
+  }
   if(gmm0$G==1) {
-    mat <- mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1]) 		
+    mat <- mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1])
     ## If the cluster number in the data is 1 use the Mahalanobis distance
   } else {
     W <- WN <- a<- vector()
     for (i in 1:N) {
       s<-which(rmultinom(1, size=1, prob=(gmm0$parameters$pro))==1)
-      NP<-rmultnorm(1, mu=gmm0$parameters$mean[,s], 
-                    vmat=gmm0$parameters$variance$sigma[,,s]) 		
+      NP<-rmultnorm(1, mu = gmm0$parameters$mean[,s], 
+                    vmat = gmm0$parameters$variance$sigma[, , s])
       ## Generate new profile (NP) from the data
-      es<-do.call("estep", c(list(data=rbind(NP, L)), gmm0))   					
+      es<-do.call("estep", c(list(data=rbind(NP, L)), gmm0)) 
       ## ELSE use the estep of the EM algorithm to determine model parameters
       W[i]<-(-2*(es$loglik - gmm0$loglik)) 
       ## Generate the test statistic, W, for round N (build up a distribution 
@@ -171,9 +171,9 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
   ## Test unlabelled
   ## Test for G>1
   if (gmm0$G!=1) {
-    WA<-W[order(W)][round((1-p)*length(W))] ## Determine W alpha 	
+    WA<-W[order(W)][round((1-p)*length(W))] ## Determine W alpha
     for (i in (1:nrow(X)) ) {
-      esN<-do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0))	
+      esN<-do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0))
       ## Use the estep of the EM algorithm to determine model 
       ## parameters for the unlabelled profile
       WN[i]<- (-2*(esN$loglik - gmm0$loglik)) 
@@ -183,7 +183,7 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
     names(TF) <- rownames(X)
     return(TF)
     ## Compare WN with WA to determine if outlier/class member
-  } else {	## Test for G=1
+  } else { ## Test for G=1
     chi <- qchisq(df=ncol(L)-1, 1-p)
     TF <- mat > chi
     return(TF)

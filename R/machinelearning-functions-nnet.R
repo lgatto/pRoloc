@@ -87,7 +87,7 @@ nnetOptimisation <- function(object,
           model <- nnet(markers ~ ., .train2,
                        decay = .decay, size = .size,
                         trace = FALSE, ...)          
-          ans <- nnet:::predict.nnet(model, .test2, type = "class")
+          ans <- predict(model, .test2, type = "class")
           ## nnet:::predict.nnet does not save the factor levels,
           ## which makes confusionMatrix to fail if both arguments
           ## have different levels.
@@ -110,7 +110,7 @@ nnetOptimisation <- function(object,
                   decay = .bestParams["decay"],
                   size = .bestParams["size"],
                   trace = FALSE, ...)
-    ans <- nnet:::predict.nnet(model, .test1, type = "class")
+    ans <- predict(model, .test1, type = "class")
     ans <- factor(as.character(ans), levels = levels(.train1$markers)) ## see comment above
     .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW    
     p <- checkNumbers(MLInterfaces:::.precision(conf),

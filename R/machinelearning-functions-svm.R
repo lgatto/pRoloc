@@ -86,7 +86,7 @@ svmOptimisation <- function(object,
         for (.sigma in sigma) {
           model <- svm(markers ~ ., .train2,
                        gamma = .sigma, cost = .cost, ...)
-          ans <- e1071:::predict.svm(model, .test2)
+          ans <- predict(model, .test2)
           conf <- confusionMatrix(ans, .test2$markers)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))
@@ -104,7 +104,7 @@ svmOptimisation <- function(object,
     model <- svm(markers ~ ., .train1,
                  gamma = .bestParams["sigma"],
                  cost = .bestParams["cost"], ...)
-    ans <- e1071:::predict.svm(model, .test1) 
+    ans <- predict(model, .test1) 
     .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW
     p <- checkNumbers(MLInterfaces:::.precision(conf),
                       tag = "precision", params = .bestParams)

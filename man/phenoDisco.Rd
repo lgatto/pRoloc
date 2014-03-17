@@ -35,7 +35,7 @@ phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   \code{Mclust}. The help file for \code{mclustModelNames}
   describes the available models. Default model names are
   \code{c("EII", "VII", "EEI", "VEI", "EVI", "VVI", "EEE",
-  "EEV", "VEV", "VVV"), as returned by
+  "EEV", "VEV", "VVV")}, as returned by
   \code{mclust.options("emModelNames")}. Note that using
   all these possible models substantially increases the
   running time. Legacy models are

@@ -271,29 +271,30 @@ updateobject  <- function(MSnSetToUpdate,
 
 ##' Runs the \code{phenoDisco} algorithm.
 ##' 
-##' \code{phenoDisco} is a semi-supervised iterative approach to detect new
-##' protein clusters. 
+##' \code{phenoDisco} is a semi-supervised iterative approach to
+##' detect new protein clusters.
 ##' 
-##' The algorithm performs a phenotype discovery analysis as described in
-##' Breckels et al. Using this approach one can identify putative subcellular 
-##' groupings in organelle proteomics experiments for more comprehensive 
-##' validation in an unbiased fashion. The method is based on the work of Yin 
-##' et al. and used iterated rounds of Gaussian Mixture Modelling using the 
-##' Expectation Maximisation algorithm combined with a non-parametric outlier
-##' detection test to identify new phenotype clusters.
+##' The algorithm performs a phenotype discovery analysis as described
+##' in Breckels et al. Using this approach one can identify putative
+##' subcellular groupings in organelle proteomics experiments for more
+##' comprehensive validation in an unbiased fashion. The method is
+##' based on the work of Yin et al. and used iterated rounds of
+##' Gaussian Mixture Modelling using the Expectation Maximisation
+##' algorithm combined with a non-parametric outlier detection test to
+##' identify new phenotype clusters.
 ##'
-##' One requires 2 or more classes to be labelled in the data 
-##' and at a very minimum of 6 markers per class to run the algorithm.
-##' The function will check and remove features with missing values using
+##' One requires 2 or more classes to be labelled in the data and at a
+##' very minimum of 6 markers per class to run the algorithm.  The
+##' function will check and remove features with missing values using
 ##' the \code{\link{filterNA}} method.
 ##'
 ##' A parallel implementation, relying on the \code{BiocParallel}
 ##' package, has been added in version 1.3.9. See the \code{BPPARAM}
 ##' arguent for details.
 ##'
-##' Important: Prior to version 1.1.2 the row order in the output was different from
-##' the row order in the input. This has now been fixed and row ordering is now
-##' the same in both input and output objects.
+##' Important: Prior to version 1.1.2 the row order in the output was
+##' different from the row order in the input. This has now been fixed
+##' and row ordering is now the same in both input and output objects.
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
@@ -307,11 +308,15 @@ updateobject  <- function(MSnSetToUpdate,
 ##' 0.05.
 ##' @param ndims Number of principal components to use as input for
 ##' the disocvery analysis. Default is 2. Added in version 1.3.9.
-##' @param modelNames A vector of character strings indicating the
-##' models to be fitted in the EM phase of clustering using
-##' \code{Mclust}. The help file for \code{mclustModelNames} describes
-##' the available models. Default is
-##' \code{c("EEE","EEV","VEV","VVV")}.
+##' @param modelNames A vector of characters indicating the models to
+##' be fitted in the EM phase of clustering using \code{Mclust}. The
+##' help file for \code{mclustModelNames} describes the available
+##' models. Default model names are \code{c("EII", "VII", "EEI",
+##' "VEI", "EVI", "VVI", "EEE", "EEV", "VEV", "VVV"), as returned by
+##' \code{mclust.options("emModelNames")}. Note that using all these
+##' possible models substantially increases the running time. Legacy
+##' models are \code{c("EEE","EEV","VEV","VVV")}, i.e. only
+##' ellipsoidal models.
 ##' @param G An integer vector specifying the numbers of mixture
 ##' components (clusters) for which the BIC is to be calculated. The
 ##' default is \code{G=1:9} (as in \code{Mclust}).
@@ -323,21 +328,25 @@ updateobject  <- function(MSnSetToUpdate,
 ##' \code{DoparParam}, \ldots see the \code{BiocParallel} package for
 ##' details. To revert to the origianl serial implementation, use
 ##' \code{NULL}.
+##' @param tmpfile An optional \code{character} to save a temporary
+##' \code{MSnSet} after each iteration. Ignored if missing. This is
+##' useful for long runs to track phenotypes and possibly kill the run
+##' when convergence is observed. If the run completes, the temporary
+##' file is deleted before returning the final result.
 ##' @param seed An optional \code{numeric} of length 1 specifing the
 ##' random number generator seed to be used. Only relevant when
 ##' executed in serialised mode with \code{BPPARAM = NULL}. See
 ##' \code{BPPARAM} for details.
-##' @param verbose Logical, indicating if messages are to be
-##' printed out during execution of the algorithm.
-##' @return An instance of class \code{MSnSet} containing the \code{phenoDisco}
-##' predictions.
+##' @param verbose Logical, indicating if messages are to be printed
+##' out during execution of the algorithm.
+##' @return An instance of class \code{MSnSet} containing the
+##' \code{phenoDisco} predictions.
 ##' @author Lisa M. Breckels <lms79@@cam.ac.uk>
-##' @references
-##' Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong ST. Using
-##' iterative cluster merging with improved gap statistics to perform
-##' online phenotype discovery in the context of high-throughput RNAi
-##' screens. BMC Bioinformatics. 2008 Jun 5;9:264.  PubMed PMID:
-##' 18534020.
+##' @references Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong
+##' ST. Using iterative cluster merging with improved gap statistics
+##' to perform online phenotype discovery in the context of
+##' high-throughput RNAi screens. BMC Bioinformatics. 2008 Jun
+##' 5;9:264.  PubMed PMID: 18534020.
 ##' 
 ##' Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS and
 ##' Trotter MWB.  The Effect of Organelle Discovery upon Sub-Cellular
@@ -359,9 +368,10 @@ phenoDisco <- function(object,
                        allIter = FALSE,
                        p = 0.05,
                        ndims = 2,
-                       modelNames = c("EEE","EEV","VEV","VVV"),
+                       modelNames = mclust.options("emModelNames"),
                        G = 1:9,
                        BPPARAM,
+                       tmpfile,
                        seed,
                        verbose = TRUE) {
     ## phenoDisco.R 
@@ -523,8 +533,12 @@ phenoDisco <- function(object,
                                oldMarkerColumnName = fcol,
                                newMarkerColumnName = newPhenoName,
                                originalMarkerColumnName = original)
-        fcol <- newPhenoName 
+        fcol <- newPhenoName
+        ## serialise temporary object
+        if (!missing(tmpfile))
+            save(object, file = tmpfile)
     } ## end of while
+
     foo <- length(names(fData(object)))
     names(fData(object))[foo] <- "pd"
     
@@ -564,6 +578,8 @@ phenoDisco <- function(object,
     object <- object[a,]
     object <- MSnbase:::nologging(object, n = 1)
     stopifnot(featureNames(object) == fnames)
-    if (validObject(object))
+    if (validObject(object)) {
+        if (!missing(tmpfile)) unlink(tmpfile)
         return(object)
+    }
 }

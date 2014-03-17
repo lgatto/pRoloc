@@ -3,8 +3,9 @@
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
 phenoDisco(object, fcol = "markers", times = 100, GS = 10,
-  allIter = FALSE, p = 0.05, ndims = 2, modelNames = c("EEE", "EEV",
-  "VEV", "VVV"), G = 1:9, BPPARAM, seed, verbose = TRUE)
+  allIter = FALSE, p = 0.05, ndims = 2,
+  modelNames = mclust.options("emModelNames"), G = 1:9, BPPARAM, tmpfile,
+  seed, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -29,11 +30,17 @@ phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   input for the disocvery analysis. Default is 2. Added in
   version 1.3.9.}
 
-  \item{modelNames}{A vector of character strings
-  indicating the models to be fitted in the EM phase of
-  clustering using \code{Mclust}. The help file for
-  \code{mclustModelNames} describes the available models.
-  Default is \code{c("EEE","EEV","VEV","VVV")}.}
+  \item{modelNames}{A vector of characters indicating the
+  models to be fitted in the EM phase of clustering using
+  \code{Mclust}. The help file for \code{mclustModelNames}
+  describes the available models. Default model names are
+  \code{c("EII", "VII", "EEI", "VEI", "EVI", "VVI", "EEE",
+  "EEV", "VEV", "VVV"), as returned by
+  \code{mclust.options("emModelNames")}. Note that using
+  all these possible models substantially increases the
+  running time. Legacy models are
+  \code{c("EEE","EEV","VEV","VVV")}, i.e. only ellipsoidal
+  models.}
 
   \item{G}{An integer vector specifying the numbers of
   mixture components (clusters) for which the BIC is to be
@@ -50,6 +57,13 @@ phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   \code{DoparParam}, \ldots see the \code{BiocParallel}
   package for details. To revert to the origianl serial
   implementation, use \code{NULL}.}
+
+  \item{tmpfile}{An optional \code{character} to save a
+  temporary \code{MSnSet} after each iteration. Ignored if
+  missing. This is useful for long runs to track phenotypes
+  and possibly kill the run when convergence is observed.
+  If the run completes, the temporary file is deleted
+  before returning the final result.}
 
   \item{seed}{An optional \code{numeric} of length 1
   specifing the random number generator seed to be used.
@@ -80,8 +94,9 @@ identify new phenotype clusters.
 
 One requires 2 or more classes to be labelled in the data
 and at a very minimum of 6 markers per class to run the
-algorithm. The function will check and remove features with
-missing values using the \code{\link{filterNA}} method.
+algorithm.  The function will check and remove features
+with missing values using the \code{\link{filterNA}}
+method.
 
 A parallel implementation, relying on the
 \code{BiocParallel} package, has been added in version

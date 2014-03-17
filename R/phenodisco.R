@@ -1,6 +1,7 @@
 ## tracking.R (L Breckels)
 ##
 ## Changes: 2014-02-03 added ndims support
+## Changes: 2014-03-17 added modelNames and G
 ##
 ## This is a core part of the phenoDisco algorihtm. This function (1) transforms 
 ## the data by PCA, then loops over k classes and (2) clusters each set k U X 
@@ -11,7 +12,13 @@
 ## following candidate identification the 'gmmOutlier' function is called and 
 ## candidates are merged or rejected accordingly.
 ##
-tracking <- function(data, alpha = 0.05, markerCol = "markers", ndims=2) {
+tracking <- function(data, 
+                     alpha, 
+                     markerCol, 
+                     ndims, 
+                     modelNames, 
+                     G) {
+
   ## ===STAGE 1=== TRANSFORM DATA by PCA to reduce data complexity
   k <- names(table(fData(data)[, markerCol]))
   k <- k[which(k!="unknown")]
@@ -34,7 +41,7 @@ tracking <- function(data, alpha = 0.05, markerCol = "markers", ndims=2) {
       ## (A)  Identify potential new members/candidates of organelle class k
       ## (B)  Get cluster IDs for defining phenotypes at a later stage  
       kUx <- rbind(L[[i]], X)
-      gmmCluster <- Mclust(kUx, modelNames = c("EEE","EEV","VEV","VVV"))
+      gmmCluster <- Mclust(data = kUx, G = G, modelNames = modelNames)
       track[[i]] <- gmmCluster$classification # Get cluster number for each prot
       Nclass <- nrow(L[[i]])
       classifyL <- track[[i]][1:Nclass]  
@@ -300,6 +307,14 @@ updateobject  <- function(MSnSetToUpdate,
 ##' 0.05.
 ##' @param ndims Number of principal components to use as input for
 ##' the disocvery analysis. Default is 2. Added in version 1.3.9.
+##' @param modelNames A vector of character strings indicating the
+##' models to be fitted in the EM phase of clustering using
+##' \code{Mclust}. The help file for \code{mclustModelNames} describes
+##' the available models. Default is
+##' \code{c("EEE","EEV","VEV","VVV")}.
+##' @param G An integer vector specifying the numbers of mixture
+##' components (clusters) for which the BIC is to be calculated. The
+##' default is \code{G=1:9} (as in \code{Mclust}).
 ##' @param BPPARAM Support for parallel processing using the
 ##' \code{BiocParallel} infrastructure. When missing (default), the
 ##' default registered \code{BiocParallelParam} parameters are
@@ -344,13 +359,17 @@ phenoDisco <- function(object,
                        allIter = FALSE,
                        p = 0.05,
                        ndims = 2,
+                       modelNames = c("EEE","EEV","VEV","VVV"),
+                       G = 1:9,
                        BPPARAM,
                        seed,
                        verbose = TRUE) {
     ## phenoDisco.R 
     ## Changes:
-    ##   ndims  2014-02-03
-    ##   BPARAM 2014-02-03
+    ##   2014-02-03 ndims  
+    ##   2014-02-03 BPARAM 
+    ##   2014-03-17 modelNames 
+    ##   2014-03-17 G
     
     ## Check data and parameters properly specified
     if (GS < 4) 
@@ -378,6 +397,8 @@ phenoDisco <- function(object,
         warning("ndims <= 1, using ndims = 2")
         ndims <- 2
     }
+    ## Check GMM parameters
+ 
     ## Check we have enough labelled data to start
     test <- table(fData(object)[,fcol])
     if (any(sapply(test, function(x) x<6)))
@@ -422,7 +443,9 @@ phenoDisco <- function(object,
                                                   tracking(data = object,
                                                            alpha = p,
                                                            markerCol = fcol,
-                                                           ndims = ndims)))
+                                                           ndims = ndims,
+                                                           modelNames = modelNames,
+                                                           G = G)))
         } else if (inherits(BPPARAM, "BiocParallelParam")) {
             ## using user-specified BiocParallelParam
             track[[i]] <- simplify2array(bplapply(seq_len(times),
@@ -430,7 +453,9 @@ phenoDisco <- function(object,
                                                   tracking(data = object,
                                                            alpha = p,
                                                            markerCol = fcol,
-                                                           ndims = ndims), 
+                                                           ndims = ndims,
+                                                           modelNames = modelNames,
+                                                           G = G), 
                                                   BPPARAM = BPPARAM))
         } else if (is.null(BPPARAM)) {
             ## serialised version (original implementation)
@@ -439,7 +464,9 @@ phenoDisco <- function(object,
                                         data = object, 
                                         markerCol = fcol,
                                         alpha = p,
-                                        ndims = ndims))
+                                        ndims = ndims,
+                                        modelNames = modelNames,
+                                        G = G))
         } else {
             stop("Non valid BPPARAM. See ?phenoDisco for details.")
         }

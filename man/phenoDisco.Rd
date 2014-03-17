@@ -3,7 +3,8 @@
 \title{Runs the \code{phenoDisco} algorithm.}
 \usage{
 phenoDisco(object, fcol = "markers", times = 100, GS = 10,
-  allIter = FALSE, p = 0.05, ndims = 2, BPPARAM, seed, verbose = TRUE)
+  allIter = FALSE, p = 0.05, ndims = 2, modelNames = c("EEE", "EEV",
+  "VEV", "VVV"), G = 1:9, BPPARAM, seed, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -27,6 +28,17 @@ phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   \item{ndims}{Number of principal components to use as
   input for the disocvery analysis. Default is 2. Added in
   version 1.3.9.}
+
+  \item{modelNames}{A vector of character strings
+  indicating the models to be fitted in the EM phase of
+  clustering using \code{Mclust}. The help file for
+  \code{mclustModelNames} describes the available models.
+  Default is \code{c("EEE","EEV","VEV","VVV")}.}
+
+  \item{G}{An integer vector specifying the numbers of
+  mixture components (clusters) for which the BIC is to be
+  calculated. The default is \code{G=1:9} (as in
+  \code{Mclust}).}
 
   \item{BPPARAM}{Support for parallel processing using the
   \code{BiocParallel} infrastructure. When missing

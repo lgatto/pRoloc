@@ -380,13 +380,16 @@ phenoDisco <- function(object,
     ##   2014-02-03 BPARAM 
     ##   2014-03-17 modelNames 
     ##   2014-03-17 G
-    
+
+    if (!missing(tmpfile))
+        on.exit(unlink(tmpfile))
+   
     ## Check data and parameters properly specified
     if (GS < 4) 
         stop("Group size specified too small.")
     if (!anyUnknown(object))
         stop("No unlabelled features (conventionally marked 'unknown') in your data.")
-    if (!missing(seed) & is.null(BPPARAM)) {
+    if (!missing(seed) && !missing(BPPARAM) && is.null(BPPARAM)) {
         seed <- as.integer(seed)
         set.seed(seed)
     }
@@ -535,7 +538,7 @@ phenoDisco <- function(object,
                                originalMarkerColumnName = original)
         fcol <- newPhenoName
         ## serialise temporary object
-        if (!missing(tmpfile))
+        if (!missing(tmpfile)) 
             save(object, file = tmpfile)
     } ## end of while
 
@@ -579,7 +582,6 @@ phenoDisco <- function(object,
     object <- MSnbase:::nologging(object, n = 1)
     stopifnot(featureNames(object) == fnames)
     if (validObject(object)) {
-        if (!missing(tmpfile)) unlink(tmpfile)
         return(object)
     }
 }

@@ -11,6 +11,15 @@ setClass("GenRegRes",
                         datasize = "list"))
 ## TODO: add a slot predictions = "list" with validation predictions.
 
+setClass("GenRegRes2",
+         representation(decision.values = "matrix",
+                        predictions = "list"),
+         contains = "GenRegRes")
+
+setMethod("show",
+          signature(object = "GenRegRes2"),
+          function(object) str(object))
+
 setMethod("show",
           signature(object = "GenRegRes"),
           function(object) {

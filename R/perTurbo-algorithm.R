@@ -155,7 +155,7 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
       ## We begin with the class that have the smaller sigma value
       i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
       rbfkernel <- rbfdot(1/trainingResults$listOfSigma[i]^2)
-      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);  	 
+      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);
       for (k in 1:testSet$nbInd){
         setOfAllPerturbations[k, iClass] <-
           t(kTestPoints[,k]) %*% trainingResults$listOfLearnedModels[[i]] %*% (kTestPoints[,k])
@@ -181,7 +181,7 @@ testStep <- function(testSet, trainingResults, loop = "LOOP_CXX", nbBlocks = 3) 
       i <- sort(trainingResults$listOfSigma, index.return = TRUE)$ix[iClass]
       rbfkernel <- rbfdot(1/trainingResults$listOfSigma[i]^2)
       
-      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);  	 
+      kTestPoints <- kernelMatrix(rbfkernel, trainingResults$trExPerCl[[i]], testSet$var);
       ## In the perTurbo paper [ref], the perturbation is calculated as 1-p
       ## and each sample is associated to the class with the least perturbation
       ## Here, we record only the 'p' value in order to have one operation less
@@ -251,10 +251,10 @@ estimateVariance <- function(learningSet, nbInd) {
 ## @param learningSet: a dataset
 ## @param pRegul A parameter to tune the importance of the regularization during matrix inversion
 ## @return trainingResults : a structure containing several parts:
-##      - trainingResults@nbLabel: nb of labels per class
-##    	- trainingResults@listOfLearnedModels: K^{-1} computed for each class
-##    	- trainingResults@trExPerCl: list of points per class
-##    	- trainingResults@listOfSigma: list of Sigma used for each class
+##   - trainingResults@nbLabel: nb of labels per class
+##   - trainingResults@listOfLearnedModels: K^{-1} computed for each class
+##   - trainingResults@trExPerCl: list of points per class
+##   - trainingResults@listOfSigma: list of Sigma used for each class
 ## @author Thomas Burger, xxxxxx
 trainingStepAutoSigma <- function(theLearningSet, inv, reg, pRegul) {
   trainingResults <- NULL
@@ -293,10 +293,10 @@ trainingStepAutoSigma <- function(theLearningSet, inv, reg, pRegul) {
 ## @param pRegul A parameter to tune the importance of the regularization during matrix inversion
 ## @param pSigma The variance of the kernel used to approximate the Laplace-Beltrami operator
 ## @return trainingResults : a structure containing several parts:
-##      - trainingResults@nbLabel: nb of labels per class
-##      - trainingResults@listOfLearnedModels: K^{-1} computed for each class
-##    	- trainingResults@trExPerCl: list of points per class
-##    	- trainingResults@listOfSigma: list of Sigma used for each class
+##   - trainingResults@nbLabel: nb of labels per class
+##   - trainingResults@listOfLearnedModels: K^{-1} computed for each class
+##   - trainingResults@trExPerCl: list of points per class
+##   - trainingResults@listOfSigma: list of Sigma used for each class
 ## @author Thomas Burger, xxxxxx
 trainingStep <- function(theLearningSet, pSigma, inv, reg, pRegul) {
   trainingResults <- NULL
@@ -329,10 +329,10 @@ trainingStep <- function(theLearningSet, pSigma, inv, reg, pRegul) {
 ## @param sigma:"AUTO" if we pick the "best" sigma, vector of sigma otherwise. Default: AUTO (optional)
 ## @param scaled: if the data are in [0,1]. DEFAULT: TRUE (optional)
 ## @return trainingResults : a structure containing several parts:
-##      - trainingResults@nbLabel: nb of labels per class
-##      - trainingResults@listOfLearnedModels: K^{-1} computed for each class
-##      - trainingResults@trExPerCl: list of points per class
-##    	- trainingResults@listOfSigma: list of Sigma used for each class
+##   - trainingResults@nbLabel: nb of labels per class
+##   - trainingResults@listOfLearnedModels: K^{-1} computed for each class
+##   - trainingResults@trExPerCl: list of points per class
+##   - trainingResults@listOfSigma: list of Sigma used for each class
 ## @author Thomas Burger, xxxxxx
 trainingPerTurbo <- function(markers, train2,
                              sigma , inv, reg, pRegul,

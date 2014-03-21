@@ -2,6 +2,8 @@ CHANGES IN VERSION 1.3.14
 -------------------------
  o deleted tab character [2014-03-15 Sat]
  o added support for GMM parametrisation to phenoDisco [2014-03-17 Mon]
+ o message instead of warning when using colour and pch [2014-03-21 Fri]
+ o remove 1 duplicated mouse marker [2014-03-21 Fri]
 
 CHANGES IN VERSION 1.3.13
 -------------------------

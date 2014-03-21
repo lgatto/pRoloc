@@ -409,7 +409,7 @@ plotDist <- function(object,
         if (toobig) warning(paste0("Not enough colours and pch.\n",
                                    "Some classes will not be coloured."),
                             call. = FALSE)
-        else warning("Not enough colours: using colours and pch.",
+        else message("Not enough colours: using colours and pch.",
                      call. = FALSE)
     }
     k <- nclst / ncol

@@ -409,8 +409,7 @@ plotDist <- function(object,
         if (toobig) warning(paste0("Not enough colours and pch.\n",
                                    "Some classes will not be coloured."),
                             call. = FALSE)
-        else message("Not enough colours: using colours and pch.",
-                     call. = FALSE)
+        else message("Not enough colours: using colours and pch.")
     }
     k <- nclst / ncol
     ## pch indices

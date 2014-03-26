@@ -11,7 +11,7 @@ test_that("subsetAsDataFrame preserves col/rownames", {
                                     nrow(itraqdata),
                                     replace=TRUE)
     .fcol <- "markers"
-    dfr <- subsetAsDataFrame(msnset, fcol = .fcol)
+    dfr <- pRoloc:::subsetAsDataFrame(msnset, fcol = .fcol)
     expect_equal(featureNames(msnset), rownames(dfr))
     expect_equal(c(sampleNames(msnset), .fcol), colnames(dfr))
 })

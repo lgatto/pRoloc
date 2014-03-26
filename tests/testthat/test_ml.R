@@ -128,45 +128,45 @@ test_that("ksvm consistency", {
 })
 
 
-test_that("deprecated consistency", {
-  .k <- c(3, 10)
-  reg1 <- knnRegularisation(d1, fcol = "markers",
-                            times = .times, k = .k,
-                            seed = .seed, verbose = FALSE)
-  reg2 <- knnRegularisation(d2, fcol = "xx",
-                            times = .times, k = .k,
-                            seed = .seed, verbose = FALSE)
-  expect_equal(reg1, reg2)  
-  ans1 <- knnPrediction(d1, reg1, fcol = "markers")
-  ans2 <- knnPrediction(d2, reg1, fcol = "xx")
-  expect_equal(ans1, ans2, check.attributes=FALSE)
-  ##
-  .cost <- 2^seq(-2, 2, 2)
-  .sigma <- 10^seq(-1, 1, 1)
-  reg1 <- svmRegularisation(d1, fcol = "markers",
-                            cost = .cost, sigma = .sigma,
-                            times = .times, 
-                            seed = .seed, verbose = FALSE)
-  reg2 <- svmRegularisation(d2, fcol = "xx",
-                            cost = .cost, sigma = .sigma,
-                            times = .times,
-                            seed = .seed, verbose = FALSE)
-  expect_equal(reg1, reg2)  
-  ans1 <- svmPrediction(d1, reg1, fcol = "markers")
-  ans2 <- svmPrediction(d2, reg1, fcol = "xx")
-  expect_equal(ans1, ans2, check.attributes=FALSE)
-  ##
-  .ncomp <- c(3, 10)
-  reg1 <- plsdaRegularisation(d1, fcol = "markers",
-                              ncomp = .ncomp,
-                              times = 1, seed = .seed,
-                              verbose = FALSE)
-  reg2 <- plsdaRegularisation(d2, fcol = "xx",
-                              ncomp = .ncomp,
-                              times = 1, seed = .seed,
-                              verbose = FALSE)
-  expect_equal(reg1, reg2)  
-  ans1 <- plsdaPrediction(d1, reg1, fcol = "markers")
-  ans2 <- plsdaPrediction(d2, reg1, fcol = "xx")
-  expect_equal(ans1, ans2, check.attributes=FALSE)  
-})
+## test_that("deprecated consistency", {
+##   .k <- c(3, 10)
+##   reg1 <- knnRegularisation(d1, fcol = "markers",
+##                             times = .times, k = .k,
+##                             seed = .seed, verbose = FALSE)
+##   reg2 <- knnRegularisation(d2, fcol = "xx",
+##                             times = .times, k = .k,
+##                             seed = .seed, verbose = FALSE)
+##   expect_equal(reg1, reg2)  
+##   ans1 <- knnPrediction(d1, reg1, fcol = "markers")
+##   ans2 <- knnPrediction(d2, reg1, fcol = "xx")
+##   expect_equal(ans1, ans2, check.attributes=FALSE)
+##   ##
+##   .cost <- 2^seq(-2, 2, 2)
+##   .sigma <- 10^seq(-1, 1, 1)
+##   reg1 <- svmRegularisation(d1, fcol = "markers",
+##                             cost = .cost, sigma = .sigma,
+##                             times = .times, 
+##                             seed = .seed, verbose = FALSE)
+##   reg2 <- svmRegularisation(d2, fcol = "xx",
+##                             cost = .cost, sigma = .sigma,
+##                             times = .times,
+##                             seed = .seed, verbose = FALSE)
+##   expect_equal(reg1, reg2)  
+##   ans1 <- svmPrediction(d1, reg1, fcol = "markers")
+##   ans2 <- svmPrediction(d2, reg1, fcol = "xx")
+##   expect_equal(ans1, ans2, check.attributes=FALSE)
+##   ##
+##   .ncomp <- c(3, 10)
+##   reg1 <- plsdaRegularisation(d1, fcol = "markers",
+##                               ncomp = .ncomp,
+##                               times = 1, seed = .seed,
+##                               verbose = FALSE)
+##   reg2 <- plsdaRegularisation(d2, fcol = "xx",
+##                               ncomp = .ncomp,
+##                               times = 1, seed = .seed,
+##                               verbose = FALSE)
+##   expect_equal(reg1, reg2)  
+##   ans1 <- plsdaPrediction(d1, reg1, fcol = "markers")
+##   ans2 <- plsdaPrediction(d2, reg1, fcol = "xx")
+##   expect_equal(ans1, ans2, check.attributes=FALSE)  
+## })

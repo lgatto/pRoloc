@@ -1,3 +1,9 @@
+CHANGES IN VERSION 1.3.17
+------------------------- 
+ o fixed newly introduced bug (see 1.3.16) in
+   pRoloc:::subsetAsDataFrame - thank you unit tests for saving me,
+   again [2014-03-26 Wed]
+
 CHANGES IN VERSION 1.3.16
 -------------------------
  o pRoloc:::subsetAsDataFrame now preserved original sample/column

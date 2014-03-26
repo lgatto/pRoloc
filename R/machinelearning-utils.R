@@ -69,7 +69,7 @@ subsetAsDataFrame <- function(object, fcol,
     nms <- sampleNames(object)
     d <- data.frame(exprs(object), markers = fData(object)[, fcol])
     if (keepColNames)
-        colnames(d) <- c(nms, fcol)
+        colnames(d) <- c(nms, "markers") 
     d.train <- d[d$markers != unknown,]
     d.train$markers <- factor(d.train$markers)
     d.test <- d[d$markers == unknown,]

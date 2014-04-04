@@ -861,10 +861,57 @@ table(p1, p2)
 
 To graphically illustrate the organelle-specific score distributions, use
 
-<<predscoresPlot, eval=FALSE>>=
-boxplot(svm.scores ~ svm,data = fData(svmres))
-abline(h = minprob)
+\begin{figure}[!hbt]
+<<predscoresPlot, dev='pdf', fig.width=6, fig.height=6, echo=TRUE, out.width='.55\\linewidth'>>=
+boxplot(svm.scores ~ svm, data = fData(svmres), ylab = "SVM scores")
+abline(h = minprob, lwd = 2, lty = 2)
 @ 
+\caption{ Organelle-specific SVM score distributions. }
+\label{fig:predscores}
+\end{figure}
+
+As can be see on figure \ref{fig:predscores}, different organelles are
+characterised by different score distributions. Using a unique
+threshold (\Robject{minprob} with value \Sexpr{round(minprob, 2)}
+above) results in accepting 
+\Sexpr{round(sum(p2 == "ER")/sum(p1 == "ER"), 2) * 100}
+\% of the initial ER predictions and only
+\Sexpr{round(sum(p2 == "mitochondrion")/sum(p1 == "mitochondrion"), 2)  * 100} 
+\% of the mitochondrion predictions. The
+\Rfunction{getPredictions} function also accepts organelle-specific
+score thresholds. Below, we calculate organelle-specific median
+scores.
+
+<<medscores1, tidy = FALSE>>=
+## including marker scores
+(ts1 <- tapply(fData(svmres)$svm.scores, fData(svmres)$svm, median))
+@
+
+
+Above, we include markers proteins (that have scores of 1 by default)
+when calculating the respective organelle-specific
+scores. Alternatively, once might choose to ignoring them.
+
+<<medscores2, tidy = FALSE>>=
+## ignoring markers scores (i.e. scores == 1)
+(ts2 <- tapply(fData(svmres)$svm.scores, fData(svmres)$svm,
+               function(x) {
+                   ## assuming scores of 1 are markers
+                   scr <- median(x[x != 1])
+                   ## in case no proteins were assigned to an organelle, 
+                   ## scr would be NA. Setting these cases to 1.
+                   ifelse(is.na(scr), 1, scr)
+               }))
+@
+
+Using these scores equates to choosing the 50\% predictions with
+highest scores for organelle.
+
+<<medscorepreds, tidy = FALSE>>=
+getPredictions(svmres, fcol = "svm", t = ts2)
+@
+
+\bigskip
 
 We can now visualise these results using the plotting functions
 presented in section \ref{sec:usml}, as shown on figure
@@ -881,10 +928,11 @@ addLegend(svmres, fcol = "svm",
 @ 
 %% $
 \caption{ Representation of the svm prediction on the
-  \Sexpr{nrow(tan2009r1)} data set. The full symbols represent the
-  original cluster markers. The svm scores have been used to set the
-  point size (the scores have been transformed to emphasise the
-  extremes). }
+  \Sexpr{nrow(tan2009r1)} data set. The svm scores have been used to
+  set the point size (\texttt{cex} argument; the scores have been
+  transformed to emphasise the extremes). Different symbols
+  (\texttt{fpch}) are used to differentiate markers and new
+  assignments. }
 \label{fig:svmres}
 \end{figure}
 

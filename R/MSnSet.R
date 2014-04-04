@@ -88,32 +88,67 @@ testMarkers <- function(object, xval = 5, n = 2, fcol = "markers") {
 ##' \code{featureData} slot. 
 ##' @param scol The name of the prediction score column in the
 ##' \code{featureData} slot. If missing, created by pasting
-##' '.scores' after \code{fcol}. If \code{NULL}, ignored.
-##' @param t The score threshold. Predictions with score < t are
-##' set to 'unknown'. Default is 0.
+##' '.scores' after \code{fcol}. 
+##' @param t The score threshold. Predictions with score < t are set
+##' to 'unknown'. Default is 0. It is also possible to define
+##' thresholds for each prediction class, in which case, \code{t} is a
+##' named numeric with names exactly matching the unique prediction
+##' class names.
 ##' @param verbose If \code{TRUE}, a prediction table is printed and the
 ##' predictions are returned invisibly. If \code{FALSE}, the predictions
 ##' are returned.
 ##' @return A \code{character} of length \code{ncol(object)}. 
 ##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' res <- svmClassification(dunkley2006, fcol = "pd.markers",
+##'                          sigma = 0.1, cost = 0.5)
+##' fData(res)$svm[500:510]
+##' fData(res)$svm.scores[500:510]
+##' getPredictions(res, fcol = "svm", t = 0) ## all predictions
+##' getPredictions(res, fcol = "svm", t = .9) ## single threshold 
+##' ## 50% top predictions per class
+##' (ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median))
+##' getPredictions(res, fcol = "svm", t = ts)
+##' ## 50% top predictions per class, ignoring marker scores
+##' ts <- tapply(fData(res)$svm.scores, fData(res)$svm,
+##'              function(x) {
+##'                  scr <- median(x[x != 1])
+##'                  ifelse(is.na(scr), 1, scr)
+##'              })
+##' ts
+##' getPredictions(res, fcol = "svm", t = ts)
 getPredictions <- function(object,
                            fcol,
                            scol,
                            t = 0,
                            verbose = TRUE) {
-  stopifnot(!missing(fcol))  
-  predictions <- as.character(fData(object)[, fcol])
+  stopifnot(!missing(fcol))
   if (missing(scol))
-    scol <- paste0(fcol, ".scores")
-  if (!is.null(scol)) {
-    scrs <- fData(object)[, scol]
-    predictions[scrs < t] <- "unknown"
-  }  
-  if (verbose) {
-    print(table(predictions))
-    invisible(predictions)
+      scol <- paste0(fcol, ".scores")  
+  ans <- predictions <-
+      as.character(fData(object)[, fcol])
+  predclasses <- unique(predictions)
+  
+  if (length(t) > 1) {  
+      if (!all(sort(names(t)) == sort(predclasses)))
+          stop("Class-specific score names do not match the class namesa exactly:\n",
+               "   score names: ", paste(sort(names(t)), collapse = ", "), "\n",
+               "   class names: ", paste(sort(predclasses), collapse = ", "))
+      tt <- as.vector(t[predictions])
+      ans <- ifelse(fData(object)[, scol] < tt,
+                    "unknown", predictions)      
   } else {
-    return(predictions)
+      scrs <- fData(object)[, scol]
+      ans[scrs < t] <- "unknown"
+  }
+  
+  if (verbose) {
+      print(table(ans))
+      invisible(ans)
+  } else {
+    return(ans)
   }
 }
 

@@ -139,62 +139,80 @@ getNewClusters <- function(history, X,
        protIDs = group)
 }
 
-## Function for performing outlier detection - L. Breckels - 16/06/2011  
-## L: labelled, X: unlabelled (MUST BE A MATRIX), N: number of iterations, p: significance level 
+## Function for performing outlier detection - L. Breckels 16/06/2011  
+## L: labelled, X: unlabelled (MUST BE A MATRIX),
+## N: number of iterations, p: significance level 
 gmmOutlier <- function(L, X, N = 500, p=0.05) {
-  if(!is.matrix(X)) {
-    stop("X must be a matrix to run gmmOutlier")
-  }
-  ## Generate Null
-  ## Need justification of options for selection G here
-  ## Re-test
-  if (nrow(L) < 30) {
-    if (nrow(L) < 10) {
-      gmm0<- Mclust(L, G=1) 
+    if (!is.matrix(X)) 
+        stop("X must be a matrix to run gmmOutlier")
+
+    ## Generate Null
+    ## Need justification of options for selection G here
+    ## Re-test
+    if (nrow(L) < 30) {
+        if (nrow(L) < 10) {
+            gmm0 <- Mclust(L, G=1) 
+        } else {
+            gmm0 <- Mclust(L, G=1:3)
+        } 
     } else {
-      gmm0<- Mclust(L, G=1:3)
-    } 
-  } else {
-    gmm0<- Mclust(L)
-  }
-  if(gmm0$G==1) {
-    mat <- mahalanobis(X, gmm0$parameters$mean,gmm0$parameters$variance$sigma[,,1])
-    ## If the cluster number in the data is 1 use the Mahalanobis distance
-  } else {
-    W <- WN <- a<- vector()
-    for (i in 1:N) {
-      s<-which(rmultinom(1, size=1, prob=(gmm0$parameters$pro))==1)
-      NP<-rmultnorm(1, mu = gmm0$parameters$mean[,s], 
-                    vmat = gmm0$parameters$variance$sigma[, , s])
-      ## Generate new profile (NP) from the data
-      es<-do.call("estep", c(list(data=rbind(NP, L)), gmm0)) 
-      ## ELSE use the estep of the EM algorithm to determine model parameters
-      W[i]<-(-2*(es$loglik - gmm0$loglik)) 
-      ## Generate the test statistic, W, for round N (build up a distribution 
-      ## of W over N rounds)
+        gmm0 <- Mclust(L)
     }
-    # Can plot to check normal using: plot(density(W))
-  }
-  ## Test unlabelled
-  ## Test for G>1
-  if (gmm0$G!=1) {
-    WA<-W[order(W)][round((1-p)*length(W))] ## Determine W alpha
-    for (i in (1:nrow(X)) ) {
-      esN<-do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0))
-      ## Use the estep of the EM algorithm to determine model 
-      ## parameters for the unlabelled profile
-      WN[i]<- (-2*(esN$loglik - gmm0$loglik)) 
-      ## Calculate the test statistic, W, for the unlabelled profile
+
+    ## LG, Mon Apr  7 21:47:12 BST 2014
+    ## Since mclust 4.3, the originl data in the Mclust
+    ## output, which can not be passed directly to estep
+    ## with an additional data argument:
+    ## Error in estep: 
+    ##     formal argument "data" matched by multiple
+    ##     actual arguments
+    ##
+    ## news(Version == '4.3', package = "mclust")
+    ## o original data (and class for classification models)
+    ##   are stored in the object returned by the main
+    ##   functions.            
+    gmm0$data <- NULL
+
+    if (gmm0$G == 1) {
+        mat <- mahalanobis(X, gmm0$parameters$mean,
+                           gmm0$parameters$variance$sigma[,,1])
+        ## If the cluster number in the data is 1 use the Mahalanobis distance
+    } else {
+        W <- WN <- a <- vector()
+        for (i in 1:N) {
+            s <- which(rmultinom(1, size=1, prob=(gmm0$parameters$pro))==1)
+            NP <- rmultnorm(1, mu = gmm0$parameters$mean[,s], 
+                            vmat = gmm0$parameters$variance$sigma[, , s])
+            ## Generate new profile (NP) from the data
+            es <- do.call("estep", c(list(data=rbind(NP, L)), gmm0)) 
+            ## ELSE use the estep of the EM algorithm to
+            ## determine model parameters
+            W[i] <- (-2*(es$loglik - gmm0$loglik)) 
+            ## Generate the test statistic, W, for round N
+            ## (build up a distribution of W over N rounds)
+        }
+                                        # Can plot to check normal using: plot(density(W))
     }
-    TF <- WN > WA
-    names(TF) <- rownames(X)
-    return(TF)
-    ## Compare WN with WA to determine if outlier/class member
-  } else { ## Test for G=1
-    chi <- qchisq(df=ncol(L)-1, 1-p)
-    TF <- mat > chi
-    return(TF)
-  }
+    ## Test unlabelled
+    ## Test for G>1
+    if (gmm0$G != 1) {
+        WA <- W[order(W)][round((1-p)*length(W))] ## Determine W alpha
+        for (i in (1:nrow(X))) {
+            esN <- do.call("estep", c(list(data=rbind(L,X[i, ])), gmm0))
+            ## Use the estep of the EM algorithm to determine model 
+            ## parameters for the unlabelled profile
+            WN[i] <- (-2*(esN$loglik - gmm0$loglik)) 
+            ## Calculate the test statistic, W, for the unlabelled profile
+        }
+        TF <- WN > WA
+        names(TF) <- rownames(X)
+        return(TF)
+        ## Compare WN with WA to determine if outlier/class member
+    } else { ## Test for G=1
+        chi <- qchisq(df=ncol(L)-1, 1-p)
+        TF <- mat > chi
+        return(TF)
+    }
 }
  
   

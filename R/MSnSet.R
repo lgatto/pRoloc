@@ -228,19 +228,25 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 }
 
 
-##' The function adds a 'markers' feature variable. These markers are read
-##' from a comma separated values (csv) spreadsheet file. This markers file 
-##' is expected to have 2 columns (others are ignored) where the first
-##' is the name of the marker features and the second the group label.
-##' It is essential to assure that  \code{featureNames(object)} and
-##' marker names (first column) match, i.e. the same feature identifiers
-##' and case fold are used. Alternatively, a markers named vector as provided
+##' The function adds a 'markers' feature variable. These markers are
+##' read from a comma separated values (csv) spreadsheet file. This
+##' markers file is expected to have 2 columns (others are ignored)
+##' where the first is the name of the marker features and the second
+##' the group label. Alternatively, a markers named vector as provided
 ##' by the \code{\link{pRolocmarkers}} function can also be used.
+##'
+##' It is essential to assure that \code{featureNames(object)} (or
+##' \code{fcol}, see below) and marker names (first column) match,
+##' i.e. the same feature identifiers and case fold are used.
 ##'
 ##' @title Adds markers to the data
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param markers A \code{character} with the name the markers' csv
-##' file or a named character of markers as provided by \code{\link{pRolocmarkers}}. 
+##' file or a named character of markers as provided by
+##' \code{\link{pRolocmarkers}}.
+##' @param fcol An optional feature variable to be used to match
+##' against the markers. If missing, the feature names are used.
+
 ##' @param verbose A \code{logical} indicating if number of markers
 ##' and marker table should be printed to the console.
 ##' @return A new instance of class \code{MSnSet} with an additional
@@ -257,7 +263,7 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' fvarLabels(marked)
 ##' plot2D(marked)
 ##' addLegend(marked, where = "topleft", cex = .7)
-addMarkers <- function(object, markers, verbose = TRUE) {
+addMarkers <- function(object, markers, fcol, verbose = TRUE) {
   if ("markers" %in% fvarLabels(object))
     stop("Detected an existing 'markers' feature column.")
   if (length(markers) == 1 && file.exists(markers)) {
@@ -273,25 +279,35 @@ addMarkers <- function(object, markers, verbose = TRUE) {
   if (any(dups))
       stop("Please remove duplicated entries in your markers:",
            paste(rownames(mrk)[dups], collapse = " "))
-  cmn <- intersect(rownames(mrk), featureNames(object))
-  if (length(cmn) == 0) {    
-    msg <- paste0("No markers found. Are you sure that the feature names match?\n",
-                  "  Feature names: ",
-                  paste0(paste(featureNames(object)[1:3], collapse = ", "), "...\n"),
-                  "  Markers names: ",
-                  paste0(paste(rownames(mrk)[1:3], collapse = ", "), "...\n"))    
-    stop(msg)
+  if (missing(fcol)) {
+      fn <- featureNames(object)
+  } else {
+      if (!fcol %in% fvarLabels(object))
+          stop("'", fcol, "' not found in feature variables.")
+      fn <- as.character(fData(object)[, fcol])
+  }  
+  cmn <- fn %in% rownames(mrk)
+  
+  if (sum(cmn) == 0) {    
+      msg <- paste0("No markers found. Are you sure that the feature names match?\n",
+                    "  Feature names: ",
+                    paste0(paste(featureNames(object)[1:3], collapse = ", "), "...\n"),
+                    "  Markers names: ",
+                    paste0(paste(rownames(mrk)[1:3], collapse = ", "), "...\n"))    
+      stop(msg)
   }
+  
   if (verbose)
-    message("Markers in data: ", length(cmn), " out of ", nrow(object))
+    message("Markers in data: ", sum(cmn), " out of ", nrow(object))
+  k <- match(fn[cmn], rownames(mrk))  
   fData(object)$markers <- "unknown"
-  fData(object)[cmn, "markers"] <- mrk[cmn, 1]
+  fData(object)[cmn, "markers"] <- mrk[k, 1]
   object@processingData@processing <-
     c(object@processingData@processing,
       paste0("Added markers from ", mfrom,". ", date()))  
   if (validObject(object)) {
-    if (verbose) getMarkers(object)
-    return(object)
+      if (verbose) getMarkers(object)
+      return(object)
   }  
 }
 

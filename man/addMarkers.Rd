@@ -2,7 +2,7 @@
 \alias{addMarkers}
 \title{Adds markers to the data}
 \usage{
-addMarkers(object, markers, verbose = TRUE)
+addMarkers(object, markers, fcol, verbose = TRUE)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -10,6 +10,10 @@ addMarkers(object, markers, verbose = TRUE)
   \item{markers}{A \code{character} with the name the
   markers' csv file or a named character of markers as
   provided by \code{\link{pRolocmarkers}}.}
+
+  \item{fcol}{An optional feature variable to be used to
+  match against the markers. If missing, the feature names
+  are used.}
 
   \item{verbose}{A \code{logical} indicating if number of
   markers and marker table should be printed to the
@@ -24,12 +28,15 @@ The function adds a 'markers' feature variable. These
 markers are read from a comma separated values (csv)
 spreadsheet file. This markers file is expected to have 2
 columns (others are ignored) where the first is the name of
-the marker features and the second the group label. It is
-essential to assure that \code{featureNames(object)} and
-marker names (first column) match, i.e. the same feature
-identifiers and case fold are used. Alternatively, a
-markers named vector as provided by the
+the marker features and the second the group label.
+Alternatively, a markers named vector as provided by the
 \code{\link{pRolocmarkers}} function can also be used.
+}
+\details{
+It is essential to assure that \code{featureNames(object)}
+(or \code{fcol}, see below) and marker names (first column)
+match, i.e. the same feature identifiers and case fold are
+used.
 }
 \examples{
 library("pRolocdata")

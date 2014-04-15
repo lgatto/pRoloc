@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.5.2
+------------------------
+ o 
+
 CHANGES IN VERSION 1.5.1
 ------------------------
  o new dunkley2006 pdunit object created with mclust 4.3
@@ -7,7 +11,7 @@ CHANGES IN VERSION 1.5.1
 
 CHANGES IN VERSION 1.5.0
 ------------------------
- o Bioc devel 2.15
+ o Bioc devel 3.0
 
 CHANGES IN VERSION 1.4.0
 ------------------------

@@ -1,3 +1,18 @@
+CHANGES IN VERSION 1.5.1
+------------------------
+ o new dunkley2006 pdunit object created with mclust 4.3
+   [2014-04-08 Tue]
+ o addMarker also accepts fcol and addMarkers unit test
+   [2014-04-14 Mon]
+
+CHANGES IN VERSION 1.5.0
+------------------------
+ o Bioc devel 2.15
+
+CHANGES IN VERSION 1.4.0
+------------------------
+ o Bioc release 2.14
+
 CHANGES IN VERSION 1.3.19
 -------------------------
  o fixed error introduced with mclust 4.3 (that now returns the data

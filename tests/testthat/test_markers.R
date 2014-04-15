@@ -3,14 +3,14 @@ context("organelle markers")
 
 test_that("adding markers", {
     set.seed(1)
-    x <- new("MSnSet",
-             exprs = matrix(1, ncol = 4, nrow = 10,
-                 dimnames = list(1:10)),             
-             featureData = new("AnnotatedDataFrame",
-                 data = data.frame(
-                     markers = rep(c("A", "B"), each = 5),
-                     id = c(LETTERS[1:7], "A", "Z", "Z"),
-                     id2 = c(letters[1:7], "A", "Z", "Z"))))    
+    x2 <- x <- new("MSnSet",
+                   exprs = matrix(1, ncol = 4, nrow = 10,
+                       dimnames = list(1:10)),             
+                   featureData = new("AnnotatedDataFrame",
+                       data = data.frame(
+                           markers = rep(c("A", "B"), each = 5),
+                           id = c(LETTERS[1:7], "A", "Z", "Z"),
+                           id2 = c(letters[1:7], "A", "Z", "Z"))))    
     m <- sample(paste0("ORG", 1:5), 26, replace = TRUE)
     names(m) <- LETTERS    
     ## Error: Detected an existing 'markers' feature column.

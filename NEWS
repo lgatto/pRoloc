@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.5.2
 ------------------------
- o 
+ o In plotDist, ... is now passed to matlines instead of plot and has
+ a new lty parameter [2014-04-17 Thu]
 
 CHANGES IN VERSION 1.5.1
 ------------------------

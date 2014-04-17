@@ -317,6 +317,8 @@ addLegend_v1 <- function(object,
 ##' @param alpha A numeric defining the alpha channel (transparency)
 ##' of the points, where \code{0 <= alpha <= 1}, 0 and 1 being completely
 ##' transparent and opaque.
+##' @param lty Vector of line types for the marker profiles. Default
+##' is 1 (solid). See \code{\link{par}} for details.
 ##' @param fractions An optional \code{character} defining the \code{phenoData}
 ##' variable to be used to label the fraction along the x axis. If missing, the
 ##' \code{phenoData} variables are searched for a match to \code{fraction}.
@@ -331,13 +333,14 @@ addLegend_v1 <- function(object,
 ##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
 ##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
 ##' plotDist(tan2009r1[i, ],
-##'          markers = featureNames(tan2009r1)[j],
-##'          main = "Mitochondrion")
+##'          markers = featureNames(tan2009r1)[j])
+##' title("Mitochondrion")
 plotDist <- function(object,
                      markers,
                      mcol = "steelblue",                     
                      pcol = "grey90",
                      alpha = 0.3,
+                     lty = 1,
                      fractions,
                      ...) {
   .data <- exprs(object)
@@ -357,8 +360,7 @@ plotDist <- function(object,
        xlim = c(1, m),
        ylab = "Intensity",
        xlab = "Fractions",
-       type = "n", xaxt = "n",
-       ...)
+       type = "n", xaxt = "n")
   axis(1, at = seq_len(m), labels = .frac)
   pcol <- col2hcl(pcol, alpha = alpha)
   matlines(t(.data),
@@ -371,7 +373,8 @@ plotDist <- function(object,
                pch = 1,
                col = mcol,
                type = "b",
-               lty = "solid")
+               lty = lty,
+               ...)
     }
   invisible(NULL)
 }

@@ -129,4 +129,14 @@ setMethod("description", "FoICollection",
 ##     if .@objpar$nrow differs -> warning
 ##     if any of !foi(.) %in% featureNames(.) -> warning
 
+highlightOnPlot <- function(object, foi, ...) {
+    ## TODO: checks above
+    .pca <- plot2D(object, plot = FALSE)
+    sel <- featureNames(object) %in% foi(foi)
+    points(.pca[sel, 1], .pca[sel, 2], ...)
+}
+
+## plot2D(tan2009r1)
+## highlightOnPlot(tan2009r1, x, col = "red")
+## highlightOnPlot(tan2009r1, y, col = "green", pch = "+")
 

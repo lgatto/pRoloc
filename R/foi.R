@@ -96,6 +96,17 @@ setMethod("addFeatsOfInterest",
           })
 
 
+setGeneric("rmFeatsOfInterest",
+           function(object, i) standardGeneric("rmFeatsOfInterest"))
+
+setMethod("rmFeatsOfInterest",
+          c("FoICollection", "numeric"),
+          function(object, i) {
+              object@foic <- object@foic[-i]
+              return(object)
+          })
+
+
 setMethod("description", "FoICollection",
           function(object, ...) sapply(foi(object), description))
 
@@ -103,7 +114,19 @@ setMethod("description", "FoICollection",
 ## x <- FeatsOfInterest(description = "A test set of features of interest",
 ##                        fnames = featureNames(tan2009r1)[1:10],
 ##                        object = tan2009r1)
+## y <- FeatsOfInterest(description = "A second test set of features of interest",
+##                        fnames = featureNames(tan2009r1)[111:113],
+##                        object = tan2009r1)
 
 ## xx <- FoICollection()
 ## xx <- addFeatsOfInterest(x, xx)
-## xx <- addFeatsOfInterest(x, xx)
+## xx <- addFeatsOfInterest(y, xx)
+
+## NOTES:
+##     on application of a foi on an MSnSet:
+##     if .@objpar$name differs -> message
+##     if .@objpar$ncol differs -> warning
+##     if .@objpar$nrow differs -> warning
+##     if any of !foi(.) %in% featureNames(.) -> warning
+
+

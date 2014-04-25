@@ -1,5 +1,10 @@
-.FeatsOfInterest <-
-    setClass("FeatsOfInterest",
+## library("pRoloc")
+## library("pRolocdata")
+## data(tan2009r1)
+## library("digest")
+
+.FeaturesOfInterest <-
+    setClass("FeaturesOfInterest",
          slots = c(description = "character",
              objpar = "list",
              fnames = "character",
@@ -8,18 +13,19 @@
 setGeneric("foi",
            function(object, ...) standardGeneric("foi"))
 
-setMethod("foi", "FeatsOfInterest",
+setMethod("foi", "FeaturesOfInterest",
           function(object, ...) object@fnames)
 
-setMethod("description", "FeatsOfInterest",
+setMethod("description", "FeaturesOfInterest",
           function(object, ...) object@description)
 
-setMethod("length", "FeatsOfInterest",
+setMethod("length", "FeaturesOfInterest",
          function(x) length(x@fnames))
 
-setMethod("show", "FeatsOfInterest",
+setMethod("show", "FeaturesOfInterest",
           function(object) {
               cat("Object of class \"", class(object), "\"\n", sep="")
+              cat(" Created on", object@date, "\n")
               cat(" Description:\n")
               cat(strwrap(object@description,
                           width = 0.65 * getOption("width"),
@@ -36,7 +42,7 @@ setMethod("show", "FeatsOfInterest",
           })
 
 
-FeatsOfInterest <- function(fnames,
+FeaturesOfInterest <- function(fnames,
                             description,
                             object) {
     fns <- featureNames(object)
@@ -45,7 +51,7 @@ FeatsOfInterest <- function(fnames,
         stop(fx, " feature(s) of interest absent from your object's feature names:\n   ",
              paste(fnames[fx], collapse = ", "))
     }
-    .FeatsOfInterest(description = description,
+    .FeaturesOfInterest(description = description,
                      fnames = fnames,
                      date = date(),
                      objpar = list(
@@ -56,6 +62,8 @@ FeatsOfInterest <- function(fnames,
                              "object"),
                          digest = digest(object)))
 }
+
+
 
 .FoICollection <- setClass("FoICollection",
                            slots = c(foic = "list"))
@@ -85,21 +93,21 @@ setMethod("foi", "FoICollection",
           })
 
 
-setGeneric("addFeatsOfInterest",
-           function(x, y) standardGeneric("addFeatsOfInterest"))
+setGeneric("addFeaturesOfInterest",
+           function(x, y) standardGeneric("addFeaturesOfInterest"))
 
-setMethod("addFeatsOfInterest",
-          c("FeatsOfInterest", "FoICollection"),
+setMethod("addFeaturesOfInterest",
+          c("FeaturesOfInterest", "FoICollection"),
           function(x, y) {              
               y@foic <- c(y@foic, x)
               return(y)
           })
 
 
-setGeneric("rmFeatsOfInterest",
-           function(object, i) standardGeneric("rmFeatsOfInterest"))
+setGeneric("rmFeaturesOfInterest",
+           function(object, i) standardGeneric("rmFeaturesOfInterest"))
 
-setMethod("rmFeatsOfInterest",
+setMethod("rmFeaturesOfInterest",
           c("FoICollection", "numeric"),
           function(object, i) {
               object@foic <- object@foic[-i]
@@ -111,16 +119,53 @@ setMethod("description", "FoICollection",
           function(object, ...) sapply(foi(object), description))
 
 
-## x <- FeatsOfInterest(description = "A test set of features of interest",
-##                        fnames = featureNames(tan2009r1)[1:10],
-##                        object = tan2009r1)
-## y <- FeatsOfInterest(description = "A second test set of features of interest",
+setGeneric("fromIdentical",
+           function(x, y, ...) standardGeneric("fromIdentical"))
+
+setMethod("fromIdentical",
+          c("FeaturesOfInterest", "FeaturesOfInterest"),
+          function(x, y) x@objpar$digest == y@objpar$digest)
+
+setMethod("fromIdentical",
+          c("FoICollection", "missing"),
+          function(x) {
+              dgsts <- sapply(foi(x), function(xx) xx@objpar$digest)
+              length(unique(dgsts)) == 1
+          })
+              
+
+setGeneric("fromEqual",
+           function(x, y, ...) standardGeneric("fromEqual"))
+
+
+setMethod("fromEqual",
+          c("FeaturesOfInterest", "FeaturesOfInterest"),
+          function(x, y)
+          x@objpar$nrow == y@objpar$nrow & x@objpar$ncol == y@objpar$ncol)
+
+setMethod("fromEqual",
+          c("FoICollection", "missing"),
+          function(x) {
+              nc <- sapply(foi(x), function(xx) xx@objpar$ncol)
+              nr <- sapply(foi(x), function(xx) xx@objpar$nrow)
+              length(unique(nc)) == 1 & length(unique(nr)) == 1
+          })
+
+
+
+## x <- FeaturesOfInterest(description = "A test set of features of interest",
+##                      fnames = featureNames(tan2009r1)[1:10],
+##                      object = tan2009r1)
+
+## y <- FeaturesOfInterest(description = "A second test set of features of interest",
 ##                        fnames = featureNames(tan2009r1)[111:113],
 ##                        object = tan2009r1)
 
 ## xx <- FoICollection()
-## xx <- addFeatsOfInterest(x, xx)
-## xx <- addFeatsOfInterest(y, xx)
+
+## xx <- addFeaturesOfInterest(x, xx)
+## xx <- addFeaturesOfInterest(y, xx)
+
 
 ## NOTES:
 ##     on application of a foi on an MSnSet:
@@ -128,6 +173,8 @@ setMethod("description", "FoICollection",
 ##     if .@objpar$ncol differs -> warning
 ##     if .@objpar$nrow differs -> warning
 ##     if any of !foi(.) %in% featureNames(.) -> warning
+## if no overlap -> error
+
 
 highlightOnPlot <- function(object, foi, ...) {
     ## TODO: checks above

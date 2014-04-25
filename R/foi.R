@@ -1,3 +1,5 @@
+## This will most likely be moved to MSnbase
+
 ## library("pRoloc")
 ## library("pRolocdata")
 ## data(tan2009r1)

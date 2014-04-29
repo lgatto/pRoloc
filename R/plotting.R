@@ -317,6 +317,8 @@ addLegend_v1 <- function(object,
 ##' @param alpha A numeric defining the alpha channel (transparency)
 ##' of the points, where \code{0 <= alpha <= 1}, 0 and 1 being completely
 ##' transparent and opaque.
+##' @param lty Vector of line types for the marker profiles. Default
+##' is 1 (solid). See \code{\link{par}} for details.
 ##' @param fractions An optional \code{character} defining the \code{phenoData}
 ##' variable to be used to label the fraction along the x axis. If missing, the
 ##' \code{phenoData} variables are searched for a match to \code{fraction}.
@@ -331,13 +333,14 @@ addLegend_v1 <- function(object,
 ##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
 ##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
 ##' plotDist(tan2009r1[i, ],
-##'          markers = featureNames(tan2009r1)[j],
-##'          main = "Mitochondrion")
+##'          markers = featureNames(tan2009r1)[j])
+##' title("Mitochondrion")
 plotDist <- function(object,
                      markers,
                      mcol = "steelblue",                     
                      pcol = "grey90",
                      alpha = 0.3,
+                     lty = 1,
                      fractions,
                      ...) {
   .data <- exprs(object)
@@ -357,8 +360,7 @@ plotDist <- function(object,
        xlim = c(1, m),
        ylab = "Intensity",
        xlab = "Fractions",
-       type = "n", xaxt = "n",
-       ...)
+       type = "n", xaxt = "n")
   axis(1, at = seq_len(m), labels = .frac)
   pcol <- col2hcl(pcol, alpha = alpha)
   matlines(t(.data),
@@ -371,7 +373,8 @@ plotDist <- function(object,
                pch = 1,
                col = mcol,
                type = "b",
-               lty = "solid")
+               lty = lty,
+               ...)
     }
   invisible(NULL)
 }
@@ -390,6 +393,7 @@ plotDist <- function(object,
 ##' @return A \code{list} of necessary variables for plot and legend
 ##' printing. See code for details.
 ##' @author Laurent Gatto
+##' @noRd 
 .isbig <- function(object, fcol, stockcol, stockpch) {
     if (is.null(fcol))
         return(list(big = FALSE, toobig = FALSE,
@@ -787,4 +791,51 @@ addLegend <- function(object,
     }
     legend(where, txt, col = col, pch = pch, ...)    
     invisible(NULL)
+}
+
+
+##' Highlights a set of features of interest given as a
+##' \code{FeaturesOfInterest} instance on a PCA plot produced by
+##' code{plot2D}.
+##'
+##' @title Highlight features of interest on a plot2D figure
+##' @param object The main dataset described as an \code{MSnSet} or a
+##' matrix with the coordinates of the features on the PCA plot
+##' produced (and invisibly returned) by \code{plot2D}.
+##' @param foi An instance of \code{linkS4class{FeaturesOfInterest}}.
+##' @param args A named list of arguments to be passed to
+##' \code{plot2D} if the PCA coordinates are to be calculated. Ignored
+##' if the PCA coordinates are passed directly, i.e. \code{object} is
+##' a \code{matrix}.
+##' @param ... Additional parameters passed to \code{points}.
+##' @return NULL; used for its side effects.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data("tan2009r1")
+##' x <- FeaturesOfInterest(description = "A test set of features of interest",
+##'                         fnames = featureNames(tan2009r1)[1:10],
+##'                         object = tan2009r1)
+##' .pca <- plot2D(tan2009r1)
+##' highlightOnPlot(.pca, x, col = "red")
+##' highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
+##' .pca <- plot2D(tan2009r1, dims = c(1, 3))
+##' 
+##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
+##' highlightOnPlot(.pca, x, pch = "+")
+highlightOnPlot <- function(object, foi, args = list(), ...) {
+    if (!fnamesIn(foi, object))
+        stop("None of the features of interest are present in the data.")
+    if (inherits(object, "MSnSet")) {
+        .args <- list(object = object, plot = FALSE)
+        args <- c(args, .args)
+        .pca <- do.call(plot2D, args = args)
+        sel <- featureNames(object) %in% foi(foi)
+    } else if (is.matrix(object)) {
+        .pca <- object
+        sel <- rownames(object) %in% foi(foi)
+    } else {
+        stop("'object' must be a matrix (as returned by plot2D) or an MSnSet.")
+    }
+    points(.pca[sel, 1], .pca[sel, 2], ...)
 }

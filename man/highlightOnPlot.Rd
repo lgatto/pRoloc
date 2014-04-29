@@ -1,0 +1,49 @@
+\name{highlightOnPlot}
+\alias{highlightOnPlot}
+\title{Highlight features of interest on a plot2D figure}
+\usage{
+highlightOnPlot(object, foi, args = list(), ...)
+}
+\arguments{
+  \item{object}{The main dataset described as an
+  \code{MSnSet} or a matrix with the coordinates of the
+  features on the PCA plot produced (and invisibly
+  returned) by \code{plot2D}.}
+
+  \item{foi}{An instance of
+  \code{linkS4class{FeaturesOfInterest}}.}
+
+  \item{args}{A named list of arguments to be passed to
+  \code{plot2D} if the PCA coordinates are to be
+  calculated. Ignored if the PCA coordinates are passed
+  directly, i.e. \code{object} is a \code{matrix}.}
+
+  \item{...}{Additional parameters passed to
+  \code{points}.}
+}
+\value{
+NULL; used for its side effects.
+}
+\description{
+Highlights a set of features of interest given as a
+\code{FeaturesOfInterest} instance on a PCA plot produced
+by code{plot2D}.
+}
+\examples{
+library("pRolocdata")
+data("tan2009r1")
+x <- FeaturesOfInterest(description = "A test set of features of interest",
+                        fnames = featureNames(tan2009r1)[1:10],
+                        object = tan2009r1)
+.pca <- plot2D(tan2009r1)
+highlightOnPlot(.pca, x, col = "red")
+highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
+.pca <- plot2D(tan2009r1, dims = c(1, 3))
+
+highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
+highlightOnPlot(.pca, x, pch = "+")
+}
+\author{
+Laurent Gatto
+}
+

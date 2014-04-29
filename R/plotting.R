@@ -393,6 +393,7 @@ plotDist <- function(object,
 ##' @return A \code{list} of necessary variables for plot and legend
 ##' printing. See code for details.
 ##' @author Laurent Gatto
+##' @noRd 
 .isbig <- function(object, fcol, stockcol, stockpch) {
     if (is.null(fcol))
         return(list(big = FALSE, toobig = FALSE,
@@ -823,13 +824,8 @@ addLegend <- function(object,
 ##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
 ##' highlightOnPlot(.pca, x, pch = "+")
 highlightOnPlot <- function(object, foi, args = list(), ...) {
-    ## TODO: 
-    ##     on application of a foi on an MSnSet:
-    ##     if .@objpar$name differs -> message (MSnSet)
-    ##     if .@objpar$ncol differs -> warning (MSnSet and matrix)
-    ##     if .@objpar$nrow differs -> warning (MSnSet and matrix)
-    ##     if any of !foi(.) %in% featureNames(.) -> warning (both)
-    ##     if no overlap in rownames/featureNames -> error (both)
+    if (!fnamesIn(foi, object))
+        stop("None of the features of interest are present in the data.")
     if (inherits(object, "MSnSet")) {
         .args <- list(object = object, plot = FALSE)
         args <- c(args, .args)

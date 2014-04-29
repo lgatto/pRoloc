@@ -66,6 +66,7 @@ export(## MSnSet manipulation
        plot2D,
        addLegend,
        plotDist,
+       highlightOnPlot,
        ## -- machine learning
        plsdaRegularisation, plsdaOptimisation, plsdaOptimization, 
        plsdaPrediction, plsdaClassification,

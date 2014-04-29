@@ -1,7 +1,9 @@
 CHANGES IN VERSION 1.5.2
 ------------------------
  o In plotDist, ... is now passed to matlines instead of plot and has
- a new lty parameter [2014-04-17 Thu]
+   a new lty parameter [2014-04-17 Thu]
+ o new highlightOnPlot function, using the new features of interest
+   infrastructure [2014-04-29 Tue]
 
 CHANGES IN VERSION 1.5.1
 ------------------------

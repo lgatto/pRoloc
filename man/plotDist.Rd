@@ -3,7 +3,7 @@
 \title{Plots the distribution of features across fractions}
 \usage{
 plotDist(object, markers, mcol = "steelblue", pcol = "grey90",
-  alpha = 0.3, fractions, ...)
+  alpha = 0.3, lty = 1, fractions, ...)
 }
 \arguments{
   \item{object}{An instance of class \code{MSnSet}.}
@@ -22,6 +22,9 @@ plotDist(object, markers, mcol = "steelblue", pcol = "grey90",
   \item{alpha}{A numeric defining the alpha channel
   (transparency) of the points, where \code{0 <= alpha <=
   1}, 0 and 1 being completely transparent and opaque.}
+
+  \item{lty}{Vector of line types for the marker profiles.
+  Default is 1 (solid). See \code{\link{par}} for details.}
 
   \item{fractions}{An optional \code{character} defining
   the \code{phenoData} variable to be used to label the
@@ -47,8 +50,8 @@ data(tan2009r1)
 j <- which(fData(tan2009r1)$markers == "mitochondrion")
 i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
 plotDist(tan2009r1[i, ],
-         markers = featureNames(tan2009r1)[j],
-         main = "Mitochondrion")
+         markers = featureNames(tan2009r1)[j])
+title("Mitochondrion")
 }
 \author{
 Laurent Gatto

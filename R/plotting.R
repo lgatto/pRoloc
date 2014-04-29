@@ -791,3 +791,55 @@ addLegend <- function(object,
     legend(where, txt, col = col, pch = pch, ...)    
     invisible(NULL)
 }
+
+
+##' Highlights a set of features of interest given as a
+##' \code{FeaturesOfInterest} instance on a PCA plot produced by
+##' code{plot2D}.
+##'
+##' @title Highlight features of interest on a plot2D figure
+##' @param object The main dataset described as an \code{MSnSet} or a
+##' matrix with the coordinates of the features on the PCA plot
+##' produced (and invisibly returned) by \code{plot2D}.
+##' @param foi An instance of \code{linkS4class{FeaturesOfInterest}}.
+##' @param args A named list of arguments to be passed to
+##' \code{plot2D} if the PCA coordinates are to be calculated. Ignored
+##' if the PCA coordinates are passed directly, i.e. \code{object} is
+##' a \code{matrix}.
+##' @param ... Additional parameters passed to \code{points}.
+##' @return NULL; used for its side effects.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data("tan2009r1")
+##' x <- FeaturesOfInterest(description = "A test set of features of interest",
+##'                         fnames = featureNames(tan2009r1)[1:10],
+##'                         object = tan2009r1)
+##' .pca <- plot2D(tan2009r1)
+##' highlightOnPlot(.pca, x, col = "red")
+##' highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
+##' .pca <- plot2D(tan2009r1, dims = c(1, 3))
+##' 
+##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
+##' highlightOnPlot(.pca, x, pch = "+")
+highlightOnPlot <- function(object, foi, args = list(), ...) {
+    ## TODO: 
+    ##     on application of a foi on an MSnSet:
+    ##     if .@objpar$name differs -> message (MSnSet)
+    ##     if .@objpar$ncol differs -> warning (MSnSet and matrix)
+    ##     if .@objpar$nrow differs -> warning (MSnSet and matrix)
+    ##     if any of !foi(.) %in% featureNames(.) -> warning (both)
+    ##     if no overlap in rownames/featureNames -> error (both)
+    if (inherits(object, "MSnSet")) {
+        .args <- list(object = object, plot = FALSE)
+        args <- c(args, .args)
+        .pca <- do.call(plot2D, args = args)
+        sel <- featureNames(object) %in% foi(foi)
+    } else if (is.matrix(object)) {
+        .pca <- object
+        sel <- rownames(object) %in% foi(foi)
+    } else {
+        stop("'object' must be a matrix (as returned by plot2D) or an MSnSet.")
+    }
+    points(.pca[sel, 1], .pca[sel, 2], ...)
+}

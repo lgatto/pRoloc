@@ -796,7 +796,8 @@ addLegend <- function(object,
 
 ##' Highlights a set of features of interest given as a
 ##' \code{FeaturesOfInterest} instance on a PCA plot produced by
-##' code{plot2D}.
+##' code{plot2D}. If none of the features of interest are found in the
+##' \code{MSnset}'s \code{featureNames}, an error is thrown.
 ##'
 ##' @title Highlight features of interest on a plot2D figure
 ##' @param object The main dataset described as an \code{MSnSet} or a

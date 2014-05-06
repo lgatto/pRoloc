@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.5.3
 ------------------------
  o import all MLInterfaces [2014-04-30 Wed]
+ o new param optim secion in ml vignette [2014-05-05 Mon]
+ o various ml typos and pRolocmakers man update [2014-05-06 Tue]
 
 CHANGES IN VERSION 1.5.2
 ------------------------

@@ -291,10 +291,10 @@ set used to construct them, while there is absolutely no reason to
 expect these regions to faithfully separate any new data points, in
 particular proteins that we wish to classify to an organelle. In other
 words, the highly specific $k = 1$ classification boundaries are
-\textit{over-optimised} for the marker set or, in other words, lack
+\textit{over-fitted} for the marker set or, in other words, lack
 generalisation to new instances. We will demonstrate this using
-simulated data taken from \cite{ISLwR} and show how these
-\textit{over-optimised} perform well for the data used to compute them
+simulated data taken from \cite{ISLwR} and show how such
+\textit{over-fitting} perform well for the data used to compute them
 at the cost of new data points.
 
 \begin{figure}[!hbt]
@@ -344,14 +344,14 @@ the training data corresponds to our marker sets. Figure
 as a function of $1/k$ which is a reflection of the
 flexibility/complexity of our model; when $k = 1$ and $1/k = 1$ (far
 right), we have a very flexible model with the risk of
-over-optimisation. Greater values of $k$ (towards the left)
-characterise less flexible models. As can be seen, high values of $k$
-produce poor performance for both training and testing data. However,
-while the training error steadily decreases when the model complexity
-increases (smaller $k$), the testing error rate displays a typical
-U-shape: at a value around $k = 10$, the testing error rate reaches a
-minimum and then start to increase due to over-optimisation to the
-training data and lack of generalisation of the model.
+over-fitting. Greater values of $k$ (towards the left) characterise
+less flexible models. As can be seen, high values of $k$ produce poor
+performance for both training and testing data. However, while the
+training error steadily decreases when the model complexity increases
+(smaller $k$), the testing error rate displays a typical U-shape: at a
+value around $k = 10$, the testing error rate reaches a minimum and
+then starts to increase due to over-fitting to the training data and
+lack of generalisation of the model.
 
 \begin{figure}[!hbt]
 \centering

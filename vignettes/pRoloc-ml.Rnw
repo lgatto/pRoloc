@@ -114,21 +114,39 @@ suppressPackageStartupMessages(library("xtable"))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-\paragraph{NB} This document is currently under construction; please see the \Rpackage{pRoloc} tutorial for details.
+\paragraph{NB} This vignette provides more general background about
+machine learning (ML) and its application to the analysis of organelle
+proteomics data. This document is currently under still construction;
+please see the \Rpackage{pRoloc} tutorial for details about the
+package itself.
 
 \paragraph{TODO} Define nomenclature
 
-
 \section{Introduction}\label{sec:intro} 
 
-For a general practical introduction to \Rpackage{pRoloc}, readers are referred to the tutorial, available using \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), and semi-supervised machine learning (SSML) as implemented in the novelty detection algorithm. 
+For a general practical introduction to \Rpackage{pRoloc}, readers are
+referred to the tutorial, available using
+\Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The
+following document provides a overview of the algorithms available in
+the package. The respective section describe unsupervised machine
+learning (USML), supervised machine learning (SML), and
+semi-supervised machine learning (SSML) as implemented in the novelty
+detection algorithm.
 
 \section{Data sets}
 
-We provide \Sexpr{nrow(pRolocdata()$results)} test data sets in the \Rpackage{pRolocdata} package%$
-that can be readily used with \Rpackage{pRoloc}. The data set can be listed with \Rfunction{pRolocdata} and loaded with the \Rfunction{data} function. Each data set, including its origin, is individually documented.
+We provide \Sexpr{nrow(pRolocdata()$results)} test data sets in the
+\Rpackage{pRolocdata} package%$
+that can be readily used with \Rpackage{pRoloc}. The data set can be
+listed with \Rfunction{pRolocdata} and loaded with the
+\Rfunction{data} function. Each data set, including its origin, is
+individually documented.
 
-The data sets are distributed as \Robject{MSnSet} instances. Briefly, these are dedicated containers for quantitation data as well as feature and sample meta-data. More details about \Robject{MSnSet}s are available in the \Rpackage{pRoloc} tutorial and in the \Rpackage{MSnbase} package, that defined the class.
+The data sets are distributed as \Robject{MSnSet} instances. Briefly,
+these are dedicated containers for quantitation data as well as
+feature and sample meta-data. More details about \Robject{MSnSet}s are
+available in the \Rpackage{pRoloc} tutorial and in the
+\Rpackage{MSnbase} package, that defined the class.
 
 <<pRolocdata>>=
 library("pRolocdata")
@@ -138,57 +156,268 @@ tan2009r1
 
 \section{Unsupervised machine learning}\label{sec:usml}
 
-Unsupervised machine learning refers to clustering, i.e. finding structure in a quantitative, generally multi-dimensional data set of unlabelled data. 
+Unsupervised machine learning refers to clustering, i.e. finding
+structure in a quantitative, generally multi-dimensional data set of
+unlabelled data.
 
-Currently, unsupervised clustering facilities are available through the \Rfunction{plot2D} function and the \Rpackage{MLInterfaces} package \cite{MLInterfaces}. The former takes an \Robject{MSnSet} instance and represents the data on a scatter plot along the first two principal components. Arbitrary feature meta-data can be represented using different colours and point characters. The reader is referred to the manual page available through \Rfunction{?plot2D} for more details and examples.
+Currently, unsupervised clustering facilities are available through
+the \Rfunction{plot2D} function and the \Rpackage{MLInterfaces}
+package \cite{MLInterfaces}. The former takes an \Robject{MSnSet}
+instance and represents the data on a scatter plot along the first two
+principal components. Arbitrary feature meta-data can be represented
+using different colours and point characters. The reader is referred
+to the manual page available through \Rfunction{?plot2D} for more
+details and examples.
 
-\Rpackage{pRoloc} also implements a \Rfunction{MLean} method for \Robject{MSnSet} instances, allowing to use the relevant infrastructure with the organelle proteomics framework. Although provides a common interface to unsupervised and numerous supervised algorithms, we refer to the \Rpackage{pRoloc} tutorial for its usage to several clustering algorithms.
+\Rpackage{pRoloc} also implements a \Rfunction{MLean} method for
+\Robject{MSnSet} instances, allowing to use the relevant
+infrastructure with the organelle proteomics framework. Although
+provides a common interface to unsupervised and numerous supervised
+algorithms, we refer to the \Rpackage{pRoloc} tutorial for its usage
+to several clustering algorithms.
 
-% \paragraph{Note} Current developments in terms of clustering are described on the \textit{Clustering infrastructure} wiki page\footnote{\url{https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure}} and will be incorporated in future version of the package.
+\paragraph{Note} Current development efforts in terms of clustering
+are described on the \textit{Clustering infrastructure} wiki
+page\footnote{\url{https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure}}
+and will be incorporated in future version of the package.
 
 \section{Supervised machine learning}\label{sec:sml}
 
-Supervised machine learning refers to a broad family of classification algorithms. The algorithms learns from a modest set of labelled data points called the training data. Each training data example consists of a pair of inputs: the actual data, generally represented as a vector of numbers and a class label, representing the membership to exactly 1 of multiple possible classes. When there are only two possible classes, on refers to binary classification. The training data is used to construct a model that can be used to classifier new, unlabelled examples. The model takes the numeric vectors of the unlabelled data points and return, for each of these inputs, the corresponding mapped class.   
+Supervised machine learning refers to a broad family of classification
+algorithms. The algorithms learns from a modest set of labelled data
+points called the training data. Each training data example consists
+of a pair of inputs: the actual data, generally represented as a
+vector of numbers and a class label, representing the membership to
+exactly 1 of multiple possible classes. When there are only two
+possible classes, on refers to binary classification. The training
+data is used to construct a model that can be used to classifier new,
+unlabelled examples. The model takes the numeric vectors of the
+unlabelled data points and return, for each of these inputs, the
+corresponding mapped class.
 
 \subsection{Algorithms used}\label{sec:algo}
 
-\paragraph{k-nearest neighbour} Function \Rfunction{knn} from package \Rpackage{class}. For each row of the test set, the $k$ nearest (in Euclidean distance) training set vectors are found, and the classification is decided by majority vote over the $k$ classes, with ties broken at random. This is a simple algorithm that is often used as baseline classifier.
+\paragraph{k-nearest neighbour (KNN)} Function \Rfunction{knn} from package
+\Rpackage{class}. For each row of the test set, the $k$ nearest (in
+Euclidean distance) training set vectors are found, and the
+classification is decided by majority vote over the $k$ classes, with
+ties broken at random. This is a simple algorithm that is often used
+as baseline classifier.
 %% If there are ties for the $k^{th}$ nearest vector, all candidates are included in the vote.
 
-\paragraph{Partial least square DA} Function \Rfunction{plsda} from package \Rpackage{caret}. Partial least square discriminant analysis is used to fit a standard PLS model for classification. 
+\paragraph{Partial least square DA (PLS-DA)} Function \Rfunction{plsda} from
+package \Rpackage{caret}. Partial least square discriminant analysis
+is used to fit a standard PLS model for classification.
 
-\paragraph{Support vector machine} 
-A support vector machine constructs a hyperplane (or set of hyperplanes for multiple-class problem), which are then used for classification. The best separation is defined as the hyperplane that has the largest distance (the margin) to the nearest data points in any class, which also reduces the classification generalisation error. To assure liner separation of the classes, the data is transformed using a \textit{kernel function} into a high-dimensional space, permitting liner separation of the classes.
+\paragraph{Support vector machine (SVM)} 
+A support vector machine constructs a hyperplane (or set of
+hyperplanes for multiple-class problem), which are then used for
+classification. The best separation is defined as the hyperplane that
+has the largest distance (the margin) to the nearest data points in
+any class, which also reduces the classification generalisation
+error. To assure liner separation of the classes, the data is
+transformed using a \textit{kernel function} into a high-dimensional
+space, permitting liner separation of the classes.
 
-\Rpackage{pRoloc} makes use of the functions \Rfunction{svm} from package \Rpackage{e1071} and \Rfunction{ksvm} from \Rpackage{kernlab}. 
+\Rpackage{pRoloc} makes use of the functions \Rfunction{svm} from
+package \Rpackage{e1071} and \Rfunction{ksvm} from \Rpackage{kernlab}.
 
-\paragraph{Artificial neural network} Function \Rfunction{nnet} from package \Rpackage{nnet}. Fits a single-hidden-layer neural network, possibly with skip-layer connections.
+\paragraph{Artificial neural network (ANN)} Function \Rfunction{nnet}
+from package \Rpackage{nnet}. Fits a single-hidden-layer neural
+network, possibly with skip-layer connections.
 
-\paragraph{Naive Bayes} Function \Rfunction{naiveBayes} from package \Rpackage{e1071}. Naive Bayes classifier that computes the conditional a-posterior probabilities of a categorical class variable given independent predictor variables using the Bayes rule. Assumes independence of the predictor variables, and Gaussian distribution (given the target class) of metric predictors.
+\paragraph{Naive Bayes (NB)} Function \Rfunction{naiveBayes} from
+package \Rpackage{e1071}. Naive Bayes classifier that computes the
+conditional a-posterior probabilities of a categorical class variable
+given independent predictor variables using the Bayes rule. Assumes
+independence of the predictor variables, and Gaussian distribution
+(given the target class) of metric predictors.
 
-\paragraph{Random Forest} Function \Rfunction{randomForest} from package \Rpackage{randomForest}.
+\paragraph{Random Forest (RF)} Function \Rfunction{randomForest} from
+package \Rpackage{randomForest}.
 
-\paragraph{Chi-square} Assignment based on squared differences between a labelled marker and a new feature to be classified. Canonical protein correlation profile method (PCP) uses squared differences between a labelled marker and new features. In \citep{Andersen2003}, $\chi^2$ is defined as \emph{the [summed] squared deviation of the normalized profile [from the marker] for all peptides divided by the number of data points}, i.e. $\chi^{2} = \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007} divide by the value the squared value by the value of the reference feature in each fraction, i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i - m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity of feature $x$ in fraction $i$,  $m_i$ is the normalised intensity of marker $m$ in fraction $i$ and $n$ is the number of fractions available. We will use the former definition.
+\paragraph{Chi-square ($\chi^2$)} Assignment based on squared
+differences between a labelled marker and a new feature to be
+classified. Canonical protein correlation profile method (PCP) uses
+squared differences between a labelled marker and new features. In
+\citep{Andersen2003}, $\chi^2$ is defined as \emph{the [summed]
+  squared deviation of the normalized profile [from the marker] for
+  all peptides divided by the number of data points}, i.e. $\chi^{2} =
+\frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007}
+divide by the value the squared value by the value of the reference
+feature in each fraction, i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i -
+  m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity of feature $x$
+in fraction $i$, $m_i$ is the normalised intensity of marker $m$ in
+fraction $i$ and $n$ is the number of fractions available. We will use
+the former definition.
 
 \paragraph{PerTurbo}
-From \cite{perturbo}: PerTurbo, an original, non-parametric and efficient classification method is presented here. In our framework, the manifold of each class is characterised by its Laplace-Beltrami operator, which is evaluated with classical methods involving the graph Laplacian. The classification criterion is established thanks to a measure of the magnitude of the spectrum perturbation of this operator. The first experiments show good performances against classical algorithms of the state-of-the-art. Moreover, from this measure is derived an efficient policy to design sampling queries in a context of active learning. Performances collected over toy examples and real world datasets assess the qualities of this strategy.
+From \cite{perturbo}: PerTurbo, an original, non-parametric and
+efficient classification method is presented here. In our framework,
+the manifold of each class is characterised by its Laplace-Beltrami
+operator, which is evaluated with classical methods involving the
+graph Laplacian. The classification criterion is established thanks to
+a measure of the magnitude of the spectrum perturbation of this
+operator. The first experiments show good performances against
+classical algorithms of the state-of-the-art. Moreover, from this
+measure is derived an efficient policy to design sampling queries in a
+context of active learning. Performances collected over toy examples
+and real world datasets assess the qualities of this strategy.
 
 The PerTurbo implementation comes from the \Rpackage{pRoloc} packages.
 
- 
+\subsection{Estimating algorithm parameters}
+
+It is essential when applying any of the above classification
+algorithms, to wisely set the algorithm parameters, as these can have
+an important effect on the classification. Such parameters are for
+example the with $sigma$ of the Radial Basis Function (Gaussian
+kernel) $exp(-\sigma \| x - x' \|^2 )$ and the $cost$ (slack)
+parameter (controlling the tolerance to mis-classification) of our SVM
+classifier. The number of neighbours $k$ of the KNN classifier is
+equally important as will be discussed in this sections.
+
+Figure \ref{fig:knnboundaries} illustrates the effect of different
+choices of $k$ using organelle proteomics data from
+\citep{Dunkley2006} (\Rfunction{dunkley2006} from
+\Rpackage{pRolocdata}). As highlighted in the squared region, we can
+see that using a low $k$ ($k = 1$ on the left) will result in very
+specific classification boundaries that precisely follow the contour
+or our marker set as opposed to a higher number of neighbours ($k =
+10$ on the right). While one could be tempted to believe that
+\textit{optimised} classification boundaries are preferable, it is
+essential to remember that these boundaries are specific to the marker
+set used to construct them, while there is absolutely no reason to
+expect these regions to faithfully separate any new data points, in
+particular proteins that we wish to classify to an organelle. In other
+words, the highly specific $k = 1$ classification boundaries are
+\textit{over-optimised} for the marker set or, in other words, lack
+generalisation to new instances. We will demonstrate this using
+simulated data taken from \cite{ISLwR} and show how these
+\textit{over-optimised} perform well for the data used to compute them
+at the cost of new data points.
+
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=1\textwidth]{./Figures/knnboundaries.pdf}
+    \caption{Classification boundaries using $k=1$ or $k=10$ on the
+      \Robject{dunkley2006} data.}
+\label{fig:knnboundaries}
+\end{figure}
+
+Figure \ref{fig:ISL1} uses 2 $\times$ 100 simulated data points
+belonging to either of the orange or blue classes. The genuine classes
+for all the points is known (solid lines) and the KNN algorithm has
+been applied using $k=1$ (left) and $k=100$ (right) respectively
+(purple dashed lines). As in our organelle proteomics examples, we
+observe that when k = 1, the decision boundaries are overly flexible
+and identify patterns in the data that do not reflect to correct
+boundaries (in such cases, the classifier is said to have low bias but
+very high variance). When a large $k$ is used, the classifier becomes
+not flexible and produces nearly linear and approximate separation
+boudaries (such a classifier is said to have low variance but high
+bias). On this simulated data set, neither $k = 1$ nor $k = 100$ give
+good predictions and have test error rates (i.e. the proportion of
+wronly classified points ) of 0.1695 and 0.1925, respectively.
+
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=1\textwidth]{./Figures/ISL-2_16.pdf}
+    \caption{The KNN classifier using $k = 1$ (left, solid
+      classification boudaries) and $k = 100$ (right, solid
+      classification boundaries) compared the optimal decision
+      boudaries. Reproduced with permission from \cite{ISLwR}.}
+\label{fig:ISL1}
+\end{figure}
+
+To quantify the effect of flexibility and lack thereof in defining the
+classification boundaries, \cite{ISLwR} calculate the classification
+error rates using training data (training error rate) and testing data
+(testing error rate). The latter is completely new data that was not
+used to assess the model error rate when defining algorithm
+parameters; one often says that the model used for classification has
+not \textit{seen} this data. If the model perform well on new data, it
+is said to generalise well. This is a quality that is required in most
+cases, and in particular in our organelle proteomics experiments where
+the training data corresponds to our marker sets. Figure
+\ref{fig:ISL2} plots the respective training and testing error rates
+as a function of $1/k$ which is a reflection of the
+flexibility/complexity of our model; when $k = 1$ and $1/k = 1$ (far
+right), we have a very flexible model with the risk of
+over-optimisation. Greater values of $k$ (towards the left)
+characterise less flexible models. As can be seen, high values of $k$
+produce poor performance for both training and testing data. However,
+while the training error steadily decreases when the model complexity
+increases (smaller $k$), the testing error rate displays a typical
+U-shape: at a value around $k = 10$, the testing error rate reaches a
+minimum and then start to increase due to over-optimisation to the
+training data and lack of generalisation of the model.
+
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=.8\textwidth]{./Figures/ISL-2_17.pdf}
+\caption{(Reproduced with permission from \cite{ISLwR}).}
+\label{fig:ISL2}
+\end{figure}
+
+These results show that adequate optimisation of the model parameters
+are essential to avoid either too flexible models (an this do not
+generalise to new data) or models that do not describe the decision
+boundaries adequately. Such parameter selection is achieved by cross
+validation, where the initial marker proteins are separated into
+training data used to build classification models and independent
+testing data used to assess the model on new data. 
+
+We recommend the book \textit{An Introduction to Statistical
+  Learning}\footnote{\url{http://www-bcf.usc.edu/~gareth/ISL/}} by
+\cite{ISLwR} for a more detailed introduction of machine learning.
+
+
 \subsection{Default analysis scheme}
 
-We present below a typical classification using \Rpackage{pRoloc}. The analysis typically consists of two steps. The first one is to optimise the classifier parameters to be used for training and testing (see beginning of this section). A range of parameters are tested using the labelled data, for which the labels are known. For each set of parameters, we hide the labels of a subset of labelled data and use the other part to train a model and apply in on the data with hidden labels. The comparison of the estimated and expected labels enables to assess the validity of the model and hence the adequacy if the parameters. Once adequate parameters have been identified, they are used to infer a model on the complete test set and use of to infer the labels of the unlabelled examples. 
+Below, we present a typical classification analysis using
+\Rpackage{pRoloc}. The analysis typically consists of two steps. The
+first one is to optimise the classifier parameters to be used for
+training and testing (see above). A range of parameters are tested
+using the labelled data, for which the labels are known. For each set
+of parameters, we hide the labels of a subset of labelled data and use
+the other part to train a model and apply in on the testing data with
+hidden labels. The comparison of the estimated and expected labels
+enables to assess the validity of the model and hence the adequacy if
+the parameters. Once adequate parameters have been identified, they
+are used to infer a model on the complete organelle marker set and
+used to infer the subcellular location of the unlabelled examples.
 
 \minisec{Parameter optimisation}
 
-Algorithmic performance is estimated using a stratified 20/80 partitioning. The 80\% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20\%. The procedure is repeated $n = 100$ \texttt{times} to sample $n$ accuracy metrics (see below) values using $n$, possibly different, optimised parameters for evaluation.
+Algorithmic performance is estimated using a stratified 20/80
+partitioning. The 80\% partitions are subjected to 5-fold
+cross-validation in order to optimise free parameters via a grid
+search, and these parameters are then applied to the remaining
+20\%. The procedure is repeated $n = 100$ \texttt{times} to sample $n$
+accuracy metrics (see below) values using $n$, possibly different,
+optimised parameters for evaluation.
 
-Models accuracy is evaluated using the F1 score, $F1 = 2 ~ \frac{precision \times recall}{precision + recall}$, calculated as the harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a measure of \textit{exactness} -- returned output is a relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of \textit{completeness} -- indicating how much was missed from the output). What we are aiming for are high generalisation accuracy, i.e high $F1$, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.
+Models accuracy is evaluated using the F1 score, $F1 = 2 ~
+\frac{precision \times recall}{precision + recall}$, calculated as the
+harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a
+measure of \textit{exactness} -- returned output is a relevant result)
+and recall ($recall=\frac{tp}{tp+fn}$, a measure of
+\textit{completeness} -- indicating how much was missed from the
+output). What we are aiming for are high generalisation accuracy, i.e
+high $F1$, indicating that the marker proteins in the test data set
+are consistently correctly assigned by the algorithms.
 
-The result of the optimisation procedure are stored in an \Robject{GenRegRes} object that can be inspected, plotted and best parameter pairs can be extracted.
+The result of the optimisation procedure are stored in an
+\Robject{GenRegRes} object that can be inspected, plotted and best
+parameter pairs can be extracted.
 
-For a given algorithm \texttt{alg}, the corresponding parameter optimisation function is names \Rfunction{algOptimisation} or, equivalently, \Rfunction{algOptimization}. See table \ref{tab:algo} for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through \Rfunction{?algOptimisation}. 
+For a given algorithm \texttt{alg}, the corresponding parameter
+optimisation function is names \Rfunction{algOptimisation} or,
+equivalently, \Rfunction{algOptimization}. See table \ref{tab:algo}
+for details. A description of each of the respective model parameters
+is provided in the optimisation function manuals, available through
+\Rfunction{?algOptimisation}.
 
 <<svmParamOptim, cache = TRUE, warning = FALSE, message = FALSE>>=
 params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
@@ -238,8 +467,18 @@ print(xt, include.rownames = FALSE, size = "small")
 
 \section{Comparison of different classifiers}
 
-Several supervised machine learning algorithms have already been applied to organelle proteomics data classification: 
-partial least square discriminant analysis in \cite{Dunkley2006, Tan2009}, support vector machines (SVMs) in \cite{Trotter2010}, random forest in \cite{Ohta2010}, neural networks in \cite{Tardif2012}, naive Bayes \cite{Nikolovski2012}. In our HUPO 2011 poster (see \Rfunction{vignette("HUPO\_2011\_poster", package = "pRoloc")}), we show that different classification algorithms provide very similar performance. We have extended this comparison on various datasets distributed in the \Rpackage{pRolocdata package}. On figure \ref{fig:f1box}, we illustrate how different algorithms reach very similar performances on most of our test datasets. 
+Several supervised machine learning algorithms have already been
+applied to organelle proteomics data classification: partial least
+square discriminant analysis in \cite{Dunkley2006, Tan2009}, support
+vector machines (SVMs) in \cite{Trotter2010}, random forest in
+\cite{Ohta2010}, neural networks in \cite{Tardif2012}, naive Bayes
+\cite{Nikolovski2012}. In our HUPO 2011 poster (see
+\Rfunction{vignette("HUPO\_2011\_poster", package = "pRoloc")}), we
+show that different classification algorithms provide very similar
+performance. We have extended this comparison on various datasets
+distributed in the \Rpackage{pRolocdata package}. On figure
+\ref{fig:f1box}, we illustrate how different algorithms reach very
+similar performances on most of our test datasets.
 
 \begin{figure}[!hbt]
 \centering
@@ -251,7 +490,19 @@ partial least square discriminant analysis in \cite{Dunkley2006, Tan2009}, suppo
 
 \section{Semi-supervised machine learning and novelty detection}\label{sec:ssml}
 
-The \emph{phenoDisco} algorithm is a semi-supervised novelty detection method by \cite{Breckels2013} (figure \ref{fig:pd}). It uses the labelled (i.e. markers, noted $D_L$) and unlabelled (i.e. proteins of unknown localisation, noted $D_U$) sets of the input data. The algorithm is repeated $N$ times (the \Robject{code} argument in the \Rfunction{phenoDisco} function). At each iteration, each organelle class $D_{L}^{i}$ and the unlabelled complement are clustered using Gaussian mixture modelling. While unlabelled members that systematically cluster with $D_{L}^{i}$ and pass outlier detection are labelled as new putative members of class $i$, any example of $D_U$ which are not merged with any any of the $D_{L}^{i}$ and are consistently clustered together throughout the $N$ iterations are considered members of a new phenotype. 
+The \emph{phenoDisco} algorithm is a semi-supervised novelty detection
+method by \cite{Breckels2013} (figure \ref{fig:pd}). It uses the
+labelled (i.e. markers, noted $D_L$) and unlabelled (i.e. proteins of
+unknown localisation, noted $D_U$) sets of the input data. The
+algorithm is repeated $N$ times (the \Robject{code} argument in the
+\Rfunction{phenoDisco} function). At each iteration, each organelle
+class $D_{L}^{i}$ and the unlabelled complement are clustered using
+Gaussian mixture modelling. While unlabelled members that
+systematically cluster with $D_{L}^{i}$ and pass outlier detection are
+labelled as new putative members of class $i$, any example of $D_U$
+which are not merged with any any of the $D_{L}^{i}$ and are
+consistently clustered together throughout the $N$ iterations are
+considered members of a new phenotype.
 
 \begin{figure}[!hbt]
 \centering

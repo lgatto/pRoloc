@@ -271,7 +271,7 @@ The PerTurbo implementation comes from the \Rpackage{pRoloc} packages.
 It is essential when applying any of the above classification
 algorithms, to wisely set the algorithm parameters, as these can have
 an important effect on the classification. Such parameters are for
-example the with $sigma$ of the Radial Basis Function (Gaussian
+example the width $sigma$ of the Radial Basis Function (Gaussian
 kernel) $exp(-\sigma \| x - x' \|^2 )$ and the $cost$ (slack)
 parameter (controlling the tolerance to mis-classification) of our SVM
 classifier. The number of neighbours $k$ of the KNN classifier is
@@ -283,8 +283,8 @@ choices of $k$ using organelle proteomics data from
 \Rpackage{pRolocdata}). As highlighted in the squared region, we can
 see that using a low $k$ ($k = 1$ on the left) will result in very
 specific classification boundaries that precisely follow the contour
-or our marker set as opposed to a higher number of neighbours ($k =
-10$ on the right). While one could be tempted to believe that
+or our marker set as opposed to a higher number of neighbours ($k = 8$
+on the right). While one could be tempted to believe that
 \textit{optimised} classification boundaries are preferable, it is
 essential to remember that these boundaries are specific to the marker
 set used to construct them, while there is absolutely no reason to
@@ -293,14 +293,13 @@ particular proteins that we wish to classify to an organelle. In other
 words, the highly specific $k = 1$ classification boundaries are
 \textit{over-fitted} for the marker set or, in other words, lack
 generalisation to new instances. We will demonstrate this using
-simulated data taken from \cite{ISLwR} and show how such
-\textit{over-fitting} perform well for the data used to compute them
-at the cost of new data points.
+simulated data taken from \cite{ISLwR} and show what detrimental
+effect \textit{over-fitting} has on new data.
 
 \begin{figure}[!hbt]
 \centering
     \includegraphics[width=1\textwidth]{./Figures/knnboundaries.pdf}
-    \caption{Classification boundaries using $k=1$ or $k=10$ on the
+    \caption{Classification boundaries using $k=1$ or $k=8$ on the
       \Robject{dunkley2006} data.}
 \label{fig:knnboundaries}
 \end{figure}
@@ -314,7 +313,7 @@ observe that when k = 1, the decision boundaries are overly flexible
 and identify patterns in the data that do not reflect to correct
 boundaries (in such cases, the classifier is said to have low bias but
 very high variance). When a large $k$ is used, the classifier becomes
-not flexible and produces nearly linear and approximate separation
+inflexible and produces approximate and nearly linear separation
 boudaries (such a classifier is said to have low variance but high
 bias). On this simulated data set, neither $k = 1$ nor $k = 100$ give
 good predictions and have test error rates (i.e. the proportion of
@@ -325,8 +324,9 @@ wronly classified points ) of 0.1695 and 0.1925, respectively.
     \includegraphics[width=1\textwidth]{./Figures/ISL-2_16.pdf}
     \caption{The KNN classifier using $k = 1$ (left, solid
       classification boudaries) and $k = 100$ (right, solid
-      classification boundaries) compared the optimal decision
-      boudaries. Reproduced with permission from \cite{ISLwR}.}
+      classification boundaries) compared the Bayes decision boudaries
+      (see original material for details). Reproduced with permission
+      from \cite{ISLwR}.}
 \label{fig:ISL1}
 \end{figure}
 
@@ -336,13 +336,13 @@ error rates using training data (training error rate) and testing data
 (testing error rate). The latter is completely new data that was not
 used to assess the model error rate when defining algorithm
 parameters; one often says that the model used for classification has
-not \textit{seen} this data. If the model perform well on new data, it
-is said to generalise well. This is a quality that is required in most
-cases, and in particular in our organelle proteomics experiments where
-the training data corresponds to our marker sets. Figure
+not \textit{seen} this data. If the model performs well on new data,
+it is said to generalise well. This is a quality that is required in
+most cases, and in particular in our organelle proteomics experiments
+where the training data corresponds to our marker sets. Figure
 \ref{fig:ISL2} plots the respective training and testing error rates
 as a function of $1/k$ which is a reflection of the
-flexibility/complexity of our model; when $k = 1$ and $1/k = 1$ (far
+flexibility/complexity of our model; when $1/k = 1$, i.e. $k = 1$ (far
 right), we have a very flexible model with the risk of
 over-fitting. Greater values of $k$ (towards the left) characterise
 less flexible models. As can be seen, high values of $k$ produce poor
@@ -356,17 +356,21 @@ lack of generalisation of the model.
 \begin{figure}[!hbt]
 \centering
     \includegraphics[width=.8\textwidth]{./Figures/ISL-2_17.pdf}
-\caption{(Reproduced with permission from \cite{ISLwR}).}
+    \caption{Effect of train and test error with respect to model
+      complexity. The former decreases for lower values of $k$ while
+      the test error reaches a minimum around $k = 10$ before
+      increasing again. Reproduced with permission from \cite{ISLwR}.}
 \label{fig:ISL2}
 \end{figure}
 
+
 These results show that adequate optimisation of the model parameters
-are essential to avoid either too flexible models (an this do not
-generalise to new data) or models that do not describe the decision
-boundaries adequately. Such parameter selection is achieved by cross
-validation, where the initial marker proteins are separated into
-training data used to build classification models and independent
-testing data used to assess the model on new data. 
+are essential to avoid either too flexible models (that do not
+generalise well to new data) or models that do not describe the
+decision boundaries adequately. Such parameter selection is achieved
+by cross validation, where the initial marker proteins are separated
+into training data used to build classification models and independent
+testing data used to assess the model on new data.
 
 We recommend the book \textit{An Introduction to Statistical
   Learning}\footnote{\url{http://www-bcf.usc.edu/~gareth/ISL/}} by
@@ -408,7 +412,7 @@ output). What we are aiming for are high generalisation accuracy, i.e
 high $F1$, indicating that the marker proteins in the test data set
 are consistently correctly assigned by the algorithms.
 
-The result of the optimisation procedure are stored in an
+The results of the optimisation procedure are stored in an
 \Robject{GenRegRes} object that can be inspected, plotted and best
 parameter pairs can be extracted.
 

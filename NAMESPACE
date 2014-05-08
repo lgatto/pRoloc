@@ -6,7 +6,8 @@ import(methods)
 import(Rcpp)
 importFrom(BiocParallel, bplapply)
 
-importMethodsFrom(MLInterfaces, MLearn, predScore)
+## importMethodsFrom(MLInterfaces, MLearn, predScore)
+import(MLInterfaces)
 
 import(lattice)
 import(BiocGenerics)

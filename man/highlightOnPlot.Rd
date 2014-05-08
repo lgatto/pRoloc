@@ -27,7 +27,9 @@ NULL; used for its side effects.
 \description{
 Highlights a set of features of interest given as a
 \code{FeaturesOfInterest} instance on a PCA plot produced
-by code{plot2D}.
+by code{plot2D}. If none of the features of interest are
+found in the \code{MSnset}'s \code{featureNames}, an error
+is thrown.
 }
 \examples{
 library("pRolocdata")
@@ -38,10 +40,10 @@ x <- FeaturesOfInterest(description = "A test set of features of interest",
 .pca <- plot2D(tan2009r1)
 highlightOnPlot(.pca, x, col = "red")
 highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
-.pca <- plot2D(tan2009r1, dims = c(1, 3))
 
-highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
+.pca <- plot2D(tan2009r1, dims = c(1, 3))
 highlightOnPlot(.pca, x, pch = "+")
+highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
 }
 \author{
 Laurent Gatto

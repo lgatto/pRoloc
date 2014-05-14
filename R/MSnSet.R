@@ -65,7 +65,8 @@ getMarkers <- function(object,
 ##' toosmall <- testMarkers(dunkley2006, xval = 15)
 ##' toosmall
 ##' try(testMarkers(dunkley2006, xval = 15, error = TRUE))
-testMarkers <- function(object, xval = 5, n = 2, fcol = "markers", error = FALSE) {
+testMarkers <- function(object, xval = 5, n = 2,
+                        fcol = "markers", error = FALSE) {
     mrktab <- table(fData(object)[, fcol])
     N <- xval + 2
     k <- mrktab < N
@@ -75,13 +76,10 @@ testMarkers <- function(object, xval = 5, n = 2, fcol = "markers", error = FALSE
         if (length(ans) == 1) {
             msg <- paste0(paste(ans, collapse = ", "), " has less than ", N, " markers.")
         } else {
-            paste0(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
+            msg <- paste0(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
         }
-}
-    if (error) {
-        stop(msg)
-    } else {
-        warning(msg)
+        if (error) stop(msg)
+        else warning(msg)
     }
     invisible(ans)
 }

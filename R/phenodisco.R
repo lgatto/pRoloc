@@ -181,13 +181,13 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
         W <- WN <- a <- vector()
         for (i in 1:N) {
             s <- which(rmultinom(1, size=1, prob=(gmm0$parameters$pro))==1)
-            ## replaced MSVBAR::rmultnorm with MASS::rmultnorm since
-            ## the former has been removed from CRAN.
+            ## replaced MSVBAR::rmultnorm with mvtnorm::rmvnorm 
+            ## since the former has been removed from CRAN.
             ## NP <- rmultnorm(1, mu = gmm0$parameters$mean[,s], 
             ##                 vmat = gmm0$parameters$variance$sigma[, , s])
-            NP <- rmultnorm(1, mean = gmm0$parameters$mean[,s], 
-                            matrix = gmm0$parameters$variance$sigma[, , s],
-                            method = "svd")
+            NP <- rmvnorm(1, mean = gmm0$parameters$mean[,s], 
+                          sigma = gmm0$parameters$variance$sigma[, , s],
+                          method = "svd")
             ## Generate new profile (NP) from the data
             es <- do.call("estep", c(list(data=rbind(NP, L)), gmm0)) 
             ## ELSE use the estep of the EM algorithm to

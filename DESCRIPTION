@@ -21,7 +21,7 @@ Depends: R (>= 2.15), MSnbase (>= 1.13.3), MLInterfaces (>= 1.37.1),
 	 methods, Rcpp (>= 0.10.3), BiocParallel
 Imports: mclust (>= 4.3), caret, e1071, sampling, class, kernlab,
 	 lattice, nnet, randomForest, proxy, FNN, BiocGenerics,
-	 stats4, RColorBrewer, scales, MASS, knitr
+	 stats, RColorBrewer, scales, MASS, knitr, mvtnorm
 Suggests: testthat, pRolocdata, roxygen2, synapter, xtable
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2

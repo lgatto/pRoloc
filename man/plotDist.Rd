@@ -4,7 +4,7 @@
 \title{Plots the distribution of features across fractions}
 \usage{
 plotDist(object, markers, mcol = "steelblue", pcol = "grey90",
-  alpha = 0.3, lty = 1, fractions, ...)
+  alpha = 0.3, lty = 1, fractions, ylim, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -30,6 +30,8 @@ is 1 (solid). See \code{\link{par}} for details.}
 variable to be used to label the fraction along the x axis. If missing, the
 \code{phenoData} variables are searched for a match to \code{fraction}.
 If no match is found, the fractions are labelled as numericals.}
+
+\item{ylim}{A numeric vector of length 2, giving the y coordinates range.}
 
 \item{...}{Additional parameters passed to \code{\link{plot}}.}
 }

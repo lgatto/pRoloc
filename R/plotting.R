@@ -323,6 +323,7 @@ addLegend_v1 <- function(object,
 ##' variable to be used to label the fraction along the x axis. If missing, the
 ##' \code{phenoData} variables are searched for a match to \code{fraction}.
 ##' If no match is found, the fractions are labelled as numericals.
+##' @param ylim A numeric vector of length 2, giving the y coordinates range.
 ##' @param ... Additional parameters passed to \code{\link{plot}}.
 ##' @return Used for its side effect of producing a feature distribution
 ##' plot. Invisibly returns \code{NULL}.
@@ -342,9 +343,11 @@ plotDist <- function(object,
                      alpha = 0.3,
                      lty = 1,
                      fractions,
+                     ylim,
                      ...) {
   .data <- exprs(object)
-  .ylim <- range(.data)
+  if (missing(ylim))
+      ylim <- range(.data)
   n <- nrow(.data)
   m <- ncol(.data)  
   if (missing(fractions)) {
@@ -356,7 +359,7 @@ plotDist <- function(object,
       .frac <- seq_len(m)
     }
   }
-  plot(0, ylim = .ylim,
+  plot(0, ylim = ylim,
        xlim = c(1, m),
        ylab = "Intensity",
        xlab = "Fractions",

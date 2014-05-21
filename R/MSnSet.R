@@ -51,6 +51,8 @@ getMarkers <- function(object,
 ##' @param n Number of additional examples. 
 ##' @param fcol The name of the prediction column in the
 ##' \code{featureData} slot. Default is \code{"markers"}. 
+##' @param error A \code{logical} specifying if an error should be
+##' thown, instead of a warning.
 ##' @return If successfull, the test invisibly returns \code{NULL}. Else,
 ##' it invisibly returns the names of the classes that have too few examples.
 ##' @author Laurent Gatto
@@ -62,7 +64,9 @@ getMarkers <- function(object,
 ##' testMarkers(dunkley2006)
 ##' toosmall <- testMarkers(dunkley2006, xval = 15)
 ##' toosmall
-testMarkers <- function(object, xval = 5, n = 2, fcol = "markers") {
+##' try(testMarkers(dunkley2006, xval = 15, error = TRUE))
+testMarkers <- function(object, xval = 5, n = 2,
+                        fcol = "markers", error = FALSE) {
     mrktab <- table(fData(object)[, fcol])
     N <- xval + 2
     k <- mrktab < N
@@ -70,11 +74,13 @@ testMarkers <- function(object, xval = 5, n = 2, fcol = "markers") {
     if (any(k)) {
         ans <- names(mrktab)[k]
         if (length(ans) == 1) {
-            warning(paste(ans, collapse = ", "), " has less than ", N, " markers.")
+            msg <- paste0(paste(ans, collapse = ", "), " has less than ", N, " markers.")
         } else {
-            warning(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
+            msg <- paste0(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
         }
-    } 
+        if (error) stop(msg)
+        else warning(msg)
+    }
     invisible(ans)
 }
 

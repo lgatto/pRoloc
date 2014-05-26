@@ -186,7 +186,7 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
             ## NP <- rmultnorm(1, mu = gmm0$parameters$mean[,s], 
             ##                 vmat = gmm0$parameters$variance$sigma[, , s])
             NP <- rmultnorm(1, mean = gmm0$parameters$mean[,s], 
-                            matrix = gmm0$parameters$variance$sigma[, , s]
+                            matrix = gmm0$parameters$variance$sigma[, , s],
                             method = "svd")
             ## Generate new profile (NP) from the data
             es <- do.call("estep", c(list(data=rbind(NP, L)), gmm0)) 

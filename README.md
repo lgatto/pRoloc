@@ -29,6 +29,12 @@ Jan 11. [Epub ahead of print]
 Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS, Trotter
 MW. The effect of organelle discovery upon sub-cellular protein
 localisation. J Proteomics. 2013 Aug 2;88:129-40. doi:
-10.1016/j.jprot.2013.02.019. Epub 2013 Mar
-21. [PubMed PMID: 23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
+10.1016/j.jprot.2013.02.019. Epub 2013
+Mar 21. [PubMed PMID: 23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
 
+
+Gatto L., Breckels L.M., Burger T, Nightingale D.J.H., Groen A.J.,
+Campbell C., Mulvey C.M., Christoforou A., Ferro M., Lilley K.S. "A
+foundation for reliable spatial proteomics data analysis", Mol Cell
+Proteomics. 2014
+May 20. [publisher](http://www.mcponline.org./content/early/2014/05/20/mcp.M113.036350.abstract)

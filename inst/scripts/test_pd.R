@@ -23,11 +23,13 @@ data(dunkley2006)
 ## plot2D(dunkley2006pdunittest2, fcol = "pd", fpch = "markers")
 
 ## Testing PD updates
-dunkley2006pdunittest <- phenoDisco(dunkley2006, times=100, allIter=TRUE, 
-                                    seed=1, GS=10, verbose=TRUE, BPPARAM=NULL)
+dunkley2006pdunittest <- phenoDisco(dunkley2006, times=100,
+                                    allIter=TRUE, seed=1,
+                                    GS=10, verbose=TRUE, BPPARAM=NULL)
+
 ## load("../extdata/dunkley2006pdunittest2.rda")
 load("../extdata/dunkley2006pdunittest_20140408.rda")
-all.equal(dunkley2006pdunittest, dunkley2006pdunittest <- 20140408)
+all.equal(dunkley2006pdunittest, dunkley2006pdunittest_20140408)
 stopifnot(all.equal(fData(dunkley2006pdunittest), fData(dunkley2006pdunittest_20140408)))
 
 

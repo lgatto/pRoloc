@@ -1,7 +1,8 @@
 CHANGES IN VERSION 1.5.5
 ------------------------
- o replaced MSVBAR::rmultnorm with MASS::rmultnorm since the former
+ o replaced MSVBAR::rmultnorm with mvtnorm::rmvnorm since the former
    has been removed from CRAN and don't import [2014-05-21 Wed]
+ o Bug tracking [2014-05-26 Mon]
 
 CHANGES IN VERSION 1.5.4
 ------------------------

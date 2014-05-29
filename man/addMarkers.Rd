@@ -3,7 +3,7 @@
 \alias{addMarkers}
 \title{Adds markers to the data}
 \usage{
-addMarkers(object, markers, fcol, verbose = TRUE)
+addMarkers(object, markers, mcol = "markers", fcol, verbose = TRUE)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -11,6 +11,10 @@ addMarkers(object, markers, fcol, verbose = TRUE)
 \item{markers}{A \code{character} with the name the markers' csv
 file or a named character of markers as provided by
 \code{\link{pRolocmarkers}}.}
+
+\item{mcol}{A \code{character} of length 1 defining the feature
+variable label for the newly added markers. Default is
+\code{"markers"}.}
 
 \item{fcol}{An optional feature variable to be used to match
 against the markers. If missing, the feature names are used.}
@@ -44,6 +48,10 @@ fData(dunkley2006)$markers.org <- fData(dunkley2006)$markers
 fData(dunkley2006)$markers <- NULL
 marked <- addMarkers(dunkley2006, atha)
 fvarLabels(marked)
+## if 'makers' already exists
+marked <- addMarkers(marked, atha, mcol = "markers2")
+fvarLabels(marked)
+stopifnot(all.equal(fData(marked)$markers, fData(marked)$markers2))
 plot2D(marked)
 addLegend(marked, where = "topleft", cex = .7)
 }

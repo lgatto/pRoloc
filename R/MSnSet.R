@@ -250,9 +250,11 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' @param markers A \code{character} with the name the markers' csv
 ##' file or a named character of markers as provided by
 ##' \code{\link{pRolocmarkers}}.
+##' @param mcol A \code{character} of length 1 defining the feature
+##' variable label for the newly added markers. Default is
+##' \code{"markers"}.
 ##' @param fcol An optional feature variable to be used to match
 ##' against the markers. If missing, the feature names are used.
-
 ##' @param verbose A \code{logical} indicating if number of markers
 ##' and marker table should be printed to the console.
 ##' @return A new instance of class \code{MSnSet} with an additional
@@ -267,11 +269,15 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' fData(dunkley2006)$markers <- NULL
 ##' marked <- addMarkers(dunkley2006, atha)
 ##' fvarLabels(marked)
+##' ## if 'makers' already exists
+##' marked <- addMarkers(marked, atha, mcol = "markers2")
+##' fvarLabels(marked)
+##' stopifnot(all.equal(fData(marked)$markers, fData(marked)$markers2))
 ##' plot2D(marked)
 ##' addLegend(marked, where = "topleft", cex = .7)
-addMarkers <- function(object, markers, fcol, verbose = TRUE) {
-  if ("markers" %in% fvarLabels(object))
-    stop("Detected an existing 'markers' feature column.")
+addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) {
+  if (mcol %in% fvarLabels(object))
+    stop("Detected an existing '", mcol, "' feature column.")
   if (length(markers) == 1 && file.exists(markers)) {
       mrk <- read.csv(markers, stringsAsFactors = FALSE, row.names = 1)
       mfrom <- basename(markers)
@@ -306,13 +312,13 @@ addMarkers <- function(object, markers, fcol, verbose = TRUE) {
   if (verbose)
     message("Markers in data: ", sum(cmn), " out of ", nrow(object))
   k <- match(fn[cmn], rownames(mrk))  
-  fData(object)$markers <- "unknown"
-  fData(object)[cmn, "markers"] <- mrk[k, 1]
+  fData(object)[, mcol] <- "unknown"
+  fData(object)[cmn, mcol] <- mrk[k, 1]
   object@processingData@processing <-
     c(object@processingData@processing,
       paste0("Added markers from ", mfrom,". ", date()))  
   if (validObject(object)) {
-      if (verbose) getMarkers(object)
+      if (verbose) getMarkers(object, fcol = mcol)
       return(object)
   }  
 }

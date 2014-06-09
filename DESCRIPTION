@@ -27,4 +27,5 @@ LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
 BugReports: https://github.com/lgatto/pRoloc/issues
-biocViews: Proteomics, MassSpectrometry, Classification, Clustering
+biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
+	   QualityControl

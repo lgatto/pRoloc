@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.5.6
+Version: 1.5.7
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 	            email = "lg390@cam.ac.uk", 
                     role = c("aut","cre")),
@@ -27,4 +27,5 @@ LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
 BugReports: https://github.com/lgatto/pRoloc/issues
-biocViews: Proteomics, MassSpectrometry, Classification, Clustering
+biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
+	   QualityControl

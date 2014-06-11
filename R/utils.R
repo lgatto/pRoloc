@@ -17,7 +17,7 @@ anyUnknown <- function(x, fcol = "markers", unknown = "unknown")
     return(ans)
 }
 
-
+## .FeatComp class
 .FeatComp <- setClass("FeatComp", 
                     slots = list(
                         name = "character",
@@ -25,8 +25,6 @@ anyUnknown <- function(x, fcol = "markers", unknown = "unknown")
                         unique1 = "character",
                         unique2 = "character",
                         all = "logical"))
-
-
 
 ##' @description \code{compfnames} allows to compare two objects of class 
 ##' \code{"MSnSet"} with regard to their occurrence of features in total and 

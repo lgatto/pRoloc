@@ -64,6 +64,7 @@ export(## MSnSet manipulation
        setStockcol, setStockpch,
        getUnknowncol, getUnknownpch,
        setUnknowncol, setUnknownpch,
+       compfnames,
        ## -- plotting
        plot2D,
        addLegend,

@@ -1,7 +1,7 @@
 anyUnknown <- function(x, fcol = "markers", unknown = "unknown") 
     any(fData(x)[, fcol] == unknown)
 
-## helper function for compfnames
+## helper function for compfnames to create matrix 
 .calcCompNumbers <- function(flist) {
     .len <- length(flist)
     ans <- matrix(NA, nrow = .len, ncol = 3)
@@ -25,6 +25,22 @@ anyUnknown <- function(x, fcol = "markers", unknown = "unknown")
                         unique1 = "character",
                         unique2 = "character",
                         all = "logical"))
+
+## helper function for compfnames to create .FeatComp S4 object
+.compStrings <- function(string1, string2, all = TRUE, name = "") {
+    if (all) 
+        name <- "all"
+    
+    .shared <- intersect(string1, string2)
+    .uniq1 <- setdiff(string1, .shared)
+    .uniq2 <- setdiff(string2, .shared)
+    
+    .FeatComp(name = name,
+            common = .shared,
+            unique1 = .uniq1,
+            unique2 = .uniq2,
+            all = all)
+}
 
 ##' @description \code{compfnames} allows to compare two objects of class 
 ##' \code{"MSnSet"} with regard to their occurrence of features in total and 
@@ -51,8 +67,9 @@ anyUnknown <- function(x, fcol = "markers", unknown = "unknown")
 ##' This is done in total and for each unique marker level. Invisibly it 
 ##' returns a list which contains feature names split accordingly to 
 ##' \code{"all"} and to each unique marker level giving information about 
-##' features in common and unique for \code{obj1}, \code{obj2}.
-##' @author Laurent Gatto <lg390@cam.ac.uk>, Thomas Naake <tn299@cam.ac.uk>
+##' features in common and unique for \code{obj1} and \code{obj2}.
+##' @author Laurent Gatto <lg390@@cam.ac.uk>, Thomas Naake <tn299@@cam.ac.uk>
+##' @export
 compfnames <- function(obj1, obj2, 
                             fcol1 = "markers", fcol2, verbose = TRUE) {    
     
@@ -74,36 +91,20 @@ compfnames <- function(obj1, obj2,
     if (!is.logical(verbose))
         stop("value to 'verbose' is not logical")
     
-    ## for all    
-    .shared <- intersect(featureNames(obj1), featureNames(obj2))
-    .uniqFeat1 <- setdiff(featureNames(obj1), .shared) 
-    .uniqFeat2 <-  setdiff(featureNames(obj2), .shared)
-    
-    ## for marker class
     .mC <- union(unique(fData(obj1)[, fcol1]), unique(fData(obj2)[, fcol2]))
     .lenmC <- length(.mC)
-    
     ans <- vector("list", .lenmC + 1)
-    ans[[1]] <- .FeatComp(name = "all",
-                     common = .shared,
-                     unique1 = .uniqFeat1,
-                     unique2 = .uniqFeat2,
-                     all = TRUE)    
     
+    ## for all
+    ans[[1]] <- .compStrings(featureNames(obj1), featureNames(obj2))   
+    
+    ## for marker class
     if (!is.null(fcol1)) {
     
         for (i in 1:.lenmC) {
             .fn1mC <- featureNames(obj1)[fData(obj1)[,fcol1] == .mC[i]]
             .fn2mC <- featureNames(obj2)[fData(obj2)[,fcol2] == .mC[i]]
-            .sharedmC <- intersect(.fn1mC, .fn2mC)
-            .uniqFeat1mC <- setdiff(.fn1mC, .sharedmC)
-            .uniqFeat2mC <- setdiff(.fn2mC, .sharedmC)
-        
-            ans[[i+1]] <- .FeatComp(name = .mC[i], 
-                            common = .sharedmC, 
-                            unique1 = .uniqFeat1mC,
-                            unique2 = .uniqFeat2mC,
-                            all = FALSE)      
+            ans[[i+1]] <- .compStrings(.fn1mC, .fn2mC, all = FALSE, name = .mC[i]) 
         }
     } 
     

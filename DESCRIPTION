@@ -8,8 +8,11 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
              person(given = "Lisa", family ="Breckels",
                     email = "lms79@cam.ac.uk",
                     role = "aut"),
-             person(given = "Samuel", family =" Wieczorek",
+             person(given = "Samuel", family ="Wieczorek",
                     email = "samuel.wieczorek@cea.fr",
+                    role = "ctb"),
+             person(given = "Thomas", family ="Naake",
+                    email = "tn299@cam.ac.uk",
                     role = "ctb"))
 Author: Laurent Gatto and Lisa M. Breckels with contributions from
 	Thomas Burger and Samuel Wieczorek

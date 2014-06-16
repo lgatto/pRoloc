@@ -31,10 +31,12 @@ importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
 
-exportClasses(GenRegRes)
+exportClasses(GenRegRes,
+              FeatComp,
               # ClustRegRes)
 
 exportMethods(chi2,
+              compfnames,
               show,
               ## machine learning
               MLearn,
@@ -64,7 +66,6 @@ export(## MSnSet manipulation
        setStockcol, setStockpch,
        getUnknowncol, getUnknownpch,
        setUnknowncol, setUnknownpch,
-       compfnames,
        ## -- plotting
        plot2D,
        addLegend,

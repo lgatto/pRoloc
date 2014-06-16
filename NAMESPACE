@@ -31,12 +31,10 @@ importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 
 
-exportClasses(GenRegRes,
-              FeatComp,
+exportClasses(GenRegRes)
               # ClustRegRes)
 
 exportMethods(chi2,
-              compfnames,
               show,
               ## machine learning
               MLearn,

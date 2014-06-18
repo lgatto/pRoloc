@@ -2,6 +2,8 @@ CHANGES IN VERSION 1.5.8
 ------------------------
  o nndistx_matrix function added to allow use of query matrix
    when calculating knn distances [2014-06-18 Wed]
+ o nndist[x]_[matrix|msnset] are now available using the experted
+   nndist method [2014-06-18 Wed]
 
 CHANGES IN VERSION 1.5.7
 ------------------------

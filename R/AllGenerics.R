@@ -17,4 +17,4 @@ setGeneric("kmeansOptimisation", function(object, ...) standardGeneric("kmeansOp
 setGeneric("kmeansOptimization", function(object, ...) kmeansOptimisation(object, ...))
 
 ## distances
-setGeneric("nndist", function(object, ...) standardGeneric("nndist"))
+setGeneric("nndist", function(object, query, ...) standardGeneric("nndist"))

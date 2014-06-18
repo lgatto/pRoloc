@@ -27,10 +27,10 @@ test_that("nndist errors", {
 
 test_that("nndist matrix/msnset", {
     expect_true(validObject(e))    
-    resm0 <- nndist_matrix(m, k = 2, dist = "euclidean")
+    resm0 <- pRoloc:::nndist_matrix(m, k = 2, dist = "euclidean")
     resm <- nndist(m, k = 2, dist = "euclidean")
     expect_equal(resm0, resm)
-    rese0 <- nndist_msnset(e, k = 2, dist = "euclidean")
+    rese0 <- pRoloc:::nndist_msnset(e, k = 2, dist = "euclidean")
     rese <- nndist(e, k = 2, dist = "euclidean")
     expect_equal(rese0, rese)
     expect_equal(data.frame(resm), fData(rese)[, -1]) 

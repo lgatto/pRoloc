@@ -17,7 +17,7 @@ import(kernlab) ## previously only imported ksvm
 import(knitr)
 
 importFrom(class, knn)
-importFrom(FNN, get.knn)
+importFrom(FNN, get.knn, get.knnx)
 importFrom(RColorBrewer, brewer.pal)
 importFrom(stats, rmultinom)
 ## importFrom(stats4, plot)

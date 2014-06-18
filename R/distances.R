@@ -39,3 +39,17 @@ nndist_msnset <- function(object, k, dist = dist, ...) {
         return(object)
 }
 
+## Use of 'get.knnx' instead of 'get.knn' allows one to have a query matrix
+nndistx_matrix <- function(object, query, k, ...) {
+  m <- seq(1, k * 2, 2)
+  ans <- matrix(NA, nrow = nrow(query), ncol = k * 2)
+  rownames(ans) <- rownames(query)
+  colnames(ans) <- paste0(rep(c("index", "dist"), k),
+                          rep(1:k, each = 2)) 
+  res <- get.knnx(object, query, k = k, ...) # n by k matrix
+  ans[, m] <- res$nn.index
+  ans[, m + 1] <- res$nn.dist
+  colnames(ans) <- paste0(colnames(ans), "euc")
+  return(ans)
+}
+

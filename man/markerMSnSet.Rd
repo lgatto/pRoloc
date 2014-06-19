@@ -27,8 +27,8 @@ These function extract the marker or unknown proteins into a new
 \examples{
 library("pRolocdata")
 data(dunkley2006)
-mrk <- markerSet(dunkley2006)
-unk <- unknownSet(dunkley2006)
+mrk <- markerMSnSet(dunkley2006)
+unk <- unknownMSnSet(dunkley2006)
 dim(dunkley2006)
 dim(mrk)
 dim(unk)

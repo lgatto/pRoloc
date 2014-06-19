@@ -58,7 +58,7 @@ tail(nndist(m[1:100, ], k = 2, dist = "mahalanobis"))
 d <- nndist(dunkley2006, k = 5)
 head(fData(d))
 
-d <- nndist(dunkley[1:100, ], k = 2, dist = "mahalanobis")
+d <- nndist(dunkley2006[1:100, ], k = 2, dist = "mahalanobis")
 tail(fData(d))
 
 ## Using a query

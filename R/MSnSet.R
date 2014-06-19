@@ -404,7 +404,7 @@ testMSnSet <- function(object, fcol = "markers",
   P <- markerMSnSet(object, fcol)
   data <- subsetAsDataFrame(P, fcol, keepColNames = TRUE)
   ## Select validation set
-  .size <- ceiling(table(data[ ,fcol]) * size.validation)
+  .size <- ceiling(table(data[ ,fcol]) * size)
   .size <- .size[unique(data[ ,fcol])] 
   validation.idxP <- strata(data, fcol, size = .size, 
                             method = "srswor")$ID_unit  

@@ -396,7 +396,7 @@ unknownMSnSet <- function(object, fcol = "markers") {
 ##' getMarkers(sample, "test")
 ##' all(dim(sample) == dim(markerSet(tan2009r1)))
 testMSnSet <- function(object, fcol = "markers", 
-                       size.validation = .2, seed) { 
+                       size = .2, seed) { 
   if (!missing(seed)) {
     seed <- as.integer(seed)
     set.seed(seed)

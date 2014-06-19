@@ -394,7 +394,7 @@ unknownMSnSet <- function(object, fcol = "markers") {
 ##' data(tan2009r1)
 ##' sample <- testMSnSet(tan2009r1)
 ##' getMarkers(sample, "test")
-##' all(dim(sample) == dim(markerSet(tan2009r1)))
+##' all(dim(sample) == dim(markerMSnSet(tan2009r1)))
 testMSnSet <- function(object, fcol = "markers", 
                        size = .2, seed) { 
   if (!missing(seed)) {

@@ -51,7 +51,7 @@ exportMethods(chi2,
               nndist)
 
 export(## MSnSet manipulation
-       markerSet, unknownSet,
+       markerMSnSet, unknownMSnSet,
        getPredictions,
        getMarkers,
        minClassScore,

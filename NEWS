@@ -5,6 +5,9 @@ CHANGES IN VERSION 1.5.8
  o nndist[x]_[matrix|msnset] are now available using the experted
    nndist method [2014-06-18 Wed]
 
+ o markerSet and unknownSet renamed to markerMSnSet and unknownMSnSet
+   [2014-06-19 Thu]
+
 CHANGES IN VERSION 1.5.7
 ------------------------
  o add recommended biocView [2014-06-05 Thu]

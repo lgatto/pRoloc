@@ -6,6 +6,7 @@ CHANGES IN VERSION 1.5.8
    nndist method [2014-06-18 Wed]
  o markerSet and unknownSet renamed to markerMSnSet and unknownMSnSet
    [2014-06-19 Thu]
+ o functions sampleMSnSet and testMSnSet added [2014-06-19 Thu]
 
 CHANGES IN VERSION 1.5.7
 ------------------------

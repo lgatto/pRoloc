@@ -402,7 +402,7 @@ testMSnSet <- function(object, fcol = "markers",
     set.seed(seed)
   } 
   P <- markerMSnSet(object, fcol)
-  data <- pRoloc:::subsetAsDataFrame(P, fcol, keepColNames = TRUE)
+  data <- subsetAsDataFrame(P, fcol, keepColNames = TRUE)
   ## Select validation set
   .size <- ceiling(table(data[ ,fcol]) * size.validation)
   .size <- .size[unique(data[ ,fcol])] 

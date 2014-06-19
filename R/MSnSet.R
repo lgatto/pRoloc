@@ -323,10 +323,10 @@ addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) 
   }  
 }
 
-##' This function extracts the marker proteins into a new
-##' \code{MSnSet}. 
+##' These function extract the marker or unknown proteins into a new
+##' \code{MSnSet}.
 ##' 
-##' @title Extract marker subset
+##' @title Extract marker/unknown subsets
 ##' @param object An instance of class \code{MSnSet}
 ##' @param fcol The name of the feature data column, that
 ##' will be used to separate the markers from the proteins
@@ -346,7 +346,7 @@ addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) 
 ##' table(fData(dunkley2006)$markers)
 ##' table(fData(mrk)$markers)
 ##' table(fData(unk)$markers)
-markerSet <- function(object, fcol = "markers") {
+markerMSnSet <- function(object, fcol = "markers") {
   mrk <- fData(object)[, fcol]
   object <- object[mrk != "unknown", ]
   ## drop "unknown" level
@@ -355,8 +355,8 @@ markerSet <- function(object, fcol = "markers") {
     return(object)
 }
 
-##' @rdname markerSet
-unknownSet <- function(object, fcol = "markers") {
+##' @rdname markerMSnSet
+unknownMSnSet <- function(object, fcol = "markers") {
   mrk <- fData(object)[, fcol]
   object <- object[mrk == "unknown", ]
   fData(object)[, fcol] <- factor(fData(object)[, fcol])

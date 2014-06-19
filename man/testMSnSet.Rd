@@ -3,7 +3,7 @@
 \alias{testMSnSet}
 \title{Create a stratified 'test' \code{MSnSet}}
 \usage{
-testMSnSet(object, fcol = "markers", size.validation = 0.2, seed)
+testMSnSet(object, fcol = "markers", size = 0.2, seed)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}}

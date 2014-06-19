@@ -39,4 +39,7 @@ table(fData(unk)$markers)
 \author{
 Laurent Gatto
 }
+\seealso{
+\code{\link{sampleMSnSet}} \code{\link{testMSnSet}}
+}
 

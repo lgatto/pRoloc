@@ -4,7 +4,6 @@ CHANGES IN VERSION 1.5.8
    when calculating knn distances [2014-06-18 Wed]
  o nndist[x]_[matrix|msnset] are now available using the experted
    nndist method [2014-06-18 Wed]
-
  o markerSet and unknownSet renamed to markerMSnSet and unknownMSnSet
    [2014-06-19 Thu]
 

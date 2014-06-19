@@ -17,7 +17,7 @@ import(kernlab) ## previously only imported ksvm
 import(knitr)
 
 importFrom(class, knn)
-importFrom(FNN, get.knn)
+importFrom(FNN, get.knn, get.knnx)
 importFrom(RColorBrewer, brewer.pal)
 importFrom(stats, rmultinom)
 ## importFrom(stats4, plot)
@@ -43,53 +43,54 @@ exportMethods(chi2,
               getF1Scores,
               f1Count,
               levelPlot,
-              plot)
+              plot,
               ## clustering
-              # kmeansClustering,
-              # kmeansOptimisation, kmeansOptimization,
+              ## kmeansClustering,
+              ## kmeansOptimisation, kmeansOptimization,
               ## distances
-              # nndist)
+              nndist)
 
 export(## MSnSet manipulation
-       markerSet, unknownSet,
-       getPredictions,
-       getMarkers,
-       minClassScore,
-       testMarkers, 
-       minMarkers,
-       addMarkers,
-       pRolocmarkers,
-       empPvalues,
-       getStockcol, getStockpch,
-       setStockcol, setStockpch,
-       getUnknowncol, getUnknownpch,
-       setUnknowncol, setUnknownpch,
-       ## -- plotting
-       plot2D,
-       addLegend,
-       plotDist,
-       highlightOnPlot,
-       ## -- machine learning
-       plsdaRegularisation, plsdaOptimisation, plsdaOptimization, 
-       plsdaPrediction, plsdaClassification,
-       svmRegularisation, svmOptimisation, svmOptimization, 
-       svmPrediction, svmClassification, 
-       ksvmRegularisation, ksvmOptimisation, ksvmOptimization,
-       ksvmPrediction, ksvmClassification, 
-       knnRegularisation, knnOptimisation, knnOptimization,
-       knnPrediction, knnClassification, 
-       nbRegularisation, nbOptimisation, nbOptimization,
-       nbPrediction, nbClassification, 
-       nnetRegularisation, nnetOptimisation, nnetOptimization, 
-       nnetPrediction, nnetClassification,
-       perTurboOptimisation, perTurboOptimization, perTurboClassification,
-       getParams,
-       getRegularisedParams, getRegularizedParams,       
-       rfRegularisation, rfOptimisation, rfOptimization, 
-       rfPrediction, rfClassification, 
-       phenoDisco,
-       makeNaData, makeNaData2, whichNA,
-       ## -- pipelines
-       lopims
-       )
+    markerMSnSet, unknownMSnSet,
+    sampleMSnSet, testMSnSet,
+    getPredictions,
+    getMarkers,
+    minClassScore,
+    testMarkers, 
+    minMarkers,
+    addMarkers,
+    pRolocmarkers,
+    empPvalues,
+    getStockcol, getStockpch,
+    setStockcol, setStockpch,
+    getUnknowncol, getUnknownpch,
+    setUnknowncol, setUnknownpch,
+    ## -- plotting
+    plot2D,
+    addLegend,
+    plotDist,
+    highlightOnPlot,
+    ## -- machine learning
+    plsdaRegularisation, plsdaOptimisation, plsdaOptimization, 
+    plsdaPrediction, plsdaClassification,
+    svmRegularisation, svmOptimisation, svmOptimization, 
+    svmPrediction, svmClassification, 
+    ksvmRegularisation, ksvmOptimisation, ksvmOptimization,
+    ksvmPrediction, ksvmClassification, 
+    knnRegularisation, knnOptimisation, knnOptimization,
+    knnPrediction, knnClassification, 
+    nbRegularisation, nbOptimisation, nbOptimization,
+    nbPrediction, nbClassification, 
+    nnetRegularisation, nnetOptimisation, nnetOptimization, 
+    nnetPrediction, nnetClassification,
+    perTurboOptimisation, perTurboOptimization, perTurboClassification,
+    getParams,
+    getRegularisedParams, getRegularizedParams,       
+    rfRegularisation, rfOptimisation, rfOptimization, 
+    rfPrediction, rfClassification, 
+    phenoDisco,
+    makeNaData, makeNaData2, whichNA,
+    ## -- pipelines
+    lopims
+)
 

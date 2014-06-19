@@ -44,3 +44,5 @@ test_that("getPredictions with different thresholds", {
         expect_true(all(fData(res)[j & !i, "svm.scores"] < ts[k]))
     }        
 })
+
+

@@ -323,10 +323,10 @@ addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) 
   }  
 }
 
-##' This function extracts the marker proteins into a new
-##' \code{MSnSet}. 
+##' These function extract the marker or unknown proteins into a new
+##' \code{MSnSet}.
 ##' 
-##' @title Extract marker subset
+##' @title Extract marker/unknown subsets
 ##' @param object An instance of class \code{MSnSet}
 ##' @param fcol The name of the feature data column, that
 ##' will be used to separate the markers from the proteins
@@ -334,19 +334,20 @@ addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) 
 ##' \code{fData(object)[, fcol] == "unknown")}).
 ##' Default is to use \code{"markers"}.
 ##' @return An new \code{MSnSet} with marker/unknown proteins only.
+##' @seealso \code{\link{sampleMSnSet}} \code{\link{testMSnSet}} 
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
-##' mrk <- markerSet(dunkley2006)
-##' unk <- unknownSet(dunkley2006)
+##' mrk <- markerMSnSet(dunkley2006)
+##' unk <- unknownMSnSet(dunkley2006)
 ##' dim(dunkley2006)
 ##' dim(mrk)
 ##' dim(unk)
 ##' table(fData(dunkley2006)$markers)
 ##' table(fData(mrk)$markers)
 ##' table(fData(unk)$markers)
-markerSet <- function(object, fcol = "markers") {
+markerMSnSet <- function(object, fcol = "markers") {
   mrk <- fData(object)[, fcol]
   object <- object[mrk != "unknown", ]
   ## drop "unknown" level
@@ -355,11 +356,106 @@ markerSet <- function(object, fcol = "markers") {
     return(object)
 }
 
-##' @rdname markerSet
-unknownSet <- function(object, fcol = "markers") {
+##' @rdname markerMSnSet
+unknownMSnSet <- function(object, fcol = "markers") {
   mrk <- fData(object)[, fcol]
   object <- object[mrk == "unknown", ]
   fData(object)[, fcol] <- factor(fData(object)[, fcol])
   if (validObject(object))
     return(object)
+}
+
+
+##' This function creates a stratified 'test' \code{MSnSet} which can be used 
+##' for algorihtmic development. A \code{"\linkS4class{MSnSet}"} containing only
+##' the marker proteins, as defined in \code{fcol}, is returned with a new 
+##' feature data column appended called \code{test} in which a stratified subset
+##' of these markers has been relabelled as 'unknowns'.
+##' 
+##' @title Create a stratified 'test' \code{MSnSet}
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}
+##' @param fcol The feature meta-data column name containing the
+##' marker definitions on which the data will be stratified. Default
+##' is \code{markers}.
+##' @param size The size of the data set to be extracted. Default is
+##' 0.2 (20 percent).
+##' @param seed The optional random number generator seed.
+##' @return An instance of class \code{"\linkS4class{MSnSet}"} which
+##' contains only the proteins that have a labelled localisation
+##' i.e. the marker proteins, as defined in \code{fcol} and a new
+##' column in the feature data slot called \code{test} which has part
+##' of the labels relabelled as "unknown" class (the number of
+##' proteins renamed as "unknown" is according to the parameter size).
+##' @seealso \code{\link{sampleMSnSet}} \code{\link{unknownMSnSet}}
+##' \code{\link{markerMSnSet}}
+##' @author Lisa Breckels
+##' @examples
+##' library(pRolocdata)
+##' data(tan2009r1)
+##' sample <- testMSnSet(tan2009r1)
+##' getMarkers(sample, "test")
+##' all(dim(sample) == dim(markerMSnSet(tan2009r1)))
+testMSnSet <- function(object, fcol = "markers", 
+                       size = .2, seed) { 
+  if (!missing(seed)) {
+    seed <- as.integer(seed)
+    set.seed(seed)
+  } 
+  P <- markerMSnSet(object, fcol)
+  data <- subsetAsDataFrame(P, fcol, keepColNames = TRUE)
+  ## Select validation set
+  .size <- ceiling(table(data[ ,fcol]) * size)
+  .size <- .size[unique(data[ ,fcol])] 
+  validation.idxP <- strata(data, fcol, size = .size, 
+                            method = "srswor")$ID_unit  
+  validation.names <- rownames(data)[validation.idxP]
+  validation.P <- P[validation.names, ]
+  train.P <- P[-validation.idxP, ]
+  fData(train.P)$test <- as.character(fData(train.P)[, fcol])
+  fData(validation.P)$test <- rep("unknown", nrow(validation.P))
+  allP <- combine(train.P, validation.P)
+  return(allP)
+}
+
+
+##' This function extracts a stratified sample of an \code{MSnSet}.
+##' 
+##' @title Extract a stratified sample of an \code{MSnSet}
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}
+##' @param fcol The feature meta-data column name containing the
+##' marker definitions on which the MSnSet will be stratified. Default
+##' is \code{markers}.
+##' @param size The size of the stratified sample to be
+##' extracted. Default is 0.2 (20 percent).
+##' @param seed The optional random number generator seed.
+##' @return A stratified sample (according to the defined \code{fcol})
+##' which is an instance of class \code{"\linkS4class{MSnSet}"}.
+##' @seealso \code{\link{testMSnSet}} \code{\link{unknownMSnSet}}
+##' \code{\link{markerMSnSet}}
+##' @author Lisa Breckels
+##' @examples
+##' library(pRolocdata)
+##' data(tan2009r1)
+##' dim(tan2009r1)
+##' mySample <- sampleMSnSet(tan2009r1, fcol = "PLSDA")
+##' dim(mySample)
+sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
+  ## Set seed
+  if (!missing(seed)) {
+    seed <- as.integer(seed)
+    set.seed(seed)
+  }
+  nms <- sampleNames(object)
+  mydata <- data.frame(exprs(object), markers = fData(object)[, fcol])
+  colnames(mydata) <- c(nms, fcol)
+  subset <- ceiling(table(mydata[ ,fcol]) * size)
+  subset <- subset[unique(mydata[ ,fcol])] 
+  idx <- strata(mydata, fcol, size = subset, 
+                method = "srswor")$ID_unit
+  object <- object[idx,]
+  m <- as.character(fData(object)[, fcol])
+  tm <- table(m)
+  if (any(tm < 6))
+      warning("New sample contains classes with < 6 markers")
+  return(object)
 }

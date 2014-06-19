@@ -64,17 +64,16 @@ checkNumbers <- function(x, tag, params) {
 
 subsetAsDataFrame <- function(object, fcol,
                               train = TRUE,
-                              keepColNames = TRUE,
+                              keepColNames = FALSE,
                               unknown = "unknown") {
     nms <- sampleNames(object)
     d <- data.frame(exprs(object), markers = fData(object)[, fcol])
-    if (keepColNames)
-        colnames(d) <- c(nms, "markers") 
     d.train <- d[d$markers != unknown,]
     d.train$markers <- factor(d.train$markers)
     d.test <- d[d$markers == unknown,]
     d.test$markers <- factor(d.test$markers)
-    ## last column is 'markers'
+    if (keepColNames)
+        colnames(d) <- c(nms, fcol) 
     ifelse(train, 
            return(d.train),
            return(d.test))         

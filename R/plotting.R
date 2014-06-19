@@ -40,7 +40,7 @@
 ##' @param col A \code{character} of appropriate length defining colours.
 ##' @param pch A \code{character} of appropriate length defining point character.
 ##' @param cex Character expansion.
-##' @param index A \code{logical} (default is FALSE), indicating of the feature
+##' @param index A \code{logical} (default is FALSE), indicating if the feature
 ##' indices should be plotted on top of the symbols.
 ##' @param idx.cex A \code{numeric} specifying the character expansion
 ##' (default is 0.75) for the feature indices. Only relevant when \code{index}

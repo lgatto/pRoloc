@@ -3,11 +3,13 @@ setMethod("nndist", c("matrix", "matrix"),
           nndistx_matrix(object, query, k, ...))
 
 setMethod("nndist", c("matrix", "missing"), 
-          function(object, query, k = 3, dist = c("euclidean", "mahalanobis"), ...)
+          function(object, query, k = 3,
+                   dist = c("euclidean", "mahalanobis"), ...)
           nndist_matrix(object, k, match.arg(dist), ...))
 
 setMethod("nndist", c("MSnSet", "missing"), 
-          function(object, query, k = 3, dist = c("euclidean", "mahalanobis"), ...)
+          function(object, query, k = 3,
+                   dist = c("euclidean", "mahalanobis"), ...)
           nndist_msnset(object, k, match.arg(dist), ...))
 
 .mahalanobis <- function(X, y, S = cov(X)) mahalanobis(X, y, S)

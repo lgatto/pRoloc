@@ -737,10 +737,7 @@ procedure is repeated for a range of possible model parameter values
 parameters is then used to construct a model on all markers and
 predict un-labelled proteins.
 
-%% TODO
-%% Describe our procedure in more details.
-
-Models accuracy is evaluated using the F1 score, $F1 = 2 ~
+Model accuracy is evaluated using the F1 score, $F1 = 2 ~
 \frac{precision \times recall}{precision + recall}$, calculated as the
 harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a
 measure of \textit{exactness} -- returned output is a relevant result)

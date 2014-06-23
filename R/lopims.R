@@ -1,4 +1,4 @@
-.lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
+lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
   HDMSeFinalPeptideFiles <- dir(hdmsedir, full.names = TRUE)
   message("[LOPIMS 1] Estimate master FDR")
   cmb <- estimateMasterFdr(HDMSeFinalPeptideFiles,
@@ -14,7 +14,7 @@
               cmb = cmb))
 }
 
-.lopims2 <- function(msedir, pep3ddir, fasta,
+lopims2 <- function(msedir, pep3ddir, fasta,
                      master, outdir,
                      ...) {
   cmb <- master$cmb
@@ -47,7 +47,7 @@
   return(res)
 }
 
-.lopims3 <- function(synlist) {
+lopims3 <- function(synlist) {
   message("[LOPIMS 3] Combine synapter results")
   ll <- lapply(synlist, as, "MSnSet")
   nms <- paste0("LOPIMS", seq_along(ll))
@@ -104,7 +104,7 @@ refNormMeanOfNonNAPepSum <- function(x) {
   .res
 }  
 
-.lopims4 <- function(xx) {
+lopims4 <- function(xx) {
   ## remove rows with only NAs
   xx <- xx[!apply(exprs(xx), 1, function(x) all(is.na(x))), ]
   message("[LOPIMS 4] Calculate ratios to reference peptide")
@@ -128,7 +128,7 @@ refNormMeanOfNonNAPepSum <- function(x) {
 
 
 
-.lopims5 <- function(x, markerfile) {
+lopims5 <- function(x, markerfile) {
   message("[LOPIMS 5] Adding markers")
   addMarkers(x, markerfile, verbose = TRUE)
 }
@@ -139,33 +139,37 @@ refNormMeanOfNonNAPepSum <- function(x) {
 ##' and organelle marker data is added as a feature-level annotation variable.
 ##' 
 ##' The \code{LOPIMS} pipeline is composed of 5 steps:
-##' \enumerate{
-##' \item The HDMSe final peptide files are used to compute 
-##' false discovery rates uppon all possible combinations of
-##' HDMSe final peptides files and the best combination smaller
-##' or equal to \code{mfdr} is chosen.
-##' See \code{\link[synapter]{estimateMasterFdr}} for details.
-##' The corresponding master run is then created as descibed in
-##' \code{\link[synapter]{makeMaster}}.
 ##' 
-##' \item Each MSe/pep3D pair is processed using the HDMSe master
-##' file using \code{\link[synapter]{synergise}}.
+##' \enumerate{
+##' 
+##' \item The HDMSe final peptide files are used to compute false
+##' discovery rates uppon all possible combinations of HDMSe final
+##' peptides files and the best combination smaller or equal to
+##' \code{mfdr} is chosen.  See
+##' \code{\link[synapter]{estimateMasterFdr}} for details.  The
+##' corresponding master run is then created as descibed in
+##' \code{\link[synapter]{makeMaster}}. (function \code{lopims1})
+##' 
+##' \item Each MSe/pep3D pair is processed using the HDMSe master file
+##' using \code{\link[synapter]{synergise}}. (function \code{lopims2})
 ##'
 ##' \item The respective peptide-level \code{synergise} output objects
-##' are converted and combined into an single \code{"\linkS4class{MSnSet}"}
-##' instance.
+##' are converted and combined into an single
+##' \code{"\linkS4class{MSnSet}"} instance. (function \code{lopims3})
 ##'
-##' \item Protein-level quantitation is inferred as follows.
-##' For each protein, a reference sample/fraction is chosen based on the
-##' number of missing values (\code{NA}). If several samples have a same
-##' minimal number of \code{NA}s, ties are broken using the sum of counts.
-##' The peptide that do not display any missing values for each
-##' (frac_{i}, frac_{ref}) pair are summed and the ratio is reported
-##' (see pRoloc:::refNormMeanOfNonNAPepSum for details).
+##' \item Protein-level quantitation is inferred as follows.  For each
+##' protein, a reference sample/fraction is chosen based on the number
+##' of missing values (\code{NA}). If several samples have a same
+##' minimal number of \code{NA}s, ties are broken using the sum of
+##' counts.  The peptides that do not display any missing values for
+##' each (frac_{i}, frac_{ref}) pair are summed and the ratio is
+##' reported (see pRoloc:::refNormMeanOfNonNAPepSum for
+##' details). (function \code{lopims4})
 ##'
 ##' \item The markers defined in the \code{markerfile} are collated as
-##' feature meta-data in the \code{markers} variable.
-##' See \code{\link{addMarkers}} for details.
+##' feature meta-data in the \code{markers} variable.  See
+##' \code{\link{addMarkers}} for details. (function \code{lopims5})
+##' 
 ##' }
 ##'
 ##' Intermediate \code{synergise} reports as well as resulting objects
@@ -204,6 +208,7 @@ refNormMeanOfNonNAPepSum <- function(x) {
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with protein
 ##' level quantitation and respective organelle markers.
 ##' @author Laurent Gatto
+##' @aliases lopims1 lopims2 lopims3 lopim4 lopims5
 lopims <- function(hdmsedir = "HDMSE",
                    msedir = "MSE",
                    pep3ddir = "pep3D",
@@ -255,13 +260,13 @@ lopims <- function(hdmsedir = "HDMSE",
   dir.create(mainoutputdir)
   message("[LOPIMS  ] Results will be saved to ", mainoutputdir)  
   
-  master <- .lopims1(hdmsedir, fastafile, mfdr)
-  res <- .lopims2(msedir, pep3ddir, fastafile,
+  master <- lopims1(hdmsedir, fastafile, mfdr)
+  res <- lopims2(msedir, pep3ddir, fastafile,
                   master,
                   mainoutputdir, ...)
-  msn <- .lopims3(res)
-  msn <- .lopims4(msn)
-  lopims <- .lopims5(msn, markerfile)
+  msn <- lopims3(res)
+  msn <- lopims4(msn)
+  lopims <- lopims5(msn, markerfile)
   write.exprs(lopims,
               file = file.path(mainoutputdir, "lopims.txt"),
               fDataCols = fvarLabels(lopims))

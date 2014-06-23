@@ -91,6 +91,6 @@ export(## MSnSet manipulation
     phenoDisco,
     makeNaData, makeNaData2, whichNA,
     ## -- pipelines
-    lopims
+    lopims, lopims1, lopims2, lopims3, lopims4, lopims5
 )
 

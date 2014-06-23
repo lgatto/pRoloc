@@ -164,7 +164,7 @@ lopims5 <- function(x, markerfile) {
 ##' counts.  The peptides that do not display any missing values for
 ##' each (frac_{i}, frac_{ref}) pair are summed and the ratio is
 ##' reported (see pRoloc:::refNormMeanOfNonNAPepSum for
-##' details). (function \code{lopims4)
+##' details). (function \code{lopims4})
 ##'
 ##' \item The markers defined in the \code{markerfile} are collated as
 ##' feature meta-data in the \code{markers} variable.  See

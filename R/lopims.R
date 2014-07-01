@@ -208,7 +208,7 @@ lopims5 <- function(x, markerfile) {
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with protein
 ##' level quantitation and respective organelle markers.
 ##' @author Laurent Gatto
-##' @aliases lopims1 lopims2 lopims3 lopim4 lopims5
+##' @aliases lopims1 lopims2 lopims3 lopims4 lopims5
 lopims <- function(hdmsedir = "HDMSE",
                    msedir = "MSE",
                    pep3ddir = "pep3D",

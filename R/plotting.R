@@ -666,9 +666,11 @@ plot2D <- function(object,
             selqtls <- .data[, 1] > qntls[1, 1] &
                 .data[, 1] < qntls[2, 1] &
                     .data[, 2] > qntls[1, 2] &
-                        .data[, 2] < qntls[2, 2] 
+                        .data[, 2] < qntls[2, 2]
             .data <- .data[selqtls, ]
             ukn <- ukn[selqtls]
+            ## also subset object, as it is used later
+            object <- object[selqtls, ]
         }
 
         isbig <- .isbig(object, fcol, stockcol, stockpch)

@@ -1,6 +1,6 @@
 CHANGES IN VERSION 1.5.11
 -------------------------
- o fixed bug in plot2D when outliers = FALSE and is.big [2014-07-10 Thu]
+ o Remove plot2D outliers param [2014-07-10 Thu]
 
 CHANGES IN VERSION 1.5.10
 -------------------------

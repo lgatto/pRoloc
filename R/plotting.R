@@ -457,10 +457,6 @@ plotDist <- function(object,
 ##' to be plotted. Always 1:2 for MDS.
 ##' @param score A numeric specifying the minimum organelle assignment score
 ##' to consider features to be assigned an organelle. (not yet implemented).
-##' @param outliers A logical specifying whether outliers should be plotted
-##' or ignored (default is TRUE, i.e. all points are plotted). Useful when 
-##' the presence of outliers masks the structure of the rest of the data.
-##' Outliers are defined by the 2.5 and 97.5 percentiles. 
 ##' @param method One of \code{PCA} (default), \code{MDS} or
 ##' \code{kpca}, defining if dimensionality reduction is done using
 ##' principal component analysis (see \code{\link{prcomp}}), classical
@@ -521,7 +517,6 @@ plot2D <- function(object,
                    unknown = "unknown",
                    dims = 1:2,
                    score = 1, ## TODO
-                   outliers = TRUE,
                    method = c("PCA", "MDS", "kpca", "scree"),
                    methargs,
                    axsSwitch = FALSE,
@@ -535,6 +530,10 @@ plot2D <- function(object,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
+    ## handling deprecated outliers argument
+    a <- as.list(match.call()[-1])
+    if ("outliers" %in% names(a))
+        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -661,18 +660,6 @@ plot2D <- function(object,
             pch <- rep(stockpch[1], nrow(.data))
         }
         pch[ukn] <- unknownpch
-        if (!outliers) {
-            qntls <- apply(.data, 2, quantile, c(0.025, 0.975))
-            selqtls <- .data[, 1] > qntls[1, 1] &
-                .data[, 1] < qntls[2, 1] &
-                    .data[, 2] > qntls[1, 2] &
-                        .data[, 2] < qntls[2, 2]
-            .data <- .data[selqtls, ]
-            ukn <- ukn[selqtls]
-            ## also subset object, as it is used later
-            object <- object[selqtls, ]
-        }
-
         isbig <- .isbig(object, fcol, stockcol, stockpch)
         
         if (is.null(fcol)) {

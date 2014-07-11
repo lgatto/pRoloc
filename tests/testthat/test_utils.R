@@ -46,3 +46,19 @@ test_that("getPredictions with different thresholds", {
 })
 
 
+test_that("subsetAsDataFrame keeping colnames", {
+    library("pRolocdata")
+    data(dunkley2006)
+    fcol <- "new"
+    cn0 <- pRoloc:::subsetAsDataFrame(dunkley2006,
+                                      fcol,
+                                      keepColNames = TRUE)
+    cn1 <- pRoloc:::subsetAsDataFrame(dunkley2006,
+                                      fcol,
+                                      keepColNames = FALSE)
+    cn1 <- colnames(cn1)
+    cn0 <- colnames(cn0)
+    n <- ncol(dunkley2006) + 1
+    expect_equal(cn0[n], fcol)
+    expect_equal(cn1[n], "markers")
+})

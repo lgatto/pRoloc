@@ -4,10 +4,9 @@
 \title{Plot organelle assignment data and results.}
 \usage{
 plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
-  score = 1, outliers = TRUE, method = c("PCA", "MDS", "kpca", "scree"),
-  methargs, axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch,
-  cex, index = FALSE, idx.cex = 0.75, identify = FALSE, plot = TRUE,
-  ...)
+  score = 1, method = c("PCA", "MDS", "kpca", "scree"), methargs,
+  axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch, cex,
+  index = FALSE, idx.cex = 0.75, identify = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -27,11 +26,6 @@ to be plotted. Always 1:2 for MDS.}
 
 \item{score}{A numeric specifying the minimum organelle assignment score
 to consider features to be assigned an organelle. (not yet implemented).}
-
-\item{outliers}{A logical specifying whether outliers should be plotted
-or ignored (default is TRUE, i.e. all points are plotted). Useful when
-the presence of outliers masks the structure of the rest of the data.
-Outliers are defined by the 2.5 and 97.5 percentiles.}
 
 \item{method}{One of \code{PCA} (default), \code{MDS} or
 \code{kpca}, defining if dimensionality reduction is done using

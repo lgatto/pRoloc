@@ -41,6 +41,9 @@ highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
 .pca <- plot2D(tan2009r1, dims = c(1, 3))
 highlightOnPlot(.pca, x, pch = "+")
 highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
+
+plot2D(tan2009r1, mirrorX = TRUE)
+highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
 }
 \author{
 Laurent Gatto

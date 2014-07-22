@@ -816,6 +816,9 @@ addLegend <- function(object,
 ##' .pca <- plot2D(tan2009r1, dims = c(1, 3))
 ##' highlightOnPlot(.pca, x, pch = "+")
 ##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
+##'
+##' plot2D(tan2009r1, mirrorX = TRUE)
+##' highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
 highlightOnPlot <- function(object, foi, args = list(), ...) {
     if (!fnamesIn(foi, object))
         stop("None of the features of interest are present in the data.")
@@ -830,5 +833,9 @@ highlightOnPlot <- function(object, foi, args = list(), ...) {
     } else {
         stop("'object' must be a matrix (as returned by plot2D) or an MSnSet.")
     }
+    if (!is.null(args$mirrorX) && args$mirrorX)
+        .pca[, 1] <- -.pca[, 1]
+    if (!is.null(args$mirrorY) && args$mirrorY)
+        .pca[, 2] <- -.pca[, 2]    
     points(.pca[sel, 1], .pca[sel, 2], ...)
 }

@@ -604,23 +604,23 @@ cls <- getStockcol()[1:4]
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "mitochondrion"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "mitochondrion")],
-         mcol = cls[1], 
-         main = "mitochondrion")
+         mcol = cls[1])
+title(main = "mitochondrion")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "ER")],
-         mcol = cls[2],
-         main = "ER")
+         mcol = cls[2])
+title(main = "ER")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "Golgi")],
-         mcol = cls[3],
-         main = "Golgi")
+         mcol = cls[3])
+title(main = "Golgi")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "PM"), ],
          markers = featureNames(tan2009r1)
          [which(fData(tan2009r1)$markers == "PM")],
-         mcol = cls[4],
-         main = "PM")
+         mcol = cls[4])
+title(main = "PM")
 @ 
 %% $
 \caption{Distribution of protein intensities along the fractions of

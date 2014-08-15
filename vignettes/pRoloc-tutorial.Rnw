@@ -1069,10 +1069,11 @@ The data is visualised as described previously, were we use the svm
 classification a-posteriori probability to set the point size.
 
 \begin{figure}[!hbt]
-<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE>>=
+<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE, tidy=FALSE>>=
 ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
 plot2D(tan2009r1, fcol = "svm", cex = ptsze)
-addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", cex = .5)
+addLegend(tan2009r1, fcol = "svm", where = "bottomright",
+          ncol = 2, bty = "n", cex = .5)
 @ 
 %% $
 \caption{ Second round of classification using the augmented set of markers obtained 
@@ -1081,6 +1082,39 @@ addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", c
 \label{fig:pdres2}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\clearpage
+
+\section{Interactive visualisation}
+
+The \Rpackage{pRolocGUI} application allow to explore the spatial
+proteomics data using an interactive, web-based \Rpackage{shiny}
+interface \citep{shiny}. The package is available in Bioconductor and
+can be installed and started as follows:
+
+<<guiinstall, eval = FALSE>>=
+library("BiocInstaller")
+biocLite("pRolocGUI")
+library("pRolocGUI")
+pRolocVis(tan2009r1)
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.6\linewidth]{./Figures/Screenshot_PCA2.png}
+  \caption{Screenshot of the \Rpackage{pRolocGUI} interface.}
+  \label{fig:gui}
+\end{figure}
+
+More details are available in the vignette that can be started from
+the application by clicking on any of the question marks, by starting
+the vignette from \R with \Rfunction{vignette("pRolocGUI")} or can be
+accessed
+online\footnote{\url{http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html}}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -1105,6 +1139,8 @@ assume that any off-the-shelf algorithm will perform well.  As such,
 one of the emphasis of the software presented in this document is
 allowing users to track data processing and critically evaluate the
 results.
+
+
 
 \clearpage
 

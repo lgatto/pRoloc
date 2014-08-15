@@ -6,7 +6,7 @@
 \title{svm parameter optimisation}
 \usage{
 svmOptimisation(object, fcol = "markers", cost = 2^(-4:4),
-  sigma = 10^(-2:3), times = 100, test.size = 0.2, xval = 5,
+  sigma = 10^(-3:2), times = 100, test.size = 0.2, xval = 5,
   fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{

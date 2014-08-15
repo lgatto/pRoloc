@@ -1,6 +1,17 @@
 CHANGES IN VERSION 1.5.15
 -------------------------
- o 
+ o svmOpt sigma defaults changed from 10^(-2:3) to 10^(-3:2)
+   [2014-08-15 Fri]
+ o in xxxOptimisation, the best parameter(s) for the validation
+   classification runs are now chosen at random instead of using the
+   first best param (see change in pRoloc:::getBestParam that got a
+   sample argument defaulted to TRUE) [2014-08-15 Fri]
+
+ o When calculating macroF1 scores (xval and validation), NAs are set
+   to 0 (via MLInterfaces:::.macroF1(..., naAs0 = TRUE)). The macro F1
+   will not be NA (when mean of F1s is calculated) but lowered. This
+   avoids having an NA macro F1 when 1 (or more) classe(s) end(s) up
+   with NA (also set to 0) precision(s) or recall(s) [2014-08-15 Fri]
 
 CHANGES IN VERSION 1.5.14
 -------------------------

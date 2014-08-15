@@ -127,7 +127,7 @@ perTurboOptimisation <- function(object,
           conf <- confusionMatrix(ans, .test2Sep$theLabels)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))
-          .f1 <- MLInterfaces:::.macroF1(.p, .r)
+          .f1 <- MLInterfaces:::.macroF1(.p, .r, naAs0 = TRUE)
           .matrixF1[as.character(.sigma), as.character(.pRegul)] <- .f1
         } # END for (.pRegul in pRegul)
       } # END for (.sigma in sigma)
@@ -139,7 +139,7 @@ perTurboOptimisation <- function(object,
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
     .f1Matrices[[.times]] <- .summaryF1
-    .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
+    .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## takes a random best param
     
     .model <- trainingPerTurbo(.train1Sep$theLabels,
                                .train1Sep$theData,
@@ -152,7 +152,7 @@ perTurboOptimisation <- function(object,
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
                       tag = "recall", params = .bestParams)
-    f1 <- MLInterfaces:::.macroF1(p, r) ## macro F1 score for .time's iteration
+    f1 <- MLInterfaces:::.macroF1(p, r, naAs0 = TRUE) ## macro F1 score for .time's iteration
     .results[.times, ] <- c(f1, .bestParams["sigma"], .bestParams["pRegul"])
   }
   if (verbose) {

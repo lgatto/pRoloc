@@ -22,7 +22,7 @@
 svmOptimisation <- function(object,
                             fcol = "markers",
                             cost = 2^(-4:4), 
-                            sigma = 10^(-2:3),
+                            sigma = 10^(-3:2),
                             times = 100,
                             test.size = .2,
                             xval = 5,                               
@@ -90,7 +90,7 @@ svmOptimisation <- function(object,
           conf <- confusionMatrix(ans, .test2$markers)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))
-          .f1 <- MLInterfaces:::.macroF1(.p, .r)
+          .f1 <- MLInterfaces:::.macroF1(.p, .r, naAs0 = TRUE)
           .matrixF1[as.character(.sigma), as.character(.cost)] <- .f1
         }
       }
@@ -100,7 +100,7 @@ svmOptimisation <- function(object,
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
     .f1Matrices[[.times]] <- .summaryF1
-    .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
+    .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## takes a random best param
     model <- svm(markers ~ ., .train1,
                  gamma = .bestParams["sigma"],
                  cost = .bestParams["cost"], ...)
@@ -110,7 +110,7 @@ svmOptimisation <- function(object,
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
                       tag = "recall", params = .bestParams)
-    f1 <- MLInterfaces:::.macroF1(p, r) ## macro F1 score for .time's iteration
+    f1 <- MLInterfaces:::.macroF1(p, r, naAs0 = TRUE) ## macro F1 score for .time's iteration
     .results[.times, ] <- c(f1, .bestParams["sigma"], .bestParams["cost"])
   }
   if (verbose) {

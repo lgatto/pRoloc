@@ -2,7 +2,7 @@
 \name{svmClassification}
 \alias{svmClassification}
 \alias{svmPrediction}
-\title{ksvm classification}
+\title{svm classification}
 \usage{
 svmClassification(object, assessRes, scores = c("prediction", "all", "none"),
   cost, sigma, fcol = "markers", ...)
@@ -32,8 +32,7 @@ An instance of class \code{"\linkS4class{MSnSet}"} with
 classification results and scores respectively.
 }
 \description{
-Classification using the support vector
-machine algorithm.
+Classification using the support vector machine algorithm.
 }
 \examples{
 library(pRolocdata)

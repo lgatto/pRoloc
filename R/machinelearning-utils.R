@@ -1,20 +1,23 @@
-getBestParams <- function(x) {
-  if (all(is.na(x))) {
-    msg <- paste("[pRoloc:::getBestParams] Only NA's in F1 matrix.\n",
-                 " Try to use better suited parameters or check the marker class sizes with 'testMarkers(object)'.")
-    warning(msg)
-    x[1] <- 0 ## hack 
-  } else if (any(is.na(x))) {
-      warning("[pRoloc:::getBestParams] Found NA's in F1 matrix.")
-  }
-  k <- arrayInd(which( x == max(x, na.rm = TRUE) ),
-                dim(x),
-                useNames = TRUE)
-  k <- apply(k, 1,
-             function(i) as.numeric(c(colnames(x)[i["col"]],
-                                      rownames(x)[i["row"]]))) 
-  rownames(k) <- rev(names(dimnames(x)))  
-  return(k)
+getBestParams <- function(x, sample=TRUE) {
+    ## sample new in 1.5.15
+    if (all(is.na(x))) {
+        msg <- paste("[pRoloc:::getBestParams] Only NA's in F1 matrix.\n",
+                     " Try to use better suited parameters or check the marker class sizes with 'testMarkers(object)'.")
+        warning(msg)
+        x[1] <- 0 ## hack 
+    } else if (any(is.na(x))) {
+        warning("[pRoloc:::getBestParams] Found NA's in F1 matrix.")
+    }
+    k <- arrayInd(which( x == max(x, na.rm = TRUE) ),
+                  dim(x),
+                  useNames = TRUE)
+    k <- apply(k, 1,
+               function(i) as.numeric(c(colnames(x)[i["col"]],
+                                        rownames(x)[i["row"]]))) 
+    rownames(k) <- rev(names(dimnames(x)))
+    if (sample) 
+        k <- k[, sample(ncol(k)), drop = FALSE]
+    return(k)
 }
 
 

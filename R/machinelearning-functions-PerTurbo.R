@@ -1,4 +1,12 @@
 ##' Classification parameter optimisation for the PerTurbo algorithm
+##'
+##' Note that when performance scores precision, recall and (macro) F1
+##' are calculated, any NA values are replaced by 0. This decision is
+##' motivated by the fact that any class that would have either a NA
+##' precision or recall would result in an NA F1 score and,
+##' eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
+##' leads to F1 values of 0 and a reduced yet defined final macro F1
+##' score.
 ##' 
 ##' @title PerTurbo parameter optimisation
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
@@ -127,7 +135,7 @@ perTurboOptimisation <- function(object,
           conf <- confusionMatrix(ans, .test2Sep$theLabels)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))
-          .f1 <- MLInterfaces:::.macroF1(.p, .r)
+          .f1 <- MLInterfaces:::.macroF1(.p, .r, naAs0 = TRUE)
           .matrixF1[as.character(.sigma), as.character(.pRegul)] <- .f1
         } # END for (.pRegul in pRegul)
       } # END for (.sigma in sigma)
@@ -139,7 +147,7 @@ perTurboOptimisation <- function(object,
     ## we have xval grids to be summerised
     .summaryF1 <- summariseMatList(.matrixF1L, fun)
     .f1Matrices[[.times]] <- .summaryF1
-    .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## take the first one
+    .bestParams <- getBestParams(.summaryF1)[1:nparams, 1] ## takes a random best param
     
     .model <- trainingPerTurbo(.train1Sep$theLabels,
                                .train1Sep$theData,
@@ -152,7 +160,7 @@ perTurboOptimisation <- function(object,
                       tag = "precision", params = .bestParams)
     r <- checkNumbers(MLInterfaces:::.recall(conf),
                       tag = "recall", params = .bestParams)
-    f1 <- MLInterfaces:::.macroF1(p, r) ## macro F1 score for .time's iteration
+    f1 <- MLInterfaces:::.macroF1(p, r, naAs0 = TRUE) ## macro F1 score for .time's iteration
     .results[.times, ] <- c(f1, .bestParams["sigma"], .bestParams["pRegul"])
   }
   if (verbose) {

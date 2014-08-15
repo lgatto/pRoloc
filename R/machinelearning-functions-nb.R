@@ -1,5 +1,13 @@
 ##' Classification algorithm parameter for the naive Bayes algorithm.
 ##'
+##' Note that when performance scores precision, recall and (macro) F1
+##' are calculated, any NA values are replaced by 0. This decision is
+##' motivated by the fact that any class that would have either a NA
+##' precision or recall would result in an NA F1 score and,
+##' eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
+##' leads to F1 values of 0 and a reduced yet defined final macro F1
+##' score.
+##' 
 ##' @title nb paramter optimisation
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.

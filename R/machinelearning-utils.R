@@ -16,7 +16,7 @@ getBestParams <- function(x, sample=TRUE) {
                                         rownames(x)[i["row"]]))) 
     rownames(k) <- rev(names(dimnames(x)))
     if (sample) 
-        k <- k[, sample(ncol(k))]
+        k <- k[, sample(ncol(k)), drop = FALSE]
     return(k)
 }
 

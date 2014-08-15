@@ -6,7 +6,7 @@
 \title{svm parameter optimisation}
 \usage{
 svmOptimisation(object, fcol = "markers", cost = 2^(-4:4),
-  sigma = 10^(-2:3), times = 100, test.size = 0.2, xval = 5,
+  sigma = 10^(-3:2), times = 100, test.size = 0.2, xval = 5,
   fun = mean, seed, verbose = TRUE, ...)
 }
 \arguments{
@@ -40,6 +40,15 @@ An instance of class \code{"\linkS4class{GenRegRes}"}.
 \description{
 Classification parameter optimisation for the support vector
 machine algorithm.
+}
+\details{
+Note that when performance scores precision, recall and (macro) F1
+are calculated, any NA values are replaced by 0. This decision is
+motivated by the fact that any class that would have either a NA
+precision or recall would result in an NA F1 score and,
+eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
+leads to F1 values of 0 and a reduced yet defined final macro F1
+score.
 }
 \author{
 Laurent Gatto

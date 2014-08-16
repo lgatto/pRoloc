@@ -10,7 +10,7 @@ highlightOnPlot(object, foi, args = list(), ...)
 matrix with the coordinates of the features on the PCA plot
 produced (and invisibly returned) by \code{plot2D}.}
 
-\item{foi}{An instance of \code{linkS4class{FeaturesOfInterest}}.}
+\item{foi}{An instance of \code{\linkS4class{FeaturesOfInterest}}.}
 
 \item{args}{A named list of arguments to be passed to
 \code{plot2D} if the PCA coordinates are to be calculated. Ignored

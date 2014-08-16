@@ -537,48 +537,18 @@ the sample names can be retrieved with
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Data analysis}\label{sec:analysis}
+\section{Data visualisation}\label{sec:viz}
 
-This section will focus on two closely related aspects, data
-visualisation and organelle assignments. Data visualisation is used in
-the context on quality control, to convince ourselves that the data
-displays the expected properties so that the output of further
-processing can be trusted. Visualising results of the localisation
-prediction is also essential, to control the validity of these
-results, before proceeding with orthogonal (and often expensive)
-\textit{dry} or \textit{wet} validation.
+The following sections will focus on two closely related aspects, data
+visualisation and data analysis (i.e. organelle assignments). Data
+visualisation is used in the context on quality control, to convince
+ourselves that the data displays the expected properties so that the
+output of further processing can be trusted. Visualising results of
+the localisation prediction is also essential, to control the validity
+of these results, before proceeding with orthogonal (and often
+expensive) \textit{dry} or \textit{wet} validation.
 
 \bigskip
-
-Classification of proteins, i.e. assigning sub-cellular localisation
-to proteins, is the main aspect of the present data analysis. The
-principle is the following and is, in its basic form, a 2 step
-process. First, an algorithm learns from the known markers that are
-shown to him and models the data space accordingly. This phase is also
-called the training phase. In the second phase, un-labelled proteins,
-i.e. those that have not been labelled as resident of any organelle,
-are matched to the model and assigned to a group (an organelle). This
-2 step process is called machine learning (ML), because the computer
-(machine) learns by itself how to recognise instances that possess
-certain characteristics and classifies them without human
-intervention. That does however not mean that results can be trusted
-blindly.
-
-In the above paragraph, we have defined what is called supervised ML,
-because the algorithm is presented with some know instances from which
-it learns (see section \ref{sec:sml}). Alternatively, un-supervised ML
-does not make any assumptions about the group memberships, and uses
-the structure of the data itself to defined sub-groups (see section
-\ref{sec:usml}). It is of course possible to classify data based on
-labelled and unlabelled data. This extension of the supervised
-classification problem described above is called semi-supervised
-learning. In this case, the training data consists of both labelled
-and unlabelled instances with the obvious goal of generating a better
-classifier than would be possible with the labelled data only. The
-\textit{phenoDisco} algorithm, will be illustrated in that context
-(section \ref{sec:ssml}).
-
-\subsection{Data visualisation}\label{sec:viz}
 
 The underlying principle of gradient approaches is that we have
 separated organelles along the gradient and by doing so, generated
@@ -631,9 +601,24 @@ title(main = "PM")
 \end{figure}
 
 
-Alternatively, we can combine all organelle groups in one 2
-dimensional figure by applying dimensionality reduction using the
-\Rfunction{plot2D} function (see figure \ref{fig:plot2d}).
+Alternatively, we can combine all organelle groups in one single 2
+dimensional figure by applying a dimensionality reduction technique
+such as Principal Component Analysis (PCA) using the
+\Rfunction{plot2D} function (see figure \ref{fig:plot2d}). The protein
+profile vectors are summarised into 2 values that can be visualised in
+two dimensions, so that the variability in the data will be maximised
+along the first principal component (PC1). The second principal
+component (PC2) is then chosen as to be orthogonal to PC1 while
+explaining as much variance in the data as possible, and so on for
+PC3, PC4, etc.
+
+Using a PCA representation to visualise a spatial proteomics
+experiment, we can easily plot all the proteins on the same figure as
+well a many sub-cellular clusters (see figure \ref{fig:pdres2} for a
+case with 11 clusters). These clusters are defined in a feature
+meta-data column (slot \Robject{featureData}/\Robject{fData}) that is
+declaraed with the \Robject{fcol} argument (default is
+\texttt{"markers"}).
 
 \begin{figure}[!hbt]
 <<plot2d, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
@@ -642,10 +627,120 @@ addLegend(tan2009r1, fcol = "PLSDA",
           where = "bottomright", bty = "n", cex = .7)
 @ 
 \caption{ Representation of the \Sexpr{nrow(tan2009r1)} protein of
-  \Robject{tan2009r1} after reduction the 4 reporter quantitation data
-  to 2 principal components.}
+  \Robject{tan2009r1} after reduction of the 4 reporter quantitation
+  data to 2 principal components.}
 \label{fig:plot2d}
 \end{figure}
+
+\subsection{Features of interest}
+
+In addition to highlighting sub-cellular niches as coloured clusters
+on the PCA plot, it is also possible to define some arbitrary
+\textit{features of interest} that represent, for example, proteins of
+a particular pathway or a set of interaction partners. Such sets of
+proteins are recorded as \Robject{FeaturesOfInterest} instances, as
+illstrated below (using the ten first features of our experiment):
+
+<<foi0>>=
+foi1 <- FeaturesOfInterest(description = "Feats of interest 1",
+                           fnames = featureNames(tan2009r1[1:10]))
+description(foi1)
+foi(foi1)
+@
+
+Several such features of interest can be combined into collections:
+
+<<>>=
+foi2 <- FeaturesOfInterest(description = "Feats of interest 2",
+                           fnames = featureNames(tan2009r1[880:888]))
+foic <- FoICollection(list(foi1, foi2))
+foic
+@
+
+\Robject{FeatureOfInterest} instances can now be overlaid on the PCA
+plot with the \Rfunction{highlightOnPlot} function.
+
+\begin{figure}[!hbt]
+<<plotfoi, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+plot2D(tan2009r1, fcol = "PLSDA")
+addLegend(tan2009r1, fcol = "PLSDA", 
+          where = "bottomright", bty = "n", cex = .7)
+highlightOnPlot(tan2009r1, foi1, col = "black", lwd = 2)
+highlightOnPlot(tan2009r1, foi2, col = "purple", lwd = 2)
+legend("topright", c("FoI 1", "FoI 2"), bty = "n",
+       col = c("black", "purple"), pch = 1)
+@ 
+\caption{Adding features of interest on a PCA plot. }
+\label{fig:plotfoi}
+\end{figure}
+
+See \Rfunction{?FeaturesOfInterest} and \Rfunction{?highlightOnPlot}
+for more details.
+
+\clearpage
+
+\subsection{Interactive visualisation}\label{sec:gui}
+
+The \Rpackage{pRolocGUI} application allows one to explore the spatial
+proteomics data using an interactive, web-based \Rpackage{shiny}
+interface \citep{shiny}. The package is available from Bioconductor
+and can be installed and started as follows:
+
+<<guiinstall, eval = FALSE>>=
+library("BiocInstaller")
+biocLite("pRolocGUI")
+library("pRolocGUI")
+pRolocVis(tan2009r1)
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.65\linewidth]{./Figures/Screenshot_PCA2.png}
+  \caption{Screenshot of the \Rpackage{pRolocGUI} interface.}
+  \label{fig:gui}
+\end{figure}
+
+More details are available in the vignette that can be started from
+the application by clicking on any of the question marks, by starting
+the vignette from \R with \Rfunction{vignette("pRolocGUI")} or can be
+accessed
+online\footnote{\url{http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html}}.
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Data analysis}\label{sec:analysis}
+
+Classification of proteins, i.e. assigning sub-cellular localisation
+to proteins, is the main aspect of the present data analysis. The
+principle is the following and is, in its basic form, a 2 step
+process. First, an algorithm learns from the known markers that are
+shown to him and models the data space accordingly. This phase is also
+called the training phase. In the second phase, un-labelled proteins,
+i.e. those that have not been labelled as resident of any organelle,
+are matched to the model and assigned to a group (an organelle). This
+2 step process is called machine learning (ML), because the computer
+(machine) learns by itself how to recognise instances that possess
+certain characteristics and classifies them without human
+intervention. That does however not mean that results can be trusted
+blindly.
+
+In the above paragraph, we have defined what is called supervised ML,
+because the algorithm is presented with some know instances from which
+it learns (see section \ref{sec:sml}). Alternatively, un-supervised ML
+does not make any assumptions about the group memberships, and uses
+the structure of the data itself to defined sub-groups (see section
+\ref{sec:usml}). It is of course possible to classify data based on
+labelled and unlabelled data. This extension of the supervised
+classification problem described above is called semi-supervised
+learning. In this case, the training data consists of both labelled
+and unlabelled instances with the obvious goal of generating a better
+classifier than would be possible with the labelled data only. The
+\textit{phenoDisco} algorithm, will be illustrated in that context
+(section \ref{sec:ssml}).
 
 \subsection{Unsupervised ML}\label{sec:usml}
 
@@ -778,8 +873,9 @@ demonstrate the function with only perform 10 iterations\footnote{%%
 } (\Robject{times = 10}), which is enough for testing, but we
 recommend 100 (which is the default value) for a more robust analysis.
 
-<<svmParamOptim, eval = FALSE, message = FALSE>>=
-params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
+<<svmParamOptim, eval = FALSE, message = FALSE, tidy=FALSE>>=
+params <- svmOptimisation(tan2009r1, times = 10,
+                          xval = 5, verbose = FALSE)
 @ 
 
 <<loadParams, echo = FALSE>>=
@@ -1069,10 +1165,11 @@ The data is visualised as described previously, were we use the svm
 classification a-posteriori probability to set the point size.
 
 \begin{figure}[!hbt]
-<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE>>=
+<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE, tidy=FALSE>>=
 ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
 plot2D(tan2009r1, fcol = "svm", cex = ptsze)
-addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", cex = .5)
+addLegend(tan2009r1, fcol = "svm", where = "bottomright",
+          ncol = 2, bty = "n", cex = .5)
 @ 
 %% $
 \caption{ Second round of classification using the augmented set of markers obtained 
@@ -1081,6 +1178,12 @@ addLegend(tan2009r1, fcol = "svm", where = "bottomright", ncol = 2, bty = "n", c
 \label{fig:pdres2}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -1105,6 +1208,8 @@ assume that any off-the-shelf algorithm will perform well.  As such,
 one of the emphasis of the software presented in this document is
 allowing users to track data processing and critically evaluate the
 results.
+
+
 
 \clearpage
 

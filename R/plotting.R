@@ -795,7 +795,7 @@ addLegend <- function(object,
 ##' @param object The main dataset described as an \code{MSnSet} or a
 ##' matrix with the coordinates of the features on the PCA plot
 ##' produced (and invisibly returned) by \code{plot2D}.
-##' @param foi An instance of \code{linkS4class{FeaturesOfInterest}}.
+##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}}.
 ##' @param args A named list of arguments to be passed to
 ##' \code{plot2D} if the PCA coordinates are to be calculated. Ignored
 ##' if the PCA coordinates are passed directly, i.e. \code{object} is

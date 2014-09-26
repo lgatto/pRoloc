@@ -1,3 +1,9 @@
+CHANGES IN VERSION 1.5.17
+-------------------------
+
+ o fix 'replacing previous import by MLInterfaces::plot when loading
+   pRoloc' warning by using specific importFrom [2014-09-27 Sat]
+
 CHANGES IN VERSION 1.5.16
 -------------------------
  o new pRolocGUI section [2014-08-15 Fri]

@@ -37,7 +37,9 @@ tut:
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 
 poster:
+
 	cp vigsrc/HUPO_2011_poster.pdf .
+	cp vigsrc/HUPO_2014_poster.pdf .
 
 ml: 
 	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex

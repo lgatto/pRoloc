@@ -1,0 +1,16 @@
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{A state-of-the-art machine learning pipeline for the analysis of spatial proteomics data}
+%\VignetteKeywords{bioinformatics, organelle proteomics, mass spectrometry, HUPO, poster}
+
+\documentclass[10pt]{article}
+\begin{document}
+
+
+\begin{document}
+This vignette is a stub. The poster is only available in pdf.
+
+<<session>>=
+sessionInfo()
+@
+
+\end{document}

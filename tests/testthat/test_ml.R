@@ -2,7 +2,7 @@ context("Machine learning tests")
 
 data(dunkley2006)
 d2 <- d1 <- dunkley2006
-fvarLabels(d2)[1] <- "xx"
+fvarLabels(d2)[8] <- "xx"
   
 .times <- 2
 .seed <- 1

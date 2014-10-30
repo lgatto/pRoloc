@@ -2,7 +2,9 @@ context("Machine learning tests")
 
 data(dunkley2006)
 d2 <- d1 <- dunkley2006
-fvarLabels(d2)[8] <- "xx"
+i <- which(fvarLabels(d1) == "markers")
+stopifnot(length(i) == 1)
+fvarLabels(d2)[i] <- "xx"
   
 .times <- 2
 .seed <- 1

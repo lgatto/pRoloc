@@ -415,20 +415,21 @@ data(tan2009r1)
 @ 
 
 The original marker proteins are available as a feature meta-data
-variables called \Robject{markers} and the output of the partial least
+variables called \Robject{markers.orig} and the output of the partial least
 square discriminant analysis, applied in the original publication, in
-the \Robject{PLSDA} feature variable. This feature meta-data column
+the \Robject{PLSDA} feature variable. The most up-to-date marker list for the
+experiment can be found in \Robject{markers}. This feature meta-data column
 can be added from a simple \texttt{csv} markers files using the
 \Rfunction{addMarkers} function - see \Rfunction{?addMarkers} for
 details.
 
 The organelle markers are illustrated below using the convenience
 function \Rfunction{getMarkers}, but could also be done manually with
-\Rfunction{table(fData(tan2009r1)\$markers)} and
+\Rfunction{table(fData(tan2009r1)\$markers.orig)} and
 \Rfunction{table(fData(tan2009r1)\$PLSDA)} respectively.
 
 <<lookAtTan>>=
-getMarkers(tan2009r1)
+getMarkers(tan2009r1, fcol = "markers.orig")
 getMarkers(tan2009r1, fcol = "PLSDA")
 @ 
 
@@ -560,7 +561,7 @@ illustrated below.
 
 <<showplotdist, echo=TRUE, eval=FALSE, prompt=FALSE>>=
 ## indices of the mito markers
-j <- which(fData(tan2009r1)$markers == "mitochondrion")
+j <- which(fData(tan2009r1)$markers.orig == "mitochondrion")
 ## indices of all proteins assigned to the mito
 i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
 plotDist(tan2009r1[i, ],
@@ -573,22 +574,22 @@ par(mfrow = c(2,2), mar = c(4, 4, 2, 0.1))
 cls <- getStockcol()[1:4]
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "mitochondrion"), ],
          markers = featureNames(tan2009r1)
-         [which(fData(tan2009r1)$markers == "mitochondrion")],
+         [which(fData(tan2009r1)$markers.orig == "mitochondrion")],
          mcol = cls[1])
 title(main = "mitochondrion")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
          markers = featureNames(tan2009r1)
-         [which(fData(tan2009r1)$markers == "ER")],
+         [which(fData(tan2009r1)$markers.orig == "ER")],
          mcol = cls[2])
 title(main = "ER")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "ER/Golgi"), ],
          markers = featureNames(tan2009r1)
-         [which(fData(tan2009r1)$markers == "Golgi")],
+         [which(fData(tan2009r1)$markers.orig == "Golgi")],
          mcol = cls[3])
 title(main = "Golgi")
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "PM"), ],
          markers = featureNames(tan2009r1)
-         [which(fData(tan2009r1)$markers == "PM")],
+         [which(fData(tan2009r1)$markers.orig == "PM")],
          mcol = cls[4])
 title(main = "PM")
 @ 
@@ -618,11 +619,13 @@ well a many sub-cellular clusters (see figure \ref{fig:pdres2} for a
 case with 11 clusters). These clusters are defined in a feature
 meta-data column (slot \Robject{featureData}/\Robject{fData}) that is
 declaraed with the \Robject{fcol} argument (default is
-\texttt{"markers"}).
+\texttt{"markers"} which contains the most current known markers for
+the experiment under investigation, the original markers published with
+the data can be found in the slot \texttt{"markers.orig"}).
 
 \begin{figure}[!hbt]
 <<plot2d, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
-plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers")
+plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers.orig")
 addLegend(tan2009r1, fcol = "PLSDA", 
           where = "bottomright", bty = "n", cex = .7)
 @ 
@@ -874,8 +877,8 @@ demonstrate the function with only perform 10 iterations\footnote{%%
 recommend 100 (which is the default value) for a more robust analysis.
 
 <<svmParamOptim, eval = FALSE, message = FALSE, tidy=FALSE>>=
-params <- svmOptimisation(tan2009r1, times = 10,
-                          xval = 5, verbose = FALSE)
+params <- svmOptimisation(tan2009r1, fcol = "markers.orig", 
+                          times = 10, xval = 5, verbose = FALSE)
 @ 
 
 <<loadParams, echo = FALSE>>=
@@ -926,7 +929,8 @@ manually), and use them to build a model with all the marker proteins
 and predict unknown residents using the \Rfunction{svmClassification}
 function (see the manual page for more details). By default, the
 organelle markers will be defined by the \Robject{"markers"} feature
-variables (and can be defined by the \Robject{fcol} parameter). New
+variables (and can be defined by the \Robject{fcol} parameter) e.g. here
+we use the original markers in \Robject{"markers.orig"} as a use case. New
 feature variables containing the organelle assignments and assignment
 probabilities\footnote{%%
   The calculation of the classification probabilities is dependent on
@@ -940,12 +944,14 @@ probabilities\footnote{%%
 
 <<svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE>>=
 ## manual setting of parameters
-svmres <- svmClassification(tan2009r1, sigma = 1, cost = 1)
+svmres <- svmClassification(tan2009r1, fcol = "markers.orig", 
+                            sigma = 1, cost = 1)
 @ 
 
 <<svmRes, warning=FALSE, tidy = FALSE>>=
 ## using default best parameters
-svmres <- svmClassification(tan2009r1, params)
+svmres <- svmClassification(tan2009r1, fcol = "markers.orig",
+                            assessRes = params)
 processingData(svmres)
 tail(fvarLabels(svmres), 4)
 @ 
@@ -1033,7 +1039,7 @@ proteins have substantially lower prediction scores.
 \begin{figure}[!hbt]
 <<svmresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
 ptsze <- exp(fData(svmres)$svm.scores) - 1
-plot2D(svmres, fcol = "svm", fpch = "markers", cex = ptsze)
+plot2D(svmres, fcol = "svm", fpch = "markers.orig", cex = ptsze)
 addLegend(svmres, fcol = "svm", 
           where = "bottomright", bty = "n", cex = .5)
 @ 
@@ -1051,8 +1057,8 @@ addLegend(svmres, fcol = "svm",
 
 \subsection{Semi-supervised ML}\label{sec:ssml}
 
-It is obvious that the set of markers initially used
-(\Sexpr{paste(levels(fData(tan2009r1)$markers)[1:4], collapse = ",
+It is obvious that the original set of markers initially used
+(\Sexpr{paste(levels(fData(tan2009r1)$markers.orig)[1:4], collapse = ",
   ")}) %%$
 is not a biologically realistic representation or the organelle
 diversity. Manually finding markers is however time consuming, as it

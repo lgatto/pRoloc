@@ -1,3 +1,16 @@
+CHANGES IN VERSION 1.7.1
+------------------------
+ o updated vignettes with markers.orig [2014-10-30 Thu]
+ o updated ml tests [2014-10-30 Thu]
+
+CHANGES IN VERSION 1.7.0
+------------------------
+ o new devel version, Bioc 3.1
+
+CHANGES IN VERSION 1.6.0
+------------------------
+ o new stable version, Bioc 3.0
+
 CHANGES IN VERSION 1.5.19
 -------------------------
  o added Video tag in DESCRIPTION [2014-10-07 Tue]

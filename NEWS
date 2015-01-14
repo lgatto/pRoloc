@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.7.2
 ------------------------
  o added t-SNE method to plot2D [2015-01-14 Wed]
+ o Updated NAMESPACE imports [2015-01-14 Wed]
 
 CHANGES IN VERSION 1.7.1
 ------------------------

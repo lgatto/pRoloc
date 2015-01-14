@@ -33,7 +33,7 @@
     % Place nodes
     \node [block2] (input) {\textbf{Input data:} $D = (D_L, D_U)$};
     \node [block, below of=input, node distance=3cm] (gmm) {\textbf{Phenotype modeling}: Select $D_L^i$ and model $F = D_L^i \cup D_U$ using a GMM (cluster number estimate using BIC).};
-    \node [block, right of=gmm, node distance=6cm] (candidates) {\textbf{Get candidats}: Members of $D_U$ clustered with $D_L^i$ are considered candidats of class $i$.};
+    \node [block, right of=gmm, node distance=6cm] (candidates) {\textbf{Get candidates}: Members of $D_U$ clustered with $D_L^i$ are considered candidats of class $i$.};
     \node [block, below of=candidates, node distance=3cm] (outlier) {Each candidate is tested against an \textbf{outlier detection} algorithm.};
     \node [block, left of=outlier, node distance=6cm] (decision) {Candidates classified as members of $i$ are merged with $D_L^i$. Those which are rejected are returned to $D_U$};
     \node [block, below of=decision, node distance=6cm] (new) {\textbf{Update classes:} examples in $D_U$ that are consistently accepted into a single class $i$ are labelled as members of $D_L^i$. \\ \bigskip \textbf{New phenotype:} Any example of $D_U$ not merged with any $D_L^i$ and which are consistenlty clustered together throughout the $N$ iterations are considered members of a \textit{new phenotype}. };

@@ -6,8 +6,20 @@ import(methods)
 import(Rcpp)
 importFrom(BiocParallel, bplapply)
 
-importMethodsFrom(MLInterfaces, MLearn, predScore)
+importMethodsFrom(MLInterfaces, MLearn,
+                  predScore, predScores,
+                  predictions)
+importFrom(MLInterfaces, 
+           naiveBayesI,
+           randomForestI,
+           svmI, knnI, ksvmI,
+           nnetI, plsdaI)
 ## import(MLInterfaces)
+
+
+
+## Importing to avoid 'no visible global function definition for' NOTES
+import(Biobase)
 
 import(lattice)
 import(BiocGenerics)

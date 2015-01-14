@@ -1,14 +1,14 @@
 lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
   HDMSeFinalPeptideFiles <- dir(hdmsedir, full.names = TRUE)
   message("[LOPIMS 1] Estimate master FDR")
-  cmb <- estimateMasterFdr(HDMSeFinalPeptideFiles,
-                           fastafile,
-                           masterFdr = mfdr,
-                           verbose = TRUE)
+  cmb <- synapter::estimateMasterFdr(HDMSeFinalPeptideFiles,
+                                     fastafile,
+                                     masterFdr = mfdr,
+                                     verbose = TRUE)
   print(cmb)
   message("[LOPIMS 1] Make master run")
-  master <- makeMaster(HDMSeFinalPeptideFiles[bestComb(cmb)],
-                       verbose = TRUE)
+  master <- synapter::makeMaster(HDMSeFinalPeptideFiles[synapter::bestComb(cmb)],
+                                 verbose = TRUE)
   print(master)
   return(list(master = master,
               cmb = cmb))
@@ -39,10 +39,10 @@ lopims2 <- function(msedir, pep3ddir, fasta,
                                  quantpeptide = msefiles[i],
                                  quantpep3d = pep3dfiles[i],
                                  fasta = fasta)
-                  synergise(filenames = .input,
-                            outputdir = .outputdir,
-                            master = TRUE,
-                            ...)
+                  synapter::synergise(filenames = .input,
+                                      outputdir = .outputdir,
+                                      master = TRUE,
+                                      ...)
                 })
   return(res)
 }

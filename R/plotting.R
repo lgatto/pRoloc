@@ -457,11 +457,13 @@ plotDist <- function(object,
 ##' to be plotted. Always 1:2 for MDS.
 ##' @param score A numeric specifying the minimum organelle assignment score
 ##' to consider features to be assigned an organelle. (not yet implemented).
-##' @param method One of \code{PCA} (default), \code{MDS} or
-##' \code{kpca}, defining if dimensionality reduction is done using
-##' principal component analysis (see \code{\link{prcomp}}), classical
-##' multidimensional scaling (see \code{\link{cmdscale}}) or kernel
-##' PCA (see \code{kernlab::kpca}).
+##' @param method One of \code{"PCA"} (default), \code{"MDS"},
+##' \code{"kpca"} or \code{"t-SNE"}, defining if dimensionality
+##' reduction is done using principal component analysis (see
+##' \code{\link{prcomp}}), classical multidimensional scaling (see
+##' \code{\link{cmdscale}}), kernel ##' PCA (see \code{kernlab::kpca})
+##' or t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used
+##' to produce a scree plot.
 ##' @param methargs A \code{list} of arguments to be passed when
 ##' \code{method} is called. If missing, the data will be scaled and
 ##' centred prior to PCA.
@@ -517,7 +519,7 @@ plot2D <- function(object,
                    unknown = "unknown",
                    dims = 1:2,
                    score = 1, ## TODO
-                   method = c("PCA", "MDS", "kpca", "scree"),
+                   method = c("PCA", "MDS", "kpca", "t-SNE", "scree"),
                    methargs,
                    axsSwitch = FALSE,
                    mirrorX = FALSE,
@@ -574,6 +576,17 @@ plot2D <- function(object,
         .data <- .pca$x
         plot(.pca, npcs = ncol(.data))
         plot <- FALSE
+    } else if (method == "t-SNE") {
+        library("tsne")
+        if (missing(methargs))
+            .data <- tsne(exprs(object), k = k)
+        else .data <- do.call(tsne,
+                              c(list(X = exprs(object)),
+                                k = k, 
+                                methargs))
+        .data <- .data[, dims]
+        .xlab <- paste("Dimension 1")
+        .ylab <- paste("Dimension 2")
     } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)

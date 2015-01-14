@@ -19,9 +19,10 @@ Description: This package implements pattern recognition techniques on
 	     sub-cellular localisation.
 Depends: R (>= 2.15), MSnbase (>= 1.13.3), MLInterfaces (>= 1.37.1),
 	 methods, Rcpp (>= 0.10.3), BiocParallel
-Imports: mclust (>= 4.3), caret, e1071, sampling, class, kernlab,
-	 lattice, nnet, randomForest, proxy, FNN, BiocGenerics,
-	 stats, RColorBrewer, scales, MASS, knitr, mvtnorm
+Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
+	 kernlab, lattice, nnet, randomForest, proxy, FNN,
+	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
+	 mvtnorm
 Suggests: testthat, pRolocdata (>= 1.5.1), roxygen2, synapter, xtable,
 	  tsne
 LinkingTo: Rcpp, RcppArmadillo

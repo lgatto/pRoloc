@@ -579,8 +579,8 @@ plot2D <- function(object,
     } else if (method == "t-SNE") {
         library("tsne")
         if (missing(methargs))
-            .data <- tsne(exprs(object), k = k)
-        else .data <- do.call(tsne,
+            .data <- tsne::tsne(exprs(object), k = k)
+        else .data <- do.call(tsne::tsne,
                               c(list(X = exprs(object)),
                                 k = k, 
                                 methargs))

@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.7.3
 ------------------------
- o
+ o use Biocstyle [2015-01-23 Fri]
+ o replace library/require by requireNamespace [2015-01-23 Fri]
  
 CHANGES IN VERSION 1.7.2
 ------------------------

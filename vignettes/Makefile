@@ -21,56 +21,39 @@ LATEXFILES = *.aux\
 	HUPO_2011_poster.tex
 
 all: 
-	make tut
 	make poster
 	make ml
+	make tut
 
 setvars:
 ifeq (${R_HOME},)
 R_HOME= $(shell R RHOME)
 endif
 
-tut:
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
-	bibtex pRoloc-tutorial
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
 
-poster:
+ml: pRoloc-ml.Rnw
+	"$(R_HOME)/bin/R" CMD Sweave --engine=knitr::knitr --pdf pRoloc-ml.Rnw	
 
+tut: pRoloc-tutorial.Rnw
+	"$(R_HOME)/bin/R" CMD Sweave --engine=knitr::knitr --pdf pRoloc-tutorial.Rnw
+
+poster: 
 	cp vigsrc/HUPO_2011_poster.pdf .
 	cp vigsrc/HUPO_2014_poster.pdf .
 
-ml: 
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
-	bibtex pRoloc-ml
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
-
-## manual building
-tut2: 
-	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-tutorial.Rnw');"
-	bibtex pRoloc-tutorial
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-tutorial.tex
-
-ml2: 
-	"$(R_HOME)/bin/R" --vanilla -e "library(knitr); knit2pdf('pRoloc-ml.Rnw');"
-	bibtex pRoloc-ml
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
-	"$(R_HOME)/bin/R" CMD pdflatex pRoloc-ml.tex
-
-
-.PHONY: clean allclean 
+.PHONY: clean allclean poster
 
 clean:	
 	rm -f $(LATEXFILES)
 	rm -f .Rhistory
+	rm -f pRoloc-ml.R
+	rm -f pRoloc-tutorial.R
 	rm -f *~
 	rm -f */*~
 
 
 allclean: clean
-	rm -f  pRoloc-tutorial.pdf
+	rm -f pRoloc-tutorial.pdf
+	rm -f pRoloc-ml.pdf
 	rm -rf figure/
 	rm -rf cache/

@@ -1,76 +1,24 @@
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Machine learning techniques available in pRoloc}
 %\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
 %\VignettePackage{pRoloc}
-\documentclass[12pt,a4paper,english]{scrartcl}
-\usepackage{amsmath,amsfonts,amssymb}
-\usepackage{tikz}
-\usepackage{hyperref}
-\usepackage[authoryear,round]{natbib}
-\usepackage[auth-sc]{authblk}
-\usepackage{setspace}
-\onehalfspacing
 
-% caption formatting
-\setcapindent{0em}
-\setkomafont{captionlabel}{\sffamily\bfseries}
-\setkomafont{caption}{\sffamily}
+\documentclass[12pt, oneside]{article}
 
-\renewcommand\Authands{ and }
-
-\newcommand{\R}{\texttt{R} }
-\newcommand{\code}[1]{{\texttt{#1}}}
-\newcommand{\Rfunction}[1]{{\texttt{#1}}}
-\newcommand{\Robject}[1]{{\texttt{#1}}}
-\newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
-\newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
-%% colors
-\definecolor{Red}{rgb}{0.7,0,0}
-\definecolor{Blue}{rgb}{0,0,0.8}
-
-\usepackage{geometry}
-\geometry{verbose,
-  tmargin = 2.5cm,
-  bmargin = 2.5cm,
-  lmargin = 3.0cm,
-  rmargin = 3.0cm}
-
-\usepackage{hyperref}
-\usepackage{breakurl}
-\hypersetup{%
-  pdfusetitle,
-  bookmarks = {true},
-  bookmarksnumbered = {true},
-  bookmarksopen = {true},
-  bookmarksopenlevel = 2,
-  unicode = {true},
-  breaklinks = {false},
-  hyperindex = {true},
-  colorlinks = {true},
-  linktocpage = {true},
-  plainpages = {false},
-  linkcolor = {Blue},
-  citecolor = {Blue},
-  urlcolor = {Red},
-  pdfstartview = {Fit},
-  pdfpagemode = {UseOutlines},
-  pdfview = {XYZ null null null}
-}
+<<style, eval=TRUE, echo=FALSE, results="asis">>=
+BiocStyle::latex()
+@
 
 
 \author{
-  Laurent Gatto\thanks{\email{lg390@cam.ac.uk}}
+  Laurent Gatto\footnote{\email{lg390@cam.ac.uk}}
 }
 
-\affil{
-  Computational Proteomics Unit\\
-  University of Cambridge
-}
+\bioctitle[\Biocpkg{pRoloc}]{Machine learning techniques available in
+  \Biocpkg{pRoloc}}
 
 
 \begin{document}
-
-\title{Machine learning techniques available in \Rpackage{pRoloc}}
 
 \maketitle
 
@@ -78,7 +26,7 @@
 % \vskip 0.3in minus 0.1in
 % \hrule
 % \begin{abstract}
-% This document described the machine learning techniques that are made available in the \Rpackage{pRoloc}.
+% This document described the machine learning techniques that are made available in the \Biocpkg{pRoloc}.
 % \end{abstract}
 % \textit{Keywords}: Bioinformatics, spatial/organelle proteomics, machine learning, visualisation
 % \vskip 0.1in minus 0.05in
@@ -117,14 +65,14 @@ suppressPackageStartupMessages(library("xtable"))
 \paragraph{NB} This vignette provides more general background about
 machine learning (ML) and its application to the analysis of organelle
 proteomics data. This document is currently under still construction;
-please see the \Rpackage{pRoloc} tutorial for details about the
+please see the \Biocpkg{pRoloc} tutorial for details about the
 package itself.
 
 \paragraph{TODO} Define nomenclature
 
 \section{Introduction}\label{sec:intro} 
 
-For a general practical introduction to \Rpackage{pRoloc}, readers are
+For a general practical introduction to \Biocpkg{pRoloc}, readers are
 referred to the tutorial, available using
 \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The
 following document provides a overview of the algorithms available in
@@ -136,8 +84,8 @@ detection algorithm.
 \section{Data sets}
 
 We provide \Sexpr{nrow(pRolocdata()$results)} test data sets in the
-\Rpackage{pRolocdata} package%$
-that can be readily used with \Rpackage{pRoloc}. The data set can be
+\Biocexptpkg{pRolocdata} package%$
+that can be readily used with \Biocpkg{pRoloc}. The data set can be
 listed with \Rfunction{pRolocdata} and loaded with the
 \Rfunction{data} function. Each data set, including its origin, is
 individually documented.
@@ -145,8 +93,8 @@ individually documented.
 The data sets are distributed as \Robject{MSnSet} instances. Briefly,
 these are dedicated containers for quantitation data as well as
 feature and sample meta-data. More details about \Robject{MSnSet}s are
-available in the \Rpackage{pRoloc} tutorial and in the
-\Rpackage{MSnbase} package, that defined the class.
+available in the \Biocpkg{pRoloc} tutorial and in the
+\Biocpkg{MSnbase} package, that defined the class.
 
 <<pRolocdata>>=
 library("pRolocdata")
@@ -161,7 +109,7 @@ structure in a quantitative, generally multi-dimensional data set of
 unlabelled data.
 
 Currently, unsupervised clustering facilities are available through
-the \Rfunction{plot2D} function and the \Rpackage{MLInterfaces}
+the \Rfunction{plot2D} function and the \Biocpkg{MLInterfaces}
 package \cite{MLInterfaces}. The former takes an \Robject{MSnSet}
 instance and represents the data on a scatter plot along the first two
 principal components. Arbitrary feature meta-data can be represented
@@ -169,11 +117,11 @@ using different colours and point characters. The reader is referred
 to the manual page available through \Rfunction{?plot2D} for more
 details and examples.
 
-\Rpackage{pRoloc} also implements a \Rfunction{MLean} method for
+\Biocpkg{pRoloc} also implements a \Rfunction{MLean} method for
 \Robject{MSnSet} instances, allowing to use the relevant
 infrastructure with the organelle proteomics framework. Although
 provides a common interface to unsupervised and numerous supervised
-algorithms, we refer to the \Rpackage{pRoloc} tutorial for its usage
+algorithms, we refer to the \Biocpkg{pRoloc} tutorial for its usage
 to several clustering algorithms.
 
 \paragraph{Note} Current development efforts in terms of clustering
@@ -198,7 +146,7 @@ corresponding mapped class.
 \subsection{Algorithms used}\label{sec:algo}
 
 \paragraph{k-nearest neighbour (KNN)} Function \Rfunction{knn} from package
-\Rpackage{class}. For each row of the test set, the $k$ nearest (in
+\Biocpkg{class}. For each row of the test set, the $k$ nearest (in
 Euclidean distance) training set vectors are found, and the
 classification is decided by majority vote over the $k$ classes, with
 ties broken at random. This is a simple algorithm that is often used
@@ -206,7 +154,7 @@ as baseline classifier.
 %% If there are ties for the $k^{th}$ nearest vector, all candidates are included in the vote.
 
 \paragraph{Partial least square DA (PLS-DA)} Function \Rfunction{plsda} from
-package \Rpackage{caret}. Partial least square discriminant analysis
+package \CRANpkg{caret}. Partial least square discriminant analysis
 is used to fit a standard PLS model for classification.
 
 \paragraph{Support vector machine (SVM)} 
@@ -219,31 +167,31 @@ error. To assure liner separation of the classes, the data is
 transformed using a \textit{kernel function} into a high-dimensional
 space, permitting liner separation of the classes.
 
-\Rpackage{pRoloc} makes use of the functions \Rfunction{svm} from
-package \Rpackage{e1071} and \Rfunction{ksvm} from \Rpackage{kernlab}.
+\Biocpkg{pRoloc} makes use of the functions \Rfunction{svm} from
+package \CRANpkg{e1071} and \Rfunction{ksvm} from \CRANpkg{kernlab}.
 
 \paragraph{Artificial neural network (ANN)} Function \Rfunction{nnet}
-from package \Rpackage{nnet}. Fits a single-hidden-layer neural
+from package \CRANpkg{nnet}. Fits a single-hidden-layer neural
 network, possibly with skip-layer connections.
 
 \paragraph{Naive Bayes (NB)} Function \Rfunction{naiveBayes} from
-package \Rpackage{e1071}. Naive Bayes classifier that computes the
+package \CRANpkg{e1071}. Naive Bayes classifier that computes the
 conditional a-posterior probabilities of a categorical class variable
 given independent predictor variables using the Bayes rule. Assumes
 independence of the predictor variables, and Gaussian distribution
 (given the target class) of metric predictors.
 
 \paragraph{Random Forest (RF)} Function \Rfunction{randomForest} from
-package \Rpackage{randomForest}.
+package \CRANpkg{randomForest}.
 
 \paragraph{Chi-square ($\chi^2$)} Assignment based on squared
 differences between a labelled marker and a new feature to be
 classified. Canonical protein correlation profile method (PCP) uses
 squared differences between a labelled marker and new features. In
-\citep{Andersen2003}, $\chi^2$ is defined as \emph{the [summed]
+\cite{Andersen2003}, $\chi^2$ is defined as \emph{the [summed]
   squared deviation of the normalized profile [from the marker] for
   all peptides divided by the number of data points}, i.e. $\chi^{2} =
-\frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \citep{Wiese2007}
+\frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \cite{Wiese2007}
 divide by the value the squared value by the value of the reference
 feature in each fraction, i.e. $\chi^{2} = \sum_{i=1}^{n}\frac{(x_i -
   m_i)^{2}}{m_i}$, where $x_i$ is normalised intensity of feature $x$
@@ -264,7 +212,7 @@ measure is derived an efficient policy to design sampling queries in a
 context of active learning. Performances collected over toy examples
 and real world datasets assess the qualities of this strategy.
 
-The PerTurbo implementation comes from the \Rpackage{pRoloc} packages.
+The PerTurbo implementation comes from the \Biocpkg{pRoloc} packages.
 
 \subsection{Estimating algorithm parameters}
 
@@ -279,8 +227,8 @@ equally important as will be discussed in this sections.
 
 Figure \ref{fig:knnboundaries} illustrates the effect of different
 choices of $k$ using organelle proteomics data from
-\citep{Dunkley2006} (\Rfunction{dunkley2006} from
-\Rpackage{pRolocdata}). As highlighted in the squared region, we can
+\cite{Dunkley2006} (\Rfunction{dunkley2006} from
+\Biocexptpkg{pRolocdata}). As highlighted in the squared region, we can
 see that using a low $k$ ($k = 1$ on the left) will result in very
 specific classification boundaries that precisely follow the contour
 or our marker set as opposed to a higher number of neighbours ($k = 8$
@@ -380,7 +328,7 @@ We recommend the book \textit{An Introduction to Statistical
 \subsection{Default analysis scheme}
 
 Below, we present a typical classification analysis using
-\Rpackage{pRoloc}. The analysis typically consists of two steps. The
+\Biocpkg{pRoloc}. The analysis typically consists of two steps. The
 first one is to optimise the classifier parameters to be used for
 training and testing (see above). A range of parameters are tested
 using the labelled data, for which the labels are known. For each set
@@ -392,7 +340,7 @@ the parameters. Once adequate parameters have been identified, they
 are used to infer a model on the complete organelle marker set and
 used to infer the subcellular location of the unlabelled examples.
 
-\minisec{Parameter optimisation}
+\subsubsection*{Parameter optimisation}
 
 Algorithmic performance is estimated using a stratified 20/80
 partitioning. The 80\% partitions are subjected to 5-fold
@@ -428,7 +376,7 @@ params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
 params
 @ 
 
-\minisec{Classification}
+\subsubsection*{Classification}
 
 <<svmRes, warning=FALSE, tidy=FALSE, eval=TRUE>>=
 tan2009r1 <- svmClassification(tan2009r1, params)
@@ -465,7 +413,7 @@ colnames(tab)[1] <- c("parameter optimisation")
 
 <<comptab, results='asis', echo=FALSE>>=
 xt <- xtable(tab, label = "tab:algo",
-             caption = "Supervised ML algorithm available in \\Rpackage{pRoloc}.")
+             caption = "Supervised ML algorithm available in \\Biocpkg{pRoloc}.")
 print(xt, include.rownames = FALSE, size = "small")
 @ 
 
@@ -480,14 +428,16 @@ vector machines (SVMs) in \cite{Trotter2010}, random forest in
 \Rfunction{vignette("HUPO\_2011\_poster", package = "pRoloc")}), we
 show that different classification algorithms provide very similar
 performance. We have extended this comparison on various datasets
-distributed in the \Rpackage{pRolocdata package}. On figure
+distributed in the \Biocexptpkg{pRolocdata} package. On figure
 \ref{fig:f1box}, we illustrate how different algorithms reach very
 similar performances on most of our test datasets.
 
 \begin{figure}[!hbt]
 \centering
     \includegraphics[width=0.7\textwidth]{./Figures/F1boxplots.pdf}
-\caption{Comparison of classification performances of several contemporary classification algorithms on data from the \Rpackage{pRolocdata} package.}
+    \caption{Comparison of classification performances of several
+      contemporary classification algorithms on data from the
+      \Biocexptpkg{pRolocdata} package.}
 \label{fig:f1box}
 \end{figure}
 
@@ -515,7 +465,6 @@ considered members of a new phenotype.
 \label{fig:pd}
 \end{figure}
 
-\singlespacing
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -531,7 +480,6 @@ All software and respective versions used to produce this document are listed be
 toLatex(sessionInfo())
 @
 
-\bibliographystyle{plainnat}
 \bibliography{pRoloc}
 
 \end{document}

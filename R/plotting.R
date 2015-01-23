@@ -577,7 +577,7 @@ plot2D <- function(object,
         plot(.pca, npcs = ncol(.data))
         plot <- FALSE
     } else if (method == "t-SNE") {
-        library("tsne")
+        requireNamespace("tsne")
         if (missing(methargs))
             .data <- tsne::tsne(exprs(object), k = k)
         else .data <- do.call(tsne::tsne,

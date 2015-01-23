@@ -216,7 +216,7 @@ lopims <- function(hdmsedir = "HDMSE",
                    markerfile,
                    mfdr = 0.025,
                    ...) {  
-  library("synapter")
+  requireNamespace("synapter")
   
   msg0 <-
     paste("\n ------------------------------------------------------------\n",

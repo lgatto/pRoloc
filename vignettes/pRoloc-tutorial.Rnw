@@ -1,80 +1,24 @@
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{pRoloc tutorial}
 %\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Proteomics}
 %\VignettePackage{pRoloc}
 
-\documentclass[12pt,a4paper,english]{scrartcl}
-\usepackage{amsmath,amsfonts,amssymb}
-\usepackage{tikz}
-\usepackage{hyperref}
-\usepackage[authoryear,round]{natbib}
-\usepackage[auth-sc]{authblk}
-\usepackage{setspace}
-\onehalfspacing
+\documentclass[12pt, oneside]{article}
 
-% caption formatting
-\setcapindent{0em}
-\setkomafont{captionlabel}{\sffamily\bfseries}
-\setkomafont{caption}{\sffamily}
-
-\renewcommand\Authands{ and }
-
-\newcommand{\R}{\texttt{R} }
-\newcommand{\code}[1]{{\texttt{#1}}}
-\newcommand{\Rfunction}[1]{{\texttt{#1}}}
-\newcommand{\Robject}[1]{{\texttt{#1}}}
-\newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
-\newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
-%% colors
-\definecolor{Red}{rgb}{0.7,0,0}
-\definecolor{Blue}{rgb}{0,0,0.8}
-
-\usepackage{geometry}
-\geometry{verbose,
-  tmargin = 2.5cm,
-  bmargin = 2.5cm,
-  lmargin = 3.0cm,
-  rmargin = 3.0cm}
-
-\usepackage{hyperref}
-\usepackage{breakurl}
-\hypersetup{%
-  pdfusetitle,
-  bookmarks = {true},
-  bookmarksnumbered = {true},
-  bookmarksopen = {true},
-  bookmarksopenlevel = 2,
-  unicode = {true},
-  breaklinks = {false},
-  hyperindex = {true},
-  colorlinks = {true},
-  linktocpage = {true},
-  plainpages = {false},
-  linkcolor = {Blue},
-  citecolor = {Blue},
-  urlcolor = {Red},
-  pdfstartview = {Fit},
-  pdfpagemode = {UseOutlines},
-  pdfview = {XYZ null null null}
-}
+<<style, eval=TRUE, echo=FALSE, results="asis">>=
+BiocStyle::latex()
+@
 
 
 \author{
-  Laurent Gatto\thanks{\email{lg390@cam.ac.uk}}
+  Laurent Gatto\footnote{\email{lg390@cam.ac.uk}}~and Lisa M. Breckels
 }
 
-\author{
-  Lisa M. Breckels
-}
 
-\affil{
-  Computational Proteomics Unit\\
-  University of Cambridge
-}
+\bioctitle[\Biocpkg{pRoloc} tutorial]{A short tutorial on using
+  \Biocpkg{pRoloc} for spatial proteomics data analysis}
 
 \begin{document}
-
-\title{A short tutorial on using \Rpackage{pRoloc} for spatial proteomics data analysis}
 
 \maketitle
 
@@ -82,7 +26,7 @@
 \vskip 0.3in minus 0.1in
 \hrule
 \begin{abstract}
-  This tutorial illustrates the usage of the \Rpackage{pRoloc} \R
+  This tutorial illustrates the usage of the \Biocpkg{pRoloc} \R
   package for the analysis and interpretation of spatial proteomics
   data. It walks the reader through the creation of \Robject{MSnSet}
   instances, that hold the quantitative proteomics data and meta-data
@@ -148,12 +92,12 @@ of proteins and nucleic acids or large protein complexes. In this
 document, we will focus on mass-spectrometry based approaches that
 assay a population of cells, as opposed as microscopy based techniques
 that monitor single cells, as the former is the primary concern of
-\Rpackage{pRoloc}, although the techniques described below and the
+\Biocpkg{pRoloc}, although the techniques described below and the
 infrastructure in place could also be applied the processed image
-data. The typical experimental use-case for using \Rpackage{pRoloc} is
+data. The typical experimental use-case for using \Biocpkg{pRoloc} is
 a set of fractions, originating from a total cell lysate. These
 fractions can originate from a continuous gradient, like in the LOPIT
-\citep{Dunkley2006} or PCP \citep{Foster2006} approaches, or can be
+\cite{Dunkley2006} or PCP \cite{Foster2006} approaches, or can be
 discrete fractions. The content of the fractions is then identified
 and quantified (using labelled or un-labelled quantitation
 techniques). Using relative quantitation of known organelle residents,
@@ -168,15 +112,15 @@ necessarily separately enclosed within their own lipid bi-layer, can
 be detected by such techniques, as long as a distinct profile can be
 defined across the fractions.
 
-\subsection{About \R and \Rpackage{pRoloc}}
+\subsection{About \R and \Biocpkg{pRoloc}}
 
-\R \citep{Rstat} is a statistical programming language and interactive
+\R \cite{Rstat} is a statistical programming language and interactive
 working environment. It can be expanded by so-called packages to
 confer new functionality to users. Many such packages have been
 developed for the analysis of high-throughput biology, notably through
-the Bioconductor project \citep{Gentleman2004}. Two packages are of
-particular interest here, namely \Rpackage{MSnbase} \citep{Gatto2012}
-and \Rpackage{pRoloc}. The former provides flexible infrastructure to
+the Bioconductor project \cite{Gentleman2004}. Two packages are of
+particular interest here, namely \Biocpkg{MSnbase} \cite{Gatto2012}
+and \Biocpkg{pRoloc}. The former provides flexible infrastructure to
 store and manipulate quantitative proteomics data and the associated
 meta-data and the latter implements specific algorithmic technologies
 to analyse organelle proteomics data.
@@ -191,7 +135,7 @@ specialised functionality in many domains of bioinformatics: tools for
 many omics technologies, including proteomics, bio-statistics, gene
 ontology and biological pathway analysis, \ldots Although there exists
 some specific graphical user interfaces (GUI) -- see for example the
-GUI implemented in the \Rpackage{synapter}
+GUI implemented in the \Biocpkg{synapter}
 package\footnote{\url{http://bioconductor.org/packages/devel/bioc/html/synapter.html}}
 for the analysis MS$^{E}$ data, interaction with \R is executed
 through a command line interface. Although this mode of interaction
@@ -211,8 +155,8 @@ library("pRoloc")
 library("pRolocdata")
 @ 
 
-\Rpackage{MSnbase} implements the data containers that are used by
-\Rpackage{pRoloc}. \Rpackage{pRolocdata} is a data package that
+\Biocpkg{MSnbase} implements the data containers that are used by
+\Biocpkg{pRoloc}. \Biocexptpkg{pRolocdata} is a data package that
 supplies several published organelle proteomics data sets.
 
 As a final setup step, we set the default colour palette for some of
@@ -234,13 +178,13 @@ setStockcol(paste0(getStockcol(), 70))
 \subsection{Test data description}
 
 The data used in this tutorial has been published in
-\cite{Tan2009}. The LOPIT technique \citep{Dunkley2006} is used to
+\cite{Tan2009}. The LOPIT technique \cite{Dunkley2006} is used to
 localise integral and associated membrane proteins in
 \textit{Drosophila melanogaster} embryos. Briefly, embryos were
 collected at 0 -- 16 hours, homogenised and centrifuged to collect the
 supernatant, removing cell debris and nuclei. Membrane fractionation
 was performed on a iodixanol gradient and fractions were quantified
-using iTRAQ isobaric tags \citep{Ross2004} as follows: fractions 4/5,
+using iTRAQ isobaric tags \cite{Ross2004} as follows: fractions 4/5,
 114; fractions 12/13, 115; fraction 19, 116 and fraction 21,
 117. Labelled peptides were then separated using cation exchange
 chromatography and analysed by LS-MS/MS on a QSTAR XL
@@ -329,7 +273,7 @@ pdataCsv
 \end{description}
 
 A self-contained data structure, called \Robject{MSnSet} (defined in
-the \Rpackage{MSnbase} package) can now easily be generated using the
+the \Biocpkg{MSnbase} package) can now easily be generated using the
 \Rfunction{readMSnSet} constructor, providing the respective
 \texttt{csv} file names shown above and specifying that the data is
 comma-separated (with \Robject{sep = ","}). Below, we call that object
@@ -360,7 +304,7 @@ to meet the following validity requirements (see figure
   column/row names must match exactly.
 \end{itemize}
   
-It is common, in the context of \Rpackage{pRoloc} to update the
+It is common, in the context of \Biocpkg{pRoloc} to update the
 feature meta-data (described in section \ref{sec:analysis}) by adding
 new columns, without breaking the objects validity. Similarly, the
 sample meta-data can also be updated by adding new sample variables. A
@@ -396,7 +340,7 @@ exprs(smallTan)
 @ 
 
 Several data sets, including the 3 replicates from \cite{Tan2009}, are
-distributed as \Robject{MSnSet} instances in the \Rpackage{pRolocdata}
+distributed as \Robject{MSnSet} instances in the \Biocexptpkg{pRolocdata}
 package. Others include, among others, the \textit{Arabidopsis
   thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006})
 and the mouse PCP data from \cite{Foster2006}
@@ -436,7 +380,7 @@ getMarkers(tan2009r1, fcol = "PLSDA")
 
 \paragraph*{Important} As can be seen above, some proteins are
 labelled \texttt{"unknown"}, defining non marker proteins. This is a
-convention in many \Rpackage{pRoloc} functions. Missing annotations
+convention in many \Biocpkg{pRoloc} functions. Missing annotations
 (empty string) will not be considered as of unknown localisation; we
 prefer to avoid empty strings and make the absence of known
 localisation explicit by using the \texttt{"unknown"} tag. This
@@ -445,10 +389,10 @@ when proceeding with data visualisation and clustering (sections
 \ref{sec:viz} and \ref{sec:usml}) and classification analysis (section
 \ref{sec:sml}).
 
-\subsection{\Rpackage{pRoloc}'s organelle markers}
+\subsection{\Biocpkg{pRoloc}'s organelle markers}
 
-The \Rpackage{pRoloc} package distributes a set of markers that have
-been obtained by mining the \Rpackage{pRolocdata} datasets and
+The \Biocpkg{pRoloc} package distributes a set of markers that have
+been obtained by mining the \Biocexptpkg{pRolocdata} datasets and
 curation by various members of the Cambridge Centre for
 Proteomics. The available marker sets can be obtained and loaded using
 the \Rfunction{pRolocmarkers} functions:
@@ -477,9 +421,9 @@ summary(rowSums(exprs(tan2009r1)))
 @ 
 
 The \Rfunction{normalise} method (also available as
-\Rfunction{normalize}) from the \Rpackage{MSnbase} package can be used
+\Rfunction{normalize}) from the \Biocpkg{MSnbase} package can be used
 to obtain relative quantitation data, as illustrated below on another
-iTRAQ test data set, available from \Rpackage{MSnbase}. Several
+iTRAQ test data set, available from \Biocpkg{MSnbase}. Several
 normalisation \Robject{methods} are available and described in
 \Rfunction{?normalise}.  For many algorithms, including classifiers in
 general and support vector machines in particular, it is important to
@@ -491,7 +435,7 @@ also available with the \Rfunction{scale} method, described in the
 In the code chunk below, we first create a test \Robject{MSnSet}
 instance\footnote{%%
   Briefly, the \Robject{itraqdata} raw iTRAQ4-plex data is quantified
-  by trapezoidation using \Rpackage{MSnbase} functionality. See the
+  by trapezoidation using \Biocpkg{MSnbase} functionality. See the
   \Robject{MSnbase-demo} vignette for details.} and illustrate the
 effect of \Rfunction{normalise(..., method = "sum")}.
 
@@ -684,9 +628,9 @@ for more details.
 
 \subsection{Interactive visualisation}\label{sec:gui}
 
-The \Rpackage{pRolocGUI} application allows one to explore the spatial
-proteomics data using an interactive, web-based \Rpackage{shiny}
-interface \citep{shiny}. The package is available from Bioconductor
+The \Biocpkg{pRolocGUI} application allows one to explore the spatial
+proteomics data using an interactive, web-based \CRANpkg{shiny}
+interface \cite{shiny}. The package is available from Bioconductor
 and can be installed and started as follows:
 
 <<guiinstall, eval = FALSE>>=
@@ -699,7 +643,7 @@ pRolocVis(tan2009r1)
 \begin{figure}[h]
   \centering
   \includegraphics[width=.65\linewidth]{./Figures/Screenshot_PCA2.png}
-  \caption{Screenshot of the \Rpackage{pRolocGUI} interface.}
+  \caption{Screenshot of the \Biocpkg{pRolocGUI} interface.}
   \label{fig:gui}
 \end{figure}
 
@@ -761,8 +705,8 @@ plot2D(tan2009r1, fcol = NULL)
 \label{fig:plot2dnull}
 \end{figure}
 
-Alternatively, \Rpackage{pRoloc} also gives access to
-\Rpackage{MLInterfaces}'s \Rfunction{MLean} unified interface for,
+Alternatively, \Biocpkg{pRoloc} also gives access to
+\Biocpkg{MLInterfaces}'s \Rfunction{MLean} unified interface for,
 among others, unsupervised approaches using k-means (figure
 \ref{fig:plotKmeans} on page \pageref{fig:plotKmeans}), hierarchical
 (figure \ref{fig:plotHclust} on page \pageref{fig:plotHclust}) or
@@ -811,14 +755,14 @@ plot(pcl, data = exprs(tan2009r1))
 
 \subsection{Supervised ML}\label{sec:sml}
 
-In this section, we show how to use \Rpackage{pRoloc} to run a typical
+In this section, we show how to use \Biocpkg{pRoloc} to run a typical
 supervised ML analysis. Several ML methods are available, including
 k-nearest neighbour (knn), partial least square discriminant analysis
 (plsda), random forest (rf), support vector machines (svm), \ldots The
 detailed description of each method is outside of the scope of this
 document. We will use support vector machines to illustrate a typical
 pipeline and the important points that should be paid attention
-to. These points are equally valid and work, from a \Rpackage{pRoloc}
+to. These points are equally valid and work, from a \Biocpkg{pRoloc}
 user perspective, exactly the same for the other approaches.
 
 \subsubsection{Classification algorithm parameters optimisation}
@@ -1068,10 +1012,10 @@ training phase of the supervised ML approach.
 
 As can be seen in the PCA plots above, there is inherent structure in
 the data that can be made use of to automate the detection of new
-clusters. The \textit{phenoDisco} algorithm \citep{Breckels2013} is an
+clusters. The \textit{phenoDisco} algorithm \cite{Breckels2013} is an
 iterative method, that combines classification of proteins to known
 groups and detection of new clusters. It is available in
-\Rpackage{pRoloc} though the \Rfunction{phenoDisco}
+\Biocpkg{pRoloc} though the \Rfunction{phenoDisco}
 function\footnote{In the interest of time, \Rfunction{phenoDisco} is
   not executed when the vignette is dynamically built. The data object
   can be located with \Rfunction{dir(system.file("extdata", package =
@@ -1200,7 +1144,7 @@ addLegend(tan2009r1, fcol = "svm", where = "bottomright",
 \section{Conclusions}\label{sec:ccl}
 
 This tutorial focuses on practical aspects of organelles proteomics
-data analysis using \Rpackage{pRoloc}.  Two important aspects have
+data analysis using \Biocpkg{pRoloc}. Two important aspects have
 been illustrates: (1) data generation, manipulation and visualisation
 and (2) application of contemporary and novel machine learning
 techniques.  Other crucial parts of a full analysis pipeline that were
@@ -1225,8 +1169,6 @@ We would like to thank Mr Daniel J.H. Nightingale, Dr Arnoud J. Groen,
 Dr Claire M. Mulvey and Dr Andy Christoforou for their organelle
 marker contributions.
 
-\singlespacing
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1240,7 +1182,6 @@ listed below.
 toLatex(sessionInfo())
 @
 
-\bibliographystyle{plainnat}
 \bibliography{pRoloc}
 
 \end{document}

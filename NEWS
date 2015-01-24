@@ -1,7 +1,6 @@
 CHANGES IN VERSION 1.7.4
 ------------------------
- o Add GNU make sys requirement to replace warning by note
-   [2015-01-24 Sat]
+ o Use default Sweave call to build vignette [2015-01-24 Sat]
  
 CHANGES IN VERSION 1.7.3
 ------------------------

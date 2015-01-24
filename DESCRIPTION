@@ -32,4 +32,3 @@ Video: https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow
 BugReports: https://github.com/lgatto/pRoloc/issues
 biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
 	   QualityControl
-SystemRequirements: GNU make

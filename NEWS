@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.7.4
 ------------------------
- o
+ o Add GNU make sys requirement to replace warning by note
+   [2015-01-24 Sat]
  
 CHANGES IN VERSION 1.7.3
 ------------------------

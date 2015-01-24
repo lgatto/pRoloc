@@ -22,24 +22,22 @@ LATEXFILES = *.aux\
 
 all: 
 	make poster
-	make ml
 	make tut
-
-setvars:
-ifeq (${R_HOME},)
-R_HOME= $(shell R RHOME)
-endif
+	make ml
 
 
 ml: pRoloc-ml.Rnw
-	"$(R_HOME)/bin/R" CMD Sweave --engine=knitr::knitr --pdf pRoloc-ml.Rnw	
+##	R CMD Sweave --engine=knitr::knitr --pdf pRoloc-ml.Rnw
+	pdflatex pRoloc-ml.tex
 
 tut: pRoloc-tutorial.Rnw
-	"$(R_HOME)/bin/R" CMD Sweave --engine=knitr::knitr --pdf pRoloc-tutorial.Rnw
+##	R CMD Sweave --engine=knitr::knitr --pdf pRoloc-tutorial.Rnw
+	pdflatex pRoloc-tutorial.tex
 
 poster: 
 	cp vigsrc/HUPO_2011_poster.pdf .
 	cp vigsrc/HUPO_2014_poster.pdf .
+
 
 .PHONY: clean allclean poster
 

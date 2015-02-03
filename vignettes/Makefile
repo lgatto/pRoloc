@@ -29,9 +29,15 @@ all:
 ml: pRoloc-ml.Rnw
 ##	R CMD Sweave --engine=knitr::knitr --pdf pRoloc-ml.Rnw
 	pdflatex pRoloc-ml.tex
+	bibtex pRoloc-ml
+	pdflatex pRoloc-ml.tex
+	pdflatex pRoloc-ml.tex
 
 tut: pRoloc-tutorial.Rnw
 ##	R CMD Sweave --engine=knitr::knitr --pdf pRoloc-tutorial.Rnw
+	pdflatex pRoloc-tutorial.tex
+	bibtex pRoloc-tutorial
+	pdflatex pRoloc-tutorial.tex
 	pdflatex pRoloc-tutorial.tex
 
 poster: 

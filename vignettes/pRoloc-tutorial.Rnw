@@ -26,9 +26,9 @@ BiocStyle::latex()
 \vskip 0.3in minus 0.1in
 \hrule
 \begin{abstract}
-  This tutorial illustrates the usage of the \Biocpkg{pRoloc} \R
+  This tutorial illustrates the usage of the \Biocpkg{pRoloc} \R{}
   package for the analysis and interpretation of spatial proteomics
-  data. It walks the reader through the creation of \Robject{MSnSet}
+  data. It walks the reader through the creation of \Rclass{MSnSet}
   instances, that hold the quantitative proteomics data and meta-data
   and introduces several aspects of data analysis, including data
   visualisation and application of machine learning to predict protein
@@ -112,9 +112,9 @@ necessarily separately enclosed within their own lipid bi-layer, can
 be detected by such techniques, as long as a distinct profile can be
 defined across the fractions.
 
-\subsection{About \R and \Biocpkg{pRoloc}}
+\subsection{About \R{} and \Biocpkg{pRoloc}}
 
-\R \cite{Rstat} is a statistical programming language and interactive
+\R{} \cite{Rstat} is a statistical programming language and interactive
 working environment. It can be expanded by so-called packages to
 confer new functionality to users. Many such packages have been
 developed for the analysis of high-throughput biology, notably through
@@ -125,27 +125,24 @@ store and manipulate quantitative proteomics data and the associated
 meta-data and the latter implements specific algorithmic technologies
 to analyse organelle proteomics data.
 
-Among the advantages of \R are robust statistical procedures, good
+Among the advantages of \R{} are robust statistical procedures, good
 visualisation capabilities, excellent documentation, reproducible
 research\footnote{The content of this document is compiled (the code
   is executed and its output, text and figures, is displayed
   dynamically) to generate the pdf file.}, power and flexibility of
-the \R language and environment itself and a rich environment for
+the \R{} language and environment itself and a rich environment for
 specialised functionality in many domains of bioinformatics: tools for
 many omics technologies, including proteomics, bio-statistics, gene
-ontology and biological pathway analysis, \ldots Although there exists
-some specific graphical user interfaces (GUI) -- see for example the
-GUI implemented in the \Biocpkg{synapter}
-package\footnote{\url{http://bioconductor.org/packages/devel/bioc/html/synapter.html}}
-for the analysis MS$^{E}$ data, interaction with \R is executed
-through a command line interface. Although this mode of interaction
-might look alien to new users, experience has proven that after a
-first steep learning curve, great results can be achieved by
+ontology and biological pathway analysis,~\ldots Although there exists
+some specific graphical user interfaces (GUI), interaction with \R{}
+is executed through a command line interface. While this mode of
+interaction might look alien to new users, experience has proven that
+after a first steep learning curve, great results can be achieved by
 non-programmers. Furthermore, specific and general documentation is
 plenty and beginners and advanced course material are also widely
 available.
 
-Once \R is started, the first step to enable functionality of a
+Once \R{} is started, the first step to enable functionality of a
 specific packages is to load them using the \Rfunction{library}
 function, as shown in the code chunk below:
 
@@ -193,13 +190,13 @@ original localisation analysis was performed using partial least
 square discriminant analysis (PLS-DA). Relative quantitation data was
 retrieved from the supplementary file
 \texttt{pr800866n\_si\_004.xls}\footnote{\url{http://pubs.acs.org/doi/suppl/10.1021/pr800866n/suppl\_file/pr800866n\_si\_004.xls}}
-and imported into \R as described below. We will concentrate on the
+and imported into \R{} as described below. We will concentrate on the
 first replicate.
 
 \subsection{Importing and loading data}
 
 This section illustrates how to import data in comma-separated value
-(csv) format into an appropriate \R data structure. The first section
+(csv) format into an appropriate \R{} data structure. The first section
 shows the original \texttt{csv} (comma separated values) spreadsheet,
 as published by the authors, and how one can read such a file into \R
 using the \Rfunction{read.csv} function. This spreadsheet file is
@@ -208,7 +205,7 @@ similar to the output of many quantitation software.
 In the next section, we show 2 \texttt{csv} files containing a subset
 of the columns of original \texttt{pr800866n\_si\_004-rep1.csv} file
 and another short file, created manually, that will be used to create
-the appropriate \R data.
+the appropriate \R{} data.
 
 \subsubsection{The original data file}\label{sec:orgcsv}
 
@@ -231,10 +228,10 @@ information related to protein identification, \ldots
 head(csv, n=3)
 @ 
 
-\subsubsection{From \texttt{csv} files to \R data}\label{sec:csv}
+\subsubsection{From \texttt{csv} files to \R{} data}\label{sec:csv}
 
-There are several ways to create the desired \R data object, termed
-\Robject{MSnSet}, that will be used to perform the actual sub-cellular
+There are several ways to create the desired \R{} data object, termed
+\Rclass{MSnSet}, that will be used to perform the actual sub-cellular
 localisation prediction. Here, we illustrate a method that uses
 separate spreadsheet files for quantitation data, feature meta-data
 and sample (fraction) meta-data and the \Rfunction{readMSnSet}
@@ -272,7 +269,7 @@ pdataCsv
 @
 \end{description}
 
-A self-contained data structure, called \Robject{MSnSet} (defined in
+A self-contained data structure, called \Rclass{MSnSet} (defined in
 the \Biocpkg{MSnbase} package) can now easily be generated using the
 \Rfunction{readMSnSet} constructor, providing the respective
 \texttt{csv} file names shown above and specifying that the data is
@@ -287,7 +284,7 @@ tan2009r1 <- readMSnSet(exprsFile = f1,
 tan2009r1
 @ 
 
-\subsubsection{The \Robject{MSnSet} class}
+\subsubsection{The \Rclass{MSnSet} class}
 
 Although there are additional specific sub-containers for additional
 meta-data (for instance to make the object MIAPE compliant), the
@@ -309,7 +306,7 @@ feature meta-data (described in section \ref{sec:analysis}) by adding
 new columns, without breaking the objects validity. Similarly, the
 sample meta-data can also be updated by adding new sample variables. A
 detailed description of the \Robject{MSnSet} class is available by
-typing \Rfunction{?MSnSet} in the \R console.
+typing \Rfunction{?MSnSet} in the \R{} console.
 
 \begin{figure}[!hbt]
 \centering
@@ -340,7 +337,7 @@ exprs(smallTan)
 @ 
 
 Several data sets, including the 3 replicates from \cite{Tan2009}, are
-distributed as \Robject{MSnSet} instances in the \Biocexptpkg{pRolocdata}
+distributed as \Rclass{MSnSet} instances in the \Biocexptpkg{pRolocdata}
 package. Others include, among others, the \textit{Arabidopsis
   thaliana} LOPIT data from \cite{Dunkley2006} (\Robject{dunkley2006})
 and the mouse PCP data from \cite{Foster2006}
@@ -403,9 +400,9 @@ head(pRolocmarkers("dmel"))
 table(pRolocmarkers("dmel"))
 @
 
-These markers can then be added to a new \Robject{MSnSet} using the
+These markers can then be added to a new \Rclass{MSnSet} using the
 \Rfunction{addMarkers} function by matching the marker names (protein
-identifiers) and the feature names of the \Robject{MSnSet}. See
+identifiers) and the feature names of the \Rclass{MSnSet}. See
 \Rfunction{?addMarkers} for examples.
 
 \subsection{Data processing}
@@ -432,7 +429,7 @@ also available with the \Rfunction{scale} method, described in the
 \Rfunction{scale} manual.
 
 
-In the code chunk below, we first create a test \Robject{MSnSet}
+In the code chunk below, we first create a test \Rclass{MSnSet}
 instance\footnote{%%
   Briefly, the \Robject{itraqdata} raw iTRAQ4-plex data is quantified
   by trapezoidation using \Biocpkg{MSnbase} functionality. See the
@@ -455,7 +452,7 @@ head(exprs(itraqnorm), n = 3)
 summary(rowSums(exprs(itraqnorm)))
 @ 
 
-Note above how the processing undergone by the \Robject{MSnSet}
+Note above how the processing undergone by the \Rclass{MSnSet}
 instances \Robject{itraqdata} and \Robject{itraqnorm} is stored in
 another such specific sub-container, the \Robject{processingData}
 slot.
@@ -500,7 +497,7 @@ separated organelles along the gradient and by doing so, generated
 organelle-specific protein distributions along the gradient
 fractions. The most natural visualisation is shown on figure
 \ref{fig:plotdist1}, obtained using the sub-setting functionality of
-\Robject{MSnSet} instances and the \Rfunction{plotDist} function, as
+\Rclass{MSnSet} instances and the \Rfunction{plotDist} function, as
 illustrated below.
 
 <<showplotdist, echo=TRUE, eval=FALSE, prompt=FALSE>>=
@@ -585,7 +582,7 @@ In addition to highlighting sub-cellular niches as coloured clusters
 on the PCA plot, it is also possible to define some arbitrary
 \textit{features of interest} that represent, for example, proteins of
 a particular pathway or a set of interaction partners. Such sets of
-proteins are recorded as \Robject{FeaturesOfInterest} instances, as
+proteins are recorded as \Rclass{FeaturesOfInterest} instances, as
 illstrated below (using the ten first features of our experiment):
 
 <<foi0>>=
@@ -604,7 +601,7 @@ foic <- FoICollection(list(foi1, foi2))
 foic
 @
 
-\Robject{FeatureOfInterest} instances can now be overlaid on the PCA
+\Rclass{FeatureOfInterest} instances can now be overlaid on the PCA
 plot with the \Rfunction{highlightOnPlot} function.
 
 \begin{figure}[!hbt]
@@ -649,7 +646,7 @@ pRolocVis(tan2009r1)
 
 More details are available in the vignette that can be started from
 the application by clicking on any of the question marks, by starting
-the vignette from \R with \Rfunction{vignette("pRolocGUI")} or can be
+the vignette from \R{} with \Rfunction{vignette("pRolocGUI")} or can be
 accessed
 online\footnote{\url{http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html}}.
 

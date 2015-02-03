@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.7.6
+------------------------
+ o
+ 
 CHANGES IN VERSION 1.7.5
 ------------------------
  o Fix vignettes: run bibtex and pdflatex twice and typo

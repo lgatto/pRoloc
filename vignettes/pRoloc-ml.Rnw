@@ -64,7 +64,7 @@ suppressPackageStartupMessages(library("xtable"))
 
 \paragraph{NB} This vignette provides more general background about
 machine learning (ML) and its application to the analysis of organelle
-proteomics data. This document is currently under still construction;
+proteomics data. This document is currently still under construction;
 please see the \Biocpkg{pRoloc} tutorial for details about the
 package itself.
 
@@ -90,9 +90,9 @@ listed with \Rfunction{pRolocdata} and loaded with the
 \Rfunction{data} function. Each data set, including its origin, is
 individually documented.
 
-The data sets are distributed as \Robject{MSnSet} instances. Briefly,
+The data sets are distributed as \Rclass{MSnSet} instances. Briefly,
 these are dedicated containers for quantitation data as well as
-feature and sample meta-data. More details about \Robject{MSnSet}s are
+feature and sample meta-data. More details about \Rclass{MSnSet}s are
 available in the \Biocpkg{pRoloc} tutorial and in the
 \Biocpkg{MSnbase} package, that defined the class.
 
@@ -110,7 +110,7 @@ unlabelled data.
 
 Currently, unsupervised clustering facilities are available through
 the \Rfunction{plot2D} function and the \Biocpkg{MLInterfaces}
-package \cite{MLInterfaces}. The former takes an \Robject{MSnSet}
+package \cite{MLInterfaces}. The former takes an \Rclass{MSnSet}
 instance and represents the data on a scatter plot along the first two
 principal components. Arbitrary feature meta-data can be represented
 using different colours and point characters. The reader is referred
@@ -118,7 +118,7 @@ to the manual page available through \Rfunction{?plot2D} for more
 details and examples.
 
 \Biocpkg{pRoloc} also implements a \Rfunction{MLean} method for
-\Robject{MSnSet} instances, allowing to use the relevant
+\Rclass{MSnSet} instances, allowing to use the relevant
 infrastructure with the organelle proteomics framework. Although
 provides a common interface to unsupervised and numerous supervised
 algorithms, we refer to the \Biocpkg{pRoloc} tutorial for its usage
@@ -189,7 +189,7 @@ differences between a labelled marker and a new feature to be
 classified. Canonical protein correlation profile method (PCP) uses
 squared differences between a labelled marker and new features. In
 \cite{Andersen2003}, $\chi^2$ is defined as \emph{the [summed]
-  squared deviation of the normalized profile [from the marker] for
+  squared deviation of the normalised profile [from the marker] for
   all peptides divided by the number of data points}, i.e. $\chi^{2} =
 \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}$, whereas \cite{Wiese2007}
 divide by the value the squared value by the value of the reference
@@ -262,17 +262,17 @@ and identify patterns in the data that do not reflect to correct
 boundaries (in such cases, the classifier is said to have low bias but
 very high variance). When a large $k$ is used, the classifier becomes
 inflexible and produces approximate and nearly linear separation
-boudaries (such a classifier is said to have low variance but high
+boundaries (such a classifier is said to have low variance but high
 bias). On this simulated data set, neither $k = 1$ nor $k = 100$ give
 good predictions and have test error rates (i.e. the proportion of
-wronly classified points ) of 0.1695 and 0.1925, respectively.
+wrongly classified points ) of 0.1695 and 0.1925, respectively.
 
 \begin{figure}[!hbt]
 \centering
     \includegraphics[width=1\textwidth]{./Figures/ISL-2_16.pdf}
     \caption{The KNN classifier using $k = 1$ (left, solid
-      classification boudaries) and $k = 100$ (right, solid
-      classification boundaries) compared the Bayes decision boudaries
+      classification boundaries) and $k = 100$ (right, solid
+      classification boundaries) compared the Bayes decision boundaries
       (see original material for details). Reproduced with permission
       from \cite{ISLwR}.}
 \label{fig:ISL1}
@@ -338,7 +338,7 @@ hidden labels. The comparison of the estimated and expected labels
 enables to assess the validity of the model and hence the adequacy if
 the parameters. Once adequate parameters have been identified, they
 are used to infer a model on the complete organelle marker set and
-used to infer the subcellular location of the unlabelled examples.
+used to infer the sub-cellular location of the unlabelled examples.
 
 \subsubsection*{Parameter optimisation}
 
@@ -361,7 +361,7 @@ high $F1$, indicating that the marker proteins in the test data set
 are consistently correctly assigned by the algorithms.
 
 The results of the optimisation procedure are stored in an
-\Robject{GenRegRes} object that can be inspected, plotted and best
+\Rclass{GenRegRes} object that can be inspected, plotted and best
 parameter pairs can be extracted.
 
 For a given algorithm \texttt{alg}, the corresponding parameter

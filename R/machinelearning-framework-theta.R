@@ -234,7 +234,7 @@ plotThetas <- function(object,
                        proportion = TRUE,
                        colramp,
                        ...) {
-    stopifnot(!inherits(object, "ThetaRegRes"))
+    stopifnot(inherits(object, "ThetaRegRes"))
     if (nrow(object@hyperparameters$theta) == 1)
         stop("Only one theta weight vector tested, no thetas to plot")          
     th <- rowSums(object@hyperparameters$theta)

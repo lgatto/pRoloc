@@ -505,24 +505,25 @@ getClasses <- function(object,
 ##' @param q Quantile defining the number of columns (rows) to filter.
 ##' @return A filtered \code{MSnSet}.
 ##' @author Laurent Gatto
-filterX <- function(object, 
-                    MARGIN = 2,
-                    t, q) {
-  stopifnot(MARGIN %in% 1:2)
-  if (MARGIN == 2)
-    K <- colSums(exprs(object))
-  else K <- rowSums(exprs(object))
-  if (missing(t) & missing(q))
-    t <- 1
-  if (missing(q)) {
-    sel <- K > t
-  } else {
-    sel <- K > quantile(K, q)    
-  }
-  if (MARGIN == 2)
-    ans <- object[, sel]
-  else ans <- object[sel, ]
-  if (validObject(ans))
-    return(ans)
+filterBinMSnSet <- function(object, 
+                            MARGIN = 2,
+                            t, q) {
+    if (!all(unique(as.numeric(exprs(object))) %in% 0:1))
+        stop("Your assay data is not binary!")
+    stopifnot(MARGIN %in% 1:2)    
+    if (MARGIN == 2)
+        K <- colSums(exprs(object))
+    else K <- rowSums(exprs(object))
+    if (missing(t) & missing(q))
+        t <- 1
+    if (missing(q)) {
+        sel <- K > t
+    } else {
+        sel <- K > quantile(K, q)    
+    }
+    if (MARGIN == 2)
+        ans <- object[, sel]
+    else ans <- object[sel, ]
+    if (validObject(ans))
+        return(ans)
 }
-

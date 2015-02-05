@@ -395,7 +395,7 @@ favourPrimary <- function(primary, auxiliary, object,
       
       primary <- markerMSnSet(primary, fcol)
       auxiliary <- markerMSnSet(auxiliary, fcol)
-      auxiliary <- filterX(auxiliary, t = 0)
+      auxiliary <- filterBinMSnSet(auxiliary, t = 0)
       
       fData(primary)$xxx <- fData(auxiliary)$xxx <- as.character(fData(primary)[, fcol])
       fData(primary)[val, "xxx"] <- fData(auxiliary)[val, "xxx"] <- rep("unknown", length(val))
@@ -539,11 +539,11 @@ thetaOptimisation  <- function(primary,
   }
   if (any(apply(exprs(primary), 2, function(z) all(z==0)))) {
     message("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed")
-    primary <- filterX(primary)
+    primary <- filterBinMSnSet(primary)
   }
   if (any(apply(exprs(auxiliary), 2, function(z) all(z==0)))) {
     message("The expression data slot in `auxiliary` contains column(s) of 0's - column(s) will be removed")
-    auxiliary <- filterX(auxiliary, t=0)
+    auxiliary <- filterBinMSnSet(auxiliary, t=0)
   }
   if (!all(names(table(fData(primary)[,fcol]))== 
              names(table(fData(auxiliary)[,fcol])))) {
@@ -551,8 +551,8 @@ thetaOptimisation  <- function(primary,
   }
   
   ## Select labelled data only and filter again to remove empty columns
-  primary <- filterX(markerMSnSet(primary, fcol), t=0)
-  auxiliary <- filterX(markerMSnSet(auxiliary, fcol), t=0)
+  primary <- filterBinMSnSet(markerMSnSet(primary, fcol), t=0)
+  auxiliary <- filterBinMSnSet(markerMSnSet(auxiliary, fcol), t=0)
   classes <- getClasses(primary, fcol, verbose = FALSE)
   nclass <- length(classes)
   
@@ -866,11 +866,11 @@ thetaClassification <- function(primary,
   
   if (any(apply(exprs(primary), 2, function(z) all(z==0)))) 
     message(paste("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed"))
-    primary <- filterX(primary)
+    primary <- filterBinMSnSet(primary)
   
   if (any(apply(exprs(auxiliary), 2, function(z) all(z==0)))) 
     message(paste("The expression data slot in `auxiliary` contains column(s) of 0's - column(s) will be removed"))
-    auxiliary <- filterX(auxiliary, t=0)
+    auxiliary <- filterBinMSnSet(auxiliary, t=0)
   
   
   ## Get k's

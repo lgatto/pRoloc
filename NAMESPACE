@@ -80,7 +80,7 @@ export(## MSnSet manipulation
     setStockcol, setStockpch,
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
-    filterX,
+    filterBinMSnSet,
     ## -- plotting
     plot2D,
     addLegend,

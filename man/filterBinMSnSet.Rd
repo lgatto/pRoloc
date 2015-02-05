@@ -11,16 +11,33 @@ filterBinMSnSet(object, MARGIN = 2, t, q)
 
 \item{MARGIN}{1 or 2. Default is 2.}
 
-\item{t}{Absolute number of non-0 values to filer out columns (rows).}
+\item{t}{If a row/column has more than \code{t} zeros, it will be
+filtered out.}
 
-\item{q}{Quantile defining the number of columns (rows) to filter.}
+\item{q}{If a row has a higher quantile than defined by \code{q},
+it will be filtered out.}
 }
 \value{
 A filtered \code{MSnSet}.
 }
 \description{
-Removes instances of columns or rows that have a certain
-proportion or absolute number of 0 values.
+Removes columns or rows that have a certain proportion or absolute
+number of 0 values.
+}
+\examples{
+set.seed(1)
+m <- matrix(sample(0:1, 25, replace=TRUE), 5)
+m[1, ] <- 0
+m[, 1] <- 0
+rownames(m) <- colnames(m) <- letters[1:5]
+fd <- data.frame(row.names = letters[1:5])
+x <- MSnSet(exprs = m, fData = fd, pData = fd)
+exprs(x)
+exprs(filterBinMSnSet(x, MARGIN = 2, t = 0))
+exprs(filterBinMSnSet(x, MARGIN = 2, t = 1))
+exprs(filterBinMSnSet(x, MARGIN = 2, t = 2))
+exprs(filterBinMSnSet(x, MARGIN = 2, t = 3))
+exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
 }
 \author{
 Laurent Gatto

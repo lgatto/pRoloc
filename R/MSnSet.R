@@ -495,16 +495,32 @@ getClasses <- function(object,
   }
 }
 
-##' Removes instances of columns or rows that have a certain
-##' proportion or absolute number of 0 values. 
+##' Removes columns or rows that have a certain proportion or absolute
+##' number of 0 values.
 ##'
 ##' @title Filter a binary MSnSet
 ##' @param object An \code{MSnSet}
 ##' @param MARGIN 1 or 2. Default is 2.
-##' @param t Absolute number of non-0 values to filer out columns (rows).
-##' @param q Quantile defining the number of columns (rows) to filter.
+##' @param t If a row/column has more than \code{t} zeros, it will be
+##' filtered out.
+##' @param q If a row has a higher quantile than defined by \code{q},
+##' it will be filtered out.
 ##' @return A filtered \code{MSnSet}.
 ##' @author Laurent Gatto
+##' @examples
+##' set.seed(1)
+##' m <- matrix(sample(0:1, 25, replace=TRUE), 5)
+##' m[1, ] <- 0
+##' m[, 1] <- 0
+##' rownames(m) <- colnames(m) <- letters[1:5]
+##' fd <- data.frame(row.names = letters[1:5])
+##' x <- MSnSet(exprs = m, fData = fd, pData = fd)
+##' exprs(x)
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 0))
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 1))
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 2))
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 3))
+##' exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
 filterBinMSnSet <- function(object, 
                             MARGIN = 2,
                             t, q) {

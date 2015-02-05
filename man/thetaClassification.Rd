@@ -33,10 +33,32 @@ A character vector of the classifications for the unknowns
 Classification using a variation of the KNN implementation
 of Wu and Dietterich's transfer learning schema
 }
+\examples{
+library(pRolocdata)
+data(andy2011)
+data(andy2011goCC)
+## reducing calculation time of k by pre-running knnOptimisation
+x <- c(andy2011, andy2011goCC)
+k <- lapply(x, function(z) knnOptimisation(z, times=5, fcol = "markers.orig"))
+k <- sapply(k, function(z) getRegularisedParams(z))
+k
+## reducing parameter search with theta = 1,
+## weights of only 1 or 0 will be considered
+opt <- thetaOptimisation(andy2011, andy2011goCC,
+                         fcol = "markers.orig", times = 2,
+                         by=1, k=k)
+opt
+th <- getParams(opt)
+plot(opt)
+plotThetas(opt)
+res <- thetaClassification(andy2011, andy2011goCC,
+                           fcol = "markers.orig", th, k)
+res
+}
 \author{
 Lisa Breckels
 }
 \seealso{
-\code{\link{thetaOptimisation}} and example therein.
+\code{\link{thetaOptimisation}}
 }
 

@@ -66,23 +66,10 @@ data sources. In Proceedings of the Twenty-First International
 Conference on Machine Learning, pages 871 - 878.  Morgan Kaufmann,
 2004. A grid search for the best theta is performed.
 }
-\examples{
-library(pRolocdata)
-data(andy2011)
-data(andy2011goCC)
-## reducing calculation time of k by pre-running knnOptimisation
-data <- c(andy2011, andy2011goCC)
-k <- lapply(data, function(z) knnOptimisation(z, times=5, fcol = "markers.orig"))
-k <- sapply(k, function(z) getRegularisedParams(z))
-## reducing parameter search with theta = 1, weights
-## of only 1 or 0 will be considered
-opt <- thetaOptimisation(andy2011, andy2011goCC, fcol = "markers.orig", times = 2, by=1, k=k)
-th <- getParams(opt)
-plot(opt)
-plotThetas(opt)
-res <- thetaClassification(andy2011, andy2011goCC, fcol = "markers.orig", th, k)
-}
 \author{
 Lisa Breckels
+}
+\seealso{
+\code{\link{thetaClassification}} and example therein.
 }
 

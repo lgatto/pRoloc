@@ -22,7 +22,7 @@ Depends: R (>= 2.15), MSnbase (>= 1.13.3), MLInterfaces (>= 1.37.1),
 Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
 	 kernlab, lattice, nnet, randomForest, proxy, FNN,
 	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
-	 mvtnorm
+	 mvtnorm, gtools, plyr
 Suggests: testthat, pRolocdata (>= 1.5.1), roxygen2, synapter, xtable,
 	  tsne, BiocStyle
 LinkingTo: Rcpp, RcppArmadillo
@@ -32,3 +32,32 @@ Video: https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow
 BugReports: https://github.com/lgatto/pRoloc/issues
 biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
 	   QualityControl
+Collate: AllGenerics.R                     
+	 machinelearning-framework.R
+	 machinelearning-framework-theta.R
+	 machinelearning-utils.R
+	 machinelearning-functions-knn.R
+	 machinelearning-functions-ksvm.R
+	 machinelearning-functions-nb.R
+	 machinelearning-functions-nnet.R
+	 machinelearning-functions-PerTurbo.R
+	 machinelearning-functions-plsda.R
+	 machinelearning-functions-rf.R
+	 machinelearning-functions-svm.R
+	 machinelearning-functions-theta.R
+	 belief.R
+	 distances.R
+	 markers.R
+	 chi2.R
+	 MLInterfaces.R
+	 clustering-framework.R
+	 MSnSet.R
+	 clustering-kmeans.R
+	 perTurbo-algorithm.R
+	 data.R
+	 phenodisco.R
+	 plotting.R
+	 environment.R
+	 utils.R
+	 lopims.R
+	 zzz.R

@@ -459,3 +459,70 @@ sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
       warning("New sample contains classes with < 6 markers")
   return(object)
 }
+
+##' Convenience accessor to the organelle classes in an 'MSnSet'.
+##' This function returns the organelle classes of an
+##' \code{MSnSet} instance. As a side effect, it prints out the classes.
+##' 
+##' @title Returns the organelle classes in an 'MSnSet'
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param fcol The name of the markers column in the \code{featureData}
+##' slot. Default is \code{markers}.
+##' @param verbose If \code{TRUE}, a character vector of the organelle
+##' classes is printed and the classes are returned invisibly. If \code{FALSE}, 
+##' the markers are returned.
+##' @param ... Additional parameters passed to \code{sort} from the base package.
+##' @return A \code{character} vector of the organelle classes in the data.
+##' @author Lisa Breckels
+##' @seealso \code{\link{getMarkers}}
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' organelles <- getClasses(dunkley2006)
+getClasses <- function(object,
+                       fcol = "markers",
+                       verbose = TRUE,
+                       ...) {
+  organelleMarkers <- getMarkers(object, fcol, verbose = FALSE)
+  classes <- unique(organelleMarkers)
+  classes <- sort(classes, ...)
+  classes <- classes[which(classes!="unknown")]
+  if (verbose) {
+    print(classes)
+    invisible(classes)
+  } else {
+    return(classes)
+  }
+}
+
+##' Removes instances of columns or rows that have a certain
+##' proportion or absolute number of 0 values. 
+##'
+##' @title Filter a binary MSnSet
+##' @param object An \code{MSnSet}
+##' @param MARGIN 1 or 2. Default is 2.
+##' @param t Absolute number of non-0 values to filer out columns (rows).
+##' @param q Quantile defining the number of columns (rows) to filter.
+##' @return A filtered \code{MSnSet}.
+##' @author Laurent Gatto
+filterX <- function(object, 
+                    MARGIN = 2,
+                    t, q) {
+  stopifnot(MARGIN %in% 1:2)
+  if (MARGIN == 2)
+    K <- colSums(exprs(object))
+  else K <- rowSums(exprs(object))
+  if (missing(t) & missing(q))
+    t <- 1
+  if (missing(q)) {
+    sel <- K > t
+  } else {
+    sel <- K > quantile(K, q)    
+  }
+  if (MARGIN == 2)
+    ans <- object[, sel]
+  else ans <- object[sel, ]
+  if (validObject(ans))
+    return(ans)
+}
+

@@ -41,10 +41,12 @@ importFrom(sampling, strata)
 importFrom(e1071, svm, naiveBayes, cmeans)
 importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
-
+importFrom(gtools, permutations)
+importFrom(plyr, colwise, catcolwise, ddply)
 
 exportClasses(GenRegRes)
-              # ClustRegRes)
+              ## ThetaRegRes
+              ## ClustRegRes)
 
 exportMethods(chi2,
               show,
@@ -67,6 +69,7 @@ export(## MSnSet manipulation
     sampleMSnSet, testMSnSet,
     getPredictions,
     getMarkers,
+    getClasses,
     minClassScore,
     testMarkers, 
     minMarkers,
@@ -77,6 +80,7 @@ export(## MSnSet manipulation
     setStockcol, setStockpch,
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
+    filterX,
     ## -- plotting
     plot2D,
     addLegend,
@@ -102,6 +106,14 @@ export(## MSnSet manipulation
     rfPrediction, rfClassification, 
     phenoDisco,
     makeNaData, makeNaData2, whichNA,
+    ## --theta
+    ## favourPrimary,
+    ## plotThetas,
+    ## combineThetaRegRes,
+    ## thetaOptimisation,
+    ## thetaClassification,
+    ## thetas, ## ?
+    ## createPartitions,
     ## -- pipelines
     lopims, lopims1, lopims2, lopims3, lopims4, lopims5
 )

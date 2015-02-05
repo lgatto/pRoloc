@@ -22,7 +22,7 @@ Depends: R (>= 2.15), MSnbase (>= 1.13.3), MLInterfaces (>= 1.37.1),
 Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
 	 kernlab, lattice, nnet, randomForest, proxy, FNN,
 	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
-	 mvtnorm, gtools, plyr
+	 mvtnorm, gtools, plyr, ggplot2
 Suggests: testthat, pRolocdata (>= 1.5.1), roxygen2, synapter, xtable,
 	  tsne, BiocStyle
 LinkingTo: Rcpp, RcppArmadillo

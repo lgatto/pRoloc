@@ -509,7 +509,7 @@ filterBinMSnSet <- function(object,
                             MARGIN = 2,
                             t, q) {
     if (!all(unique(as.numeric(exprs(object))) %in% 0:1))
-        stop("Your assay data is not binary!")
+        warning("Your assay data is not binary!")
     stopifnot(MARGIN %in% 1:2)    
     if (MARGIN == 2)
         K <- colSums(exprs(object))

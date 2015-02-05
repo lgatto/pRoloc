@@ -22,6 +22,7 @@ importFrom(MLInterfaces,
 import(Biobase)
 
 import(lattice)
+import(ggplot2)
 import(BiocGenerics)
 import(mclust)
 import(MASS)
@@ -44,8 +45,8 @@ importFrom(randomForest, randomForest)
 importFrom(gtools, permutations)
 importFrom(plyr, colwise, catcolwise, ddply)
 
-exportClasses(GenRegRes)
-              ## ThetaRegRes
+exportClasses(GenRegRes,
+              ThetaRegRes)
               ## ClustRegRes)
 
 exportMethods(chi2,
@@ -107,13 +108,13 @@ export(## MSnSet manipulation
     phenoDisco,
     makeNaData, makeNaData2, whichNA,
     ## --theta
-    ## favourPrimary,
-    ## plotThetas,
-    ## combineThetaRegRes,
-    ## thetaOptimisation,
-    ## thetaClassification,
-    ## thetas, ## ?
-    ## createPartitions,
+    favourPrimary,
+    plotThetas,
+    combineThetaRegRes,
+    thetaOptimisation,
+    thetaClassification,
+    thetas, 
+    createPartitions,
     ## -- pipelines
     lopims, lopims1, lopims2, lopims3, lopims4, lopims5
 )

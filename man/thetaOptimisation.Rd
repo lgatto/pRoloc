@@ -18,7 +18,7 @@ thetaOptimisation(primary, auxiliary, fcol = "markers", k, times = 20,
 Default is \code{markers}.}
 
 \item{k}{Numeric vector of length 2, containing the best \code{k}
-parameters to use for the primary (\code(k[1])) and auxiliary
+parameters to use for the primary (\code{k[1]}) and auxiliary
 (\code{k[2]}) datasets. See \code{knnOptimisation} for generating
 best \code{k}.}
 
@@ -41,7 +41,7 @@ to test.}
 generated from the function \code{thetas}, the number of columns
 should be equal to the number of classes contained in
 \code{fcol}. Note: columns will be ordered according to
-\code{getClasses(primary, fcol)}.}
+\code{getMarkerClasses(primary, fcol)}.}
 
 \item{xfolds}{Option to pass specific folds for the cross
 validation.}

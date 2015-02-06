@@ -70,7 +70,7 @@ export(## MSnSet manipulation
     sampleMSnSet, testMSnSet,
     getPredictions,
     getMarkers,
-    getClasses,
+    getMarkerClasses,
     minClassScore,
     testMarkers, 
     minMarkers,

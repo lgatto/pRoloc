@@ -35,7 +35,7 @@ context("thetaFunctions")
 ##   P <- relabel(P, seed = 1)
 ##   A <- relabel(A, seed = 1)
   
-##   cl <- getClasses(P, verbose=FALSE)
+##   cl <- getMarkerClasses(P, verbose=FALSE)
 ##   expect_equal(fData(P)$test, fData(A)$test)
   
 ##   ## Check for using all primary

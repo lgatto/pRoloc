@@ -478,11 +478,11 @@ sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
-##' organelles <- getClasses(dunkley2006)
-getClasses <- function(object,
-                       fcol = "markers",
-                       verbose = TRUE,
-                       ...) {
+##' organelles <- getMarkerClasses(dunkley2006)
+getMarkerClasses <- function(object,
+                           fcol = "markers",
+                           verbose = TRUE,
+                           ...) {
   organelleMarkers <- getMarkers(object, fcol, verbose = FALSE)
   classes <- unique(organelleMarkers)
   classes <- sort(classes, ...)

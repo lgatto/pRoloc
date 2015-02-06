@@ -6,12 +6,16 @@
 \alias{class:GenRegRes}
 \alias{class:ThetaRegRes}
 \alias{GenRegRes-class}
+\alias{ThetaRegRes-class}
 \alias{getF1Scores}
 \alias{getF1Scores,GenRegRes-method}
+\alias{getF1Scores,ThetaRegRes-method}
 \alias{f1Count}
 \alias{f1Count,GenRegRes-method}
+\alias{f1Count,ThetaRegRes-method}
 \alias{getParams}
 \alias{getParams,GenRegRes-method}
+\alias{getParams,ThetaRegRes-method}
 \alias{getRegularisedParams}
 \alias{getRegularisedParams,GenRegRes-method}
 \alias{getRegularizedParams}
@@ -23,7 +27,9 @@
 \alias{levelPlot}
 \alias{levelPlot,GenRegRes-method}
 \alias{plot,GenRegRes,missing-method}
+\alias{plot,ThetaRegRes,missing-method}
 \alias{show,GenRegRes-method}
+\alias{show,ThetaRegRes-method}
 
 \title{Class \code{"GenRegRes"} and \code{"ThetaRegRes"}}
 

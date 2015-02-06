@@ -2,7 +2,9 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{GenRegRes}
+\alias{ThetaRegRes}
 \alias{class:GenRegRes}
+\alias{class:ThetaRegRes}
 \alias{GenRegRes-class}
 \alias{getF1Scores}
 \alias{getF1Scores,GenRegRes-method}
@@ -23,17 +25,17 @@
 \alias{plot,GenRegRes,missing-method}
 \alias{show,GenRegRes-method}
 
-\title{Class \code{"GenRegRes"}}
+\title{Class \code{"GenRegRes"} and \code{"ThetaRegRes"}}
 
 \description{
-  Regularisation framework container.
+  Regularisation framework containers.
 }
 
 \section{Objects from the Class}{
   Object of this class are created with the respective regularisation
-  function: \code{\link{knnRegularisation}},
-  \code{\link{svmRegularisation}}, \code{\link{plsdaRegularisation}},
-  ... 
+  function: \code{\link{knnOptimisation}},
+  \code{\link{svmOptimisation}}, \code{\link{plsdaOptimisation}},
+  \code{\link{thetaOptimisation}}, ... 
 }
 
 \section{Slots}{
@@ -63,23 +65,39 @@
       about the respective inner and outter training and testing data
       sizes.  }
   }
+
+  Only in \code{ThetaRegRes}:
+
+  \describe{
+    \item{\code{predictions}:}{ A \code{list} of predictions for the
+      optimisation iterations. }    
+    \item{\code{otherWeights}:}{ Alternative best theta weigts: a vector
+      per iterations, \code{NULL} if no other best weights were found. }    
+  }
+  
 }
+
 \section{Methods}{
   \describe{
-    \item{getF1Scores}{\code{signature(object = "GenRegRes")}: ... }
+    \item{getF1Scores}{Returns a matrix of F1 scores for the
+      optimisation parameters. }
     \item{f1Count}{\code{signature(object = "GenRegRes", t =
+	"numeric")} and \code{signature(object = "ThetaRegRes", t =
 	"numeric")}: Constructs a table of all possible parameter
       combination and count how many have an F1 scores greater or equal
       than \code{t}. When \code{t} is missing (default), the best F1
       score is used. This method is useful in conjunctin with
       \code{plot}. }
-    \item{getRegularisedParams}{\code{signature(object = "GenRegRes")}: ... }
-    \item{getRegularizedParams}{\code{signature(object = "GenRegRes")}: ... }
-    \item{getSeed}{\code{signature(object = "GenRegRes")}: ... }
-    \item{getWarnings}{\code{signature(object = "GenRegRes")}: ... }
-    \item{levelPlot}{\code{signature(object = "GenRegRes")}: ... }
-    \item{plot}{\code{signature(x = "GenRegRes", y = "missing")}: ... }
-    \item{show}{\code{signature(object = "GenRegRes")}: ... }
+    \item{getParams}{Returns the \emph{best} parameters. It is however
+      recommended to inspect the optimisation results. }
+    \item{getSeed}{Returns the seed used for the optimisation run. }
+    \item{getWarnings}{\code{signature(object = "GenRegRes")}: Returns a
+      vector of recorded warnings. }
+    \item{levelPlot}{\code{signature(object = "GenRegRes")}: Plots a
+      heatmap of of the optimisation results. Only for
+      \code{"GenRegRes"} instances. }
+    \item{plot}{Plots the optisisation results. }
+    \item{show}{Shows the object. }
   }
 }
 
@@ -91,6 +109,7 @@
 
 \examples{
 showClass("GenRegRes")
+showClass("ThetaRegRes")
 }
 
 \keyword{classes}

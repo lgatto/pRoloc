@@ -30,15 +30,6 @@ createPartitions <- function(markers,
     return(ans)
 }
 
-## Generate folds to test
-                                        #getFolds <- function(markers,
-                                        #                     times) {
-                                        #                     xval,
-                                        #  if(is.null(names(markers))) {stop("No protein names for markers vector specified")}
-                                        #  folds.idx <- replicate(times, createFolds(markers, xval, returnTrain = FALSE))
-                                        #  xfolds <- apply(folds.idx, 2, function(z) {lapply(z, function(x) names(markers)[x])}) 
-                                        #}
-
 ## Draw matrix of thetas to test
 thetas <- function(nclass, 
                    by = .5,
@@ -109,7 +100,7 @@ vc.res <- function(vp, va, theta) {
         .vc <- sapply(n, function(z) mapply(.foo, x=vp[, z], y=va[, z], n=z))
         colnames(.vc) <- colnames(vp)
         rownames(.vc) <- rownames(vp)
-                                        #res <- apply(.vc, 1, function(z) names(which.max(z)))
+        ## res <- apply(.vc, 1, function(z) names(which.max(z)))
         return(.vc)
     } else {
         stop("Classes differ in input matrices")
@@ -263,6 +254,8 @@ classify <- function(primary,
 ## Now split theta matrix
 ## Generate thetas to use as input
 splitTh <- function(theta, cores) {
+    if (cores == 1)
+        return(list(theta))
     spl <- round(nrow(theta)/cores)
     t <- vector("list", cores)
     foo <- function(x,y) c(((x-1)*y+1):(x*y))
@@ -275,7 +268,7 @@ splitTh <- function(theta, cores) {
             t[[i]] <- foo(i, spl)
         }
     }
-    set <- lapply(t, function(z) theta[z, ])
+    lapply(t, function(z) theta[z, ])    
 }
 
 ## Core optimisation function for thetaOptimisation. 
@@ -341,18 +334,24 @@ opt <- function(primary,
 }
 
 
-
-
 ## Function to favour primary data when there is multiple best theta weights
 favourPrimary <- function(primary, auxiliary, object, 
                           verbose = TRUE) {
+
+    stopifnot(inherits(primary, "MSnSet"))
+    stopifnot(inherits(auxiliary, "MSnSet"))
+    stopifnot(inherits(object, "ThetaRegRes"))
+    
     .other <- sapply(object@otherWeights, rbind)
     .chk <- sapply(.other, nrow)
-    if (all(.chk == 0)) stop("No otherWeights in ThetaRegRes, no possible other best weights")
+    if (all(.chk == 0)) {
+        warning("No otherWeights in ThetaRegRes, no possible other best weights")
+        return(object)
+    }
     
-    fcol = object@datasize$fcol
-    N = object@design[3]
-    k = object@hyperparameters$k
+    fcol <- object@datasize$fcol
+    N <- object@design[3]
+    k <- object@hyperparameters$k
     
     ## Initialise new results matrix, otherWeights, confusion matrices
     ncl <- length(getClasses(primary, fcol, verbose = FALSE))
@@ -395,10 +394,14 @@ favourPrimary <- function(primary, auxiliary, object,
             
             primary <- markerMSnSet(primary, fcol)
             auxiliary <- markerMSnSet(auxiliary, fcol)
-            auxiliary <- filterBinMSnSet(auxiliary, t = 0)
+            ## auxiliary <- filterBinMSnSet(auxiliary, t = 0, verbose = FALSE)
             
-            fData(primary)$xxx <- fData(auxiliary)$xxx <- as.character(fData(primary)[, fcol])
-            fData(primary)[val, "xxx"] <- fData(auxiliary)[val, "xxx"] <- rep("unknown", length(val))
+            fData(primary)$xxx <-
+                fData(auxiliary)$xxx <-
+                    as.character(fData(primary)[, fcol])
+            fData(primary)[val, "xxx"] <-
+                fData(auxiliary)[val, "xxx"] <-
+                    rep("unknown", length(val))
             res <- thetaClassification(primary, auxiliary, fcol = "xxx",
                                        bestTheta = th, k = k)
             lev <- names(th) 
@@ -450,8 +453,9 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
 ##' @param k Numeric vector of length 2, containing the best \code{k}
-##' parameters to use for the primary and auxiliary datasets. See
-##' \code{knnOptimisation} for generating best \code{k}.
+##' parameters to use for the primary (\code(k[1])) and auxiliary
+##' (\code{k[2]}) datasets. See \code{knnOptimisation} for generating
+##' best \code{k}.
 ##' @param times The number of times cross-validation is
 ##' performed. Default is 20.
 ##' @param test.size The size of test (validation) data. Default is
@@ -492,16 +496,16 @@ thetaOptimisation  <- function(primary,
                                BPPARAM = BiocParallel::bpparam()
                                ) {  
     ## Set seed (removed for Darwin HPC)
-                                        #if (missing(seed)) {
-                                        #  seed <- sample(.Machine$integer.max, 1)
-                                        #} 
-                                        #.seed <- as.integer(seed)
-                                        #set.seed(.seed)
+    ## if (missing(seed)) {
+    ##   seed <- sample(.Machine$integer.max, 1)
+    ## } 
+    ## .seed <- as.integer(seed)
+    ## set.seed(.seed)
     
     ## Check object validity
     if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))
         stop("Primary and auxiliary must both be of class 'MSnSet'")
-    
+
     ## check k specified
     if (missing(k)) {
         stop("No k specified. Generate best k's for primary and auxiliary. See
@@ -512,38 +516,32 @@ thetaOptimisation  <- function(primary,
            data source)")
         }
     }
-    
-    ## Check datasets have some common proteins and no columns of 0's
-    if (!length(intersect(featureNames(primary), 
-                          featureNames(auxiliary))) > 0) {
-        stop("No common proteins in primary and auxilary data")
-    }
-    if (!length(intersect(fData(primary)[,fcol], 
-                          fData(auxiliary)[,fcol])) > 0) {
-        stop("No common markers in primary and auxilary data")
-    }
-    ## if (any(apply(exprs(primary), 2, function(z) all(z==0)))) {
-    ##     message("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed")
-    ##     primary <- filterBinMSnSet(primary) 
-    ## }
-    if (any(apply(exprs(auxiliary), 2, function(z) all(z==0)))) {
-        message("The expression data slot in `auxiliary` contains column(s) of 0's - column(s) will be removed")
-        auxiliary <- filterBinMSnSet(auxiliary, t=0)
-    }
-    if (!all(names(table(fData(primary)[,fcol]))== 
-                 names(table(fData(auxiliary)[,fcol])))) {
+
+    ## We don't care about the unlabelled/unknown instances here, and
+    ## want an overlap of marker features. It is not a strict
+    ## requirement to have the same markes; different markers will be
+    ## used for training, not for validation of testing (to be checked
+    ## though).
+    primary <- markerMSnSet(primary, fcol)
+    auxiliary <- markerMSnSet(auxiliary, fcol)
+
+    ## Check datasets have some common proteins
+    if (length(intersect(featureNames(primary),
+                         featureNames(auxiliary))) == 0) 
+        stop("No common marker proteins in primary and auxilary data")
+
+    if (!identical(sort(unique(getMarkers(primary, fcol, verbose = FALSE))),
+                   sort(unique(getMarkers(auxiliary, fcol, verbose = FALSE)))))
         stop("Different classes in fcol's between data sources")
-    }
     
-    ## Select labelled data only and filter again to remove empty columns
-    ## primary <- filterBinMSnSet(markerMSnSet(primary, fcol), t=0)
-    auxiliary <- filterBinMSnSet(markerMSnSet(auxiliary, fcol), t=0)
+    ## Filter to remove empty columns - to best tested
+    auxiliary <- filterBinMSnSet(auxiliary, t=0, verbose = FALSE)
     classes <- getClasses(primary, fcol, verbose = FALSE)
     nclass <- length(classes)
     
     ## Generate thetas to test
     if (missing(th)) {
-        if(!missing(length.out)) {
+        if (!missing(length.out)) {
             th <- thetas(nclass, length.out = length.out)
             w1 <- seq(0, 1, length.out = length.out)
             w2 <- 1-w1
@@ -558,14 +556,14 @@ thetaOptimisation  <- function(primary,
         ## Check the input matrix
         nP <- names(table(fData(primary)[,fcol]))
         nA <- names(table(fData(auxiliary)[,fcol]))
-        if (any(nP=="unknown")) {
+        if (any(nP == "unknown")) {
             nP <- length(nP)-1
             nA <- length(nA)-1
         } else {
             nP <- length(nP)
             nA <- length(nA)
         }
-        if (class(th) == "numeric") {
+        if (class(th) == "numeric") { ## best thetas 
             if (length(th) != nP | length(th) != nA) 
                 stop("theta vector has a different number of classes to the data")
             if (is.null(names(th))) {
@@ -611,7 +609,6 @@ thetaOptimisation  <- function(primary,
     ## Do subsetting for train/validation partition if not specified in xfolds
     if (missing(xfolds)) {
         xfolds <- createPartitions(markers, xval, times, test.size)
-                                        #xfolds <- getFolds(markers, xval, times) 
     } else {
         if(class(xfolds) != "list" | length(xfolds) != 3 | 
            length(xfolds[[1]]) != times | class(xfolds[[1]][[1]])!="character") {
@@ -619,8 +616,9 @@ thetaOptimisation  <- function(primary,
            pRoloc::createPartitons")
         }
     }
-    
-    if (.numTh == 1) {
+
+    .workers <- BPPARAM$workers
+    if (.numTh == 1 | .workers == 1) {
         .res <- opt(primary = primary, 
                     auxiliary = auxiliary,
                     cmn.markers = markers,
@@ -630,12 +628,11 @@ thetaOptimisation  <- function(primary,
                     k = k,
                     theta = th, 
                     xfolds = xfolds
-                                        # test.size = test.size
+                    ## test.size = test.size
                     )
         .f1Matrices <- .res
         .thNames <- "th1"
     } else {
-        .workers <- BPPARAM$workers
         if (.numTh < .workers) {
             .workers <- .numTh # Is there enough rows in the matrix to split amongst cores
         }
@@ -650,7 +647,7 @@ thetaOptimisation  <- function(primary,
                 k = k,
                 theta = z, 
                 xfolds = xfolds
-                                        #test.size = test.size
+                ## test.size = test.size
                 )}, 
                          BPPARAM = BPPARAM)
         .f1Matrices <- sapply(1:times, function(x) 
@@ -668,7 +665,7 @@ thetaOptimisation  <- function(primary,
         
         names(.f1Matrices[[.times]]) <- .thNames
         
-        if (.numTh != 1) {
+        if (.numTh != 1 | .workers != 1) {
             ## Find thetas with highest macroF1
             allbest <- which(.f1Matrices[[.times]] == max(.f1Matrices[[.times]]))
             
@@ -762,10 +759,12 @@ thetaOptimisation  <- function(primary,
     }    
     
     if (.numTh != 1) {
-        .thList <- sapply(.thetaSubsets, nrow)
-        .log$splits <- sapply(.thList, function(z)
-            paste("Theta matrix was split into ", .workers, 
-                  "matrices for optimal parallelisation with nrow = ", z))
+        if (.workers != 1) {
+            .thList <- sapply(.thetaSubsets, nrow)
+            .log$splits <- sapply(.thList, function(z)
+                paste("Theta matrix was split into ", .workers, 
+                      "matrices for optimal parallelisation with nrow = ", z))
+        }
     }
     
     ans <- new("ThetaRegRes",
@@ -832,59 +831,41 @@ thetaClassification <- function(primary,
                                 scores = c("prediction", "all", "none")) {  
     
     scores <- match.arg(scores)
-    markers <- getMarkers(primary, fcol, verbose=FALSE)
-    classes <- getClasses(primary, fcol, verbose=FALSE)
-    un <- featureNames(unknownMSnSet(primary, fcol))
-    all.un <- table(c(featureNames(unknownMSnSet(primary, fcol)), 
-                      featureNames(unknownMSnSet(auxiliary, fcol))))
-
-    ## Check object validity
-    if (!class(primary) == "MSnSet" | !class(auxiliary) == "MSnSet")
+    if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))
         stop("Primary and auxiliary must both be of class 'MSnSet'")
-    
-    if (!any(markers=="unknown")) 
+
+    markers <- getMarkers(primary, fcol, verbose = FALSE)
+    classes <- getClasses(primary, fcol, verbose = FALSE)
+    if (!any(markers == "unknown")) 
         stop("No unknown proteins to classify")
     
-    if (any(all.un!=2))
-        stop("Different unknown proteins in primary and auxiliary data")
+    ## In thetaClassification, we want to have the same unknowns [*],
+    ## not necessarily in the same order. Different markers are not a
+    ## problem (although this should not happen, as not allowed in
+    ## thetaOptimisation, where some overlap in needed). We look at
+    ## the unknowns' nearest neighbours independently.  [*] it would
+    ## be possible to have the same ones, but we don't bother.
+    if (!checkSortedFeatureNames(unknownMSnSet(primary, fcol),
+                                 unknownMSnSet(auxiliary, fcol)))
+        stop("Feature names of unknown features don't match exactly.")
     
-    if (!length(bestTheta)==length(classes)) 
+    if (inherits(bestTheta, "ThetaRegRes")) {
+        k <- bestTheta@hyperparameters$k
+        bestTheta <- getParams(bestTheta)
+    }    
+        
+    if (length(bestTheta) != length(classes)) 
         stop("Classes in best theta and classes in data do not match")
     
-    if (is.null(bestTheta)) {
-        message("Note: bestTheta vector will be ordered according to classes: ", 
-                paste(classes, collpase = ""), 
-                "(as names have not been explicitly defined)")
-    } else {
-        if(!all(names(bestTheta) == classes))
-            stop("Classes in data and bestTheta do not match")    
-    } 
-    
-    
-    ## Check datasets are the same size and no columns of 0's
-    if (!length(intersect(featureNames(primary), 
-                          featureNames(auxiliary))) > 0) 
-        stop("No common proteins in primary and auxilary data")
-    
-    if (!length(intersect(featureNames(markerMSnSet(primary, fcol)), 
-                          featureNames(markerMSnSet(auxiliary, fcol)))) > 0) 
-        stop("No common marker proteins in primary and auxilary data")
-    
-    ## if (any(apply(exprs(primary), 2, function(z) all(z==0)))) 
-    ##     message(paste("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed"))
-    ## primary <- filterBinMSnSet(primary)
-    
-    if (any(apply(exprs(auxiliary), 2, function(z) all(z==0)))) 
-        message(paste("The expression data slot in `auxiliary` contains column(s) of 0's - column(s) will be removed"))
-    auxiliary <- filterBinMSnSet(auxiliary, t=0)
-    
-    
+    if (!identical(names(bestTheta), classes))
+        stop("Classes in data and bestTheta do not match")    
+        
     ## Get k's
     if (missing(k)) {
         stop("Use the same k as for thetaOptimisation.")
     } else {
         if (!is.numeric(k)) stop("Input k is not of class 'numeric'")
-        if (!length(k)==2) stop("Input k must be of length 2")
+        if (!length(k) == 2) stop("Input k must be of length 2")
     }
     
     ## Generate nearest neighbours for each protein in primary 
@@ -912,7 +893,8 @@ thetaClassification <- function(primary,
     X <- match(featureNames(uP), featureNames(primary))
     
     ## Added as check for LMB (will remove later)
-    if (all(colnames(vcMatrix) != classes)) {stop("Column names in vote matrix not equal to classes")}
+    if (all(colnames(vcMatrix) != classes))
+        stop("Column names in vote matrix not equal to classes")
     if (scores == "all") {
         .scoreMatrix <- matrix(data = NA, nrow = nrow(primary), 
                                ncol = length(classes))
@@ -937,7 +919,7 @@ thetaClassification <- function(primary,
     
     ## Get final classification
     res <- getPrediction(vcMatrix)
-    y <- vector("character", nrow(primary))
+    y <- rep("unknown", nrow(primary))
     y[L] <- as.character(fData(primary)[L, fcol])
     y[X] <- res
     fData(primary)$theta <- as.factor(y)

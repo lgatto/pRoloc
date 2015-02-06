@@ -21,8 +21,8 @@ checkSortedFeatureNames <- function(x, y)
 ##' @param x An \code{MSnSet} instance.
 ##' @param y An \code{MSnSet} instance.
 ##' @param fcolx The feature variable to separate unknown
-##' (\code{fData(y)$coly == "unknown") from the marker features in the
-##' \code{x} object.
+##' (\code{fData(y)$coly == "unknown"}) from the marker features in
+##' the \code{x} object.
 ##' @param fcoly As \code{fcolx}, for the \code{y} object. If missing,
 ##' the value of \code{fcolx} is used.
 ##' @param verbose If \code{TRUE} (default), the overlap is printed
@@ -69,8 +69,29 @@ checkFeatureNamesOverlap <-
                        unknownsX = xu,
                        unknownsU = yu))
 }
-
-checkMarkersOverlap <- function(x, y, fcolx = "markers", fcoly,
+##' Extracts qualitative feature variables from two \code{MSnSet}
+##' instances and compares with a contingency table.
+##'
+##' @title Compare a feature variable overlap
+##' @param x An \code{MSnSet} instance. 
+##' @param y An \code{MSnSet} instance. 
+##' @param fcolx The feature variable to separate unknown
+##' (\code{fData(y)$coly == "unknown"}) from the marker features in
+##' the \code{x} object.
+##' @param fcoly As \code{fcolx}, for the \code{y} object. If missing,
+##' the value of \code{fcolx} is used.
+##' @param verbose If \code{TRUE} (default), the contingency table of
+##' the the feature variables is printed out.
+##' @return Invisibly returns a named list with the values of the
+##' diagonal, upper and lower triangles of the contingency table.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' res <- checkFvarOverlap(dunkley2006, dunkley2006,
+##'                         "markers", "markers.orig")
+##' str(res)
+checkFvarOverlap <- function(x, y, fcolx = "markers", fcoly,
                                 verbose = TRUE) {
     stopifnot(checkFeatureNames(x, y))
     if (missing(fcoly)) fcoly <- fcolx

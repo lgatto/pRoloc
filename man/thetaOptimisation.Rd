@@ -18,8 +18,9 @@ thetaOptimisation(primary, auxiliary, fcol = "markers", k, times = 20,
 Default is \code{markers}.}
 
 \item{k}{Numeric vector of length 2, containing the best \code{k}
-parameters to use for the primary and auxiliary datasets. See
-\code{knnOptimisation} for generating best \code{k}.}
+parameters to use for the primary (\code(k[1])) and auxiliary
+(\code{k[2]}) datasets. See \code{knnOptimisation} for generating
+best \code{k}.}
 
 \item{times}{The number of times cross-validation is
 performed. Default is 20.}

@@ -87,6 +87,9 @@ export(## MSnSet manipulation
     addLegend,
     plotDist,
     highlightOnPlot,
+    ## -- data checks
+    checkFvarOverlap,
+    checkFeatureNamesOverlap,
     ## -- machine learning
     plsdaRegularisation, plsdaOptimisation, plsdaOptimization, 
     plsdaPrediction, plsdaClassification,

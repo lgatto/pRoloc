@@ -53,7 +53,7 @@ getNN <- function(object, query, fcol, k,
                   include.unknowns = FALSE,
                   include.dist = FALSE) {
     .markers <- getMarkers(object, fcol, verbose=FALSE)
-    .classes <- getClasses(object, fcol, verbose = FALSE)
+    .classes <- getMarkerClasses(object, fcol, verbose = FALSE)
     if (!include.unknowns) {
         if(any(.classes=="unknown")) {
             .classes <- .classes[-(which(.classes=="unknown"))]
@@ -354,7 +354,7 @@ favourPrimary <- function(primary, auxiliary, object,
     k <- object@hyperparameters$k
     
     ## Initialise new results matrix, otherWeights, confusion matrices
-    ncl <- length(getClasses(primary, fcol, verbose = FALSE))
+    ncl <- length(getMarkerClasses(primary, fcol, verbose = FALSE))
     results <- matrix(NA, nrow = N, ncol = ncl + 1)
     colnames(results) <- colnames(object@results)
     
@@ -394,7 +394,7 @@ favourPrimary <- function(primary, auxiliary, object,
             
             primary <- markerMSnSet(primary, fcol)
             auxiliary <- markerMSnSet(auxiliary, fcol)
-            ## auxiliary <- filterBinMSnSet(auxiliary, t = 0, verbose = FALSE)
+            auxiliary <- filterBinMSnSet(auxiliary, t = 0, verbose = FALSE)
             
             fData(primary)$xxx <-
                 fData(auxiliary)$xxx <-
@@ -453,7 +453,7 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
 ##' @param k Numeric vector of length 2, containing the best \code{k}
-##' parameters to use for the primary (\code(k[1])) and auxiliary
+##' parameters to use for the primary (\code{k[1]}) and auxiliary
 ##' (\code{k[2]}) datasets. See \code{knnOptimisation} for generating
 ##' best \code{k}.
 ##' @param times The number of times cross-validation is
@@ -470,7 +470,7 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' generated from the function \code{thetas}, the number of columns
 ##' should be equal to the number of classes contained in
 ##' \code{fcol}. Note: columns will be ordered according to
-##' \code{getClasses(primary, fcol)}.
+##' \code{getMarkerClasses(primary, fcol)}.
 ##' @param xfolds Option to pass specific folds for the cross
 ##' validation.
 ##' @param BPPARAM Required for parallelisation. If not specified
@@ -536,7 +536,7 @@ thetaOptimisation  <- function(primary,
     
     ## Filter to remove empty columns - to best tested
     auxiliary <- filterBinMSnSet(auxiliary, t=0, verbose = FALSE)
-    classes <- getClasses(primary, fcol, verbose = FALSE)
+    classes <- getMarkerClasses(primary, fcol, verbose = FALSE)
     nclass <- length(classes)
     
     ## Generate thetas to test
@@ -563,42 +563,27 @@ thetaOptimisation  <- function(primary,
             nP <- length(nP)
             nA <- length(nA)
         }
-        if (class(th) == "numeric") { ## best thetas 
-            if (length(th) != nP | length(th) != nA) 
-                stop("theta vector has a different number of classes to the data")
-            if (is.null(names(th))) {
-                message("Note: vector will be ordered according to classes: ", 
-                        paste(classes, collpase = ""), 
-                        "(as names are not explicitly defined)")
-                names(th) <- classes
-            } else {
-                th <- th[c(match(classes, names(th)))]
-            }
-            .numTh <- 1
+        if (!is.matrix(th)) stop("thetas is not a matrix")
+
+        if (!all(nP == ncol(th)))
+            stop("thetas has a different number of classes to primary data")
+        if (!all(nA == ncol(th)))
+            stop("thetas has a different number of classes to primary data")
+        if (is.null(colnames(th))) {
+            message("Note: vector will be ordered according to classes: ", 
+                    paste(classes, collpase = ""), 
+                    "(as names are not explicitly defined)")
+            colnames(th) <- classes
         } else {
-            if (!is.matrix(th)) {
-                stop("thetas is not a matrix")
-            }
-            if (!all(nP == ncol(th)))
-                stop("thetas has a different number of classes to primary data")
-            if (!all(nA == ncol(th)))
-                stop("thetas has a different number of classes to primary data")
-            if (is.null(colnames(th))) {
-                message("Note: vector will be ordered according to classes: ", 
-                        paste(classes, collpase = ""), 
-                        "(as names are not explicitly defined)")
-                colnames(th) <- classes
-            } else {
-                th <- th[, c(match(classes, colnames(th)))]
-            }
-            .numTh <- nrow(th)
-        }      
+            th <- th[, c(match(classes, colnames(th)))]
+        }
+        .numTh <- nrow(th)
         w1 <- unique(as.vector(th))
         w2 <- 1-w1
     }
 
     ## Now select proteins common in both sets
-                                        #n <- 1:nrow(auxiliary)
+    ## n <- 1:nrow(auxiliary)
     pn <- featureNames(primary)
     an <- featureNames(auxiliary)
     cmn <- intersect(pn, an)
@@ -612,60 +597,44 @@ thetaOptimisation  <- function(primary,
     } else {
         if(class(xfolds) != "list" | length(xfolds) != 3 | 
            length(xfolds[[1]]) != times | class(xfolds[[1]][[1]])!="character") {
-            stop("If 'xfolds' is specified it must be generated using the function
-           pRoloc::createPartitons")
+            stop("If 'xfolds' is specified it must be generated using ",
+                 "the function pRoloc::createPartitons")
         }
     }
 
     .workers <- BPPARAM$workers
-    if (.numTh == 1 | .workers == 1) {
-        .res <- opt(primary = primary, 
-                    auxiliary = auxiliary,
-                    cmn.markers = markers,
-                    fcol = fcol, 
-                    xval = xval,
-                    times = times,
-                    k = k,
-                    theta = th, 
-                    xfolds = xfolds
-                    ## test.size = test.size
-                    )
-        .f1Matrices <- .res
-        .thNames <- "th1"
-    } else {
-        if (.numTh < .workers) {
-            .workers <- .numTh # Is there enough rows in the matrix to split amongst cores
-        }
-        .thetaSubsets <- splitTh(theta = th, cores = .workers)
-        .res <- bplapply(.thetaSubsets, function(z) {
-            opt(primary = primary, 
-                auxiliary = auxiliary,
-                cmn.markers = markers,
-                fcol = fcol, 
-                xval = xval,
-                times = times,
-                k = k,
-                theta = z, 
-                xfolds = xfolds
-                ## test.size = test.size
-                )}, 
-                         BPPARAM = BPPARAM)
-        .f1Matrices <- sapply(1:times, function(x) 
-            unlist(lapply(.res, function(z) z[[x]])), simplify = FALSE)
-        
-        ## Initialise objects for ThetaRegRes
-        .thNames <- paste("th", 1:nrow(th), sep = "")
+    if (.numTh < .workers) {
+        .workers <- .numTh # Is there enough rows in the matrix to split amongst cores
     }
+    .thetaSubsets <- splitTh(theta = th, cores = .workers)
+    .res <- bplapply(.thetaSubsets,
+                     function(z) {
+                         opt(primary = primary, 
+                             auxiliary = auxiliary,
+                             cmn.markers = markers,
+                             fcol = fcol, 
+                             xval = xval,
+                             times = times,
+                             k = k,
+                             theta = z, 
+                             xfolds = xfolds
+                             ## test.size = test.size
+                             )}, 
+                     BPPARAM = BPPARAM)
+    .f1Matrices <- sapply(1:times, function(x) 
+        unlist(lapply(.res, function(z) z[[x]])), simplify = FALSE)
+        
+    ## Initialise objects for ThetaRegRes
+    .thNames <- paste("th", 1:nrow(th), sep = "")
 
     .otherWeights <- .cmMatrices <- .pred <- vector("list", times)
     results <- matrix(NA, nrow = times, ncol = nclass + 1)
     .warnings <- NULL
     
-    for (.times in 1:times) {
-        
+    for (.times in 1:times) {        
         names(.f1Matrices[[.times]]) <- .thNames
-        
-        if (.numTh != 1 | .workers != 1) {
+        ## Getting the best theta
+        if (.numTh != 1) {
             ## Find thetas with highest macroF1
             allbest <- which(.f1Matrices[[.times]] == max(.f1Matrices[[.times]]))
             
@@ -673,18 +642,21 @@ thetaOptimisation  <- function(primary,
             if (length(allbest) > 0) {
                 .warnings <- c(.warnings, 
                                paste0("For run number ", .times, 
-                                      " of times there are multiple best thetas, picking one at random"))
+                                      " of times there are multiple best thetas, ",
+                                      "picking one at random"))
                 indbest <- sample(1:length(allbest), 1) 
                 indTh <- allbest[indbest]
                 indOthers <- allbest[-indbest]
                 .otherWeights[[.times]] <- th[indOthers, ]
             } else {
                 indTh <- allbest
-                                        #.otherWeights[[.times]] <- NULL
+                ## .otherWeights[[.times]] <- NULL
             }
             .best <- th[indTh, ]
         } else {
-            .best <- th
+            ## a matrix with 1 row
+            .best <- as.numeric(th)
+            names(.best) <- colnames(th)
         }
         
         ## Apply best to validation to get macroF1
@@ -758,14 +730,10 @@ thetaOptimisation  <- function(primary,
         .log$warnings <- .warnings
     }    
     
-    if (.numTh != 1) {
-        if (.workers != 1) {
-            .thList <- sapply(.thetaSubsets, nrow)
-            .log$splits <- sapply(.thList, function(z)
-                paste("Theta matrix was split into ", .workers, 
-                      "matrices for optimal parallelisation with nrow = ", z))
-        }
-    }
+    .thList <- sapply(.thetaSubsets, nrow)
+    .log$splits <- sapply(.thList, function(z)
+        paste("Theta matrix was split into ", .workers, 
+              "matrices for optimal parallelisation with nrow = ", z))
     
     ans <- new("ThetaRegRes",
                algorithm = "theta",
@@ -835,7 +803,7 @@ thetaClassification <- function(primary,
         stop("Primary and auxiliary must both be of class 'MSnSet'")
 
     markers <- getMarkers(primary, fcol, verbose = FALSE)
-    classes <- getClasses(primary, fcol, verbose = FALSE)
+    classes <- getMarkerClasses(primary, fcol, verbose = FALSE)
     if (!any(markers == "unknown")) 
         stop("No unknown proteins to classify")
     

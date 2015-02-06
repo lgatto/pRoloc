@@ -556,3 +556,32 @@ filterBinMSnSet <- function(object,
     if (validObject(ans))
         return(ans)
 }
+
+##' Removes all assay data columns that are composed of only 0,
+##' i.e. have a \code{colSum} of 0.
+##'
+##' @title Remove 0 columns
+##' @param object A \code{MSnSet} object.
+##' @param verbose Print a message with the number of filtered out
+##' columns (if any).
+##' @return An \code{MSnSet}.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(andy2011goCC)
+##' any(colSums(exprs(andy2011goCC)) == 0)
+##' exprs(andy2011goCC)[, 1:5] <- 0
+##' ncol(andy2011goCC)
+##' ncol(filterZeroCols(andy2011goCC))
+filterZeroCols <- function(object,
+                           verbose = TRUE) {
+    cs <- colSums(exprs(object))
+    sel <- cs > 0
+    if (any(!sel)) {
+        if (verbose)
+            message("Removing ", sum(!sel), " columns with only 0s.")
+        object <- object[, sel]
+    }
+    if (validObject(object))
+        return(object)
+}

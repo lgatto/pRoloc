@@ -82,6 +82,7 @@ export(## MSnSet manipulation
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
     filterBinMSnSet,
+    filterZeroCols,
     ## -- plotting
     plot2D,
     addLegend,

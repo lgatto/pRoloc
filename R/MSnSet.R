@@ -501,10 +501,13 @@ getClasses <- function(object,
 ##' @title Filter a binary MSnSet
 ##' @param object An \code{MSnSet}
 ##' @param MARGIN 1 or 2. Default is 2.
-##' @param t If a row/column has more than \code{t} zeros, it will be
-##' filtered out.
+##' @param t Rows/columns that have \code{t} or less \code{1}s, it
+##' will be filtered out. When \code{t} and \code{q} are missing,
+##' default is to use \code{t = 1}.
 ##' @param q If a row has a higher quantile than defined by \code{q},
 ##' it will be filtered out.
+##' @param verbose A \code{logical} defining of a message is to be
+##' printed. Default is \code{TRUE}.
 ##' @return A filtered \code{MSnSet}.
 ##' @author Laurent Gatto
 ##' @examples
@@ -516,14 +519,20 @@ getClasses <- function(object,
 ##' fd <- data.frame(row.names = letters[1:5])
 ##' x <- MSnSet(exprs = m, fData = fd, pData = fd)
 ##' exprs(x)
+##' ## Remove columns with no 1s
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 0))
+##' ## Remove columns with one 1 or less
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 1))
+##' ## Remove columns with two 1s or less
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 2))
+##' ## Remove columns with three 1s 
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 3))
+##' ## Remove columns that have half or less of 1s
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
 filterBinMSnSet <- function(object, 
                             MARGIN = 2,
-                            t, q) {
+                            t, q,
+                            verbose = TRUE) {
     if (!all(unique(as.numeric(exprs(object))) %in% 0:1))
         warning("Your assay data is not binary!")
     stopifnot(MARGIN %in% 1:2)    
@@ -537,9 +546,13 @@ filterBinMSnSet <- function(object,
     } else {
         sel <- K > quantile(K, q)    
     }
-    if (MARGIN == 2)
+    if (MARGIN == 2) {
+        if (verbose) message("Removing ", sum(!sel), " column(s)")
         ans <- object[, sel]
-    else ans <- object[sel, ]
+    } else {
+        if (verbose) message("Removing ", sum(!sel), " row(s)")
+        ans <- object[sel, ]
+    }
     if (validObject(ans))
         return(ans)
 }

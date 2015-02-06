@@ -522,10 +522,10 @@ thetaOptimisation  <- function(primary,
                           fData(auxiliary)[,fcol])) > 0) {
         stop("No common markers in primary and auxilary data")
     }
-    if (any(apply(exprs(primary), 2, function(z) all(z==0)))) {
-        message("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed")
-        primary <- filterBinMSnSet(primary)
-    }
+    ## if (any(apply(exprs(primary), 2, function(z) all(z==0)))) {
+    ##     message("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed")
+    ##     primary <- filterBinMSnSet(primary) 
+    ## }
     if (any(apply(exprs(auxiliary), 2, function(z) all(z==0)))) {
         message("The expression data slot in `auxiliary` contains column(s) of 0's - column(s) will be removed")
         auxiliary <- filterBinMSnSet(auxiliary, t=0)
@@ -536,7 +536,7 @@ thetaOptimisation  <- function(primary,
     }
     
     ## Select labelled data only and filter again to remove empty columns
-    primary <- filterBinMSnSet(markerMSnSet(primary, fcol), t=0)
+    ## primary <- filterBinMSnSet(markerMSnSet(primary, fcol), t=0)
     auxiliary <- filterBinMSnSet(markerMSnSet(auxiliary, fcol), t=0)
     classes <- getClasses(primary, fcol, verbose = FALSE)
     nclass <- length(classes)
@@ -870,9 +870,9 @@ thetaClassification <- function(primary,
                           featureNames(markerMSnSet(auxiliary, fcol)))) > 0) 
         stop("No common marker proteins in primary and auxilary data")
     
-    if (any(apply(exprs(primary), 2, function(z) all(z==0)))) 
-        message(paste("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed"))
-    primary <- filterBinMSnSet(primary)
+    ## if (any(apply(exprs(primary), 2, function(z) all(z==0)))) 
+    ##     message(paste("The expression data slot in `primary` contains column(s) of 0's - column(s) will be removed"))
+    ## primary <- filterBinMSnSet(primary)
     
     if (any(apply(exprs(auxiliary), 2, function(z) all(z==0)))) 
         message(paste("The expression data slot in `auxiliary` contains column(s) of 0's - column(s) will be removed"))

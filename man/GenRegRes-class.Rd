@@ -31,6 +31,9 @@
 \alias{show,GenRegRes-method}
 \alias{show,ThetaRegRes-method}
 
+\alias{combineThetaRegRes}
+\alias{favourPrimary}
+
 \title{Class \code{"GenRegRes"} and \code{"ThetaRegRes"}}
 
 \description{
@@ -107,6 +110,28 @@
   }
 }
 
+
+\section{Other functions}{
+ 
+  Only for \code{ThetaRegRes}:
+
+  \describe{
+
+    \item{\code{combineThetaRegRes(object)}}{Takes a \code{list} of
+      \code{ThetaRegRes} instances to be combined and returnes a new
+      \code{ThetaRegRes} instance. }
+
+    \item{\code{favourPrimary(primary, auxiliary, object, verbose =
+	TRUE)}}{Takes the \code{primary} and \code{auxiliary} data
+	sources (two \code{\linkS4class{MSnSet}} instances) and a
+	\code{ThetaRegRes} object and returns and updated
+	\code{ThetaRegRes} instance that will report best
+	parameters/weigths (see the \code{getParams} function) favouring
+	the primary data when multiple best theta weights are
+	availble. }
+
+    }
+}
 
 \author{
   Laurent Gatto <lg390@cam.ac.uk>

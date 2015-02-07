@@ -1,5 +1,4 @@
 ## Sub-functions for `thetaOptimisation` and `thetaClassification`
-
 createPartitions <- function(markers, 
                              xval, 
                              times, 
@@ -30,18 +29,44 @@ createPartitions <- function(markers,
     return(ans)
 }
 
-## Draw matrix of thetas to test
+
+##' The possible weights to be considered is a sequence from 0 (favour
+##' auxiliary data) to 1 (favour primary data). Each possible
+##' combination of weights for \code{nclass} classes must be
+##' tested. The \code{thetas} function produces a weight \code{matrix}
+##' for \code{nclass} columns (one for each class) with all possible
+##' weight combinations (number of rows).
+##'
+##' @title Draw matrix of thetas to test
+##' @param nclass Number of marker classes
+##' @param by The increment of the weights. One of \code{1},
+##' \code{0.5}, \code{0.25}, \code{2}, \code{0.1} or \code{0.05}.
+##' @param length.out The desired length of the weight sequence.
+##' @param verbose A \code{logical} indicating if the weight sequences
+##' should be printed out. Default is \code{TRUE}.
+##' @return A matrix with all possible theta weight combinations.
+##' @author Lisa Breckels
+##' @examples
+##' dim(thetas(4, by = 0.5))
+##' dim(thetas(4, by = 0.2))
+##' dim(thetas(5, by = 0.2))
+##' dim(thetas(5, length.out = 5))
+##' dim(thetas(6, by = 0.2))
 thetas <- function(nclass, 
                    by = .5,
-                   length.out) { 
+                   length.out,
+                   verbose = TRUE) { 
     if(missing(length.out)) {
-        bys <- c(1, 0.5, 0.25, 0.2, 0.15, 0.1, 0.05)
+        bys <- c(1, 0.5, 0.25, 0.2, 0.1, 0.05)
         if (!by %in% bys)
-            stop("'by' must be one of ", bys)
+            stop("'by' must be one of ",
+                 paste(bys, collapse = ", "))
         t <- seq(0, 1, by)
     } else {
         t <- seq(0, 1, length.out = length.out)
-    } 
+    }
+    if (verbose)
+        message("Weigths:\n  (", paste(t, collapse = ", "), ")")
     gtools::permutations(length(t), nclass, t, repeats.allowed=TRUE)
 }
 
@@ -467,8 +492,8 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' parameter. Specifies the desired length of the sequence of theta
 ##' to test.
 ##' @param th A matrix of theta values to test for each class as
-##' generated from the function \code{thetas}, the number of columns
-##' should be equal to the number of classes contained in
+##' generated from the function \code{\link{thetas}}, the number of
+##' columns should be equal to the number of classes contained in
 ##' \code{fcol}. Note: columns will be ordered according to
 ##' \code{getMarkerClasses(primary, fcol)}.
 ##' @param xfolds Option to pass specific folds for the cross

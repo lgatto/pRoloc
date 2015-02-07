@@ -283,7 +283,6 @@ plotThetas <- function(object,
 }
 
 
-
 combineThetaRegRes <- function(object) {
     ##  object: a list of "ThetaRegRes" objects
     if (!class(object)=="list")

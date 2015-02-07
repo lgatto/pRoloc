@@ -38,8 +38,8 @@ parameter. Specifies the desired length of the sequence of theta
 to test.}
 
 \item{th}{A matrix of theta values to test for each class as
-generated from the function \code{thetas}, the number of columns
-should be equal to the number of classes contained in
+generated from the function \code{\link{thetas}}, the number of
+columns should be equal to the number of classes contained in
 \code{fcol}. Note: columns will be ordered according to
 \code{getMarkerClasses(primary, fcol)}.}
 

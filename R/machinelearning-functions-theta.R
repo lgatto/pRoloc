@@ -801,7 +801,10 @@ thetaOptimisation  <- function(primary,
 ##' data(andy2011goCC)
 ##' ## reducing calculation time of k by pre-running knnOptimisation
 ##' x <- c(andy2011, andy2011goCC)
-##' k <- lapply(x, function(z) knnOptimisation(z, times=5, fcol = "markers.orig"))
+##' k <- lapply(x, function(z)
+##'             knnOptimisation(z, times=5,
+##'                             fcol = "markers.orig",
+##'                             verbose = FALSE))
 ##' k <- sapply(k, function(z) getRegularisedParams(z))
 ##' k
 ##' ## reducing parameter search with theta = 1, 
@@ -812,7 +815,6 @@ thetaOptimisation  <- function(primary,
 ##' opt
 ##' th <- getParams(opt)
 ##' plot(opt)
-##' plotThetas(opt)
 ##' res <- thetaClassification(andy2011, andy2011goCC,
 ##'                            fcol = "markers.orig", th, k)
 ##' res

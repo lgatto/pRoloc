@@ -95,3 +95,12 @@ setUnknownpch <- function(pch) {
   if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
   else assign("unknownpch", pch, envir = .pRolocEnv)
 }
+
+## -------------------------------
+
+## Annotation 
+
+## Default params is NULL - initialised by pRoloc::setAnnotationParams()
+assign("params", NULL, envir=.pRolocEnv)
+
+lockEnvironment(.pRolocEnv,bindings=TRUE)

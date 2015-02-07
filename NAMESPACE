@@ -16,7 +16,10 @@ importFrom(MLInterfaces,
            nnetI, plsdaI)
 ## import(MLInterfaces)
 
-
+importClassesFrom(biomaRt, Mart)
+importFrom(biomaRt, getBM,
+           useMart,
+           listAttributes)
 
 ## Importing to avoid 'no visible global function definition for' NOTES
 import(Biobase)
@@ -46,7 +49,8 @@ importFrom(gtools, permutations)
 importFrom(plyr, colwise, catcolwise, ddply)
 
 exportClasses(GenRegRes,
-              ThetaRegRes)
+              ThetaRegRes,
+              AnnotationParams)
               ## ClustRegRes)
 
 exportMethods(chi2,
@@ -120,8 +124,14 @@ export(## MSnSet manipulation
     thetas, 
     createPartitions,
     ## -- pipelines
-    lopims, lopims1, lopims2, lopims3, lopims4, lopims5
-)
+    lopims, lopims1, lopims2, lopims3, lopims4, lopims5,
+    ## -- annotation
+    showGOEvidenceCodes,
+    getGOEvidenceCodes,
+    setAnnotationParams,
+    getAnnotationParams,
+    getGOFromFeatures,
+    makeGoSet)
 
 
 

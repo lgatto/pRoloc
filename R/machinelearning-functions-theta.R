@@ -839,7 +839,7 @@ thetaClassification <- function(primary,
     ## problem (although this should not happen, as not allowed in
     ## thetaOptimisation, where some overlap in needed). We look at
     ## the unknowns' nearest neighbours independently.  [*] it would
-    ## be possible to have the same ones, but we don't bother.
+    ## be possible to have different ones, but we don't bother.
     if (!checkSortedFeatureNames(unknownMSnSet(primary, fcol),
                                  unknownMSnSet(auxiliary, fcol)))
         stop("Feature names of unknown features don't match exactly.")

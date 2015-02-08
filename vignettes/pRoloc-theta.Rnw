@@ -75,10 +75,75 @@ set.seed(1)
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \section{Introduction}\label{sec:intro} 
 
+<<>>=
+library("pRoloc")
+@
+
 \section{Preparing the auxiliary data}\label{sec:aux}
+
+The auxiliary data is prepared from the primary data's features. All
+the GO terms associated to these features are retrieved and used to
+create a binary matrix where a one in position $(i,j)$ indicates that
+term $j$ has been used to annotate feature $i$.
+
+The GO terms are retrieved from an appropriate repository using the
+\Biocpkg{biomaRt} package. The specific Biomart repository and query
+will depend on the species under study and the type of features. The
+first step is to prepare annotation parameters that will enable to
+perform the query. The \Biocpkg{pRoloc} package provides a dedicated
+infrastructure to prepare the query to the annotation resource and
+prepare the GO data for subsequent analyses. This infrastructure is
+composed of:
+
+\begin{enumerate}
+\item prepare the annotation parameters based on the species and
+  feature types;
+\item query the resource defined in (1) and retrieve the terms;
+\item use the terms to prepare the auxiliary data.
+\end{enumerate}
+
+We will describe how to perform step 2 above, although in practice,
+steps 2 and 3 are combined into one single function. 
+
+\subsection{Preparing the query parameters}\label{sec:ap}
+
+The query parameters are stored as \Rclass{AnnotationParams} object
+that be created with the \Rfunction{setAnnotationParams} function. The
+function will present a first menu with
+\Sexpr{nrow(pRoloc:::getMartTab())}. Once the species has been
+selected, a set of possible identifier types is displayed. 
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=5cm]{./Figures/ap1.png}\hspace{1cm}
+  \includegraphics[height=5cm]{./Figures/ap2.png}
+  \caption{Selecting species (left) and feature type (right) to create an \Robject{AnnotationParams} instance.}
+  \label{fig:apgui}
+\end{figure}
+
+It is also possible to pass patterns\footnote{These patterns must
+  match uniquely or an error will be thrown.} to match against the
+species (\texttt{"Homo sapiens"}) and feature type
+(\texttt{"UniProt/Swissprot ID"}).
+
+<<ap>>=
+ap <- setAnnotationParams(inputs =
+                              c("Homo sapiens",
+                                "UniProt/Swissprot ID"))
+ap
+@
+
+The \Rfunction{setAnnotationParams} function sets the annotation
+parameters globally so that the \Robject{ap} object does not neet to
+be explicitly set later on. The default parameters can be retrieved
+with \Rfunction{getAnnotationParams}. 
+
+\subsection{Preparing the auxiliary data}\label{sec:aux}
+
+
 
 \section{Calculating weights}\label{sec:thopt}
 

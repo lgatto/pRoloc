@@ -68,7 +68,7 @@ getGONamespace <- function()
 ## used in pRoloc all have.  @author Laurent Gatto @rdname
 ## getAttributesOfInterest
 
-getAattributesOfInterest0 <- function()
+getAttributesOfInterest0 <- function()
     c("ensembl_gene_id", "ensembl_peptide_id",
       "ensembl_transcript_id",
       "cdna", "peptide", "coding",

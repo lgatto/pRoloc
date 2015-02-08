@@ -36,57 +36,91 @@ setMethod("show",
           })
 
 
-setAnnotationParams <- function(params=NULL,
-                                graphics=getOption("menu.graphics")) {
+setAnnotationParams <- function(params = NULL,
+                                inputs,
+                                graphics = getOption("menu.graphics")) {
   ## TODO: allow to directly pass a Mart instance or
   ##       martname and dataset or
   ##       filter or
   ##       filter and (mart of martname+dataset)
   ##       and call the respective menus
   ## -----------------------------------------------
-  if (is.null(params)) {
-    if (!interactive()) 
-      stop("Use the 'params' argument in non-interactive mode.")
-    m <- getMartTab()
-    sortedsp <- sort(m$description)
-    spsel <- menu(sortedsp, graphics, "Select species")
-    spidx <- match(sortedsp[spsel],m$description)
-    
-    foi <- getFiltersOfInterest()
-    
-    l <- getFilterList()
-    spfilters <- l[[spidx]]
-    sortedspfilters <- sort(spfilters$description[spfilters$name %in% foi])
-    if (length(sortedspfilters)==0)
-        stop("No filters available for this species.\n",
-             "Please consider emailing the author to file a bug.")
-    fltsel <- menu(sortedspfilters, graphics, "Select filter")
-    
-    fltidx <- match(sortedspfilters[fltsel],
-                    spfilters$description)
-
-    martname <- as.character(m[spidx, "mart"])
-    dataset <- as.character(m[spidx, "dataset"])
-    filter <- as.character(spfilters[fltidx, "name"])
-    cat("Connecting to Biomart...\n")
-    mart <- useMart(martname, dataset)
-    params <- new("AnnotationParams",
-                  mart = mart,
-                  martname = martname,
-                  dataset = dataset,
-                  filter = filter,
-                  date = date(),
-                  biomaRtVersion = packageDescription("biomaRt")$Version)
-  } else {
-    if (!inherits(params, "AnnotationParams"))
-      stop("'params' must be of class 'AnnotationParams'.")
-  }
-  if (validObject(params)) {
-    unlockBinding("params", .pRolocEnv)
-    assign("params", params, envir=.pRolocEnv)
-    lockBinding("params", .pRolocEnv)
-  }
-  invisible(params)
+    if (!is.null(params)) {
+        if (!inherits(params, "AnnotationParams"))
+            stop("'params' must be of class 'AnnotationParams'.")
+    } else {
+        if (!missing(inputs)) {
+            if (length(inputs) != 2)
+                stop("'inputs' must contain a species and a feature type.")
+            m <- pRoloc:::getMartTab()
+            spidx <- grep(inputs[1], m[, "description"])
+            if (length(spidx) != 1)
+                stop("Couldn't find a unique species match for '",
+                     inputs[1], "'.")
+            else message("Using species ", m[spidx, "description"])
+            foi <- pRoloc:::getFiltersOfInterest()
+            l <- pRoloc:::getFilterList()         
+            spfilters <- l[[spidx]]
+            spfilters <- spfilters[spfilters$name %in% foi, ]
+            fltidx <- grep(inputs[2], spfilters$description)
+            if (length(fltidx) != 1)
+                stop("Couldn't find a unique feature type match for '",
+                     inputs[2], "'.")
+            else message("Using feature type ",
+                         spfilters[fltidx, "description"])
+            martname <- as.character(m[spidx, "mart"])
+            dataset <- as.character(m[spidx, "dataset"])
+            filter <- as.character(spfilters[fltidx, "name"])
+            cat("Connecting to Biomart...\n")
+            mart <- useMart(martname, dataset)
+            params <- new("AnnotationParams",
+                          mart = mart,
+                          martname = martname,
+                          dataset = dataset,
+                          filter = filter,
+                          date = date(),
+                          biomaRtVersion =
+                              packageDescription("biomaRt")$Version)
+        } else { ## interactiven
+            if (!interactive())
+                stop("Use interactive mode of provide arguments.")
+            m <- getMartTab()
+            sortedsp <- sort(m$description)
+            spsel <- menu(sortedsp, graphics, "Select species")
+            spidx <- match(sortedsp[spsel],m$description)
+            
+            foi <- getFiltersOfInterest()          
+            l <- getFilterList()
+            spfilters <- l[[spidx]]
+            sortedspfilters <-
+                sort(spfilters$description[spfilters$name %in% foi])
+            if (length(sortedspfilters)==0)
+                stop("No filters available for this species.\n",
+                     "Please consider emailing the author to file a bug.")
+            fltsel <- menu(sortedspfilters, graphics, "Select filter")
+            fltidx <- match(sortedspfilters[fltsel],
+                            spfilters$description)
+            martname <- as.character(m[spidx, "mart"])
+            dataset <- as.character(m[spidx, "dataset"])
+            filter <- as.character(spfilters[fltidx, "name"])
+            cat("Connecting to Biomart...\n")
+            mart <- useMart(martname, dataset)
+            params <- new("AnnotationParams",
+                          mart = mart,
+                          martname = martname,
+                          dataset = dataset,
+                          filter = filter,
+                          date = date(),
+                          biomaRtVersion =
+                              packageDescription("biomaRt")$Version)
+        }
+    }
+    if (validObject(params)) {
+        unlockBinding("params", .pRolocEnv)
+        assign("params", params, envir=.pRolocEnv)
+        lockBinding("params", .pRolocEnv)
+    }
+    invisible(params)
 }
 
 getAnnotationParams <-

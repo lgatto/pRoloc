@@ -37,10 +37,15 @@
 
   The species that are available are those for which ENSEMBL data is
   available in Biomart and have a set of attributes of interest
-  available (see \code{getAttributesOfInterest}). The compatible
-  identifiers for downstream queries are then automatically filtered and
-  displayed for user selection.
+  available. The compatible identifiers for downstream queries are then
+  automatically filtered and displayed for user selection.
 
+  It is also possible to pass a parameter \code{inputs}, a character
+  vector of length 2 containing a pattern uniquely matching the species
+  of interest (in position 1) and a patterns uniquely matching the
+  feature types (in position 2). If the matches are not unique, an error
+  will be thrown.
+  
   A new instance of the \code{AnnotationParams} will be created
   to enable easy and automatic query of the \code{Mart} instance. The
   instance is invisibly returned and stored in a global variable in the
@@ -109,6 +114,11 @@ data(andy2011params)
 andy2011params
 data(dunkley2006params)
 dunkley2006params
+
+try(setAnnotationParams(inputs = c("nomatch1", "nomatch2")))
+setAnnotationParams(inputs = c("Homo sapiens",
+                        "UniProt/Swissprot ID"))
+getAnnotationParams()
 }
 
 \keyword{classes}

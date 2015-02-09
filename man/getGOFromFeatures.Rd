@@ -16,9 +16,9 @@ from biomart. If and \code{MSnSet} is provided, then
 \code{biological_process}, \code{cellular_component} (default)
 or \code{molecular_function}.}
 
-\item{evidence}{The GO evidence code. See \code{showGOEvidenceCodes}
-for details. If \code{NULL} (default), not filtering based on the
-evidence code is performed.}
+\item{evidence}{The GO evidence code. See
+\code{showGOEvidenceCodes} for details. If \code{NULL} (default),
+no filtering based on the evidence code is performed.}
 
 \item{params}{An instance of class \code{"\linkS4class{AnnotationParams}"}.}
 

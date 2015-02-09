@@ -8,9 +8,9 @@
 ##' @param namespace The GO namespace. One of
 ##' \code{biological_process}, \code{cellular_component} (default)
 ##' or \code{molecular_function}.
-##' @param evidence The GO evidence code. See \code{showGOEvidenceCodes}
-##' for details. If \code{NULL} (default), not filtering based on the
-##' evidence code is performed.
+##' @param evidence The GO evidence code. See
+##' \code{showGOEvidenceCodes} for details. If \code{NULL} (default),
+##' no filtering based on the evidence code is performed.
 ##' @param params An instance of class \code{"\linkS4class{AnnotationParams}"}.
 ##' @param verbose A \code{logical} defining verbosity of the
 ##' function. Default is \code{FALSE}.

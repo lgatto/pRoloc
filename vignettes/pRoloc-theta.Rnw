@@ -141,8 +141,67 @@ parameters globally so that the \Robject{ap} object does not neet to
 be explicitly set later on. The default parameters can be retrieved
 with \Rfunction{getAnnotationParams}. 
 
+Below is another example using \textit{Arabodopsis thaliana} and the
+TAIR locus IDs. 
+
+<<ap2>>=
+ap2 <- setAnnotationParams(inputs =
+                               c("Arabidopsis thaliana",
+                                 "TAIR locus ID"))
+ap2
+@
+
 \subsection{Preparing the auxiliary data}\label{sec:aux}
 
+The \Rfunction{goGoFromFeatures} takes an \Rclass{MSnSet} class (from
+which the feature names will be extracted) or, directly a vector of
+characters containing the feature names of interest to retrieve the
+associated GO terms. By default, it downloads \textit{cellular
+  component} terms and does not do any filtering on the terms evidence
+codes (see the \Rfunction{getGOFromFeatures} manual for
+details). Unless passed as argument, the default, globally set
+\Rclass{AnnotationParams} are used to define the Biomart server and
+the query.
+
+Below, we show an example on how we can retrieve the GO terms for the
+\Robject{dunkley2006} dataset \cite{Dunkley2006}, available in the
+\Biocexptpkg{pRolocdata} package. We load the data and verify that the
+feature names correspond the the TAIR locus identifiers.
+
+<<dun>>=
+library("pRolocdata")
+data(dunkley2006)
+head(featureNames(dunkley2006))
+@
+
+<<dungo>>=
+dunkleygo <- getGOFromFeatures(dunkley2006, params = ap2)
+head(dunkleygo)
+@
+
+We could also have passed the vector for feature names:
+
+<<dungo2, eval=FALSE>>=
+getGOFromFeatures(featureNames(dunkley2006), params = ap2)
+@
+
+We now have, in the \Robject{dunkleygo}, the GO terms that have been
+associated to the feature names identified in the
+\Robject{dunkley2006} dataset. Instead of tuning this information into
+an \Robject{MSnSet} manually, we can use the \Rfunction{makeGoSet}
+function.
+
+<<dungoset>>=
+dunkleygoset <- makeGoSet(dunkley2006, params = ap2)
+dunkleygoset
+exprs(dunkleygoset)[1:7, 1:4]
+@
+
+The \Robject{dunkley2006} object stores \Sexpr{nrow(dunkley2006)}
+quantitative protein localisation profiles along
+\Sexpr{ncol(dunkley2006)} gradient fractions and the
+\Robject{dunkleygoset} stores a binary association matrix for
+\Sexpr{nrow(dunkleygoset)} and \Sexpr{ncol(dunkleygoset)} GO terms.
 
 
 \section{Calculating weights}\label{sec:thopt}

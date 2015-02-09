@@ -107,6 +107,19 @@ composed of:
 We will describe how to perform step 2 above, although in practice,
 steps 2 and 3 are combined into one single function. 
 
+We will demonstrate these steps with 2 workding examples. The first
+one is a LOPIT experiment on \textit{Arabodopsis thaliana} by
+\cite{Dunkley2006}. The second data is a LOPIT experiment on Human
+Embryonic Kidney (HEK293T) fibroblast cells \cite{Breckels2013}. Both
+datasets are available and documented in the \Biocexptpkg{pRolocdata}
+experiment package as \Robject{dunkley2006} and \Robject{andy2011}.
+
+<<loaddata>>=
+library("pRolocdata")
+data(dunkley2006)
+data(andy2011)
+@
+
 \subsection{Preparing the query parameters}\label{sec:ap}
 
 The query parameters are stored as \Rclass{AnnotationParams} object
@@ -120,7 +133,9 @@ selected, a set of possible identifier types is displayed.
   \centering
   \includegraphics[height=5cm]{./Figures/ap1.png}\hspace{1cm}
   \includegraphics[height=5cm]{./Figures/ap2.png}
-  \caption{Selecting species (left) and feature type (right) to create an \Robject{AnnotationParams} instance.}
+  \caption{Selecting species (left) and feature type (right) to create
+    an \Robject{AnnotationParams} instance for the human
+    \Robject{andy2011} data.}
   \label{fig:apgui}
 \end{figure}
 
@@ -169,7 +184,6 @@ Below, we show an example on how we can retrieve the GO terms for the
 feature names correspond the the TAIR locus identifiers.
 
 <<dun>>=
-library("pRolocdata")
 data(dunkley2006)
 head(featureNames(dunkley2006))
 @

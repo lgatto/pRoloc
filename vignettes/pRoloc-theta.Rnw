@@ -178,6 +178,8 @@ details). Unless passed as argument, the default, globally set
 \Rclass{AnnotationParams} are used to define the Biomart server and
 the query.
 
+\subsubsection{The \Robject{dunkley2006} data}
+
 Below, we show an example on how we can retrieve the GO terms for the
 \Robject{dunkley2006} dataset \cite{Dunkley2006}, available in the
 \Biocexptpkg{pRolocdata} package. We load the data and verify that the
@@ -211,12 +213,82 @@ dunkleygoset
 exprs(dunkleygoset)[1:7, 1:4]
 @
 
+<<testdunsamefeats, echo=FALSE>>=
+stopifnot(all.equal(featureNames(dunkley2006), featureNames(dunkleygoset)))
+@
+
+
 The \Robject{dunkley2006} object stores \Sexpr{nrow(dunkley2006)}
 quantitative protein localisation profiles along
 \Sexpr{ncol(dunkley2006)} gradient fractions and the
 \Robject{dunkleygoset} stores a binary association matrix for
 \Sexpr{nrow(dunkleygoset)} and \Sexpr{ncol(dunkleygoset)} GO terms.
 
+
+\subsubsection{The \Robject{andy2011} data}
+
+The situation for the \Robject{andy2011} data is slightly
+different. As can be seen in the next code chunk, the feature names do
+not match exactly any of the feature types available (see figure
+\ref{fig:apgui} on the right). 
+
+<<and>>=
+data(andy2011)
+head(featureNames(andy2011))
+@
+
+However, the UniProt/SwissProt identifiers are available in the
+feature data:
+
+<<ids>>=
+head(fData(andy2011)$Accession.No.)
+@
+
+As these are unique (feature names must be), we are going to (1) store
+the current feature names as a new feature varaiable, named
+\texttt{UniProtKB.entry.name}, and use the \texttt{Accession.No.}
+feature variable as new feature names.
+
+<<entry>>=
+fData(andy2011)$UniProtKB.entry.name <- featureNames(andy2011)
+featureNames(andy2011) <- fData(andy2011)$Accession.No.
+@
+
+We first set the appropriate annotation parameters \Robject{ap}
+generated in section \ref{sec:ap} (we could also pass them explicitely
+as in the previous example) and use the \Rfunction{makeGoSet} function
+to create the binary auxiliary data.
+
+<<andgoset>>=
+setAnnotationParams(ap)
+andygoset <- makeGoSet(andy2011)
+andygoset
+exprs(andygoset)[1:7, 1:4]
+@
+
+<<testandsamefeats, echo=FALSE>>=
+stopifnot(all.equal(featureNames(andy2011), featureNames(andygoset)))
+@
+
+We now have a primary dataset, composed of \Sexpr{nrow(andy2011)}
+protein quantitative profiles for \Sexpr{ncol(andy2011)} fractions
+along the density gradient and an auxiliary dataset for
+\Sexpr{ncol(andygoset)} cellular compartment GO terms for the same
+\Sexpr{nrow(andygoset)} features.
+
+\subsection{A note on reproducibility}\label{sec:annotrepro}
+
+The generation of the auxiliary data replies on specific Biomart
+server \Rclass{Mart} instances in the \Rclass{AnnotationParams} class
+and the actual query to the server to obtain the GO terms associated
+with the features. The utilisation of the online servers, which
+undergo regular updates, does not guarantee reproducibility of
+feature/term association over time. It is recommended to save and
+store the \Rclass{AnnotationParams} and auxiliary \Rclass{MSnSet}
+instances. Alternatively, I should be possible to use other
+Bioconductor infrastructure, such as specific organism annotations and
+the \Biocannopkg{GO.db} package to use specific versioned (and thus
+traceable} annotations.
 
 \section{Calculating weights}\label{sec:thopt}
 

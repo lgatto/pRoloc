@@ -294,6 +294,10 @@ traceable} annotations.
 
 \section{Applying best \textit{theta} weights}\label{sec:thclass}
 
+\subsubsection{Choosing weights}
+
+With \Rfunction{getParams} or manually, by inspecting the weight plots.
+
 \section{Conclusion}\label{sec:ccl}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -4,6 +4,7 @@ CHANGES IN VERSION 1.7.6
  o theta vignette stub [2015-02-06 Fri]
  o rename getClasses to getMarkerClasses [2015-02-06 Fri]
  o added the infrastructure to create GO MSnSet [2015-02-07 Sat]
+ o Fixed ml vignette [2015-02-16 Mon]
  
 CHANGES IN VERSION 1.7.5
 ------------------------

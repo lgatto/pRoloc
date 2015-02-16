@@ -19,6 +19,7 @@ BiocStyle::latex()
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \maketitle
 
@@ -386,14 +387,14 @@ tan2009r1
 \subsection{Customising model parameters}
 
 Below we illustrate how to weight different classes according to the 
-number of labelled instances, were large sets are down weighted. 
+number of labelled instances, where large sets are down weighted. 
 This strategy can help with imbalanced designs.
 
 <<weigths, eval=FALSE>>=
-w <- table(fData(dunkley2006)$markers)
+w <- table(fData(markerMSnSet(dunkley2006))$markers)
 w <- 1/w[-5]
 wpar <- svmOptimisation(dunkley2006, class.weights = w)
-wres <- svmClassification(dunkley2006, pw, class.weights = w)
+wres <- svmClassification(dunkley2006, wpar, class.weights = w)
 @ 
 
 
@@ -407,7 +408,7 @@ tab$algorithm <- c("nearest neighbour", "support vector machine", "naive bayes",
 tab$package <- c("class", "kernlab", "e1071",
                  "nnet", "pRoloc", "caret",
                  "randomForest", "e1071")
-colnames(tab)[1] <- c("parameter optimisation")
+#colnames(tab)[1] <- c("parameter optimisation")
 @ 
 
 

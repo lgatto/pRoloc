@@ -23,6 +23,7 @@ LATEXFILES = *.aux\
 all: 
 	make poster
 	make tut
+	make theta
 	make ml
 
 
@@ -39,6 +40,12 @@ tut: pRoloc-tutorial.Rnw
 	bibtex pRoloc-tutorial
 	pdflatex pRoloc-tutorial.tex
 	pdflatex pRoloc-tutorial.tex
+
+theta: pRoloc-theta.Rnw
+	pdflatex pRoloc-theta.tex
+	bibtex pRoloc-theta
+	pdflatex pRoloc-theta.tex
+	pdflatex pRoloc-theta.tex
 
 poster: 
 	cp vigsrc/HUPO_2011_poster.pdf .

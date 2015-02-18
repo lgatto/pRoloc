@@ -166,7 +166,7 @@ ap2 <- setAnnotationParams(inputs =
 ap2
 @
 
-\subsection{Preparing the auxiliary data}\label{sec:aux}
+\subsection{Preparing the auxiliary data from the Go ontology}\label{sec:auxgo}
 
 The \Rfunction{goGoFromFeatures} takes an \Rclass{MSnSet} class (from
 which the feature names will be extracted) or, directly a vector of
@@ -288,7 +288,7 @@ store the \Rclass{AnnotationParams} and auxiliary \Rclass{MSnSet}
 instances. Alternatively, I should be possible to use other
 Bioconductor infrastructure, such as specific organism annotations and
 the \Biocannopkg{GO.db} package to use specific versioned (and thus
-traceable} annotations.
+traceable) annotations.
 
 \section{Calculating weights}\label{sec:thopt}
 
@@ -313,7 +313,7 @@ listed below.
 toLatex(sessionInfo())
 @
 
-% \bibliography{pRoloc}
+\bibliography{pRoloc}
 
 \end{document}
 

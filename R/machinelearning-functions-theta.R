@@ -77,7 +77,7 @@ thetas <- function(nclass,
 getNN <- function(object, query, fcol, k, 
                   include.unknowns = FALSE,
                   include.dist = FALSE) {
-    .markers <- getMarkers(object, fcol, verbose=FALSE)
+    .markers <- getMarkers(object, fcol, verbose = FALSE)
     .classes <- getMarkerClasses(object, fcol, verbose = FALSE)
     if (!include.unknowns) {
         if(any(.classes=="unknown")) {
@@ -247,7 +247,8 @@ classify <- function(primary,
         data <- c(primary, auxiliary)
         ## Using default parameters for the knnOptimisation.
         ## Otherwise, use ...
-        k <- lapply(data, function(z) knnOptimisation(z, fcol, verbose=FALSE))
+        k <- lapply(data,
+                    function(z) knnOptimisation(z, fcol, verbose = FALSE))
         k <- sapply(k, function(z) getRegularisedParams(z))
     } else {
         if(!is.numeric(k)) stop("Input k is not of class 'numeric'")
@@ -419,7 +420,7 @@ favourPrimary <- function(primary, auxiliary, object,
             
             primary <- markerMSnSet(primary, fcol)
             auxiliary <- markerMSnSet(auxiliary, fcol)
-            auxiliary <- filterBinMSnSet(auxiliary, t = 0, verbose = FALSE)
+            auxiliary <- filterZeroCols(auxiliary, verbose = TRUE)
             
             fData(primary)$xxx <-
                 fData(auxiliary)$xxx <-
@@ -433,7 +434,8 @@ favourPrimary <- function(primary, auxiliary, object,
             
             ## Now calculate macroF1 on validation
             res.x <- unknownMSnSet(res, "xxx")
-            r <- factor(getMarkers(res.x, "theta", verbose = FALSE), levels = lev)
+            r <- factor(getMarkers(res.x, "theta", verbose = FALSE),
+                        levels = lev)
             m <- factor(getMarkers(res.x, fcol, verbose = FALSE), levels = lev)
             cm <- table(r, m, dnn = c("Prediction", "Reference"))
             f1 <- MLInterfaces:::.macroF1(MLInterfaces:::.precision(cm, naAs0 = TRUE),
@@ -560,7 +562,7 @@ thetaOptimisation  <- function(primary,
         stop("Different classes in fcol's between data sources")
     
     ## Filter to remove empty columns - to best tested
-    auxiliary <- filterBinMSnSet(auxiliary, t=0, verbose = FALSE)
+    auxiliary <- filterZeroCols(auxiliary, verbose = TRUE)
     classes <- getMarkerClasses(primary, fcol, verbose = FALSE)
     nclass <- length(classes)
     

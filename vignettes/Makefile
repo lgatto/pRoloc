@@ -23,29 +23,27 @@ LATEXFILES = *.aux\
 all: 
 	make poster
 	make tut
-	make theta
+	make tl
 	make ml
 
 
 ml: pRoloc-ml.Rnw
-##	R CMD Sweave --engine=knitr::knitr --pdf pRoloc-ml.Rnw
 	pdflatex pRoloc-ml.tex
 	bibtex pRoloc-ml
 	pdflatex pRoloc-ml.tex
 	pdflatex pRoloc-ml.tex
 
 tut: pRoloc-tutorial.Rnw
-##	R CMD Sweave --engine=knitr::knitr --pdf pRoloc-tutorial.Rnw
 	pdflatex pRoloc-tutorial.tex
 	bibtex pRoloc-tutorial
 	pdflatex pRoloc-tutorial.tex
 	pdflatex pRoloc-tutorial.tex
 
-theta: pRoloc-theta.Rnw
-	pdflatex pRoloc-theta.tex
-	bibtex pRoloc-theta
-	pdflatex pRoloc-theta.tex
-	pdflatex pRoloc-theta.tex
+tl: pRoloc-transfer-learning.Rnw
+	pdflatex pRoloc-transfer-learning.tex
+	bibtex pRoloc-transfer-learning
+	pdflatex pRoloc-transfer-learning.tex
+	pdflatex pRoloc-transfer-learning.tex
 
 poster: 
 	cp vigsrc/HUPO_2011_poster.pdf .

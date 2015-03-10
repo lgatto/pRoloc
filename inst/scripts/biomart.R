@@ -101,7 +101,7 @@ attr(filterList, "date") <- date()
 martTab <- martTab[sel,]
 attr(martTab, "date") <- date()
 
-saveRDS(attrList, file="../extdata/attrList.rds")
-saveRDS(filterList, file="../extdata/filterList.rds")
-saveRDS(martTab, file="../extdata/martTab.rds")
+saveRDS(attrList, file="../extdata/attrList.rds", compress = "xz")
+saveRDS(filterList, file="../extdata/filterList.rds", compress = "xz")
+saveRDS(martTab, file="../extdata/martTab.rds", compress = "xz")
 

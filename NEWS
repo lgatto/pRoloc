@@ -5,6 +5,8 @@ CHANGES IN VERSION 1.7.6
  o rename getClasses to getMarkerClasses [2015-02-06 Fri]
  o added the infrastructure to create GO MSnSet [2015-02-07 Sat]
  o Fixed ml vignette [2015-02-16 Mon]
+ o new filterZeroRows function [2015-03-10 Tue]
+ o hpa data section [2015-03-10 Tue]
  
 CHANGES IN VERSION 1.7.5
 ------------------------

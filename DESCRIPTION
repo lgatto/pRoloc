@@ -24,7 +24,7 @@ Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
 	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
 	 mvtnorm, gtools, plyr, ggplot2, biomaRt
 Suggests: testthat, pRolocdata (>= 1.5.1), roxygen2, synapter, xtable,
-	  tsne, BiocStyle
+	  tsne, BiocStyle, hpar
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr

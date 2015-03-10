@@ -56,7 +56,7 @@ opts_chunk$set(fig.align = 'center',
                comment = NA)
 options(replace.assign = TRUE, 
         width = 55)
-
+suppressPackageStartupMessages(library("dplyr"))
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
@@ -81,7 +81,10 @@ set.seed(1)
 library("pRoloc")
 @
 
+
 \section{Preparing the auxiliary data}\label{sec:aux}
+
+\subsection{The Gene Ontology}\label{sec:goaux}
 
 The auxiliary data is prepared from the primary data's features. All
 the GO terms associated to these features are retrieved and used to
@@ -120,7 +123,7 @@ data(dunkley2006)
 data(andy2011)
 @
 
-\subsection{Preparing the query parameters}\label{sec:ap}
+\subsubsection{Preparing the query parameters}\label{sec:ap}
 
 The query parameters are stored as \Rclass{AnnotationParams} object
 that be created with the \Rfunction{setAnnotationParams} function. The
@@ -166,7 +169,7 @@ ap2 <- setAnnotationParams(inputs =
 ap2
 @
 
-\subsection{Preparing the auxiliary data from the Go ontology}\label{sec:auxgo}
+\subsubsection{Preparing the auxiliary data from the GO ontology}\label{sec:auxgo}
 
 The \Rfunction{goGoFromFeatures} takes an \Rclass{MSnSet} class (from
 which the feature names will be extracted) or, directly a vector of
@@ -178,7 +181,7 @@ details). Unless passed as argument, the default, globally set
 \Rclass{AnnotationParams} are used to define the Biomart server and
 the query.
 
-\subsubsection{The \Robject{dunkley2006} data}
+\paragraph*{The \Robject{dunkley2006} data}
 
 Below, we show an example on how we can retrieve the GO terms for the
 \Robject{dunkley2006} dataset \cite{Dunkley2006}, available in the
@@ -225,7 +228,7 @@ quantitative protein localisation profiles along
 \Sexpr{nrow(dunkleygoset)} and \Sexpr{ncol(dunkleygoset)} GO terms.
 
 
-\subsubsection{The \Robject{andy2011} data}
+\paragraph*{The \Robject{andy2011} data}
 
 The situation for the \Robject{andy2011} data is slightly
 different. As can be seen in the next code chunk, the feature names do
@@ -276,7 +279,7 @@ along the density gradient and an auxiliary dataset for
 \Sexpr{ncol(andygoset)} cellular compartment GO terms for the same
 \Sexpr{nrow(andygoset)} features.
 
-\subsection{A note on reproducibility}\label{sec:annotrepro}
+\subsubsection{A note on reproducibility}\label{sec:annotrepro}
 
 The generation of the auxiliary data replies on specific Biomart
 server \Rclass{Mart} instances in the \Rclass{AnnotationParams} class
@@ -290,11 +293,87 @@ Bioconductor infrastructure, such as specific organism annotations and
 the \Biocannopkg{GO.db} package to use specific versioned (and thus
 traceable) annotations.
 
+\subsection{The Human Protein Atlas}\label{sec:hpaaux}
+
+The feature names of our LOPIT experiment are UniProt identifiers,
+while the Human Protein Atlas uses Ensembl gene identifiers. This
+first code chunk matches both identifier types using the UniProt
+Biomart server.
+
+<<hparprep, eval=TRUE>>=
+fvarLabels(andy2011)[1] <- "accession" ## for left_join matching
+
+## convert protein accession numbers to ensembl gene identifiers
+library("biomaRt")
+uniprot <- useMart("unimart", dataset = "uniprot")
+filter <- "accession"
+attrib <- c("name", "accession", "ensembl_id")
+bm <- getBM(attributes = attrib,
+            filters = filter,
+            values = fData(andy2011)[, "accession"],
+            mart = uniprot)
+
+## HPA data
+library("hpar")
+setHparOptions(hpadata = "SubcellularLoc")
+hpa <- getHpa(bm$ensembl_id)
+hpa$Reliability <- droplevels(hpa$Reliability)
+colnames(hpa)[1] <- "ensembl_id"
+
+library("dplyr")
+hpa <- left_join(hpa, bm)
+hpa <- hpa[!duplicated(hpa$accession), ]
+
+## match HPA/LOPIT
+fd <- left_join(fData(andy2011), hpa)
+rownames(fd) <- featureNames(andy2011)
+fData(andy2011) <- fd
+stopifnot(validObject(andy2011))
+
+## Let's get rid of features without any hpa data
+lopit <- andy2011[!is.na(fData(andy2011)$Main.location), ]
+@
+
+Below, we deparse the multiple ';'-delimited locations contained in
+the Human Protein sub-cellular Atlas, create the auxiliary binary data
+matrix (only localisations with reliability equal to \emph{Supportive}
+are considered; \emph{Uncertain} assignments are ignored) and filter
+proteins without any localisation data.
+
+<<hpadata, eval=TRUE>>=
+## HPA localisation
+hpalocs <- c(as.character(fData(lopit)$Main.location),
+             as.character(fData(lopit)$Other.location))
+hpalocs <- hpalocs[!is.na(hpalocs)]
+hpalocs <- unique(unlist(strsplit(hpalocs, ";")))
+
+makeHpaSet <- function(x, score2, locs = hpalocs) {
+    hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
+    colnames(hpamat) <- locs
+    rownames(hpamat) <- featureNames(x)    
+    for  (i in 1:nrow(hpamat)) {
+        loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
+        loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
+        score <- score2[fData(x)[i, "Reliability"]]
+        hpamat[i, loc] <- score
+        hpamat[i, loc2] <- score
+    }
+    new("MSnSet", exprs = hpamat,
+        featureData = featureData(lopit))
+}
+
+hpaset <- makeHpaSet(lopit,
+                     score2 = c(Supportive = 1, Uncertain = 0))
+hpaset <- filterZeroRows(hpaset)
+dim(hpaset)
+exprs(hpaset)[c(1, 6, 200), 1:3]
+@
+
 \section{Calculating weights}\label{sec:thopt}
 
 \section{Applying best \textit{theta} weights}\label{sec:thclass}
 
-\subsubsection{Choosing weights}
+\subsection{Choosing weights}
 
 With \Rfunction{getParams} or manually, by inspecting the weight plots.
 

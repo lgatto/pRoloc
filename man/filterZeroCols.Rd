@@ -2,22 +2,25 @@
 % Please edit documentation in R/MSnSet.R
 \name{filterZeroCols}
 \alias{filterZeroCols}
-\title{Remove 0 columns}
+\alias{filterZeroRows}
+\title{Remove 0 columns/rows}
 \usage{
 filterZeroCols(object, verbose = TRUE)
+
+filterZeroRows(object, verbose = TRUE)
 }
 \arguments{
 \item{object}{A \code{MSnSet} object.}
 
 \item{verbose}{Print a message with the number of filtered out
-columns (if any).}
+columns/row (if any).}
 }
 \value{
 An \code{MSnSet}.
 }
 \description{
-Removes all assay data columns that are composed of only 0,
-i.e. have a \code{colSum} of 0.
+Removes all assay data columns/rows that are composed of only 0,
+i.e. have a \code{colSum}/\code{rowSum} of 0.
 }
 \examples{
 library("pRolocdata")

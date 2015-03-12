@@ -249,7 +249,7 @@ classify <- function(primary,
         ## Otherwise, use ...
         k <- lapply(data,
                     function(z) knnOptimisation(z, fcol, verbose = FALSE))
-        k <- sapply(k, function(z) getRegularisedParams(z))
+        k <- sapply(k, function(z) getParams(z))
     } else {
         if(!is.numeric(k)) stop("Input k is not of class 'numeric'")
         if(!length(k)==2) stop("Input k must be of length 2")
@@ -807,7 +807,7 @@ thetaOptimisation  <- function(primary,
 ##'             knnOptimisation(z, times=5,
 ##'                             fcol = "markers.orig",
 ##'                             verbose = FALSE))
-##' k <- sapply(k, function(z) getRegularisedParams(z))
+##' k <- sapply(k, function(z) getParams(z))
 ##' k
 ##' ## reducing parameter search with theta = 1, 
 ##' ## weights of only 1 or 0 will be considered

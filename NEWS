@@ -7,6 +7,8 @@ CHANGES IN VERSION 1.7.6
  o Fixed ml vignette [2015-02-16 Mon]
  o new filterZeroRows function [2015-03-10 Tue]
  o hpa data section [2015-03-10 Tue]
+ o theta sections [2015-03-10 Tue]
+ o deprecate getRegulari[z|s]edParams [2015-03-11 Wed]
  
 CHANGES IN VERSION 1.7.5
 ------------------------

@@ -52,14 +52,14 @@ setAnnotationParams <- function(params = NULL,
         if (!missing(inputs)) {
             if (length(inputs) != 2)
                 stop("'inputs' must contain a species and a feature type.")
-            m <- pRoloc:::getMartTab()
+            m <- getMartTab()
             spidx <- grep(inputs[1], m[, "description"])
             if (length(spidx) != 1)
                 stop("Couldn't find a unique species match for '",
                      inputs[1], "'.")
             else message("Using species ", m[spidx, "description"])
-            foi <- pRoloc:::getFiltersOfInterest()
-            l <- pRoloc:::getFilterList()         
+            foi <- getFiltersOfInterest()
+            l <- getFilterList()         
             spfilters <- l[[spidx]]
             spfilters <- spfilters[spfilters$name %in% foi, ]
             fltidx <- grep(inputs[2], spfilters$description)

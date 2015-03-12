@@ -77,10 +77,37 @@ set.seed(1)
 
 \section{Introduction}\label{sec:intro} 
 
+Our main data source to study protein sub-cellular localisation are
+high-throughput mass spectrometry-based experiments such as LOPIT, PCP
+and similar designs (see \cite{Gatto2010} for an general
+introduction). Recent optimised experiments result in high quality
+data enabling to identify over 7000 proteins and discriminate numerous
+sub-cellular and sub-organellar niches. Supervised and semi-supervised
+machine learning algorithms can be applied to assign thousands of
+proteins to annotated sub-cellular niches. These data constitute our
+main source for protein localisation and are termed thereafter
+\emph{primary} data.
+
+There are other sources of data about sub-cellular localisation of
+proteins, such as the Gene Ontology \cite{Ashburner:2000} (in
+particular the cellular compartment name space), quantitative feature
+derived from protein sequences or the Human Protein Atlas
+\cite{Uhlen:2010} for cite a few. These data, while not optimised to a
+specific system at hand and, in the case of annotation feature, not as
+reliable as our experimental data, constitute an invaluable, often
+plentiful source of \emph{auxiliary} information.
+
+The aim of a \emph{transfer learning} algorithm is to combine
+different sources of data to improve overall classification. In
+particular, the goal is to support/complement the primary target
+domain (experimental data) with auxiliary data (annotation) features
+without compromising the integrity of our primary data. In this
+vignette, we describe the application of transfer learning algorithms
+for the localisation of proteins from the \Biocpkg{pRoloc} package.
+
 <<>>=
 library("pRoloc")
 @
-
 
 \section{Preparing the auxiliary data}\label{sec:aux}
 
@@ -371,11 +398,98 @@ exprs(hpaset)[c(1, 6, 200), 1:3]
 
 \section{Calculating weights}\label{sec:thopt}
 
+<<>>=
+m <- unique(fData(andy2011)$markers)
+m <- m[m != "unknown"]
+@
+
+The weighted nearest neighbours transfer learning algorithm estimates
+optimal weights for the different data sources and the spatial niches
+described for the data at hand. For instance, for the human data
+modelled by the \Robject{andy2011} and \Robject{andugoset} objects and
+the \Sexpr{length(m)} annotated sub-cellular localisations
+(\Sexpr{paste(m[-1], collapse = ", ")} and \Sexpr{m[1]}), we want to
+know how to optimally use the different data sources. If we look at
+figure \ref{fig:andypca}, that illustrates the experimental separation
+of the \Sexpr{m} spatial classes on a principal component plot, we see
+that some organelles such as the mitochondrion or the cytosol and
+cytosol/nucleus are well resolved, while others such as the Golgi or
+the ER are less so. In this experiment, the former classes are not
+expected to benefit for other data source, while the latter should
+benefit from additional information.
+
+\begin{figure}[h]
+  \centering
+<<andypca, echo=FALSE>>=
+setStockcol(paste0(getStockcol(), "80"))
+plot2D(andy2011)
+setStockcol(NULL)
+addLegend(andy2011, where = "topright", bty = "n", cex = .8)
+@  
+ \caption{PCA plot of \Robject{andy2011}. The multivariate protein
+   profiles are summerised along the two first principal
+   components. Proteins of unknown localisation are represented by
+   empty grey points. Protein markers, which are well-known residents
+   of specific sub-cellular niches are colour-coded and form clusters
+   on the figure. }
+  \label{fig:andypca}
+\end{figure}
+
+
+Let's define a set of three possible weights: 0, 0.5 and 1. A weight
+of 1 indicates that the final results rely exclusively on the
+experimental data and ignore completely the auxiliary data. A weight
+of 0 represents the opposite, where the primary data is ignored and
+only the auxiliary data is considered. A weight of 0.5 indicates that
+each data source will contribute equally to the final results.  It is
+the algorithm's optimisation step to identify the optimal set of
+weights for a given primary and auxiliary data pair. The optimisation
+process can be quite time consuming for many weights and many
+sub-cellular classes, as all combinations (there are
+$number of classes^{number of weights}$ possibilities; see below). One would
+generally defined more weights (for example \Sexpr{seq(0, 1, by =
+  0.25)} or \Sexpr{round(seq(0, 1, length.out = 4), 2)}) to explore
+more fine-grained integration opportunities. The possible weight
+combinations can be calculated with the \Rfunction{thetas} function:
+
+<<thetas>>=
+## 3 classes, 3 weights
+head(thetas(3, by = 0.5))
+dim(thetas(3, by = 0.5))
+## 3 classe, 3 weights
+dim(thetas(3, length.out = 4))
+## 10 classe, 5 weights
+dim(thetas(10, length.out = 5))
+@
+
+Considering the sub-cellular resolution for this experiment, we would
+anticipate that the mitochondrion, the cytosol and the cytosol/nucleus
+classes would get high weights, while the ER and Golgi would be
+assigned lower weights.
+
+As we use a nearest neighbour classifier, we also need to know how
+many neighbours to consider when classifying a protein of unknown
+localisation. The \Rfunction{knnOptimisation} function can be run on
+the primary and auxiliary data sources independently to estimate the
+best $k_P$ and $k_A$ values. Below, we use 3 and 3.
+
+Below, pass a small subset of theta matrix to make it fast.
+
+<<thetaopt, eval=FALSE>>=
+
+topt <- thetaOptimisation(andy2011, andygoset,
+                          length.out = 4, ## weights are seq(0, 1, length.out = 4)
+                          k = c(3, 3),
+                          times = 20)
+@
+
 \section{Applying best \textit{theta} weights}\label{sec:thclass}
 
 \subsection{Choosing weights}
 
 With \Rfunction{getParams} or manually, by inspecting the weight plots.
+
+Favouring primary data.
 
 \section{Conclusion}\label{sec:ccl}
 

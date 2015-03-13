@@ -488,7 +488,7 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' @param test.size The size of test (validation) data. Default is
 ##' 0.2 (20 percent).
 ##' @param xval The number of rounds of cross-validation to perform.
-##' @param by The interval for theta, must be one of \code{c(1, 0.5,
+##' @param by The increment for theta, must be one of \code{c(1, 0.5,
 ##' 0.25, 0.2, 0.15, 0.1, 0.05)}
 ##' @param length.out Alternative to using \code{by}
 ##' parameter. Specifies the desired length of the sequence of theta

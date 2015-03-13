@@ -43,7 +43,7 @@ k <- lapply(x, function(z)
             knnOptimisation(z, times=5,
                             fcol = "markers.orig",
                             verbose = FALSE))
-k <- sapply(k, function(z) getRegularisedParams(z))
+k <- sapply(k, function(z) getParams(z))
 k
 ## reducing parameter search with theta = 1,
 ## weights of only 1 or 0 will be considered

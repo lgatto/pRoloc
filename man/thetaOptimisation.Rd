@@ -30,7 +30,7 @@ performed. Default is 20.}
 
 \item{xval}{The number of rounds of cross-validation to perform.}
 
-\item{by}{The interval for theta, must be one of \code{c(1, 0.5,
+\item{by}{The increment for theta, must be one of \code{c(1, 0.5,
 0.25, 0.2, 0.15, 0.1, 0.05)}}
 
 \item{length.out}{Alternative to using \code{by}

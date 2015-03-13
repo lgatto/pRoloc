@@ -30,20 +30,23 @@ BiocStyle::latex()
 \begin{abstract}
   This vignette illustrates the application of a \emph{transfer
     learning} algorithm to assign protein to sub-cellular
-  localisations. The \emph{thetaClassification} algorithm will combine
-  a \emph{primary} experiment spatial proteomics data (LOPIT, PCP,
-  etc.) and an \emph{auxiliary} binary data (for example Gene Ontology
-  terms) to improve the sub-cellular assignment given an optimal
-  combination of these data sources.
+  localisations. The \emph{thetaClassification} algorithm combines a
+  \emph{primary} experimental spatial proteomics data (LOPIT, PCP,
+  etc.)  and an \emph{auxiliary} dataset (for example binary data
+  based on Gene Ontology terms) to improve the sub-cellular assignment
+  given an optimal combination of these data sources.
 \end{abstract}
 \textit{Keywords}: Bioinformatics, organelle, spatial proteomics,
-machine learning \vskip 0.1in minus 0.05in \hrule \vskip 0.2in minus
-0.1in
+machine learning, transfer learning 
+
+\vskip 0.1in minus 0.05in \hrule \vskip 0.2in minus 0.1in
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
 
 \tableofcontents
+
+\newpage
 
 <<env, include=FALSE, echo=FALSE, cache=FALSE>>=
 library("knitr")
@@ -64,12 +67,6 @@ suppressPackageStartupMessages(library("class"))
 set.seed(1)
 @ 
 %%$
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Section
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -396,18 +393,20 @@ dim(hpaset)
 exprs(hpaset)[c(1, 6, 200), 1:3]
 @
 
-\section{Calculating weights}\label{sec:thopt}
+\section{Optimal weights}\label{sec:thopt}
 
-<<>>=
+<<mclasses, echo=FALSE>>=
+## marker classes for andy2011
 m <- unique(fData(andy2011)$markers)
 m <- m[m != "unknown"]
 @
 
 The weighted nearest neighbours transfer learning algorithm estimates
 optimal weights for the different data sources and the spatial niches
-described for the data at hand. For instance, for the human data
-modelled by the \Robject{andy2011} and \Robject{andugoset} objects and
-the \Sexpr{length(m)} annotated sub-cellular localisations
+described for the data at hand with the \Rfunction{thetaOptimisation}
+function. For instance, for the human data modelled by the
+\Robject{andy2011} and \Robject{andugoset} objects and the
+\Sexpr{length(m)} annotated sub-cellular localisations
 (\Sexpr{paste(m[-1], collapse = ", ")} and \Sexpr{m[1]}), we want to
 know how to optimally use the different data sources. If we look at
 figure \ref{fig:andypca}, that illustrates the experimental separation
@@ -452,15 +451,40 @@ generally defined more weights (for example \Sexpr{seq(0, 1, by =
 more fine-grained integration opportunities. The possible weight
 combinations can be calculated with the \Rfunction{thetas} function:
 
-<<thetas>>=
-## 3 classes, 3 weights
+\begin{itemize}
+\item 3 classes, 3 weights
+
+<<thetas0, echo=TRUE>>=
 head(thetas(3, by = 0.5))
 dim(thetas(3, by = 0.5))
-## 3 classe, 3 weights
-dim(thetas(3, length.out = 4))
-## 10 classe, 5 weights
-dim(thetas(10, length.out = 5))
 @
+
+\item 5 classe, 4 weights
+
+<<thetas1, echo=TRUE>>=
+dim(thetas(5, length.out = 4))
+@
+
+\item for the human \Robject{andy2011} data, considering 4 weights,
+there are very many combinations:
+
+<<thetaandy>>=
+## marker classes for andy2011
+m <- unique(fData(andy2011)$markers)
+m <- m[m != "unknown"]
+
+th <- thetas(length(m), length.out=4)
+dim(th)
+@
+
+\end{itemize}
+
+The combination of weights to be tested can be defined in multiple
+ways: one can pass a weights matrix explicitly generated with
+\Rfunction{thetas} through the \Robject{th} argument; one can defined
+the increment between weights using \Robject{by}; or by specifying the
+number of weights to be used through the \Robject{length.out}
+argument.
 
 Considering the sub-cellular resolution for this experiment, we would
 anticipate that the mitochondrion, the cytosol and the cytosol/nucleus
@@ -469,27 +493,58 @@ assigned lower weights.
 
 As we use a nearest neighbour classifier, we also need to know how
 many neighbours to consider when classifying a protein of unknown
-localisation. The \Rfunction{knnOptimisation} function can be run on
-the primary and auxiliary data sources independently to estimate the
-best $k_P$ and $k_A$ values. Below, we use 3 and 3.
+localisation. The \Rfunction{knnOptimisation} function (see the
+\textit{pRoloc-tutorial} vignette and the functions manual page) can
+be run on the primary and auxiliary data sources independently to
+estimate the best $k_P$ and $k_A$ values. Here, based on
+\Rfunction{knnOptimisation}, we use 3 and 3.
 
-Below, pass a small subset of theta matrix to make it fast.
+Finally, to assess the validity of the weight selection, it should be
+repeated a certain number of times (default value is 50). As the
+weight optimisation can become very time consuming for a wide range of
+weights and many target classes, we would recommend to start with a
+lower number of iterations, pre-analyse the results, proceed with
+further iterations and eventually combine the optimisation results
+data with the \Rfunction{combineThetaRegRes} function before
+proceeding with the selection of best weights.
 
-<<thetaopt, eval=FALSE>>=
-
+<<thetaopt0, eval=FALSE>>=
 topt <- thetaOptimisation(andy2011, andygoset,
-                          length.out = 4, ## weights are seq(0, 1, length.out = 4)
+                          th = th, 
                           k = c(3, 3),
-                          times = 20)
+                          times = 50)
 @
 
-\section{Applying best \textit{theta} weights}\label{sec:thclass}
 
-\subsection{Choosing weights}
+The above code chunk would take too much time to be executed in the
+frame of this vignette. Below, we pass a very small subset of theta
+matrix to minimise the computation time. The
+\Rfunction{thetaOptimisation} function supports parallelised execution
+using various backends thanks to the \Biocpkg{BiocParallel} package;
+an appropriate backend will be defined automatically according to the
+underlying architecture and alternative backends can be defined
+through the \Robject{BPPARAM} argument. Also, in the interest of time,
+the weights optimisation is repeated only 5 times below.
+
+<<thetaopt, eval=TRUE>>=
+set.seed(1)
+i <- sample(nrow(th), 10)
+topt <- thetaOptimisation(andy2011, andygoset,
+                          th = th[i, ],
+                          k = c(3, 3),
+                          times = 5)
+@
+
+
+\subsection{Choosing weights}\label{sec:choosep}
 
 With \Rfunction{getParams} or manually, by inspecting the weight plots.
 
-Favouring primary data.
+
+\subsection{Favouring primary data}\label{sec:fav}
+
+
+\section{Applying best \textit{theta} weights}\label{sec:thclass}
 
 \section{Conclusion}\label{sec:ccl}
 

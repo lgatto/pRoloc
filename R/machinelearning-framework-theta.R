@@ -95,7 +95,7 @@ setMethod("getParams", "ThetaRegRes",
               scores <- object@results[, 1]
               ind <- which(scores == max(scores))
               res <- object@results[ind, -1]
-              if (class(res) != "numeric") {
+              if (!is.vector(class(res))) {
                 if (favourP) {
                   message("More than one best theta, picking weights that favour primary. See plot() to examine best thetas")
                   rs <- rowSums(res)
@@ -201,7 +201,8 @@ setMethod("plot", c("ThetaRegRes", "missing"),
               ssd <- scale_size_continuous(range = c(0, n)) ## Scaling of points
               points <- geom_point(aes(color = classes))
               theme.par <- theme(legend.position = "none", 
-                                 axis.text=element_text(size = cex, colour = rgb(0, 0, 0)), ## Axis ticks and labels font size
+                                 axis.text = element_text(size = cex,
+                                     colour = rgb(0, 0, 0)), ## Axis ticks and labels font size
                                  text = element_text(size = cex + 1), ## Axis labels font size
                                  axis.title.y = element_text(vjust = 0.8, colour = rgb(0, 0, 0)), 
                                  axis.title.x = element_text(vjust = -.5, colour = rgb(0, 0, 0))) 

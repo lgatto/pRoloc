@@ -56,7 +56,7 @@ thetas <- function(nclass,
                    by = .5,
                    length.out,
                    verbose = TRUE) { 
-    if(missing(length.out)) {
+    if (missing(length.out)) {
         bys <- c(1, 0.5, 0.25, 0.2, 0.1, 0.05)
         if (!by %in% bys)
             stop("'by' must be one of ",

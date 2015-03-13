@@ -13,6 +13,7 @@ setMethod("show",
             hyper <- object@hyperparameters$theta
             w <- unique(as.vector(hyper))
             w <- w[order(w)]
+            wx <- round(w, 2)
             cat(" weights:", w, "\n") 
             cat(" k:", object@hyperparameters$k, "\n")
             cat(" nrow:", nrow(object@hyperparameters$theta), "\n")
@@ -41,7 +42,7 @@ setMethod("show",
             m <- colwise(foo)(m)
             foo <- function(z) table(z)
             t <- colwise(foo)(m)
-            rownames(t) <- paste("weight:", w, sep = "")
+            rownames(t) <- paste("weight:", wx, sep = "")
             cat(" best theta:\n")
             print(t)
             if ("warnings" %in% names(object@log)) {

@@ -5,7 +5,7 @@
 \alias{thetaOptimization}
 \title{theta parameter optimisation}
 \usage{
-thetaOptimisation(primary, auxiliary, fcol = "markers", k, times = 20,
+thetaOptimisation(primary, auxiliary, fcol = "markers", k, times = 50,
   test.size = 0.2, xval = 5, by = 0.5, length.out, th, xfolds,
   BPPARAM = BiocParallel::bpparam())
 }
@@ -23,7 +23,7 @@ parameters to use for the primary (\code{k[1]}) and auxiliary
 best \code{k}.}
 
 \item{times}{The number of times cross-validation is
-performed. Default is 20.}
+performed. Default is 50.}
 
 \item{test.size}{The size of test (validation) data. Default is
 0.2 (20 percent).}

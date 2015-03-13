@@ -484,7 +484,7 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' (\code{k[2]}) datasets. See \code{knnOptimisation} for generating
 ##' best \code{k}.
 ##' @param times The number of times cross-validation is
-##' performed. Default is 20.
+##' performed. Default is 50.
 ##' @param test.size The size of test (validation) data. Default is
 ##' 0.2 (20 percent).
 ##' @param xval The number of rounds of cross-validation to perform.
@@ -513,7 +513,7 @@ thetaOptimisation  <- function(primary,
                                auxiliary,
                                fcol = "markers",
                                k,
-                               times = 20,
+                               times = 50,
                                test.size = .2,
                                xval = 5,
                                by = .5,

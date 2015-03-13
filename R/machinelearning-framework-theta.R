@@ -1,54 +1,54 @@
 setClass("ThetaRegRes",
          contains = "GenRegRes",
          slots = list(
-           predictions = "list", 
-           otherWeights = "list"))
+             predictions = "list", 
+             otherWeights = "list"))
 
 setMethod("show",
           signature(object = "ThetaRegRes"),
           function(object) {
-            cat("Object of class \"",class(object),"\"\n",sep="")
-            cat("Algorithm:", object@algorithm, "\n")
-            cat("Theta hyper-parameters:\n")
-            hyper <- object@hyperparameters$theta
-            w <- unique(as.vector(hyper))
-            w <- w[order(w)]
-            wx <- round(w, 2)
-            cat(" weights:", w, "\n") 
-            cat(" k:", object@hyperparameters$k, "\n")
-            cat(" nrow:", nrow(object@hyperparameters$theta), "\n")
-            cat("Design:\n")
-            cat(" Replication: ",
-                object@design["times"], " x ",
-                object@design["xval"], "-fold X-validation\n",
-                sep = "")
-            cat(" Partitioning: ",                
-                object@design["test.size"], "/",
-                1-object@design["test.size"], " (test/train)\n",
-                sep = "")
-            cat("Results\n")
-            resF1 <- object@results[, "F1"]     
-            resTh <- object@results[, c(2:ncol(object@results))]
-            cat(" macro F1:\n")
-            print(summary(resF1))
-            w <- as.factor(w)
-            if (class(resTh) == "numeric") {
-              m <- data.frame(t(data.frame(resTh)))
-            } else {
-              m <- data.frame(resTh)
-            }            
-            ll <- levels(w)
-            foo <- function(z) factor(z, levels = ll)
-            m <- colwise(foo)(m)
-            foo <- function(z) table(z)
-            t <- colwise(foo)(m)
-            rownames(t) <- paste("weight:", wx, sep = "")
-            cat(" best theta:\n")
-            print(t)
-            if ("warnings" %in% names(object@log)) {
-              cat("Use getWarnings() to see warnings.\n")
-            }
-            invisible(NULL)            
+              cat("Object of class \"",class(object),"\"\n",sep="")
+              cat("Algorithm:", object@algorithm, "\n")
+              cat("Theta hyper-parameters:\n")
+              hyper <- object@hyperparameters$theta
+              w <- unique(as.vector(hyper))
+              w <- w[order(w)]
+              wx <- round(w, 2)
+              cat(" weights:", w, "\n") 
+              cat(" k:", object@hyperparameters$k, "\n")
+              cat(" nrow:", nrow(object@hyperparameters$theta), "\n")
+              cat("Design:\n")
+              cat(" Replication: ",
+                  object@design["times"], " x ",
+                  object@design["xval"], "-fold X-validation\n",
+                  sep = "")
+              cat(" Partitioning: ",                
+                  object@design["test.size"], "/",
+                  1-object@design["test.size"], " (test/train)\n",
+                  sep = "")
+              cat("Results\n")
+              resF1 <- object@results[, "F1"]     
+              resTh <- object@results[, c(2:ncol(object@results))]
+              cat(" macro F1:\n")
+              print(summary(resF1))
+              w <- as.factor(w)
+              if (is.vector(resTh)) {
+                  m <- data.frame(t(data.frame(resTh)))
+              } else {
+                  m <- data.frame(resTh)
+              }            
+              ll <- levels(w)
+              foo <- function(z) factor(z, levels = ll)
+              m <- colwise(foo)(m)
+              foo <- function(z) table(z)
+              t <- colwise(foo)(m)
+              rownames(t) <- paste("weight:", wx, sep = "")
+              cat(" best theta:\n")
+              print(t)
+              if ("warnings" %in% names(object@log)) {
+                  cat("Use getWarnings() to see warnings.\n")
+              }
+              invisible(NULL)            
           })
 
 ## object  =   Object of class "ThetaRegRes"
@@ -165,67 +165,66 @@ setMethod("plot", c("ThetaRegRes", "missing"),
                    cols = getStockcol(),
                    wlab, cex = 14,
                    t) {
-            if (nrow(x@hyperparameters$theta) == 1)
-              stop("Only one theta weight vector tested, no weights to plot")
-            if (!is.logical(labels))
-              stop("labels must be of class logical")
-            if (!is.numeric(n))
-              stop("n must be of class numeric")
-            if (missing(t))
-              t <- min(x@results[, "F1"])
-            f1 <- x@results[, "F1"]
-            tokeep <- which(f1 >= t)
-            best <- x@results[tokeep, c(2:ncol(x@results))]
-            th <- unique(x@hyperparameters$theta[,1])
-            w <- as.vector(best)
-            if (class(best)=="numeric") {
-              orgs <- names(best)
-              orgs <- factor(orgs, levels = rev(orgs))
-              df <- data.frame(orgs, best, row.names=c(1:length(best)))
-              colnames(df) <- c("classes", "w")
-            } else {
-              orgs <- colnames(best)
-              classes <- factor(rep(orgs, each = nrow(best)), levels = rev(orgs))
-              df <- data.frame(classes, w)
-            }
-            df[,"w"] <- factor(w, levels = th)
-            data <- ddply(df, c("classes", "w"), "nrow", .drop = FALSE)
+              if (nrow(x@hyperparameters$theta) == 1)
+                  stop("Only one theta weight vector tested, no weights to plot")
+              if (!is.logical(labels))
+                  stop("labels must be of class logical")
+              if (!is.numeric(n))
+                  stop("n must be of class numeric")
+              if (missing(t))
+                  t <- min(x@results[, "F1"])
+              f1 <- x@results[, "F1"]
+              tokeep <- which(f1 >= t)
+              best <- x@results[tokeep, c(2:ncol(x@results))]
+              th <- unique(x@hyperparameters$theta[, 1])
+              w <- as.vector(best)
+              if (is.vector(best)) { 
+                  orgs <- names(best)
+                  orgs <- factor(orgs, levels = rev(orgs))
+                  df <- data.frame(orgs, best, row.names=c(1:length(best)))
+                  colnames(df) <- c("classes", "w")
+              } else {
+                  orgs <- colnames(best)
+                  classes <- factor(rep(orgs, each = nrow(best)), levels = rev(orgs))
+                  df <- data.frame(classes, w)
+              }
+              df[,"w"] <- factor(w, levels = th)
+              data <- ddply(df, c("classes", "w"), "nrow", .drop = FALSE)
             
-            nth <- length(th)
-            ncl <- ncol(best)
-            if (axsSwitch) {
-              aes = aes(x = classes, y = w, size = nrow)
-            } else {
-              aes = aes(x = w, y = classes, size = nrow)
-            }  
-            ssd = scale_size_continuous(range = c(0, n)) ## Scaling of points
-            points = geom_point(aes(color = classes))
-            theme.par = theme(legend.position = "none", 
-                              axis.text=element_text(size = cex, colour = rgb(0, 0, 0)), ## Axis ticks and labels font size
-                              text = element_text(size = cex + 1), ## Axis labels font size
-                              axis.title.y = element_text(vjust = 0.8, colour = rgb(0, 0, 0)), 
-                              axis.title.x = element_text(vjust = -.5, colour = rgb(0, 0, 0))) 
-            ## Adjust space between axis and titles with vjust
-            #set.ticks = scale_y_continuous(breaks=th, limits = c(-0.2, 1.2))
-            #q = ggplot(data, aes) + points + ssd + theme.par + set.ticks + xlab("Class") + ylab("Classifier weight")
-            if (axsSwitch) {
-              q = ggplot(data, aes) + points + ssd + theme.par + xlab("Class") + ylab("Classifier weight")
+              nth <- length(th)
+              ncl <- ncol(best)
+              if (axsSwitch) {
+                  aes <- aes(x = classes, y = w, size = nrow)
+              } else {
+                  aes <- aes(x = w, y = classes, size = nrow)
+              }  
+              ssd <- scale_size_continuous(range = c(0, n)) ## Scaling of points
+              points <- geom_point(aes(color = classes))
+              theme.par <- theme(legend.position = "none", 
+                                 axis.text=element_text(size = cex, colour = rgb(0, 0, 0)), ## Axis ticks and labels font size
+                                 text = element_text(size = cex + 1), ## Axis labels font size
+                                 axis.title.y = element_text(vjust = 0.8, colour = rgb(0, 0, 0)), 
+                                 axis.title.x = element_text(vjust = -.5, colour = rgb(0, 0, 0))) 
+              ## Adjust space between axis and titles with vjust
+              ## set.ticks <- scale_y_continuous(breaks=th, limits = c(-0.2, 1.2))
+              ## q <- ggplot(data, aes) + points + ssd + theme.par + set.ticks + xlab("Class") + ylab("Classifier weight")
               if (missing(wlab)) 
-                wlab <- th
-              q = q + scale_y_discrete(labels = wlab)
-            } else {
-              q = ggplot(data, aes) + points + ssd + theme.par + xlab("Classifier weight") + ylab("Class")
-              if (missing(wlab)) 
-                wlab <- th
-              q = q + scale_x_discrete(labels = wlab)
-            }            
-            if (labels) {
-              q = q + geom_text(data = subset(data, nrow != 0), 
-                                aes(label = nrow), size = 4)
-            } 
-            #q = q + scale_fill_manual(values = cols[1:ncl])
-            q = q + scale_color_manual(values = rev(cols[1:ncl]))
-            q 
+                  wlab <- sort(round(th, 3))
+              if (axsSwitch) {
+                  q <- ggplot(data, aes) + points + ssd + theme.par + xlab("Class") + ylab("Classifier weight")
+                  q <- q + scale_y_discrete(labels = wlab)
+              } else {
+                  q <- ggplot(data, aes) + points + ssd + theme.par +
+                      xlab("Classifier weight") + ylab("Class")
+                  q <- q + scale_x_discrete(labels = wlab)
+              }            
+              if (labels) {
+                  q <- q + geom_text(data = subset(data, nrow != 0), 
+                                     aes(label = nrow), size = 4)
+              } 
+              ## q <- q + scale_fill_manual(values = cols[1:ncl])
+              q <- q + scale_color_manual(values = rev(cols[1:ncl]))
+              q 
           })        
 
 
@@ -244,11 +243,11 @@ plotThetas <- function(object,
     ## use medians: take the median f1 score over all runs for each combination
     if (medians) {
         f1 <- apply(data, 1, function(x) median(x))
-        r = range(f1)
+        r <- range(f1)
     } else {
         f1 <- as.vector(data)
         th <- rep(th, ncol(data))
-        r = range(f1)
+        r <- range(f1)
     }
     if (proportion) {
         th <- th/max(th)
@@ -256,7 +255,7 @@ plotThetas <- function(object,
         w <- which.max(f1)
         loc <- th[w] + .02
     } else {
-        ylab = "Row sum of thetas"
+        ylab <- "Row sum of thetas"
     }
     if (missing(colramp)) colramp <- c("white", blues9)
     if (smooth) smoothScatter(f1, th, xlab = "F1 scores", 
@@ -264,12 +263,12 @@ plotThetas <- function(object,
                               colramp = colorRampPalette(colramp), ...)
     else plot(f1, th, xlab = "F1 scores", xlim = r,
               ylab = ylab, ...)
-    max = max(f1)
+    max <- max(f1)
     w <- which.max(f1)
     if (!proportion) {
         myth <- object@hyperparameters$theta
-        minT= min(rowSums(myth))
-        maxT = max(rowSums(myth))
+        minT <- min(rowSums(myth))
+        maxT <- max(rowSums(myth))
         abline(h=minT, lty=3, lwd=1.5)
         abline(h=maxT, lty=3, lwd=1.5)
         text(x=r[1]+.03, y=round(minT+.2, 5), cex=.6, 

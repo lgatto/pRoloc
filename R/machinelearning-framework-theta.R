@@ -176,7 +176,7 @@ setMethod("plot", c("ThetaRegRes", "missing"),
               f1 <- x@results[, "F1"]
               tokeep <- which(f1 >= t)
               best <- x@results[tokeep, c(2:ncol(x@results))]
-              th <- unique(x@hyperparameters$theta[, 1])
+              th <- unique(as.vector(x@hyperparameters$theta))
               w <- as.vector(best)
               if (is.vector(best)) { 
                   orgs <- names(best)

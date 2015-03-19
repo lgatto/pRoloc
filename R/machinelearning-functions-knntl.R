@@ -1,4 +1,4 @@
-## Sub-functions for `thetaOptimisation` and `thetaClassification`
+## Sub-functions for `knntlOptimisation` and `knntlClassification`
 createPartitions <- function(markers, 
                              xval, 
                              times, 
@@ -234,7 +234,7 @@ combineParams <- function(object) {
 
 
 
-## Internal thetaClassification - modified version, with checks removed, 
+## Internal knntlClassification - modified version, with checks removed, 
 ## no generation of MSnSet output
 classify <- function(primary,
                      auxiliary,
@@ -297,7 +297,7 @@ splitTh <- function(theta, cores) {
     lapply(t, function(z) theta[z, ])    
 }
 
-## Core optimisation function for thetaOptimisation. 
+## Core optimisation function for knntlOptimisation. 
 opt <- function(primary, 
                 auxiliary,
                 cmn.markers,
@@ -428,7 +428,7 @@ favourPrimary <- function(primary, auxiliary, object,
             fData(primary)[val, "xxx"] <-
                 fData(auxiliary)[val, "xxx"] <-
                     rep("unknown", length(val))
-            res <- thetaClassification(primary, auxiliary, fcol = "xxx",
+            res <- knntlClassification(primary, auxiliary, fcol = "xxx",
                                        bestTheta = th, k = k)
             lev <- names(th) 
             
@@ -467,7 +467,7 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' Classification parameter optimisation for the KNN implementation
 ##' of Wu and Dietterich's transfer learning schema
 ##' 
-##' \code{thetaOptimisation} implements a variation of Wu and
+##' \code{knntlOptimisation} implements a variation of Wu and
 ##' Dietterich's transfer learning schema: P. Wu and
 ##' T. G. Dietterich. Improving SVM accuracy by training on auxiliary
 ##' data sources. In Proceedings of the Twenty-First International
@@ -506,10 +506,10 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' @return A list of containing the theta combinations tested,
 ##' associated macro F1 score and accuracy for each combination over
 ##' each round (specified by times).
-##' @seealso \code{\link{thetaClassification}} and example therein.
-##' @aliases thetaOptimisation thetaOptimization
+##' @seealso \code{\link{knntlClassification}} and example therein.
+##' @aliases knntlOptimisation knntlOptimisation
 ##' @author Lisa Breckels
-thetaOptimisation  <- function(primary,
+knntlOptimisation  <- function(primary,
                                auxiliary,
                                fcol = "markers",
                                k,
@@ -695,7 +695,7 @@ thetaOptimisation  <- function(primary,
         
         fData(P)$xxx <- fData(A)$xxx <- as.character(fData(P)[, fcol])
         fData(P)[val, "xxx"] <- fData(A)[val, "xxx"] <- rep("unknown", length(val))
-        res <- thetaClassification(P, A, fcol = "xxx",
+        res <- knntlClassification(P, A, fcol = "xxx",
                                    bestTheta = .best, k = k)
         lev <- names(.best) 
         
@@ -781,13 +781,13 @@ thetaOptimisation  <- function(primary,
 ##' Classification using a variation of the KNN implementation
 ##' of Wu and Dietterich's transfer learning schema
 ##' 
-##' @title theta classification
+##' @title knn transfer learning classification
 ##' @param primary An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param auxiliary An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##' Default is \code{markers}.
 ##' @param bestTheta Best theta vector as output from
-##' \code{thetaOptimisation}, see \code{thetaOptimisation} for details
+##' \code{knntlOptimisation}, see \code{knntlOptimisation} for details
 ##' @param k Numeric vector of length 2, containing the best \code{k} 
 ##' parameters to use for the primary and auxiliary datasets. If k \code{k} 
 ##' is not specified it will be calculated internally.
@@ -795,7 +795,7 @@ thetaOptimisation  <- function(primary,
 ##' \code{"none"} to report the score for the predicted class only,
 ##' for all cluster or none.
 ##' @return A character vector of the classifications for the unknowns
-##' @seealso \code{\link{thetaOptimisation}}
+##' @seealso \code{\link{knntlOptimisation}}
 ##' @author Lisa Breckels
 ##' @examples
 ##' library(pRolocdata)
@@ -811,16 +811,16 @@ thetaOptimisation  <- function(primary,
 ##' k
 ##' ## reducing parameter search with theta = 1, 
 ##' ## weights of only 1 or 0 will be considered
-##' opt <- thetaOptimisation(andy2011, andy2011goCC,
+##' opt <- knntlOptimisation(andy2011, andy2011goCC,
 ##'                          fcol = "markers.orig", times = 2,
 ##'                          by=1, k=k)
 ##' opt
 ##' th <- getParams(opt)
 ##' plot(opt)
-##' res <- thetaClassification(andy2011, andy2011goCC,
+##' res <- knntlClassification(andy2011, andy2011goCC,
 ##'                            fcol = "markers.orig", th, k)
 ##' res
-thetaClassification <- function(primary,
+knntlClassification <- function(primary,
                                 auxiliary,
                                 fcol = "markers",
                                 bestTheta,
@@ -836,10 +836,10 @@ thetaClassification <- function(primary,
     if (!any(markers == "unknown")) 
         stop("No unknown proteins to classify")
     
-    ## In thetaClassification, we want to have the same unknowns [*],
+    ## In knntlClassification, we want to have the same unknowns [*],
     ## not necessarily in the same order. Different markers are not a
     ## problem (although this should not happen, as not allowed in
-    ## thetaOptimisation, where some overlap in needed). We look at
+    ## knntlOptimisation, where some overlap in needed). We look at
     ## the unknowns' nearest neighbours independently.  [*] it would
     ## be possible to have different ones, but we don't bother.
     if (!checkSortedFeatureNames(unknownMSnSet(primary, fcol),
@@ -859,7 +859,7 @@ thetaClassification <- function(primary,
         
     ## Get k's
     if (missing(k)) {
-        stop("Use the same k as for thetaOptimisation.")
+        stop("Use the same k as for knntlOptimisation.")
     } else {
         if (!is.numeric(k)) stop("Input k is not of class 'numeric'")
         if (!length(k) == 2) stop("Input k must be of length 2")

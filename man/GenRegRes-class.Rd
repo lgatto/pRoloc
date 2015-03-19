@@ -44,7 +44,7 @@
   Object of this class are created with the respective regularisation
   function: \code{\link{knnOptimisation}},
   \code{\link{svmOptimisation}}, \code{\link{plsdaOptimisation}},
-  \code{\link{thetaOptimisation}}, ... 
+  \code{\link{knntlOptimisation}}, ... 
 }
 
 \section{Slots}{

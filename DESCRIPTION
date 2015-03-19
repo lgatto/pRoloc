@@ -44,7 +44,7 @@ Collate: AllGenerics.R
 	 machinelearning-functions-plsda.R
 	 machinelearning-functions-rf.R
 	 machinelearning-functions-svm.R
-	 machinelearning-functions-theta.R
+	 machinelearning-functions-knntl.R
 	 belief.R
 	 distances.R
 	 markers.R

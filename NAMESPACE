@@ -115,12 +115,12 @@ export(## MSnSet manipulation
     rfPrediction, rfClassification, 
     phenoDisco,
     makeNaData, makeNaData2, whichNA,
-    ## --theta
+    ## -- tl
     favourPrimary,
     ## plotThetas,
     combineThetaRegRes,
-    thetaOptimisation,
-    thetaClassification,
+    knntlOptimisation, 
+    knntlClassification,
     thetas, 
     ## -- pipelines
     lopims, lopims1, lopims2, lopims3, lopims4, lopims5,

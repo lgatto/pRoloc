@@ -17,7 +17,7 @@ BiocStyle::latex()
 }
 
 
-\bioctitle[\Biocpkg{pRoloc} \textit{theta}]{A transfer learning
+\bioctitle[\Biocpkg{pRoloc}\textit{-tl}]{A transfer learning
   algorithm for spatial proteomics}
 
 \begin{document}
@@ -30,7 +30,7 @@ BiocStyle::latex()
 \begin{abstract}
   This vignette illustrates the application of a \emph{transfer
     learning} algorithm to assign protein to sub-cellular
-  localisations. The \emph{thetaClassification} algorithm combines a
+  localisations. The \emph{knntlClassification} algorithm combines a
   \emph{primary} experimental spatial proteomics data (LOPIT, PCP,
   etc.)  and an \emph{auxiliary} dataset (for example binary data
   based on Gene Ontology terms) to improve the sub-cellular assignment
@@ -403,7 +403,7 @@ m <- m[m != "unknown"]
 
 The weighted nearest neighbours transfer learning algorithm estimates
 optimal weights for the different data sources and the spatial niches
-described for the data at hand with the \Rfunction{thetaOptimisation}
+described for the data at hand with the \Rfunction{knntlOptimisation}
 function. For instance, for the human data modelled by the
 \Robject{andy2011} and \Robject{andugoset} objects and the
 \Sexpr{length(m)} annotated sub-cellular localisations
@@ -509,7 +509,7 @@ data with the \Rfunction{combineThetaRegRes} function before
 proceeding with the selection of best weights.
 
 <<thetaopt0, eval=FALSE>>=
-topt <- thetaOptimisation(andy2011, andygoset,
+topt <- knntlOptimisation(andy2011, andygoset,
                           th = th, 
                           k = c(3, 3),
                           times = 50)
@@ -519,7 +519,7 @@ topt <- thetaOptimisation(andy2011, andygoset,
 The above code chunk would take too much time to be executed in the
 frame of this vignette. Below, we pass a very small subset of theta
 matrix to minimise the computation time. The
-\Rfunction{thetaOptimisation} function supports parallelised execution
+\Rfunction{knntlOptimisation} function supports parallelised execution
 using various backends thanks to the \Biocpkg{BiocParallel} package;
 an appropriate backend will be defined automatically according to the
 underlying architecture and alternative backends can be defined
@@ -529,7 +529,7 @@ the weights optimisation is repeated only 5 times below.
 <<thetaopt, eval=TRUE>>=
 set.seed(1)
 i <- sample(nrow(th), 10)
-topt <- thetaOptimisation(andy2011, andygoset,
+topt <- knntlOptimisation(andy2011, andygoset,
                           th = th[i, ],
                           k = c(3, 3),
                           times = 5)

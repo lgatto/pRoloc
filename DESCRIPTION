@@ -23,7 +23,7 @@ Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
 	 kernlab, lattice, nnet, randomForest, proxy, FNN,
 	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
 	 mvtnorm, gtools, plyr, ggplot2, biomaRt
-Suggests: testthat, pRolocdata (>= 1.5.1), roxygen2, synapter, xtable,
+Suggests: testthat, pRolocdata (>= 1.5.6), roxygen2, synapter, xtable,
 	  tsne, BiocStyle, hpar, dplyr
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2

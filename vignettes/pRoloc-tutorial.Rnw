@@ -601,7 +601,7 @@ foic <- FoICollection(list(foi1, foi2))
 foic
 @
 
-\Rclass{FeatureOfInterest} instances can now be overlaid on the PCA
+\Rclass{FeaturesOfInterest} instances can now be overlaid on the PCA
 plot with the \Rfunction{highlightOnPlot} function.
 
 \begin{figure}[!hbt]

@@ -16,12 +16,16 @@ importFrom(MLInterfaces,
            nnetI, plsdaI)
 ## import(MLInterfaces)
 
-
+importClassesFrom(biomaRt, Mart)
+importFrom(biomaRt, getBM,
+           useMart,
+           listAttributes)
 
 ## Importing to avoid 'no visible global function definition for' NOTES
 import(Biobase)
 
 import(lattice)
+import(ggplot2)
 import(BiocGenerics)
 import(mclust)
 import(MASS)
@@ -41,10 +45,13 @@ importFrom(sampling, strata)
 importFrom(e1071, svm, naiveBayes, cmeans)
 importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
+importFrom(gtools, permutations)
+importFrom(plyr, colwise, catcolwise, ddply)
 
-
-exportClasses(GenRegRes)
-              # ClustRegRes)
+exportClasses(GenRegRes,
+              ThetaRegRes,
+              AnnotationParams)
+              ## ClustRegRes)
 
 exportMethods(chi2,
               show,
@@ -67,6 +74,7 @@ export(## MSnSet manipulation
     sampleMSnSet, testMSnSet,
     getPredictions,
     getMarkers,
+    getMarkerClasses,
     minClassScore,
     testMarkers, 
     minMarkers,
@@ -77,11 +85,16 @@ export(## MSnSet manipulation
     setStockcol, setStockpch,
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
+    filterBinMSnSet,
+    filterZeroCols, filterZeroRows,
     ## -- plotting
     plot2D,
     addLegend,
     plotDist,
     highlightOnPlot,
+    ## -- data checks
+    checkFvarOverlap,
+    checkFeatureNamesOverlap,
     ## -- machine learning
     plsdaRegularisation, plsdaOptimisation, plsdaOptimization, 
     plsdaPrediction, plsdaClassification,
@@ -102,7 +115,24 @@ export(## MSnSet manipulation
     rfPrediction, rfClassification, 
     phenoDisco,
     makeNaData, makeNaData2, whichNA,
+    ## -- tl
+    favourPrimary,
+    ## plotThetas,
+    combineThetaRegRes,
+    knntlOptimisation, 
+    knntlClassification,
+    thetas, 
     ## -- pipelines
-    lopims, lopims1, lopims2, lopims3, lopims4, lopims5
-)
+    lopims, lopims1, lopims2, lopims3, lopims4, lopims5,
+    ## -- annotation
+    showGOEvidenceCodes,
+    getGOEvidenceCodes,
+    setAnnotationParams,
+    getAnnotationParams,
+    getGOFromFeatures,
+    makeGoSet)
+
+
+
+
 

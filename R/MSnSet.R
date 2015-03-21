@@ -459,3 +459,159 @@ sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
       warning("New sample contains classes with < 6 markers")
   return(object)
 }
+
+##' Convenience accessor to the organelle classes in an 'MSnSet'.
+##' This function returns the organelle classes of an
+##' \code{MSnSet} instance. As a side effect, it prints out the classes.
+##' 
+##' @title Returns the organelle classes in an 'MSnSet'
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param fcol The name of the markers column in the \code{featureData}
+##' slot. Default is \code{markers}.
+##' @param verbose If \code{TRUE}, a character vector of the organelle
+##' classes is printed and the classes are returned invisibly. If \code{FALSE}, 
+##' the markers are returned.
+##' @param ... Additional parameters passed to \code{sort} from the base package.
+##' @return A \code{character} vector of the organelle classes in the data.
+##' @author Lisa Breckels
+##' @seealso \code{\link{getMarkers}}
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' organelles <- getMarkerClasses(dunkley2006)
+getMarkerClasses <- function(object,
+                           fcol = "markers",
+                           verbose = TRUE,
+                           ...) {
+  organelleMarkers <- getMarkers(object, fcol, verbose = FALSE)
+  classes <- unique(organelleMarkers)
+  classes <- sort(classes, ...)
+  classes <- classes[which(classes!="unknown")]
+  if (verbose) {
+    print(classes)
+    invisible(classes)
+  } else {
+    return(classes)
+  }
+}
+
+##' Removes columns or rows that have a certain proportion or absolute
+##' number of 0 values.
+##'
+##' @title Filter a binary MSnSet
+##' @param object An \code{MSnSet}
+##' @param MARGIN 1 or 2. Default is 2.
+##' @param t Rows/columns that have \code{t} or less \code{1}s, it
+##' will be filtered out. When \code{t} and \code{q} are missing,
+##' default is to use \code{t = 1}.
+##' @param q If a row has a higher quantile than defined by \code{q},
+##' it will be filtered out.
+##' @param verbose A \code{logical} defining of a message is to be
+##' printed. Default is \code{TRUE}.
+##' @return A filtered \code{MSnSet}.
+##' @author Laurent Gatto
+##' @examples
+##' set.seed(1)
+##' m <- matrix(sample(0:1, 25, replace=TRUE), 5)
+##' m[1, ] <- 0
+##' m[, 1] <- 0
+##' rownames(m) <- colnames(m) <- letters[1:5]
+##' fd <- data.frame(row.names = letters[1:5])
+##' x <- MSnSet(exprs = m, fData = fd, pData = fd)
+##' exprs(x)
+##' ## Remove columns with no 1s
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 0))
+##' ## Remove columns with one 1 or less
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 1))
+##' ## Remove columns with two 1s or less
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 2))
+##' ## Remove columns with three 1s 
+##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 3))
+##' ## Remove columns that have half or less of 1s
+##' exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
+filterBinMSnSet <- function(object, 
+                            MARGIN = 2,
+                            t, q,
+                            verbose = TRUE) {
+    if (!isBinary(object))
+        warning("Your assay data is not binary!")
+    stopifnot(MARGIN %in% 1:2)    
+    if (MARGIN == 2)
+        K <- colSums(exprs(object))
+    else K <- rowSums(exprs(object))
+    if (missing(t) & missing(q))
+        t <- 1
+    if (missing(q)) {
+        sel <- K > t
+    } else {
+        sel <- K > quantile(K, q)    
+    }
+    if (MARGIN == 2) {
+        if (verbose) message("Removing ", sum(!sel), " column(s)")
+        ans <- object[, sel]
+    } else {
+        if (verbose) message("Removing ", sum(!sel), " row(s)")
+        ans <- object[sel, ]
+    }
+    if (validObject(ans))
+        return(ans)
+}
+
+##' Removes all assay data columns/rows that are composed of only 0,
+##' i.e. have a \code{colSum}/\code{rowSum} of 0.
+##'
+##' @title Remove 0 columns/rows
+##' @param object A \code{MSnSet} object.
+##' @param verbose Print a message with the number of filtered out
+##' columns/row (if any).
+##' @return An \code{MSnSet}.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(andy2011goCC)
+##' any(colSums(exprs(andy2011goCC)) == 0)
+##' exprs(andy2011goCC)[, 1:5] <- 0
+##' ncol(andy2011goCC)
+##' ncol(filterZeroCols(andy2011goCC))
+filterZeroCols <- function(object,
+                           verbose = TRUE) {
+    cs <- colSums(exprs(object))
+    sel <- cs > 0
+    if (any(!sel)) {
+        if (verbose)
+            message("Removing ", sum(!sel), " columns with only 0s.")
+        object <- object[, sel]
+    }
+    if (validObject(object))
+        return(object)
+}
+
+##' @rdname filterZeroCols
+filterZeroRows <- function(object,
+                           verbose = TRUE) {
+    rs <- rowSums(exprs(object))
+    sel <- rs > 0
+    if (any(!sel)) {
+        if (verbose)
+            message("Removing ", sum(!sel), " columns with only 0s.")
+        object <- object[sel, ]
+    }
+    if (validObject(object))
+        return(object)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

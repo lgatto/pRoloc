@@ -129,16 +129,14 @@ composed of:
 \begin{enumerate}
 \item define the annotation parameters based on the species and
   feature types;
-\item query the resource defined in (1) and retrieve relevant terms;
-\item use the terms to prepare the auxiliary data.
+\item query the resource defined in (1) to retrieve relevant terms and
+  use the terms to prepare the auxiliary data.
 \end{enumerate}
 
-We will describe how to perform these different steps, although, in
-practice, steps 2 and 3 are combined into one single function. We will
-demonstrate these steps using a LOPIT experiment on Human Embryonic
-Kidney (HEK293T) fibroblast cells \cite{Breckels2013}, available and
-documented in the \Biocexptpkg{pRolocdata} experiment package as
-\Robject{andy2011}.
+We will demonstrate these steps using a LOPIT experiment on Human
+Embryonic Kidney (HEK293T) fibroblast cells \cite{Breckels2013},
+available and documented in the \Biocexptpkg{pRolocdata} experiment
+package as \Robject{andy2011}.
 
 <<loaddata>>=
 library("pRolocdata")
@@ -183,44 +181,25 @@ retrieved with \Rfunction{getAnnotationParams}.
 
 \subsubsection{Preparing the auxiliary data from the GO ontology}\label{sec:auxgo}
 
-The \Rfunction{goGoFromFeatures} takes an \Rclass{MSnSet} class (from
-which the feature names will be extracted) or, directly a vector of
-characters containing the feature names of interest to retrieve the
-associated GO terms. By default, it downloads \textit{cellular
-  component} terms and does not do any filtering on the terms evidence
-codes (see the \Rfunction{getGOFromFeatures} manual for
-details). Unless passed as argument, the default, globally set
-\Rclass{AnnotationParams} are used to define the Biomart server and
-the query.
-
-Below, we show an example on how we can retrieve the GO terms for the
-\Robject{andy2011} dataset. We load the data and verify that the
-feature names correspond to UniProt accessions.
+The feature names of the \Robject{andy2011} data are UniProt
+identifiers, as defined in the \Robject{ap} accession parameters.
 
 <<pdata>>=
 data(andy2011)
 head(featureNames(andy2011))
 @
 
-<<andgo>>=
-andygo <- getGOFromFeatures(andy2011)
-head(andygo)
-@
-
-We could also have passed the vector for feature names:
-
-<<andgo2, eval=FALSE>>=
-getGOFromFeatures(featureNames(andy2011))
-@
-
-We now have, in the \Robject{andygo}, the GO terms that have been
-associated to the feature names identified in the \Robject{andy2011}
-dataset. Instead of tuning this information into an \Robject{MSnSet}
-manually, we can use the \Rfunction{makeGoSet} function\footnote{As
-  above, the globally set parameters (\Robject{ap} above) will be used
-  automatically (as the \Rfunction{getGOFromFeatures} function above),
-  but they could also be passed explicitly through the
-  \Robject{params} argument.}.
+The \Rfunction{makeGoSet} function takes an \Rclass{MSnSet} class
+(from which the feature names will be extracted) or, directly a vector
+of characters containing the feature names of interest to retrieve the
+associated GO terms and construct an auxiliary \Robject{MSnSet}. By
+default, it downloads \textit{cellular component} terms and does not
+do any filtering on the terms evidence codes (see the
+\Rfunction{makeGoSet} manual for details). Unless passed as argument,
+the default, globally set \Rclass{AnnotationParams} are used to define
+the Biomart server and the query\footnote{The annotation parameters
+  could also be passed explicitly through the \Robject{params}
+  argument.}.
 
 <<andgoset>>=
 andygoset <- makeGoSet(andy2011)

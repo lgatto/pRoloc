@@ -1,0 +1,479 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{A transfer learning algorithm for spatial proteomics}
+%\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Spatial Proteomics}
+%\VignettePackage{pRoloc}
+
+\documentclass[12pt, oneside]{article}
+
+<<style, eval=TRUE, echo=FALSE, results="asis">>=
+BiocStyle::latex()
+@
+
+
+\author{
+  Lisa M. Breckels and Laurent Gatto\footnote{\email{lg390@cam.ac.uk}}\\
+  Computational Proteomics Unit\\
+  University of Cambridge, UK
+}
+
+
+\bioctitle[\Biocpkg{pRoloc} transfer learning]{A transfer learning
+  algorithm for spatial proteomics}
+
+\begin{document}
+
+\maketitle
+
+%% Abstract and keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vskip 0.3in minus 0.1in
+\hrule
+\begin{abstract}
+  This vignette illustrates the application of a \emph{transfer
+    learning} algorithm to assign protein to sub-cellular
+  localisations. The \emph{knntlClassification} algorithm combines a
+  \emph{primary} experimental spatial proteomics data (LOPIT, PCP,
+  etc.)  and an \emph{auxiliary} dataset (for example binary data
+  based on Gene Ontology terms) to improve the sub-cellular assignment
+  given an optimal combination of these data sources.
+\end{abstract}
+\textit{Keywords}: Bioinformatics, organelle, spatial proteomics,
+machine learning, transfer learning 
+
+\vskip 0.1in minus 0.05in \hrule \vskip 0.2in minus 0.1in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+<<env, include=FALSE, echo=FALSE, cache=FALSE>>=
+library("knitr")
+opts_chunk$set(fig.align = 'center', 
+               fig.show = 'hold', 
+               par = TRUE,
+               prompt = TRUE,
+               eval = TRUE,
+               stop_on_error = 1L,
+               comment = NA)
+options(replace.assign = TRUE, 
+        width = 55)
+suppressPackageStartupMessages(library("dplyr"))
+suppressPackageStartupMessages(library("MSnbase"))
+suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
+suppressPackageStartupMessages(library("pRolocdata"))
+suppressPackageStartupMessages(library("class"))
+set.seed(1)
+@ 
+%%$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}\label{sec:intro} 
+
+Our main data source to study protein sub-cellular localisation are
+high-throughput mass spectrometry-based experiments such as LOPIT, PCP
+and similar designs (see \cite{Gatto2010} for an general
+introduction). Recent optimised experiments result in high quality
+data enabling to identify over 6000 proteins and discriminate numerous
+sub-cellular and sub-organellar niches (\fixme{add ref}). Supervised
+and semi-supervised machine learning algorithms can be applied to
+assign thousands of proteins to annotated sub-cellular niches
+\cite{Breckels2013,Gatto:2014}. These data constitute our main source
+for protein localisation and are termed thereafter \emph{primary}
+data.
+
+There are other sources of data about sub-cellular localisation of
+proteins, such as the Gene Ontology \cite{Ashburner:2000} (in
+particular the cellular compartment name space), quantitative features
+derived from protein sequences (such as pseudo amino acid composition)
+or the Human Protein Atlas \cite{Uhlen:2010} to cite a few. These
+data, while not optimised to a specific system at hand and, in the
+case of annotation feature, not as reliable as our experimental data,
+constitute an invaluable, often plentiful source of \emph{auxiliary}
+information.
+
+The aim of a \emph{transfer learning} algorithm is to combine
+different sources of data to improve overall classification. In
+particular, the goal is to support/complement the primary target
+domain (experimental data) with auxiliary data (annotation) features
+without compromising the integrity of our primary data. In this
+vignette, we describe the application of transfer learning algorithms
+for the localisation of proteins from the \Biocpkg{pRoloc} package.
+
+<<>>=
+library("pRoloc")
+@
+
+\section{Preparing the auxiliary data}\label{sec:aux}
+
+\subsection{The Gene Ontology}\label{sec:goaux}
+
+The auxiliary data is prepared from the primary data's features. All
+the GO terms associated to these features are retrieved and used to
+create a binary matrix where a one (zero) at position $(i,j)$
+indicates that term $j$ has (not) been used to annotate feature $i$.
+
+The GO terms are retrieved from an appropriate repository using the
+\Biocpkg{biomaRt} package. The specific Biomart repository and query
+will depend on the species under study and the type of features. The
+first step is to prepare annotation parameters that will enable to
+perform the query. The \Biocpkg{pRoloc} package provides a dedicated
+infrastructure to set up the query to the annotation resource and
+prepare the GO data for subsequent analyses. This infrastructure is
+composed of:
+
+\begin{enumerate}
+\item define the annotation parameters based on the species and
+  feature types;
+\item query the resource defined in (1) to retrieve relevant terms and
+  use the terms to prepare the auxiliary data.
+\end{enumerate}
+
+We will demonstrate these steps using a LOPIT experiment on Human
+Embryonic Kidney (HEK293T) fibroblast cells \cite{Breckels2013},
+available and documented in the \Biocexptpkg{pRolocdata} experiment
+package as \Robject{andy2011}.
+
+<<loaddata>>=
+library("pRolocdata")
+data(andy2011)
+@
+
+\subsubsection{Preparing the query parameters}\label{sec:ap}
+
+The query parameters are stored as \Rclass{AnnotationParams} objects
+that are created with the \Rfunction{setAnnotationParams}
+function. The function will present a first menu with
+\Sexpr{nrow(pRoloc:::getMartTab())}. Once the species has been
+selected, a set of possible identifier types is displayed.
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=5cm]{./Figures/ap1.png}\hspace{1cm}
+  \includegraphics[height=5cm]{./Figures/ap2.png}
+  \caption{Selecting species (left) and feature type (right) to create
+    an \Robject{AnnotationParams} instance for the human
+    \Robject{andy2011} data.}
+  \label{fig:apgui}
+\end{figure}
+
+It is also possible to pass patterns\footnote{These patterns must
+  match uniquely or an error will be thrown.} to match against the
+species (\texttt{"Homo sapiens"}) and feature type
+(\texttt{"UniProt/Swissprot ID"}).
+
+<<ap>>=
+ap <- setAnnotationParams(inputs =
+                              c("Homo sapiens",
+                                "UniProt/Swissprot ID"))
+ap
+@
+
+The \Rfunction{setAnnotationParams} function automatically sets the
+annotation parameters globally so that the \Robject{ap} object does
+not neet to be explicitly set later on. The default parameters can be
+retrieved with \Rfunction{getAnnotationParams}.
+
+\subsubsection{Preparing the auxiliary data from the GO ontology}\label{sec:auxgo}
+
+The feature names of the \Robject{andy2011} data are UniProt
+identifiers, as defined in the \Robject{ap} accession parameters.
+
+<<pdata>>=
+data(andy2011)
+head(featureNames(andy2011))
+@
+
+The \Rfunction{makeGoSet} function takes an \Rclass{MSnSet} class
+(from which the feature names will be extracted) or, directly a vector
+of characters containing the feature names of interest to retrieve the
+associated GO terms and construct an auxiliary \Robject{MSnSet}. By
+default, it downloads \textit{cellular component} terms and does not
+do any filtering on the terms evidence codes (see the
+\Rfunction{makeGoSet} manual for details). Unless passed as argument,
+the default, globally set \Rclass{AnnotationParams} are used to define
+the Biomart server and the query\footnote{The annotation parameters
+  could also be passed explicitly through the \Robject{params}
+  argument.}.
+
+<<andgoset>>=
+andygoset <- makeGoSet(andy2011)
+andygoset
+exprs(andygoset)[1:7, 1:4]
+@
+
+<<testandsamefeats, echo=FALSE>>=
+stopifnot(all.equal(featureNames(andy2011), featureNames(andygoset)))
+@
+
+We now have a primary dataset, composed of \Sexpr{nrow(andy2011)}
+protein quantitative profiles for \Sexpr{ncol(andy2011)} fractions
+along the density gradient and an auxiliary dataset for
+\Sexpr{ncol(andygoset)} cellular compartment GO terms for the same
+\Sexpr{nrow(andygoset)} features.
+
+\subsubsection{A note on reproducibility}\label{sec:annotrepro}
+
+The generation of the auxiliary data replies on specific Biomart
+server \Rclass{Mart} instances in the \Rclass{AnnotationParams} class
+and the actual query to the server to obtain the GO terms associated
+with the features. The utilisation of online servers, which undergo
+regular updates, does not guarantee reproducibility of feature/term
+association over time. It is recommended to save and store the
+\Rclass{AnnotationParams} and auxiliary \Rclass{MSnSet}
+instances. Alternatively, it is possible to use other Bioconductor
+infrastructure, such as specific organism annotations and the
+\Biocannopkg{GO.db} package to use specific versioned (and thus
+traceable) annotations.
+
+\subsection{The Human Protein Atlas}\label{sec:hpaaux}
+
+The feature names of our LOPIT experiment are UniProt identifiers,
+while the Human Protein Atlas uses Ensembl gene identifiers. This
+first code chunk matches both identifier types using the UniProt
+Biomart server.
+
+<<hparprep, eval=TRUE>>=
+fvarLabels(andy2011)[1] <- "accession" ## for left_join matching
+## convert protein accession numbers to ensembl gene identifiers
+library("biomaRt")
+uniprot <- useMart("unimart", dataset = "uniprot")
+filter <- "accession"
+attrib <- c("name", "accession", "ensembl_id")
+bm <- getBM(attributes = attrib,
+            filters = filter,
+            values = fData(andy2011)[, "accession"],
+            mart = uniprot)
+## HPA data
+library("hpar")
+setHparOptions(hpadata = "SubcellularLoc")
+hpa <- getHpa(bm$ensembl_id)
+hpa$Reliability <- droplevels(hpa$Reliability)
+colnames(hpa)[1] <- "ensembl_id"
+
+library("dplyr")
+hpa <- left_join(hpa, bm)
+hpa <- hpa[!duplicated(hpa$accession), ]
+
+## match HPA/LOPIT
+fd <- left_join(fData(andy2011), hpa)
+rownames(fd) <- featureNames(andy2011)
+fData(andy2011) <- fd
+stopifnot(validObject(andy2011))
+
+## Let's get rid of features without any hpa data
+lopit <- andy2011[!is.na(fData(andy2011)$Main.location), ]
+@
+
+Below, we deparse the multiple ';'-delimited locations contained in
+the Human Protein sub-cellular Atlas, create the auxiliary binary data
+matrix (only localisations with reliability equal to \emph{Supportive}
+are considered; \emph{Uncertain} assignments are ignored) and filter
+proteins without any localisation data.
+
+<<hpadata, eval=TRUE>>=
+## HPA localisation
+hpalocs <- c(as.character(fData(lopit)$Main.location),
+             as.character(fData(lopit)$Other.location))
+hpalocs <- hpalocs[!is.na(hpalocs)]
+hpalocs <- unique(unlist(strsplit(hpalocs, ";")))
+
+makeHpaSet <- function(x, score2, locs = hpalocs) {
+    hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
+    colnames(hpamat) <- locs
+    rownames(hpamat) <- featureNames(x)    
+    for  (i in 1:nrow(hpamat)) {
+        loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
+        loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
+        score <- score2[fData(x)[i, "Reliability"]]
+        hpamat[i, loc] <- score
+        hpamat[i, loc2] <- score
+    }
+    new("MSnSet", exprs = hpamat,
+        featureData = featureData(lopit))
+}
+
+hpaset <- makeHpaSet(lopit,
+                     score2 = c(Supportive = 1, Uncertain = 0))
+hpaset <- filterZeroRows(hpaset)
+dim(hpaset)
+exprs(hpaset)[c(1, 6, 200), 1:3]
+@
+
+\section{Optimal weights}\label{sec:thopt}
+
+<<mclasses, echo=FALSE>>=
+## marker classes for andy2011
+m <- unique(fData(andy2011)$markers)
+m <- m[m != "unknown"]
+@
+
+The weighted nearest neighbours transfer learning algorithm estimates
+optimal weights for the different data sources and the spatial niches
+described for the data at hand with the \Rfunction{knntlOptimisation}
+function. For instance, for the human data modelled by the
+\Robject{andy2011} and \Robject{andygoset} objects and the
+\Sexpr{length(m)} annotated sub-cellular localisations
+(\Sexpr{paste(m[-1], collapse = ", ")} and \Sexpr{m[1]} \fixme{Use the
+  \texttt{markers.tl} column here (as in large scale analysis), once
+  added to the data object.}), we want to know how to optimally
+combine primary and auxiliary data. If we look at figure
+\ref{fig:andypca}, that illustrates the experimental separation of the
+\Sexpr{length(m)} spatial classes on a principal component plot, we
+see that some organelles such as the mitochondrion or the cytosol and
+cytosol/nucleus are well resolved, while others such as the Golgi or
+the ER are less so. In this experiment, the former classes are not
+expected to benefit for other data source, while the latter should
+benefit from additional information.
+
+\begin{figure}[h]
+  \centering
+<<andypca, fig.width=6, fig.height=6, echo=FALSE>>=
+setStockcol(paste0(getStockcol(), "80"))
+plot2D(andy2011)
+setStockcol(NULL)
+addLegend(andy2011, where = "topright", bty = "n", cex = .7)
+@  
+ \caption{PCA plot of \Robject{andy2011}. The multivariate protein
+   profiles are summerised along the two first principal
+   components. Proteins of unknown localisation are represented by
+   empty grey points. Protein markers, which are well-known residents
+   of specific sub-cellular niches are colour-coded and form clusters
+   on the figure. }
+  \label{fig:andypca}
+\end{figure}
+
+Let's define a set of three possible weights: 0, 0.5 and 1. A weight
+of 1 indicates that the final results rely exclusively on the
+experimental data and ignore completely the auxiliary data. A weight
+of 0 represents the opposite situation, where the primary data is
+ignored and only the auxiliary data is considered. A weight of 0.5
+indicates that each data source will contribute equally to the final
+results.  It is the algorithm's optimisation step task to identify the
+optimal combination of class-specific weights for a given primary and
+auxiliary data pair. The optimisation process can be quite time
+consuming for many weights and many sub-cellular classes, as all
+combinations (there are $number~of~classes^{number~of~weights}$
+possibilities; see below). One would generally defined more weights
+(for example \Sexpr{seq(0, 1, by = 0.25)} or \Sexpr{round(seq(0, 1,
+  length.out = 4), 2)}) to explore more fine-grained integration
+opportunities. The possible weight combinations can be calculated with
+the \Rfunction{thetas} function:
+
+\begin{itemize}
+\item 3 classes, 3 weights
+
+<<thetas0, echo=TRUE>>=
+head(thetas(3, by = 0.5))
+dim(thetas(3, by = 0.5))
+@
+
+\item 5 classe, 4 weights
+
+<<thetas1, echo=TRUE>>=
+dim(thetas(5, length.out = 4))
+@
+
+\item for the human \Robject{andy2011} data, considering 4 weights,
+there are very many combinations:
+
+<<thetaandy>>=
+## marker classes for andy2011
+m <- unique(fData(andy2011)$markers)
+m <- m[m != "unknown"]
+th <- thetas(length(m), length.out=4)
+dim(th)
+@
+\end{itemize}
+
+The actual combination of weights to be tested can be defined in
+multiple ways: by passing a weights matrix explicitly (as those
+generated with \Rfunction{thetas} above) through the \Robject{th}
+argument; or by defining the increment between weights using
+\Robject{by}; or by specifying the number of weights to be used
+through the \Robject{length.out} argument.
+
+Considering the sub-cellular resolution for this experiment, we would
+anticipate that the mitochondrion, the cytosol and the cytosol/nucleus
+classes would get high weights, while the ER and Golgi would be
+assigned lower weights.
+
+As we use a nearest neighbour classifier, we also need to know how
+many neighbours to consider when classifying a protein of unknown
+localisation. The \Rfunction{knnOptimisation} function (see the
+\textit{pRoloc-tutorial} vignette and the functions manual page) can
+be run on the primary and auxiliary data sources independently to
+estimate the best $k_P$ and $k_A$ values. Here, based on
+\Rfunction{knnOptimisation}, we use 3 and 3.
+
+Finally, to assess the validity of the weight selection, it should be
+repeated a certain number of times (default value is 50). As the
+weight optimisation can become very time consuming for a wide range of
+weights and many target classes, we would recommend to start with a
+lower number of iterations, pre-analyse the results, proceed with
+further iterations and eventually combine the optimisation results
+data with the \Rfunction{combineThetaRegRes} function before
+proceeding with the selection of best weights.
+
+<<thetaopt0, eval=FALSE>>=
+topt <- knntlOptimisation(andy2011, andygoset,
+                          th = th, 
+                          k = c(3, 3),
+                          times = 50)
+@
+
+
+The above code chunk would take too much time to be executed in the
+frame of this vignette. Below, we pass a very small subset of theta
+matrix to minimise the computation time. The
+\Rfunction{knntlOptimisation} function supports parallelised execution
+using various backends thanks to the \Biocpkg{BiocParallel} package;
+an appropriate backend will be defined automatically according to the
+underlying architecture and user-defined backends can be defined
+through the \Robject{BPPARAM} argument\footnote{Large scale
+  applications of this algorithms (\fixme{add ref}) were run on a
+  cluster using an MPI backend defined with
+  \Rfunction{SnowParams(256, type="MPI")}.}. Also, in the interest of
+time, the weights optimisation is repeated only 5 times below.
+
+<<thetaopt, eval=TRUE>>=
+set.seed(1)
+i <- sample(nrow(th), 10)
+topt <- knntlOptimisation(andy2011, andygoset,
+                          th = th[i, ],
+                          k = c(3, 3),
+                          times = 5)
+@
+
+\subsection{Choosing weights}\label{sec:choosep}
+
+With \Rfunction{getParams} or manually, by inspecting the weight plots.
+
+\subsection{Favouring primary data}\label{sec:fav}
+
+\section{Applying best \textit{theta} weights}\label{sec:thclass}
+
+\section{Conclusion}\label{sec:ccl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Session information}\label{sec:sessionInfo} 
+
+All software and respective versions used to produce this document are
+listed below.
+
+<<sessioninfo, results='asis', echo=FALSE>>=
+toLatex(sessionInfo())
+@
+
+\bibliography{pRoloc}
+
+\end{document}
+

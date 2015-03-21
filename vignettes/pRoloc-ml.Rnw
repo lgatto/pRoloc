@@ -386,27 +386,40 @@ tan2009r1
 \subsection{Customising model parameters}
 
 Below we illustrate how to weight different classes according to the 
-number of labelled instances, were large sets are down weighted. 
+number of labelled instances, where large sets are down weighted. 
 This strategy can help with imbalanced designs.
 
 <<weigths, eval=FALSE>>=
-w <- table(fData(dunkley2006)$markers)
-w <- 1/w[-5]
+w <- table(fData(markerMSnSet(dunkley2006))$markers)
 wpar <- svmOptimisation(dunkley2006, class.weights = w)
-wres <- svmClassification(dunkley2006, pw, class.weights = w)
+wres <- svmClassification(dunkley2006, wpar, class.weights = w)
 @ 
 
 
 <<getmlfunction, echo=FALSE>>=
+
 ## Add chi^2.
-tab <- data.frame('parameter optimisation' = grep("Optimisation", ls("package:pRoloc"), value = TRUE), 
-                  'classification' = grep("Classification", ls("package:pRoloc"), value = TRUE))
-tab$algorithm <- c("nearest neighbour", "support vector machine", "naive bayes",
-                   "neural networks", "PerTurbo", "partial least square", 
-                   "random forest", "support vector machine")
+tab <- data.frame('parameter optimisation' =
+                      grep("Optimisation",
+                           ls("package:pRoloc"), value = TRUE), 
+                  'classification' =
+                      grep("Classification",
+                           ls("package:pRoloc"), value = TRUE))
+
+tab$algorithm <- c("nearest neighbour",
+                   "support vector machine",
+                   "naive bayes",
+                   "neural networks",
+                   "PerTurbo",
+                   "partial least square", 
+                   "random forest",
+                   "support vector machine",
+                   "transfer learning (see pRoloc-theta vignette)")
+
 tab$package <- c("class", "kernlab", "e1071",
                  "nnet", "pRoloc", "caret",
-                 "randomForest", "e1071")
+                 "randomForest", "e1071",
+                 "pRoloc")
 colnames(tab)[1] <- c("parameter optimisation")
 @ 
 

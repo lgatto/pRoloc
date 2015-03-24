@@ -43,8 +43,8 @@ context("thetaFunctions")
 ##   resP.th <- thetaClassification(P, A, fcol="test", theta, k=c(3,3))
 ##   resP.knn <- knnClassification(P, fcol="test", k=3)
   
-##   expect_equal(fData(resP.th)$theta, fData(resP.knn)$knn)
-##   expect_equal(fData(resP.th)$theta.scores, fData(resP.knn)$knn.scores)
+##   expect_equal(fData(resP.th)$knntl, fData(resP.knn)$knn)
+##   expect_equal(fData(resP.th)$knntl.scores, fData(resP.knn)$knn.scores)
   
 ##   ## Now test with all auxiliary data
 ##   theta <- rep(0, length(cl))
@@ -54,6 +54,6 @@ context("thetaFunctions")
 ##   resA.th <- thetaClassification(P, A, fcol="test", theta, k=c(3,3))
 ##   resA.knn <- knnClassification(filterBinMSnSet(A, t=0), fcol="test", k=3)
   
-##   expect_equal(fData(resA.th)$theta, fData(resA.knn)$knn)
-##   expect_equal(fData(resA.th)$theta.scores, fData(resA.knn)$knn.scores)
+##   expect_equal(fData(resA.th)$knntl, fData(resA.knn)$knn)
+##   expect_equal(fData(resA.th)$knntl.scores, fData(resA.knn)$knn.scores)
 ## })

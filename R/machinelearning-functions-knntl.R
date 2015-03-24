@@ -434,7 +434,7 @@ favourPrimary <- function(primary, auxiliary, object,
             
             ## Now calculate macroF1 on validation
             res.x <- unknownMSnSet(res, "xxx")
-            r <- factor(getMarkers(res.x, "theta", verbose = FALSE),
+            r <- factor(getMarkers(res.x, "knntl", verbose = FALSE),
                         levels = lev)
             m <- factor(getMarkers(res.x, fcol, verbose = FALSE), levels = lev)
             cm <- table(r, m, dnn = c("Prediction", "Reference"))
@@ -701,7 +701,7 @@ knntlOptimisation  <- function(primary,
         
         ## Now calculate macroF1 on validation
         res.x <- unknownMSnSet(res, "xxx")
-        .pred[[.times]] <- factor(getMarkers(res.x, "theta", verbose = FALSE), 
+        .pred[[.times]] <- factor(getMarkers(res.x, "knntl", verbose = FALSE), 
                                   levels = lev)
         .mark <- factor(getMarkers(res.x, fcol, verbose = FALSE), levels = lev)
         cm <- table(.pred[[.times]], .mark, dnn = c("Prediction", "Reference"))
@@ -896,7 +896,7 @@ knntlClassification <- function(primary,
     if (scores == "all") {
         .scoreMatrix <- matrix(data = NA, nrow = nrow(primary), 
                                ncol = length(classes))
-        colnames(.scoreMatrix) <- paste0(colnames(vcMatrix), ".theta.scores")
+        colnames(.scoreMatrix) <- paste0(colnames(vcMatrix), ".knntl.scores")
         for (i in 1:length(classes)) {
             .ind <- which(fData(primary)[, fcol] == classes[i])
             .mark <- rep(1, length(.ind))
@@ -909,10 +909,10 @@ knntlClassification <- function(primary,
     }
     else if (scores == "prediction") {
         scores <- apply(vcMatrix, 1, function(z) max(z))
-        theta.scores <- vector("numeric", nrow(primary))
-        theta.scores[L] <- rep(1, length(L))
-        theta.scores[X] <- scores
-        fData(primary)$theta.scores <- theta.scores
+        knntl.scores <- vector("numeric", nrow(primary))
+        knntl.scores[L] <- rep(1, length(L))
+        knntl.scores[X] <- scores
+        fData(primary)$knntl.scores <- knntl.scores
     }
     
     ## Get final classification
@@ -920,7 +920,7 @@ knntlClassification <- function(primary,
     y <- rep("unknown", nrow(primary))
     y[L] <- as.character(fData(primary)[L, fcol])
     y[X] <- res
-    fData(primary)$theta <- as.factor(y)
+    fData(primary)$knntl <- as.factor(y)
     
     return(primary)           
 }

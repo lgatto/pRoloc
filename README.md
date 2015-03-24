@@ -33,8 +33,9 @@ localisation. J Proteomics. 2013 Aug 2;88:129-40. doi:
 Mar 21. [PubMed PMID: 23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
 
 
-Gatto L., Breckels L.M., Burger T, Nightingale D.J.H., Groen A.J.,
-Campbell C., Mulvey C.M., Christoforou A., Ferro M., Lilley K.S. "A
-foundation for reliable spatial proteomics data analysis", Mol Cell
-Proteomics. 2014
-May 20. [publisher](http://www.mcponline.org./content/early/2014/05/20/mcp.M113.036350.abstract)
+Gatto L, Breckels LM, Burger T, Nightingale DJ, Groen AJ, Campbell C,
+Nikolovski N, Mulvey CM, Christoforou A, Ferro M, Lilley KS. A
+foundation for reliable spatial proteomics data analysis. Mol Cell
+Proteomics. 2014 Aug;13(8):1937-52. doi: 10.1074/mcp.M113.036350. Epub
+2014 May 20. [PubMed PMID: 24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
+

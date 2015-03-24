@@ -251,6 +251,9 @@ bm <- getBM(attributes = attrib,
             mart = uniprot)
 ## HPA data
 library("hpar")
+getHpaVersion()
+getHpaDate()
+
 setHparOptions(hpadata = "SubcellularLoc")
 hpa <- getHpa(bm$ensembl_id)
 hpa$Reliability <- droplevels(hpa$Reliability)

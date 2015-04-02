@@ -29,8 +29,8 @@ BiocStyle::latex()
 \hrule
 \begin{abstract}
   This vignette illustrates the application of a \emph{transfer
-    learning} algorithm to assign protein to sub-cellular
-  localisations. The \emph{knntlClassification} algorithm combines a
+    learning} algorithm to assign proteins to sub-cellular
+  localisations. The \emph{knntlClassification} algorithm combines
   \emph{primary} experimental spatial proteomics data (LOPIT, PCP,
   etc.)  and an \emph{auxiliary} data set (for example binary data
   based on Gene Ontology terms) to improve the sub-cellular assignment
@@ -78,13 +78,14 @@ Our main data source to study protein sub-cellular localisation are
 high-throughput mass spectrometry-based experiments such as LOPIT, PCP
 and similar designs (see \cite{Gatto2010} for an general
 introduction). Recent optimised experiments result in high quality
-data enabling to identify over 6000 proteins and discriminate numerous
-sub-cellular and sub-organellar niches (\fixme{add ref}). Supervised
-and semi-supervised machine learning algorithms can be applied to
-assign thousands of proteins to annotated sub-cellular niches
-\cite{Breckels2013,Gatto:2014} (see also the \textit{pRoloc-tutorial}
-vignette). These data constitute our main source for protein
-localisation and are termed thereafter \emph{primary} data.
+data enabling the identification of over 6000 proteins and
+discriminate numerous sub-cellular and sub-organellar niches
+\cite{Breckels:2015}. Supervised and semi-supervised machine learning
+algorithms can be applied to assign thousands of proteins to annotated
+sub-cellular niches \cite{Breckels2013,Gatto:2014} (see also the
+\textit{pRoloc-tutorial} vignette). These data constitute our main
+source for protein localisation and are termed thereafter
+\emph{primary} data.
 
 There are other sources of data about sub-cellular localisation of
 proteins, such as the Gene Ontology \cite{Ashburner:2000} (in
@@ -219,7 +220,7 @@ along the density gradient and an auxiliary data set for
 
 \subsubsection{A note on reproducibility}\label{sec:annotrepro}
 
-The generation of the auxiliary data replies on specific Biomart
+The generation of the auxiliary data relies on specific Biomart
 server \Rclass{Mart} instances in the \Rclass{AnnotationParams} class
 and the actual query to the server to obtain the GO terms associated
 with the features. The utilisation of online servers, which undergo
@@ -322,8 +323,8 @@ described for the data at hand with the \Rfunction{knntlOptimisation}
 function. For instance, for the human data modelled by the
 \Robject{andy2011} and \Robject{andygoset} objects\footnote{We will
   use the sub-cellular markers defined in the \texttt{markers.tl}
-  feature variable, instead of the default \texttt{markers}. } and
-the \Sexpr{length(m)} annotated sub-cellular localisations
+  feature variable, instead of the default \texttt{markers}. } and the
+\Sexpr{length(m)} annotated sub-cellular localisations
 (\Sexpr{paste(m[-1], collapse = ", ")} and \Sexpr{m[1]}), we want to
 know how to optimally combine primary and auxiliary data. If we look
 at figure \ref{fig:andypca}, that illustrates the experimental
@@ -331,7 +332,7 @@ separation of the \Sexpr{length(m)} spatial classes on a principal
 component plot, we see that some organelles such as the mitochondrion
 or the cytosol and cytosol/nucleus are well resolved, while others
 such as the Golgi or the ER are less so. In this experiment, the
-former classes are not expected to benefit for other data source,
+former classes are not expected to benefit from another data source,
 while the latter should benefit from additional information.
 
 \begin{figure}[h]
@@ -340,7 +341,8 @@ while the latter should benefit from additional information.
 setStockcol(paste0(getStockcol(), "80"))
 plot2D(andy2011, fcol = "markers.tl")
 setStockcol(NULL)
-addLegend(andy2011, where = "topright", bty = "n", cex = .7)
+addLegend(andy2011, fcol = "markers.tl",
+          where = "topright", bty = "n", cex = .7)
 @  
  \caption{PCA plot of \Robject{andy2011}. The multivariate protein
    profiles are summarised along the two first principal
@@ -412,7 +414,8 @@ localisation. The \Rfunction{knnOptimisation} function (see the
 \textit{pRoloc-tutorial} vignette and the functions manual page) can
 be run on the primary and auxiliary data sources independently to
 estimate the best $k_P$ and $k_A$ values. Here, based on
-\Rfunction{knnOptimisation}, we use 3 and 3.
+\Rfunction{knnOptimisation}, we use 3 and 3, for $k_P$ and $k_A$
+respectively.
 
 Finally, to assess the validity of the weight selection, it should be
 repeated a certain number of times (default value is 50). As the
@@ -495,8 +498,9 @@ observed in the weights \textit{bubble} plot (figure
 \Rfunction{getParams} method\footnote{Note that the scores extracted
   here are based on the random subsest of weights.}. See
 \Rfunction{?getParams} for details and the \Rfunction{favourPrimary}
-it is desirable to systematically favour the primary data (i.e. high
-weights) when different weight combinations perform equally well.
+function, if it is desirable to systematically favour the primary data
+(i.e. high weights) when different weight combinations perform equally
+well.
 
 <<getParam>>=
 getParams(topt)
@@ -545,7 +549,9 @@ setStockcol(paste0(getStockcol(), "80"))
 ptsze <- exp(fData(andy2011)$knntl.scores) - 1
 plot2D(andy2011, fcol = "knntl", cex = ptsze)
 setStockcol(NULL)
-addLegend(andy2011, where = "topright", bty = "n", cex = .7)
+addLegend(andy2011, where = "topright",
+          fcol = "markers.tl",
+          bty = "n", cex = .7)
 @  
  \caption{PCA plot of \Robject{andy2011} after transfer learning
    classification. The size of the points is proportional to the

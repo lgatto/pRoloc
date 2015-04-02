@@ -67,11 +67,11 @@ head(filterList[[1]])
 ## 5 chromosomal_region  Chromosome Regions
 ## 6      with_wikigene with WikiGene ID(s)
 
-checkAttr0 <- function(x, attr0 = pRoloc2:::getAttributesOfInterest0()) 
+checkAttr0 <- function(x, attr0 = pRoloc:::getAttributesOfInterest0()) 
     attr0 %in% x$name
 
 
-checkAttrX <- function(x, attrX = pRoloc2:::getAttributesOfInterestX()) 
+checkAttrX <- function(x, attrX = pRoloc:::getAttributesOfInterestX()) 
     sapply(attrX,
            function(.attrX) {
                stopifnot(length(.attrX) == 2)
@@ -87,8 +87,8 @@ tmp <- cbind(tmp, tmp2)
 
 ## colnames(tmp) <- c(attributes.of.interest0,                   
 ##                    sapply(attributes.of.interestX, "[", 1))
-colnames(tmp) <- c(pRoloc2:::attributesOfInterest0,
-                   sapply(pRoloc2:::attributesOfInterestX, "[", 1))
+colnames(tmp) <- c(pRoloc:::attributesOfInterest0,
+                   sapply(pRoloc:::attributesOfInterestX, "[", 1))
 
 sel <- which(apply(tmp, 1, all))
 

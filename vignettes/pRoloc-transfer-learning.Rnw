@@ -32,7 +32,7 @@ BiocStyle::latex()
     learning} algorithm to assign protein to sub-cellular
   localisations. The \emph{knntlClassification} algorithm combines a
   \emph{primary} experimental spatial proteomics data (LOPIT, PCP,
-  etc.)  and an \emph{auxiliary} dataset (for example binary data
+  etc.)  and an \emph{auxiliary} data set (for example binary data
   based on Gene Ontology terms) to improve the sub-cellular assignment
   given an optimal combination of these data sources.
 \end{abstract}
@@ -102,7 +102,8 @@ particular, the goal is to support/complement the primary target
 domain (experimental data) with auxiliary data (annotation) features
 without compromising the integrity of our primary data. In this
 vignette, we describe the application of transfer learning algorithms
-for the localisation of proteins from the \Biocpkg{pRoloc} package.
+for the localisation of proteins from the \Biocpkg{pRoloc} package
+\cite{Breckels:2015}.
 
 <<>>=
 library("pRoloc")
@@ -175,7 +176,7 @@ ap
 
 The \Rfunction{setAnnotationParams} function automatically sets the
 annotation parameters globally so that the \Robject{ap} object does
-not neet to be explicitly set later on. The default parameters can be
+not need to be explicitly set later on. The default parameters can be
 retrieved with \Rfunction{getAnnotationParams}.
 
 \subsubsection{Preparing the auxiliary data from the GO ontology}\label{sec:auxgo}
@@ -210,9 +211,9 @@ exprs(andygoset)[1:7, 1:4]
 stopifnot(all.equal(featureNames(andy2011), featureNames(andygoset)))
 @
 
-We now have a primary dataset, composed of \Sexpr{nrow(andy2011)}
+We now have a primary data set, composed of \Sexpr{nrow(andy2011)}
 protein quantitative profiles for \Sexpr{ncol(andy2011)} fractions
-along the density gradient and an auxiliary dataset for
+along the density gradient and an auxiliary data set for
 \Sexpr{ncol(andygoset)} cellular compartment GO terms for the same
 \Sexpr{nrow(andygoset)} features.
 
@@ -311,7 +312,7 @@ exprs(hpaset)[c(1, 6, 200), 1:3]
 
 <<mclasses, echo=FALSE>>=
 ## marker classes for andy2011
-m <- unique(fData(andy2011)$markers)
+m <- unique(fData(andy2011)$markers.tl)
 m <- m[m != "unknown"]
 @
 
@@ -319,30 +320,30 @@ The weighted nearest neighbours transfer learning algorithm estimates
 optimal weights for the different data sources and the spatial niches
 described for the data at hand with the \Rfunction{knntlOptimisation}
 function. For instance, for the human data modelled by the
-\Robject{andy2011} and \Robject{andygoset} objects and the
-\Sexpr{length(m)} annotated sub-cellular localisations
-(\Sexpr{paste(m[-1], collapse = ", ")} and \Sexpr{m[1]} \fixme{Use the
-  \texttt{markers.tl} column here (as in large scale analysis), once
-  added to the data object.}), we want to know how to optimally
-combine primary and auxiliary data. If we look at figure
-\ref{fig:andypca}, that illustrates the experimental separation of the
-\Sexpr{length(m)} spatial classes on a principal component plot, we
-see that some organelles such as the mitochondrion or the cytosol and
-cytosol/nucleus are well resolved, while others such as the Golgi or
-the ER are less so. In this experiment, the former classes are not
-expected to benefit for other data source, while the latter should
-benefit from additional information.
+\Robject{andy2011} and \Robject{andygoset} objects\footnote{We will
+  use the sub-cellular markers defined in the \texttt{markers.tl}
+  feature variable, instead of the default \texttt{markers}. } and
+the \Sexpr{length(m)} annotated sub-cellular localisations
+(\Sexpr{paste(m[-1], collapse = ", ")} and \Sexpr{m[1]}), we want to
+know how to optimally combine primary and auxiliary data. If we look
+at figure \ref{fig:andypca}, that illustrates the experimental
+separation of the \Sexpr{length(m)} spatial classes on a principal
+component plot, we see that some organelles such as the mitochondrion
+or the cytosol and cytosol/nucleus are well resolved, while others
+such as the Golgi or the ER are less so. In this experiment, the
+former classes are not expected to benefit for other data source,
+while the latter should benefit from additional information.
 
 \begin{figure}[h]
   \centering
 <<andypca, fig.width=6, fig.height=6, echo=FALSE>>=
 setStockcol(paste0(getStockcol(), "80"))
-plot2D(andy2011)
+plot2D(andy2011, fcol = "markers.tl")
 setStockcol(NULL)
 addLegend(andy2011, where = "topright", bty = "n", cex = .7)
 @  
  \caption{PCA plot of \Robject{andy2011}. The multivariate protein
-   profiles are summerised along the two first principal
+   profiles are summarised along the two first principal
    components. Proteins of unknown localisation are represented by
    empty grey points. Protein markers, which are well-known residents
    of specific sub-cellular niches are colour-coded and form clusters
@@ -375,7 +376,7 @@ head(thetas(3, by = 0.5))
 dim(thetas(3, by = 0.5))
 @
 
-\item 5 classe, 4 weights
+\item 5 classes, 4 weights
 
 <<thetas1, echo=TRUE>>=
 dim(thetas(5, length.out = 4))
@@ -386,7 +387,7 @@ there are very many combinations:
 
 <<thetaandy>>=
 ## marker classes for andy2011
-m <- unique(fData(andy2011)$markers)
+m <- unique(fData(andy2011)$markers.tl)
 m <- m[m != "unknown"]
 th <- thetas(length(m), length.out=4)
 dim(th)
@@ -426,6 +427,7 @@ proceeding with the selection of best weights.
 topt <- knntlOptimisation(andy2011, andygoset,
                           th = th, 
                           k = c(3, 3),
+                          fcol = "markers.tl",
                           times = 50)
 @
 
@@ -449,6 +451,7 @@ i <- sample(nrow(th), 10)
 topt <- knntlOptimisation(andy2011, andygoset,
                           th = th[i, ],
                           k = c(3, 3),
+                          fcol = "markers.tl",
                           times = 5)
 topt
 @
@@ -461,7 +464,7 @@ which are temporarily removed.
 
 The \Robject{topt} result stores all the result from the optimisation
 step, and in particular the observed theta weights, which can be
-direcly plotted as shown on figure \ref{fig:bubble}. These
+directly plotted as shown on figure \ref{fig:bubble}. These
 \textit{bubble} plots give the proportion of best weights for each
 marker class that was observed during the optimisation phase. We see
 that the mitochondrion, the cytosol and cytosol/nucleus classes
@@ -474,7 +477,7 @@ indicating a substantial benefit of the auxiliary data.
   \centering
   \includegraphics[width=.7\linewidth]{./Figures/bubble-andy.pdf}
   \caption{Results obtained from an extensive optimisation on the
-    primary \Robject{andy2011} and auxiliart \Robject{andygoset} data
+    primary \Robject{andy2011} and auxiliary \Robject{andygoset} data
     sets, as produced by \Rfunction{plot(topt)}. This figure is not
     the result for the previous code chunk, where only a random subset
     of 10 candidate weights have been tested. }
@@ -491,26 +494,84 @@ observed in the weights \textit{bubble} plot (figure
 \ref{fig:bubble}), or automatically extracted with the
 \Rfunction{getParams} method\footnote{Note that the scores extracted
   here are based on the random subsest of weights.}. See
-\Rfunction{?getParams} for details.
+\Rfunction{?getParams} for details and the \Rfunction{favourPrimary}
+it is desirable to systematically favour the primary data (i.e. high
+weights) when different weight combinations perform equally well.
 
 <<getParam>>=
 getParams(topt)
 @
 
-\section{Applying best \textit{theta} weights}\label{sec:thclass}
+We provide the best parameters for the extensive parameter
+optimisation search, as provided by \Rfunction{getParams}:
 
-<<tlclass, eval = FALSE>>=
-res <- knntlClassification(andy2011, andygoset,
-                           bestTheta = TODO,
-                           k = c(3, 3))
-getPredictions(res, fcol = "knntl")
+<<besttheta>>=
+(bw <- experimentData(andy2011)@other$knntl$thetas)
 @
 
-\section{Conclusion}\label{sec:ccl}
+\section{Applying best \textit{theta} weights}\label{sec:thclass}
+
+To apply our best weights and learn from the auxiliary data
+accordingly when classifying the unlabelled proteins to one of the
+sub-cellular niches considered in \texttt{markers.tl} (as displayed on
+figure \ref{fig:andypca}), we pass the primary and auxiliary data
+sets, best weights, best k's (and, on our case the marker's feature
+variable we want to use, default would be \texttt{markers}) to the
+\Rfunction{knntlClassification} function.
+
+<<tlclass>>=
+andy2011 <- knntlClassification(andy2011, andygoset,
+                                bestTheta = bw,
+                                k = c(3, 3),
+                                fcol = "markers.tl")
+@
+
+This will generate a new instance of class \Rclass{MSnSet},
+identical to the primary data, including the classification results
+and classifications scores of the transfer learning classification
+algorithm (as \texttt{knntl} and \texttt{knntl.scores} feature
+variables respectively). Below, we extract the former with the
+\Rfunction{getPrediction} function and plot the results of the
+classification.
+
+<<tlpreds>>=
+getPredictions(andy2011, fcol = "knntl")
+@
+
+\begin{figure}[h]
+  \centering
+<<andypca2, fig.width=6, fig.height=6>>=
+setStockcol(paste0(getStockcol(), "80"))
+ptsze <- exp(fData(andy2011)$knntl.scores) - 1
+plot2D(andy2011, fcol = "knntl", cex = ptsze)
+setStockcol(NULL)
+addLegend(andy2011, where = "topright", bty = "n", cex = .7)
+@  
+ \caption{PCA plot of \Robject{andy2011} after transfer learning
+   classification. The size of the points is proportional to the
+   classification scores. }
+  \label{fig:andypca2}
+\end{figure}
+
+Please read the \textit{pRoloc-tutorial} vignette, and in particular
+the classification section, for more details on how to proceed with
+exploration the classification results and classification scores.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusions}\label{sec:ccl}
+
+This vignette describes the application of a weighted $k$-nearest
+neighbour transfer learning algorithm and its application to the
+sub-cellular localisation prediction of proteins using quantitative
+proteomics data as primary data and Gene Ontology-derived binary data
+as auxiliary data source. The algorithm can be used with various data
+sources (we show how to compile binary data from the Human Protein
+Atlas in section \ref{sec:hpaaux}) and have successfully applied the
+algorithm \cite{Breckels:2015} on third-party quantitative auxiliary
+data.
 
 \section*{Session information}\label{sec:sessionInfo} 
 

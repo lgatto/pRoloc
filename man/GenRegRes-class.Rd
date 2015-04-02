@@ -97,8 +97,23 @@
       than \code{t}. When \code{t} is missing (default), the best F1
       score is used. This method is useful in conjunctin with
       \code{plot}. }
-    \item{getParams}{Returns the \emph{best} parameters. It is however
-      recommended to inspect the optimisation results. }
+
+    \item{getParams}{
+
+      Returns the \emph{best} parameters. It is however strongly
+      recommended to inspect the optimisation results. For a
+      \code{ThetaRegRes} optimisation result, the method to chose the
+      best parameters can be \code{"median"} (default) or \code{"mean"}
+      (the median or mean of the best weights is chosen), \code{"max"}
+      (the first weights with the highest macro-F1 score, considering
+      that multiple max scoring combinations are possible) or
+      \code{"count"} (the observed weight that get the maximum number of
+      observations, see \code{f1Count}). The \code{favourP} argument can
+      be used to prioritise weights that favour the primary data
+      (i.e. heigh weights). See \code{favourPrimary} below.
+
+    }
+    
     \item{getSeed}{Returns the seed used for the optimisation run. }
     \item{getWarnings}{\code{signature(object = "GenRegRes")}: Returns a
       vector of recorded warnings. }
@@ -125,10 +140,9 @@
 	TRUE)}}{Takes the \code{primary} and \code{auxiliary} data
 	sources (two \code{\linkS4class{MSnSet}} instances) and a
 	\code{ThetaRegRes} object and returns and updated
-	\code{ThetaRegRes} instance that will report best
-	parameters/weigths (see the \code{getParams} function) favouring
-	the primary data when multiple best theta weights are
-	availble. }
+	\code{ThetaRegRes} instance containing best parameters/weigths
+	(see the \code{getParams} function) favouring the primary data
+	when multiple best theta weights are available. }
 
     }
 }

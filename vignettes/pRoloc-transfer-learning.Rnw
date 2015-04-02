@@ -82,9 +82,9 @@ data enabling to identify over 6000 proteins and discriminate numerous
 sub-cellular and sub-organellar niches (\fixme{add ref}). Supervised
 and semi-supervised machine learning algorithms can be applied to
 assign thousands of proteins to annotated sub-cellular niches
-\cite{Breckels2013,Gatto:2014}. These data constitute our main source
-for protein localisation and are termed thereafter \emph{primary}
-data.
+\cite{Breckels2013,Gatto:2014} (see also the \textit{pRoloc-tutorial}
+vignette). These data constitute our main source for protein
+localisation and are termed thereafter \emph{primary} data.
 
 There are other sources of data about sub-cellular localisation of
 proteins, such as the Gene Ontology \cite{Ashburner:2000} (in
@@ -150,7 +150,6 @@ that are created with the \Rfunction{setAnnotationParams}
 function. The function will present a first menu with
 \Sexpr{nrow(pRoloc:::getMartTab())}. Once the species has been
 selected, a set of possible identifier types is displayed.
-
 
 \begin{figure}[h]
   \centering
@@ -451,15 +450,61 @@ topt <- knntlOptimisation(andy2011, andygoset,
                           th = th[i, ],
                           k = c(3, 3),
                           times = 5)
+topt
 @
+
+The optimisation is performed on the labelled marker examples
+only. When removing unlabelled non-marker proteins (the
+\texttt{unknowns}), some auxiliary GO columns end up containing only 0
+(the GO-protein association was only observed in non-marker proteins),
+which are temporarily removed. 
+
+The \Robject{topt} result stores all the result from the optimisation
+step, and in particular the observed theta weights, which can be
+direcly plotted as shown on figure \ref{fig:bubble}. These
+\textit{bubble} plots give the proportion of best weights for each
+marker class that was observed during the optimisation phase. We see
+that the mitochondrion, the cytosol and cytosol/nucleus classes
+predominantly are scored with height weights (2/3 and 1), consistent
+with high reliability of the primary data. The Golgi and the ribosomal
+clusters (and to a lesser extend the ER) favour smaller scores,
+indicating a substantial benefit of the auxiliary data.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\linewidth]{./Figures/bubble-andy.pdf}
+  \caption{Results obtained from an extensive optimisation on the
+    primary \Robject{andy2011} and auxiliart \Robject{andygoset} data
+    sets, as produced by \Rfunction{plot(topt)}. This figure is not
+    the result for the previous code chunk, where only a random subset
+    of 10 candidate weights have been tested. }
+  \label{fig:bubble}
+\end{figure}
+
 
 \subsection{Choosing weights}\label{sec:choosep}
 
-With \Rfunction{getParams} or manually, by inspecting the weight plots.
+A set of best weights must be chosen and applied to the classification
+of the unlabelled proteins (formally annotated as
+\texttt{unknown}). These can be defined manually, based on the pattern
+observed in the weights \textit{bubble} plot (figure
+\ref{fig:bubble}), or automatically extracted with the
+\Rfunction{getParams} method\footnote{Note that the scores extracted
+  here are based on the random subsest of weights.}. See
+\Rfunction{?getParams} for details.
 
-\subsection{Favouring primary data}\label{sec:fav}
+<<getParam>>=
+getParams(topt)
+@
 
 \section{Applying best \textit{theta} weights}\label{sec:thclass}
+
+<<tlclass, eval = FALSE>>=
+res <- knntlClassification(andy2011, andygoset,
+                           bestTheta = TODO,
+                           k = c(3, 3))
+getPredictions(res, fcol = "knntl")
+@
 
 \section{Conclusion}\label{sec:ccl}
 

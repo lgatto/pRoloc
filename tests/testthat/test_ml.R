@@ -57,21 +57,22 @@ test_that("nb consistency", {
     expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
-test_that("plsda consistency", {
-    .ncomp <- c(3, 10)
-    reg1 <- plsdaOptimisation(d1, fcol = "markers",
-                              ncomp = .ncomp,
-                              times = 1, seed = .seed,
-                              verbose = FALSE)
-    reg2 <- plsdaOptimisation(d2, fcol = "xx",
-                              ncomp = .ncomp,
-                              times = 1, seed = .seed,
-                              verbose = FALSE)
-    expect_equal(reg1, reg2)  
-    ans1 <- plsdaClassification(d1, reg1, fcol = "markers")
-    ans2 <- plsdaClassification(d2, reg1, fcol = "xx")
-    expect_equal(ans1, ans2, check.attributes=FALSE)
-})
+## Removed on Thu Apr  2 10:26:19 BST 2015 to reduce checkig time
+## test_that("plsda consistency", {
+##     .ncomp <- c(3, 10)
+##     reg1 <- plsdaOptimisation(d1, fcol = "markers",
+##                               ncomp = .ncomp,
+##                               times = 1, seed = .seed,
+##                               verbose = FALSE)
+##     reg2 <- plsdaOptimisation(d2, fcol = "xx",
+##                               ncomp = .ncomp,
+##                               times = 1, seed = .seed,
+##                               verbose = FALSE)
+##     expect_equal(reg1, reg2)  
+##     ans1 <- plsdaClassification(d1, reg1, fcol = "markers")
+##     ans2 <- plsdaClassification(d2, reg1, fcol = "xx")
+##     expect_equal(ans1, ans2, check.attributes=FALSE)
+## })
 
 
 test_that("nnet consistency", {
@@ -111,23 +112,24 @@ test_that("rf consistency", {
     expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 
-test_that("ksvm consistency", {
-    .cost <- 2^seq(-1, 4, 5)
-    reg1 <- ksvmOptimisation(d1, fcol = "markers",
-                             cost = .cost,
-                             times = .times, seed = .seed,
-                             verbose = FALSE)
-    reg2 <- ksvmOptimisation(d2, fcol = "xx",
-                             cost = .cost,
-                             times = .times, seed = .seed,
-                             verbose = FALSE)
-    expect_equal(reg1, reg2)
-    set.seed(.seed)
-    ans1 <- ksvmClassification(d1, reg1, fcol = "markers")
-    set.seed(.seed)
-    ans2 <- ksvmClassification(d2, reg1, fcol = "xx")  
-    expect_equal(ans1, ans2, check.attributes = FALSE)
-})
+## Removed on Thu Apr  2 10:26:19 BST 2015 to reduce checkig time
+## test_that("ksvm consistency", {
+##     .cost <- 2^seq(-1, 4, 5)
+##     reg1 <- ksvmOptimisation(d1, fcol = "markers",
+##                              cost = .cost,
+##                              times = .times, seed = .seed,
+##                              verbose = FALSE)
+##     reg2 <- ksvmOptimisation(d2, fcol = "xx",
+##                              cost = .cost,
+##                              times = .times, seed = .seed,
+##                              verbose = FALSE)
+##     expect_equal(reg1, reg2)
+##     set.seed(.seed)
+##     ans1 <- ksvmClassification(d1, reg1, fcol = "markers")
+##     set.seed(.seed)
+##     ans2 <- ksvmClassification(d2, reg1, fcol = "xx")  
+##     expect_equal(ans1, ans2, check.attributes = FALSE)
+## })
 
 
 ## test_that("deprecated consistency", {

@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.7.10
+-------------------------
+ o (Temporary) change in vignette to work on zin1: using 12 random th
+   rows. See issue #49 for details and followup [2015-04-03 Fri]
+
 CHANGES IN VERSION 1.7.9
 ------------------------
  o updated tl vignette [2015-04-02 Thu]

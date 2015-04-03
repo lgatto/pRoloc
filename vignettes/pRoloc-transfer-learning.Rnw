@@ -450,7 +450,7 @@ time, the weights optimisation is repeated only 5 times below.
 
 <<thetaopt, eval=TRUE>>=
 set.seed(1)
-i <- sample(nrow(th), 10)
+i <- sample(nrow(th), 12)
 topt <- knntlOptimisation(andy2011, andygoset,
                           th = th[i, ],
                           k = c(3, 3),

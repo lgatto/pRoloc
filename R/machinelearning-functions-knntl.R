@@ -279,7 +279,7 @@ classify <- function(primary,
 
 ## Now split theta matrix
 ## Generate thetas to use as input
-splitTh <- function(theta, cores) {
+BUG_splitTh <- function(theta, cores) {
     if (cores == 1)
         return(list(theta))
     spl <- round(nrow(theta)/cores)
@@ -296,6 +296,21 @@ splitTh <- function(theta, cores) {
     }
     lapply(t, function(z) theta[z, ])    
 }
+
+
+splitTh <- function(theta, cores) {
+    .checkSplitTh <- function(idxl, n) {
+        ## idxl: list with indeices
+        ## n: nrow(theta)
+        tmp <- unlist(idxl)
+        all(sort(tmp) == seq_len(n))
+    }
+    n <- nrow(theta)
+    ll <- split(1:n, ceiling(seq_len(n)/(n/cores)))
+    stopifnot(.checkSplitTh(ll, n))
+    lapply(ll, function(z) theta[z, ])
+}
+
 
 ## Core optimisation function for knntlOptimisation. 
 opt <- function(primary, 

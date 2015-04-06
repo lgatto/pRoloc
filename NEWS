@@ -1,7 +1,12 @@
+CHANGES IN VERSION 1.7.11
+-------------------------
+ o fix splitTh, closes issue #49 [2015-04-06 Mon]
+
 CHANGES IN VERSION 1.7.10
 -------------------------
- o (Temporary) change in vignette to work on zin1: using 12 random th
-   rows. See issue #49 for details and followup [2015-04-03 Fri]
+
+ o Change in vignette to work on zin1: using 12 random th rows. See
+ issue #49 for details. Fixed in version 1.7.11. [2015-04-03 Fri]
 
 CHANGES IN VERSION 1.7.9
 ------------------------

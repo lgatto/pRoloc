@@ -34,6 +34,7 @@ Classification using a variation of the KNN implementation
 of Wu and Dietterich's transfer learning schema
 }
 \examples{
+\dontrun{
 library(pRolocdata)
 data(andy2011)
 data(andy2011goCC)
@@ -57,6 +58,7 @@ plot(opt)
 res <- knntlClassification(andy2011, andy2011goCC,
                            fcol = "markers.orig", th, k)
 res
+}
 }
 \author{
 Lisa Breckels

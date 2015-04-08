@@ -813,6 +813,7 @@ knntlOptimisation  <- function(primary,
 ##' @seealso \code{\link{knntlOptimisation}}
 ##' @author Lisa Breckels
 ##' @examples
+##' \dontrun{
 ##' library(pRolocdata)
 ##' data(andy2011)
 ##' data(andy2011goCC)
@@ -836,6 +837,7 @@ knntlOptimisation  <- function(primary,
 ##' res <- knntlClassification(andy2011, andy2011goCC,
 ##'                            fcol = "markers.orig", th, k)
 ##' res
+##' }
 knntlClassification <- function(primary,
                                 auxiliary,
                                 fcol = "markers",

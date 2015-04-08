@@ -41,13 +41,16 @@ setMethod("getParams", "ClustRegRes",
 setMethod("plot", c("ClustRegRes", "missing"),
           ## currently works for kmeans
           ## what if we have two parameters, like cmeans?
-          ## other algorithms: spetral clustering, hyperspherical clustering
+          ## other algorithms: spectral clustering, hyperspherical clustering
           function(x, y, ...) {
             cls <- c("steelblue", "red")
             res <- x@results[, x@criteria]            
             matplot(res, pch = 1, type = "b",
                     xlab = "k", ylab = "IC",
+                    xaxt = "n",
                     col = cls)
+            axis(1, at = seq_len(nrow(x@results)),
+                 labels = x@parameters$k)
             grid()
             xx <- apply(res, 2, which.min)
             yy <- apply(res, 2, min)

@@ -186,7 +186,7 @@ plsdaRegularisation <- function(...) {
 ##' @author Laurent Gatto
 ##' @aliases plsdaPrediction
 ##' @examples
-##' \dontrun{
+##' \donttest{
 ##' ## not running this one for time considerations
 ##' library(pRolocdata)
 ##' data(dunkley2006)

@@ -7,8 +7,8 @@ context("thetaFunctions")
 ##   ## Also see function sampleMSnSet
 ##   data(andy2011)
 ##   data(andy2011goCC)
-##   P <- pRoloc2:::sampleMSnSet(andy2011, seed = 1)
-##   A <- pRoloc2:::sampleMSnSet(andy2011goCC, seed = 1)
+##   P <- sampleMSnSet(andy2011, seed = 1)
+##   A <- sampleMSnSet(andy2011goCC, seed = 1)
   
 ##   relabel <- function(object, fcol = "markers", 
 ##                       size.validation = .2, seed) { 

@@ -1,4 +1,4 @@
-## Sub-functions for `knntlOptimisation` and `knntlClassification`
+# Sub-functions for `knntlOptimisation` and `knntlClassification`
 createPartitions <- function(markers, 
                              xval, 
                              times, 
@@ -813,7 +813,7 @@ knntlOptimisation  <- function(primary,
 ##' @seealso \code{\link{knntlOptimisation}}
 ##' @author Lisa Breckels
 ##' @examples
-##' \dontrun{
+##' \donttest{
 ##' library(pRolocdata)
 ##' data(andy2011)
 ##' data(andy2011goCC)

@@ -1,3 +1,12 @@
+CHANGES IN VERSION 1.9.1
+------------------------
+ o new plot2Ds function to overlay two data sets on the same PCA plot
+   [2015-04-17 Fri]
+
+CHANGES IN VERSION 1.9.0
+------------------------
+ o new devel version for Bioc 3.2
+ 
 CHANGES IN VERSION 1.7.13
 -------------------------
  o use donttest instead of dontrun [2015-04-09 Thu]

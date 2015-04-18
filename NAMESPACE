@@ -88,7 +88,7 @@ export(## MSnSet manipulation
     filterBinMSnSet,
     filterZeroCols, filterZeroRows,
     ## -- plotting
-    plot2D,
+    plot2D, plot2Ds,
     addLegend,
     plotDist,
     highlightOnPlot,

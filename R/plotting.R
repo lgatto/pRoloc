@@ -573,15 +573,15 @@ highlightOnPlot <- function(object, foi, args = list(), ...) {
 ##' data set.
 ##'
 ##' @title Draw 2 data sets on one PCA plot
-##' @param object An instance of class \code{linkS4class{MSnSet}}, a
-##' list of \code{MSnSet} instances or and instance of class
-##' \code{MSnSetList}. Only the two first items of the lists will be
-##' used for plotting and the others will be silently ignored.
-##' @param pcol If \code{object} is an \code{MSnSet}, the name of a
-##' phenotype variable (\code{phenoData} slot) defining how to split
-##' the single \code{MSnSet} into two or more data sets. The phenoData
-##' variable will be converted to a factor and must contain at least 2
-##' levels. Ignored if \code{object} is a list.
+##' @param object An \code{linkS4class{MSnSet}} or a
+##' \code{MSnSetList}. In the latter case, only the two first elements
+##' of the list will be used for plotting and the others will be
+##' silently ignored.
+##' @param pcol If \code{object} is an \code{MSnSet}, a \code{factor}
+##' or the name of a phenotype variable (\code{phenoData} slot)
+##' defining how to split the single \code{MSnSet} into two or more
+##' data sets.  Ignored if \code{object} is a
+##' \code{\link{MSnSetList}}.
 ##' @param fcol Feature meta-data label (fData column name) defining
 ##' the groups to be differentiated using different colours. Default
 ##' is \code{markers}. Use \code{NULL} to suppress any colouring.
@@ -635,7 +635,7 @@ plot2Ds <- function(object, pcol,
                     ...) {
     if (inherits(object, "MSnSet")) {
         if (missing(pcol)) stop("specify an pcol.")
-        object <- split(object, f = pcol, MARGIN = 2)
+        object <- split(object, f = pcol)
     } ## a list or an MSnSetList
     x <- object[[1]]
     y <- object[[2]]

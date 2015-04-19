@@ -29,6 +29,7 @@ LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
 Video: https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow
+URL: https://github.com/lgatto/MSnbase
 BugReports: https://github.com/lgatto/pRoloc/issues
 biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
 	   QualityControl

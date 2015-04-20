@@ -552,7 +552,7 @@ highlightOnPlot <- function(object, foi, args = list(), ...) {
 }
 
 
-.makeCol3 <- function(x, y, fcol, pcol) {
+.makeCol3 <- function(x, y, fcol) {
     col0 <- getStockcol()
     setStockcol(NULL)
     col <- paste0(getStockcol(), 90)
@@ -613,7 +613,8 @@ highlightOnPlot <- function(object, foi, args = list(), ...) {
 ##' library("pRolocdata")
 ##' data(tan2009r1)
 ##' data(tan2009r2)
-##' plot2Ds(list(tan2009r1, tan2009r2))
+##' msnl <- MSnSetList(list(tan2009r1, tan2009r2))
+##' plot2Ds(msnl)
 ##' ## tweaking the parameters
 ##' plot2Ds(list(tan2009r1, tan2009r2),
 ##'         fcol = NULL, cex.x = 1.5)

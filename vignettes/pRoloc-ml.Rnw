@@ -77,9 +77,9 @@ referred to the tutorial, available using
 \Rfunction{vignette("pRoloc-tutorial", package = "pRoloc")}. The
 following document provides a overview of the algorithms available in
 the package. The respective section describe unsupervised machine
-learning (USML), supervised machine learning (SML), and
-semi-supervised machine learning (SSML) as implemented in the novelty
-detection algorithm.
+learning (USML), supervised machine learning (SML), semi-supervised
+machine learning (SSML) as implemented in the novelty detection
+algorithm and transfer learning.
 
 \section{Data sets}
 
@@ -101,6 +101,19 @@ library("pRolocdata")
 data(tan2009r1)
 tan2009r1
 @
+
+\subsubsection{Other omics data} 
+
+While our primary biological domain is quantitative proteomics, with
+special emphasis on spatial proteomics, the underlying class
+infrastructure on which \Biocpkg{pRoloc} and implemented in the
+Bioconductor \Biocpkg{MSnbase} package enables the conversion from/to
+transcriptomics data, in particular microarray data available as
+\Rclass{ExpressionSet} objects using the \Rfunction{as} coercion
+methods (see the \Rclass{MSnSet} section in the
+\texttt{MSnbase-development} vignette). As a result, it is
+straightforward to apply the methods summarised here in detailed in
+the other \Biocpkg{pRoloc} vignettes to these other data structures.
 
 \section{Unsupervised machine learning}\label{sec:usml}
 
@@ -478,6 +491,32 @@ considered members of a new phenotype.
 \label{fig:pd}
 \end{figure}
 
+\section{Transfer learning}\label{sec:tl}
+
+When multiple sources of data are available, it is often beneficial to
+take all or several into account with the aim of increasing the
+information to tackle a problem of interest. While it is at times
+possible to combine these different sources of data, this can lead to
+substantially harm to performance of the analysis when the different
+data sources are of variable signal-to-noise ratio or the data are
+drawn from different domains and recorded by different encoding
+(quantitative and binary, for example). If we defined the following
+two data source
+
+\begin{itemize}
+\item \emph{primary} data, of high signal-to-noise ratio, but general
+  available in limited amounts;
+\item \emph{auxiliary} data, of limited signal-to-noise, and available
+  in large amounts;
+\end{itemize}
+
+then, a \emph{transfer learning} algorithm will efficiently
+support/complement the primary target domain with auxiliary data
+features without compromising the integrity of our primary data.
+
+We have developed a transfer learning framework and applied to the
+analysis of spatial proteomics data, as described in the
+\texttt{pRoloc-transfer-learning} vignette.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section

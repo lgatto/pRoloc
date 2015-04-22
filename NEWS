@@ -13,8 +13,8 @@ CHANGES IN VERSION 1.7.13
  
 CHANGES IN VERSION 1.7.12
 -------------------------
-o don't run knntl example to reduce checking time and timeout on
-  Windows [2015-04-08 Wed]
+ o don't run knntl example to reduce checking time and timeout on
+   Windows [2015-04-08 Wed]
  
 CHANGES IN VERSION 1.7.11
 -------------------------

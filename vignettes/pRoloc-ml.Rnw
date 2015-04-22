@@ -420,19 +420,19 @@ tab <- data.frame('parameter optimisation' =
                            ls("package:pRoloc"), value = TRUE))
 
 tab$algorithm <- c("nearest neighbour",
+                   "nearest neighbour transfer learning",
                    "support vector machine",
                    "naive bayes",
                    "neural networks",
                    "PerTurbo",
                    "partial least square", 
                    "random forest",
-                   "support vector machine",
-                   "transfer learning (see pRoloc-theta vignette)")
+                   "support vector machine")
 
-tab$package <- c("class", "kernlab", "e1071",
+tab$package <- c("class", "pRoloc", "kernlab", "e1071",
                  "nnet", "pRoloc", "caret",
-                 "randomForest", "e1071",
-                 "pRoloc")
+                 "randomForest", "e1071")
+
 colnames(tab)[1] <- c("parameter optimisation")
 @ 
 

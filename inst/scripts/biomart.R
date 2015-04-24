@@ -1,8 +1,15 @@
 library(biomaRt)
 library(pRoloc)
 
-## Last check Fri Feb  6 21:42:58 2015
-## Fri Apr 24 03:03:45 2015"
+## Last check Fri Apr 24 03:03:45 2015"
+
+## > i <- c(1, 5, 7, 9)
+## > listMarts()[i, ]
+##           biomart                      version
+## 1         ensembl ENSEMBL GENES 79 (SANGER UK)
+## 5   fungi_mart_26    ENSEMBL FUNGI 26 (EBI UK)
+## 7 metazoa_mart_26  ENSEMBL METAZOA 26 (EBI UK)
+## 9  plants_mart_26   ENSEMBL PLANTS 26 (EBI UK)
 
 marts.of.interest <- c("ensembl","fungi_mart_26","metazoa_mart_26","plants_mart_26")
 
@@ -34,7 +41,7 @@ martTab <- do.call("rbind", martList)
 ## 6 mlucifugus_gene_ensembl        Myotis lucifugus genes (myoLuc2)     myoLuc2 ensembl
 
 
-(n <- nrow(martTab)) ## 215 216
+(n <- nrow(martTab)) ## 216
 attrList <- filterList <- vector("list", length = n)
 names(attrList) <- names(filterList) <- martTab$dataset[1:n]
 

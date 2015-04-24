@@ -2,8 +2,9 @@ library(biomaRt)
 library(pRoloc)
 
 ## Last check Fri Feb  6 21:42:58 2015
+## Fri Apr 24 03:03:45 2015"
 
-marts.of.interest <- c("ensembl","fungi_mart_25","metazoa_mart_25","plants_mart_25")
+marts.of.interest <- c("ensembl","fungi_mart_26","metazoa_mart_26","plants_mart_26")
 
 ## > head(listMarts())
 ##               biomart                             version
@@ -33,7 +34,7 @@ martTab <- do.call("rbind", martList)
 ## 6 mlucifugus_gene_ensembl        Myotis lucifugus genes (myoLuc2)     myoLuc2 ensembl
 
 
-(n <- nrow(martTab)) ## 215
+(n <- nrow(martTab)) ## 215 216
 attrList <- filterList <- vector("list", length = n)
 names(attrList) <- names(filterList) <- martTab$dataset[1:n]
 
@@ -87,8 +88,8 @@ tmp <- cbind(tmp, tmp2)
 
 ## colnames(tmp) <- c(attributes.of.interest0,                   
 ##                    sapply(attributes.of.interestX, "[", 1))
-colnames(tmp) <- c(pRoloc:::attributesOfInterest0,
-                   sapply(pRoloc:::attributesOfInterestX, "[", 1))
+colnames(tmp) <- c(pRoloc:::getAttributesOfInterest0(),
+                   sapply(pRoloc:::getAttributesOfInterestX(), "[", 1))
 
 sel <- which(apply(tmp, 1, all))
 
@@ -104,4 +105,3 @@ attr(martTab, "date") <- date()
 saveRDS(attrList, file="../extdata/attrList.rds", compress = "xz")
 saveRDS(filterList, file="../extdata/filterList.rds", compress = "xz")
 saveRDS(martTab, file="../extdata/martTab.rds", compress = "xz")
-

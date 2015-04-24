@@ -2,6 +2,8 @@ CHANGES IN VERSION 1.9.1
 ------------------------
  o new plot2Ds function to overlay two data sets on the same PCA plot
    [2015-04-17 Fri]
+ o regenerate biomart data used by setAnnotationParams
+   [2015-04-24 Fri]
 
 CHANGES IN VERSION 1.9.0
 ------------------------

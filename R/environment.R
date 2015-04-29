@@ -101,7 +101,6 @@ setUnknownpch <- function(pch) {
 setStockcolGui <- function() {
     n <- length(colours())
     i <- 26
-    m <- i^2 - n
     m <- matrix(c(1:n, rep(NA, m)),
                 ncol = i, nrow = i)
     ## plotting

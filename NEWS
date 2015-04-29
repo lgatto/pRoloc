@@ -4,6 +4,8 @@ CHANGES IN VERSION 1.9.1
    [2015-04-17 Fri]
  o regenerate biomart data used by setAnnotationParams
    [2015-04-24 Fri]
+ o new setStockcolGui function to set the default colours manually via
+   a simple interface [2015-04-29 Wed]
 
 CHANGES IN VERSION 1.9.0
 ------------------------

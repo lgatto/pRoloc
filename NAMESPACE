@@ -83,6 +83,7 @@ export(## MSnSet manipulation
     empPvalues,
     getStockcol, getStockpch,
     setStockcol, setStockpch,
+    setStockcolGui,
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
     filterBinMSnSet,

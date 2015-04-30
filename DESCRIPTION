@@ -58,6 +58,7 @@ Collate: AllGenerics.R
 	 data.R
 	 phenodisco.R
 	 plotting.R
+	 plotting2.R
 	 environment.R
 	 utils.R
 	 lopims.R

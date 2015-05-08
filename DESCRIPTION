@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.9.0
+Version: 1.9.1
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 	            email = "lg390@cam.ac.uk", 
                     role = c("aut","cre")),
@@ -17,18 +17,19 @@ Maintainer: Laurent Gatto <lg390@cam.ac.uk>
 Description: This package implements pattern recognition techniques on
 	     quantitiative mass spectrometry data to infer protein
 	     sub-cellular localisation.
-Depends: R (>= 2.15), MSnbase (>= 1.13.3), MLInterfaces (>= 1.37.1),
+Depends: R (>= 2.15), MSnbase (>= 1.17.1), MLInterfaces (>= 1.37.1),
 	 methods, Rcpp (>= 0.10.3), BiocParallel
 Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
 	 kernlab, lattice, nnet, randomForest, proxy, FNN,
 	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
 	 mvtnorm, gtools, plyr, ggplot2, biomaRt
 Suggests: testthat, pRolocdata (>= 1.5.8), roxygen2, synapter, xtable,
-	  tsne, BiocStyle, hpar, dplyr
+	  tsne, BiocStyle, hpar, dplyr, GO.db, AnnotationDbi
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
 Video: https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow
+URL: https://github.com/lgatto/MSnbase
 BugReports: https://github.com/lgatto/pRoloc/issues
 biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
 	   QualityControl
@@ -57,11 +58,13 @@ Collate: AllGenerics.R
 	 data.R
 	 phenodisco.R
 	 plotting.R
+	 plotting2.R
 	 environment.R
 	 utils.R
 	 lopims.R
 	 annotation.R
 	 goenv.R
+	 go.R
 	 makeGoSet.R
 	 zzz.R
 

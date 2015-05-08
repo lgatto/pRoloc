@@ -51,8 +51,8 @@ getStockcol <- function() get("stockcol", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{cols}.
 ##' @rdname getStockcol
 setStockcol <- function(cols) {
-  if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
-  else assign("stockcol", cols, envir = .pRolocEnv)
+    if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
+    else assign("stockcol", cols, envir = .pRolocEnv)
 }
 
 ##' @return A \code{numeric} vector.
@@ -64,8 +64,8 @@ getStockpch <- function() get("stockpch", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{pchs}.
 ##' @rdname getStockcol
 setStockpch <- function(pchs) {
-  if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
-  else assign("stockpch", pchs, envir = .pRolocEnv)
+    if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
+    else assign("stockpch", pchs, envir = .pRolocEnv)
 }
 
 ##' @return A \code{character} vector or length 1.
@@ -79,8 +79,8 @@ getUnknowncol <- function() get("unknowncol", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{col}.
 ##' @rdname getStockcol
 setUnknowncol <- function(col) {
-  if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
-  else assign("unknowncol", col, envir = .pRolocEnv)
+    if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
+    else assign("unknowncol", col, envir = .pRolocEnv)
 }
 
 ##' @return A \code{numeric} vector of length 1.
@@ -92,8 +92,44 @@ getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{pch}.
 ##' @rdname getStockcol
 setUnknownpch <- function(pch) {
-  if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
-  else assign("unknownpch", pch, envir = .pRolocEnv)
+    if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
+    else assign("unknownpch", pch, envir = .pRolocEnv)
+}
+
+##' @return Invisibly returns the set colours
+##' @rdname getStockcol
+setStockcolGui <- function() {
+    n <- length(colours())
+    i <- 26
+    m <- matrix(c(1:n, rep(NA, m)),
+                ncol = i, nrow = i)
+    ## plotting
+    image(m, col = colours(),
+          xaxt = "n", yaxt = "n")
+    k <- seq(0, 1, length.out = i)
+    kk <- expand.grid(k, k)
+    kk <- kk[1:n, ]
+    ## points(kk)
+    ## choosing
+    identifycol <- function(x, y = NULL, n = length(x), pch = 19) {
+        ## from ?identify
+        k <- 1
+        xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
+        sel <- rep(FALSE, length(x)); res <- integer(0)
+        while(sum(sel) < n) {
+            ans <- identify(x[!sel], y[!sel], n = 1, plot = FALSE)
+            if (!length(ans)) break
+            ans <- which(!sel)[ans]
+            text(x[ans], y[ans], k, cex = 1.5)
+            k <- k + 1
+            sel[ans] <- TRUE
+            res <- c(res, ans)
+        }
+        res
+    }
+    ans <- identifycol(kk)
+    ans <- col2hcl(colours()[ans])
+    setStockcol(ans)
 }
 
 ## -------------------------------

@@ -1,11 +1,28 @@
+CHANGES IN VERSION 1.9.1
+------------------------
+ o new plot2Ds function to overlay two data sets on the same PCA plot
+   [2015-04-17 Fri]
+ o regenerate biomart data used by setAnnotationParams
+   [2015-04-24 Fri]
+ o new setStockcolGui function to set the default colours manually via
+   a simple interface [2015-04-29 Wed]
+ o new move2Ds function to produce an transition movie between two
+   MSnSets [2015-04-29 Wed]   
+ o functions to convert GO ids to/from terms. See ?goTermToId for
+   details <2015-05-08 Fri>
+
+CHANGES IN VERSION 1.9.0
+------------------------
+ o new devel version for Bioc 3.2
+ 
 CHANGES IN VERSION 1.7.13
 -------------------------
  o use donttest instead of dontrun [2015-04-09 Thu]
  
 CHANGES IN VERSION 1.7.12
 -------------------------
-o don't run knntl example to reduce checking time and timeout on
-  Windows [2015-04-08 Wed]
+ o don't run knntl example to reduce checking time and timeout on
+   Windows [2015-04-08 Wed]
  
 CHANGES IN VERSION 1.7.11
 -------------------------

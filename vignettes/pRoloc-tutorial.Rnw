@@ -172,7 +172,7 @@ setStockcol(paste0(getStockcol(), 70))
 
 \section{Data structures}\label{sec:data}
 
-\subsection{Test data description}
+\subsection{Example data}
 
 The data used in this tutorial has been published in
 \cite{Tan2009}. The LOPIT technique \cite{Dunkley2006} is used to

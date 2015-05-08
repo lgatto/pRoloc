@@ -73,16 +73,11 @@ getStockcol <- function() get("stockcol", envir = .pRolocEnv)
 ##' which sets the colours to the default values.
 ##' @rdname getStockcol
 setStockcol <- function(cols) {
-<<<<<<< HEAD
-    if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
-    else assign("stockcol", cols, envir = .pRolocEnv)
-=======
     if (is.null(cols)) {
         assign("stockcol", stockcol, envir = .pRolocEnv)
     } else if (cols == "lisacol") {
         setLisacol()
     } else assign("stockcol", cols, envir = .pRolocEnv)
->>>>>>> master
 }
 
 ##' @rdname getStockcol
@@ -120,10 +115,6 @@ setUnknownpch <- function(pch) {
     else assign("unknownpch", pch, envir = .pRolocEnv)
 }
 
-<<<<<<< HEAD
-##' @return Invisibly returns the set colours
-=======
->>>>>>> master
 ##' @rdname getStockcol
 setStockcolGui <- function() {
     n <- length(colours())

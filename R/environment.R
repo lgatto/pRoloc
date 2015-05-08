@@ -51,8 +51,8 @@ getStockcol <- function() get("stockcol", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{cols}.
 ##' @rdname getStockcol
 setStockcol <- function(cols) {
-  if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
-  else assign("stockcol", cols, envir = .pRolocEnv)
+    if (is.null(cols)) assign("stockcol", stockcol, envir = .pRolocEnv)
+    else assign("stockcol", cols, envir = .pRolocEnv)
 }
 
 ##' @return A \code{numeric} vector.
@@ -64,8 +64,8 @@ getStockpch <- function() get("stockpch", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{pchs}.
 ##' @rdname getStockcol
 setStockpch <- function(pchs) {
-  if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
-  else assign("stockpch", pchs, envir = .pRolocEnv)
+    if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
+    else assign("stockpch", pchs, envir = .pRolocEnv)
 }
 
 ##' @return A \code{character} vector or length 1.
@@ -79,8 +79,8 @@ getUnknowncol <- function() get("unknowncol", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{col}.
 ##' @rdname getStockcol
 setUnknowncol <- function(col) {
-  if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
-  else assign("unknowncol", col, envir = .pRolocEnv)
+    if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
+    else assign("unknowncol", col, envir = .pRolocEnv)
 }
 
 ##' @return A \code{numeric} vector of length 1.
@@ -92,8 +92,8 @@ getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
 ##' @return Invisibly returns \code{pch}.
 ##' @rdname getStockcol
 setUnknownpch <- function(pch) {
-  if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
-  else assign("unknownpch", pch, envir = .pRolocEnv)
+    if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
+    else assign("unknownpch", pch, envir = .pRolocEnv)
 }
 
 ##' @return Invisibly returns the set colours

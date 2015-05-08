@@ -34,7 +34,7 @@ Classification using a variation of the KNN implementation
 of Wu and Dietterich's transfer learning schema
 }
 \examples{
-\dontrun{
+\donttest{
 library(pRolocdata)
 data(andy2011)
 data(andy2011goCC)

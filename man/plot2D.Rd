@@ -117,6 +117,8 @@ Laurent Gatto <lg390@cam.ac.uk>
 \seealso{
 \code{\link{addLegend}} to add a legend to \code{plot2D}
 figures and \code{\link{plotDist}} for alternative graphical
-representation of quantitative organelle proteomics data.
+representation of quantitative organelle proteomics
+data. \code{\link{plot2Ds}} to overlay 2 data sets on the same PCA
+plot.
 }
 

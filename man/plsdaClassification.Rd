@@ -35,7 +35,7 @@ Classification using the partial least square
 distcriminant analysis algorithm.
 }
 \examples{
-\dontrun{
+\donttest{
 ## not running this one for time considerations
 library(pRolocdata)
 data(dunkley2006)

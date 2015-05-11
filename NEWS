@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.9.3
 ------------------------
- o
+ o Clarify error when no annotation params are provided
+   <2015-05-11 Mon>
  
 CHANGES IN VERSION 1.9.2
 ------------------------

@@ -95,8 +95,10 @@ makeGoSet <- function(object, params,
       stop("object must be an MSnSet or a character")
   }
   if (missing(evidence)) evidence <- NULL
-  if (missing(params)) 
+  if (missing(params))
       params <- getAnnotationParams()
+  if (is.null(params))
+      stop("Please set your annotation parameters. See ?AnnotationParams for details.")
   godf <- getGOFromFeatures(fn,
                             params = params,
                             namespace = namespace,

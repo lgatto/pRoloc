@@ -2,7 +2,8 @@ CHANGES IN VERSION 1.9.3
 ------------------------
  o Clarify error when no annotation params are provided
    <2015-05-11 Mon>
- 
+ o support for matrix-encoded markers <2015-05-19 Tue>
+
 CHANGES IN VERSION 1.9.2
 ------------------------
  o Lisa's colour palette <2015-05-08 Fri>

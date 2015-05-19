@@ -1,56 +1,114 @@
-## pRoloc markers
-## data is in inst/extdata/marker_species.rda
-
-
-##' This function retrieves a list of organelle markers or, if no
-##' \code{species} is provided, prints a description of available
-##' marker sets. The markers can be added to and \code{MSnSet} using
-##' the \code{\link{addMarkers}} function.
+##' Functions producing a new vector (matrix) marker vector set from
+##' an existing matrix (vector) marker set.
 ##'
-##' The markers have been contributed by various members of the
-##' Cambridge Centre for Proteomics, in particular Dan Nightingale for
-##' yeast, Dr Andy Christoforou for human, Dr Arnoud Groen for
-##' Arabodopsis and Dr Claire Mulvey for mouse.  In addition, original
-##' (curated) markers from the \code{pRolocdata} datasets have been
-##' extracted (see \code{pRolocdata} for details and references).
-##' Curation involved verification of publicly available subcellular
-##' localisation annotation based on the curators knowledge of the
-##' organelles/proteins considered and tracing the original statement
-##' in the literature.
 ##'
-##' These markers are provided as a starting point to generate
-##' reliable sets of organelle markers but still need to be verified
-##' against any new data in the light of the quantitative data and the
-##' study conditions.
+##' Sub-cellular markers can be encoded in two different ways. Sets of
+##' spatial markers can be represented as character \emph{vectors},
+##' stored as feature metadata, and proteins of unknown or uncertain
+##' localisation (unlabelled, to be classified) are marked with the
+##' \code{"unknown"} character. While very handy, this encoding suffers
+##' from some drawbacks, in particular the difficulty to label
+##' proteins that reside in multiple (possible or actual)
+##' localisations. The markers vector feature data is typically named
+##' \code{markers}. A new \emph{matrix} encoding is also
+##' supported. Each spatial compartment is defined in a column in a
+##' binary markers matrix and the resident proteins are encoded with
+##' 1s. The markers matrix feature data is typically named
+##' \code{Markers}. If proteins are assigned unique localisations only
+##' (i.e. no multi-localisation) or their localisation is unknown
+##' (unlabelled), then both encodings are equivalent. 
+##'
+##' The \code{mrkMatToVec} and \code{mrkVecToMat} functions enable the
+##' conversion from matrix (vector) to vector (matrix). The
+##' \code{mrkMatAndVec} function generates the missing encoding from
+##' the existing one. If the destination encoding already exists, or,
+##' more accurately, if the feature variable of the destination
+##' encoding exists, an error is thrown. During the conversion from
+##' matrix to vector, if multiple possible label exists, they are
+##' dropped, i.e. they are converted to \code{"unknown"}.
 ##' 
-##' @title Organelle markers
-##' @param species The species of interest.
-##' @return Prints a description of the available marker lists if
-##' \code{species} is missing or a named character with organelle
-##' markers.
-##' @author Laurent Gatto
+##' @title Create a marker vector or matrix.
+##' @param object An \code{MSnSet} object 
+##' @param vfcol The name of the \emph{vector} marker feature
+##' variable. Default is \code{"markers"}.
+##' @param mfcol The name of the \emph{matrix} marker feature
+##' variable. Default is \code{"Markers"}.
+##' @return An updated \code{MSnSet} with a new vector (matrix) marker
+##' set.
+##' @aliases markers
+##' @author Laurent Gatto and Lisa Breckels
 ##' @examples
-##' pRolocmarkers()
-##' table(pRolocmarkers("atha"))
-##' table(pRolocmarkers("hsap"))
-pRolocmarkers <- function(species) {    
-    fls <- dir(system.file("extdata", package = "pRoloc"),
-               full.names = TRUE, pattern = "marker_")    
-    if (missing(species)) {
-        cat(length(fls), "marker lists available:\n")
-        for (f in fls) {
-            m <- readRDS(f)
-            x <- sub(".rds", "", sub("^.+marker_", "", f))        
-            cat(m$species, " [", x, "]:\n", sep = "")
-            cat(" Ids: ", m$ids, ", ", length(m$markers), " markers\n", sep = "")
-        }
-    } else {
-        species <- tolower(species)
-        x <- sub(".rds", "", sub("^.+marker_", "", fls))
-        k <- match(species, x)
-        if (is.na(k))
-            stop("Available species: ", paste(x, collapse = ", "), ". See pRolocmarkers() for details.")
-        m <- readRDS(fls[k])
-        return(m$markers)
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' dunk <- mrkVecToMat(dunkley2006)
+##' head(fData(dunk)$Markers)
+##' fData(dunk)$markers <- NULL
+##' dunk <- mrkMatToVec(dunk)
+##' stopifnot(all.equal(fData(dunkley2006)$markers,
+##'                     fData(dunk)$markers))
+mrkVecToMat <- function(object,
+                         vfcol = "markers",
+                         mfcol = "Markers") {
+    fvl <- fvarLabels(object)
+    if (!vfcol %in% fvl) stop(vfcol, " does not exist.")
+    if (mfcol %in% fvl) stop(mfcol, " already present.")
+    m <- fData(object)$markers
+    um <- unique(m)
+    if ("unknown" %in% um) um <- um[um != "unknown"]
+    M <- matrix(0, nrow = nrow(object), ncol = length(um))
+    rownames(M) <- featureNames(object)
+    colnames(M) <- um
+    for (j in um) M[which(j == m), j] <- 1
+    fData(object)[, mfcol] <- M
+    return(object)
+}
+
+##' @rdname mrkVecToMat
+mrkMatToVec <- function(object,
+                        mfcol = "Markers",
+                        vfcol = "markers") {
+    fvl <- fvarLabels(object)
+    if (vfcol %in% fvl) stop(vfcol, " already present.")
+    if (!mfcol %in% fvl) stop(mfcol, " does not exist.")
+    m <- rep("unknown", nrow(object))
+    M <- fData(object)[, mfcol]
+    for (i in 1:nrow(object)) {
+        k <- M[i, ] == 1
+        if (sum(k) == 1) m[i] <- colnames(M)[k]
     }
+    fData(object)[, vfcol] <- m
+    return(object)
+}
+
+##' @rdname mrkVecToMat
+mrkMatAndVec <- function(object,
+                         vfcol = "markers",
+                         mfcol = "Markers") {
+    fvl <- fvarLabels(object)
+    vex <- vfcol %in% fvl
+    mex <- mfcol %in% fvl
+    if (!vex & !mex) stop("No marker found.")
+    if (vex & !mex)
+        object <- mrkVecToMat(object)
+    if (!vex & mex)
+        object <- mrkMatToVec(object)
+    return(object)
+}
+
+##' @rdname mrkVecToMat
+showMrkMat <- function(object, mfcol = "Markers") {
+    M <- fData(object)[, mfcol]
+    cat("Localisation count:")
+    print(table(rs <- rowSums(M)))
+    cat("Single localisations:\n")
+    print(apply(M, 2, sum))
+    cat("Multiple localisations:")
+    multi <- rs > 1
+    if (any(multi)) {
+        mtab <- table(apply(M[multi, , drop=FALSE],
+                    1,
+                    function(m)
+                        paste0(colnames(M)[m == 1], collapse = "/")))
+        print(mtab)
+    } else cat("\n  none\n")
 }

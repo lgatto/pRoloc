@@ -49,6 +49,7 @@ Collate: AllGenerics.R
 	 belief.R
 	 distances.R
 	 markers.R
+	 pRolocmarkers.R
 	 chi2.R
 	 MLInterfaces.R
 	 clustering-framework.R

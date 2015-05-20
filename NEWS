@@ -3,6 +3,7 @@ CHANGES IN VERSION 1.9.3
  o Clarify error when no annotation params are provided
    <2015-05-11 Mon>
  o support for matrix-encoded markers <2015-05-19 Tue>
+ o New default in addLegend: bty = "n" <2015-05-20 Wed>
 
 CHANGES IN VERSION 1.9.2
 ------------------------

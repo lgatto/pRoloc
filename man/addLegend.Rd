@@ -6,7 +6,7 @@
 \usage{
 addLegend(object, fcol = "markers", where = c("other", "bottomright",
   "bottom", "bottomleft", "left", "topleft", "top", "topright", "right",
-  "center"), col, ...)
+  "center"), col, bty = "n", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}}
@@ -21,6 +21,9 @@ the location of the legend. \code{"other"} opens a new graphics device,
 while the other locations are passed to \code{\link{legend}}.}
 
 \item{col}{A \code{character} defining point colours.}
+
+\item{bty}{Box type, as in \code{legend}. Default is set to
+\code{"n"}.}
 
 \item{...}{Additional parameters passed to \code{\link{legend}}.}
 }

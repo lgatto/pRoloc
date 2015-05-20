@@ -431,6 +431,8 @@ plot2D <- function(object,
 ##' the location of the legend. \code{"other"} opens a new graphics device,
 ##' while the other locations are passed to \code{\link{legend}}.
 ##' @param col A \code{character} defining point colours.
+##' @param bty Box type, as in \code{legend}. Default is set to
+##' \code{"n"}.
 ##' @param ... Additional parameters passed to \code{\link{legend}}.
 ##' @return Invisibly returns \code{NULL}
 ##' @author Laurent Gatto
@@ -439,7 +441,8 @@ addLegend <- function(object,
                       where = c("other", "bottomright", "bottom",
                           "bottomleft", "left", "topleft",
                           "top", "topright", "right", "center"),
-                      col, 
+                      col,
+                      bty = "n",
                       ...) {
     where <- match.arg(where)
     fData(object)[, fcol] <- as.factor(fData(object)[, fcol])
@@ -492,7 +495,8 @@ addLegend <- function(object,
             pch[i] <- unknownpch            
         }
     }
-    legend(where, txt, col = col, pch = pch, ...)    
+    if ("bty" %in% names(pairlist(...))) legend(where, txt, col = col, pch = pch, ...)
+    else legend(where, txt, col = col, pch = pch, bty = bty, ...)
     invisible(NULL)
 }
 

@@ -4,6 +4,7 @@
 \alias{isMrkMat}
 \alias{isMrkVec}
 \alias{markers}
+\alias{mrkEncoding}
 \alias{mrkMatAndVec}
 \alias{mrkMatToVec}
 \alias{mrkVecToMat}
@@ -21,6 +22,8 @@ showMrkMat(object, mfcol = "Markers")
 isMrkMat(object, fcol = "Markers")
 
 isMrkVec(object, fcol = "markers")
+
+mrkEncoding(object, fcol = "markers")
 }
 \arguments{
 \item{object}{An \code{MSnSet} object}
@@ -57,7 +60,11 @@ binary markers matrix and the resident proteins are encoded with
 1s. The markers matrix feature data is typically named
 \code{Markers}. If proteins are assigned unique localisations only
 (i.e. no multi-localisation) or their localisation is unknown
-(unlabelled), then both encodings are equivalent.
+(unlabelled), then both encodings are equivalent. When the markers
+are encoded as vectors, features of unknown localisation are
+defined as \code{fData(object)[, fcol] == "unknown"}. For
+matrix-encoded markers, unlabelled proteins are defined as
+\code{rowSums(fData(object)[, fcol]) == 0}.
 
 The \code{mrkMatToVec} and \code{mrkVecToMat} functions enable the
 conversion from matrix (vector) to vector (matrix). The
@@ -68,7 +75,9 @@ encoding exists, an error is thrown. During the conversion from
 matrix to vector, if multiple possible label exists, they are
 dropped, i.e. they are converted to \code{"unknown"}. Function
 \code{isMrkVec} and \code{isMrkMat} can be used to test if a
-marker set is encoded as a vector or a matrix.
+marker set is encoded as a vector or a matrix. \code{mrkEncoding}
+returns either \code{"vector"} or \code{"matrix"} depending on the
+nature of the markers.
 }
 \examples{
 library("pRolocdata")

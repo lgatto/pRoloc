@@ -17,7 +17,11 @@
 ##' 1s. The markers matrix feature data is typically named
 ##' \code{Markers}. If proteins are assigned unique localisations only
 ##' (i.e. no multi-localisation) or their localisation is unknown
-##' (unlabelled), then both encodings are equivalent.
+##' (unlabelled), then both encodings are equivalent. When the markers
+##' are encoded as vectors, features of unknown localisation are
+##' defined as \code{fData(object)[, fcol] == "unknown"}. For
+##' matrix-encoded markers, unlabelled proteins are defined as
+##' \code{rowSums(fData(object)[, fcol]) == 0}.
 ##'
 ##' The \code{mrkMatToVec} and \code{mrkVecToMat} functions enable the
 ##' conversion from matrix (vector) to vector (matrix). The
@@ -28,7 +32,9 @@
 ##' matrix to vector, if multiple possible label exists, they are
 ##' dropped, i.e. they are converted to \code{"unknown"}. Function
 ##' \code{isMrkVec} and \code{isMrkMat} can be used to test if a
-##' marker set is encoded as a vector or a matrix.
+##' marker set is encoded as a vector or a matrix. \code{mrkEncoding}
+##' returns either \code{"vector"} or \code{"matrix"} depending on the
+##' nature of the markers.
 ##' 
 ##' @title Create a marker vector or matrix.
 ##' @param object An \code{MSnSet} object 
@@ -136,4 +142,11 @@ isMrkVec <- function(object, fcol = "markers") {
     isvec <- is.vector(fData(object)[, fcol])
     isfac <- is.factor(fData(object)[, fcol])
     any(c(isvec, isfac))
+}
+
+##' @rdname markers
+mrkEncoding <- function(object, fcol = "markers") {
+    if (isMrkVec(object, fcol)) return("vector")
+    if (isMrkMat(object, fcol)) return("matrix")
+    stop("Your markers are neither vector nor matrix. See ?markers for details.")
 }

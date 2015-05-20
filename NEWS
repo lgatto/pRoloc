@@ -6,6 +6,8 @@ CHANGES IN VERSION 1.9.3
  o New default in addLegend: bty = "n" <2015-05-20 Wed>
  o getMarkers now supports matrix markers <2015-05-20 Wed>
  o getMarkerClasses now supports matrix markers <2015-05-20 Wed>
+ o markerMSnSet and unknownMSnSet now support matrix markers
+   <2015-05-20 Wed>
 
 CHANGES IN VERSION 1.9.2
 ------------------------

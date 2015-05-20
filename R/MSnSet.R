@@ -30,15 +30,10 @@
 getMarkers <- function(object,
                        fcol = "markers",
                        names = TRUE,
-                       verbose = TRUE) {
-    if (isMrkVec(object, fcol))
-        getVecMarkers(object, fcol, names, verbose)
-    else if (isMrkMat(object, fcol))
-        getMatMarkers(object, fcol, verbose)
-    else
-        stop("Your markers are neither vector nor matrix. See ?markers for details.")
-}
-
+                       verbose = TRUE)
+    switch(mrkEncoding(object, fcol),
+           vector = getVecMarkers(object, fcol, names, verbose),
+           matrix = getMatMarkers(object, fcol, verbose))
 
 getVecMarkers <- function(object, fcol, names, verbose) {
     organelleMarkers <- as.character(fData(object)[, fcol])
@@ -365,11 +360,13 @@ addMarkers <- function(object, markers,
 ##' 
 ##' @title Extract marker/unknown subsets
 ##' @param object An instance of class \code{MSnSet}
-##' @param fcol The name of the feature data column, that
-##' will be used to separate the markers from the proteins
-##' of unknown localisation (with
-##' \code{fData(object)[, fcol] == "unknown")}).
-##' Default is to use \code{"markers"}.
+##' @param fcol The name of the feature data column, that will be used
+##' to separate the markers from the proteins of unknown
+##' localisation. When the markers are encoded as vectors, features of
+##' unknown localisation are defined as \code{fData(object)[, fcol] ==
+##' "unknown"}. For matrix-encoded markers, unlabelled proteins are
+##' defined as \code{rowSums(fData(object)[, fcol]) == 0}. Default is
+##' \code{"markers"}.
 ##' @return An new \code{MSnSet} with marker/unknown proteins only.
 ##' @seealso \code{\link{sampleMSnSet}} \code{\link{testMSnSet}} and
 ##' \code{\link{markers}} for markers encoding.
@@ -385,7 +382,20 @@ addMarkers <- function(object, markers,
 ##' table(fData(dunkley2006)$markers)
 ##' table(fData(mrk)$markers)
 ##' table(fData(unk)$markers)
-markerMSnSet <- function(object, fcol = "markers") {
+##' ## matrix-encoded markers
+##' dunkley2006 <- mrkVecToMat(dunkley2006)
+##' dim(markerMSnSet(dunkley2006, "Markers"))
+##' stopifnot(all.equal(featureNames(markerMSnSet(dunkley2006, "Markers")),
+##'                     featureNames(markerMSnSet(dunkley2006, "markers"))))
+##' dim(unknownMSnSet(dunkley2006, "Markers"))
+##' stopifnot(all.equal(featureNames(unknownMSnSet(dunkley2006, "Markers")),
+##'                     featureNames(unknownMSnSet(dunkley2006, "markers"))))
+markerMSnSet <- function(object, fcol = "markers")
+    switch(mrkEncoding(object, fcol),
+           vector = vecMarkerMSnSet(object, fcol),
+           matrix = matMarkerMSnSet(object, fcol))
+
+vecMarkerMSnSet <- function(object, fcol) {
     mrk <- fData(object)[, fcol]
     object <- object[mrk != "unknown", ]
     ## drop "unknown" level
@@ -394,11 +404,30 @@ markerMSnSet <- function(object, fcol = "markers") {
         return(object)
 }
 
+matMarkerMSnSet <- function(object, fcol) {
+    rs <- rowSums(fData(object)[, fcol])
+    object <- object[rs > 0, ]
+    if (validObject(object))
+        return(object)
+}
+
 ##' @rdname markerMSnSet
-unknownMSnSet <- function(object, fcol = "markers") {
+unknownMSnSet <- function(object, fcol = "markers")
+    switch(mrkEncoding(object, fcol),
+           vector = vecUnknownMSnSet(object, fcol),
+           matrix = matUnknownMSnSet(object, fcol))
+
+vecUnknownMSnSet <- function(object, fcol) {
     mrk <- fData(object)[, fcol]
     object <- object[mrk == "unknown", ]
     fData(object)[, fcol] <- factor(fData(object)[, fcol])
+    if (validObject(object))
+        return(object)
+}
+
+matUnknownMSnSet <- function(object, fcol) {
+    rs <- rowSums(fData(object)[, fcol])
+    object <- object[rs == 0, ]
     if (validObject(object))
         return(object)
 }

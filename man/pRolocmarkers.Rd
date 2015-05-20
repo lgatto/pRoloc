@@ -45,4 +45,9 @@ table(pRolocmarkers("hsap"))
 \author{
 Laurent Gatto
 }
+\seealso{
+\code{\link{addMarkers}} to add markers to an
+\code{MSnSet} and \code{\link{markers}} for more information about
+marker encoding.
+}
 

@@ -29,20 +29,24 @@
 ##' \code{species} is missing or a named character with organelle
 ##' markers.
 ##' @author Laurent Gatto
+##' @seealso \code{\link{addMarkers}} to add markers to an
+##' \code{MSnSet} and \code{\link{markers}} for more information about
+##' marker encoding.
 ##' @examples
 ##' pRolocmarkers()
 ##' table(pRolocmarkers("atha"))
 ##' table(pRolocmarkers("hsap"))
-pRolocmarkers <- function(species) {    
+pRolocmarkers <- function(species) {
     fls <- dir(system.file("extdata", package = "pRoloc"),
-               full.names = TRUE, pattern = "marker_")    
+               full.names = TRUE, pattern = "marker_")
     if (missing(species)) {
         cat(length(fls), "marker lists available:\n")
         for (f in fls) {
             m <- readRDS(f)
-            x <- sub(".rds", "", sub("^.+marker_", "", f))        
+            x <- sub(".rds", "", sub("^.+marker_", "", f))
             cat(m$species, " [", x, "]:\n", sep = "")
-            cat(" Ids: ", m$ids, ", ", length(m$markers), " markers\n", sep = "")
+            cat(" Ids: ", m$ids, ", ", length(m$markers),
+                " markers\n", sep = "")
         }
     } else {
         species <- tolower(species)

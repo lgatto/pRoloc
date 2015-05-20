@@ -1,20 +1,22 @@
-##' Convenience accessor to the organelle markers in an 'MSnSet'.
-##' This function returns the organelle markers of an
-##' \code{MSnSet} instance. As a side effect, it print out a marker table.
+##' Convenience accessor to the organelle markers in an \code{MSnSet}.
+##' This function returns the organelle markers of an \code{MSnSet}
+##' instance. As a side effect, it print out a marker table.
 ##' 
-##' @title Returns the organelle markers in an 'MSnSet'
+##' @title Get the organelle markers in an \code{MSnSet}
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The name of the markers column in the \code{featureData}
-##' slot. Default is \code{markers}.
+##' slot. Default is \code{"markers"}.
 ##' @param names A \code{logical} indicating if the markers vector should
 ##' be named. Ignored if markers are encoded as a matrix.
 ##' @param verbose If \code{TRUE}, a marker table is printed and the markers
 ##' are returned invisibly. If \code{FALSE}, the markers are returned.
 ##' @return A \code{character} (\code{matrix}) of length (ncol)
 ##' \code{ncol(object)}, depending on the vector or matrix encoding of
-##' the markers.
+##' the markers. 
 ##' @author Laurent Gatto
-##' @seealso \code{\link{testMarkers}} and \code{\link{minMarkers}}
+##' @seealso See \code{\link{getMarkerClasses}} to get the classes
+##' only. See \code{\link{markers}} for details about spatial markers
+##' storage and encoding.
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
@@ -199,6 +201,8 @@ getPredictions <- function(object,
 ##' @return The original \code{object} with a modified \code{fData(object)[, fcol]}
 ##' feature variable.
 ##' @author Laurent Gatto
+##' @seealso \code{link{minMarkers}} to filter based on the number of
+##' markers par class.
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
@@ -242,6 +246,8 @@ minClassScore <- function(object,
 ##' feature variables, named after the original \code{fcol} variable and
 ##' the \code{n} value. 
 ##' @author Laurent Gatto
+##' @seealso \code{\link{minClassScore}} to filter based on
+##' classification scores.
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
@@ -285,6 +291,9 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' and marker table should be printed to the console.
 ##' @return A new instance of class \code{MSnSet} with an additional
 ##' \code{markers} feature variable.
+##' @seealso See \code{\link{pRolocmarkers}} for a list of spatial
+##' markers and \code{\link{markers}} for details about markers
+##' encoding.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
@@ -360,7 +369,8 @@ addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) 
 ##' \code{fData(object)[, fcol] == "unknown")}).
 ##' Default is to use \code{"markers"}.
 ##' @return An new \code{MSnSet} with marker/unknown proteins only.
-##' @seealso \code{\link{sampleMSnSet}} \code{\link{testMSnSet}} 
+##' @seealso \code{\link{sampleMSnSet}} \code{\link{testMSnSet}} and
+##' \code{\link{markers}} for markers encoding.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
@@ -421,19 +431,19 @@ unknownMSnSet <- function(object, fcol = "markers") {
 ##' sample <- testMSnSet(tan2009r1)
 ##' getMarkers(sample, "test")
 ##' all(dim(sample) == dim(markerMSnSet(tan2009r1)))
-testMSnSet <- function(object, fcol = "markers", 
-                       size = .2, seed) { 
+testMSnSet <- function(object, fcol = "markers",
+                       size = .2, seed) {
     if (!missing(seed)) {
         seed <- as.integer(seed)
         set.seed(seed)
-    } 
+    }
     P <- markerMSnSet(object, fcol)
     data <- subsetAsDataFrame(P, fcol, keepColNames = TRUE)
     ## Select validation set
     .size <- ceiling(table(data[ ,fcol]) * size)
-    .size <- .size[unique(data[ ,fcol])] 
+    .size <- .size[unique(data[ ,fcol])]
     validation.idxP <- strata(data, fcol, size = .size, 
-                              method = "srswor")$ID_unit  
+                              method = "srswor")$ID_unit
     validation.names <- rownames(data)[validation.idxP]
     validation.P <- P[validation.names, ]
     train.P <- P[-validation.idxP, ]
@@ -500,7 +510,9 @@ sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
 ##' @param ... Additional parameters passed to \code{sort} from the base package.
 ##' @return A \code{character} vector of the organelle classes in the data.
 ##' @author Lisa Breckels and Laurent Gatto
-##' @seealso \code{\link{getMarkers}}
+##' @seealso \code{\link{getMarkers}} to extract the marker
+##' proteins. See \code{\link{markers}} for details about spatial
+##' markers storage and encoding.
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)

@@ -42,4 +42,8 @@ all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
 \author{
 Laurent Gatto
 }
+\seealso{
+\code{link{minMarkers}} to filter based on the number of
+markers par class.
+}
 

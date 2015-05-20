@@ -40,6 +40,11 @@
 ##' set.
 ##' @rdname markers
 ##' @aliases mrkVecToMat
+##' @seealso Other functions that operate on markers are
+##' \code{\link{getMarkers}}, \code{\link{getMarkerClasses}} and
+##' \code{\link{markerMSnSet}}. To add markers to an existing
+##' \code{MSnSet}, see the \code{\link{addMarkers}} function and
+##' \code{\link{pRolocmarkers}}, for a list of suggested markers.
 ##' @author Laurent Gatto and Lisa Breckels
 ##' @examples
 ##' library("pRolocdata")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/MSnSet.R
 \name{getMarkers}
 \alias{getMarkers}
-\title{Returns the organelle markers in an 'MSnSet'}
+\title{Get the organelle markers in an \code{MSnSet}}
 \usage{
 getMarkers(object, fcol = "markers", names = TRUE, verbose = TRUE)
 }
@@ -10,7 +10,7 @@ getMarkers(object, fcol = "markers", names = TRUE, verbose = TRUE)
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}
 
 \item{fcol}{The name of the markers column in the \code{featureData}
-slot. Default is \code{markers}.}
+slot. Default is \code{"markers"}.}
 
 \item{names}{A \code{logical} indicating if the markers vector should
 be named. Ignored if markers are encoded as a matrix.}
@@ -24,9 +24,9 @@ A \code{character} (\code{matrix}) of length (ncol)
 the markers.
 }
 \description{
-Convenience accessor to the organelle markers in an 'MSnSet'.
-This function returns the organelle markers of an
-\code{MSnSet} instance. As a side effect, it print out a marker table.
+Convenience accessor to the organelle markers in an \code{MSnSet}.
+This function returns the organelle markers of an \code{MSnSet}
+instance. As a side effect, it print out a marker table.
 }
 \examples{
 library("pRolocdata")
@@ -43,6 +43,8 @@ head(myMmarkers)
 Laurent Gatto
 }
 \seealso{
-\code{\link{testMarkers}} and \code{\link{minMarkers}}
+See \code{\link{getMarkerClasses}} to get the classes
+only. See \code{\link{markers}} for details about spatial markers
+storage and encoding.
 }
 

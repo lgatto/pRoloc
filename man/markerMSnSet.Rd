@@ -41,6 +41,7 @@ table(fData(unk)$markers)
 Laurent Gatto
 }
 \seealso{
-\code{\link{sampleMSnSet}} \code{\link{testMSnSet}}
+\code{\link{sampleMSnSet}} \code{\link{testMSnSet}} and
+\code{\link{markers}} for markers encoding.
 }
 

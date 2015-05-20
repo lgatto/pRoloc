@@ -39,6 +39,8 @@ stopifnot(all.equal(organelles, organelles2))
 Lisa Breckels and Laurent Gatto
 }
 \seealso{
-\code{\link{getMarkers}}
+\code{\link{getMarkers}} to extract the marker
+proteins. See \code{\link{markers}} for details about spatial
+markers storage and encoding.
 }
 

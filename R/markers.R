@@ -39,7 +39,7 @@
 ##' @return An updated \code{MSnSet} with a new vector (matrix) marker
 ##' set.
 ##' @rdname markers
-##' @aliases mrkVecToMat
+##' @aliases mrkVecToMat markers
 ##' @seealso Other functions that operate on markers are
 ##' \code{\link{getMarkers}}, \code{\link{getMarkerClasses}} and
 ##' \code{\link{markerMSnSet}}. To add markers to an existing

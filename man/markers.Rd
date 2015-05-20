@@ -3,6 +3,7 @@
 \name{mrkVecToMat}
 \alias{isMrkMat}
 \alias{isMrkVec}
+\alias{markers}
 \alias{mrkMatAndVec}
 \alias{mrkMatToVec}
 \alias{mrkVecToMat}

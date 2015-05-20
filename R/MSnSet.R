@@ -102,9 +102,11 @@ testMarkers <- function(object, xval = 5, n = 2,
     if (any(k)) {
         ans <- names(mrktab)[k]
         if (length(ans) == 1) {
-            msg <- paste0(paste(ans, collapse = ", "), " has less than ", N, " markers.")
+            msg <- paste0(paste(ans, collapse = ", "),
+                          " has less than ", N, " markers.")
         } else {
-            msg <- paste0(paste(ans, collapse = ", "), " have/has less than ", N, " markers.")
+            msg <- paste0(paste(ans, collapse = ", "),
+                          " have/has less than ", N, " markers.")
         }
         if (error) stop(msg)
         else warning(msg)
@@ -160,24 +162,23 @@ getPredictions <- function(object,
                            verbose = TRUE) {
     stopifnot(!missing(fcol))
     if (missing(scol))
-        scol <- paste0(fcol, ".scores")  
+        scol <- paste0(fcol, ".scores")
     ans <- predictions <-
         as.character(fData(object)[, fcol])
     predclasses <- unique(predictions)
-  
-    if (length(t) > 1) {  
+
+    if (length(t) > 1) {
         if (!all(sort(names(t)) == sort(predclasses)))
             stop("Class-specific score names do not match the class namesa exactly:\n",
                  "   score names: ", paste(sort(names(t)), collapse = ", "), "\n",
                  "   class names: ", paste(sort(predclasses), collapse = ", "))
         tt <- as.vector(t[predictions])
         ans <- ifelse(fData(object)[, scol] < tt,
-                      "unknown", predictions)      
+                      "unknown", predictions)
     } else {
         scrs <- fData(object)[, scol]
         ans[scrs < t] <- "unknown"
     }
-  
     if (verbose) {
         print(table(ans))
         invisible(ans)
@@ -310,7 +311,9 @@ minMarkers <- function(object, n = 10, fcol = "markers") {
 ##' stopifnot(all.equal(fData(marked)$markers, fData(marked)$markers2))
 ##' plot2D(marked)
 ##' addLegend(marked, where = "topleft", cex = .7)
-addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) {
+addMarkers <- function(object, markers,
+                       mcol = "markers",
+                       fcol, verbose = TRUE) {
     if (mcol %in% fvarLabels(object))
         stop("Detected an existing '", mcol, "' feature column.")
     if (length(markers) == 1 && file.exists(markers)) {
@@ -332,30 +335,29 @@ addMarkers <- function(object, markers, mcol = "markers", fcol, verbose = TRUE) 
         if (!fcol %in% fvarLabels(object))
             stop("'", fcol, "' not found in feature variables.")
         fn <- as.character(fData(object)[, fcol])
-    }  
+    }
     cmn <- fn %in% rownames(mrk)
-  
-    if (sum(cmn) == 0) {    
+
+    if (sum(cmn) == 0) {
         msg <- paste0("No markers found. Are you sure that the feature names match?\n",
                       "  Feature names: ",
                       paste0(paste(featureNames(object)[1:3], collapse = ", "), "...\n"),
                       "  Markers names: ",
-                      paste0(paste(rownames(mrk)[1:3], collapse = ", "), "...\n"))    
+                      paste0(paste(rownames(mrk)[1:3], collapse = ", "), "...\n"))
         stop(msg)
     }
-  
     if (verbose)
         message("Markers in data: ", sum(cmn), " out of ", nrow(object))
-    k <- match(fn[cmn], rownames(mrk))  
+    k <- match(fn[cmn], rownames(mrk))
     fData(object)[, mcol] <- "unknown"
     fData(object)[cmn, mcol] <- mrk[k, 1]
     object@processingData@processing <-
         c(object@processingData@processing,
-          paste0("Added markers from ", mfrom,". ", date()))  
+          paste0("Added markers from ", mfrom,". ", date()))
     if (validObject(object)) {
         if (verbose) getMarkers(object, fcol = mcol)
         return(object)
-    }  
+    }
 }
 
 ##' These function extract the marker or unknown proteins into a new
@@ -442,7 +444,7 @@ testMSnSet <- function(object, fcol = "markers",
     ## Select validation set
     .size <- ceiling(table(data[ ,fcol]) * size)
     .size <- .size[unique(data[ ,fcol])]
-    validation.idxP <- strata(data, fcol, size = .size, 
+    validation.idxP <- strata(data, fcol, size = .size,
                               method = "srswor")$ID_unit
     validation.names <- rownames(data)[validation.idxP]
     validation.P <- P[validation.names, ]
@@ -485,8 +487,8 @@ sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
     mydata <- data.frame(exprs(object), markers = fData(object)[, fcol])
     colnames(mydata) <- c(nms, fcol)
     subset <- ceiling(table(mydata[ ,fcol]) * size)
-    subset <- subset[unique(mydata[ ,fcol])] 
-    idx <- strata(mydata, fcol, size = subset, 
+    subset <- subset[unique(mydata[ ,fcol])]
+    idx <- strata(mydata, fcol, size = subset,
                   method = "srswor")$ID_unit
     object <- object[idx,]
     m <- as.character(fData(object)[, fcol])
@@ -530,7 +532,7 @@ getMarkerClasses <- function(object,
     else if (isMrkMat(object, fcol))
         getMarkerMatClasses(object, fcol, verbose)
     else
-        stop("Your markers are neither vector nor matrix. See ?markers for details.")    
+        stop("Your markers are neither vector nor matrix. See ?markers for details.")
 }
 
 getMarkerMatClasses <- function(object, fcol, verbose, ...) {
@@ -592,13 +594,13 @@ getMarkerVecClasses <- function(object, fcol, verbose, ...) {
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, t = 3))
 ##' ## Remove columns that have half or less of 1s
 ##' exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
-filterBinMSnSet <- function(object, 
+filterBinMSnSet <- function(object,
                             MARGIN = 2,
                             t, q,
                             verbose = TRUE) {
     if (!isBinary(object))
         warning("Your assay data is not binary!")
-    stopifnot(MARGIN %in% 1:2)    
+    stopifnot(MARGIN %in% 1:2)
     if (MARGIN == 2)
         K <- colSums(exprs(object))
     else K <- rowSums(exprs(object))
@@ -607,7 +609,7 @@ filterBinMSnSet <- function(object,
     if (missing(q)) {
         sel <- K > t
     } else {
-        sel <- K > quantile(K, q)    
+        sel <- K > quantile(K, q)
     }
     if (MARGIN == 2) {
         if (verbose) message("Removing ", sum(!sel), " column(s)")

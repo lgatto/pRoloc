@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.9.4
+------------------------
+ o Temp fix for phenoDisco error related to choice of models in
+   mclust <2015-05-20 Wed>
+
 CHANGES IN VERSION 1.9.3
 ------------------------
  o Clarify error when no annotation params are provided

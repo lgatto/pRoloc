@@ -41,7 +41,13 @@ tracking <- function(data,
       ## (A)  Identify potential new members/candidates of organelle class k
       ## (B)  Get cluster IDs for defining phenotypes at a later stage  
       kUx <- rbind(L[[i]], X)
-      gmmCluster <- Mclust(data = kUx, G = G, modelNames = modelNames)
+      gmmCluster <- try(Mclust(data = kUx, G = G, modelNames = modelNames),
+                        silent = TRUE)
+      if (class(gmmCluster) == "try-error") {
+        kUx <- kUx[sample(nrow(kUx)), ]
+        gmmCluster <- try(Mclust(data = kUx, G = G, modelNames = modelNames),
+                          silent = TRUE)    
+      }
       track[[i]] <- gmmCluster$classification # Get cluster number for each prot
       Nclass <- nrow(L[[i]])
       classifyL <- track[[i]][1:Nclass]  
@@ -143,21 +149,27 @@ getNewClusters <- function(history, X,
 ## L: labelled, X: unlabelled (MUST BE A MATRIX),
 ## N: number of iterations, p: significance level 
 gmmOutlier <- function(L, X, N = 500, p=0.05) {
-    if (!is.matrix(X)) 
-        stop("X must be a matrix to run gmmOutlier")
+  if (!is.matrix(X)) 
+    stop("X must be a matrix to run gmmOutlier")
 
-    ## Generate Null
-    ## Need justification of options for selection G here
-    ## Re-test
+  ## Generate Null
+  ## Need justification of options for selection G here
+  ## Re-test
+  gmm0 <- try(log("a"), silent = TRUE)
+  while (class(gmm0) == "try-error") {
+    L <- L[sample(nrow(L)), ]
     if (nrow(L) < 30) {
-        if (nrow(L) < 10) {
-            gmm0 <- Mclust(L, G=1) 
-        } else {
-            gmm0 <- Mclust(L, G=1:3)
-        } 
+      if (nrow(L) < 10) {
+        gmm0 <- try(Mclust(L, G=1), silent = TRUE)
+      } else {
+        gmm0 <- try(Mclust(L, G=1:3), silent = TRUE)
+      } 
     } else {
-        gmm0 <- Mclust(L)
+      gmm0 <- try(Mclust(L), silent = TRUE)   
     }
+  }
+
+    
 
     ## LG, Mon Apr  7 21:47:12 BST 2014
     ## Since mclust 4.3, the originl data in the Mclust
@@ -503,10 +515,11 @@ phenoDisco <- function(object,
                                         ndims = ndims,
                                         modelNames = modelNames,
                                         G = G))
+            if (length(track[[i]]) == 0)
+              browser()
         } else {
             stop("Non valid BPPARAM. See ?phenoDisco for details.")
         }
-        
         ## Update known classes with members assigned to that class
         ## over all iterations of tracking
         classes <- track[[i]][,1]$k
@@ -561,8 +574,8 @@ phenoDisco <- function(object,
                                originalMarkerColumnName = original)
         fcol <- newPhenoName
         ## serialise temporary object
-        if (!missing(tmpfile)) 
-            save(object, file = tmpfile)
+       # if (!missing(tmpfile)) 
+      #      save(object, file = tmpfile)
     } ## end of while
 
     foo <- length(names(fData(object)))

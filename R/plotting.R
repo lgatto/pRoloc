@@ -230,6 +230,9 @@ plot2D <- function(object,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
+    if (mrkIsMat(object, fcol))
+        stop("To visualise a marker matrix, use 'pRolocGUI::plotMat2D'.")
+    stopifnot(mrkIsVec(object, fcol))
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
     if ("outliers" %in% names(a))

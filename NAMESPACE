@@ -80,8 +80,6 @@ export(## MSnSet manipulation
     minMarkers,
     addMarkers,
     pRolocmarkers,
-    mrkVecToMat, mrkMatToVec,
-    mrkMatAndVec, showMrkMat,
     empPvalues,
     getStockcol, getStockpch,
     setStockcol, setStockpch,
@@ -138,4 +136,8 @@ export(## MSnSet manipulation
     setAnnotationParams,
     getAnnotationParams,
     getGOFromFeatures,
-    makeGoSet)
+    makeGoSet,
+    ## -- markers
+    mrkVecToMat, mrkMatToVec,
+    mrkMatAndVec, showMrkMat,
+    isMrkMat, isMrkVec)

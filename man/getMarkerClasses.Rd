@@ -30,9 +30,13 @@ This function returns the organelle classes of an
 library("pRolocdata")
 data(dunkley2006)
 organelles <- getMarkerClasses(dunkley2006)
+## same if markers encoded as a matrix
+dunkley2006 <- mrkVecToMat(dunkley2006, mfcol = "Markers")
+organelles2 <- getMarkerClasses(dunkley2006, fcol = "Markers")
+stopifnot(all.equal(organelles, organelles2))
 }
 \author{
-Lisa Breckels
+Lisa Breckels and Laurent Gatto
 }
 \seealso{
 \code{\link{getMarkers}}

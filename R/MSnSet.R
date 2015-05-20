@@ -499,20 +499,45 @@ sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
 ##' the markers are returned.
 ##' @param ... Additional parameters passed to \code{sort} from the base package.
 ##' @return A \code{character} vector of the organelle classes in the data.
-##' @author Lisa Breckels
+##' @author Lisa Breckels and Laurent Gatto
 ##' @seealso \code{\link{getMarkers}}
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' organelles <- getMarkerClasses(dunkley2006)
+##' ## same if markers encoded as a matrix
+##' dunkley2006 <- mrkVecToMat(dunkley2006, mfcol = "Markers")
+##' organelles2 <- getMarkerClasses(dunkley2006, fcol = "Markers")
+##' stopifnot(all.equal(organelles, organelles2))
 getMarkerClasses <- function(object,
                              fcol = "markers",
                              verbose = TRUE,
                              ...) {
+    if (isMrkVec(object, fcol))
+        getMarkerVecClasses(object, fcol, verbose, ...)
+    else if (isMrkMat(object, fcol))
+        getMarkerMatClasses(object, fcol, verbose)
+    else
+        stop("Your markers are neither vector nor matrix. See ?markers for details.")    
+}
+
+getMarkerMatClasses <- function(object, fcol, verbose, ...) {
+    classes <- colnames(fData(object)[, fcol])
+    classes <- sort(classes, ...)
+    classes <- classes[which(classes != "unknown")]
+    if (verbose) {
+        print(classes)
+        invisible(classes)
+    } else {
+        return(classes)
+    }
+}
+
+getMarkerVecClasses <- function(object, fcol, verbose, ...) {
     organelleMarkers <- getMarkers(object, fcol, verbose = FALSE)
     classes <- unique(organelleMarkers)
     classes <- sort(classes, ...)
-    classes <- classes[which(classes!="unknown")]
+    classes <- classes[which(classes != "unknown")]
     if (verbose) {
         print(classes)
         invisible(classes)

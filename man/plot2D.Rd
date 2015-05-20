@@ -76,8 +76,8 @@ Invisibly returns the 2d data.
 }
 \description{
 Generate 2 dimensional or feature distribution plots to illustrate
-localistation clusters. In \code{plot2D}, rows containing \code{NA}
-values are removed prior to dimention reduction.
+localistation clusters. In \code{plot2D}, rows containing
+\code{NA} values are removed prior to dimention reduction.
 }
 \details{
 Note that \code{plot2D} has been update in version 1.3.6 to

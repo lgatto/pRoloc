@@ -3,11 +3,12 @@
 ##'
 ##'
 ##' Sub-cellular markers can be encoded in two different ways. Sets of
-##' spatial markers can be represented as character \emph{vectors},
-##' stored as feature metadata, and proteins of unknown or uncertain
+##' spatial markers can be represented as character \emph{vectors}
+##' (\code{character} or \code{factor}, to be accurate), stored as
+##' feature metadata, and proteins of unknown or uncertain
 ##' localisation (unlabelled, to be classified) are marked with the
-##' \code{"unknown"} character. While very handy, this encoding suffers
-##' from some drawbacks, in particular the difficulty to label
+##' \code{"unknown"} character. While very handy, this encoding
+##' suffers from some drawbacks, in particular the difficulty to label
 ##' proteins that reside in multiple (possible or actual)
 ##' localisations. The markers vector feature data is typically named
 ##' \code{markers}. A new \emph{matrix} encoding is also
@@ -16,7 +17,7 @@
 ##' 1s. The markers matrix feature data is typically named
 ##' \code{Markers}. If proteins are assigned unique localisations only
 ##' (i.e. no multi-localisation) or their localisation is unknown
-##' (unlabelled), then both encodings are equivalent. 
+##' (unlabelled), then both encodings are equivalent.
 ##'
 ##' The \code{mrkMatToVec} and \code{mrkVecToMat} functions enable the
 ##' conversion from matrix (vector) to vector (matrix). The
@@ -25,7 +26,9 @@
 ##' more accurately, if the feature variable of the destination
 ##' encoding exists, an error is thrown. During the conversion from
 ##' matrix to vector, if multiple possible label exists, they are
-##' dropped, i.e. they are converted to \code{"unknown"}.
+##' dropped, i.e. they are converted to \code{"unknown"}. Function
+##' \code{isMrkVec} and \code{isMrkMat} can be used to test if a
+##' marker set is encoded as a vector or a matrix.
 ##' 
 ##' @title Create a marker vector or matrix.
 ##' @param object An \code{MSnSet} object 
@@ -35,7 +38,8 @@
 ##' variable. Default is \code{"Markers"}.
 ##' @return An updated \code{MSnSet} with a new vector (matrix) marker
 ##' set.
-##' @aliases markers
+##' @rdname markers
+##' @aliases mrkVecToMat
 ##' @author Laurent Gatto and Lisa Breckels
 ##' @examples
 ##' library("pRolocdata")
@@ -63,7 +67,7 @@ mrkVecToMat <- function(object,
     return(object)
 }
 
-##' @rdname mrkVecToMat
+##' @rdname markers
 mrkMatToVec <- function(object,
                         mfcol = "Markers",
                         vfcol = "markers") {
@@ -80,7 +84,7 @@ mrkMatToVec <- function(object,
     return(object)
 }
 
-##' @rdname mrkVecToMat
+##' @rdname markers
 mrkMatAndVec <- function(object,
                          vfcol = "markers",
                          mfcol = "Markers") {
@@ -95,7 +99,7 @@ mrkMatAndVec <- function(object,
     return(object)
 }
 
-##' @rdname mrkVecToMat
+##' @rdname markers
 showMrkMat <- function(object, mfcol = "Markers") {
     M <- fData(object)[, mfcol]
     cat("Localisation count:")
@@ -111,4 +115,20 @@ showMrkMat <- function(object, mfcol = "Markers") {
                         paste0(colnames(M)[m == 1], collapse = "/")))
         print(mtab)
     } else cat("\n  none\n")
+}
+
+
+##' @rdname markers
+isMrkMat <- function(object, fcol = "Markers") {
+    stopifnot(fcol %in% fvarLabels(object))
+    inherits(fData(object)[, fcol], "matrix")
+}
+
+##' @rdname markers
+##' @param fcol A marker feature variable name.
+isMrkVec <- function(object, fcol = "markers") {
+    stopifnot(fcol %in% fvarLabels(object))
+    isvec <- is.vector(fData(object)[, fcol])
+    isfac <- is.factor(fData(object)[, fcol])
+    any(c(isvec, isfac))
 }

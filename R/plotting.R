@@ -129,8 +129,8 @@ plotDist <- function(object,
 ##' Plot organelle assignment data and results.
 ##' 
 ##' Generate 2 dimensional or feature distribution plots to illustrate
-##' localistation clusters. In \code{plot2D}, rows containing \code{NA}
-##' values are removed prior to dimention reduction.
+##' localistation clusters. In \code{plot2D}, rows containing
+##' \code{NA} values are removed prior to dimention reduction.
 ##'
 ##' Note that \code{plot2D} has been update in version 1.3.6 to
 ##' support more more orgnalle classes than colours defined in

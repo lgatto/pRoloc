@@ -488,42 +488,77 @@ testMSnSet <- function(object, fcol = "markers",
 ##' This function extracts a stratified sample of an \code{MSnSet}.
 ##' 
 ##' @title Extract a stratified sample of an \code{MSnSet}
-##' @param object An instance of class \code{"\linkS4class{MSnSet}"}
+##' @param object An instance of class \code{\linkS4class{MSnSet}}
 ##' @param fcol The feature meta-data column name containing the
-##' marker definitions on which the MSnSet will be stratified. Default
-##' is \code{markers}.
+##' marker (vector or matrix) definitions on which the MSnSet will be
+##' stratified. Default is \code{markers}.
 ##' @param size The size of the stratified sample to be
 ##' extracted. Default is 0.2 (20 percent).
 ##' @param seed The optional random number generator seed.
 ##' @return A stratified sample (according to the defined \code{fcol})
 ##' which is an instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @seealso \code{\link{testMSnSet}} \code{\link{unknownMSnSet}}
-##' \code{\link{markerMSnSet}}
+##' \code{\link{markerMSnSet}}. See \code{\link{markers}} for details
+##' about markers encoding.
 ##' @author Lisa Breckels
 ##' @examples
 ##' library(pRolocdata)
 ##' data(tan2009r1)
 ##' dim(tan2009r1)
-##' mySample <- sampleMSnSet(tan2009r1, fcol = "PLSDA")
-##' dim(mySample)
+##' smp <- sampleMSnSet(tan2009r1, fcol = "markers")
+##' dim(smp)
+##' getMarkers(tan2009r1)
+##' getMarkers(smp)
 sampleMSnSet <- function(object, fcol = "markers", size = .2, seed) {
     ## Set seed
     if (!missing(seed)) {
         seed <- as.integer(seed)
         set.seed(seed)
     }
+    switch(mrkEncoding(object, fcol),
+           vector = vecSampleMSnSet(object, fcol, size),
+           matrix = matSampleMSnSet(object, fcol, size))
+}
+
+vecSampleMSnSet <- function(object, fcol, size) {
     nms <- sampleNames(object)
     mydata <- data.frame(exprs(object), markers = fData(object)[, fcol])
     colnames(mydata) <- c(nms, fcol)
-    subset <- ceiling(table(mydata[ ,fcol]) * size)
-    subset <- subset[unique(mydata[ ,fcol])]
+    subset <- ceiling(table(mydata[, fcol]) * size)
+    subset <- subset[unique(mydata[, fcol])]
     idx <- strata(mydata, fcol, size = subset,
                   method = "srswor")$ID_unit
     object <- object[idx,]
     m <- as.character(fData(object)[, fcol])
     tm <- table(m)
     if (any(tm < 6))
-        warning("New sample contains classes with < 6 markers")
+        warning("New sample contains classes with < 6 markers",
+                call. = FALSE)
+    return(object)
+}
+
+matSampleMSnSet <- function(object, fcol, size) {
+    ## we create a vector of concatenated colnames
+    vfcol <- rep("unknown", nrow(object))
+    mrk <- fData(object)[, fcol]
+    nms <- colnames(mrk)
+    for (i in 1:length(vfcol)) {
+        k <- nms[mrk[i, ] != 0]
+        if (length(k))
+            vfcol[i] <- paste(k, collapse = ".")
+    }
+    ## subsetting
+    mydata <- data.frame(exprs(object), markers = vfcol)
+    colnames(mydata) <- c(sampleNames(object), fcol)
+    subset <- ceiling(table(mydata[, fcol]) * size)
+    subset <- subset[unique(mydata[, fcol])]
+    idx <- strata(mydata, fcol, size = subset,
+                  method = "srswor")$ID_unit
+    object <- object[idx, ]
+    tm <- table(vfcol)
+    if (any(tm < 6))
+        warning("New sample contains classes with < 6 markers",
+                call. = FALSE)
     return(object)
 }
 

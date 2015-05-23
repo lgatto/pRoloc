@@ -8,6 +8,7 @@ CHANGES IN VERSION 1.9.3
  o getMarkerClasses now supports matrix markers <2015-05-20 Wed>
  o markerMSnSet and unknownMSnSet now support matrix markers
    <2015-05-20 Wed>
+ o sampleMSnSet now supports matrix markers <2015-05-23 Sat>
 
 CHANGES IN VERSION 1.9.2
 ------------------------

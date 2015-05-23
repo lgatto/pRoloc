@@ -67,7 +67,7 @@ mrkVecToMat <- function(object,
     fvl <- fvarLabels(object)
     if (!vfcol %in% fvl) stop(vfcol, " does not exist.")
     if (mfcol %in% fvl) stop(mfcol, " already present.")
-    m <- fData(object)$markers
+    m <- fData(object)[, vfcol]
     um <- unique(m)
     if ("unknown" %in% um) um <- um[um != "unknown"]
     M <- matrix(0, nrow = nrow(object), ncol = length(um))

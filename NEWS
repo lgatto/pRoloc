@@ -10,6 +10,8 @@ CHANGES IN VERSION 1.9.3
    <2015-05-20 Wed>
  o sampleMSnSet now supports matrix markers <2015-05-23 Sat>
  o updated yeast markers and added uniprot ids <2015-05-27 Wed>
+ o plot2D support a pre-calculated dim-reduced data matrix as method
+   parameter to avoid recalculation <2015-05-27 Wed>
 
 CHANGES IN VERSION 1.9.2
 ------------------------

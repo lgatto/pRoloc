@@ -5,9 +5,9 @@
 \title{Plot organelle assignment data and results.}
 \usage{
 plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
-  score = 1, method = c("PCA", "MDS", "kpca", "t-SNE", "scree"), methargs,
-  axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch, cex,
-  index = FALSE, idx.cex = 0.75, identify = FALSE, plot = TRUE, ...)
+  score = 1, method = "PCA", methargs, axsSwitch = FALSE,
+  mirrorX = FALSE, mirrorY = FALSE, col, pch, cex, index = FALSE,
+  idx.cex = 0.75, identify = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -20,7 +20,8 @@ is \code{markers}. Use \code{NULL} to suppress any colouring.}
 the groups to be differentiated using different point symbols.}
 
 \item{unknown}{A \code{character} (default is \code{"unknown"})
-defining how proteins of unknown localisation are labelled.}
+defining how proteins of unknown/un-labelled localisation are
+labelled.}
 
 \item{dims}{A \code{numeric} of length 2 defining the dimensions
 to be plotted. Always 1:2 for MDS.}
@@ -28,13 +29,19 @@ to be plotted. Always 1:2 for MDS.}
 \item{score}{A numeric specifying the minimum organelle assignment score
 to consider features to be assigned an organelle. (not yet implemented).}
 
-\item{method}{One of \code{"PCA"} (default), \code{"MDS"},
+\item{method}{Either a \code{character} of a \code{matrix}. When
+the former, one of \code{"PCA"} (default), \code{"MDS"},
 \code{"kpca"} or \code{"t-SNE"}, defining if dimensionality
 reduction is done using principal component analysis (see
 \code{\link{prcomp}}), classical multidimensional scaling (see
 \code{\link{cmdscale}}), kernel ##' PCA (see \code{kernlab::kpca})
 or t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used
-to produce a scree plot.}
+to produce a scree plot. If a \code{matrix} is passed, its
+rownames must match object's feature names and represent a
+projection of the data in \code{object} in two dimensions, as
+produced by \code{plot2D}. This enables to re-generate the figure
+without computing the dimensionality reduction over and over
+again, which can be time consuming for certain methods.}
 
 \item{methargs}{A \code{list} of arguments to be passed when
 \code{method} is called. If missing, the data will be scaled and

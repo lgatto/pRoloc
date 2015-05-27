@@ -148,18 +148,25 @@ plotDist <- function(object,
 ##' @param fpch Featre meta-data label (fData column name) desining
 ##' the groups to be differentiated using different point symbols.
 ##' @param unknown A \code{character} (default is \code{"unknown"})
-##' defining how proteins of unknown localisation are labelled.
+##' defining how proteins of unknown/un-labelled localisation are
+##' labelled.
 ##' @param dims A \code{numeric} of length 2 defining the dimensions
 ##' to be plotted. Always 1:2 for MDS.
 ##' @param score A numeric specifying the minimum organelle assignment score
 ##' to consider features to be assigned an organelle. (not yet implemented).
-##' @param method One of \code{"PCA"} (default), \code{"MDS"},
+##' @param method Either a \code{character} of a \code{matrix}. When
+##' the former, one of \code{"PCA"} (default), \code{"MDS"},
 ##' \code{"kpca"} or \code{"t-SNE"}, defining if dimensionality
 ##' reduction is done using principal component analysis (see
 ##' \code{\link{prcomp}}), classical multidimensional scaling (see
 ##' \code{\link{cmdscale}}), kernel ##' PCA (see \code{kernlab::kpca})
 ##' or t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used
-##' to produce a scree plot.
+##' to produce a scree plot. If a \code{matrix} is passed, its
+##' rownames must match object's feature names and represent a
+##' projection of the data in \code{object} in two dimensions, as
+##' produced by \code{plot2D}. This enables to re-generate the figure
+##' without computing the dimensionality reduction over and over
+##' again, which can be time consuming for certain methods.  
 ##' @param methargs A \code{list} of arguments to be passed when
 ##' \code{method} is called. If missing, the data will be scaled and
 ##' centred prior to PCA.
@@ -217,7 +224,7 @@ plot2D <- function(object,
                    unknown = "unknown",
                    dims = 1:2,
                    score = 1, ## TODO
-                   method = c("PCA", "MDS", "kpca", "t-SNE", "scree"),
+                   method = "PCA",
                    methargs,
                    axsSwitch = FALSE,
                    mirrorX = FALSE,
@@ -254,75 +261,90 @@ plot2D <- function(object,
         stop("'", fcol, "' not found in feature variables.")
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
         stop("'", fpch, "' not found in feature variables.")
-    method <- match.arg(method)
-    if (length(dims) > 2) {
-        warning("Using first two dimensions of ", dims)
-        dims <- dims[1:2]
-    }
-    k <- max(dims)
-    if (any(is.na(object))) {
-        n0 <- nrow(object)
-        object <- filterNA(object)
-        n1 <- nrow(object)
-        if (n1 == 0)
-            stop("No rows left after removing NAs!")
-        else
-            warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
-    }
-    if (method == "scree") {
-        if (missing(methargs))
-            methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
-                                  methargs))
-        .data <- .pca$x
-        plot(.pca, npcs = ncol(.data))
-        plot <- FALSE
-    } else if (method == "t-SNE") {
-        requireNamespace("tsne")
-        if (missing(methargs))
-            .data <- tsne::tsne(exprs(object), k = k)
-        else .data <- do.call(tsne::tsne,
-                              c(list(X = exprs(object)),
-                                k = k, 
-                                methargs))
-        .data <- .data[, dims]
-        .xlab <- paste("Dimension 1")
-        .ylab <- paste("Dimension 2")
-    } else if (method == "PCA") {
-        if (missing(methargs))
-            methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
-                                  methargs))
-        .data <- .pca$x[, dims]
-        .vars <- (.pca$sdev)^2
-        .vars <- (.vars / sum(.vars))[dims]
-        .vars <- round(100 * .vars, 2)
-        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-    } else if (method == "MDS")  { ## MDS
-        if (!missing(methargs))
-            warning("'methargs' ignored for MDS")
-        ## TODO - use other distances
-        .data <- cmdscale(dist(exprs(object), 
-                               method = "euclidean",
-                               diag = FALSE,
-                               upper = FALSE),
-                          k = 2)    
-        .xlab <- paste("Dimension 1")
-        .ylab <- paste("Dimension 2")
-    } else { ## kpca
-        if (missing(methargs)) {
-            .kpca <- kpca(exprs(object))
-        } else {
-            .kpca <- do.call(kpca, c(list(x = exprs(object)),
-                                     methargs))
+    if (is.character(method)) {
+        method <- match.arg(method, c("PCA", "MDS", "kpca", "t-SNE", "scree"))
+        if (length(dims) > 2) {
+            warning("Using first two dimensions of ", dims)
+            dims <- dims[1:2]
         }
-        .data <- rotated(.kpca)[, dims]
-        .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
-        .vars <- round(100 * .vars, 2)
-        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-    } 
+        k <- max(dims)
+        if (any(is.na(object))) {
+            n0 <- nrow(object)
+            object <- filterNA(object)
+            n1 <- nrow(object)
+            if (n1 == 0)
+                stop("No rows left after removing NAs!")
+            else
+                warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
+        }
+        if (method == "scree") {
+            if (missing(methargs))
+                methargs <- list(scale = TRUE, center = TRUE)
+            .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                      methargs))
+            .data <- .pca$x
+            plot(.pca, npcs = ncol(.data))
+            plot <- FALSE
+        } else if (method == "t-SNE") {
+            requireNamespace("tsne")
+            if (missing(methargs))
+                .data <- tsne::tsne(exprs(object), k = k)
+            else .data <- do.call(tsne::tsne,
+                                  c(list(X = exprs(object)),
+                                    k = k, 
+                                    methargs))
+            .data <- .data[, dims]
+            .xlab <- paste("Dimension 1")
+            .ylab <- paste("Dimension 2")
+            colnames(.data) <- c(.xlab, .ylab)
+            rownames(.data) <- featureNames(object)
+        } else if (method == "PCA") {
+            if (missing(methargs))
+                methargs <- list(scale = TRUE, center = TRUE)
+            .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                      methargs))
+            .data <- .pca$x[, dims]
+            .vars <- (.pca$sdev)^2
+            .vars <- (.vars / sum(.vars))[dims]
+            .vars <- round(100 * .vars, 2)
+            .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+            .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+            colnames(.data) <- c(.xlab, .ylab)
+        } else if (method == "MDS")  { ## MDS
+            if (!missing(methargs))
+                warning("'methargs' ignored for MDS")
+            ## TODO - use other distances
+            .data <- cmdscale(dist(exprs(object), 
+                                   method = "euclidean",
+                                   diag = FALSE,
+                                   upper = FALSE),
+                              k = 2)    
+            .xlab <- paste("Dimension 1")
+            .ylab <- paste("Dimension 2")
+            colnames(.data) <- c(.xlab, .ylab)
+        } else { ## kpca
+            if (missing(methargs)) {
+                .kpca <- kpca(exprs(object))
+            } else {
+                .kpca <- do.call(kpca, c(list(x = exprs(object)),
+                                         methargs))
+            }
+            .data <- rotated(.kpca)[, dims]
+            .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
+            .vars <- round(100 * .vars, 2)
+            .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+            .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+            colnames(.data) <- c(.xlab, .ylab)
+        }
+    } else if (is.matrix(method)) {
+        stopifnot(nrow(method) == nrow(object))
+        stopifnot(ncol(method) == 2)
+        .data <- method
+        .xlab <- colnames(method)[1]
+        .ylab <- colnames(method)[2]
+    } else {
+        stop("'method' must be either a character of a matrix")        
+    }
     if (plot) {
         if (axsSwitch) {
             .data <- .data[, 2:1]
@@ -532,11 +554,14 @@ addLegend <- function(object,
 ##' highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
 ##'
 ##' .pca <- plot2D(tan2009r1, dims = c(1, 3))
+##' head(.pca)
 ##' highlightOnPlot(.pca, x, pch = "+")
 ##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
 ##'
 ##' plot2D(tan2009r1, mirrorX = TRUE)
 ##' highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
+##' ## regenerate without recomputing
+##' plot2D(tan2009r1, method = .pca)
 highlightOnPlot <- function(object, foi, args = list(), ...) {
     if (!fnamesIn(foi, object))
         stop("None of the features of interest are present in the data.")

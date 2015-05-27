@@ -65,3 +65,12 @@ test_that("sampling using vector and matrix markers", {
               smp2 <- sampleMSnSet(tan2009r1, fcol = "MatPLSDA", seed = 1L)
               expect_true(all.equal(featureNames(smp1), featureNames(smp2)))
           })
+
+test_that("scer, scer_uniprot and scer_sgdb", {
+              x <- pRolocmarkers("scer")
+              xu <- pRolocmarkers("scer_uniprot")
+              xs <- pRolocmarkers("scer_sgd")
+              expect_true(all.equal(x, xu))
+              ## names are different
+              expect_true(all.equal(xu, xs, check.attributes=FALSE))
+          })

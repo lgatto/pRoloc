@@ -49,11 +49,14 @@ pRolocmarkers <- function(species) {
                 " markers\n", sep = "")
         }
     } else {
+        if (species == "scer")
+            species <- "scer_uniprot"
         species <- tolower(species)
         x <- sub(".rds", "", sub("^.+marker_", "", fls))
         k <- match(species, x)
         if (is.na(k))
-            stop("Available species: ", paste(x, collapse = ", "), ". See pRolocmarkers() for details.")
+            stop("Available species: ", paste(x, collapse = ", "),
+                 ". See pRolocmarkers() for details.")
         m <- readRDS(fls[k])
         return(m$markers)
     }

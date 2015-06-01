@@ -22,7 +22,7 @@
 ##' @param ylim A numeric vector of length 2, giving the y coordinates range.
 ##' @param ... Additional parameters passed to \code{\link{plot}}.
 ##' @return Used for its side effect of producing a feature distribution
-##' plot. Invisibly returns \code{NULL}.
+##' plot. Invisibly returns the data matrix.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
@@ -75,7 +75,7 @@ plotDist <- function(object,
                lty = lty,
                ...)
     }
-  invisible(NULL)
+  invisible(t(.data))
 }
 
 

@@ -102,7 +102,7 @@ data(tan2009r1)
 tan2009r1
 @
 
-\subsubsection{Other omics data} 
+\subsubsection*{Other omics data} 
 
 While our primary biological domain is quantitative proteomics, with
 special emphasis on spatial proteomics, the underlying class

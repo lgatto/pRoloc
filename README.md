@@ -9,6 +9,13 @@ requires `R (>= 3.0.0)`.
 - `release` <a href="http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html#archives"><img border="0" src="http://www.bioconductor.org/shields/availability/release/pRoloc.svg" title="Whether the package is available on all platforms; click for details."></a> <a href="http://bioconductor.org/checkResults/release/bioc-LATEST/pRoloc/"><img border="0" src="http://www.bioconductor.org/shields/build/release/bioc/pRoloc.svg" title="build results; click for full report"></a>
 - `devel` <a href="http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html#archives"><img border="0" src="http://www.bioconductor.org/shields/availability/devel/pRoloc.svg" title="Whether the package is available on all platforms; click for details."></a> <a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/pRoloc/"><img border="0" src="http://www.bioconductor.org/shields/build/devel/bioc/pRoloc.svg" title="build results; click for full report"></a>
 
+The `pRoloc` suite set of software are distributed as part of the
+R/[Bioconductor](http://bioconductor.org/) project and are developed
+at the [Computational Proteomics Unit](http://cpu.sysbiol.cam.ac.uk/)
+and
+[Cambridge Centre for Proteomics](http://proteomics.bio.cam.ac.uk/)
+labs, at the University of Cambridge.
+
 ## Getting started
 
 The `pRoloc` software comes with ample documentation. The main
@@ -60,7 +67,6 @@ biocLite("pRolocdata")
 biocLite("pRolocGUI")
 ```  
 
-
 ## References:
 
 Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley KS.
@@ -81,3 +87,8 @@ foundation for reliable spatial proteomics data analysis. Mol Cell
 Proteomics. 2014 Aug;13(8):1937-52. doi: 10.1074/mcp.M113.036350. Epub
 2014 May 20. [PubMed PMID: 24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
 
+#### More resource
+- R and Bioconductor for proteomics
+  [web page](http://lgatto.github.io/RforProteomics/) and
+  [package](http://www.bioconductor.org/packages/release/data/experiment/html/RforProteomics.html)
+- Bioconductor proteomics [workflow](http://bioconductor.org/help/workflows/proteomics/)

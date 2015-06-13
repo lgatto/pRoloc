@@ -11,8 +11,32 @@ requires `R (>= 3.0.0)`.
 
 ## Getting started
 
-The `pRoloc` software comes with ample documentation
+The `pRoloc` software comes with ample documentation. The main
+tutorial
+([release](http://www.bioconductor.org/packages/release/bioc/vignettes/pRoloc/inst/doc/pRoloc-tutorial.pdf)
+and
+[devel](http://www.bioconductor.org/packages/devel/bioc/vignettes/pRoloc/inst/doc/pRoloc-tutorial.pdf))
+provides a broad overview of the package and its functionality. See
+the package page
+([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
+and
+[devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
+for additional manuals.
 
+Two associated packages, `pRolocdata`
+([devel](http://www.bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html)
+and
+[release](http://www.bioconductor.org/packages/release/data/experiment/html/pRolocdata.html))
+and `pRolocGUI`
+([release](http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html)
+and
+[devel](http://www.bioconductor.org/packages/devel/bioc/html/pRolocGUI.html))
+offer spatial proteomics data and a graphical user interface to
+interactively explore the data.
+
+Here are a set of
+[video tutorial](https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow)
+that illustrate the `pRoloc` framework.
 
 ## Installation
 
@@ -22,16 +46,10 @@ infrastructure:
 ```c
 source("http://bioconductor.org/biocLite.R")
 biocLite("pRoloc")
+biocLite("pRolocdata")
+biocLite("pRolocGUI")
 ```  
 
-You can also install the associated data package
-[`pRolocdata`](http://bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html)
-with multiple experimental data sets.
-
-
-```c
-biocLite("pRolocdata")
-```
 
 ## References:
 

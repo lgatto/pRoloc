@@ -38,6 +38,16 @@ Here are a set of
 [video tutorial](https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow)
 that illustrate the `pRoloc` framework.
 
+## Help
+
+Post your questions on the
+[Bioconductor support site](https://support.bioconductor.org/),
+tagging it with the package name `pRoloc` (the maintainer will
+automatically be notified by email). If you identify a bug or have a
+feature request, please open an
+[issue](https://github.com/lgatto/pRoloc/issues) on the github
+development page.
+
 ## Installation
 
 The preferred installation procedure uses the Bioconductor

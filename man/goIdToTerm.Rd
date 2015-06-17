@@ -7,16 +7,19 @@
 \alias{prettyGoTermId}
 \title{Convert GO ids to/from terms}
 \usage{
-goIdToTerm(x)
+goIdToTerm(x, names = TRUE)
 
-goTermToId(x)
+goTermToId(x, names = TRUE)
 
-flipGoTermId(x)
+flipGoTermId(x, names = TRUE)
 
 prettyGoTermId(x)
 }
 \arguments{
 \item{x}{A \code{character} of GO ids or terms.}
+
+\item{names}{Should a named character be returned? Default is
+\code{TRUE}.}
 }
 \value{
 A \code{character} of GO terms (ids) if \code{x} were ids
@@ -28,14 +31,17 @@ checking if (any items in) the input contains \code{"GO:"}.
 }
 \examples{
 goIdToTerm("GO:0000001")
+goIdToTerm("GO:0000001", names = FALSE)
 goIdToTerm(c("GO:0000001", "novalid"))
 goIdToTerm(c("GO:0000001", "GO:0000002", "notvalid"))
 goTermToId("mitochondrion inheritance")
+goTermToId("mitochondrion inheritance", name = FALSE)
 goTermToId(c("mitochondrion inheritance", "notvalid"))
 prettyGoTermId("mitochondrion inheritance")
 prettyGoTermId("GO:0000001")
 flipGoTermId("mitochondrion inheritance")
 flipGoTermId("GO:0000001")
+flipGoTermId("GO:0000001", names = FALSE)
 }
 \author{
 Laurent Gatto

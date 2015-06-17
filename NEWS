@@ -1,3 +1,18 @@
+CHANGES IN VERSION 1.9.3
+------------------------
+ o Clarify error when no annotation params are provided
+   <2015-05-11 Mon>
+ o support for matrix-encoded markers <2015-05-19 Tue>
+ o New default in addLegend: bty = "n" <2015-05-20 Wed>
+ o getMarkers now supports matrix markers <2015-05-20 Wed>
+ o getMarkerClasses now supports matrix markers <2015-05-20 Wed>
+ o markerMSnSet and unknownMSnSet now support matrix markers
+   <2015-05-20 Wed>
+ o sampleMSnSet now supports matrix markers <2015-05-23 Sat>
+ o updated yeast markers and added uniprot ids <2015-05-27 Wed>
+ o plot2D support a pre-calculated dim-reduced data matrix as method
+   parameter to avoid recalculation <2015-05-27 Wed>
+
 CHANGES IN VERSION 1.9.2
 ------------------------
  o Lisa's colour palette <2015-05-08 Fri>

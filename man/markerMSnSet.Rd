@@ -12,11 +12,13 @@ unknownMSnSet(object, fcol = "markers")
 \arguments{
 \item{object}{An instance of class \code{MSnSet}}
 
-\item{fcol}{The name of the feature data column, that
-will be used to separate the markers from the proteins
-of unknown localisation (with
-\code{fData(object)[, fcol] == "unknown")}).
-Default is to use \code{"markers"}.}
+\item{fcol}{The name of the feature data column, that will be used
+to separate the markers from the proteins of unknown
+localisation. When the markers are encoded as vectors, features of
+unknown localisation are defined as \code{fData(object)[, fcol] ==
+"unknown"}. For matrix-encoded markers, unlabelled proteins are
+defined as \code{rowSums(fData(object)[, fcol]) == 0}. Default is
+\code{"markers"}.}
 }
 \value{
 An new \code{MSnSet} with marker/unknown proteins only.
@@ -36,11 +38,20 @@ dim(unk)
 table(fData(dunkley2006)$markers)
 table(fData(mrk)$markers)
 table(fData(unk)$markers)
+## matrix-encoded markers
+dunkley2006 <- mrkVecToMat(dunkley2006)
+dim(markerMSnSet(dunkley2006, "Markers"))
+stopifnot(all.equal(featureNames(markerMSnSet(dunkley2006, "Markers")),
+                    featureNames(markerMSnSet(dunkley2006, "markers"))))
+dim(unknownMSnSet(dunkley2006, "Markers"))
+stopifnot(all.equal(featureNames(unknownMSnSet(dunkley2006, "Markers")),
+                    featureNames(unknownMSnSet(dunkley2006, "markers"))))
 }
 \author{
 Laurent Gatto
 }
 \seealso{
-\code{\link{sampleMSnSet}} \code{\link{testMSnSet}}
+\code{\link{sampleMSnSet}} \code{\link{testMSnSet}} and
+\code{\link{markers}} for markers encoding.
 }
 

@@ -7,11 +7,11 @@
 sampleMSnSet(object, fcol = "markers", size = 0.2, seed)
 }
 \arguments{
-\item{object}{An instance of class \code{"\linkS4class{MSnSet}"}}
+\item{object}{An instance of class \code{\linkS4class{MSnSet}}}
 
 \item{fcol}{The feature meta-data column name containing the
-marker definitions on which the MSnSet will be stratified. Default
-is \code{markers}.}
+marker (vector or matrix) definitions on which the MSnSet will be
+stratified. Default is \code{markers}.}
 
 \item{size}{The size of the stratified sample to be
 extracted. Default is 0.2 (20 percent).}
@@ -29,14 +29,17 @@ This function extracts a stratified sample of an \code{MSnSet}.
 library(pRolocdata)
 data(tan2009r1)
 dim(tan2009r1)
-mySample <- sampleMSnSet(tan2009r1, fcol = "PLSDA")
-dim(mySample)
+smp <- sampleMSnSet(tan2009r1, fcol = "markers")
+dim(smp)
+getMarkers(tan2009r1)
+getMarkers(smp)
 }
 \author{
 Lisa Breckels
 }
 \seealso{
 \code{\link{testMSnSet}} \code{\link{unknownMSnSet}}
-\code{\link{markerMSnSet}}
+\code{\link{markerMSnSet}}. See \code{\link{markers}} for details
+about markers encoding.
 }
 

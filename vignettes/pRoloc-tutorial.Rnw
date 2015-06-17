@@ -381,10 +381,10 @@ convention in many \Biocpkg{pRoloc} functions. Missing annotations
 (empty string) will not be considered as of unknown localisation; we
 prefer to avoid empty strings and make the absence of known
 localisation explicit by using the \texttt{"unknown"} tag. This
-information will be used to separate marker and non-marker proteins
-when proceeding with data visualisation and clustering (sections
-\ref{sec:viz} and \ref{sec:usml}) and classification analysis (section
-\ref{sec:sml}).
+information will be used to separate marker and non-marker
+(unlabelled) proteins when proceeding with data visualisation and
+clustering (sections \ref{sec:viz} and \ref{sec:usml}) and
+classification analysis (section \ref{sec:sml}).
 
 \subsection{\Biocpkg{pRoloc}'s organelle markers}
 

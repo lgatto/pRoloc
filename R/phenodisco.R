@@ -143,27 +143,27 @@ getNewClusters <- function(history, X,
 ## L: labelled, X: unlabelled (MUST BE A MATRIX),
 ## N: number of iterations, p: significance level 
 gmmOutlier <- function(L, X, N = 500, p=0.05) {
-    if (!is.matrix(X)) 
-        stop("X must be a matrix to run gmmOutlier")
-
-    ## Generate Null
-    ## Need justification of options for selection G here
-    ## Re-test
-    if (nrow(L) < 30) {
-        if (nrow(L) < 10) {
-            gmm0 <- Mclust(L, G=1) 
-        } else {
-            gmm0 <- Mclust(L, G=1:3)
-        } 
-    } else {
-        gmm0 <- Mclust(L)
-    }
+  if (!is.matrix(X))
+      stop("X must be a matrix to run gmmOutlier")
+  
+  ## Generate Null
+  ## Need justification of options for selection G here
+  ## Re-test
+  if (nrow(L) < 30) {
+      if (nrow(L) < 10) {
+          gmm0 <- Mclust(L, G=1)
+      } else {
+          gmm0 <- Mclust(L, G=1:3)
+      }
+  } else {
+      gmm0 <- Mclust(L)
+  }  
 
     ## LG, Mon Apr  7 21:47:12 BST 2014
     ## Since mclust 4.3, the originl data in the Mclust
     ## output, which can not be passed directly to estep
     ## with an additional data argument:
-    ## Error in estep: 
+    ## Error in estep:
     ##     formal argument "data" matched by multiple
     ##     actual arguments
     ##
@@ -506,7 +506,6 @@ phenoDisco <- function(object,
         } else {
             stop("Non valid BPPARAM. See ?phenoDisco for details.")
         }
-        
         ## Update known classes with members assigned to that class
         ## over all iterations of tracking
         classes <- track[[i]][,1]$k
@@ -561,28 +560,27 @@ phenoDisco <- function(object,
                                originalMarkerColumnName = original)
         fcol <- newPhenoName
         ## serialise temporary object
-        if (!missing(tmpfile)) 
+        if (!missing(tmpfile))
             save(object, file = tmpfile)
     } ## end of while
 
     foo <- length(names(fData(object)))
     names(fData(object))[foo] <- "pd"
-    
-                                        # Add back in any duplicated rows with localisation assigned from pd
+    ## Add back in any duplicated rows with localisation assigned from pd
     if (duplicatedRows) {
         ind <- apply(exprs(duplicateSet), 1, function(x) 
                      which(apply(exprs(object), 1, function(z) all(x==z))))
-        
+
         for (i in 1:length(ind)){
             fData(duplicateSet)$pd[i] <- as.character(fData(object)$pd[ind[i]])
         }
-        
+
         fData(object)$pd <- as.character(fData(object)$pd)
         object <- combine(object, duplicateSet)
     }
-    
+
     if (missing(seed)) {
-        procmsg <- paste0("Run phenoDisco using '", original, "': ", date())    
+        procmsg <- paste0("Run phenoDisco using '", original, "': ", date())
     } else {
         procmsg <- paste0("Run phenoDisco using '", original,
                           "' (seed, ", seed, "): ", date())
@@ -591,7 +589,7 @@ phenoDisco <- function(object,
                       "\n   with parameters times=", times,
                       ", GS=", GS,
                       ", p=", p,
-                      ", ndims=", ndims, ".")    
+                      ", ndims=", ndims, ".")
     object <- MSnbase:::logging(object,  procmsg, date. = FALSE)
 
     if (!allIter) {

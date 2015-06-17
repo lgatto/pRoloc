@@ -59,4 +59,9 @@ addLegend(marked, where = "topleft", cex = .7)
 \author{
 Laurent Gatto
 }
+\seealso{
+See \code{\link{pRolocmarkers}} for a list of spatial
+markers and \code{\link{markers}} for details about markers
+encoding.
+}
 

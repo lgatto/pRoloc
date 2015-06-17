@@ -34,4 +34,8 @@ getMarkers(d2, fcol = "markers20")
 \author{
 Laurent Gatto
 }
+\seealso{
+\code{\link{minClassScore}} to filter based on
+classification scores.
+}
 

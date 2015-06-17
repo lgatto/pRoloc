@@ -75,7 +75,7 @@ getStockcol <- function() get("stockcol", envir = .pRolocEnv)
 setStockcol <- function(cols) {
     if (is.null(cols)) {
         assign("stockcol", stockcol, envir = .pRolocEnv)
-    } else if (cols == "lisacol") {
+    } else if (cols[1] == "lisacol") {
         setLisacol()
     } else assign("stockcol", cols, envir = .pRolocEnv)
 }

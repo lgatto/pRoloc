@@ -563,8 +563,10 @@ addLegend <- function(object,
 ##' ## regenerate without recomputing
 ##' plot2D(tan2009r1, method = .pca)
 highlightOnPlot <- function(object, foi, args = list(), ...) {
-    if (!fnamesIn(foi, object))
-        stop("None of the features of interest are present in the data.")
+    if (!fnamesIn(foi, object)) {
+        warning("None of the features of interest are present in the data.")
+        invisible(NULL)
+    }
     if (inherits(object, "MSnSet")) {
         .args <- list(object = object, plot = FALSE)
         args <- c(args, .args)

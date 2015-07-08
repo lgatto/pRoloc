@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.9.4
 ------------------------
  o Add reference to TL paper and link to lpSVM code <2015-07-06 Mon>
+ o highlightOnPlot throws a warning and invisibly returns NULL instead
+   of an error when no features are in the object <2015-07-08 Wed>
  
 CHANGES IN VERSION 1.9.3
 ------------------------

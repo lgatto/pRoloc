@@ -536,6 +536,9 @@ addLegend <- function(object,
 ##' matrix with the coordinates of the features on the PCA plot
 ##' produced (and invisibly returned) by \code{plot2D}.
 ##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}}.
+##' @param labels A \code{character} of length 1 with a feature
+##' variable name to be used to label the features of
+##' interest. Default is missing.
 ##' @param args A named list of arguments to be passed to
 ##' \code{plot2D} if the PCA coordinates are to be calculated. Ignored
 ##' if the PCA coordinates are passed directly, i.e. \code{object} is
@@ -562,7 +565,7 @@ addLegend <- function(object,
 ##' highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
 ##' ## regenerate without recomputing
 ##' plot2D(tan2009r1, method = .pca)
-highlightOnPlot <- function(object, foi, args = list(), ...) {
+highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     if (!fnamesIn(foi, object)) {
         warning("None of the features of interest are present in the data.")
         invisible(NULL)
@@ -583,4 +586,10 @@ highlightOnPlot <- function(object, foi, args = list(), ...) {
     if (!is.null(args$mirrorY) && args$mirrorY)
         .pca[, 2] <- -.pca[, 2]    
     points(.pca[sel, 1], .pca[sel, 2], ...)
+    if (!missing(labels)) {
+        labels <- labels[1]
+        stopifnot(labels %in% fvarLabels(object))
+        text(.pca[sel, 1], .pca[sel, 2],
+             fData(object)[sel, labels])
+    }
 }

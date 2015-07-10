@@ -568,7 +568,7 @@ addLegend <- function(object,
 highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     if (!fnamesIn(foi, object)) {
         warning("None of the features of interest are present in the data.")
-        invisible(NULL)
+        return(invisible(NULL))
     }
     if (inherits(object, "MSnSet")) {
         .args <- list(object = object, plot = FALSE)

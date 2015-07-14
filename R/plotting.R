@@ -585,11 +585,12 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
         .pca[, 1] <- -.pca[, 1]
     if (!is.null(args$mirrorY) && args$mirrorY)
         .pca[, 2] <- -.pca[, 2]    
-    points(.pca[sel, 1], .pca[sel, 2], ...)
     if (!missing(labels)) {
         labels <- labels[1]
         stopifnot(labels %in% fvarLabels(object))
         text(.pca[sel, 1], .pca[sel, 2],
-             fData(object)[sel, labels])
+             fData(object)[sel, labels], ...)
+    } else {
+        points(.pca[sel, 1], .pca[sel, 2], ...)
     }
 }

@@ -75,7 +75,7 @@ citEntry(entry = "article",
          journal = "bioRxiv",
          publisher = "Cold Spring Harbor Labs Journals",
          year = "2015",
-         doi = "xxx",
+         doi = "http://biorxiv.org/content/early/2015/07/07/022152",
          textVersion = 
              paste("Breckels L.M., Holden S., Wonjar D., Mulvey C.M, Christoforou A.,",
                    "Groen A., Kohlbacker O., Lilley K.S. and Gatto L.",

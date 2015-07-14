@@ -103,10 +103,24 @@ particular, the goal is to support/complement the primary target
 domain (experimental data) with auxiliary data (annotation) features
 without compromising the integrity of our primary data. In this
 vignette, we describe the application of transfer learning algorithms
-for the localisation of proteins from the \Biocpkg{pRoloc} package
-\cite{Breckels:2015}.
+for the localisation of proteins from the \Biocpkg{pRoloc} package, as
+described in  
 
-<<>>=
+\begin{quote}
+<<ref, echo=FALSE, results='asis'>>=
+cits <- citation("pRoloc")
+i <- which(lengths(sapply(cits, function(xx) grep("heterogeneous", xx$title))) > 0)
+print(cits[[i]], style = "LaTeX")
+@
+\end{quote}
+
+Two algorithms were developed: a transfer learning algorithm based on
+the $k$-nearest
+neighbour classifier, coined kNN-TL hereafter, described in section
+\ref{sec:knntl}, and one based on the support vector machine
+algorithm, termed SVM-TL, described in section \ref{sec:svmtl}.
+
+<<loadpkg>>=
 library("pRoloc")
 @
 
@@ -309,7 +323,17 @@ dim(hpaset)
 exprs(hpaset)[c(1, 6, 200), 1:3]
 @
 
-\section{Optimal weights}\label{sec:thopt}
+\section{Support vector machine transfer learning}\label{sec:svmtl}
+
+The SVM-TL method descibed in \cite{Breckels:2015} has not yet been
+incorporated in the \Biocpkg{pRoloc} package. The code implementing
+the method is currently available in its own repository:
+
+\indent \url{https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code}
+
+\section{Nearest neighbour transfer learning}\label{sec:knntl}
+
+\subsection{Optimal weights}\label{sec:theopt}
 
 <<mclasses, echo=FALSE>>=
 ## marker classes for andy2011
@@ -513,7 +537,7 @@ optimisation search, as provided by \Rfunction{getParams}:
 (bw <- experimentData(andy2011)@other$knntl$thetas)
 @
 
-\section{Applying best \textit{theta} weights}\label{sec:thclass}
+\subsection{Applying best \textit{theta} weights}\label{sec:thclass}
 
 To apply our best weights and learn from the auxiliary data
 accordingly when classifying the unlabelled proteins to one of the

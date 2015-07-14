@@ -58,3 +58,28 @@ citEntry(entry = "article",
                "'A foundation for reliable spatial proteomics data analysis'",
                "Mol Cell Proteomics. 2014 May 20.")
          )
+
+citEntry(entry = "article",
+         title = "Learning from heterogeneous data sources: an application in spatial proteomics",
+         author = personList(
+             as.person("Lisa M. Breckels"),
+             as.person("Sean Holden"),
+             as.person("David Wonjar"),
+             as.person("Claire M. Mulvey"),
+             as.person("Andy Christoforou"),
+             as.person("Arnoud Groen"),
+             as.person("Oliver Kohlbacker"),
+             as.person("Kathryn S. Lilley"),
+             as.person("Laurent Gatto")
+             ),
+         journal = "bioRxiv",
+         publisher = "Cold Spring Harbor Labs Journals",
+         year = "2015",
+         doi = "http://biorxiv.org/content/early/2015/07/07/022152",
+         textVersion = 
+             paste("Breckels L.M., Holden S., Wonjar D., Mulvey C.M, Christoforou A.,",
+                   "Groen A., Kohlbacker O., Lilley K.S. and Gatto L.",
+                   "'Learning from heterogeneous data sources: an application in spatial proteomics'",
+                   "bioRxiv doi: http://dx.doi.org/xxx")
+         )
+         

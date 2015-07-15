@@ -38,7 +38,7 @@ If no match is found, the fractions are labelled as numericals.}
 }
 \value{
 Used for its side effect of producing a feature distribution
-plot. Invisibly returns \code{NULL}.
+plot. Invisibly returns the data matrix.
 }
 \description{
 Produces a line plot showing the feature abundances

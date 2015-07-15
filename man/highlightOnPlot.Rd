@@ -4,7 +4,7 @@
 \alias{highlightOnPlot}
 \title{Highlight features of interest on a plot2D figure}
 \usage{
-highlightOnPlot(object, foi, args = list(), ...)
+highlightOnPlot(object, foi, labels, args = list(), ...)
 }
 \arguments{
 \item{object}{The main dataset described as an \code{MSnSet} or a
@@ -12,6 +12,10 @@ matrix with the coordinates of the features on the PCA plot
 produced (and invisibly returned) by \code{plot2D}.}
 
 \item{foi}{An instance of \code{\linkS4class{FeaturesOfInterest}}.}
+
+\item{labels}{A \code{character} of length 1 with a feature
+variable name to be used to label the features of
+interest. Default is missing.}
 
 \item{args}{A named list of arguments to be passed to
 \code{plot2D} if the PCA coordinates are to be calculated. Ignored

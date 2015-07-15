@@ -159,14 +159,14 @@ plotDist <- function(object,
 ##' \code{"kpca"} or \code{"t-SNE"}, defining if dimensionality
 ##' reduction is done using principal component analysis (see
 ##' \code{\link{prcomp}}), classical multidimensional scaling (see
-##' \code{\link{cmdscale}}), kernel ##' PCA (see \code{kernlab::kpca})
-##' or t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used
-##' to produce a scree plot. If a \code{matrix} is passed, its
-##' rownames must match object's feature names and represent a
-##' projection of the data in \code{object} in two dimensions, as
-##' produced by \code{plot2D}. This enables to re-generate the figure
-##' without computing the dimensionality reduction over and over
-##' again, which can be time consuming for certain methods.  
+##' \code{\link{cmdscale}}), kernel PCA (see \code{kernlab::kpca}) or
+##' t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used to
+##' produce a scree plot. If a \code{matrix} is passed, its rownames
+##' must match object's feature names and represent a projection of
+##' the data in \code{object} in two dimensions, as produced by
+##' \code{plot2D}. This enables to re-generate the figure without
+##' computing the dimensionality reduction over and over again, which
+##' can be time consuming for certain methods.
 ##' @param methargs A \code{list} of arguments to be passed when
 ##' \code{method} is called. If missing, the data will be scaled and
 ##' centred prior to PCA.

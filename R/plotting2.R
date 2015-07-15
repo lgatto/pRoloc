@@ -216,7 +216,7 @@ col2 <- function(x) x$pred.col
 ##' plot2D(xx[[1]], main = "condition A")
 ##' highlightOnPlot(xx[[1]], foi)
 ##' plot2D(xx[[2]], mirrorY = TRUE, main = "condition B")
-##' highlightOnPlot(xx[[2]], foi, list(mirrorY = TRUE))
+##' highlightOnPlot(xx[[2]], foi, args = list(mirrorY = TRUE))
 ##'
 ##' ## (2) plot both data on the same plot
 ##' par(mfrow = c(1, 1))

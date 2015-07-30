@@ -90,14 +90,21 @@ reference papers.
 Laurent Gatto
 }
 \references{
-Improving qualitative and quantitative performance for MSE-based label free proteomics.
-N.J. Bond, P.V. Shliaha, K.S. Lilley and L. Gatto, Journal of Proteome Research, 2013 (in press).
+Improving qualitative and quantitative performance for
+    MSE-based label free proteomics N.J. Bond, P.V. Shliaha,
+    K.S. Lilley and L. Gatto Journal of Proteome Research,
+    2013;12(6):2340-53. PMID: 23510225.
 
-The Effects of Travelling Wave Ion Mobility Separation on Data Independent Acquisition in Proteomics Studies,
-P.V. Shliaha, N.J. Bond, L. Gatto and K.S. Lilley, Journal of Proteome Research, 2013 (in press).
 
-MSnbase-an R/Bioconductor package for isobaric tagged mass spectrometry data visualization,
-processing and quantitation. L. Gatto and KS. Lilley. Bioinformatics. 2012 Jan 15;28(2):288-9.
-doi: 10.1093/bioinformatics/btr645. Epub 2011 Nov 22. PubMed PMID: 22113085.
+    The Effects of Travelling Wave Ion Mobility Separation on Data
+    Independent Acquisition in Proteomics Studies P.V. Shliaha,
+    N.J. Bond, L. Gatto and K.S. Lilley Journal of Proteome
+    Research, 2013;12(6):2323-39. PMID: 23514362.
+
+    MSnbase-an R/Bioconductor package for isobaric tagged mass
+    spectrometry data visualization, processing and
+    quantitation. L. Gatto and KS. Lilley. Bioinformatics. 2012
+    Jan 15;28(2):288-9.  doi: 10.1093/bioinformatics/btr645. Epub
+    2011 Nov 22. PubMed PMID: 22113085.
 }
 

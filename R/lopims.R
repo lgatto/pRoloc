@@ -178,15 +178,22 @@ lopims5 <- function(x, markerfile) {
 ##' reference papers.
 ##'
 ##' @references
-##' Improving qualitative and quantitative performance for MSE-based label free proteomics.
-##' N.J. Bond, P.V. Shliaha, K.S. Lilley and L. Gatto, Journal of Proteome Research, 2013 (in press).
+##'     Improving qualitative and quantitative performance for
+##'     MSE-based label free proteomics N.J. Bond, P.V. Shliaha,
+##'     K.S. Lilley and L. Gatto Journal of Proteome Research,
+##'     2013;12(6):2340-53. PMID: 23510225.
 ##'
-##' The Effects of Travelling Wave Ion Mobility Separation on Data Independent Acquisition in Proteomics Studies,
-##' P.V. Shliaha, N.J. Bond, L. Gatto and K.S. Lilley, Journal of Proteome Research, 2013 (in press).
+##'
+##'     The Effects of Travelling Wave Ion Mobility Separation on Data
+##'     Independent Acquisition in Proteomics Studies P.V. Shliaha,
+##'     N.J. Bond, L. Gatto and K.S. Lilley Journal of Proteome
+##'     Research, 2013;12(6):2323-39. PMID: 23514362.
 ##' 
-##' MSnbase-an R/Bioconductor package for isobaric tagged mass spectrometry data visualization,
-##' processing and quantitation. L. Gatto and KS. Lilley. Bioinformatics. 2012 Jan 15;28(2):288-9.
-##' doi: 10.1093/bioinformatics/btr645. Epub 2011 Nov 22. PubMed PMID: 22113085.
+##'     MSnbase-an R/Bioconductor package for isobaric tagged mass
+##'     spectrometry data visualization, processing and
+##'     quantitation. L. Gatto and KS. Lilley. Bioinformatics. 2012
+##'     Jan 15;28(2):288-9.  doi: 10.1093/bioinformatics/btr645. Epub
+##'     2011 Nov 22. PubMed PMID: 22113085.
 ##' 
 ##' @title A complete LOPIMS pipeline
 ##' @param hdmsedir A \code{character} identifying the directory
@@ -224,14 +231,20 @@ lopims <- function(hdmsedir = "HDMSE",
           "If you use it, please cite:\n\n",          
           "L. Gatto and KS. Lilley. MSnbase - an R/Bioconductor\n",
           "package for isobaric tagged mass spectrometry data visualization,\n",
-          "processing and quantitation. Bioinformatics 28, 288-289 (2012).\n\n",          
-          "NJ. Bond, PV. Shliaha, KS. Lilley and L. Gatto\n", 
-          "Improving qualitative and quantitative performance for MSE-based\n",
-          "label free proteomics Journal of Proteome Research, in press (2013).\n\n",          
-          "L. Gatto, LM. Breckels with contributions from T. Burger and\n", 
-          "S. Wieczorek. pRoloc: A unifying bioinformatics framework for \n",
-          "spatial proteomics. R package (2013).\n",
-          "------------------------------------------------------------\n\n")
+          "processing and quantitation. Bioinformatics 28, 288-289 (2012).\n\n",
+          "N.J. Bond, P.V. Shliaha, K.S. Lilley and L. Gatto Improving\n",
+          "qualitative and quantitative performance for MSE-based label free\n",
+          "proteomics. Journal of Proteome Research, 2013;12(6):2340-53.\n\n",
+          "The Effects of Travelling Wave Ion Mobility Separation on\n",
+          "Data Independent Acquisition in Proteomics Studies\n",
+          "P.V. Shliaha, N.J. Bond, L. Gatto and K.S. Lilley Journal of\n",
+          "Proteome Research, 2013;12(6):2323-39. PMID: 23514362.\n\n",
+          "Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley KS.\n",
+          "Mass-spectrometry-based spatial proteomics data analysis using pRoloc\n",
+          "and pRolocdata. Bioinformatics. 2014 May 1;30(9):1322-4.\n",
+          "doi:10.1093/bioinformatics/btu013. Epub 2014 Jan 11. PubMed PMID:\n",
+          "24413670; PubMed Central PMCID: PMC3998135.\n",
+          "------------------------------------------------------------\n")
   message(msg0)
   
   version <- "0.1.1"

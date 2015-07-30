@@ -87,6 +87,11 @@ foundation for reliable spatial proteomics data analysis. Mol Cell
 Proteomics. 2014 Aug;13(8):1937-52. doi: 10.1074/mcp.M113.036350. Epub
 2014 May 20. [PubMed PMID: 24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
 
+Breckels LM, Holden S, Wojnar D, Mulvey CMM, Christoforou A, Groen AJ,
+Kohlbacher O, Lilley KS and Gatto L. Learning from heterogeneous data
+sources: an application in spatial proteomics. 2015 biorXiv, doi:
+http://dx.doi.org/10.1101/022152
+
 #### More resource
 - R and Bioconductor for proteomics
   [web page](http://lgatto.github.io/RforProteomics/) and

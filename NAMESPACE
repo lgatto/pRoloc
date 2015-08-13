@@ -50,7 +50,8 @@ importFrom(plyr, colwise, catcolwise, ddply)
 
 exportClasses(GenRegRes,
               ThetaRegRes,
-              AnnotationParams)
+              AnnotationParams,
+              SpatProtVis)
               ## ClustRegRes)
 
 exportMethods(chi2,
@@ -97,6 +98,7 @@ export(## MSnSet manipulation
     addLegend,
     plotDist,
     highlightOnPlot,
+    SpatProtVis,
     ## -- data checks
     checkFvarOverlap,
     checkFeatureNamesOverlap,

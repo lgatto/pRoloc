@@ -67,4 +67,5 @@ Collate: AllGenerics.R
 	 goenv.R
 	 go.R
 	 makeGoSet.R
+	 vis.R
 	 zzz.R

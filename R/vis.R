@@ -46,10 +46,15 @@ SpatProtVis <- function(x, methods, dims,
                           .args <- methargs[i]
                           if (is.null(.args[[1]])) .args <- list()
                           .dims <- dims[[i]]
-                          suppressMessages(xx <- plot2D(x, plot = FALSE,
-                                                        dims = .dims,
-                                                        method = m,
-                                                        methargs = .args))
+                          if (m == "MDS") ## no methargs here
+                              suppressMessages(xx <- plot2D(x, plot = FALSE,
+                                                            dims = .dims,
+                                                            method = m))
+                          else
+                              suppressMessages(xx <- plot2D(x, plot = FALSE,
+                                                            dims = .dims,
+                                                            method = m,
+                                                            methargs = .args))
                       })
     names(vismats) <- methods
     objname <- MSnbase:::getVariableName(match.call(), "x")

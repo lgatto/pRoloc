@@ -1,7 +1,3 @@
-## A class for spatial proteomics visualisation, that upon
-## instantiation, pre-computes all available visualisations. Also
-## stores the data annotation (spatial clusters labels)
-
 .SpatProtVis <-
     setClass("SpatProtVis",
              slots = c(
@@ -26,17 +22,26 @@
              })
 
 
-SpatProtVis <- function(x, ...) {
-    methodignore <- c("scree", "t-SNE")
-    .plot2Dmethods <- plot2Dmethods[!plot2Dmethods %in% methodignore]
+SpatProtVis <- function(x, methods, methargs, ...) {
+    if (missing(methods)) {
+        methods <- plot2Dmethods
+        methodignore <- c("scree")
+        methods <- methods[!methods %in% methodignore]
+    }
+    if (!missing(methargs)) 
+        stopifnot(length(methods) == length(methargs))
     ## TODO: manage plot2D args for the different methods, possibly as
     ## a list of metargs
-    vismats <- lapply(.plot2Dmethods,
-                      function(m) {
+    vismats <- lapply(seq_along(methods), 
+                      function(i) {
+                          m <- methods[i]
                           message("Producting ", m, " visualisation...")
-                          suppressMessages(plot2D(x, method = m, plot = FALSE))
-n                      })
-    names(vismats) <- .plot2Dmethods
+                          args <- methargs[[i]]
+                          ## FIXME
+                          args <- list(object = x, plot = FALSE, args, method = m)
+                          suppressMessages(do.call(plot2D, args))
+                      })
+    names(vismats) <- methods
     objname <- MSnbase:::getVariableName(match.call(), "x")
     .SpatProtVis(vismats = vismats, objname = objname, data = x)
 }

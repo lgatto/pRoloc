@@ -126,6 +126,9 @@ plotDist <- function(object,
 }
 
 
+## Available plot2D methods
+plot2Dmethods <- c("PCA", "MDS", "kpca", "t-SNE", "scree")
+
 ##' Plot organelle assignment data and results.
 ##' 
 ##' Generate 2 dimensional or feature distribution plots to illustrate
@@ -163,8 +166,8 @@ plotDist <- function(object,
 ##' t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used to
 ##' produce a scree plot. If a \code{matrix} is passed, its rownames
 ##' must match object's feature names and represent a projection of
-##' the data in \code{object} in two dimensions, as produced by
-##' \code{plot2D}. This enables to re-generate the figure without
+##' the data in \code{object} in two dimensions, as produced (and invisibly
+##' returned) by \code{plot2D}. This enables to re-generate the figure without
 ##' computing the dimensionality reduction over and over again, which
 ##' can be time consuming for certain methods.
 ##' @param methargs A \code{list} of arguments to be passed when
@@ -177,8 +180,8 @@ plotDist <- function(object,
 ##' @param col A \code{character} of appropriate length defining colours.
 ##' @param pch A \code{character} of appropriate length defining point character.
 ##' @param cex Character expansion.
-##' @param index A \code{logical} (default is FALSE), indicating of the feature
-##' indices should be plotted on top of the symbols.
+##' @param index A \code{logical} (default is \code{FALSE), indicating of the
+##' feature indices should be plotted on top of the symbols.
 ##' @param idx.cex A \code{numeric} specifying the character expansion
 ##' (default is 0.75) for the feature indices. Only relevant when \code{index}
 ##' is TRUE.
@@ -262,7 +265,7 @@ plot2D <- function(object,
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
         stop("'", fpch, "' not found in feature variables.")
     if (is.character(method)) {
-        method <- match.arg(method, c("PCA", "MDS", "kpca", "t-SNE", "scree"))
+        method <- match.arg(method, plot2Dmethods)
         if (length(dims) > 2) {
             warning("Using first two dimensions of ", dims)
             dims <- dims[1:2]

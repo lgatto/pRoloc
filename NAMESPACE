@@ -91,6 +91,7 @@ export(## MSnSet manipulation
     filterZeroCols, filterZeroRows,
     ## -- plotting
     plot2D,
+    plot2Dmethods,
     plot2Ds, data1, data2, col1, col2,
     move2Ds,
     addLegend,

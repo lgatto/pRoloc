@@ -2,6 +2,7 @@
 % Please edit documentation in R/plotting.R
 \name{plot2D}
 \alias{plot2D}
+\alias{plot2Dmethods}
 \title{Plot organelle assignment data and results.}
 \usage{
 plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
@@ -41,7 +42,8 @@ must match object's feature names and represent a projection of
 the data in \code{object} in two dimensions, as produced (and invisibly
 returned) by \code{plot2D}. This enables to re-generate the figure without
 computing the dimensionality reduction over and over again, which
-can be time consuming for certain methods.}
+can be time consuming for certain methods. Available methods are listed
+in \code{plot2Dmethods}.}
 
 \item{methargs}{A \code{list} of arguments to be passed when
 \code{method} is called. If missing, the data will be scaled and
@@ -100,6 +102,8 @@ transparency instead. See example below.
 library("pRolocdata")
 data(dunkley2006)
 plot2D(dunkley2006, fcol = NULL)
+## available methods
+plot2Dmethods
 plot2D(dunkley2006, fcol = NULL, method = "kpca")
 plot2D(dunkley2006, fcol = NULL, method = "kpca",
        methargs = list(kpar = list(sigma = 1)))

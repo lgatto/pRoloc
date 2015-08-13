@@ -169,7 +169,8 @@ plot2Dmethods <- c("PCA", "MDS", "kpca", "t-SNE", "scree")
 ##' the data in \code{object} in two dimensions, as produced (and invisibly
 ##' returned) by \code{plot2D}. This enables to re-generate the figure without
 ##' computing the dimensionality reduction over and over again, which
-##' can be time consuming for certain methods.
+##' can be time consuming for certain methods. Available methods are listed
+##' in \code{plot2Dmethods}.
 ##' @param methargs A \code{list} of arguments to be passed when
 ##' \code{method} is called. If missing, the data will be scaled and
 ##' centred prior to PCA.
@@ -200,10 +201,13 @@ plot2Dmethods <- c("PCA", "MDS", "kpca", "t-SNE", "scree")
 ##' representation of quantitative organelle proteomics
 ##' data. \code{\link{plot2Ds}} to overlay 2 data sets on the same PCA
 ##' plot.
+##' @aliases plot2Dmethods
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' plot2D(dunkley2006, fcol = NULL)
+##' ## available methods
+##' plot2Dmethods
 ##' plot2D(dunkley2006, fcol = NULL, method = "kpca")
 ##' plot2D(dunkley2006, fcol = NULL, method = "kpca",
 ##'        methargs = list(kpar = list(sigma = 1)))

@@ -1,9 +1,11 @@
+setClassUnion("listOrNULL", c("list", "NULL"))
+
 .SpatProtVis <-
     setClass("SpatProtVis",
              slots = c(
                  vismats = "list",
                  data = "MSnSet",
-                 methargs = "list",
+                 methargs = "listOrNULL",
                  objname = "character"),
              validity = function(object) {
                  msg <- validMsg(NULL, NULL)
@@ -25,40 +27,40 @@
 
 SpatProtVis <- function(x, methods, dims,
                         methargs, ...) {
-    stopifnot(methods %in% plot2Dmethods)
     if (missing(methods)) {
         methods <- plot2Dmethods
         methodignore <- c("scree")
         methods <- methods[!methods %in% methodignore]
     }
-    if (missing(methargs)) 
-        methargs <- vector("list", length = length(methods))
+    stopifnot(methods %in% plot2Dmethods)
     if (missing(dims)) 
         dims <- replicate(length(methods), 1:2, simplify=FALSE)
-    stopifnot(length(methods) == length(methargs))    
-    stopifnot(length(methods) == length(dims))    
-    ## TODO: manage plot2D args for the different methods, possibly as
-    ## a list of metargs
+    stopifnot(length(methods) == length(dims))
+    if (!missing(methargs)) stopifnot(length(methods) == length(methargs))
+    else methargs <- NULL
     vismats <- lapply(seq_along(methods), 
                       function(i) {
                           m <- methods[i]
                           message("Producting ", m, " visualisation...")
-                          .args <- methargs[i]
-                          if (is.null(.args[[1]])) .args <- list()
                           .dims <- dims[[i]]
-                          if (m == "MDS") ## no methargs here
-                              suppressMessages(xx <- plot2D(x, plot = FALSE,
-                                                            dims = .dims,
-                                                            method = m))
-                          else
-                              suppressMessages(xx <- plot2D(x, plot = FALSE,
-                                                            dims = .dims,
-                                                            method = m,
-                                                            methargs = .args))
+                          if (m == "MDS" | is.null(methargs)) { 
+                              suppressMessages(plot2D(x, plot = FALSE,
+                                                      dims = .dims,
+                                                      method = m))
+                          } else {
+                              .args <- methargs[i]
+                              suppressMessages(plot2D(x, plot = FALSE,
+                                                      dims = .dims,
+                                                      method = m,
+                                                      methargs = .args))
+                          }
                       })
     names(vismats) <- methods
     objname <- MSnbase:::getVariableName(match.call(), "x")
-    .SpatProtVis(vismats = vismats, objname = objname, data = x)
+    .SpatProtVis(vismats = vismats,
+                 objname = objname,
+                 methargs = methargs,
+                 data = x)
 }
 
 setMethod("show", "SpatProtVis",

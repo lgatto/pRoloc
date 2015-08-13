@@ -38,8 +38,8 @@ reduction is done using principal component analysis (see
 t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used to
 produce a scree plot. If a \code{matrix} is passed, its rownames
 must match object's feature names and represent a projection of
-the data in \code{object} in two dimensions, as produced by
-\code{plot2D}. This enables to re-generate the figure without
+the data in \code{object} in two dimensions, as produced (and invisibly
+returned) by \code{plot2D}. This enables to re-generate the figure without
 computing the dimensionality reduction over and over again, which
 can be time consuming for certain methods.}
 
@@ -60,8 +60,8 @@ switched.}
 
 \item{cex}{Character expansion.}
 
-\item{index}{A \code{logical} (default is FALSE), indicating of the feature
-indices should be plotted on top of the symbols.}
+\item{index}{A \code{logical} (default is \code{FALSE}, indicating of the
+feature indices should be plotted on top of the symbols.}
 
 \item{idx.cex}{A \code{numeric} specifying the character expansion
 (default is 0.75) for the feature indices. Only relevant when \code{index}

@@ -180,7 +180,7 @@ plot2Dmethods <- c("PCA", "MDS", "kpca", "t-SNE", "scree")
 ##' @param col A \code{character} of appropriate length defining colours.
 ##' @param pch A \code{character} of appropriate length defining point character.
 ##' @param cex Character expansion.
-##' @param index A \code{logical} (default is \code{FALSE), indicating of the
+##' @param index A \code{logical} (default is \code{FALSE}, indicating of the
 ##' feature indices should be plotted on top of the symbols.
 ##' @param idx.cex A \code{numeric} specifying the character expansion
 ##' (default is 0.75) for the feature indices. Only relevant when \code{index}

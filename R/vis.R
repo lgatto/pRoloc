@@ -3,6 +3,7 @@
              slots = c(
                  vismats = "list",
                  data = "MSnSet",
+                 methargs = "list",
                  objname = "character"),
              validity = function(object) {
                  msg <- validMsg(NULL, NULL)
@@ -22,24 +23,33 @@
              })
 
 
-SpatProtVis <- function(x, methods, methargs, ...) {
+SpatProtVis <- function(x, methods, dims,
+                        methargs, ...) {
+    stopifnot(methods %in% plot2Dmethods)
     if (missing(methods)) {
         methods <- plot2Dmethods
         methodignore <- c("scree")
         methods <- methods[!methods %in% methodignore]
     }
-    if (!missing(methargs)) 
-        stopifnot(length(methods) == length(methargs))
+    if (missing(methargs)) 
+        methargs <- vector("list", length = length(methods))
+    if (missing(dims)) 
+        dims <- replicate(length(methods), 1:2, simplify=FALSE)
+    stopifnot(length(methods) == length(methargs))    
+    stopifnot(length(methods) == length(dims))    
     ## TODO: manage plot2D args for the different methods, possibly as
     ## a list of metargs
     vismats <- lapply(seq_along(methods), 
                       function(i) {
                           m <- methods[i]
                           message("Producting ", m, " visualisation...")
-                          args <- methargs[[i]]
-                          ## FIXME
-                          args <- list(object = x, plot = FALSE, args, method = m)
-                          suppressMessages(do.call(plot2D, args))
+                          .args <- methargs[i]
+                          if (is.null(.args[[1]])) .args <- list()
+                          .dims <- dims[[i]]
+                          suppressMessages(xx <- plot2D(x, plot = FALSE,
+                                                        dims = .dims,
+                                                        method = m,
+                                                        methargs = .args))
                       })
     names(vismats) <- methods
     objname <- MSnbase:::getVariableName(match.call(), "x")
@@ -57,8 +67,9 @@ setMethod("show", "SpatProtVis",
 
 setMethod("plot", c("SpatProtVis", "missing"),
           function(x, y, legend, ...) {
-              for (m in names(x@vismats)) {
-                  plot2D(x@data, method = x@vismats[[m]], main = m, ...)
+              for (i in seq_along(x@vismats)) {                  
+                  plot2D(x@data, method = x@vismats[[i]],
+                         main = names(x@vismats)[i], ...)
                   if (!missing(legend))
                       addLegend(x@data, where = legend, ...)
                   if (interactive())

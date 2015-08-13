@@ -23,11 +23,13 @@ method.
    
     \item{\code{vismats}:}{A \code{"list"} of matrices containing the
       feature projections in 2 dimensions. }
-
     
     \item{\code{data}:}{The original spatial proteomics data stored as
       an \code{"MSnSet"}. }
-    
+
+    \item{\code{methargs}:}{A \code{"list"} of additional plotting
+    arguments. }
+
     \item{\code{objname}:}{A \code{"character"} defining how to name the
       dataset. By default, this is set using the variable name used at
       object creation. }
@@ -35,7 +37,11 @@ method.
   }
 }
 
-
+\section{Slots}{
+  \describe{
+    \item{\code{plot}:}{}
+  }
+}
 
 \author{
   Laurent Gatto <lg390@cam.ac.uk>
@@ -57,8 +63,10 @@ vis
 plot(vis)
 plot(vis, legend = "topleft")
 
-## Add example with multiple PCA plots and different dims
-
+## Multiple PCA plots but different PCs
+dims <- list(c(1, 2), c(3, 4))
+vis <- SpatProtVis(dunkley2006, methods = c("PCA", "PCA"), dims = dims)
+plot(vis)
 }
 
 \keyword{classes}

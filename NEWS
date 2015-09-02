@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.9.7
 ------------------------
  o New SpatProtVis visualisation class <2015-08-13 Thu>
+ o add link to explanation of supportive/uncertain reliability scores
+   in tl vignette <2015-09-02 Wed>
  
 CHANGES IN VERSION 1.9.6
 ------------------------

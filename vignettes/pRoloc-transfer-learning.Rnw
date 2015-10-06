@@ -291,8 +291,9 @@ lopit <- andy2011[!is.na(fData(andy2011)$Main.location), ]
 Below, we deparse the multiple ';'-delimited locations contained in
 the Human Protein sub-cellular Atlas, create the auxiliary binary data
 matrix (only localisations with reliability equal to \emph{Supportive}
-are considered; \emph{Uncertain} assignments are ignored) and filter
-proteins without any localisation data.
+are considered; \emph{Uncertain} assignments are ignored - see
+\url{http://www.proteinatlas.org/about/quality+scoring#ifr} for
+details) and filter proteins without any localisation data.
 
 <<hpadata, eval=TRUE>>=
 ## HPA localisation

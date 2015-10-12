@@ -128,8 +128,11 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' @param verbose If \code{TRUE}, a prediction table is printed and the
 ##' predictions are returned invisibly. If \code{FALSE}, the predictions
 ##' are returned.
-##' @return A \code{character} of length \code{ncol(object)}. 
-##' @author Laurent Gatto
+##' @return An instance of class "\linkS4class{MSnSet}" with \code{fcol.pred} feature
+##' variable storing the prediction results according to the chosen threshold.
+##' @author Laurent Gatto and Lisa Breckels
+##' @seealso \code{link{orgQuants}} for calculating organelle-specific
+##' thresholds.
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
@@ -140,15 +143,7 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' getPredictions(res, fcol = "svm", t = 0) ## all predictions
 ##' getPredictions(res, fcol = "svm", t = .9) ## single threshold 
 ##' ## 50% top predictions per class
-##' (ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median))
-##' getPredictions(res, fcol = "svm", t = ts)
-##' ## 50% top predictions per class, ignoring marker scores
-##' ts <- tapply(fData(res)$svm.scores, fData(res)$svm,
-##'              function(x) {
-##'                  scr <- median(x[x != 1])
-##'                  ifelse(is.na(scr), 1, scr)
-##'              })
-##' ts
+##' ts <- orgQuants(res, fcol = "svm")
 ##' getPredictions(res, fcol = "svm", t = ts)
 getPredictions <- function(object,
                            fcol,
@@ -174,12 +169,20 @@ getPredictions <- function(object,
         scrs <- fData(object)[, scol]
         ans[scrs < t] <- "unknown"
     }
+    t <- format(t, digits = 3)
+    if (length(t) > 1)
+      p <- paste("thresholds:", paste(paste(names(t), ts, sep = " = "), collapse = ", "))
+    else
+      p <- paste("global threshold =", t)
+    l <- paste0(fcol, ".preds")
+    fData(object)[, l] <- ans
     if (verbose) {
         print(table(ans))
         invisible(ans)
-    } else {
-        return(ans)
     }
+    object@processingData@processing <- c(processingData(object)@processing, 
+                                        paste("Added", fcol, "predictions according to", p, date()))
+    return(object)
 }
 
 ##' This functions updates the classification results in an \code{"\linkS4class{MSnSet}"}
@@ -727,4 +730,42 @@ filterZeroRows <- function(object,
     }
     if (validObject(object))
         return(object)
+}
+
+##' This function produces organelle-specific quantiles corresponding to 
+##' the given classification scores. 
+##' 
+##' @title Returns organelle-specific quantile scores
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param fcol The name of the prediction column in the
+##' \code{featureData} slot. 
+##' @param scol The name of the prediction score column in the
+##' \code{featureData} slot. If missing, created by pasting
+##' '.scores' after \code{fcol}. 
+##' @param mcol The name of the column containing the training data in the
+##' \code{featureData} slot. Default is \code{markers}.
+##' @param t The quantile threshold. 
+##' @param verbose If \code{TRUE}, the calculated threholds are printed.
+##' @return A named \code{vector} of organelle thresholds. 
+##' @author Lisa Breckels
+##' @seealso \code{\link{getPredictions}} to get organelle predictions based
+##' on calculated thresholds.
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' res <- svmClassification(dunkley2006, fcol = "pd.markers",
+##'                          sigma = 0.1, cost = 0.5)
+##' ## 50% top predictions per class
+##' ts <- orgQuants(res, fcol = "svm", t = .5)
+##' getPredictions(res, fcol = "svm", t = ts)
+orgQuants <- function(object, fcol, scol, 
+                      mcol = "markers", 
+                      t, verbose = TRUE) {
+  stopifnot(!missing(fcol))
+  if (missing(scol)) 
+    scol <- paste0(fcol, ".scores")
+  object <- unknownMSnSet(object, mcol)
+  nt <- tapply(fData(object)[, scol], fData(object)[, fcol], quantile, t)
+  if (verbose) print(nt)
+  return(nt)
 }

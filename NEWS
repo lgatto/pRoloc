@@ -1,3 +1,9 @@
+CHANGES IN VERSION 1.11.1
+------------------------
+ o Bump for new Bioc <2015-10-13 Tue>
+ o New orgQuants function and update to getPredictions
+   <2015-10-13 Tue> 
+
 CHANGES IN VERSION 1.9.7
 ------------------------
  o New SpatProtVis visualisation class <2015-08-13 Thu>

@@ -143,7 +143,7 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' getPredictions(res, fcol = "svm", t = 0) ## all predictions
 ##' getPredictions(res, fcol = "svm", t = .9) ## single threshold 
 ##' ## 50% top predictions per class
-##' ts <- orgQuants(res, fcol = "svm")
+##' ts <- orgQuants(res, fcol = "svm", t = .5)
 ##' getPredictions(res, fcol = "svm", t = ts)
 getPredictions <- function(object,
                            fcol,

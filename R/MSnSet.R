@@ -120,6 +120,8 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' @param scol The name of the prediction score column in the
 ##' \code{featureData} slot. If missing, created by pasting
 ##' '.scores' after \code{fcol}. 
+##' @param mcol The feature meta data column containing the labelled training 
+##' data.
 ##' @param t The score threshold. Predictions with score < t are set
 ##' to 'unknown'. Default is 0. It is also possible to define
 ##' thresholds for each prediction class, in which case, \code{t} is a
@@ -148,9 +150,10 @@ testMarkers <- function(object, xval = 5, n = 2,
 getPredictions <- function(object,
                            fcol,
                            scol,
+                           mcol = "markers",
                            t = 0,
                            verbose = TRUE) {
-    stopifnot(!missing(fcol))
+  stopifnot(!missing(fcol))
     if (missing(scol))
         scol <- paste0(fcol, ".scores")
     ans <- predictions <-
@@ -162,16 +165,23 @@ getPredictions <- function(object,
             stop("Class-specific score names do not match the class namesa exactly:\n",
                  "   score names: ", paste(sort(names(t)), collapse = ", "), "\n",
                  "   class names: ", paste(sort(predclasses), collapse = ", "))
+        if (anyNA(t)) {
+          t[whichNA(t)] <- Inf
+        }
         tt <- as.vector(t[predictions])
         ans <- ifelse(fData(object)[, scol] < tt,
                       "unknown", predictions)
     } else {
+        if (isNA(t)) t <- Inf
         scrs <- fData(object)[, scol]
         ans[scrs < t] <- "unknown"
     }
-    t <- format(t, digits = 3)
+    train <- as.character(fData(object)[, mcol])
+    train.ind <- which(train != "unknown")
+    ans[train.ind] <- train[train.ind]
+    t <- format(t, digits = 2)
     if (length(t) > 1)
-      p <- paste("thresholds:", paste(paste(names(t), ts, sep = " = "), collapse = ", "))
+      p <- paste("thresholds:", paste(paste(names(t), t, sep = " = "), collapse = ", "))
     else
       p <- paste("global threshold =", t)
     l <- paste0(fcol, ".pred")
@@ -766,6 +776,7 @@ orgQuants <- function(object, fcol, scol,
     scol <- paste0(fcol, ".scores")
   object <- unknownMSnSet(object, mcol)
   nt <- tapply(fData(object)[, scol], fData(object)[, fcol], quantile, t)
-  if (verbose) print(nt)
-  return(nt)
+  if (verbose)
+    print(nt)
+  invisible(nt)
 }

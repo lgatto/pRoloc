@@ -18,36 +18,39 @@ test_that("subsetAsDataFrame preserves col/rownames", {
 
 
 test_that("getPredictions with different thresholds", {
-    library("pRolocdata")
-    data(tan2009r1)
-    ## using parameters as estimated in vignette
-    ## (although these are from markers, not pd.markers)
-    res <- svmClassification(dunkley2006, fcol = "pd.markers", sigma = 0.1, cost = 0.5)
-    classres <- as.character(fData(res)$svm)
-    allpreds <- getPredictions(res, fcol = "svm", t = 0, verbose = FALSE)
-    allpreds <- fData(allpreds)$svm.pred
-    expect_equal(classres, allpreds)
-    preds <- getPredictions(res, fcol = "svm", t = 1, verbose = FALSE)
-    preds <- fData(preds)$svm.pred
-    mrkrs <- getMarkers(res, "pd.markers", verbose = FALSE)
-    names(mrkrs) <- NULL
-    expect_equal(preds, mrkrs)
-    tserr <- ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median)
-    names(tserr)[1] <- "wrongnames"
-    expect_error(getPredictions(res, fcol = "svm", t = tserr, verbose = FALSE))
-    preds <- getPredictions(res, fcol = "svm", t = ts, verbose = FALSE)
-    preds <- fData(preds)$svm.pred
-    for (k in unique(classres)) {
-        ## all thresholded predictions must be > that class score
-        i <- preds == k
-        expect_true(all(fData(res)[i, "svm.scores"] >= ts[k]))
-        ## predicted but not in thresholded predictions must have
-        ## lower scores than class scores
-        j <- allpreds == k
-        expect_true(all(fData(res)[j & !i, "svm.scores"] < ts[k]))
-    }        
+  library("pRolocdata")
+  data(dunkley2006)
+  ## using parameters as estimated in vignette
+  ## (although these are from markers, not pd.markers)
+  res <- svmClassification(dunkley2006, fcol = "pd.markers", sigma = 0.1, cost = 0.5)
+  classres <- as.character(fData(res)$svm)
+  allpreds <- getPredictions(res, fcol = "svm", mcol = "pd.markers", 
+                             t = 0, verbose = FALSE)
+  allpreds <- fData(allpreds)$svm.pred
+  expect_equal(classres, allpreds)
+  preds <- getPredictions(res, fcol = "svm", mcol = "pd.markers",
+                          t = 1, verbose = FALSE)
+  preds <- fData(preds)$svm.pred
+  mrkrs <- getMarkers(res, "pd.markers", verbose = FALSE)
+  names(mrkrs) <- NULL
+  expect_equal(preds, mrkrs)
+  tserr <- ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median)
+  names(tserr)[1] <- "wrongnames"  
+  expect_error(getPredictions(res, fcol = "svm", mcol = "pd.markers",
+                              t = tserr, verbose = FALSE))
+  preds <- getPredictions(res, fcol = "svm", mcol = "pd.markers",
+                          t = ts, verbose = FALSE)
+  preds <- fData(preds)$svm.pred
+  for (k in unique(classres)) {
+    ## all thresholded predictions must be > that class score
+    i <- preds == k
+    expect_true(all(fData(res)[i, "svm.scores"] >= ts[k]))
+    ## predicted but not in thresholded predictions must have
+    ## lower scores than class scores
+    j <- allpreds == k
+    expect_true(all(fData(res)[j & !i, "svm.scores"] < ts[k]))
+  }
 })
-
 
 test_that("subsetAsDataFrame keeping colnames", {
     library("pRolocdata")

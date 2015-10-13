@@ -174,7 +174,7 @@ getPredictions <- function(object,
       p <- paste("thresholds:", paste(paste(names(t), ts, sep = " = "), collapse = ", "))
     else
       p <- paste("global threshold =", t)
-    l <- paste0(fcol, ".preds")
+    l <- paste0(fcol, ".pred")
     fData(object)[, l] <- ans
     if (verbose) {
         print(table(ans))

@@ -27,7 +27,8 @@ predictions are returned invisibly. If \code{FALSE}, the predictions
 are returned.}
 }
 \value{
-A \code{character} of length \code{ncol(object)}.
+An instance of class "\linkS4class{MSnSet}" with \code{fcol.pred} feature
+variable storing the prediction results according to the chosen threshold.
 }
 \description{
 Convenience accessor to the predicted feature localisation in an 'MSnSet'.
@@ -44,18 +45,14 @@ fData(res)$svm.scores[500:510]
 getPredictions(res, fcol = "svm", t = 0) ## all predictions
 getPredictions(res, fcol = "svm", t = .9) ## single threshold
 ## 50\% top predictions per class
-(ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median))
-getPredictions(res, fcol = "svm", t = ts)
-## 50\% top predictions per class, ignoring marker scores
-ts <- tapply(fData(res)$svm.scores, fData(res)$svm,
-             function(x) {
-                 scr <- median(x[x != 1])
-                 ifelse(is.na(scr), 1, scr)
-             })
-ts
+ts <- orgQuants(res, fcol = "svm")
 getPredictions(res, fcol = "svm", t = ts)
 }
 \author{
-Laurent Gatto
+Laurent Gatto and Lisa Breckels
+}
+\seealso{
+\code{link{orgQuants}} for calculating organelle-specific
+thresholds.
 }
 

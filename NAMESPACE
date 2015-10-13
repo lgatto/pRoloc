@@ -99,6 +99,7 @@ export(## MSnSet manipulation
     plotDist,
     highlightOnPlot,
     SpatProtVis,
+    orgQuants,
     ## -- data checks
     checkFvarOverlap,
     checkFeatureNamesOverlap,

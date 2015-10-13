@@ -25,8 +25,10 @@ test_that("getPredictions with different thresholds", {
     res <- svmClassification(dunkley2006, fcol = "pd.markers", sigma = 0.1, cost = 0.5)
     classres <- as.character(fData(res)$svm)
     allpreds <- getPredictions(res, fcol = "svm", t = 0, verbose = FALSE)
+    allpreds <- fData(allpreds)$svm.pred
     expect_equal(classres, allpreds)
     preds <- getPredictions(res, fcol = "svm", t = 1, verbose = FALSE)
+    preds <- fData(preds)$svm.pred
     mrkrs <- getMarkers(res, "pd.markers", verbose = FALSE)
     names(mrkrs) <- NULL
     expect_equal(preds, mrkrs)
@@ -34,6 +36,7 @@ test_that("getPredictions with different thresholds", {
     names(tserr)[1] <- "wrongnames"
     expect_error(getPredictions(res, fcol = "svm", t = tserr, verbose = FALSE))
     preds <- getPredictions(res, fcol = "svm", t = ts, verbose = FALSE)
+    preds <- fData(preds)$svm.pred
     for (k in unique(classres)) {
         ## all thresholded predictions must be > that class score
         i <- preds == k

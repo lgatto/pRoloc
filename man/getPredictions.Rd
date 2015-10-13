@@ -4,7 +4,8 @@
 \alias{getPredictions}
 \title{Returns the predictions in an 'MSnSet'}
 \usage{
-getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
+getPredictions(object, fcol, scol, mcol = "markers", t = 0,
+  verbose = TRUE)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -15,6 +16,9 @@ getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
 \item{scol}{The name of the prediction score column in the
 \code{featureData} slot. If missing, created by pasting
 '.scores' after \code{fcol}.}
+
+\item{mcol}{The feature meta data column containing the labelled training
+data.}
 
 \item{t}{The score threshold. Predictions with score < t are set
 to 'unknown'. Default is 0. It is also possible to define
@@ -45,7 +49,7 @@ fData(res)$svm.scores[500:510]
 getPredictions(res, fcol = "svm", t = 0) ## all predictions
 getPredictions(res, fcol = "svm", t = .9) ## single threshold
 ## 50\% top predictions per class
-ts <- orgQuants(res, fcol = "svm")
+ts <- orgQuants(res, fcol = "svm", t = .5)
 getPredictions(res, fcol = "svm", t = ts)
 }
 \author{

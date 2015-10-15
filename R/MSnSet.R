@@ -159,20 +159,23 @@ getPredictions <- function(object,
     ans <- predictions <-
         as.character(fData(object)[, fcol])
     predclasses <- unique(predictions)
-
+    ## Note: If any of the thresholds are NA we set them to Infinity so  
+    ## no new assignments can be made. Usually, a threshold is calculated
+    ## from the distribution of class scores of the unlabelled data.
+    ## However, if there are no new assignments for a particular 
+    ## class, there are no scores on which to calculate the threshold 
+    ## and this can result in NA values.
+    t[whichNA(t)] <- Inf
+    warning('t contains NA, setting t to Inf')
     if (length(t) > 1) {
         if (!all(sort(names(t)) == sort(predclasses)))
             stop("Class-specific score names do not match the class namesa exactly:\n",
                  "   score names: ", paste(sort(names(t)), collapse = ", "), "\n",
                  "   class names: ", paste(sort(predclasses), collapse = ", "))
-        if (anyNA(t)) {
-          t[whichNA(t)] <- Inf
-        }
         tt <- as.vector(t[predictions])
         ans <- ifelse(fData(object)[, scol] < tt,
                       "unknown", predictions)
     } else {
-        if (isNA(t)) t <- Inf
         scrs <- fData(object)[, scol]
         ans[scrs < t] <- "unknown"
     }

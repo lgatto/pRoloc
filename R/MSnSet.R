@@ -165,8 +165,10 @@ getPredictions <- function(object,
     ## However, if there are no new assignments for a particular 
     ## class, there are no scores on which to calculate the threshold 
     ## and this can result in NA values.
-    t[whichNA(t)] <- Inf
-    warning('t contains NA, setting t to Inf')
+    if (anyNA(t)) {
+      t[whichNA(t)] <- Inf
+      warning('t contains NA, setting t to Inf')
+    }
     if (length(t) > 1) {
         if (!all(sort(names(t)) == sort(predclasses)))
             stop("Class-specific score names do not match the class namesa exactly:\n",

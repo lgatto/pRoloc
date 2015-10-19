@@ -601,3 +601,36 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
         points(.pca[sel, 1], .pca[sel, 2], ...)
     }
 }
+
+##' The \code{pRolocVisMethod} function lists the visualisation 
+##' methods available in \code{pRoloc} package. These can be 
+##' passed to \code{plot2D} and other visualisation functions
+##' in the \code{pRolocGUI} package
+##'
+##' @title Available visualisation methods in \code{pRoloc}
+##' @return A \code{character} of available visualisation methods
+##' in \code{pRoloc}.
+##' @author Lisa Breckels
+##' @examples
+##' pRolocVisMethod()
+pRolocVisMethod <- function() {
+  c("PCA", "MDS", "kpca", "t-SNE")
+}
+
+##' Tests whether the \code{object} is visualisation method available
+##' in \code{pRoloc}. 
+##'
+##' @title Test the validity of the chosen visualisation method
+##' @return Returns \code{TRUE} if the visualisation method is valid,
+##' otherwise \code{FALSE}.
+##' @author Lisa Breckels
+##' @seealso \code{pRolocVisMethod}
+##' @examples
+##' m <- "PCA"
+##' .validpRolocVisMethod(m)
+.validpRolocVisMethod <- function(object) {
+  if (class(object) != "matrix")
+    object %in% pRolocVisMethod()
+  else 
+    return(TRUE)
+}

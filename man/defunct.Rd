@@ -14,7 +14,7 @@
   
   Defunct: 
 
-  Depreciated functions are provided for compatibility with older versions of the
+  Deprecated functions are provided for compatibility with older versions of the
   \code{pRoloc} package only, and will be defunct at the next release.
 }
 

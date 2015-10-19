@@ -125,6 +125,8 @@ plotDist <- function(object,
                 k = k, kk = kk, jj = jj))
 }
 
+## Available pRoloc visualisation methods
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "t-SNE")
 
 ## Available plot2D methods
 plot2Dmethods <- c(pRolocVisMethods, "scree")
@@ -602,21 +604,9 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     }
 }
 
-## Available pRoloc visualisation methods
-pRolocVisMethods <- c("PCA", "MDS", "kpca", "t-SNE")
 
-
-##' Tests whether the \code{object} is visualisation method available
-##' in \code{pRoloc}. 
-##'
-##' @title Test the validity of the chosen visualisation method
-##' @return Returns \code{TRUE} if the visualisation method is valid,
-##' otherwise \code{FALSE}.
-##' @author Lisa Breckels
-##' @seealso \code{pRolocVisMethod}
-##' @examples
-##' m <- "PCA"
-##' .validpRolocVisMethod(m)
+## Tests whether the object is visualisation method available
+## in pRoloc 
 .validpRolocVisMethod <- function(object) {
   if (class(object) == "matrix" && ncol(object) == 2)
     return(TRUE)

@@ -200,38 +200,12 @@ getPredictions <- function(object,
     return(object)
 }
 
-##' This functions updates the classification results in an \code{"\linkS4class{MSnSet}"}
-##' based on a prediction score threshold \code{t}. All features with a score < t are set
-##' to 'unknown'. Note that the original levels are preserved while 'unknown' is added.
-##'
-##' @title Updates classes based on prediction scores
-##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
-##' @param fcol The name of the markers column in the \code{featureData} slot. 
-##' @param scol The name of the prediction score column in the
-##' \code{featureData} slot. If missing, created by pasting
-##' '.scores' after \code{fcol}.
-##' @param t The score threshold. Predictions with score < t are
-##' set to 'unknown'. Default is 0.
-##' @return The original \code{object} with a modified \code{fData(object)[, fcol]}
-##' feature variable.
-##' @author Laurent Gatto
-##' @seealso \code{link{minMarkers}} to filter based on the number of
-##' markers par class.
-##' @examples
-##' library(pRolocdata)
-##' data(dunkley2006)
-##' ## random scores
-##' fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
-##' getPredictions(dunkley2006, fcol = "assigned")
-##' getPredictions(dunkley2006, fcol = "assigned", t = 0.5) 
-##' x <- minClassScore(dunkley2006, fcol = "assigned", t = 0.5)
-##' getPredictions(x, fcol = "assigned")
-##' all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
-##'           getPredictions(x, fcol = "assigned"))
+
 minClassScore <- function(object,
                           fcol,
                           scol,
                           t = 0) {
+    .Deprecated("getPredictions")
     stopifnot(!missing(fcol))
     lv <- c(levels(fData(object)[, fcol]),
             "unknown")
@@ -260,7 +234,7 @@ minClassScore <- function(object,
 ##' feature variables, named after the original \code{fcol} variable and
 ##' the \code{n} value. 
 ##' @author Laurent Gatto
-##' @seealso \code{\link{minClassScore}} to filter based on
+##' @seealso \code{\link{getPredictions}} to filter based on
 ##' classification scores.
 ##' @examples
 ##' library(pRolocdata)

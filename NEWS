@@ -1,8 +1,16 @@
 CHANGES IN VERSION 1.11.1
 ------------------------
- o Bump for new Bioc <2015-10-13 Tue>
  o New orgQuants function and update to getPredictions
    <2015-10-13 Tue> 
+ o Deprecate minClassScore replaced by getPredictions
+   <2015-10-19 Mon>
+ o Add pRolocVisMethods and check for new apps in 
+   pRolocGUI <2015-10-19 Mon>
+ o Deprecated minClassScore <2015-10-19 Mon>
+
+CHANGES IN VERSION 1.11.0
+-------------------------
+ o Bioc devel version 3.3
 
 CHANGES IN VERSION 1.9.7
 ------------------------

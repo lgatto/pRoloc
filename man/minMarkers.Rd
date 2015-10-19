@@ -35,7 +35,7 @@ getMarkers(d2, fcol = "markers20")
 Laurent Gatto
 }
 \seealso{
-\code{\link{minClassScore}} to filter based on
+\code{\link{getPredictions}} to filter based on
 classification scores.
 }
 

@@ -68,3 +68,25 @@ test_that("subsetAsDataFrame keeping colnames", {
     expect_equal(cn0[n], fcol)
     expect_equal(cn1[n], "markers")
 })
+
+test_that("fDataToUnknown function", {
+    library("pRolocdata")
+    data(dunkley2006)
+    x <- getMarkers(dunkley2006, "markers", verbose = FALSE)
+    ## replacing unknown by unassigned
+    xx <- fDataToUnknown(dunkley2006,
+                         from = "unknown", to = "unassigned")
+    y <- getMarkers(xx, "markers", verbose = FALSE)
+    expect_identical(x == "unknown", y == "unassigned")
+    expect_identical(x != "unknown", y != "unassigned")
+    ## defaults, should not affect the data
+    xx <- fDataToUnknown(dunkley2006)
+    y <- getMarkers(xx, "markers", verbose = FALSE)
+    expect_identical(x, y)
+    ## a non-existing pattern, should not affect the data
+    xx <- fDataToUnknown(dunkley2006,
+                         from = "qqqqqqqqqqqqqq",
+                         to = "unassigned")
+    y <- getMarkers(xx, "markers", verbose = FALSE)
+    expect_identical(x, y)
+})

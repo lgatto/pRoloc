@@ -103,3 +103,36 @@ checkFvarOverlap <- function(x, y, fcolx = "markers", fcoly,
                    lower.mismatches = tab[lower.tri(tab)],
                    upper.mismatches = tab[lower.tri(tab)]))
 }
+
+
+##' This function replaces a string or regular expression in a feature
+##' variable using the \code{\link{sub}} function.
+##'
+##' @title Update a feature variable
+##' @param object An instance of class \code{MSnSet}.
+##' @param fcol Feature variable to be modified. Default is \code{"markers"}.
+##' @param from A \code{character} defining the string or regular expression
+##' of the pattern to be replaced. Default is the empty string,
+##' i.e. the regular expression \code{"^$"}.
+##' See \code{\link{sub}} for details.
+##' @param to A replacement for matched pattern. Default is \code{"unknown"}.
+##' See \code{\link{sub}} for details.
+##' @param ... Additional arguments, other than \code{fixed}, passed to
+##' \code{\link{sub}}.
+##' @return An updated \code{MSnSet}.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' getMarkers(dunkley2006, "markers")
+##' dunkley2006 <- fDataToUnknown(dunkley2006,
+##'                               from = "unknown", to = "unassigned")
+##' getMarkers(dunkley2006, "markers")
+fDataToUnknown <- function(object, fcol = "markers",
+                           from = "^$", to = "unknown",
+                           ...) {
+    fData(object)[, fcol] <-
+        sub(from, to, fData(object)[, fcol], ...)
+    if (validObject(object))
+        return(object)
+}

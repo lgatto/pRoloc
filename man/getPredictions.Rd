@@ -4,7 +4,8 @@
 \alias{getPredictions}
 \title{Returns the predictions in an 'MSnSet'}
 \usage{
-getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
+getPredictions(object, fcol, scol, mcol = "markers", t = 0,
+  verbose = TRUE)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -15,6 +16,9 @@ getPredictions(object, fcol, scol, t = 0, verbose = TRUE)
 \item{scol}{The name of the prediction score column in the
 \code{featureData} slot. If missing, created by pasting
 '.scores' after \code{fcol}.}
+
+\item{mcol}{The feature meta data column containing the labelled training
+data.}
 
 \item{t}{The score threshold. Predictions with score < t are set
 to 'unknown'. Default is 0. It is also possible to define
@@ -27,7 +31,8 @@ predictions are returned invisibly. If \code{FALSE}, the predictions
 are returned.}
 }
 \value{
-A \code{character} of length \code{ncol(object)}.
+An instance of class "\linkS4class{MSnSet}" with \code{fcol.pred} feature
+variable storing the prediction results according to the chosen threshold.
 }
 \description{
 Convenience accessor to the predicted feature localisation in an 'MSnSet'.
@@ -44,18 +49,14 @@ fData(res)$svm.scores[500:510]
 getPredictions(res, fcol = "svm", t = 0) ## all predictions
 getPredictions(res, fcol = "svm", t = .9) ## single threshold
 ## 50\% top predictions per class
-(ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median))
-getPredictions(res, fcol = "svm", t = ts)
-## 50\% top predictions per class, ignoring marker scores
-ts <- tapply(fData(res)$svm.scores, fData(res)$svm,
-             function(x) {
-                 scr <- median(x[x != 1])
-                 ifelse(is.na(scr), 1, scr)
-             })
-ts
+ts <- orgQuants(res, fcol = "svm", t = .5)
 getPredictions(res, fcol = "svm", t = ts)
 }
 \author{
-Laurent Gatto
+Laurent Gatto and Lisa Breckels
+}
+\seealso{
+\code{link{orgQuants}} for calculating organelle-specific
+thresholds.
 }
 

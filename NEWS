@@ -1,11 +1,22 @@
+CHANGES IN VERSION 1.11.1
+------------------------
+ o New orgQuants function and update to getPredictions
+   <2015-10-13 Tue> 
+ o Deprecate minClassScore replaced by getPredictions
+   <2015-10-19 Mon>
+ o Add pRolocVisMethods and check for new apps in 
+   pRolocGUI <2015-10-19 Mon>
+ o Deprecated minClassScore <2015-10-19 Mon>
+ o new fDataToUnknown function <2015-10-23 Fri>
+ 
 CHANGES IN VERSION 1.11.0
 -------------------------
  o Bioc devel version 3.3
  
 CHANGES IN VERSION 1.10.0
 -------------------------
- o Bioc release version 3.2 
-
+ o Bioc release version 3.2
+ 
 CHANGES IN VERSION 1.9.7
 ------------------------
  o New SpatProtVis visualisation class <2015-08-13 Thu>

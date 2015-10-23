@@ -125,9 +125,11 @@ plotDist <- function(object,
                 k = k, kk = kk, jj = jj))
 }
 
+## Available pRoloc visualisation methods
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "t-SNE")
 
 ## Available plot2D methods
-plot2Dmethods <- c("PCA", "MDS", "kpca", "t-SNE", "scree")
+plot2Dmethods <- c(pRolocVisMethods, "scree")
 
 ##' Plot organelle assignment data and results.
 ##' 
@@ -600,4 +602,17 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     } else {
         points(.pca[sel, 1], .pca[sel, 2], ...)
     }
+}
+
+
+## Tests whether the object is visualisation method available
+## in pRoloc 
+.validpRolocVisMethod <- function(object) {
+  if (class(object) == "matrix" && ncol(object) == 2)
+    return(TRUE)
+  else
+    if (object %in% pRolocVisMethods)
+      return(TRUE)
+    else
+      return(FALSE)
 }

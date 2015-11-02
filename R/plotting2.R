@@ -20,7 +20,7 @@
 ##' data set.
 ##'
 ##' @title Draw 2 data sets on one PCA plot
-##' @param object An \code{linkS4class{MSnSet}} or a
+##' @param object An \code{\linkS4class{MSnSet}} or a
 ##' \code{MSnSetList}. In the latter case, only the two first elements
 ##' of the list will be used for plotting and the others will be
 ##' silently ignored.

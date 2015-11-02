@@ -110,15 +110,16 @@ checkFvarOverlap <- function(x, y, fcolx = "markers", fcoly,
 ##'
 ##' @title Update a feature variable
 ##' @param object An instance of class \code{MSnSet}.
-##' @param fcol Feature variable to be modified. Default is \code{"markers"}.
-##' @param from A \code{character} defining the string or regular expression
-##' of the pattern to be replaced. Default is the empty string,
-##' i.e. the regular expression \code{"^$"}.
-##' See \code{\link{sub}} for details.
-##' @param to A replacement for matched pattern. Default is \code{"unknown"}.
-##' See \code{\link{sub}} for details.
-##' @param ... Additional arguments, other than \code{fixed}, passed to
-##' \code{\link{sub}}.
+##' @param fcol Feature variable to be modified. Default is
+##'     \code{"markers"}. If \code{NULL}, all feature variables will
+##'     updated.
+##' @param from A \code{character} defining the string or regular
+##'     expression of the pattern to be replaced. Default is the empty
+##'     string, i.e. the regular expression \code{"^$"}.  See
+##'     \code{\link{sub}} for details.
+##' @param to A replacement for matched pattern. Default is
+##'     \code{"unknown"}.  See \code{\link{sub}} for details.
+##' @param ... Additional arguments passed to \code{\link{sub}}.
 ##' @return An updated \code{MSnSet}.
 ##' @author Laurent Gatto
 ##' @examples
@@ -131,8 +132,12 @@ checkFvarOverlap <- function(x, y, fcolx = "markers", fcoly,
 fDataToUnknown <- function(object, fcol = "markers",
                            from = "^$", to = "unknown",
                            ...) {
-    fData(object)[, fcol] <-
-        sub(from, to, fData(object)[, fcol], ...)
+    if (is.null(fcol))
+        fcol <- fvarLabels(object)
+    for (.fcol in fcol)
+        fData(object)[, .fcol] <-
+            sub(from, to, fData(object)[, .fcol], ...)
     if (validObject(object))
         return(object)
 }
+

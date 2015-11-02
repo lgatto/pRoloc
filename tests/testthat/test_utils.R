@@ -90,3 +90,16 @@ test_that("fDataToUnknown function", {
     y <- getMarkers(xx, "markers", verbose = FALSE)
     expect_identical(x, y)
 })
+
+
+test_that("fDataToUnknown function, 2nd test", {
+    library("pRolocdata")
+    data(dunkley2006)
+    fData(dunkley2006) <-
+        fData(dunkley2006)[, c("assigned", "markers.orig", "markers")]
+    res1 <- fDataToUnknown(dunkley2006, from = "ER", to = "TEST", fcol = "assigned")
+    res1 <- fDataToUnknown(res1, from = "ER", to = "TEST", fcol = "markers.orig")
+    res1 <- fDataToUnknown(res1, from = "ER", to = "TEST", fcol = "markers")
+    res2 <- fDataToUnknown(dunkley2006, from = "ER", to = "TEST", fcol = NULL)
+    expect_identical(res1, res2)
+})

@@ -1,10 +1,9 @@
 .makeCol3 <- function(x, y, fcol) {
-    col0 <- getStockcol()
-    ## not sure why I initially enforced to use default stock
-    ## colours. Commenting next line for now to support actual stock
-    ## colours.
-    ## setStockcol(NULL)
-    col <- col0 <- paste0(getStockcol(), 90)
+    col <- col0 <- getStockcol()
+    ## if all colours are RGB without alpha channel
+    ## if (all(sapply(strsplit(col, ""), "[", 1) == "#") &
+    ##     all(nchar(col) == 7))
+    ##     col <- paste0(col0, 90)
     .fcol1 <- factor(fData(x)[, fcol])
     .fcol2 <- factor(fData(y)[, fcol])
     col1 <- col[as.numeric(.fcol1)]
@@ -13,7 +12,8 @@
         paste0(getUnknowncol(), 30)
     col2[.fcol2 == "unknown"] <-
         paste0(getUnknowncol(), 30)
-    return(list(col0, col1, col2))
+    setStockcol(col0) ## set original stock colours
+    return(list(col, col1, col2))
 }
 
 

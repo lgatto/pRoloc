@@ -13,7 +13,7 @@ remap <- function(object, ref = 1) {
     for (i in seq_along(x))
         exprs(object@x[[i]]) <- preds[[i]]    
     exprs(object@x[[ref]]) <- pca1$x
-    object@log[["PCAremap"]] <- list(prcomp = pca1, ref = ref)
+    object@log[["remap"]] <- list(type = "PCA", prcomp = pca1, ref = ref)
     if (validObject(object))
         return(object)
 }

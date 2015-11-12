@@ -56,7 +56,7 @@ getPredictions(res, fcol = "svm", t = ts)
 Laurent Gatto and Lisa Breckels
 }
 \seealso{
-\code{link{orgQuants}} for calculating organelle-specific
+\code{\link{orgQuants}} for calculating organelle-specific
 thresholds.
 }
 

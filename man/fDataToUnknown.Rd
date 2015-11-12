@@ -9,18 +9,19 @@ fDataToUnknown(object, fcol = "markers", from = "^$", to = "unknown", ...)
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
 
-\item{fcol}{Feature variable to be modified. Default is \code{"markers"}.}
+\item{fcol}{Feature variable to be modified. Default is
+\code{"markers"}. If \code{NULL}, all feature variables will
+updated.}
 
-\item{from}{A \code{character} defining the string or regular expression
-of the pattern to be replaced. Default is the empty string,
-i.e. the regular expression \code{"^$"}.
-See \code{\link{sub}} for details.}
+\item{from}{A \code{character} defining the string or regular
+expression of the pattern to be replaced. Default is the empty
+string, i.e. the regular expression \code{"^$"}.  See
+\code{\link{sub}} for details.}
 
-\item{to}{A replacement for matched pattern. Default is \code{"unknown"}.
-See \code{\link{sub}} for details.}
+\item{to}{A replacement for matched pattern. Default is
+\code{"unknown"}.  See \code{\link{sub}} for details.}
 
-\item{...}{Additional arguments, other than \code{fixed}, passed to
-\code{\link{sub}}.}
+\item{...}{Additional arguments passed to \code{\link{sub}}.}
 }
 \value{
 An updated \code{MSnSet}.

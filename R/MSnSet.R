@@ -133,7 +133,7 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' @return An instance of class "\linkS4class{MSnSet}" with \code{fcol.pred} feature
 ##' variable storing the prediction results according to the chosen threshold.
 ##' @author Laurent Gatto and Lisa Breckels
-##' @seealso \code{link{orgQuants}} for calculating organelle-specific
+##' @seealso \code{\link{orgQuants}} for calculating organelle-specific
 ##' thresholds.
 ##' @examples
 ##' library("pRolocdata")

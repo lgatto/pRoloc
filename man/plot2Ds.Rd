@@ -58,7 +58,7 @@ should be mirrored?}
 \value{
 Used for its side effects of producing a plot. Invisibly
 returns an object of class \code{plot2Ds}, which is a list with
-the PCA analsys results (see \code{\link{prcomp}}) of the first
+the PCA analyses results (see \code{\link{prcomp}}) of the first
 data set and the new coordinates of the second data sets, as used
 to produce the plot and the respective point colours. Each of
 these elements can be accessed with \code{data1}, \code{data2},

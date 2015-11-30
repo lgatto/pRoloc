@@ -117,7 +117,7 @@ dunkley2006params
 
 try(setAnnotationParams(inputs = c("nomatch1", "nomatch2")))
 setAnnotationParams(inputs = c("Homo sapiens",
-                        "UniProt/Swissprot ID"))
+                        "UniProt/Swissprot Accession"))
 getAnnotationParams()
 }
 

@@ -90,6 +90,7 @@ export(## MSnSet manipulation
     setUnknowncol, setUnknownpch,
     filterBinMSnSet,
     filterZeroCols, filterZeroRows,
+    fDataToUnknown,
     ## -- plotting
     plot2D,
     plot2Dmethods,

@@ -912,8 +912,10 @@ classifications are set to \texttt{"unknown"}.
 
 <<getPredictions>>=
 p1 <- getPredictions(svmres, fcol = "svm")
+p1 <- fData(p1)$svm.pred
 minprob <- median(fData(svmres)$svm.scores)
 p2 <- getPredictions(svmres, fcol = "svm", t = minprob)
+p2 <- fData(p2)$svm.pred
 table(p1, p2)
 @ %%$
 
@@ -940,33 +942,15 @@ above) results in accepting
 score thresholds. Below, we calculate organelle-specific median
 scores.
 
-<<medscores1, tidy = FALSE>>=
-## including marker scores
-(ts1 <- tapply(fData(svmres)$svm.scores, fData(svmres)$svm, median))
-@
-
-
-Above, we include markers proteins (that have scores of 1 by default)
-when calculating the respective organelle-specific
-scores. Alternatively, once might choose to ignoring them.
-
 <<medscores2, tidy = FALSE>>=
-## ignoring markers scores (i.e. scores == 1)
-(ts2 <- tapply(fData(svmres)$svm.scores, fData(svmres)$svm,
-               function(x) {
-                   ## assuming scores of 1 are markers
-                   scr <- median(x[x != 1])
-                   ## in case no proteins were assigned to an organelle, 
-                   ## scr would be NA. Setting these cases to 1.
-                   ifelse(is.na(scr), 1, scr)
-               }))
+ts <- orgQuants(svmres, fcol = "svm", t = .5) 
 @
 
 Using these scores equates to choosing the 50\% predictions with
 highest scores for organelle.
 
 <<medscorepreds, tidy = FALSE>>=
-getPredictions(svmres, fcol = "svm", t = ts2)
+getPredictions(svmres, fcol = "svm", t = ts)
 @
 
 \bigskip

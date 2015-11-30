@@ -120,6 +120,8 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' @param scol The name of the prediction score column in the
 ##' \code{featureData} slot. If missing, created by pasting
 ##' '.scores' after \code{fcol}. 
+##' @param mcol The feature meta data column containing the labelled training 
+##' data.
 ##' @param t The score threshold. Predictions with score < t are set
 ##' to 'unknown'. Default is 0. It is also possible to define
 ##' thresholds for each prediction class, in which case, \code{t} is a
@@ -128,8 +130,11 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' @param verbose If \code{TRUE}, a prediction table is printed and the
 ##' predictions are returned invisibly. If \code{FALSE}, the predictions
 ##' are returned.
-##' @return A \code{character} of length \code{ncol(object)}. 
-##' @author Laurent Gatto
+##' @return An instance of class "\linkS4class{MSnSet}" with \code{fcol.pred} feature
+##' variable storing the prediction results according to the chosen threshold.
+##' @author Laurent Gatto and Lisa Breckels
+##' @seealso \code{link{orgQuants}} for calculating organelle-specific
+##' thresholds.
 ##' @examples
 ##' library("pRolocdata")
 ##' data(dunkley2006)
@@ -140,28 +145,30 @@ testMarkers <- function(object, xval = 5, n = 2,
 ##' getPredictions(res, fcol = "svm", t = 0) ## all predictions
 ##' getPredictions(res, fcol = "svm", t = .9) ## single threshold 
 ##' ## 50% top predictions per class
-##' (ts <- tapply(fData(res)$svm.scores, fData(res)$svm, median))
-##' getPredictions(res, fcol = "svm", t = ts)
-##' ## 50% top predictions per class, ignoring marker scores
-##' ts <- tapply(fData(res)$svm.scores, fData(res)$svm,
-##'              function(x) {
-##'                  scr <- median(x[x != 1])
-##'                  ifelse(is.na(scr), 1, scr)
-##'              })
-##' ts
+##' ts <- orgQuants(res, fcol = "svm", t = .5)
 ##' getPredictions(res, fcol = "svm", t = ts)
 getPredictions <- function(object,
                            fcol,
                            scol,
+                           mcol = "markers",
                            t = 0,
                            verbose = TRUE) {
-    stopifnot(!missing(fcol))
+  stopifnot(!missing(fcol))
     if (missing(scol))
         scol <- paste0(fcol, ".scores")
     ans <- predictions <-
         as.character(fData(object)[, fcol])
     predclasses <- unique(predictions)
-
+    ## Note: If any of the thresholds are NA we set them to Infinity so  
+    ## no new assignments can be made. Usually, a threshold is calculated
+    ## from the distribution of class scores of the unlabelled data.
+    ## However, if there are no new assignments for a particular 
+    ## class, there are no scores on which to calculate the threshold 
+    ## and this can result in NA values.
+    if (anyNA(t)) {
+      t[whichNA(t)] <- Inf
+      warning('t contains NA, setting t to Inf')
+    }
     if (length(t) > 1) {
         if (!all(sort(names(t)) == sort(predclasses)))
             stop("Class-specific score names do not match the class namesa exactly:\n",
@@ -174,46 +181,31 @@ getPredictions <- function(object,
         scrs <- fData(object)[, scol]
         ans[scrs < t] <- "unknown"
     }
+    train <- as.character(fData(object)[, mcol])
+    train.ind <- which(train != "unknown")
+    ans[train.ind] <- train[train.ind]
+    t <- format(t, digits = 2)
+    if (length(t) > 1)
+      p <- paste("thresholds:", paste(paste(names(t), t, sep = " = "), collapse = ", "))
+    else
+      p <- paste("global threshold =", t)
+    l <- paste0(fcol, ".pred")
+    fData(object)[, l] <- ans
     if (verbose) {
         print(table(ans))
         invisible(ans)
-    } else {
-        return(ans)
     }
+    object@processingData@processing <- c(processingData(object)@processing, 
+                                        paste("Added", fcol, "predictions according to", p, date()))
+    return(object)
 }
 
-##' This functions updates the classification results in an \code{"\linkS4class{MSnSet}"}
-##' based on a prediction score threshold \code{t}. All features with a score < t are set
-##' to 'unknown'. Note that the original levels are preserved while 'unknown' is added.
-##'
-##' @title Updates classes based on prediction scores
-##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
-##' @param fcol The name of the markers column in the \code{featureData} slot. 
-##' @param scol The name of the prediction score column in the
-##' \code{featureData} slot. If missing, created by pasting
-##' '.scores' after \code{fcol}.
-##' @param t The score threshold. Predictions with score < t are
-##' set to 'unknown'. Default is 0.
-##' @return The original \code{object} with a modified \code{fData(object)[, fcol]}
-##' feature variable.
-##' @author Laurent Gatto
-##' @seealso \code{link{minMarkers}} to filter based on the number of
-##' markers par class.
-##' @examples
-##' library(pRolocdata)
-##' data(dunkley2006)
-##' ## random scores
-##' fData(dunkley2006)$assigned.scores <- runif(nrow(dunkley2006))
-##' getPredictions(dunkley2006, fcol = "assigned")
-##' getPredictions(dunkley2006, fcol = "assigned", t = 0.5) 
-##' x <- minClassScore(dunkley2006, fcol = "assigned", t = 0.5)
-##' getPredictions(x, fcol = "assigned")
-##' all.equal(getPredictions(dunkley2006, fcol = "assigned", t = 0.5),
-##'           getPredictions(x, fcol = "assigned"))
+
 minClassScore <- function(object,
                           fcol,
                           scol,
                           t = 0) {
+    .Deprecated("getPredictions")
     stopifnot(!missing(fcol))
     lv <- c(levels(fData(object)[, fcol]),
             "unknown")
@@ -242,7 +234,7 @@ minClassScore <- function(object,
 ##' feature variables, named after the original \code{fcol} variable and
 ##' the \code{n} value. 
 ##' @author Laurent Gatto
-##' @seealso \code{\link{minClassScore}} to filter based on
+##' @seealso \code{\link{getPredictions}} to filter based on
 ##' classification scores.
 ##' @examples
 ##' library(pRolocdata)
@@ -727,4 +719,43 @@ filterZeroRows <- function(object,
     }
     if (validObject(object))
         return(object)
+}
+
+##' This function produces organelle-specific quantiles corresponding to 
+##' the given classification scores. 
+##' 
+##' @title Returns organelle-specific quantile scores
+##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param fcol The name of the prediction column in the
+##' \code{featureData} slot. 
+##' @param scol The name of the prediction score column in the
+##' \code{featureData} slot. If missing, created by pasting
+##' '.scores' after \code{fcol}. 
+##' @param mcol The name of the column containing the training data in the
+##' \code{featureData} slot. Default is \code{markers}.
+##' @param t The quantile threshold. 
+##' @param verbose If \code{TRUE}, the calculated threholds are printed.
+##' @return A named \code{vector} of organelle thresholds. 
+##' @author Lisa Breckels
+##' @seealso \code{\link{getPredictions}} to get organelle predictions based
+##' on calculated thresholds.
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' res <- svmClassification(dunkley2006, fcol = "pd.markers",
+##'                          sigma = 0.1, cost = 0.5)
+##' ## 50% top predictions per class
+##' ts <- orgQuants(res, fcol = "svm", t = .5)
+##' getPredictions(res, fcol = "svm", t = ts)
+orgQuants <- function(object, fcol, scol, 
+                      mcol = "markers", 
+                      t, verbose = TRUE) {
+  stopifnot(!missing(fcol))
+  if (missing(scol)) 
+    scol <- paste0(fcol, ".scores")
+  object <- unknownMSnSet(object, mcol)
+  nt <- tapply(fData(object)[, scol], fData(object)[, fcol], quantile, t)
+  if (verbose)
+    print(nt)
+  invisible(nt)
 }

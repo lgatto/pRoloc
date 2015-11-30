@@ -305,7 +305,7 @@ ecol <- paste("area", 114:117, sep = ".")
 fname <- "Protein.ID"
 eset <- readMSnSet2(f0, ecol, fname)
 eset
-@ 
+@
 
 The \texttt{ecol} columns can also be queried interactively from \R{}
 using the \Rfunction{getEcols} and \Rfunction{grepEcols} function. The

@@ -68,5 +68,4 @@ Collate: AllGenerics.R
 	 go.R
 	 makeGoSet.R
 	 vis.R
-	 dynamics.R
 	 zzz.R

@@ -8,6 +8,7 @@ CHANGES IN VERSION 1.11.1
    pRolocGUI <2015-10-19 Mon>
  o Deprecated minClassScore <2015-10-19 Mon>
  o new fDataToUnknown function <2015-10-23 Fri>
+ o New section in vignette describing readMSnSet2 <2015-11-30 Mon>
  
 CHANGES IN VERSION 1.11.0
 -------------------------

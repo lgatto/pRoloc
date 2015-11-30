@@ -22,63 +22,59 @@ remap <- function(object, ref = 1) {
 }
 
 
-
-pdist <- function(object, pcol, distfun = dist) {
-    if (is.character(pcol)) {
-        stopifnot(pcol %in% names(pData(object)))
-        pcol <- pData(object)[, pcol]
-    }
-    pcol <- factor(pcol)
-    stopifnot(length(levels(pcol)) == 2)
-    stopifnot(length(pcol) == ncol(object))
-    lv <- levels(pcol)
-    e1 <- exprs(object)[, pcol == lv[1]]
-    e2 <- exprs(object)[, pcol == lv[2]]
-    ans <- sapply(seq_len(nrow(object)),
-                  function(i) distfun(rbind(e1[i, ], e2[i, ])))
-    names(ans) <- featureNames(object)
-    ans
-}
-
-.sameNbCol <- function(x)
-    length(unique(sapply(msnsets(x), ncol)) == 1)
-
-.sameNbRow <- function(x)
-    length(unique(sapply(msnsets(x), nrow)) == 1)
+## pdist <- function(object, pcol, distfun = dist) {
+##     if (is.character(pcol)) {
+##         stopifnot(pcol %in% names(pData(object)))
+##         pcol <- pData(object)[, pcol]
+##     }
+##     pcol <- factor(pcol)
+##     stopifnot(length(levels(pcol)) == 2)
+##     stopifnot(length(pcol) == ncol(object))
+##     lv <- levels(pcol)
+##     e1 <- exprs(object)[, pcol == lv[1]]
+##     e2 <- exprs(object)[, pcol == lv[2]]
+##     ans <- sapply(seq_len(nrow(object)),
+##                   function(i) distfun(rbind(e1[i, ], e2[i, ])))
+##     names(ans) <- featureNames(object)
+##     ans
+## }
 
 
-.pdist <- function(x, y) {
+.pdist <- function(x, y, distfun) {
     e1 <- exprs(x)
     e2 <- exprs(y)
-    sapply(seq_len(nrow(object)),
+    sapply(seq_len(nrow(x)),
            function(i) distfun(rbind(e1[i, ], e2[i, ])))
 }
 
-pdist <- function(object, distfun = dist) {
+pdist <- function(object, distfun = dist, simplify = TRUE) {
     stopifnot(inherits(object, "MSnSetList"))
     ## keeping common feature names
-    object <- commonFeatureNames(object)
+    suppressMessages(object <- commonFeatureNames(object))
     if (!.sameNbCol(object))
         stop("All MSnSets must have the same number of columns.")
-        ## naming, to name the results at the end
     if (is.null(names(object)))
         names(object) <- seq_len(length(object))
     pw <- combn(length(object), 2)
     ans <- matrix(NA, ncol = ncol(pw),
                   nrow = nrow(object[[1]]))
-
-    apply(pw, 2, function(ii) names(object))
-    
+    colnames(ans) <- apply(pw, 2,
+                           function(ii) paste(names(object)[ii],
+                                              collapse = "_"))
+    rownames(ans) <- featureNames(object[[1]])
     for (k in 1:ncol(pw)) {
         i <- pw[1, k]
         j <- pw[2, k]
-        ans[, k]. <- pdist(object[[i]], object[[j]])
+        ans[, k] <- .pdist(object[[i]], object[[j]], distfun)
     }
-    
-
+    if (ncol(ans) == 1 & simplify)
+        ans <- ans[, 1]
+    ans
 }
 
- 
+## msnl <- commonFeatureNames(list(n2014 = nightingale2014, n2015 = nightingale2015))
+## d <- pdist(msnl)
+
 ## d <- pdist(yeastgg2, "condition")
 ## n <- 5
 ## o <- order(d, decreasing = TRUE)

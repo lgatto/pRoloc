@@ -10,8 +10,11 @@ remap <- function(object, ref = 1) {
         colnames(ans) <- sampleNames(xx)
         ans
     })
-    for (i in seq_along(x))
-        exprs(object@x[[i]]) <- preds[[i]]    
+    for (i in seq_along(x)) {
+        exprs(object@x[[i]]) <- preds[[i]]
+        object@x[[i]] <-
+            MSnbase:::logging(object@x[[i]], "remapped (PCA)")
+    }
     exprs(object@x[[ref]]) <- pca1$x
     object@log[["remap"]] <- list(type = "PCA", prcomp = pca1, ref = ref)
     if (validObject(object))

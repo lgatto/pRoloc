@@ -284,6 +284,48 @@ tan2009r1 <- readMSnSet(exprsFile = f1,
 tan2009r1
 @ 
 
+
+\subsection{A shorter input work flow}
+
+The \Rfunction{readMSnSet2} function provides a simplified import
+pipeline.  It takes a single spreadsheet as input (default is
+\texttt{csv}) and extract the columns identified by \Robject{ecol} to
+create the expression data, while the others are used as feature
+meta-data. \Robject{ecol} can be a \Robject{character} with the
+respective column labels or a numeric with their indices. In the
+former case, it is important to make sure that the names match
+exactly. Special characters like \texttt{'-'} or \texttt{'('} will be
+transformed by \R into \texttt{'.'} when the \texttt{csv} file is read
+in.  Optionally, one can also specify a column to be used as feature
+names.  Note that these must be unique to guarantee the final object
+validity.
+
+<<readMSnSet2>>=
+ecol <- paste("area", 114:117, sep = ".")
+fname <- "Protein.ID"
+eset <- readMSnSet2(f0, ecol, fname)
+eset
+@ 
+
+The \texttt{ecol} columns can also be queried interactively from \R{}
+using the \Rfunction{getEcols} and \Rfunction{grepEcols} function. The
+former return a character with all column names, given a splitting
+character, i.e. the separation value of the spreadsheet (typically
+\texttt{","} for \texttt{csv}, \texttt{"\t"} for \texttt{tsv},
+...). The latter can be used to grep a pattern of interest to obtain
+the relevant column indices.
+
+<<ecols>>=
+getEcols(f0, ",")
+grepEcols(f0, "area", ",")
+e <- grepEcols(f0, "area", ",")
+readMSnSet2(f0, e)
+@
+
+The \Robject{phenoData} slot can now be updated accordingly using the
+replacement functions \Rfunction{phenoData<-} or \Rfunction{pData<-}
+(see \Rfunction{?MSnSet} for details).
+
 \subsubsection{The \Rclass{MSnSet} class}
 
 Although there are additional specific sub-containers for additional

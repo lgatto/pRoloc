@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.11.0
+-------------------------
+ o Bioc devel version 3.3
+ 
+CHANGES IN VERSION 1.10.0
+-------------------------
+ o Bioc release version 3.2 
+
 CHANGES IN VERSION 1.9.7
 ------------------------
  o New SpatProtVis visualisation class <2015-08-13 Thu>

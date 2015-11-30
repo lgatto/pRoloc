@@ -185,7 +185,7 @@ species (\texttt{"Homo sapiens"}) and feature type
 <<ap>>=
 ap <- setAnnotationParams(inputs =
                               c("Homo sapiens",
-                                "UniProt/Swissprot ID"))
+                                "UniProt/Swissprot Accession"))
 ap
 @
 
@@ -250,35 +250,41 @@ traceable) annotations.
 
 The feature names of our LOPIT experiment are UniProt identifiers,
 while the Human Protein Atlas uses Ensembl gene identifiers. This
-first code chunk matches both identifier types using the UniProt
-Biomart server.
+first code chunk matches both identifier types using the Ensembl
+Biomart server\footnote{This section has been updated on the 30th
+  November to reflect changes in Biomart.}.
 
 <<hparprep, eval=TRUE>>=
 fvarLabels(andy2011)[1] <- "accession" ## for left_join matching
 ## convert protein accession numbers to ensembl gene identifiers
+
 library("biomaRt")
-uniprot <- useMart("unimart", dataset = "uniprot")
-filter <- "accession"
-attrib <- c("name", "accession", "ensembl_id")
+mart <- useMart("ensembl",dataset="hsapiens_gene_ensembl")
+
+filter <- "uniprot_swissprot"
+attrib <- c("uniprot_genename", "uniprot_swissprot", "ensembl_gene_id")
 bm <- getBM(attributes = attrib,
             filters = filter,
             values = fData(andy2011)[, "accession"],
-            mart = uniprot)
+            mart = mart)
+head(bm)
+
 ## HPA data
 library("hpar")
 getHpaVersion()
 getHpaDate()
 
 setHparOptions(hpadata = "SubcellularLoc")
-hpa <- getHpa(bm$ensembl_id)
+hpa <- getHpa(bm$ensembl_gene_id)
 hpa$Reliability <- droplevels(hpa$Reliability)
-colnames(hpa)[1] <- "ensembl_id"
+colnames(hpa)[1] <- "ensembl_gene_id"
 
 library("dplyr")
 hpa <- left_join(hpa, bm)
-hpa <- hpa[!duplicated(hpa$accession), ]
+hpa <- hpa[!duplicated(hpa$uniprot_swissprot), ]
 
 ## match HPA/LOPIT
+colnames(hpa)[7] <- "accession"
 fd <- left_join(fData(andy2011), hpa)
 rownames(fd) <- featureNames(andy2011)
 fData(andy2011) <- fd

@@ -1,7 +1,10 @@
 .makeCol3 <- function(x, y, fcol) {
     col0 <- getStockcol()
-    setStockcol(NULL)
-    col <- paste0(getStockcol(), 90)
+    ## not sure why I initially enforced to use default stock
+    ## colours. Commenting next line for now to support actual stock
+    ## colours.
+    ## setStockcol(NULL)
+    col <- col0 <- paste0(getStockcol(), 90)
     .fcol1 <- factor(fData(x)[, fcol])
     .fcol2 <- factor(fData(y)[, fcol])
     col1 <- col[as.numeric(.fcol1)]

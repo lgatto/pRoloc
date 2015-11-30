@@ -13,7 +13,7 @@ plot2Ds(object, pcol, fcol = "markers", cex.x = 1, cex.y = 1,
   plot = TRUE, ...)
 }
 \arguments{
-\item{object}{An \code{linkS4class{MSnSet}} or a
+\item{object}{An \code{\linkS4class{MSnSet}} or a
 \code{MSnSetList}. In the latter case, only the two first elements
 of the list will be used for plotting and the others will be
 silently ignored.}

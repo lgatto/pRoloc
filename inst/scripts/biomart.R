@@ -1,23 +1,18 @@
 library(biomaRt)
 library(pRoloc)
 
-## Updated on "Mon Nov 30 22:06:33 2015"
+## Last check Fri Feb  6 21:42:58 2015
 
-## > biomaRt::listMarts()
-##                biomart               version
-## 1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 82
-## 2     ENSEMBL_MART_SNP  Ensembl Variation 82
-## 3 ENSEMBL_MART_FUNCGEN Ensembl Regulation 82
-## 4    ENSEMBL_MART_VEGA               Vega 62
-## 5                pride        PRIDE (EBI UK)
+marts.of.interest <- c("ensembl","fungi_mart_25","metazoa_mart_25","plants_mart_25")
 
-
-## 1         ensembl ENSEMBL GENES 79 (SANGER UK)
-## 5   fungi_mart_26    ENSEMBL FUNGI 26 (EBI UK)
-## 7 metazoa_mart_26  ENSEMBL METAZOA 26 (EBI UK)
-## 9  plants_mart_26   ENSEMBL PLANTS 26 (EBI UK)
-
-marts.of.interest <- "ENSEMBL_MART_ENSEMBL"
+## > head(listMarts())
+##               biomart                             version
+## 1             ensembl        ENSEMBL GENES 78 (SANGER UK)
+## 2                 snp    ENSEMBL VARIATION 78 (SANGER UK)
+## 3 functional_genomics   ENSEMBL REGULATION 78 (SANGER UK)
+## 4                vega                VEGA 58  (SANGER UK)
+## 5       fungi_mart_25           ENSEMBL FUNGI 25 (EBI UK)
+## 6 fungi_variations_25 ENSEMBL FUNGI VARIATION 25 (EBI UK)
 
 martList <- lapply(marts.of.interest,
                    function(x) {
@@ -29,22 +24,16 @@ martList <- lapply(marts.of.interest,
 martTab <- do.call("rbind", martList)
 
 ## head(martTab)
-##                          dataset                                description
-## 1         oanatinus_gene_ensembl     Ornithorhynchus anatinus genes (OANA5)
-## 2        cporcellus_gene_ensembl            Cavia porcellus genes (cavPor3)
-## 3        gaculeatus_gene_ensembl     Gasterosteus aculeatus genes (BROADS1)
-## 4         lafricana_gene_ensembl         Loxodonta africana genes (loxAfr3)
-## 5 itridecemlineatus_gene_ensembl Ictidomys tridecemlineatus genes (spetri2)
-## 6        choffmanni_gene_ensembl        Choloepus hoffmanni genes (choHof1)
-##   version                 mart
-## 1   OANA5 ENSEMBL_MART_ENSEMBL
-## 2 cavPor3 ENSEMBL_MART_ENSEMBL
-## 3 BROADS1 ENSEMBL_MART_ENSEMBL
-## 4 loxAfr3 ENSEMBL_MART_ENSEMBL
-## 5 spetri2 ENSEMBL_MART_ENSEMBL
-## 6 choHof1 ENSEMBL_MART_ENSEMBL
+##                   dataset                             description     version    mart
+## 1  oanatinus_gene_ensembl  Ornithorhynchus anatinus genes (OANA5)       OANA5 ensembl
+## 2   tguttata_gene_ensembl Taeniopygia guttata genes (taeGut3.2.4) taeGut3.2.4 ensembl
+## 3 cporcellus_gene_ensembl         Cavia porcellus genes (cavPor3)     cavPor3 ensembl
+## 4 gaculeatus_gene_ensembl  Gasterosteus aculeatus genes (BROADS1)     BROADS1 ensembl
+## 5  lafricana_gene_ensembl      Loxodonta africana genes (loxAfr3)     loxAfr3 ensembl
+## 6 mlucifugus_gene_ensembl        Myotis lucifugus genes (myoLuc2)     myoLuc2 ensembl
 
-(n <- nrow(martTab)) ## 69
+
+(n <- nrow(martTab)) ## 215
 attrList <- filterList <- vector("list", length = n)
 names(attrList) <- names(filterList) <- martTab$dataset[1:n]
 
@@ -61,23 +50,22 @@ close(pb)
 
 
 head(attrList[[1]])
-##                    name           description         page
-## 1       ensembl_gene_id       Ensembl Gene ID feature_page
-## 2 ensembl_transcript_id Ensembl Transcript ID feature_page
-## 3    ensembl_peptide_id    Ensembl Protein ID feature_page
-## 4       ensembl_exon_id       Ensembl Exon ID feature_page
-## 5           description           Description feature_page
-## 6       chromosome_name       Chromosome Name feature_page
-
+##                             name                       description
+## 1                ensembl_gene_id                   Ensembl Gene ID
+## 2          ensembl_transcript_id             Ensembl Transcript ID
+## 3             ensembl_peptide_id                Ensembl Protein ID
+## 4 canonical_transcript_stable_id Canonical transcript stable ID(s)
+## 5                    description                       Description
+## 6                chromosome_name                   Chromosome Name
 
 head(filterList[[1]])
-##                 name                                               description
-## 1    chromosome_name                                           Chromosome name
-## 2              start                                           Gene Start (bp)
-## 3                end                                             Gene End (bp)
-## 4             strand                                                    Strand
-## 5 chromosomal_region Chromosome Regions (e.g 1:100:10000:-1,1:100000:200000:1)
-## 6          with_hgnc                                           with HGNC ID(s)
+##                 name         description
+## 1    chromosome_name     Chromosome name
+## 2              start     Gene Start (bp)
+## 3                end       Gene End (bp)
+## 4             strand              Strand
+## 5 chromosomal_region  Chromosome Regions
+## 6      with_wikigene with WikiGene ID(s)
 
 checkAttr0 <- function(x, attr0 = pRoloc:::getAttributesOfInterest0()) 
     attr0 %in% x$name
@@ -99,8 +87,8 @@ tmp <- cbind(tmp, tmp2)
 
 ## colnames(tmp) <- c(attributes.of.interest0,                   
 ##                    sapply(attributes.of.interestX, "[", 1))
-colnames(tmp) <- c(pRoloc:::getAttributesOfInterest0(),
-                   sapply(pRoloc:::getAttributesOfInterestX(), "[", 1))
+colnames(tmp) <- c(pRoloc:::attributesOfInterest0,
+                   sapply(pRoloc:::attributesOfInterestX, "[", 1))
 
 sel <- which(apply(tmp, 1, all))
 
@@ -116,3 +104,4 @@ attr(martTab, "date") <- date()
 saveRDS(attrList, file="../extdata/attrList.rds", compress = "xz")
 saveRDS(filterList, file="../extdata/filterList.rds", compress = "xz")
 saveRDS(martTab, file="../extdata/martTab.rds", compress = "xz")
+

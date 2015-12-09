@@ -31,27 +31,9 @@
 \title{Class \code{"MartInstance"}}
 
 \description{
-%%  ~~ A concise (1-5 lines) description of what the class is. ~~
-}
-
-\section{Objects from the Class}{
-  Objects can be created with the respective constructors
-  \code{MartInstance} and \code{MartInstanceList}.
-
-}
-\section{Slots}{
-  \describe{
-    \item{\code{name}:}{Object of class \code{"character"} ~~ }
-    \item{\code{host}:}{Object of class \code{"character"} ~~ }
-    \item{\code{path}:}{Object of class \code{"character"} ~~ }
-    \item{\code{datasets}:}{Object of class \code{"data.frame"} ~~ }
-    \item{\code{created}:}{Object of class \code{"character"} ~~ }
-  }
-}
-\section{Methods}{
-  \describe{
-    \item{show}{\code{signature(object = "MartInstance")}: ... }
-	 }
+  
+  Internal infrastructure to query/handle several individual mart
+  instance. See \code{MartInterface.R} for details.     
 }
 
 \author{

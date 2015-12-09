@@ -68,7 +68,7 @@ setAnnotationParams <- function(params = NULL,
             else message("Using feature type ",
                          spfilters[fltidx, "description"])                        
             miname <- m[spidx, "MartInterface"]
-            mil <- pRoloc:::getMartInstanceList()
+            mil <- pRoloc::getMartInstanceList()
             i <- which(sapply(mil, slot, name = "name") == miname)
             mi <- mil[[i]]            
             dataset <- as.character(m[spidx, "dataset"])

@@ -59,23 +59,27 @@ setAnnotationParams <- function(params = NULL,
                      inputs[1], "'.")
             else message("Using species ", m[spidx, "description"])
             foi <- getFiltersOfInterest()
-            l <- getFilterList()         
-            spfilters <- l[[spidx]]
+            spfilters <- getFilterList(m[spidx, "dataset"])
             spfilters <- spfilters[spfilters$name %in% foi, ]
             fltidx <- grep(inputs[2], spfilters$description)
             if (length(fltidx) != 1)
                 stop("Couldn't find a unique feature type match for '",
                      inputs[2], "'.")
             else message("Using feature type ",
-                         spfilters[fltidx, "description"])
-            martname <- as.character(m[spidx, "mart"])
+                         spfilters[fltidx, "description"])                        
+            miname <- m[spidx, "MartInterface"]
+            mil <- getMartInstanceList()
+            i <- which(sapply(mil, slot, name = "name") == miname)
+            mi <- mil[[i]]            
             dataset <- as.character(m[spidx, "dataset"])
-            filter <- as.character(spfilters[fltidx, "name"])
+            filter <- as.character(spfilters[fltidx, "name"])            
             cat("Connecting to Biomart...\n")
-            mart <- useMart(martname, dataset)
+            mart <- useMart(miname, dataset = dataset,
+                            host = mi@host,
+                            path = mi@path)
             params <- new("AnnotationParams",
                           mart = mart,
-                          martname = martname,
+                          martname = miname,
                           dataset = dataset,
                           filter = filter,
                           date = date(),
@@ -89,9 +93,9 @@ setAnnotationParams <- function(params = NULL,
             spsel <- menu(sortedsp, graphics, "Select species")
             spidx <- match(sortedsp[spsel],m$description)
             
-            foi <- getFiltersOfInterest()          
-            l <- getFilterList()
-            spfilters <- l[[spidx]]
+            foi <- getFiltersOfInterest()            
+            ds <- m[spidx, "dataset"]
+            spfilters <- getFilterList(ds)
             sortedspfilters <-
                 sort(spfilters$description[spfilters$name %in% foi])
             if (length(sortedspfilters)==0)
@@ -100,15 +104,21 @@ setAnnotationParams <- function(params = NULL,
             fltsel <- menu(sortedspfilters, graphics, "Select filter")
             fltidx <- match(sortedspfilters[fltsel],
                             spfilters$description)
-            martname <- as.character(m[spidx, "mart"])
-            dataset <- as.character(m[spidx, "dataset"])
+
+            ds2 <- m[m$dataset == ds, ]
+            martname <- ds2[, "MartInterface"]
+            mil <- getMartInstanceList()
+            i <- which(sapply(mil, slot, name = "name") == martname)
+            mi <- mil[[i]]
             filter <- as.character(spfilters[fltidx, "name"])
             cat("Connecting to Biomart...\n")
-            mart <- useMart(martname, dataset)
+            mart <- useMart(martname,
+                            dataset = ds,
+                            host = mi@host, path = mi@path)
             params <- new("AnnotationParams",
                           mart = mart,
                           martname = martname,
-                          dataset = dataset,
+                          dataset = ds,
                           filter = filter,
                           date = date(),
                           biomaRtVersion =

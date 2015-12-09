@@ -1,18 +1,3 @@
-getAttrList <- function() 
-    readRDS(dir(system.file(package="pRoloc", dir="extdata"),
-                full.names=TRUE,
-                pattern="attrList.rda"))
-
-getFilterList <- function() 
-    readRDS(dir(system.file(package="pRoloc", dir="extdata"),
-                full.names=TRUE,
-                pattern="filterList.rds"))
-
-getMartTab <- function() 
-    readRDS(dir(system.file(package="pRoloc", dir="extdata"),
-                full.names=TRUE,
-                pattern="martTab"))
-
 getFiltersOfInterest <- function()
     c("ensembl_gene_id",
       "ensembl_transcript_id",

@@ -1,5 +1,10 @@
+CHANGES IN VERSION 1.11.2
+-------------------------
+ o Internally using MartInterface to query individual mart servers to
+   bypass the biomart.org downtime <2015-12-09 Wed>
+ 
 CHANGES IN VERSION 1.11.1
-------------------------
+-------------------------
  o New orgQuants function and update to getPredictions
    <2015-10-13 Tue> 
  o Deprecate minClassScore replaced by getPredictions

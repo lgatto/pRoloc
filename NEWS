@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.3
+-------------------------
+ o
+ 
 CHANGES IN VERSION 1.11.2
 -------------------------
  o Internally using MartInterface to query individual mart servers to

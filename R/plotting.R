@@ -126,7 +126,7 @@ plotDist <- function(object,
 }
 
 ## Available pRoloc visualisation methods
-pRolocVisMethods <- c("PCA", "MDS", "kpca", "t-SNE")
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "t-SNE", "none")
 
 ## Available plot2D methods
 plot2Dmethods <- c(pRolocVisMethods, "scree")
@@ -137,14 +137,28 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' localistation clusters. In \code{plot2D}, rows containing
 ##' \code{NA} values are removed prior to dimention reduction.
 ##'
-##' Note that \code{plot2D} has been update in version 1.3.6 to
-##' support more more orgnalle classes than colours defined in
-##' \code{\link{getStockcol}}. In such cases, the defauly colours are
-##' recycled using the default plotting characters defined in
-##' \code{\link{getStockpch}}. See the example for an
-##' illustration. The \code{alpha} argument is also depreciated in
-##' version 1.3.6. Use \code{setStockcol} to set colours with
-##' transparency instead. See example below.
+##' \itemize{
+##' 
+##' \item Note that \code{plot2D} has been update in version 1.3.6 to
+##'        support more organelle classes than colours defined in
+##'        \code{\link{getStockcol}}. In such cases, the default
+##'        colours are recycled using the default plotting characters
+##'        defined in \code{\link{getStockpch}}. See the example for
+##'        an illustration. The \code{alpha} argument is also
+##'        depreciated in version 1.3.6. Use \code{setStockcol} to set
+##'        colours with transparency instead. See example below.
+##'
+##' \item Version 1.11.3: to plot data as is, i.e. without any
+##'       transformation, \code{method} can be set to "none" (as
+##'       opposed to passing pre-computed values to \code{method} as a
+##'       \code{matrix}, in previous versions). If \code{object} is an
+##'       \code{MSnSet}, the untransformed values in the assay data
+##'       will be plotted. If \code{object} is a \code{matrix} with
+##'       coordinates, then a matching \code{MSnSet} must be passed to
+##'       \code{methargs}.
+##' }
+##'
+##' 
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol Feature meta-data label (fData column name) defining
@@ -159,27 +173,42 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' to be plotted. Always 1:2 for MDS.
 ##' @param score A numeric specifying the minimum organelle assignment score
 ##' to consider features to be assigned an organelle. (not yet implemented).
-##' @param method Either a \code{character} of a \code{matrix}. When
-##' the former, one of \code{"PCA"} (default), \code{"MDS"},
-##' \code{"kpca"} or \code{"t-SNE"}, defining if dimensionality
-##' reduction is done using principal component analysis (see
-##' \code{\link{prcomp}}), classical multidimensional scaling (see
-##' \code{\link{cmdscale}}), kernel PCA (see \code{kernlab::kpca}) or
-##' t-SNE (see \code{tsne::tsne}). \code{"scree"} can also be used to
-##' produce a scree plot. If a \code{matrix} is passed, its rownames
-##' must match object's feature names and represent a projection of
-##' the data in \code{object} in two dimensions, as produced (and invisibly
-##' returned) by \code{plot2D}. This enables to re-generate the figure without
-##' computing the dimensionality reduction over and over again, which
-##' can be time consuming for certain methods. Available methods are listed
-##' in \code{plot2Dmethods}.
+##' 
+##' @param method A \code{character} describe how to transform the
+##'     data or what to plot. One of \code{"PCA"} (default),
+##'     \code{"MDS"}, \code{"kpca"} or \code{"t-SNE"}, defines what
+##'     dimensionality reduction is applied: principal component
+##'     analysis (see \code{\link{prcomp}}), classical
+##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
+##'     PCA (see \code{kernlab::kpca}) or t-SNE (see
+##'     \code{tsne::tsne}). \code{"scree"} can also be used to produce
+##'     a scree plot. If none is used, the data is plotted as is,
+##'     i.e. without any transformation. In this case, \code{object}
+##'     can either be an \code{MSnSet} or a \code{matrix} (as
+##'     invisibly returned by \code{plot2D}). This enables to
+##'     re-generate the figure without computing the dimensionality
+##'     reduction over and over again, which can be time consuming for
+##'     certain methods. Available methods are listed in
+##'     \code{plot2Dmethods}. If \code{object} is a \code{matrix}, an
+##'     \code{MSnSet} containing the feature metadata must be provided
+##'     in \code{methargs} (see below for details).
+##' 
 ##' @param methargs A \code{list} of arguments to be passed when
-##' \code{method} is called. If missing, the data will be scaled and
-##' centred prior to PCA.
-##' @param axsSwitch A \code{logical} indicating whether the axes should be
-##' switched.
-##' @param mirrorX A \code{logical} indicating whether the x axis should be mirrored? 
-##' @param mirrorY A \code{logical} indicating whether the y axis should be mirrored? 
+##'     \code{method} is called. If missing, the data will be scaled
+##'     and centred prior to PCA. If \code{method = "none"} and
+##'     \code{object} is a \code{matrix}, then the first and only
+##'     argument of \code{methargs} must be an \code{MSnSet} with
+##'     matching features with \code{object}.
+##' 
+##' @param axsSwitch A \code{logical} indicating whether the axes
+##'     should be switched.
+##' 
+##' @param mirrorX A \code{logical} indicating whether the x axis
+##'     should be mirrored?
+##' 
+##' @param mirrorY A \code{logical} indicating whether the y axis
+##'     should be mirrored?
+##' 
 ##' @param col A \code{character} of appropriate length defining colours.
 ##' @param pch A \code{character} of appropriate length defining point character.
 ##' @param cex Character expansion.
@@ -199,10 +228,10 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' Invisibly returns the 2d data.
 ##' @author Laurent Gatto <lg390@@cam.ac.uk>
 ##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
-##' figures and \code{\link{plotDist}} for alternative graphical
-##' representation of quantitative organelle proteomics
-##' data. \code{\link{plot2Ds}} to overlay 2 data sets on the same PCA
-##' plot.
+##'     figures and \code{\link{plotDist}} for alternative graphical
+##'     representation of quantitative organelle proteomics
+##'     data. \code{\link{plot2Ds}} to overlay 2 data sets on the same
+##'     PCA plot.
 ##' @aliases plot2Dmethods
 ##' @examples
 ##' library("pRolocdata")
@@ -227,6 +256,14 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' getStockcol() ## only 3 colours to be recycled
 ##' getMarkers(dunkley2006)
 ##' plot2D(dunkley2006)
+##' ## reset colours
+##' setStockcol(NULL)
+##' plot2D(dunkley2006, method = "none") ## plotting along 2 first fractions
+##' plot2D(dunkley2006, dims = c(3, 5), method = "none") ## plotting along fractions 3 and 5
+##' ## pre-calculate PC1 and PC2 coordinates
+##' pca <- plot2D(dunkley2006, plot=FALSE)
+##' head(pca)
+##' plot2D(pca, method = "none", methargs  = list(dunkley2006))
 plot2D <- function(object,
                    fcol = "markers",
                    fpch,
@@ -246,9 +283,6 @@ plot2D <- function(object,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
-    if (isMrkMat(object, fcol))
-        stop("To visualise a marker matrix, use 'plotMat2D' from package pRolocGUI (>= 1.3.1).")
-    if (!is.null(fcol)) stopifnot(isMrkVec(object, fcol))
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
     if ("outliers" %in% names(a))
@@ -256,104 +290,114 @@ plot2D <- function(object,
     if (!missing(col)) {
         stockcol <- col
     } else {
-        stockcol <- getStockcol()  
+        stockcol <- getStockcol()
     }
     if (!missing(pch)) {
         stockpch <- pch
     } else {
-        stockpch <- getStockpch()  
+        stockpch <- getStockpch()
     }
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
+    method <- match.arg(method, plot2Dmethods)
 
+    if (length(dims) > 2) {
+        warning("Using first two dimensions of ", dims)
+        dims <- dims[1:2]
+    }
+    k <- max(dims)
+    if (any(is.na(object))) {
+        n0 <- nrow(object)
+        object <- filterNA(object)
+        n1 <- nrow(object)
+        if (n1 == 0)
+            stop("No rows left after removing NAs!")
+        else
+            warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
+    }
+    if (method == "scree") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                  methargs))
+        .data <- .pca$x
+        plot(.pca, npcs = ncol(.data))
+        plot <- FALSE
+    } else if (method == "t-SNE") {
+        requireNamespace("tsne")
+        if (missing(methargs))
+            .data <- tsne::tsne(exprs(object), k = k)
+        else .data <- do.call(tsne::tsne,
+                              c(list(X = exprs(object)),
+                                k = k, 
+                                methargs))
+        .data <- .data[, dims]
+        .xlab <- paste("Dimension 1")
+        .ylab <- paste("Dimension 2")
+        colnames(.data) <- c(.xlab, .ylab)
+        rownames(.data) <- featureNames(object)
+    } else if (method == "PCA") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+                                  methargs))
+        .data <- .pca$x[, dims]
+        .vars <- (.pca$sdev)^2
+        .vars <- (.vars / sum(.vars))[dims]
+        .vars <- round(100 * .vars, 2)
+        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+        colnames(.data) <- c(.xlab, .ylab)
+    } else if (method == "MDS")  { ## MDS
+        if (!missing(methargs))
+            warning("'methargs' ignored for MDS")
+        ## TODO - use other distances
+        .data <- cmdscale(dist(exprs(object), 
+                               method = "euclidean",
+                               diag = FALSE,
+                               upper = FALSE),
+                          k = 2)    
+        .xlab <- paste("Dimension 1")
+        .ylab <- paste("Dimension 2")
+        colnames(.data) <- c(.xlab, .ylab)
+    } else if (method == "kpca") { 
+        if (missing(methargs)) {
+            .kpca <- kpca(exprs(object))
+        } else {
+            .kpca <- do.call(kpca, c(list(x = exprs(object)),
+                                     methargs))
+        }
+        .data <- rotated(.kpca)[, dims]
+        .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
+        .vars <- round(100 * .vars, 2)
+        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
+        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
+        colnames(.data) <- c(.xlab, .ylab)
+    } else { ## none
+        if (inherits(object, "MSnSet")) {
+            .data <- exprs(object)[, dims]
+        } else if (is.matrix(object)) {
+            .data <- object[, dims]
+            ## we still need the feature variables
+            object <- methargs[[1]]
+            if (!inherits(object, "MSnSet"))
+                stop(paste("If method == \"none\", and object is a 'matrix',",
+                           "the feature metadata must be provided as an 'MSnSet'",
+                           "(the object matching the coordinate matrix) in 'methargs'"))
+        } else stop("object must be an 'MSnSet' or a 'matrix' (if method == \"none\").")
+        .xlab <- colnames(.data)[1]
+        .ylab <- colnames(.data)[2]
+    }
+    ## Now, object must be an MSnSet - if it was a matrix, it has been
+    ## replaced by methargs[[1]] (see method = "none" above).
+    stopifnot(inherits(object, "MSnSet"))
+    if (isMrkMat(object, fcol))
+        stop("To visualise a marker matrix, use 'plotMat2D' from package pRolocGUI (>= 1.3.1).")
+    if (!is.null(fcol)) stopifnot(isMrkVec(object, fcol))
     if (!is.null(fcol) && !fcol %in% fvarLabels(object))
         stop("'", fcol, "' not found in feature variables.")
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
         stop("'", fpch, "' not found in feature variables.")
-    if (is.character(method)) {
-        method <- match.arg(method, plot2Dmethods)
-        if (length(dims) > 2) {
-            warning("Using first two dimensions of ", dims)
-            dims <- dims[1:2]
-        }
-        k <- max(dims)
-        if (any(is.na(object))) {
-            n0 <- nrow(object)
-            object <- filterNA(object)
-            n1 <- nrow(object)
-            if (n1 == 0)
-                stop("No rows left after removing NAs!")
-            else
-                warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
-        }
-        if (method == "scree") {
-            if (missing(methargs))
-                methargs <- list(scale = TRUE, center = TRUE)
-            .pca <- do.call(prcomp, c(list(x = exprs(object)), 
-                                      methargs))
-            .data <- .pca$x
-            plot(.pca, npcs = ncol(.data))
-            plot <- FALSE
-        } else if (method == "t-SNE") {
-            requireNamespace("tsne")
-            if (missing(methargs))
-                .data <- tsne::tsne(exprs(object), k = k)
-            else .data <- do.call(tsne::tsne,
-                                  c(list(X = exprs(object)),
-                                    k = k, 
-                                    methargs))
-            .data <- .data[, dims]
-            .xlab <- paste("Dimension 1")
-            .ylab <- paste("Dimension 2")
-            colnames(.data) <- c(.xlab, .ylab)
-            rownames(.data) <- featureNames(object)
-        } else if (method == "PCA") {
-            if (missing(methargs))
-                methargs <- list(scale = TRUE, center = TRUE)
-            .pca <- do.call(prcomp, c(list(x = exprs(object)), 
-                                      methargs))
-            .data <- .pca$x[, dims]
-            .vars <- (.pca$sdev)^2
-            .vars <- (.vars / sum(.vars))[dims]
-            .vars <- round(100 * .vars, 2)
-            .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-            .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-            colnames(.data) <- c(.xlab, .ylab)
-        } else if (method == "MDS")  { ## MDS
-            if (!missing(methargs))
-                warning("'methargs' ignored for MDS")
-            ## TODO - use other distances
-            .data <- cmdscale(dist(exprs(object), 
-                                   method = "euclidean",
-                                   diag = FALSE,
-                                   upper = FALSE),
-                              k = 2)    
-            .xlab <- paste("Dimension 1")
-            .ylab <- paste("Dimension 2")
-            colnames(.data) <- c(.xlab, .ylab)
-        } else { ## kpca
-            if (missing(methargs)) {
-                .kpca <- kpca(exprs(object))
-            } else {
-                .kpca <- do.call(kpca, c(list(x = exprs(object)),
-                                         methargs))
-            }
-            .data <- rotated(.kpca)[, dims]
-            .vars <- (eig(.kpca)/sum(eig(.kpca)))[dims]
-            .vars <- round(100 * .vars, 2)
-            .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-            .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-            colnames(.data) <- c(.xlab, .ylab)
-        }
-    } else if (is.matrix(method)) {
-        stopifnot(nrow(method) == nrow(object))
-        stopifnot(ncol(method) == 2)
-        .data <- method
-        .xlab <- colnames(method)[1]
-        .ylab <- colnames(method)[2]
-    } else {
-        stop("'method' must be either a character of a matrix")        
-    }
     if (plot) {
         if (axsSwitch) {
             .data <- .data[, 2:1]
@@ -473,8 +517,8 @@ plot2D <- function(object,
 addLegend <- function(object,
                       fcol = "markers",
                       where = c("other", "bottomright", "bottom",
-                          "bottomleft", "left", "topleft",
-                          "top", "topright", "right", "center"),
+                                "bottomleft", "left", "topleft",
+                                "top", "topright", "right", "center"),
                       col,
                       bty = "n",
                       ...) {
@@ -607,12 +651,12 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 
 ## Tests whether the object is visualisation method available
 ## in pRoloc 
-.validpRolocVisMethod <- function(object) {
-  if (class(object) == "matrix" && ncol(object) == 2)
-    return(TRUE)
-  else
-    if (object %in% pRolocVisMethods)
-      return(TRUE)
-    else
-      return(FALSE)
-}
+    .validpRolocVisMethod <- function(object) {
+        if (class(object) == "matrix" && ncol(object) == 2)
+            return(TRUE)
+        else
+            if (object %in% pRolocVisMethods)
+                return(TRUE)
+        else
+            return(FALSE)
+    }

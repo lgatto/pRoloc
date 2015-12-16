@@ -12,19 +12,54 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "samuel.wieczorek@cea.fr",
                     role = "ctb"))
 Author: Laurent Gatto and Lisa M. Breckels with contributions from
-	Thomas Burger and Samuel Wieczorek
+    Thomas Burger and Samuel Wieczorek
 Maintainer: Laurent Gatto <lg390@cam.ac.uk>
 Description: This package implements pattern recognition techniques on
-	     quantitiative mass spectrometry data to infer protein
-	     sub-cellular localisation.
-Depends: R (>= 2.15), MSnbase (>= 1.19.4), MLInterfaces (>= 1.37.1),
-	 methods, Rcpp (>= 0.10.3), BiocParallel
-Imports: Biobase, mclust (>= 4.3), caret, e1071, sampling, class,
-	 kernlab, lattice, nnet, randomForest, proxy, FNN,
-	 BiocGenerics, stats, RColorBrewer, scales, MASS, knitr,
-	 mvtnorm, gtools, plyr, ggplot2, biomaRt
-Suggests: testthat, pRolocdata (>= 1.5.8), roxygen2, synapter, xtable,
-	  tsne, BiocStyle, hpar, dplyr, GO.db, AnnotationDbi
+    quantitiative mass spectrometry data to infer protein
+    sub-cellular localisation.
+Depends:
+    R (>= 2.15),
+    MSnbase (>= 1.19.4),
+    MLInterfaces (>= 1.37.1),
+    methods,
+    Rcpp (>= 0.10.3),
+    BiocParallel
+Imports:
+    Biobase,
+    mclust (>= 4.3),
+    caret,
+    e1071,
+    sampling,
+    class,
+    kernlab,
+    lattice,
+    nnet,
+    randomForest,
+    proxy,
+    FNN,
+    BiocGenerics,
+    stats,
+    RColorBrewer,
+    scales,
+    MASS,
+    knitr,
+    mvtnorm,
+    gtools,
+    plyr,
+    ggplot2,
+    biomaRt
+Suggests:
+    testthat,
+    pRolocdata (>= 1.5.8),
+    roxygen2,
+    synapter,
+    xtable,
+    tsne,
+    BiocStyle,
+    hpar,
+    dplyr,
+    GO.db,
+    AnnotationDbi
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
@@ -32,41 +67,43 @@ Video: https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow
 URL: https://github.com/lgatto/pRoloc
 BugReports: https://github.com/lgatto/pRoloc/issues
 biocViews: Proteomics, MassSpectrometry, Classification, Clustering,
-	   QualityControl
-Collate: AllGenerics.R                     
-	 machinelearning-framework.R
-	 machinelearning-framework-theta.R
-	 machinelearning-utils.R
-	 machinelearning-functions-knn.R
-	 machinelearning-functions-ksvm.R
-	 machinelearning-functions-nb.R
-	 machinelearning-functions-nnet.R
-	 machinelearning-functions-PerTurbo.R
-	 machinelearning-functions-plsda.R
-	 machinelearning-functions-rf.R
-	 machinelearning-functions-svm.R
-	 machinelearning-functions-knntl.R
-	 belief.R
-	 distances.R
-	 markers.R
-	 pRolocmarkers.R
-	 chi2.R
-	 MLInterfaces.R
-	 clustering-framework.R
-	 MSnSet.R
-	 clustering-kmeans.R
-	 perTurbo-algorithm.R
-	 data.R
-	 phenodisco.R
-	 plotting.R
-	 plotting2.R
-	 environment.R
-	 utils.R
-	 lopims.R
-	 annotation.R
-	 goenv.R
-	 go.R
-	 makeGoSet.R
-	 vis.R
-	 MartInterface.R
-	 zzz.R
+    QualityControl
+Collate:
+    AllGenerics.R
+    machinelearning-framework.R
+    machinelearning-framework-theta.R
+    machinelearning-utils.R
+    machinelearning-functions-knn.R
+    machinelearning-functions-ksvm.R
+    machinelearning-functions-nb.R
+    machinelearning-functions-nnet.R
+    machinelearning-functions-PerTurbo.R
+    machinelearning-functions-plsda.R
+    machinelearning-functions-rf.R
+    machinelearning-functions-svm.R
+    machinelearning-functions-knntl.R
+    belief.R
+    distances.R
+    markers.R
+    pRolocmarkers.R
+    chi2.R
+    MLInterfaces.R
+    clustering-framework.R
+    MSnSet.R
+    clustering-kmeans.R
+    perTurbo-algorithm.R
+    data.R
+    phenodisco.R
+    plotting.R
+    plotting2.R
+    environment.R
+    utils.R
+    lopims.R
+    annotation.R
+    goenv.R
+    go.R
+    makeGoSet.R
+    vis.R
+    MartInterface.R
+    zzz.R
+RoxygenNote: 5.0.1

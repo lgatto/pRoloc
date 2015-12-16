@@ -606,18 +606,16 @@ addLegend <- function(object,
 ##'                         fnames = featureNames(tan2009r1)[1:10],
 ##'                         object = tan2009r1)
 ##' .pca <- plot2D(tan2009r1)
+##' head(.pca)
 ##' highlightOnPlot(.pca, x, col = "red")
 ##' highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
 ##'
 ##' .pca <- plot2D(tan2009r1, dims = c(1, 3))
-##' head(.pca)
 ##' highlightOnPlot(.pca, x, pch = "+")
 ##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
 ##'
-##' plot2D(tan2009r1, mirrorX = TRUE)
+##' plot2D(tan2009r1, mirrorX = TRUE, dims = c(1, 3))
 ##' highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
-##' ## regenerate without recomputing
-##' plot2D(tan2009r1, method = .pca)
 highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     if (!fnamesIn(foi, object)) {
         warning("None of the features of interest are present in the data.")

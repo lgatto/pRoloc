@@ -1,3 +1,13 @@
+CHANGES IN VERSION 1.11.3
+-------------------------
+ o Update dunkley2006params to use plant_mart_30 <2015-12-16 Wed>
+ o API change in plot2D: to plot data as is, i.e. without any
+   transformation, method can be set to "none" (as opposed to passing
+   pre-computed values to method as in previous versions). If object
+   is an MSnSet, the untransformed values in the assay data will be
+   plotted. If object is a matrix with coordinates, then a matching
+   MSnSet must be passed to methargs. <2015-12-16 Wed>
+ 
 CHANGES IN VERSION 1.11.2
 -------------------------
  o Internally using MartInterface to query individual mart servers to
@@ -11,7 +21,6 @@ CHANGES IN VERSION 1.11.1
    <2015-10-19 Mon>
  o Add pRolocVisMethods and check for new apps in 
    pRolocGUI <2015-10-19 Mon>
- o Deprecated minClassScore <2015-10-19 Mon>
  o new fDataToUnknown function <2015-10-23 Fri>
  o New section in vignette describing readMSnSet2 <2015-11-30 Mon>
  

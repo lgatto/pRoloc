@@ -74,8 +74,10 @@ setMethod("show", "SpatProtVis",
 
 setMethod("plot", c("SpatProtVis", "missing"),
           function(x, y, legend, ...) {
-              for (i in seq_along(x@vismats)) {                  
-                  plot2D(x@data, method = x@vismats[[i]],
+              for (i in seq_along(x@vismats)) {
+                  plot2D(object = x@vismats[[i]],
+                         method = "none",
+                         methargs = list(x@data),
                          main = names(x@vismats)[i], ...)
                   if (!missing(legend))
                       addLegend(x@data, where = legend, ...)

@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.11.4
 -------------------------
- o
+ o plot2D: Mirror PCs even when not plotting, addressing issue #68
+   <2015-12-18 Fri>
  
 CHANGES IN VERSION 1.11.3
 -------------------------

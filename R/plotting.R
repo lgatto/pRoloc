@@ -386,7 +386,7 @@ plot2D <- function(object,
                            "(the object matching the coordinate matrix) in 'methargs'"))
             if (nrow(.data) != nrow(object))
                 stop("Number of features in the matrix and feature metadata differ.")
-            if (!all.equal(rownames(.data), featureNames(object))
+            if (!all.equal(rownames(.data), featureNames(object)))
                 warning("Matrix rownames and feature names don't match")
         } else stop("object must be an 'MSnSet' or a 'matrix' (if method == \"none\").")
         .xlab <- colnames(.data)[1]

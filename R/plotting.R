@@ -594,7 +594,8 @@ addLegend <- function(object,
 ##'     \code{matrix} with the coordinates of the features on the PCA
 ##'     plot produced (and invisibly returned) by \code{plot2D}. 
 ##' 
-##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}}.
+##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}},
+##'     or, alternatively, a \code{character} of feautre names.
 ##'
 ##' @param labels A \code{character} of length 1 with a feature
 ##'     variable name to be used to label the features of
@@ -618,6 +619,14 @@ addLegend <- function(object,
 ##' x <- FeaturesOfInterest(description = "A test set of features of interest",
 ##'                         fnames = featureNames(tan2009r1)[1:10],
 ##'                         object = tan2009r1)
+##'
+##' ## using FeaturesOfInterest or feature names
+##' par(mfrow = c(2, 1))
+##' plot2D(tan2009r1)
+##' highlightOnPlot(tan2009r1, x)
+##' plot2D(tan2009r1)
+##' highlightOnPlot(tan2009r1, featureNames(tan2009r1)[1:10])
+##' 
 ##' .pca <- plot2D(tan2009r1)
 ##' head(.pca)
 ##' highlightOnPlot(.pca, x, col = "red")
@@ -639,6 +648,11 @@ addLegend <- function(object,
 ##' highlightOnPlot(tan2009r1, x, labels = TRUE, pos = 3)
 ##' highlightOnPlot(tan2009r1, x, labels = "Flybase.Symbol", pos = 1)
 highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
+    if (is.character(foi))
+        foi <- FeaturesOfInterest(description = "internally created",
+                                  fnames = foi)
+    stopifnot(inherits(foi, "FeaturesOfInterest"))
+    
     if (!fnamesIn(foi, object)) {
         warning("None of the features of interest are present in the data.")
         return(invisible(NULL))

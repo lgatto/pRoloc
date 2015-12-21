@@ -11,7 +11,8 @@ highlightOnPlot(object, foi, labels, args = list(), ...)
 \code{matrix} with the coordinates of the features on the PCA
 plot produced (and invisibly returned) by \code{plot2D}.}
 
-\item{foi}{An instance of \code{\linkS4class{FeaturesOfInterest}}.}
+\item{foi}{An instance of \code{\linkS4class{FeaturesOfInterest}},
+or, alternatively, a \code{character} of feautre names.}
 
 \item{labels}{A \code{character} of length 1 with a feature
 variable name to be used to label the features of
@@ -43,6 +44,14 @@ data("tan2009r1")
 x <- FeaturesOfInterest(description = "A test set of features of interest",
                         fnames = featureNames(tan2009r1)[1:10],
                         object = tan2009r1)
+
+## using FeaturesOfInterest or feature names
+par(mfrow = c(2, 1))
+plot2D(tan2009r1)
+highlightOnPlot(tan2009r1, x)
+plot2D(tan2009r1)
+highlightOnPlot(tan2009r1, featureNames(tan2009r1)[1:10])
+
 .pca <- plot2D(tan2009r1)
 head(.pca)
 highlightOnPlot(.pca, x, col = "red")

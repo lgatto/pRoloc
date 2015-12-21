@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.6
+-------------------------
+ o
+ 
 CHANGES IN VERSION 1.11.5
 -------------------------
  o highlightOnPlot support labels = TRUE to use featureNames as labels

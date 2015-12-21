@@ -583,24 +583,33 @@ addLegend <- function(object,
     invisible(NULL)
 }
 
-
 ##' Highlights a set of features of interest given as a
 ##' \code{FeaturesOfInterest} instance on a PCA plot produced by
 ##' code{plot2D}. If none of the features of interest are found in the
-##' \code{MSnset}'s \code{featureNames}, an error is thrown.
+##' \code{MSnset}'s \code{featureNames}, an warning is thrown.
 ##'
 ##' @title Highlight features of interest on a plot2D figure
+##' 
 ##' @param object The main dataset described as an \code{MSnSet} or a
-##' matrix with the coordinates of the features on the PCA plot
-##' produced (and invisibly returned) by \code{plot2D}.
-##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}}.
+##'     \code{matrix} with the coordinates of the features on the PCA
+##'     plot produced (and invisibly returned) by \code{plot2D}. 
+##' 
+##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}},
+##'     or, alternatively, a \code{character} of feautre names.
+##'
 ##' @param labels A \code{character} of length 1 with a feature
-##' variable name to be used to label the features of
-##' interest. Default is missing.
+##'     variable name to be used to label the features of
+##'     interest. This is only valid if \code{object} is an
+##'     \code{MSnSet}. Alternatively, if \code{TRUE}, then
+##'     \code{featureNames(object)} (or code{rownames(object)}, if
+##'     \code{object} is a \code{matrix}) are used. Default is
+##'     missing, which does not add any label.s
+##' 
 ##' @param args A named list of arguments to be passed to
-##' \code{plot2D} if the PCA coordinates are to be calculated. Ignored
-##' if the PCA coordinates are passed directly, i.e. \code{object} is
-##' a \code{matrix}.
+##'     \code{plot2D} if the PCA coordinates are to be
+##'     calculated. Ignored if the PCA coordinates are passed
+##'     directly, i.e. \code{object} is a \code{matrix}.
+##' 
 ##' @param ... Additional parameters passed to \code{points}.
 ##' @return NULL; used for its side effects.
 ##' @author Laurent Gatto
@@ -610,18 +619,40 @@ addLegend <- function(object,
 ##' x <- FeaturesOfInterest(description = "A test set of features of interest",
 ##'                         fnames = featureNames(tan2009r1)[1:10],
 ##'                         object = tan2009r1)
+##'
+##' ## using FeaturesOfInterest or feature names
+##' par(mfrow = c(2, 1))
+##' plot2D(tan2009r1)
+##' highlightOnPlot(tan2009r1, x)
+##' plot2D(tan2009r1)
+##' highlightOnPlot(tan2009r1, featureNames(tan2009r1)[1:10])
+##' 
 ##' .pca <- plot2D(tan2009r1)
 ##' head(.pca)
 ##' highlightOnPlot(.pca, x, col = "red")
 ##' highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
+##' highlightOnPlot(tan2009r1, x, labels = TRUE)
 ##'
 ##' .pca <- plot2D(tan2009r1, dims = c(1, 3))
-##' highlightOnPlot(.pca, x, pch = "+")
+##' highlightOnPlot(.pca, x, pch = "+", dims = c(1, 3))
 ##' highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
 ##'
-##' plot2D(tan2009r1, mirrorX = TRUE, dims = c(1, 3))
+##' .pca2 <- plot2D(tan2009r1, mirrorX = TRUE, dims = c(1, 3))
+##' ## previous pca matrix, need to mirror X axis
 ##' highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
+##' ## new pca matrix, with X mirrors (and 1st and 3rd PCs)
+##' highlightOnPlot(.pca2, x, col = "red")
+##'
+##' plot2D(tan2009r1)
+##' highlightOnPlot(tan2009r1, x)
+##' highlightOnPlot(tan2009r1, x, labels = TRUE, pos = 3)
+##' highlightOnPlot(tan2009r1, x, labels = "Flybase.Symbol", pos = 1)
 highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
+    if (is.character(foi))
+        foi <- FeaturesOfInterest(description = "internally created",
+                                  fnames = foi)
+    stopifnot(inherits(foi, "FeaturesOfInterest"))
+    
     if (!fnamesIn(foi, object)) {
         warning("None of the features of interest are present in the data.")
         return(invisible(NULL))
@@ -640,12 +671,21 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     if (!is.null(args$mirrorX) && args$mirrorX)
         .pca[, 1] <- -.pca[, 1]
     if (!is.null(args$mirrorY) && args$mirrorY)
-        .pca[, 2] <- -.pca[, 2]    
+        .pca[, 2] <- -.pca[, 2]
     if (!missing(labels)) {
-        labels <- labels[1]
-        stopifnot(labels %in% fvarLabels(object))
-        text(.pca[sel, 1], .pca[sel, 2],
-             fData(object)[sel, labels], ...)
+        if (is.character(labels)) {
+            stopifnot(inherits(object, "MSnSet"))
+            labels <- labels[1]
+            stopifnot(labels %in% fvarLabels(object))
+            labels <- fData(object)[, labels]
+        } else if (isTRUE(labels)) {
+            if (inherits(object, "MSnSet"))
+                labels <- featureNames(object)
+            else labels <- rownames(object) ## a matrix
+        } else {
+            stop("'labels' must be a character or logical of length 1.")
+        }
+        text(.pca[sel, 1], .pca[sel, 2], labels[sel], ...)
     } else {
         points(.pca[sel, 1], .pca[sel, 2], ...)
     }
@@ -654,12 +694,12 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 
 ## Tests whether the object is visualisation method available
 ## in pRoloc 
-    .validpRolocVisMethod <- function(object) {
-        if (class(object) == "matrix" && ncol(object) == 2)
+.validpRolocVisMethod <- function(object) {
+    if (class(object) == "matrix" && ncol(object) == 2)
+        return(TRUE)
+    else
+        if (object %in% pRolocVisMethods)
             return(TRUE)
-        else
-            if (object %in% pRolocVisMethods)
-                return(TRUE)
-        else
-            return(FALSE)
-    }
+    else
+        return(FALSE)
+}

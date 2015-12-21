@@ -402,6 +402,11 @@ plot2D <- function(object,
         stop("'", fcol, "' not found in feature variables.")
     if (!missing(fpch) && !fpch %in% fvarLabels(object))
         stop("'", fpch, "' not found in feature variables.")
+    ## mirror irrespective of plotting
+    if (mirrorX)
+        .data[, 1] <- -.data[, 1]
+    if (mirrorY)
+        .data[, 2] <- -.data[, 2]
     if (plot) {
         if (axsSwitch) {
             .data <- .data[, 2:1]
@@ -409,10 +414,6 @@ plot2D <- function(object,
             .xlab <- .ylab
             .ylab <- .tmp
         }
-        if (mirrorX)
-            .data[, 1] <- -.data[, 1]
-        if (mirrorY)
-            .data[, 2] <- -.data[, 2]
         
         col <- rep(unknowncol, nrow(.data))
         pch <- rep(unknownpch, nrow(.data))        

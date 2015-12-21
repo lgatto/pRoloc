@@ -8,19 +8,23 @@ highlightOnPlot(object, foi, labels, args = list(), ...)
 }
 \arguments{
 \item{object}{The main dataset described as an \code{MSnSet} or a
-matrix with the coordinates of the features on the PCA plot
-produced (and invisibly returned) by \code{plot2D}.}
+\code{matrix} with the coordinates of the features on the PCA
+plot produced (and invisibly returned) by \code{plot2D}.}
 
 \item{foi}{An instance of \code{\linkS4class{FeaturesOfInterest}}.}
 
 \item{labels}{A \code{character} of length 1 with a feature
 variable name to be used to label the features of
-interest. Default is missing.}
+interest. This is only valid if \code{object} is an
+\code{MSnSet}. Alternatively, if \code{TRUE}, then
+\code{featureNames(object)} (or code{rownames(object)}, if
+\code{object} is a \code{matrix}) are used. Default is
+missing, which does not add any label.s}
 
 \item{args}{A named list of arguments to be passed to
-\code{plot2D} if the PCA coordinates are to be calculated. Ignored
-if the PCA coordinates are passed directly, i.e. \code{object} is
-a \code{matrix}.}
+\code{plot2D} if the PCA coordinates are to be
+calculated. Ignored if the PCA coordinates are passed
+directly, i.e. \code{object} is a \code{matrix}.}
 
 \item{...}{Additional parameters passed to \code{points}.}
 }
@@ -31,7 +35,7 @@ NULL; used for its side effects.
 Highlights a set of features of interest given as a
 \code{FeaturesOfInterest} instance on a PCA plot produced by
 code{plot2D}. If none of the features of interest are found in the
-\code{MSnset}'s \code{featureNames}, an error is thrown.
+\code{MSnset}'s \code{featureNames}, an warning is thrown.
 }
 \examples{
 library("pRolocdata")
@@ -43,13 +47,22 @@ x <- FeaturesOfInterest(description = "A test set of features of interest",
 head(.pca)
 highlightOnPlot(.pca, x, col = "red")
 highlightOnPlot(tan2009r1, x, col = "red", cex = 1.5)
+highlightOnPlot(tan2009r1, x, labels = TRUE)
 
 .pca <- plot2D(tan2009r1, dims = c(1, 3))
-highlightOnPlot(.pca, x, pch = "+")
+highlightOnPlot(.pca, x, pch = "+", dims = c(1, 3))
 highlightOnPlot(tan2009r1, x, args = list(dims = c(1, 3)))
 
-plot2D(tan2009r1, mirrorX = TRUE, dims = c(1, 3))
+.pca2 <- plot2D(tan2009r1, mirrorX = TRUE, dims = c(1, 3))
+## previous pca matrix, need to mirror X axis
 highlightOnPlot(.pca, x, pch = "+", args = list(mirrorX = TRUE))
+## new pca matrix, with X mirrors (and 1st and 3rd PCs)
+highlightOnPlot(.pca2, x, col = "red")
+
+plot2D(tan2009r1)
+highlightOnPlot(tan2009r1, x)
+highlightOnPlot(tan2009r1, x, labels = TRUE, pos = 3)
+highlightOnPlot(tan2009r1, x, labels = "Flybase.Symbol", pos = 1)
 }
 \author{
 Laurent Gatto

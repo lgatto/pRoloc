@@ -598,7 +598,8 @@ addLegend <- function(object,
 ##'
 ##' @param labels A \code{character} of length 1 with a feature
 ##'     variable name to be used to label the features of
-##'     interest. Alternatively, if \code{TRUE}, then
+##'     interest. This is only valid if \code{object} is an
+##'     \code{MSnSet}. Alternatively, if \code{TRUE}, then
 ##'     \code{featureNames(object)} (or code{rownames(object)}, if
 ##'     \code{object} is a \code{matrix}) are used. Default is
 ##'     missing, which does not add any label.s

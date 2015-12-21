@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.11.5
 -------------------------
- o
+ o highlightOnPlot support labels = TRUE to use featureNames as labels
+   <2015-12-21 Mon>
+ o selective ggplot2 import <2015-12-21 Mon>
  
 CHANGES IN VERSION 1.11.4
 -------------------------

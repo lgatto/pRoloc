@@ -21,11 +21,14 @@ importFrom(biomaRt, getBM,
            useMart,
            listAttributes)
 
+importFrom(ggplot2, ggplot, geom_point, theme, scale_size_continuous,
+           xlab, ylab, scale_y_discrete, geom_text,
+           scale_color_manual, element_text, scale_x_discrete)
+
 ## Importing to avoid 'no visible global function definition for' NOTES
 import(Biobase)
 
 import(lattice)
-import(ggplot2)
 import(BiocGenerics)
 import(mclust)
 import(MASS)

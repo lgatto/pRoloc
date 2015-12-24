@@ -171,7 +171,7 @@ getPredictions <- function(object,
     }
     if (length(t) > 1) {
         if (!all(sort(names(t)) == sort(predclasses)))
-            stop("Class-specific score names do not match the class namesa exactly:\n",
+            stop("Class-specific score names do not match the class names exactly:\n",
                  "   score names: ", paste(sort(names(t)), collapse = ", "), "\n",
                  "   class names: ", paste(sort(predclasses), collapse = ", "))
         tt <- as.vector(t[predictions])

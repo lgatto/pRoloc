@@ -36,7 +36,7 @@ test_that("nndist matrix/msnset", {
     expect_equal(data.frame(resm), fData(rese)[, -1]) 
 })
 
-test_that("nndist query", {    
+test_that("nndist query", {
     res <- nndist(m, q, k = 2)
     res0 <- rbind(c(1, as.numeric(dist(rbind(q[1, ], m[1, ]))),
                     2, as.numeric(dist(rbind(q[1, ], m[2, ])))),

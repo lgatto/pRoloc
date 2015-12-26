@@ -108,6 +108,7 @@ export(## MSnSet manipulation
     checkFvarOverlap,
     checkFeatureNamesOverlap,
     ## -- machine learning
+    classWeights,
     plsdaRegularisation, plsdaOptimisation, plsdaOptimization,
     plsdaPrediction, plsdaClassification,
     svmRegularisation, svmOptimisation, svmOptimization,

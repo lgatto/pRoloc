@@ -1110,8 +1110,8 @@ slightly different analysis than described in section \ref{sec:sml}
 weights are set to be inversely proportional to class frequencies.
 
 <<weights, eval = TRUE, echo = TRUE>>=
-w <- table(fData(tan2009r1)[, "pd.markers"])
-(w <- 1/w[names(w) != "unknown"])
+w <- classWeights(tan2009r1, fcol = "pd.markers")
+w
 @ 
 
 <<pdsvmParams, eval = FALSE, tidy = FALSE>>=

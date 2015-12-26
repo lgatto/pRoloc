@@ -141,3 +141,27 @@ fDataToUnknown <- function(object, fcol = "markers",
         return(object)
 }
 
+##' Calculates class weights to be used for parameter optimisation and
+##' classification such as \code{\link{svmOptimisation}} or
+##' \code{\link{svmClassification}} - see the \emph{pRoloc tutorial}
+##' vignette for an example. The weights are calculated for all
+##' non-\emph{unknown} classes the inverse of the number of
+##' observations.
+##'
+##' @title Calculate class weights
+##' @param object An instance of class \code{MSnSet}
+##' @param fcol The name of the features to be weighted
+##' @return A \code{table} of class weights
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(hyperLOPIT2015)
+##' classWeights(hyperLOPIT2015)
+##' data(dunkley2006)
+##' classWeights(dunkley2006)
+classWeights <- function(object, fcol = "markers") {
+    stopifnot(inherits(object, "MSnSet"))
+    w <- table(fData(object)[, fcol])
+    w <- 1/w[names(w) != "unknown"]
+    w
+}

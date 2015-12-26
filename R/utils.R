@@ -143,10 +143,10 @@ fDataToUnknown <- function(object, fcol = "markers",
 
 ##' Calculates class weights to be used for parameter optimisation and
 ##' classification such as \code{\link{svmOptimisation}} or
-##' \code{\link{svmClassiciation}} - see the \emph{pRoloc tutorial}
+##' \code{\link{svmClassification}} - see the \emph{pRoloc tutorial}
 ##' vignette for an example. The weights are calculated for all
 ##' non-\emph{unknown} classes the inverse of the number of
-##' observations. 
+##' observations.
 ##'
 ##' @title Calculate class weights
 ##' @param object An instance of class \code{MSnSet}

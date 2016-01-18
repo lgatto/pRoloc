@@ -4,7 +4,7 @@ remap <- function(object, ref = 1) {
     x <- msnsets(object)
     refset <- x[[ref]]
     pca1 <- prcomp(exprs(refset), scale = TRUE, center = TRUE)
-    colnames(pca1$x) <- paste0("PC", 1:ncol(reset))
+    colnames(pca1$x) <- paste0("PC", 1:ncol(refset))
     preds <- lapply(x, function(xx) {
         ans <- predict(pca1, newdata = exprs(xx))
         colnames(ans) <- paste0("PC", 1:ncol(xx))

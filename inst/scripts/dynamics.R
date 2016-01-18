@@ -4,16 +4,17 @@ remap <- function(object, ref = 1) {
     x <- msnsets(object)
     refset <- x[[ref]]
     pca1 <- prcomp(exprs(refset), scale = TRUE, center = TRUE)
-    colnames(pca1$x) <- paste0("PC", 1:ncol(refset))
     preds <- lapply(x, function(xx) {
         ans <- predict(pca1, newdata = exprs(xx))
-        colnames(ans) <- paste0("PC", 1:ncol(xx))
         ans
     })
     for (i in seq_along(x)) {
-        exprs(object@x[[i]]) <- preds[[i]]
-        object@x[[i]] <-
-            MSnbase:::logging(object@x[[i]], "remapped (PCA)")
+        xx <- object@x[[i]]
+        exprs(xx) <- preds[[i]]
+        sampleNames(xx) <-
+            paste0("PC", 1:ncol(xx))
+        xx <- MSnbase:::logging(xx, "remapped (PCA)")
+        object@x[[i]] <- xx
     }
     exprs(object@x[[ref]]) <- pca1$x
     object@log[["remap"]] <- list(type = "PCA", prcomp = pca1, ref = ref)
@@ -40,6 +41,30 @@ remap <- function(object, ref = 1) {
 ## }
 
 
+## Last check Tue Dec  8 20:56:27 2015
+## Also changed to use single mart instances
+
+library("biomaRt")
+
+## get MartInterface inferface
+source("../../R/MartInterface.R")
+
+mil <- MartInstanceList(list(ensembl = MartInstance(name = "ENSEMBL_MART_ENSEMBL",
+                                                    host="www.ensembl.org",
+                                                    path="/biomart/martservice"),
+                             plants = MartInstance(name = "plants_mart",
+                                                   host="plants.ensembl.org",
+                                                   path="/biomart/martservice"),
+                             fungi = MartInstance(name = "fungal_mart",
+                                                  host="fungi.ensembl.org",
+                                                  path="/biomart/martservice"),     
+                             metazoa = MartInstance("metazoa_mart",
+                                                    host="metazoa.ensembl.org",
+                                                    path="/biomart/martservice")))
+## filter out datasets that don't have all required attributes
+mil <- lapply(mil, filterAttrs)
+
+saveRDS(martTab, file="../extdata/mil.rds", compress = "xz")
 .pdist <- function(x, y, distfun) {
     e1 <- exprs(x)
     e2 <- exprs(y)

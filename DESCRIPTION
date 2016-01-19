@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.11.6
+Version: 1.11.7
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 	            email = "lg390@cam.ac.uk", 
                     role = c("aut","cre")),
@@ -105,5 +105,6 @@ Collate:
     makeGoSet.R
     vis.R
     MartInterface.R
+    dynamics.R
     zzz.R
 RoxygenNote: 5.0.1

@@ -105,5 +105,6 @@ Collate:
     makeGoSet.R
     vis.R
     MartInterface.R
+    dynamics.R
     zzz.R
 RoxygenNote: 5.0.1

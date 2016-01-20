@@ -67,6 +67,19 @@ biocLite("pRolocdata")
 biocLite("pRolocGUI")
 ```  
 
+The pre-release/development code on github can be installed using
+`biocLite`. Note that this requires a working R build environment (i.e
+`Rtools` on Windows - see
+[here](https://github.com/lgatto/teachingmaterial/wiki/R-package)).
+
+
+```c
+## install from github
+biocLite("lgatto/pRoloc")
+biocLite("lgatto/pRolocdata")
+biocLite("ComputationalProteomicsUnit/pRolocGUI")
+```
+
 ## References:
 
 Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley KS.

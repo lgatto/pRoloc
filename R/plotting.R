@@ -396,7 +396,7 @@ plot2D <- function(object,
     ## replaced by methargs[[1]] (see method = "none" above).
     stopifnot(inherits(object, "MSnSet"))
     if (isMrkMat(object, fcol))
-        stop("To visualise a marker matrix, use 'plotMat2D' from package pRolocGUI (>= 1.3.1).")
+        stop("To visualise a marker matrix, use 'pRolocVis' from package pRolocGUI (>= 1.5.2).")
     if (!is.null(fcol)) stopifnot(isMrkVec(object, fcol))
     if (!is.null(fcol) && !fcol %in% fvarLabels(object))
         stop("'", fcol, "' not found in feature variables.")

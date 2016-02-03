@@ -1,6 +1,11 @@
 CHANGES IN VERSION 1.11.8
 -------------------------
  o New Lisa cols and changed default unknown col <2016-02-03 Wed>
+ o mrkVecToMat has been updated so that the column order reflects
+   the factor levels of fcol, rather than calling unique on fcol.
+   This change means that the order of the classes in fcol are 
+   now consistent between plot2D and new visualisation apps that
+   rely on mrkVecToMat. <2016-02-03 Wed>
  
 CHANGES IN VERSION 1.11.7
 -------------------------

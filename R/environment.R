@@ -1,11 +1,10 @@
 .pRolocEnv <- new.env(parent=emptyenv(), hash=TRUE)
 
-lisacol <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00",
-             "#FFD700", "#A65628", "#F781BF", "#999999", "#333333",
-             "#00CED1", "#276419","#FDAE6B","#A50F15", "#00008A",
-             "#8E0152", "#CD8C95", "#66C2A5", "#6A51A3","#EEAD0E",
-             "#0000FF", "#CDB5CD", "#CDBE70", "#9ACD32", "#CD6090",
-             "#CD5B45", "#B0C4DE", "#808000", "#8B795E", "#483D8B")
+lisacols <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333", 
+              "#00CED1", "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#8E0152", 
+              "#00008A", "#67000D", "#FDAE6B", "#66C2A5", "#276419", "#CD8C95",
+              "#6A51A3", "#EEAD0E", "#0000FF", "#9ACD32", "#CD6090", "#CD5B45", 
+              "#B0C4DE", "#808000", "#8B795E", "#3F007D", "#6BAED6", "#FC9272")
 
 assign("lisacol", lisacol, envir = .pRolocEnv)
 
@@ -28,7 +27,7 @@ assign("stockcol", stockcol, envir = .pRolocEnv)
 stockpch <- c(19, 1, 15, 0, 17, 2, 18, 5, 7, 9, 13, 3:4,  8)
 assign("stockpch", stockpch, envir = .pRolocEnv)
 
-unknowncol <- "#E7E7E7" ## grey91
+unknowncol <- "#E0E0E0" ## grey88
 assign("unknowncol", unknowncol, envir = .pRolocEnv)
 
 unknownpch <- 21

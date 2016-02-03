@@ -1,6 +1,6 @@
 .pRolocEnv <- new.env(parent=emptyenv(), hash=TRUE)
 
-lisacols <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333", 
+lisacol <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333", 
               "#00CED1", "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#8E0152", 
               "#00008A", "#67000D", "#FDAE6B", "#66C2A5", "#276419", "#CD8C95",
               "#6A51A3", "#EEAD0E", "#0000FF", "#9ACD32", "#CD6090", "#CD5B45", 

@@ -34,7 +34,7 @@ pdist <- function(object, distfun = dist, simplify = TRUE) {
     stopifnot(inherits(object, "MSnSetList"))
     ## keeping common feature names
     suppressMessages(object <- commonFeatureNames(object))
-    if (!.sameNbCol(object))
+    if (!MSnbase:::.sameNbCol(object))
         stop("All MSnSets must have the same number of columns.")
     if (is.null(names(object)))
         names(object) <- seq_len(length(object))

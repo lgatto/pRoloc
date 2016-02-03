@@ -68,7 +68,7 @@ mrkVecToMat <- function(object,
     if (!vfcol %in% fvl) stop(vfcol, " does not exist.")
     if (mfcol %in% fvl) stop(mfcol, " already present.")
     m <- fData(object)[, vfcol]
-    um <- unique(m)
+    um <- levels(factor(m))
     if ("unknown" %in% um) um <- um[um != "unknown"]
     M <- matrix(0, nrow = nrow(object), ncol = length(um))
     rownames(M) <- featureNames(object)

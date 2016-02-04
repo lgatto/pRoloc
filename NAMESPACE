@@ -88,7 +88,7 @@ export(## MSnSet manipulation
     getStockcol, getStockpch,
     setStockcol, setStockpch,
     getLisacol, setLisacol,
-    setStockcolGui,
+    getOldcol, setOldcol,
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
     filterBinMSnSet,

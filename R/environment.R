@@ -1,28 +1,31 @@
 .pRolocEnv <- new.env(parent=emptyenv(), hash=TRUE)
 
-lisacol <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333", 
-              "#00CED1", "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#B0C4DE", 
+stockcol <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333",
+              "#00CED1", "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#B0C4DE",
               "#00008A", "#8B795E", "#FDAE6B", "#66C2A5", "#276419", "#CD8C95",
-              "#6A51A3", "#EEAD0E", "#0000FF", "#9ACD32", "#CD6090", "#CD5B45", 
+              "#6A51A3", "#EEAD0E", "#0000FF", "#9ACD32", "#CD6090", "#CD5B45",
               "#8E0152", "#808000", "#67000D", "#3F007D", "#6BAED6", "#FC9272")
 
-assign("lisacol", lisacol, envir = .pRolocEnv)
+assign("stockcol", stockcol, envir = .pRolocEnv)
 
-##' @rdname getStockcol
-setLisacol <- function()
-    assign("stockcol", lisacol, envir = .pRolocEnv)
-
-##' @rdname getStockcol
-getLisacol <- function() get("lisacol", envir=.pRolocEnv)
+setLisacol <- function() message("The 'lisacol' palette is now the default option")
+getLisacol <- function() message("The 'lisacol' palette is now the default option")
 
 ## plotting stock colors and point chars
-stockcol <-  c(brewer.pal(9, "Set1"),
-               "#333333", ## grey20
-               "#A021EF", ## purple
-               "#008A45", ## springgreen4
-               "#00008A") ## blue4
+oldcol <-  c(brewer.pal(9, "Set1"),
+             "#333333", ## grey20
+             "#A021EF", ## purple
+             "#008A45", ## springgreen4
+             "#00008A") ## blue4
 
-assign("stockcol", stockcol, envir = .pRolocEnv)
+assign("oldcol", oldcol, envir = .pRolocEnv)
+
+##' @rdname getStockcol
+getOldcol <- function() get("oldcol", envir = .pRolocEnv)
+
+##' @rdname getStockcol
+setOldcol <- function()
+    assign("stockcol", oldcol, envir = .pRolocEnv)
 
 stockpch <- c(19, 1, 15, 0, 17, 2, 18, 5, 7, 9, 13, 3:4,  8)
 assign("stockpch", stockpch, envir = .pRolocEnv)
@@ -62,10 +65,8 @@ assign("unknownpch", unknownpch, envir = .pRolocEnv)
 ##' getUnknowncol()
 ##' setUnknowncol(NULL)
 ##' getUnknowncol()
-##' getLisacol()
-##' setLisacol()
-##' ## now default colours are Lisa's
 ##' getStockcol()
+##' getOldcol()
 getStockcol <- function() get("stockcol", envir = .pRolocEnv)
 
 ##' @param cols A vector of colour \code{characters} or \code{NULL},
@@ -112,41 +113,6 @@ getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
 setUnknownpch <- function(pch) {
     if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
     else assign("unknownpch", pch, envir = .pRolocEnv)
-}
-
-##' @rdname getStockcol
-setStockcolGui <- function() {
-    n <- length(colours())
-    i <- 26
-    m <- matrix(c(1:n, rep(NA, m)),
-                ncol = i, nrow = i)
-    ## plotting
-    image(m, col = colours(),
-          xaxt = "n", yaxt = "n")
-    k <- seq(0, 1, length.out = i)
-    kk <- expand.grid(k, k)
-    kk <- kk[1:n, ]
-    ## points(kk)
-    ## choosing
-    identifycol <- function(x, y = NULL, n = length(x), pch = 19) {
-        ## from ?identify
-        k <- 1
-        xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
-        sel <- rep(FALSE, length(x)); res <- integer(0)
-        while(sum(sel) < n) {
-            ans <- identify(x[!sel], y[!sel], n = 1, plot = FALSE)
-            if (!length(ans)) break
-            ans <- which(!sel)[ans]
-            text(x[ans], y[ans], k, cex = 1.5)
-            k <- k + 1
-            sel[ans] <- TRUE
-            res <- c(res, ans)
-        }
-        res
-    }
-    ans <- identifycol(kk)
-    ans <- col2hcl(colours()[ans])
-    setStockcol(ans)
 }
 
 ## -------------------------------

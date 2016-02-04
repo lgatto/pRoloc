@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.11.9
+-------------------------
+ o Lisa's colour palette is now default. Old colours can be accessed
+   and set with get/setOldcol <2016-02-04 Thu>
+ 
 CHANGES IN VERSION 1.11.8
 -------------------------
  o New Lisa cols and changed default unknown col <2016-02-03 Wed>

@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.11.10
+--------------------------
+ o Update colours man page to document change in default colour
+   palette <2016-02-08 Mon>
+ 
 CHANGES IN VERSION 1.11.9
 -------------------------
  o Lisa's colour palette is now default. Old colours can be accessed

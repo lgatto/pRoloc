@@ -481,9 +481,8 @@ effect of \Rfunction{normalise(..., method = "sum")}.
 <<norm, echo=TRUE, message=FALSE, cache=TRUE>>=
 ## create a small illustrative test data
 data(itraqdata)
-itraqdata <- quantify(itraqdata, method = "trap", 
-                      reporters = iTRAQ4, 
-                      verbose = FALSE, parallel = FALSE)
+itraqdata <- quantify(itraqdata, method = "trap",
+                      reporters = iTRAQ4)
 ## the quantification data
 head(exprs(itraqdata), n = 3)
 summary(rowSums(exprs(itraqdata)))

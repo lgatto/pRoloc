@@ -8,7 +8,10 @@ stockcol <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333",
 
 assign("stockcol", stockcol, envir = .pRolocEnv)
 
+##' @rdname getStockcol
 setLisacol <- function() message("The 'lisacol' palette is now the default option")
+
+##' @rdname getStockcol
 getLisacol <- function() message("The 'lisacol' palette is now the default option")
 
 ## plotting stock colors and point chars
@@ -36,10 +39,12 @@ assign("unknowncol", unknowncol, envir = .pRolocEnv)
 unknownpch <- 21
 assign("unknownpch", unknownpch, envir = .pRolocEnv)
 
-##' These functions allow to get/set the default colours and point
-##' character that are used when plotting organelle clusters and
-##' unknown features. These values are parametrised at the session
-##' level. Two palettes are available: the default and Lisa's colours.
+##' These functions allow to get/set the colours and point character
+##' that are used when plotting organelle clusters and unknown
+##' features. These values are parametrised at the session level. Two
+##' palettes are available: the default palette (previously
+##' \emph{Lisa's colours}) containing 30 colours and the old
+##' (original) palette, containing 13 colours.
 ##'
 ##' @title Manage default colours and point characters
 ##' @return The \code{set} functions set (and invisibly returns)

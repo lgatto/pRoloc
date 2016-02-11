@@ -1,6 +1,9 @@
 
 remap <- function(object, ref = 1) {
     stopifnot(inherits(object, "MSnSetList"))
+    if (length(lapply(object, sampleNames)) != 1)
+      stop("The sampleNames of the datasets in the MSnSetList are different, 
+  please check your sampleNames of each item in the MSnSetList")
     x <- msnsets(object)
     refset <- x[[ref]]
     pca1 <- prcomp(exprs(refset), scale = TRUE, center = TRUE)

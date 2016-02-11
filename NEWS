@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.11.11
 --------------------------
- o
+ o added error message when sampleNames differ between datasets
+   in an MSnSetList when using remap function <2016-02-11 Thu>
  
 CHANGES IN VERSION 1.11.10
 --------------------------

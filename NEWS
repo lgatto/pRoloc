@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.13
+--------------------------
+ o
+ 
 CHANGES IN VERSION 1.11.12
 --------------------------
  o the colour and pch setters now invisibly return the old values

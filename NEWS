@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.11.12
+--------------------------
+ o the colour and pch setters now invisibly return the old values
+   <2016-02-17 Wed>
+ 
 CHANGES IN VERSION 1.11.11
 --------------------------
  o added error message when sampleNames differ between datasets

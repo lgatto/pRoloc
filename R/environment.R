@@ -78,11 +78,13 @@ getStockcol <- function() get("stockcol", envir = .pRolocEnv)
 ##' which sets the colours to the default values.
 ##' @rdname getStockcol
 setStockcol <- function(cols) {
+    prevcols <- getStockcol()
     if (is.null(cols)) {
         assign("stockcol", stockcol, envir = .pRolocEnv)
     } else if (cols[1] == "lisacol") {
         setLisacol()
     } else assign("stockcol", cols, envir = .pRolocEnv)
+    invisible(prevcols)
 }
 
 ##' @rdname getStockcol
@@ -92,8 +94,10 @@ getStockpch <- function() get("stockpch", envir=.pRolocEnv)
 ##' which sets the point characters to the default values.
 ##' @rdname getStockcol
 setStockpch <- function(pchs) {
+    prevpch <- getStockpch()
     if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
     else assign("stockpch", pchs, envir = .pRolocEnv)
+    invisible(prevpch)
 }
 
 ##' @rdname getStockcol
@@ -105,8 +109,10 @@ getUnknowncol <- function() get("unknowncol", envir=.pRolocEnv)
 ##' the default colour for unknown features.
 ##' @rdname getStockcol
 setUnknowncol <- function(col) {
+    prevcol <- getUnknowncol()
     if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
     else assign("unknowncol", col, envir = .pRolocEnv)
+    invisible(prevcol)
 }
 
 ##' @rdname getStockcol
@@ -116,8 +122,10 @@ getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
 ##' which sets the point character to 21, the default.
 ##' @rdname getStockcol
 setUnknownpch <- function(pch) {
+    prevpch <- getUnknownpch()
     if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
     else assign("unknownpch", pch, envir = .pRolocEnv)
+    invisible(prevpch)
 }
 
 ## -------------------------------

@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.11.13
 --------------------------
- o
+ o new method argument added to knntlOptimisation that allows 
+   optimisation of class weights as per Wu and Dietterich's
+   original k-NN TL method <2016-02-19 Fri>
  
 CHANGES IN VERSION 1.11.12
 --------------------------

@@ -6,7 +6,7 @@
 \usage{
 knntlOptimisation(primary, auxiliary, fcol = "markers", k, times = 50,
   test.size = 0.2, xval = 5, by = 0.5, length.out, th, xfolds,
-  BPPARAM = BiocParallel::bpparam())
+  BPPARAM = BiocParallel::bpparam(), method = "Breckels")
 }
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -40,7 +40,8 @@ to test.}
 generated from the function \code{\link{thetas}}, the number of
 columns should be equal to the number of classes contained in
 \code{fcol}. Note: columns will be ordered according to
-\code{getMarkerClasses(primary, fcol)}.}
+\code{getMarkerClasses(primary, fcol)}. This argument is only
+valid if the default method 'Breckels' is used.}
 
 \item{xfolds}{Option to pass specific folds for the cross
 validation.}
@@ -48,6 +49,11 @@ validation.}
 \item{BPPARAM}{Required for parallelisation. If not specified
 selects a default \code{BiocParallelParam}, from global options
 or, if that fails, the most recently registered() back-end.}
+
+\item{method}{The k-NN transfer learning method to use. The default
+is 'Breckels' as described in the Breckels et al (2016). If 'Wu' is
+specificed then the original method implemented Wu and Dietterich
+(2004) is implemented.}
 }
 \value{
 A list of containing the theta combinations tested,
@@ -68,6 +74,16 @@ Conference on Machine Learning, pages 871 - 878.  Morgan Kaufmann,
 }
 \author{
 Lisa Breckels
+}
+\references{
+Breckels LM, Holden S, Wonjar D, Mulvey CM, 
+Christoforou A, Groen AJ, Kohlbacher O, Lilley KS, Gatto L. 
+Learning from heterogeneous data sources: an application 
+in spatial proteomics. bioRxiv. doi: http://dx.doi.org/10.1101/022152
+
+Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary 
+Data Sources. Proceedings of the 21st International Conference on Machine
+Learning (ICML); 2004.
 }
 \seealso{
 \code{\link{knntlClassification}} and example therein.

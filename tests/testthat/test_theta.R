@@ -1,5 +1,47 @@
 context("thetaFunctions")
 
+test_that("theta matrices passed to knntl are the same as those output and stored in hyperparameters", {
+  library("pRolocdata")
+  data(andy2011)
+  data(andy2011goCC)
+  tl1 <- knntlOptimisation(andy2011, andy2011goCC,
+                           fcol = "markers.orig",
+                           times = 1,
+                           by = 1, k = c(3, 3), 
+                           BPPARAM = MulticoreParam(1L), 
+                           method = "Breckels")
+  tl2 <-knntlOptimisation(andy2011, andy2011goCC,
+                          fcol = "markers.orig",
+                          times = 1,
+                          by = 1, k = c(3, 3), 
+                          BPPARAM = MulticoreParam(1L))
+  expect_equal(tl1@hyperparameters, tl2@hyperparameters)
+  
+  weights <- thetas(nclass = length(getMarkerClasses(andy2011, 
+                                                     fcol = "markers.orig", 
+                                                     verbose = FALSE)),
+                    by = 1, verbose = FALSE)
+  
+  tl3 <- knntlOptimisation(andy2011, andy2011goCC,
+                           fcol = "markers.orig",
+                           times = 1, th = weights,
+                           by = 1, k = c(3, 3), 
+                           BPPARAM = MulticoreParam(1L))
+  expect_equal(tl3@hyperparameters, tl1@hyperparameters)
+  
+  n <- length(getMarkerClasses(andy2011, fcol = "markers.orig", verbose = FALSE))
+  wuweights <- matrix(rep(seq(0, 1, length.out = 4), n), ncol = n)
+  tl4 <-  knntlOptimisation(andy2011, andy2011goCC,
+                            fcol = "markers.orig",
+                            times = 1,
+                            length.out = 4, 
+                            k = c(3, 3), 
+                            BPPARAM = MulticoreParam(1L),
+                            method = "Wu")
+  dimnames(tl4@hyperparameters$theta) <- NULL
+  expect_equal(wuweights, tl4@hyperparameters$theta)
+}) 
+
 ## test_that("results from thetaOptimisation with all primary/auxiliary is the same as knnClassification with primary/auxiliary", {
 ##   library("pRolocdata")
 ##   library("sampling")

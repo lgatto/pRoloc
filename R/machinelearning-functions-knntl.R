@@ -523,6 +523,7 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' is 'Breckels' as described in the Breckels et al (2016). If 'Wu' is
 ##' specificed then the original method implemented Wu and Dietterich
 ##' (2004) is implemented. 
+##' @param seed The optional random number generator seed.
 ##' @return A list of containing the theta combinations tested,
 ##' associated macro F1 score and accuracy for each combination over
 ##' each round (specified by times).
@@ -549,15 +550,22 @@ knntlOptimisation  <- function(primary,
                                th,
                                xfolds,
                                BPPARAM = BiocParallel::bpparam(),
-                               method = "Breckels"
+                               method = "Breckels",
+                               seed
                                 
-) {  
-  ## Set seed (removed for Darwin HPC)
-  ## if (missing(seed)) {
-  ##   seed <- sample(.Machine$integer.max, 1)
-  ## } 
-  ## .seed <- as.integer(seed)
-  ## set.seed(.seed)
+) { 
+
+  ## Set seed (Originally removed for Darwin HPC, and added
+  ## back 22/02/16 to use with SerialParam, unit testing and for 
+  ## reproducibility)
+  if (class(BPPARAM) == "SerialParam") {
+    if (missing(seed)) {
+      seed <- sample(.Machine$integer.max, 1)
+    } 
+    .seed <- as.integer(seed)
+    set.seed(.seed)
+  }
+  
   
   ## Check object validity
   if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))

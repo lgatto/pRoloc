@@ -6,7 +6,7 @@
 \usage{
 knntlOptimisation(primary, auxiliary, fcol = "markers", k, times = 50,
   test.size = 0.2, xval = 5, by = 0.5, length.out, th, xfolds,
-  BPPARAM = BiocParallel::bpparam(), method = "Breckels")
+  BPPARAM = BiocParallel::bpparam(), method = "Breckels", seed)
 }
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -54,6 +54,8 @@ or, if that fails, the most recently registered() back-end.}
 is 'Breckels' as described in the Breckels et al (2016). If 'Wu' is
 specificed then the original method implemented Wu and Dietterich
 (2004) is implemented.}
+
+\item{seed}{The optional random number generator seed.}
 }
 \value{
 A list of containing the theta combinations tested,

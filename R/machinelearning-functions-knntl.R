@@ -857,6 +857,7 @@ knntlOptimisation  <- function(primary,
 ##' @param scores One of \code{"prediction"}, \code{"all"} or
 ##' \code{"none"} to report the score for the predicted class only,
 ##' for all cluster or none.
+##' @param seed The optional random number generator seed.
 ##' @return A character vector of the classifications for the unknowns
 ##' @seealso \code{\link{knntlOptimisation}}
 ##' @author Lisa Breckels
@@ -891,8 +892,16 @@ knntlClassification <- function(primary,
                                 fcol = "markers",
                                 bestTheta,
                                 k,
-                                scores = c("prediction", "all", "none")) {  
+                                scores = c("prediction", "all", "none"),
+                                seed) {  
   
+  ## Set seed 
+  if (missing(seed)) {
+    seed <- sample(.Machine$integer.max, 1)
+  } 
+  .seed <- as.integer(seed)
+  set.seed(.seed)
+
   scores <- match.arg(scores)
   if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))
     stop("Primary and auxiliary must both be of class 'MSnSet'")

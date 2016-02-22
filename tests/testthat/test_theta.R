@@ -21,8 +21,17 @@ test_that("theta matrices passed to knntl are the same as those output and store
                           by = 1, k = c(3, 3), 
                           BPPARAM = SerialParam(),
                           seed = seed)
-  
   expect_equal(tl1, tl2)
+  
+  par <- getParams(tl1)
+  res1 <- knntlClassification(andy2011, andy2011goCC, 
+                              fcol = "markers.orig", 
+                              bestTheta = par, k = c(3,3))
+  res2 <- knntlClassification(andy2011, andy2011goCC, 
+                              fcol = "markers.orig", 
+                              bestTheta = par, k = c(3,3))
+  expect_equal(fData(res1)$knntl.scores, fData(res2)$knntl.scores)                   
+  expect_equal(fData(res1)$knntl, fData(res2)$knntl) 
   
   ## Test whether passing weights using the thetas function
   ## or calculating internally produces the same results

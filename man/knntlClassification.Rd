@@ -5,7 +5,7 @@
 \title{knn transfer learning classification}
 \usage{
 knntlClassification(primary, auxiliary, fcol = "markers", bestTheta, k,
-  scores = c("prediction", "all", "none"))
+  scores = c("prediction", "all", "none"), seed)
 }
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -25,6 +25,8 @@ is not specified it will be calculated internally.}
 \item{scores}{One of \code{"prediction"}, \code{"all"} or
 \code{"none"} to report the score for the predicted class only,
 for all cluster or none.}
+
+\item{seed}{The optional random number generator seed.}
 }
 \value{
 A character vector of the classifications for the unknowns

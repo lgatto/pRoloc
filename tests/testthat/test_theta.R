@@ -11,31 +11,33 @@ test_that("theta matrices passed to knntl are the same as those output and store
   tl1 <- knntlOptimisation(andy2011, andy2011goCC,
                            fcol = "markers.orig",
                            times = 1,
-                           by = 1, k = c(3, 3), 
-                           BPPARAM = SerialParam(), 
+                           by = 1, k = c(3, 3),
+                           BPPARAM = SerialParam(),
                            method = "Breckels",
                            seed = seed)
-  tl2 <-knntlOptimisation(andy2011, andy2011goCC,
-                          fcol = "markers.orig",
-                          times = 1,
-                          by = 1, k = c(3, 3), 
-                          BPPARAM = SerialParam(),
-                          seed = seed)
+  tl2 <- knntlOptimisation(andy2011, andy2011goCC,
+                           fcol = "markers.orig",
+                           times = 1,
+                           by = 1, k = c(3, 3),
+                           BPPARAM = SerialParam(),
+                           seed = seed)
   expect_equal(tl1, tl2)
-  
+
   par <- getParams(tl1)
-  res1 <- knntlClassification(andy2011, andy2011goCC, 
-                              fcol = "markers.orig", 
-                              bestTheta = par, k = c(3,3))
-  res2 <- knntlClassification(andy2011, andy2011goCC, 
-                              fcol = "markers.orig", 
-                              bestTheta = par, k = c(3,3))
-  expect_equal(fData(res1)$knntl.scores, fData(res2)$knntl.scores)                   
-  expect_equal(fData(res1)$knntl, fData(res2)$knntl) 
+  res1 <- knntlClassification(andy2011, andy2011goCC,
+                              fcol = "markers.orig",
+                              bestTheta = par, k = c(3,3),
+                              seed = seed)
+  res2 <- knntlClassification(andy2011, andy2011goCC,
+                              fcol = "markers.orig",
+                              bestTheta = par, k = c(3,3),
+                              seed = seed)
+  expect_equal(fData(res1)$knntl.scores, fData(res2)$knntl.scores)
+  expect_equal(fData(res1)$knntl, fData(res2)$knntl)
   
   ## Test whether passing weights using the thetas function
   ## or calculating internally produces the same results
-  n <- length(getMarkerClasses(andy2011,fcol = "markers.orig", 
+  n <- length(getMarkerClasses(andy2011,fcol = "markers.orig",
                                     verbose = FALSE))
   weights <- thetas(nclass = n, by = 1, verbose = FALSE)
   

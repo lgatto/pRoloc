@@ -1,3 +1,13 @@
+CHANGES IN VERSION 1.11.13
+--------------------------
+ o new method argument added to knntlOptimisation that allows 
+   optimisation of class weights as per Wu and Dietterich's
+   original k-NN TL method <2016-02-19 Fri>
+ o seed argument added to knntlOptimisation for reproducibility
+   <2016-02-22 Mon>
+ o New section in tl vignette describing preparation of auxiliary PPI
+   data <2016-02-29 Mon>
+ 
 CHANGES IN VERSION 1.11.12
 --------------------------
  o the colour and pch setters now invisibly return the old values

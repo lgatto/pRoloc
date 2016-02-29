@@ -50,7 +50,7 @@ Imports:
     biomaRt
 Suggests:
     testthat,
-    pRolocdata (>= 1.5.8),
+    pRolocdata (>= 1.9.4),
     roxygen2,
     synapter,
     xtable,

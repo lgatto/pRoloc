@@ -60,7 +60,7 @@ setMethod("f1Count", "ThetaRegRes",
           function(object, t) {
             f1tab <- getF1Scores(object)
             .f1 <- f1tab[, "F1"]
-            .weights <- f1tab[, 2:ncol(f1tab)]
+            .weights <- f1tab[, 2:ncol(f1tab), drop = FALSE]
             if (missing(t))
               t <- max(.f1, na.rm = TRUE)
             .tokeep <- which(.f1 >= t)
@@ -94,8 +94,8 @@ setMethod("getParams", "ThetaRegRes",
             if (method == "max") {
               scores <- object@results[, 1]
               ind <- which(scores == max(scores))
-              res <- object@results[ind, -1]
-              if (!is.vector(class(res))) {
+              if (length(ind) > 1) {
+                res <- object@results[ind, -1, drop = FALSE]
                 if (favourP) {
                   message("More than one best theta, picking weights that favour primary. See plot() to examine best thetas")
                   rs <- rowSums(res)
@@ -109,17 +109,17 @@ setMethod("getParams", "ThetaRegRes",
                 }
                 best <- res[ind, ]
               } else {
-                best <- res
+                object@results[ind, -1]
               }
             }
             
             if (method == "median") {
-              res <- object@results[, -1]
+              res <- object@results[, -1, drop = FALSE]
               best <- apply(res, 2, median)
             }
             
             if (method == "mean") {
-              res <- object@results[, -1]
+              res <- object@results[, -1, drop = FALSE]
               best <- apply(res, 2, mean)
             }
             

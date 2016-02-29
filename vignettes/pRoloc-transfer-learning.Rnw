@@ -330,6 +330,88 @@ dim(hpaset)
 exprs(hpaset)[c(1, 6, 200), 1:3]
 @
 
+\subsection{Protein-protein interactions}\label{sec:ppi}
+
+Protein-protein interaction data can also be used as auxiliary data
+input to the transfer learning algorithm. Several sources can be used
+to do so directly from R: 
+
+\begin{itemize}
+
+\item The \Biocpkg{PSICQUIC} package provides an R interfaces to the
+  HUPO Proteomics Standard Initiative (HUPO-PSI) project, which
+  standardises programmatic access to molecular interaction
+  databases. This approach enables to query great many resources in
+  one go but, as noted in the vignettes, for bulk interactions, it is
+  recommended to directly download databases from individual PSICQUIC
+  providers.
+  
+\item The \Biocpkg{STRINGdb} package provides a direct interface to
+  the STRING protein-protein interactions database. This package can
+  be used to generate a table as the one used below. The exact
+  procedure is described in the \texttt{STRINGdb} vignette and
+  involves mapping the protein identifiers with the \Rfunction{map}
+  and retrieve the interaction partners with the
+  \Rfunction{get\_neighbors} method.
+  
+\item Finally, it is possible to use any third-party PPI inference
+  results and adequately prepare these results for transfer
+  learning. Below, we will described this case with PPI data in a
+  tab-delimited format, as retrieved directly from the STRING
+  database.
+\end{itemize}
+
+
+Below, we access the PPI spreadsheet file for our test data, that is
+distributed with the \Biocexptpkg{pRolocdata} package.
+
+<<tabdelim>>=
+ppif <- system.file("extdata/tabdelimited._gHentss2F9k.txt.gz", package = "pRolocdata")
+ppidf <- read.delim(ppif, header = TRUE, stringsAsFactors = FALSE)
+head(ppidf)
+@
+
+The file contains \Sexpr{nrow(ppidf)} pairwise interactions and the
+STRING combined interaction score. Below, we create a contingency
+matrix that uses these scores to encode and weight interactions.
+
+<<ppiset>>=
+uid <- unique(c(ppidf$X.node1, ppidf$node2))
+ppim <- diag(length(uid))
+colnames(ppim) <- rownames(ppim) <- uid
+
+for (k in 1:nrow(ppidf)) {
+    i <- ppidf[[k, "X.node1"]]
+    j <- ppidf[[k, "node2"]]
+    ppim[i, j] <- ppidf[[k, "combined_score"]]
+}
+
+ppim[1:5, 1:8]
+@ 
+
+We now have a contingency matrix reflecting a total of
+\Sexpr{sum(ppim != 0)} interactions between \Sexpr{nrow(ppim)}
+proteins. Below, we only keep proteins that are also available in our
+spatial proteomics data, subset the PPI and LOPIT data, create the
+appropriate \Robject{MSnSet} object, and filter out proteins without
+any interaction scores.
+
+<<ppiset2>>=
+featureNames(andy2011) <- sub("_HUMAN", "", fData(andy2011)$UniProtKB.entry.name)
+cmn <- intersect(featureNames(andy2011), rownames(ppim))
+ppim <- ppim[cmn, ]
+andy2011 <- andy2011[cmn, ]
+
+ppi <- MSnSet(ppim, fData = fData(andy2011),
+              pData = data.frame(row.names = colnames(ppim)))
+ppi <- filterZeroCols(ppi)
+@
+
+We now have two \Robject{MSnSet} objects containing respectively
+\Sexpr{nrow(andy2011)} primary experimental protein profiles along a
+sub-cellular density gradient (\texttt{andy2001}) and
+\Sexpr{nrow(ppi)} auxiliary interaction profiles (\texttt{ppi}).
+
 \section{Support vector machine transfer learning}\label{sec:svmtl}
 
 The SVM-TL method descibed in \cite{Breckels:2015} has not yet been
@@ -343,6 +425,7 @@ the method is currently available in its own repository:
 \subsection{Optimal weights}\label{sec:theopt}
 
 <<mclasses, echo=FALSE>>=
+data(andy2011) ## load clean LOPIT data
 ## marker classes for andy2011
 m <- unique(fData(andy2011)$markers.tl)
 m <- m[m != "unknown"]
@@ -465,7 +548,6 @@ topt <- knntlOptimisation(andy2011, andygoset,
                           times = 50)
 @
 
-
 The above code chunk would take too much time to be executed in the
 frame of this vignette. Below, we pass a very small subset of theta
 matrix to minimise the computation time. The
@@ -570,7 +652,7 @@ variables respectively). Below, we extract the former with the
 classification.
 
 <<tlpreds>>=
-getPredictions(andy2011, fcol = "knntl")
+andy2011 <- getPredictions(andy2011, fcol = "knntl")
 @
 
 \begin{figure}[h]

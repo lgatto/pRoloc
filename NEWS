@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.11.15
 --------------------------
-
+ o Clarify that score during optim are not a reflection of final
+   assignment accuracy <2016-03-01 Tue>
 
 CHANGES IN VERSION 1.11.14
 --------------------------

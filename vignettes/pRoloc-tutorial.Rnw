@@ -809,13 +809,17 @@ Before actually generating a model on the new markers and classifying
 unknown residents, one has to take care of properly setting the model
 parameters. Wrongly set parameters can have a very negative impact on
 classification performance. To do so, we create testing (to model) and
-training (to predict) subsets using known residents. By comparing
-observed and expected classification prediction, we can assess how
-well a given model works using the macro F1 score (see below). This
-procedure is repeated for a range of possible model parameter values
-(this is called a grid search), and the best performing set of
-parameters is then used to construct a model on all markers and
-predict un-labelled proteins.
+training (to predict) subsets using known residents, i.e. marker
+proteins. By comparing observed and expected classification
+prediction, we can assess how well a given model works using the macro
+F1 score (see below). This procedure is repeated for a range of
+possible model parameter values (this is called a grid search), and
+the best performing set of parameters is then used to construct a
+model on all markers and predict un-labelled proteins. For this
+parameter optimisation procedure to perform well and produce useful
+results, it is essential to run it with a reasonable amount of
+markers. In our experience, 15 such marker proteins are necessary.
+
 
 Model accuracy is evaluated using the F1 score, $F1 = 2 ~
 \frac{precision \times recall}{precision + recall}$, calculated as the
@@ -901,6 +905,23 @@ assess whether this is the most wise choice.
 f1Count(params)
 getParams(params)
 @ 
+
+
+\paragraph{NB} It is essential to emphasise that the accuracy scores
+obtained during parameter optimisation are only a reflection of
+classification performance on a set of distinct and ideally separated
+spatial clusters\footnote{Indeed, we assume that the data is
+  characterised by good separation of the various spatial niches which
+  are reflected by sub-cellular markers. Quality control of the data
+  and the markers using the visualisation described in section
+  \ref{sec:viz} is essential and subsequent analyses are doomed to
+  fail in the absence of such separation.}. These scores are not
+representative of the reliability of the final classification
+(described in section \ref{sec:sml}), in particular along the
+boundaries separating the different sub-cellular niches. High scores
+at the optimisation stage are a requirement to proceed with the
+analysis, but are by no means indicative of the false positive rate in
+the final sub-cellular assignment of non-marker proteins.
 
 \subsubsection{Classification}\label{sec:sml}
 

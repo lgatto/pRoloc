@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.14
+--------------------------
+ o fix build error due to doi/url confusion <2016-03-01 Tue>
+ 
 CHANGES IN VERSION 1.11.13
 --------------------------
  o new method argument added to knntlOptimisation that allows 

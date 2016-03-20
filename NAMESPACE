@@ -6,6 +6,16 @@ import(methods)
 import(Rcpp)
 importFrom(BiocParallel, bplapply)
 
+importFrom("grDevices", "blues9", "colorRampPalette", "dev.new", "rgb")
+importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
+           "matplot", "points", "segments", "smoothScatter", "text")
+importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
+           "mahalanobis", "median", "prcomp", "qchisq", "quantile",
+           "update", "var", "rmultinom")
+importFrom("utils", "combn", "head", "menu", "packageDescription",
+           "packageVersion", "read.csv", "setTxtProgressBar",
+           "txtProgressBar")
+
 importMethodsFrom(MLInterfaces, MLearn,
                   predScore, predScores,
                   predictions)
@@ -38,7 +48,6 @@ import(knitr)
 importFrom(class, knn)
 importFrom(FNN, get.knn, get.knnx)
 importFrom(RColorBrewer, brewer.pal)
-importFrom(stats, rmultinom)
 ## importFrom(stats4, plot)
 importFrom(mvtnorm, rmvnorm)
 importFrom(proxy, simil)

@@ -47,7 +47,10 @@ Imports:
     gtools,
     plyr,
     ggplot2,
-    biomaRt
+    biomaRt,
+    utils,
+    grDevices,
+    graphics
 Suggests:
     testthat,
     pRolocdata (>= 1.9.4),

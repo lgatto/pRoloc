@@ -21,4 +21,4 @@ mil <- MartInstanceList(list(ensembl = MartInstance(name = "ENSEMBL_MART_ENSEMBL
 ## filter out datasets that don't have all required attributes
 mil <- lapply(mil, filterAttrs)
 
-saveRDS(martTab, file="../extdata/mil.rds", compress = "xz")
+saveRDS(mil, file="../extdata/mil.rds", compress = "xz")

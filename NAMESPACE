@@ -54,7 +54,9 @@ importFrom(plyr, colwise, catcolwise, ddply)
 exportClasses(GenRegRes,
               ThetaRegRes,
               AnnotationParams,
-              SpatProtVis)
+              SpatProtVis,
+              ClustDist,
+	      ClustDistList)
               ## ClustRegRes)
 
 exportMethods(chi2,
@@ -149,4 +151,13 @@ export(## MSnSet manipulation
     ## -- markers
     mrkVecToMat, mrkMatToVec,
     mrkMatAndVec, showMrkMat,
-    isMrkMat, isMrkVec)
+    isMrkMat, isMrkVec,
+    ## -- gomarkers
+    addGoMarkers,
+    filterMinMarkers,
+    filterMaxMarkers,
+    subsetMarkers,
+    orderGoMarkers,
+    ## -- clustdist
+    clustDist,
+    getNormDist)

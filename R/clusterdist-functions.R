@@ -1,4 +1,3 @@
-
 ## Sub-function for clustDist: output the Euclidean distance matrix and 
 ## component IDs of each protein for a given k tested
 .clusterDistK <- function(k, x, min.size) {

@@ -70,10 +70,37 @@
 ##' summarises the algorithm information such as the number of k's tested 
 ##' for the kmeans, and mean and normalised pairwise Euclidean distances 
 ##' per numer of component clusters tested. 
-##' 
 ##' @seealso For class definitions see \code{"\linkS4class{ClustDistList}"} 
 ##' and \code{"\linkS4class{ClustDist}"}.
 ##' @author Lisa Breckels
+##' @example
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' par <- setAnnotationParams(inputs =
+##'                    c("Arabidopsis thaliana genes",
+##'                    "TAIR locus ID"))
+##' ## add protein sets/annotation information
+##' xx <- addGoMarkers(dunkley2006, par)
+##' ## filter
+##' xx <- filterMinMarkers(xx, n = 50)
+##' xx <- filterMaxMarkers(xx, p = .25)
+##' ## get distances for protein sets 
+##' dd <- clustDist(xx)
+##' ## plot clusters for first 'ClustDist' object 
+##' ## in the 'ClustDistList'
+##' plot(dd[[1]], xx)
+##' ## plot distances for all protein sets 
+##' plot(dd)
+##' ## Extract normalised distances
+##' ## Normalise by n^1/3
+##' minDist <- getNormDist(dd, p = 1/3)
+##' ## Get new order according to lowest distance
+##' o <- order(minDist)
+##' ## Re-order 'GOMarkers' 
+##' fData(xx)$GOMarkers <- fData(xx)$GOMarkers[, o]
+##' if (interactive()) {
+##' pRolocVis(xx, fcol = "GOMarkers")
+##' }
 clustDist <- function(object,
                       k = 1:5,
                       fcol = "GOMarkers",
@@ -237,7 +264,7 @@ normDist <- function(object, ## ClustDist object
 ##' @return An numeric of normalised distances, one per protein set in the
 ##' \code{ClustDistList}.
 ##' @seealso \code{"\linkS4class{ClustDistList}"}, \code{"\linkS4class{ClustDist}"},
-##' \code{clustDist}.
+##' and examples in \code{clustDist}.
 ##' @author Lisa Breckels
 getNormDist <- function(object, ## EucDist class
                         p = 1/3) {

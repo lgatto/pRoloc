@@ -3,26 +3,31 @@
 ##'
 ##' @title Plots the distribution of features across fractions
 ##' @param object An instance of class \code{MSnSet}.
-##' @param markers A \code{character}, \code{numeric} or \code{logical}
-##' of appropriate length and or content used to subset \code{object}
-##' and define the organelle markers.
-##' @param mcol A \code{character} define the colour of the marker features.
-##' Default is \code{"steelblue"}. 
-##' @param pcol A \code{character} define the colour of the non-markers features.
-##' Default is \code{"grey90"}. 
+##' @param markers A \code{character}, \code{numeric} or
+##'     \code{logical} of appropriate length and or content used to
+##'     subset \code{object} and define the organelle markers.
+##' @param mcol A \code{character} define the colour of the marker
+##'     features.  Default is \code{"steelblue"}.
+##' @param pcol A \code{character} define the colour of the
+##'     non-markers features.  Default is \code{"grey90"}.
 ##' @param alpha A numeric defining the alpha channel (transparency)
-##' of the points, where \code{0 <= alpha <= 1}, 0 and 1 being completely
-##' transparent and opaque.
+##'     of the points, where \code{0 <= alpha <= 1}, 0 and 1 being
+##'     completely transparent and opaque.
+##' @param type Character string defining the type of lines. For
+##'     example \code{"p"} for points, \code{"l"} for lines,
+##'     \code{"b"} for both. See \code{plot} for all possible types.
 ##' @param lty Vector of line types for the marker profiles. Default
-##' is 1 (solid). See \code{\link{par}} for details.
-##' @param fractions An optional \code{character} defining the \code{phenoData}
-##' variable to be used to label the fraction along the x axis. If missing, the
-##' \code{phenoData} variables are searched for a match to \code{fraction}.
-##' If no match is found, the fractions are labelled as numericals.
-##' @param ylim A numeric vector of length 2, giving the y coordinates range.
+##'     is 1 (solid). See \code{\link{par}} for details.
+##' @param fractions An optional \code{character} defining the
+##'     \code{phenoData} variable to be used to label the fraction
+##'     along the x axis. If missing, the \code{phenoData} variables
+##'     are searched for a match to \code{fraction}.  If no match is
+##'     found, the fractions are labelled as numericals.
+##' @param ylim A numeric vector of length 2, giving the y coordinates
+##'     range.
 ##' @param ... Additional parameters passed to \code{\link{plot}}.
-##' @return Used for its side effect of producing a feature distribution
-##' plot. Invisibly returns the data matrix.
+##' @return Used for its side effect of producing a feature
+##'     distribution plot. Invisibly returns the data matrix.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
@@ -37,6 +42,7 @@ plotDist <- function(object,
                      mcol = "steelblue",                     
                      pcol = "grey90",
                      alpha = 0.3,
+                     type = "b",
                      lty = 1,
                      fractions,
                      ylim,
@@ -69,9 +75,8 @@ plotDist <- function(object,
       mcol <- col2hcl(mcol)      
       .mrk <- exprs(object[markers, ])
       matlines(t(.mrk),
-               pch = 1,
                col = mcol,
-               type = "b",
+               type = type,
                lty = lty,
                ...)
     }

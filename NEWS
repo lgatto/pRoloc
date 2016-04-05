@@ -1,3 +1,6 @@
+CHANGES IN VERSION 1.11.21
+--------------------------
+
 CHANGES IN VERSION 1.11.20
 --------------------------
  o Update plotDist signature to support different types and pch

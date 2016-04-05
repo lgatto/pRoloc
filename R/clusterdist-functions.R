@@ -73,7 +73,7 @@
 ##' @seealso For class definitions see \code{"\linkS4class{ClustDistList}"} 
 ##' and \code{"\linkS4class{ClustDist}"}.
 ##' @author Lisa Breckels
-##' @example
+##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' par <- setAnnotationParams(inputs =
@@ -96,7 +96,7 @@
 ##' minDist <- getNormDist(dd, p = 1/3)
 ##' ## Get new order according to lowest distance
 ##' o <- order(minDist)
-##' ## Re-order 'GOMarkers' 
+##' ## Re-order GOMarkers 
 ##' fData(xx)$GOMarkers <- fData(xx)$GOMarkers[, o]
 ##' if (interactive()) {
 ##' pRolocVis(xx, fcol = "GOMarkers")

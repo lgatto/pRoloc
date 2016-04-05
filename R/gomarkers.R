@@ -15,19 +15,29 @@
 ##' called \code{GOMarkers} containing a matrix of GO
 ##' markers
 ##' @author Lisa M Breckels
-##' @example 
+##' @examples
+##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' setAnnotationParams(inputs =
 ##'                       c("Arabidopsis thaliana genes",
 ##'                                           "TAIR locus ID"))
 ##' xx <- addGoMarkers(dunkley2006)
 ##' dim(fData(xx)$GOMarkers)
-##' ## filter
+##' 
+##' ## filter sets
 ##' xx <- filterMinMarkers(xx, n = 50)
 ##' dim(fData(xx)$GOMarkers)
 ##' xx <- filterMaxMarkers(xx, p = .25)
-##' ## Subset for specific markers
+##' dim(fData(xx)$GOMarkers)
+##' 
+##' ## Subset for specific protein sets
 ##' sub <- subsetMarkers(xx, keep = c("vacuole"))
+##' 
+##' ## Order protein sets
+##' res <- orderGoMarkers(xx, k = 1:3, p = 1/3, verbose = FALSE)
+##' if (interactive()) {
+##' pRolocVis(res, fcol = "GOMarkers")
+##' }
 addGoMarkers <- function(object, params, evidence, 
                          useID = FALSE, fcol = "GOMarkers",
                          ...) {
@@ -216,17 +226,7 @@ subsetMarkers <- function(object,
 ##' @return An updated \code{MSnSet} containing the newly ordered 
 ##' \code{fcol} matrix.
 ##' @author Lisa M Breckels
-##' @example
-##' data(dunkley2006)
-##' setAnnotationParams(inputs =
-##'                       c("Arabidopsis thaliana genes",
-##'                                           "TAIR locus ID"))
-##' xx <- addGoMarkers(dunkley2006)
-##' xx <- filterMinMarkers(xx, n = 10)
-##' res <- orderGoMarkers(xx, k = 1:3, p = 1/3, verbose = FALSE)
-##' if (interactive()) {
-##' pRolocVis(res, fcol = "GOMarkers")
-##' }
+##' @seealso \code{addGoMarkers} and example therein.
 orderGoMarkers <- function(object,
                            fcol = "GOMarkers",
                            k = 1:5,

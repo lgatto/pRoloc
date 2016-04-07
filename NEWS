@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.11.21
 --------------------------
-
+ o fix bug in getParams method = 'max' <2016-04-07 Thu>
+ 
 CHANGES IN VERSION 1.11.20
 --------------------------
  o Update plotDist signature to support different types and pch

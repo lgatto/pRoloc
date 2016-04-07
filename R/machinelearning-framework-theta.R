@@ -88,7 +88,6 @@ setMethod("getParams", "ThetaRegRes",
                    method = c("median", "mean", "max", "count"),
                    favourP = FALSE
                    ) {
-            
             if (missing(method)) method <- "median"
 
             if (method == "max") {
@@ -109,7 +108,7 @@ setMethod("getParams", "ThetaRegRes",
                 }
                 best <- res[ind, ]
               } else {
-                object@results[ind, -1]
+                best <- object@results[ind, -1]
               }
             }
             

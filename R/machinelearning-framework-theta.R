@@ -7,6 +7,7 @@ setClass("ThetaRegRes",
 setMethod("show",
           signature(object = "ThetaRegRes"),
           function(object) {
+            browser()
               cat("Object of class \"",class(object),"\"\n",sep="")
               cat("Algorithm:", object@algorithm, "\n")
               cat("Theta hyper-parameters:\n")

@@ -665,7 +665,7 @@ knntlOptimisation  <- function(primary,
               "(as names are not explicitly defined)")
       colnames(th) <- classes
     } else {
-      th <- th[, c(match(classes, colnames(th)))]
+      th <- th[, c(match(classes, colnames(th))), drop = FALSE]
     }
     .numTh <- nrow(th)
     w1 <- unique(as.vector(th))
@@ -691,7 +691,7 @@ knntlOptimisation  <- function(primary,
            "the function pRoloc::createPartitons")
     }
   }
-  
+
   .workers <- BPPARAM$workers
   if (.numTh < .workers) {
     .workers <- .numTh # Is there enough rows in the matrix to split amongst cores

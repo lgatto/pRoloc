@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.23
+--------------------------
+ o
+ 
 CHANGES IN VERSION 1.11.22
 --------------------------
  o fix bug in knntlOptimisation to allow passing of th matrix

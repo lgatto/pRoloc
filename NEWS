@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.11.22
+--------------------------
+ o fix bug in knntlOptimisation to allow passing of th matrix
+   with 1 column <2016-04-08 Fri>
+ 
 CHANGES IN VERSION 1.11.21
 --------------------------
  o fix bug in getParams method = 'max' <2016-04-07 Thu>

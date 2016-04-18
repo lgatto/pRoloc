@@ -105,7 +105,8 @@ clustDist <- function(object,
                       k = 1:5,
                       fcol = "GOMarkers",
                       n = 5,
-                      verbose = TRUE) {
+                      verbose = TRUE,
+                      seed) {
   
   ## check min cluster size is not > available GO marker sets
   min.cs <- min(colSums(fData(object)[, fcol]))
@@ -116,6 +117,13 @@ clustDist <- function(object,
     stop("Please run filterMinMarkers. There are some columns in 
          fcol = ", fcol, " with only 1 protein. Can not create a
          cluster with only 1 protein.")
+  
+  ## allow setting of seed to re-produce results
+  if (missing(seed)) {
+    seed <- sample(.Machine$integer.max, 1)
+  }
+  .seed <- as.integer(seed)
+  set.seed(.seed)
   
   ## Matrix of potential markers
   .pm <- fData(object)[, fcol]

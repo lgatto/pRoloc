@@ -42,19 +42,20 @@ addGoMarkers <- function(object, params, evidence,
                          useID = FALSE, fcol = "GOMarkers",
                          ...) {
   if (missing(evidence))
-        evidence = NULL
-   if (any(fvarLabels(object) == "GOMarkers"))
-        stop ("colname GOMarkers already exists if fData")
-    goSet <- makeGoSet(object, params, evidence = evidence, ...)
-    goSet <- filterZeroCols(goSet)
-    fData(object)[, fcol] <- exprs(goSet)
-    id <- colnames(fData(object)[, fcol])
-    orgnames <- goIdToTerm(id, names = FALSE)
-    colnames(fData(object)[, fcol]) <- orgnames
-    #object <- filterGoMarkers(object) ## Remove any obselete terms
-    return (object)
+    evidence = NULL
+  if (!inherits(params, "AnnotationParams"))
+    stop("params must be of class AnnotationParams")
+  if (any(fvarLabels(object) == "GOMarkers"))
+    stop("colname GOMarkers already exists if fData")
+  goSet <- makeGoSet(object, params, evidence = evidence, ...)
+  goSet <- filterZeroCols(goSet)
+  fData(object)[, fcol] <- exprs(goSet)
+  id <- colnames(fData(object)[, fcol])
+  orgnames <- goIdToTerm(id, names = FALSE)
+  colnames(fData(object)[, fcol]) <- orgnames
+  #object <- filterGoMarkers(object) ## Remove any obselete terms
+  return (object)
 }
-
 
 
 ##' Removes annotation information that contain less that a
@@ -232,10 +233,18 @@ orderGoMarkers <- function(object,
                            k = 1:5,
                            n = 5,
                            p = 1/3,
-                           verbose = TRUE) {
+                           verbose = TRUE,
+                           seed) {
+  ## set seed for reproducibility for kmeans
+  if (missing(seed)) {
+    seed <- sample(.Machine$integer.max, 1)
+  }
+  .seed <- as.integer(seed)
+  set.seed(.seed)
   ## calculate distances
   message("Calculating GO cluster densities")
-  dd <- clustDist(object, k = k, fcol = fcol, n = n, verbose = verbose)
+  dd <- clustDist(object, k = k, fcol = fcol, n = n, 
+                  verbose = verbose, seed = seed)
   ## Normalise by n^1/3
   minDist <- getNormDist(dd, p = 1/3)
   ## Get new order according to lowest distance

@@ -210,7 +210,7 @@ subsetMarkers <- function(object,
 ##' high density, tight clusters to have the smallest mean 
 ##' normalised distance.
 ##' 
-##' This function is a wrapper for running \code{clusterDist},
+##' This function is a wrapper for running \code{clustDist},
 ##' \code{getNormDist}, see the "Annotating spatial proteomics data"
 ##' vignette for more details.
 ##' 
@@ -235,7 +235,7 @@ orderGoMarkers <- function(object,
                            verbose = TRUE) {
   ## calculate distances
   message("Calculating GO cluster densities")
-  dd <- calcDist(object, k = k, fcol = fcol, n = n, verbose = verbose)
+  dd <- clustDist(object, k = k, fcol = fcol, n = n, verbose = verbose)
   ## Normalise by n^1/3
   minDist <- getNormDist(dd, p = 1/3)
   ## Get new order according to lowest distance

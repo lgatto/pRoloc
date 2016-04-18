@@ -1,5 +1,34 @@
+CHANGES IN VERSION 1.11.23
+--------------------------
+ o New gomarkers functionality for adding annotation information 
+   to spatial proteomics data and accompanying new vignette 
+   <2016-04-18 Mon>
+ 
+CHANGES IN VERSION 1.11.22
+--------------------------
+ o fix bug in knntlOptimisation to allow passing of th matrix
+   with 1 column <2016-04-08 Fri>
+ 
+CHANGES IN VERSION 1.11.21
+--------------------------
+ o fix bug in getParams method = 'max' <2016-04-07 Thu>
+ 
+CHANGES IN VERSION 1.11.20
+--------------------------
+ o Update plotDist signature to support different types and pch
+   <2016-04-05 Tue>
+
+CHANGES IN VERSION 1.11.19
+--------------------------
+  o Update dunkley2006params <2016-04-01 Fri>
+  
+CHANGES IN VERSION 1.11.18
+--------------------------
+ o Update dunkley2006params <2016-03-30 Wed>
+ 
 CHANGES IN VERSION 1.11.17
 --------------------------
+ o Selective imports <2016-03-20 Sun>
 
 CHANGES IN VERSION 1.11.16
 --------------------------

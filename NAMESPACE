@@ -8,7 +8,8 @@ importFrom(BiocParallel, bplapply)
 
 importFrom("grDevices", "blues9", "colorRampPalette", "dev.new", "rgb")
 importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
-           "matplot", "points", "segments", "smoothScatter", "text")
+           "matplot", "points", "segments", "smoothScatter", "text",
+           "par", "mtext")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
            "update", "var", "rmultinom")
@@ -63,7 +64,9 @@ importFrom(plyr, colwise, catcolwise, ddply)
 exportClasses(GenRegRes,
               ThetaRegRes,
               AnnotationParams,
-              SpatProtVis)
+              SpatProtVis,
+              ClustDist,
+	      ClustDistList)
               ## ClustRegRes)
 
 exportMethods(chi2,
@@ -158,4 +161,13 @@ export(## MSnSet manipulation
     ## -- markers
     mrkVecToMat, mrkMatToVec,
     mrkMatAndVec, showMrkMat,
-    isMrkMat, isMrkVec)
+    isMrkMat, isMrkVec,
+    ## -- gomarkers
+    addGoMarkers,
+    filterMinMarkers,
+    filterMaxMarkers,
+    subsetMarkers,
+    orderGoMarkers,
+    ## -- clustdist
+    clustDist,
+    getNormDist)

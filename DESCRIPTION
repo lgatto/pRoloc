@@ -110,4 +110,7 @@ Collate:
     MartInterface.R
     dynamics.R
     zzz.R
+    gomarkers.R
+    clusterdist-functions.R
+    clusterdist-framework.R
 RoxygenNote: 5.0.1

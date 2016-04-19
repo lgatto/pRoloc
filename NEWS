@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.11.23
 --------------------------
- o
+ o New gomarkers functionality for adding annotation information 
+   to spatial proteomics data and accompanying new vignette 
+   <2016-04-18 Mon>
  
 CHANGES IN VERSION 1.11.22
 --------------------------
@@ -15,6 +17,19 @@ CHANGES IN VERSION 1.11.20
 --------------------------
  o Update plotDist signature to support different types and pch
    <2016-04-05 Tue>
+
+CHANGES IN VERSION 1.11.19
+--------------------------
+  o Update dunkley2006params <2016-04-01 Fri>
+  
+CHANGES IN VERSION 1.11.18
+--------------------------
+ o Update dunkley2006params <2016-03-30 Wed>
+ 
+CHANGES IN VERSION 1.11.17
+--------------------------
+ o Selective imports <2016-03-20 Sun>
+>>>>>>> dbb83b6b5240a0abbc0e7191b7a4134c03449bad
 
 CHANGES IN VERSION 1.11.19
 --------------------------

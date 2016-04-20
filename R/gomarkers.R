@@ -18,10 +18,11 @@
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
-##' setAnnotationParams(inputs =
-##'                       c("Arabidopsis thaliana genes",
-##'                                           "TAIR locus ID"))
-##' xx <- addGoMarkers(dunkley2006)
+##' par <- setAnnotationParams(inputs =
+##'                    c("Arabidopsis thaliana genes",
+##'                    "TAIR locus ID"))
+##' ## add protein sets/annotation information
+##' xx <- addGoMarkers(dunkley2006, par)
 ##' dim(fData(xx)$GOMarkers)
 ##' 
 ##' ## filter sets

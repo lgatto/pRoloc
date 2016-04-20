@@ -85,7 +85,7 @@
   xx <- filterMaxMarkers(xx, p = .25)
   
   ## get distances for protein sets
-  dd <- ClustDistList(xx)
+  dd <- clustDist(xx)
   
   ## plot distances for all protein sets 
   plot(dd)

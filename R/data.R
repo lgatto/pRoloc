@@ -1,18 +1,16 @@
 ##' These functions take an instance of class
-##' \code{"\linkS4class{MSnSet}"} and sets randomly
-##' selected values to \code{NA}.
+##' \code{"\linkS4class{MSnSet}"} and sets randomly selected values to
+##' \code{NA}.
 ##'
-##' \code{makeNaData} randomly selects a number \code{nNA}
-##' (or a proportion \code{pNA}) of cells in the expression
-##' matrix to be set to \code{NA}.
+##' \code{makeNaData} randomly selects a number \code{nNA} (or a
+##' proportion \code{pNA}) of cells in the expression matrix to be set
+##' to \code{NA}.
 ##' 
-##' \code{makeNaData2} will select \code{length(nRows)}
-##' sets of rows from \code{object},
-##' each with \code{nRows[i]} rows respectively. 
-##' The first set will be assigned
-##' \code{nNAs[1]} missing values, the second
-##' \code{nNAs[2]}, ... As opposed to \code{makeNaData},
-##' this permits to control the number of \code{NAs} per rows.
+##' \code{makeNaData2} will select \code{length(nRows)} sets of rows
+##' from \code{object}, each with \code{nRows[i]} rows respectively.
+##' The first set will be assigned \code{nNAs[1]} missing values, the
+##' second \code{nNAs[2]}, ... As opposed to \code{makeNaData}, this
+##' permits to control the number of \code{NAs} per rows.
 ##' 
 ##' The \code{whichNA} can be used to extract the indices
 ##' of the missing values, as illustrated in the example.
@@ -22,11 +20,11 @@
 ##' @param nNA The absolute number of missing values to be assigned.
 ##' @param pNA The proportion of missing values to be assignmed.
 ##' @param exclude A \code{vector} to be used to subset \code{object},
-##' defining rows that should not be used to set \code{NA}s.
-##' @return An instance of class \code{MSnSet}, as \code{object},
-##' but with the appropriate number/proportion of missing values.
-##' The returned object has an additional feature meta-data columns,
-##' \code{nNA}
+##'     defining rows that should not be used to set \code{NA}s.
+##' @return An instance of class \code{MSnSet}, as \code{object}, but
+##'     with the appropriate number/proportion of missing values.  The
+##'     returned object has an additional feature meta-data columns,
+##'     \code{nNA}
 ##' @author Laurent Gatto
 ##' @examples
 ##' ## Example 1
@@ -67,12 +65,12 @@ makeNaData <- function(object,
       if (!all(fn0 %in% exclude))
         stop("Unknown feature names in 'exclude'")
       exl <- !(fn0 %in% exclude)
-      object <- object0[!exl, ]      
-      objectX <- object0[exl, ]      
+      object <- object0[!exl, ]
+      objectX <- object0[exl, ]
     }
     fData(objectX)$nNA <- 0
   }
-    
+
   N <- prod(dim(object))
   if (missing(nNA)) {
     if (pNA <= 0 | pNA >= 1)
@@ -92,7 +90,7 @@ makeNaData <- function(object,
     if (missing(pNA)) paste0("Set ", nNA, " values to NA")
     else paste0("Set ", nNA, " (", pNA, "%) values to NA")
   }
-  msg <- paste(msg, date())  
+  msg <- paste(msg, date())
   if (!missing(exclude)) {
     msg <- paste0(msg, "\n  (excluding ", nrow(objectX) ," features)" )
     object <- combine(object, objectX)
@@ -103,7 +101,7 @@ makeNaData <- function(object,
   object@processingData@processing <-
     c(object@processingData@processing,
       msg)
-      
+
   if (validObject(object))
     return(object)
 }
@@ -171,7 +169,7 @@ makeNaData2 <- function(object,
     fData(objectX)$nNA <- 0
   }
   
-  naRows <- sample(nrow(object), sum(nRows))  
+  naRows <- sample(nrow(object), sum(nRows))
   naCols <- lapply(1:lNA, function(k) {
     replicate(nRows[k],
               sample(ncol(object), nNAs[k]))
@@ -199,7 +197,7 @@ makeNaData2 <- function(object,
   if (!missing(exclude)) {
     msg <- paste0(msg, "\n  (excluding ", nrow(objectX) ," features)" )
     object <- combine(object, objectX)
-    object <- object[fn0, ]    
+    object <- object[fn0, ]
     object <- MSnbase:::nologging(object, n = 2)
   }
 
@@ -216,5 +214,5 @@ makeNaData2 <- function(object,
 whichNA <- function(x) {
   if (inherits(x, "MSnSet"))
     x <- exprs(x)
-  arrayInd(which(is.na(x)), .dim = dim(x))      
+  arrayInd(which(is.na(x)), .dim = dim(x))
 }

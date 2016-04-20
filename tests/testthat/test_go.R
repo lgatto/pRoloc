@@ -22,3 +22,13 @@ test_that("GO term/id printing", {
     expect_identical(flipGoTermId("GO:0000001", names = FALSE),
                      "mitochondrion inheritance")
 })
+
+test_that("GO evidence codes", {
+    expect_null(showGOEvidenceCodes())
+    expect_length(getGOEvidenceCodes(), 22)
+    expect_identical(getGOEvidenceCodes(),
+                     c("EXP", "IDA", "IPI", "IMP", "IGI", "IEP",
+                       "ISS", "ISO", "ISA", "ISM", "IGC", "IBA",
+                       "IBD", "IKR", "IRD", "RCA", "TAS", "NAS", "IC",
+                       "ND", "IEA", "NR"))    
+})

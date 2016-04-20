@@ -53,7 +53,7 @@ setMethod("plot", c("ClustDist", "MSnSet"),
             if (method == "norm")
               clusterdists <- normDist(x, best = FALSE, p = p)
             if (method == "mean")
-              clusterdists <- meanDist(x, best = FALSE) ## CHECK HERE
+              clusterdists <- meanDist(x, best = FALSE)
             clusterdists <- signif(clusterdists, 3)
             numk <- length(x@k)
             if (numk > 3)

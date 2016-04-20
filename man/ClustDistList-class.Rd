@@ -71,9 +71,8 @@
 
 
 \examples{
-  showClass("ClustDistList")
-  
   library('pRolocdata')
+  data(dunkley2006)
   par <- setAnnotationParams(inputs =
                     c("Arabidopsis thaliana genes",
                     "TAIR locus ID"))

@@ -170,4 +170,5 @@ export(## MSnSet manipulation
     orderGoMarkers,
     ## -- clustdist
     clustDist,
+    ClustDistList,    
     getNormDist)

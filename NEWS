@@ -3,10 +3,12 @@ CHANGES IN VERSION 1.11.23
  o New gomarkers functionality for adding annotation information 
    to spatial proteomics data and accompanying new vignette 
    <2016-04-18 Mon>
+ o Added unit tests <2016-04-20 Wed> <2016-04-21 Thu>
+ o Moved makeNaData[2] and whichNA to MSnbase <2016-04-21 Thu>
  o Renamed addGoMarkers and orderGoMarkers to addGoAnnotations
-   and orderGoAnnotations and all associated documentation. 
-   Vignette also renamed to pRoloc-goannotations 
-   <2016-04-21 Thu> 
+   and orderGoAnnotations and all associated documentation.
+   Vignette also renamed to pRoloc-goannotations
+   <2016-04-21 Thu>
  
 CHANGES IN VERSION 1.11.22
 --------------------------
@@ -33,7 +35,6 @@ CHANGES IN VERSION 1.11.18
 CHANGES IN VERSION 1.11.17
 --------------------------
  o Selective imports <2016-03-20 Sun>
->>>>>>> dbb83b6b5240a0abbc0e7191b7a4134c03449bad
 
 CHANGES IN VERSION 1.11.19
 --------------------------

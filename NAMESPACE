@@ -139,7 +139,6 @@ export(## MSnSet manipulation
     rfRegularisation, rfOptimisation, rfOptimization,
     rfPrediction, rfClassification,
     phenoDisco,
-    makeNaData, makeNaData2, whichNA,
     ## -- tl
     favourPrimary,
     ## plotThetas,

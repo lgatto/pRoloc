@@ -32,7 +32,7 @@ setMethod("show",
             cat(" Using the '", object@dataset, "' dataset\n", sep="")
             cat(" Using '", object@filter, "' as filter\n", sep="")
             cat(" Created on ",object@date, "\n", sep="")
-            invisible(NULL) 
+            invisible(NULL)
           })
 
 
@@ -182,9 +182,9 @@ showGOEvidenceCodes <- function() {
 ##' @rdname showGOEvidenceCodes
 getGOEvidenceCodes <- function()
     c("EXP", ## experimental evidence
-      "IDA", "IPI", "IMP", "IGI", "IEP", 
+      "IDA", "IPI", "IMP", "IGI", "IEP",
       "ISS", ## computational analysis evidence
-      "ISO", "ISA", "ISM", "IGC", "IBA", 
+      "ISO", "ISA", "ISM", "IGC", "IBA",
       "IBD", "IKR", "IRD", "RCA",
       ## author statement - traceable or non-traceable
       "TAS", "NAS",

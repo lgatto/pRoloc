@@ -34,7 +34,7 @@ hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
 ```
 
 # Adding sub-cellular localisation information
-All GO terms associated to proteins that appear in the dataset are retrieved and used to create a binary matrix where a 1 (0) at position $(i,j)$ indicates that term $j$ has (not) been used to annotate feature $i$. This matrix is appended and stored in the feature data slot of the `MSnSet` dataset using the `addGoMarkers` function. We first however need to prepare annotation parameters that will enable us to query the Biomart repository using the \Biocpkg{biomaRt} package, from where we are able to retrieve GO terms. The specific Biomart repository and query
+All GO terms associated to proteins that appear in the dataset are retrieved and used to create a binary matrix where a 1 (0) at position $(i,j)$ indicates that term $j$ has (not) been used to annotate feature $i$. This matrix is appended and stored in the feature data slot of the `MSnSet` dataset using the `addGoAnnotations` function. We first however need to prepare annotation parameters that will enable us to query the Biomart repository using the \Biocpkg{biomaRt} package, from where we are able to retrieve GO terms. The specific Biomart repository and query
 will depend on the species under study and the type of features. This can be set using the `setAnnotationParams` function.
 
 In the code chunk below we set the annotation parameters for the `hyperLOPIT2015` dataset. As this species used was mouse and the `featureNames` of the da`hyperLOPIT2015` dataset are Uniprot accession numbers the input to the function is defined as `inputs = c("Mus musculus", "UniProt/Swissprot")`. See `?setAnnotationParams` for details.
@@ -44,16 +44,15 @@ params <- setAnnotationParams(inputs = c("Mus musculus",
                                          "UniProt/Swissprot"))
 ```
 
-
-Now the parameters for the search have been defined we can use the `addGoMarkers` function to add a GO information matrix to the `featureData` slot of the dataset. The `addGoMarkers` function takes a `MSnSet` instance as input (from which the `featureNames` will be extracted) and it downloads the CC terms (the default, biological process and the molecular function namespaces are also supported) found for each protein in the dataset. The output `MSnSet` has the CC term binary matrix appended to the `fData`, by default this is called `GOMarkers` (and changed using the `fcol` argument).
+Now the parameters for the search have been defined we can use the `addGoAnnotations` function to add a GO information matrix to the `featureData` slot of the dataset. The `addGoAnnotations` function takes a `MSnSet` instance as input (from which the `featureNames` will be extracted) and it downloads the CC terms (the default, biological process and the molecular function namespaces are also supported) found for each protein in the dataset. The output `MSnSet` has the CC term binary matrix appended to the `fData`, by default this is called `GOAnnotations` (and changed using the `fcol` argument).
 
 ```{r addGO, echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE}
-cc <- addGoMarkers(hyperLOPIT2015, params, 
+cc <- addGoAnnotations(hyperLOPIT2015, params, 
                    namespace = "cellular_component")
 fvarLabels(cc)
 ```
 
-The `addGoMarkers` function by defualt does not do any filtering of the terms evidence codes unless specified in the `evidence` argument, see `?addGoMarkers` for more details. 
+The `addGoAnnotations` function by defualt does not do any filtering of the terms evidence codes unless specified in the `evidence` argument, see `?addGoAnnotations` for more details. 
 
 With many well-annotated species and datasets containing typically thousands of proteins, we often find many CC terms, of which many may not be particularly meaningful. These such terms can be filtered out using the `filerMinMarkers` and `filterMaxMarkers` functions.
 
@@ -67,7 +66,7 @@ cc <- filterMaxMarkers(cc)
 ```
 
 # Correlating and ordering annotation information
-Now we have extracted and filtered annotation information for our dataset we re-order the `GOMarkers` matrix of terms according to their correlation with the dataset structure. To do this we use the `orderGoMarkers` function. 
+Now we have extracted and filtered annotation information for our dataset we re-order the `GOAnnotations` matrix of terms according to their correlation with the dataset structure. To do this we use the `orderGoAnnotations` function. 
 
 For each piece of annotation information, e.g. for each GO CC term in the matrix, the function:
 
@@ -75,26 +74,26 @@ For each piece of annotation information, e.g. for each GO CC term in the matrix
 2. Fits `k` component clusters to this subset using the `kmeans` algorithm (the default to test is `k = 1:5`).
 3. Calculates all pairwise Euclidean distances per component cluster
 4. Normalises each component by the cubed root of the number of instances per component (this was set heuristically through individual tests and can be set using the argument `p`)
-5. Orders the annotation information in `GOMarkers` according to the minimum normalised Euclidean distance.
+5. Orders the annotation information in `GOAnnotations` according to the minimum normalised Euclidean distance.
 
 We find that high density clusters have the low mean normalised Euclidean distances. In the below chunk we test try fitting `k = 1:3` component clusters per term and normalise by `p = 1/3`. The ordered terms can be displayed using the `pRolocVis` function in the `pRolocGUI` package.
 
 ```{r orderMarkers, eval = TRUE, verbose = FALSE}
 ## Extract markers can use n to specify to select top n terms
-res <- orderGoMarkers(cc, k = 1:3, p = 1/3, verbose = FALSE)
+res <- orderGoAnnotations(cc, k = 1:3, p = 1/3, verbose = FALSE)
 ```
 
 ```{r viewGO, eval=FALSE}
 library("pRolocGUI")
-pRolocVis(res, fcol = "GOMarkers")
+pRolocVis(res, fcol = "GOAnnotations")
 ```
 
 ## Examining distances
-Instead of using the `orderGoMarkers` function which is a wrapper for steps 1 - 5 above, it is possible to calculate the Euclidean distances manually using the `clustDist` function. The input is a `MSnSet` dataset with the matrix of markers e.g. `GOMarkers` appended to the `fData` slot. The output is a `"ClustDistList"`. The `"ClustDist"` and `"ClustDistList"` class summarises the algorithm information such as the number of k's tested for the kmeans, and mean and normalised pairwise Euclidean distances per numer of component clusters tested. 
+Instead of using the `orderGoAnnotations` function which is a wrapper for steps 1 - 5 above, it is possible to calculate the Euclidean distances manually using the `clustDist` function. The input is a `MSnSet` dataset with the matrix of markers e.g. `GOAnnotations` appended to the `fData` slot. The output is a `"ClustDistList"`. The `"ClustDist"` and `"ClustDistList"` class summarises the algorithm information such as the number of k's tested for the kmeans, and mean and normalised pairwise Euclidean distances per numer of component clusters tested. 
 
 ```{r clusterDist, eval = TRUE, verbose = FALSE}
 ## Now calculate distances
-dd <- clustDist(cc, fcol = "GOMarkers", k = 1:3, verbose = FALSE)
+dd <- clustDist(cc, fcol = "GOAnnotations", k = 1:3, verbose = FALSE)
 dd[[1]]
 ```
 
@@ -110,7 +109,7 @@ plot(dd[[1]], cc)
 
 The output of `plotClustDist` is a boxplot of the normalised distances per term and the output of `plotComponents` is a set of principal components analysis (PCA) plots, one for each `k` tested, highlighting the component clusters found according to the kmeans algorithm. 
 
-The `getNormDist` function can be used to extract a `vector` of normalised distances. Which can then be used to rank and order the terms in the `GOMarkers` matrix, as per the code chunk below. 
+The `getNormDist` function can be used to extract a `vector` of normalised distances. Which can then be used to rank and order the terms in the `GOAnnotations` matrix, as per the code chunk below. 
 
 ```{r minRank, eval = FALSE}
 ## Normalise by n^1/3
@@ -119,12 +118,12 @@ minDist <- getNormDist(dd, p = 1/3)
 ## Get new order according to lowest distance
 o <- order(minDist)
 
-## Re-order `GOMarkers` matrix in `fData`
-fData(cc)$GOMarkers <- fData(cc)$GOMarkers[, o]
+## Re-order `GOAnnotations` matrix in `fData`
+fData(cc)$GOAnnotations <- fData(cc)$GOAnnotations[, o]
 ```
 
 Finally, we can use the `pRolocVis` function in `pRolocGUI` to visualise our clusters. 
 
 ```{r visAgain, eval=FALSE}
-pRolocVis(cc, fcol = "GOMarkers")
+pRolocVis(cc, fcol = "GOAnnotations")
 ```

@@ -78,7 +78,7 @@
                     "TAIR locus ID"))
                     
   ## add protein set/annotation information                  
-  xx <- addGoMarkers(dunkley2006, par)
+  xx <- addGoAnnotations(dunkley2006, par)
   
   ## filter
   xx <- filterMinMarkers(xx, n = 50)

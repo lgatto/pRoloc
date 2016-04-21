@@ -4,8 +4,8 @@
 \alias{clustDist}
 \title{Pairwise Distance Computation for Protein Information Sets}
 \usage{
-clustDist(object, k = 1:5, fcol = "GOMarkers", n = 5, verbose = TRUE,
-  seed)
+clustDist(object, k = 1:5, fcol = "GOAnnotations", n = 5,
+  verbose = TRUE, seed)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -14,7 +14,7 @@ clustDist(object, k = 1:5, fcol = "GOMarkers", n = 5, verbose = TRUE,
 Default is \code{k = 1:5}.}
 
 \item{fcol}{The feature meta-data containing matrix of protein sets/
-marker definitions. Default is Markers.}
+marker definitions. Default is \code{GOAnnotations}.}
 
 \item{n}{The minimum number of proteins per set. If protein sets
 contain less than \code{n} instances they will be ignored. 
@@ -64,7 +64,7 @@ par <- setAnnotationParams(inputs =
                    c("Arabidopsis thaliana genes",
                    "TAIR locus ID"))
 ## add protein sets/annotation information
-xx <- addGoMarkers(dunkley2006, par)
+xx <- addGoAnnotations(dunkley2006, par)
 ## filter
 xx <- filterMinMarkers(xx, n = 50)
 xx <- filterMaxMarkers(xx, p = .25)
@@ -80,10 +80,10 @@ plot(dd)
 minDist <- getNormDist(dd, p = 1/3)
 ## Get new order according to lowest distance
 o <- order(minDist)
-## Re-order GOMarkers 
-fData(xx)$GOMarkers <- fData(xx)$GOMarkers[, o]
+## Re-order GOAnnotations 
+fData(xx)$GOAnnotations <- fData(xx)$GOAnnotations[, o]
 if (interactive()) {
-pRolocVis(xx, fcol = "GOMarkers")
+pRolocVis(xx, fcol = "GOAnnotations")
 }
 }
 \author{

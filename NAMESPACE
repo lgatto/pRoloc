@@ -163,11 +163,11 @@ export(## MSnSet manipulation
     mrkMatAndVec, showMrkMat,
     isMrkMat, isMrkVec,
     ## -- gomarkers
-    addGoMarkers,
+    addGoAnnotations,
     filterMinMarkers,
     filterMaxMarkers,
     subsetMarkers,
-    orderGoMarkers,
+    orderGoAnnotations,
     ## -- clustdist
     clustDist,
     ClustDistList,    

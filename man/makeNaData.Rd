@@ -29,28 +29,26 @@ defining rows that should not be used to set \code{NA}s.}
 \item{x}{A \code{matrix} or an instance of class \code{MSnSet}.}
 }
 \value{
-An instance of class \code{MSnSet}, as \code{object},
-but with the appropriate number/proportion of missing values.
-The returned object has an additional feature meta-data columns,
-\code{nNA}
+An instance of class \code{MSnSet}, as \code{object}, but
+    with the appropriate number/proportion of missing values.  The
+    returned object has an additional feature meta-data columns,
+    \code{nNA}
 }
 \description{
 These functions take an instance of class
-\code{"\linkS4class{MSnSet}"} and sets randomly
-selected values to \code{NA}.
+\code{"\linkS4class{MSnSet}"} and sets randomly selected values to
+\code{NA}.
 }
 \details{
-\code{makeNaData} randomly selects a number \code{nNA}
-(or a proportion \code{pNA}) of cells in the expression
-matrix to be set to \code{NA}.
+\code{makeNaData} randomly selects a number \code{nNA} (or a
+proportion \code{pNA}) of cells in the expression matrix to be set
+to \code{NA}.
 
-\code{makeNaData2} will select \code{length(nRows)}
-sets of rows from \code{object},
-each with \code{nRows[i]} rows respectively. 
-The first set will be assigned
-\code{nNAs[1]} missing values, the second
-\code{nNAs[2]}, ... As opposed to \code{makeNaData},
-this permits to control the number of \code{NAs} per rows.
+\code{makeNaData2} will select \code{length(nRows)} sets of rows
+from \code{object}, each with \code{nRows[i]} rows respectively.
+The first set will be assigned \code{nNAs[1]} missing values, the
+second \code{nNAs[2]}, ... As opposed to \code{makeNaData}, this
+permits to control the number of \code{NAs} per rows.
 
 The \code{whichNA} can be used to extract the indices
 of the missing values, as illustrated in the example.

@@ -3,6 +3,10 @@ CHANGES IN VERSION 1.11.23
  o New gomarkers functionality for adding annotation information 
    to spatial proteomics data and accompanying new vignette 
    <2016-04-18 Mon>
+ o Renamed addGoMarkers and orderGoMarkers to addGoAnnotations
+   and orderGoAnnotations and all associated documentation. 
+   Vignette also renamed to pRoloc-goannotations 
+   <2016-04-21 Thu> 
  
 CHANGES IN VERSION 1.11.22
 --------------------------

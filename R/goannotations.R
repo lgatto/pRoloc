@@ -1,6 +1,6 @@
-##' Adds a GO markers to the feature data
+##' Adds GO annotations to the feature data
 ##' 
-##' @title Add GO markers
+##' @title Add GO annotations
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param params An instance of class \code{AnnotationParams}. 
 ##' If missing, \code{\link{getAnnotationParams}} will be used.
@@ -8,12 +8,12 @@
 ##' @param useID Logical. Should GO term names or identifiers be used?
 ##' If \code{TRUE}, identifiers will be used. If \code{FALSE} GO term 
 ##' names will be used.
-##' @param fcol Character. Name of the matrix of markers to be added to the 
-##' \code{fData} default is \code{GOMarkers}
+##' @param fcol Character. Name of the matrix of annotations to be added to the 
+##' \code{fData} default is \code{GOAnnotations}
 ##' @param ... Other arguments passed to \code{makeGoSet}
 ##' @return An updated \code{MSnSet} with new feature data column
-##' called \code{GOMarkers} containing a matrix of GO
-##' markers
+##' called \code{GOAnnotations} containing a matrix of GO
+##' annotations
 ##' @author Lisa M Breckels
 ##' @examples
 ##' library(pRolocdata)
@@ -22,39 +22,39 @@
 ##'                    c("Arabidopsis thaliana genes",
 ##'                    "TAIR locus ID"))
 ##' ## add protein sets/annotation information
-##' xx <- addGoMarkers(dunkley2006, par)
-##' dim(fData(xx)$GOMarkers)
+##' xx <- addGoAnnotations(dunkley2006, par)
+##' dim(fData(xx)$GOAnnotations)
 ##' 
 ##' ## filter sets
 ##' xx <- filterMinMarkers(xx, n = 50)
-##' dim(fData(xx)$GOMarkers)
+##' dim(fData(xx)$GOAnnotations)
 ##' xx <- filterMaxMarkers(xx, p = .25)
-##' dim(fData(xx)$GOMarkers)
+##' dim(fData(xx)$GOAnnotations)
 ##' 
 ##' ## Subset for specific protein sets
 ##' sub <- subsetMarkers(xx, keep = c("vacuole"))
 ##' 
 ##' ## Order protein sets
-##' res <- orderGoMarkers(xx, k = 1:3, p = 1/3, verbose = FALSE)
+##' res <- orderGoAnnotations(xx, k = 1:3, p = 1/3, verbose = FALSE)
 ##' if (interactive()) {
-##' pRolocVis(res, fcol = "GOMarkers")
+##' pRolocVis(res, fcol = "GOAnnotations")
 ##' }
-addGoMarkers <- function(object, params, evidence, 
-                         useID = FALSE, fcol = "GOMarkers",
+addGoAnnotations <- function(object, params, evidence, 
+                         useID = FALSE, fcol = "GOAnnotations",
                          ...) {
   if (missing(evidence))
     evidence = NULL
   if (!inherits(params, "AnnotationParams"))
     stop("params must be of class AnnotationParams")
-  if (any(fvarLabels(object) == "GOMarkers"))
-    stop("colname GOMarkers already exists if fData")
+  if (any(fvarLabels(object) == "GOAnnotations"))
+    stop("colname GOAnnotations already exists if fData")
   goSet <- makeGoSet(object, params, evidence = evidence, ...)
   goSet <- filterZeroCols(goSet)
   fData(object)[, fcol] <- exprs(goSet)
   id <- colnames(fData(object)[, fcol])
   orgnames <- goIdToTerm(id, names = FALSE)
   colnames(fData(object)[, fcol]) <- orgnames
-  #object <- filterGoMarkers(object) ## Remove any obselete terms
+  #object <- filterGOAnnotations(object) ## Remove any obselete terms
   return (object)
 }
 
@@ -68,15 +68,15 @@ addGoMarkers <- function(object, params, evidence,
 ##' @param n Minimum number of proteins allowed per column. Default is 10.
 ##' @param p Minimum percentage of proteins per column.
 ##' @param fcol The name of the matrix of marker information. Default is
-##' \code{GOMarkers}.
+##' \code{GOAnnotations}.
 ##' @param verbose Number of marker candidates retained after filtering.
 ##' @return An updated \code{MSnSet}.
 ##' @author Lisa M Breckels
-##' @seealso \code{addGoMarkers} and example therein.
+##' @seealso \code{addGoAnnotations} and example therein.
 filterMinMarkers <- function(object, 
                              n = 10, 
                              p,
-                             fcol = "GOMarkers",
+                             fcol = "GOAnnotations",
                              verbose = TRUE) {
   if (!fcol %in% fvarLabels(object)) 
     stop(paste("fcol = ", fcol, "not found in fvarLabels"))
@@ -88,7 +88,7 @@ filterMinMarkers <- function(object,
   if (!missing(p)) {
     sel <- colSums(pm) > nrow(pm)*p
   } else {
-    sel <- colSums(pm) > n
+    sel <- colSums(pm) >= n
   }
   if (verbose)  
     message("Retaining ", sum(sel), " out of ", ncol(pm), " in ", fcol)
@@ -113,14 +113,14 @@ filterMinMarkers <- function(object,
 ##' for example, if information is GO terms, for removing very general
 ##' and uninformative terms).
 ##' @param fcol The name of the matrix of marker information. Default is
-##' \code{GOMarkers}.
+##' \code{GOAnnotations}.
 ##' @param verbose Number of marker candidates retained after filtering.
 ##' @return An updated \code{MSnSet}
-##' @seealso \code{addGoMarkers} and example therein.
+##' @seealso \code{addGoAnnotations} and example therein.
 filterMaxMarkers <- function(object, 
                              n, 
                              p = .2,
-                             fcol = "GOMarkers",
+                             fcol = "GOAnnotations",
                              verbose = TRUE) {
   if (!fcol %in% fvarLabels(object)) 
     stop(paste("fcol = ", fcol, "not found in fvarLabels"))
@@ -149,14 +149,14 @@ filterMaxMarkers <- function(object,
 ##' @title Subsets markers
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol The name of the markers matrix. Default is
-##' \code{GOMarkers}.
+##' \code{GOAnnotations}.
 ##' @param keep Integer or character vector specifying the columns to keep 
 ##' in the markers matrix, as defined by \code{fcol}. 
 ##' @return An updated \code{MSnSet}
 ##' @author Lisa M Breckels
-##' @seealso \code{addGoMarkers} and example therein.
+##' @seealso \code{addGoAnnotations} and example therein.
 subsetMarkers <- function(object,
-                          fcol = "GOMarkers",
+                          fcol = "GOAnnotations",
                           keep) {
   if (!fcol %in% fvarLabels(object))
     stop(paste("fcol = ", fcol, "not found in fvarLabels"))
@@ -183,11 +183,11 @@ subsetMarkers <- function(object,
   return(object)
 }
 
-##' For a given matrix of candidate markers/annotation information, 
+##' For a given matrix of annotation information, 
 ##' this function returns the information ordered according to 
 ##' the best fit with the data.
 ##' 
-##' As there are typically many protein sets that may fit the data
+##' As there are typically many protein/annotation sets that may fit the data
 ##' we order protein sets by best fit i.e. cluster tightness, by
 ##' computing the mean normalised Euclidean distance for all instances 
 ##' per protein set. 
@@ -216,10 +216,10 @@ subsetMarkers <- function(object,
 ##' \code{getNormDist}, see the "Annotating spatial proteomics data"
 ##' vignette for more details.
 ##' 
-##' @title Orders candidate markers
+##' @title Orders annotation information
 ##' @param object An instance of class \code{MSnSet}.
-##' @param fcol The name of the markers matrix. Default is
-##' \code{GOMarkers}.
+##' @param fcol The name of the annotations matrix. Default is
+##' \code{GOAnnotations}.
 ##' @param k The number of clusters to test. Default is \code{k = 1:5} 
 ##' @param n The minimum number of proteins per component cluster.
 ##' @param p The normalisation factor, per \code{k} tested
@@ -229,9 +229,9 @@ subsetMarkers <- function(object,
 ##' @return An updated \code{MSnSet} containing the newly ordered 
 ##' \code{fcol} matrix.
 ##' @author Lisa M Breckels
-##' @seealso \code{addGoMarkers} and example therein.
-orderGoMarkers <- function(object,
-                           fcol = "GOMarkers",
+##' @seealso \code{addGoAnnotations} and example therein.
+orderGoAnnotations <- function(object,
+                           fcol = "GOAnnotations",
                            k = 1:5,
                            n = 5,
                            p = 1/3,
@@ -251,7 +251,7 @@ orderGoMarkers <- function(object,
   minDist <- getNormDist(dd, p = 1/3)
   ## Get new order according to lowest distance
   o <- order(minDist)
-  ## Re-order `Markers` matrix in `fData`
+  ## Re-order `annotations` matrix in `fData`
   fData(object)[, fcol] <- fData(object)[, fcol][, o]
   if (validObject(object)) 
     return(object)

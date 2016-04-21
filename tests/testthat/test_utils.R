@@ -141,6 +141,7 @@ test_that("checkFeatureNamesOverlap", {
 })
 
 test_that("checkFvarOverlap", {
+    tmp <- dunkley2006
     o <- pRoloc:::checkFvarOverlap(tmp, tmp)
     expect_true(all(o$lower.mismatches == 0))
     expect_true(all(o$upper.mismatches == 0))

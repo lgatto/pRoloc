@@ -95,7 +95,6 @@ Collate:
     MSnSet.R
     clustering-kmeans.R
     perTurbo-algorithm.R
-    data.R
     phenodisco.R
     plotting.R
     plotting2.R

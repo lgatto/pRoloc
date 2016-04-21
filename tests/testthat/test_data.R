@@ -7,4 +7,3 @@ test_that("subsetting", {
   nm <- sum(fData(dunkley2006)$markers == "unknown")
   expect_equal(nrow(dunkley2006) - nm, nrow(mrk))
 })
-

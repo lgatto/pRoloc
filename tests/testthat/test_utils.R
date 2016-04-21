@@ -114,7 +114,7 @@ test_that("isBinary", {
 })
 
 test_that("check[Sorted]FeatureNames", {
-    tmp <- dunkley2006
+    tmp2 <- tmp <- dunkley2006
     k <- sample(nrow(tmp2))
     tmp2 <- tmp[k, ]
     expect_false(pRoloc:::checkFeatureNames(tmp, tmp2))

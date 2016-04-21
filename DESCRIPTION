@@ -19,7 +19,7 @@ Description: This package implements pattern recognition techniques on
     sub-cellular localisation.
 Depends:
     R (>= 2.15),
-    MSnbase (>= 1.19.4),
+    MSnbase (>= 1.19.20),
     MLInterfaces (>= 1.37.1),
     methods,
     Rcpp (>= 0.10.3),

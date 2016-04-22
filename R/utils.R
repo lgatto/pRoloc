@@ -1,4 +1,4 @@
-anyUnknown <- function(x, fcol = "markers", unknown = "unknown") 
+anyUnknown <- function(x, fcol = "markers", unknown = "unknown")
     any(fData(x)[, fcol] == unknown)
 
 isBinary <- function(x){
@@ -8,10 +8,10 @@ isBinary <- function(x){
     all(unique(x) %in% 0:1)
 }
 
-checkFeatureNames <- function(x, y) 
+checkFeatureNames <- function(x, y)
     identical(featureNames(x), featureNames(y))
 
-checkSortedFeatureNames <- function(x, y) 
+checkSortedFeatureNames <- function(x, y)
     identical(sort(featureNames(x)), sort(featureNames(y)))
 
 ##' Checks the marker and unknown feature overlap of two \code{MSnSet}
@@ -67,8 +67,9 @@ checkFeatureNamesOverlap <-
                        markersY = ym,
                        unknownsXY = xyu,
                        unknownsX = xu,
-                       unknownsU = yu))
-}
+                       unknownsY = yu))
+    }
+
 ##' Extracts qualitative feature variables from two \code{MSnSet}
 ##' instances and compares with a contingency table.
 ##'

@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.11.22
+Version: 1.11.23
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 	            email = "lg390@cam.ac.uk", 
                     role = c("aut","cre")),
@@ -19,7 +19,7 @@ Description: This package implements pattern recognition techniques on
     sub-cellular localisation.
 Depends:
     R (>= 2.15),
-    MSnbase (>= 1.19.4),
+    MSnbase (>= 1.19.20),
     MLInterfaces (>= 1.37.1),
     methods,
     Rcpp (>= 0.10.3),
@@ -95,7 +95,6 @@ Collate:
     MSnSet.R
     clustering-kmeans.R
     perTurbo-algorithm.R
-    data.R
     phenodisco.R
     plotting.R
     plotting2.R
@@ -110,4 +109,7 @@ Collate:
     MartInterface.R
     dynamics.R
     zzz.R
+    goannotations.R
+    clusterdist-functions.R
+    clusterdist-framework.R
 RoxygenNote: 5.0.1

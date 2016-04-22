@@ -1,4 +1,6 @@
 context("utils")
+library("pRolocdata")
+data(dunkley2006)
 
 test_that("subsetAsDataFrame preserves col/rownames", {
     library("MSnbase")
@@ -18,8 +20,6 @@ test_that("subsetAsDataFrame preserves col/rownames", {
 
 
 test_that("getPredictions with different thresholds", {
-  library("pRolocdata")
-  data(dunkley2006)
   ## using parameters as estimated in vignette
   ## (although these are from markers, not pd.markers)
   res <- svmClassification(dunkley2006, fcol = "pd.markers", sigma = 0.1, cost = 0.5)
@@ -53,8 +53,6 @@ test_that("getPredictions with different thresholds", {
 })
 
 test_that("subsetAsDataFrame keeping colnames", {
-    library("pRolocdata")
-    data(dunkley2006)
     fcol <- "new"
     cn0 <- pRoloc:::subsetAsDataFrame(dunkley2006,
                                       fcol,
@@ -70,8 +68,6 @@ test_that("subsetAsDataFrame keeping colnames", {
 })
 
 test_that("fDataToUnknown function", {
-    library("pRolocdata")
-    data(dunkley2006)
     x <- getMarkers(dunkley2006, "markers", verbose = FALSE)
     ## replacing unknown by unassigned
     xx <- fDataToUnknown(dunkley2006,
@@ -93,13 +89,63 @@ test_that("fDataToUnknown function", {
 
 
 test_that("fDataToUnknown function, 2nd test", {
-    library("pRolocdata")
-    data(dunkley2006)
-    fData(dunkley2006) <-
+    tmp <- dunkley2006
+    fData(tmp) <-
         fData(dunkley2006)[, c("assigned", "markers.orig", "markers")]
-    res1 <- fDataToUnknown(dunkley2006, from = "ER", to = "TEST", fcol = "assigned")
+    res1 <- fDataToUnknown(tmp, from = "ER", to = "TEST", fcol = "assigned")
     res1 <- fDataToUnknown(res1, from = "ER", to = "TEST", fcol = "markers.orig")
     res1 <- fDataToUnknown(res1, from = "ER", to = "TEST", fcol = "markers")
-    res2 <- fDataToUnknown(dunkley2006, from = "ER", to = "TEST", fcol = NULL)
+    res2 <- fDataToUnknown(tmp, from = "ER", to = "TEST", fcol = NULL)
     expect_identical(res1, res2)
+})
+
+test_that("anyUnknowns", {
+    expect_true(pRoloc:::anyUnknown(dunkley2006))
+    expect_false(pRoloc:::anyUnknown(markerMSnSet(dunkley2006)))
+})
+
+test_that("isBinary", {
+    tmp <- dunkley2006
+    expect_false(pRoloc:::isBinary(tmp))
+    sel <- exprs(tmp) < 0.5
+    exprs(tmp)[sel] <- 0
+    exprs(tmp)[!sel] <- 1
+    expect_true(pRoloc:::isBinary(tmp))
+})
+
+test_that("check[Sorted]FeatureNames", {
+    tmp2 <- tmp <- dunkley2006
+    k <- sample(nrow(tmp2))
+    tmp2 <- tmp[k, ]
+    expect_false(pRoloc:::checkFeatureNames(tmp, tmp2))
+    expect_true(pRoloc:::checkFeatureNames(tmp, tmp2[order(k), ]))
+    expect_true(pRoloc:::checkSortedFeatureNames(tmp, tmp2))
+})
+
+test_that("checkFeatureNamesOverlap", {
+    o <- checkFeatureNamesOverlap(dunkley2006[1:100, ], dunkley2006[90:200, ])    
+    expect_length(o$markersXY, 0)
+    expect_length(o$markersX, 49)
+    expect_length(o$markersY, 34)
+    expect_length(o$unknownsXY, 11)
+    expect_length(o$unknownsX, 40)
+    expect_length(o$unknownsY, 66)
+    expect_identical(sort(featureNames(markerMSnSet(dunkley2006[1:100, ]))),
+                     sort(c(o$markersXY, o$markersX)))
+    expect_identical(sort(featureNames(markerMSnSet(dunkley2006[90:200, ]))),
+                     sort(c(o$markersXY, o$markersY)))
+    expect_identical(sort(featureNames(unknownMSnSet(dunkley2006[1:100, ]))),
+                     sort(c(o$unknownsXY, o$unknownsX)))
+    expect_identical(sort(featureNames(unknownMSnSet(dunkley2006[90:200, ]))),
+                     sort(c(o$unknownsXY, o$unknownsY)))
+})
+
+test_that("checkFvarOverlap", {
+    tmp <- dunkley2006
+    o <- pRoloc:::checkFvarOverlap(tmp, tmp)
+    expect_true(all(o$lower.mismatches == 0))
+    expect_true(all(o$upper.mismatches == 0))
+    tmp <- table(getMarkers(dunkley2006, verbose = FALSE))
+    tmp2 <- structure(as.numeric(tmp), names = names(tmp))
+    expect_equal(o$matches, tmp2)
 })

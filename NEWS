@@ -1,6 +1,10 @@
 CHANGES IN VERSION 1.13.1
 -------------------------
- o
+ o Added keepNA argument to goTermToId so that if a GO term becomes
+   obsolete and you cannot replace it with the ID name, you have 
+   the option to either replace it with a NA (previous and current
+   default option) or now with keepNA = FALSE the term name will be
+   replaced with the id name <2016-05-25 Wed>
  
 CHANGES IN VERSION 1.13.0
 -------------------------

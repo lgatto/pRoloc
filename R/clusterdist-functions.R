@@ -171,19 +171,19 @@ clustDist <- function(object,
     termnames <- colnames(.pm)
     if (length(grep("GO:", termnames)) > 0) {
       term <- termnames
-      id <- goIdToTerm(term, names = FALSE)
+      id <- goIdToTerm(term, names = FALSE, keepNA = FALSE)
       if (length(grep("/ ", termnames)) > 0) {
         id <- sapply(termnames, function(z) 
-          paste(goIdToTerm(strsplit(z, split = "/ ")[[1]], names = FALSE),
+          paste(goIdToTerm(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
                 collapse = "/ "))
         names(id) <- NULL
       }
     } else {
-      term <- goTermToId(termnames, names = FALSE)
+      term <- goTermToId(termnames, names = FALSE, keepNA = FALSE)
       id <- termnames
       if (length(grep("/ ", termnames)) > 0) {
         term <- sapply(termnames, function(z)
-          paste(goTermToId(strsplit(z, split = "/ ")[[1]], names = FALSE),
+          paste(goTermToId(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
                 collapse = "/ "))
         names(term) <- NULL
       }

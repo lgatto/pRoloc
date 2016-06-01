@@ -673,10 +673,6 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     } else {
         stop("'object' must be a matrix (as returned by plot2D) or an MSnSet.")
     }
-    if (!is.null(args$mirrorX) && args$mirrorX)
-        .pca[, 1] <- -.pca[, 1]
-    if (!is.null(args$mirrorY) && args$mirrorY)
-        .pca[, 2] <- -.pca[, 2]
     if (!missing(labels)) {
         if (is.character(labels)) {
             stopifnot(inherits(object, "MSnSet"))

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.13.4
+-------------------------
+ o
+ 
 CHANGES IN VERSION 1.13.3
 -------------------------
  o Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue #79

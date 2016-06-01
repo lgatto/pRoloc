@@ -52,7 +52,7 @@ addGoAnnotations <- function(object, params, evidence,
   goSet <- filterZeroCols(goSet)
   fData(object)[, fcol] <- exprs(goSet)
   id <- colnames(fData(object)[, fcol])
-  orgnames <- goIdToTerm(id, names = FALSE)
+  orgnames <- goIdToTerm(id, names = FALSE, keepNA = FALSE)
   colnames(fData(object)[, fcol]) <- orgnames
   #object <- filterGOAnnotations(object) ## Remove any obselete terms
   return (object)

@@ -1,3 +1,16 @@
+CHANGES IN VERSION 1.13.3
+-------------------------
+ o Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue #79
+
+CHANGES IN VERSION 1.13.2
+-------------------------
+ o Version bump to trigger package rebuilding now that purl()'ing
+   issue has been correctly identified. knitr does not create
+   purl()'ed (Stangle equivalent) .R files if _R_CHECK_TIMINGS_ is
+   set, which the build system was setting. Now it's not set, so these
+   .R files are now created. See
+   https://github.com/yihui/knitr/issues/1212 for more. d.tenenbaum
+
 CHANGES IN VERSION 1.13.1
 -------------------------
  o Added keepNA argument to goTermToId so that if a GO term becomes
@@ -5,6 +18,13 @@ CHANGES IN VERSION 1.13.1
    the option to either replace it with a NA (previous and current
    default option) or now with keepNA = FALSE the term name will be
    replaced with the id name <2016-05-25 Wed>
+
+ o Bump version of all packages that use knitr for vignettes. This is
+   because of an issue (now fixed) in knitr which failed to create
+   purl()'ed R files from vignette sources and include them in the
+   package. This version bump will cause these packages to propagate
+   with those R files included. d.tenenbaum
+
  
 CHANGES IN VERSION 1.13.0
 -------------------------

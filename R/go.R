@@ -5,6 +5,9 @@
 ##' @param x A \code{character} of GO ids or terms.
 ##' @param names Should a named character be returned? Default is
 ##' \code{TRUE}.
+##' @param keepNA Should any GO term/id names that are missing or obsolete
+##' be replaced with a \code{NA}? Default is \code{TRUE}. If 
+##' \code{FALSE} then the GO term/id names is kept.
 ##' @return A \code{character} of GO terms (ids) if \code{x} were ids
 ##' (terms).
 ##' @author Laurent Gatto
@@ -21,7 +24,7 @@
 ##' flipGoTermId("mitochondrion inheritance")
 ##' flipGoTermId("GO:0000001")
 ##' flipGoTermId("GO:0000001", names = FALSE)
-goIdToTerm <- function(x, names = TRUE) {
+goIdToTerm <- function(x, names = TRUE, keepNA = TRUE) {
     stopifnot(requireNamespace("GO.db"))
     stopifnot(requireNamespace("AnnotationDbi"))
     ans <- rep(NA_character_, length(x))
@@ -31,12 +34,13 @@ goIdToTerm <- function(x, names = TRUE) {
     k <- which(!is.na(i))
     res <- AnnotationDbi::Term(GO.db::GOTERM[i[k]])
     ans[k] <- res
+    if (!keepNA) ans[is.na(ans)] <- names(ans[is.na(ans)])
     if (!names) names(ans) <- NULL
     return(ans)
 }
 
 ##' @rdname goIdToTerm
-goTermToId <- function(x, names = TRUE) {
+goTermToId <- function(x, names = TRUE, keepNA = TRUE) {
     stopifnot(requireNamespace("GO.db"))
     stopifnot(requireNamespace("AnnotationDbi"))
     ans <- rep(NA_character_, length(x))
@@ -46,15 +50,16 @@ goTermToId <- function(x, names = TRUE) {
     k <- which(!is.na(i))
     res <- AnnotationDbi::GOID(GO.db::GOTERM[i[k]])
     ans[k] <- res
+    if (!keepNA) ans[is.na(ans)] <- names(ans[is.na(ans)])
     if (!names) names(ans) <- NULL
     return(ans)
 }
 
 ##' @rdname goIdToTerm
-flipGoTermId <- function(x, names = TRUE) {
+flipGoTermId <- function(x, names = TRUE, keepNA = TRUE) {
     isId <- grepl("GO:", x)
-    if (any(isId)) ans <- goIdToTerm(x, names)
-    else ans <- goTermToId(x, names)
+    if (any(isId)) ans <- goIdToTerm(x, names, keepNA)
+    else ans <- goTermToId(x, names, keepNA)
     return(ans)
 }
 

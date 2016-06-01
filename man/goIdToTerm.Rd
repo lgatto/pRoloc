@@ -7,11 +7,11 @@
 \alias{prettyGoTermId}
 \title{Convert GO ids to/from terms}
 \usage{
-goIdToTerm(x, names = TRUE)
+goIdToTerm(x, names = TRUE, keepNA = TRUE)
 
-goTermToId(x, names = TRUE)
+goTermToId(x, names = TRUE, keepNA = TRUE)
 
-flipGoTermId(x, names = TRUE)
+flipGoTermId(x, names = TRUE, keepNA = TRUE)
 
 prettyGoTermId(x)
 }
@@ -20,6 +20,10 @@ prettyGoTermId(x)
 
 \item{names}{Should a named character be returned? Default is
 \code{TRUE}.}
+
+\item{keepNA}{Should any GO terms that are missing or obsolete
+be replaced with a \code{NA}? Default is \code{TRUE}. If 
+\code{FALSE} then the GO term name is kept.}
 }
 \value{
 A \code{character} of GO terms (ids) if \code{x} were ids

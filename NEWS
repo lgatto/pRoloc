@@ -1,6 +1,10 @@
+CHANGES IN VERSION 1.13.4
+-------------------------
+ o Updated mouse pRolocmarkers <2016-06-02 Thu>
+ 
 CHANGES IN VERSION 1.13.3
 -------------------------
- o Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue #79
+ o Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue #79 <2016-05-31 Tue>
 
 CHANGES IN VERSION 1.13.2
 -------------------------

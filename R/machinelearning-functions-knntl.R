@@ -528,20 +528,20 @@ favourPrimary <- function(primary, auxiliary, object,
 ##' Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary 
 ##' Data Sources. Proceedings of the 21st International Conference on Machine
 ##' Learning (ICML); 2004. 
-knntlOptimisation2  <- function(primary,
-                                auxiliary,
-                                fcol = "markers",
-                                k,
-                                times = 50,
-                                test.size = .2,
-                                xval = 5,
-                                by = .5,
-                                length.out,
-                                th,
-                                xfolds,
-                                BPPARAM = BiocParallel::bpparam(),
-                                method = "Breckels",
-                                seed
+knntlOptimisation  <- function(primary,
+                               auxiliary,
+                               fcol = "markers",
+                               k,
+                               times = 50,
+                               test.size = .2,
+                               xval = 5,
+                               by = .5,
+                               length.out,
+                               th,
+                               xfolds,
+                               BPPARAM = BiocParallel::bpparam(),
+                               method = "Breckels",
+                               seed  
                                 
 ) { 
   
@@ -555,8 +555,7 @@ knntlOptimisation2  <- function(primary,
     .seed <- as.integer(seed)
     set.seed(.seed)
   }
-  
-  
+
   ## Check object validity
   if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))
     stop("Primary and auxiliary must both be of class 'MSnSet'")
@@ -760,8 +759,8 @@ knntlOptimisation2  <- function(primary,
     P <- primary
     A <- auxiliary
     
-    
-    fData(P)$xxx <- fData(A)$xxx <- as.character(fData(P)[, fcol])
+    fData(P)$xxx <- as.character(fData(P)[, fcol])
+    fData(A)$xxx <- as.character(fData(A)[, fcol])
     fData(P)[val, "xxx"] <- fData(A)[val, "xxx"] <- rep("unknown", length(val))
     res <- knntlClassification(P, A, fcol = "xxx",
                                bestTheta = .best, k = k)

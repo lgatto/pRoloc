@@ -52,15 +52,16 @@ plotDist <- function(object,
       ylim <- range(.data)
   n <- nrow(.data)
   m <- ncol(.data)  
-  if (missing(fractions)) {
-    .frac <- grep("fraction",
-                  casefold(names(pData(object))))
+  if (!missing(fractions)) {
+    .frac <- grep(fractions,
+                  names(pData(object)))
     if (length(.frac) == 1) {
       .frac <- as.character(pData(object)[, .frac])
     } else {
       .frac <- seq_len(m)
     }
-  }
+  } else
+      .frac <- seq_len(m)
   plot(0, ylim = ylim,
        xlim = c(1, m),
        ylab = "Intensity",
@@ -323,11 +324,12 @@ plot2D <- function(object,
     if (method == "scree") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+        .pca <- do.call(prcomp, c(list(x = exprs(object)),
                                   methargs))
         .data <- .pca$x
         plot(.pca, npcs = ncol(.data))
         plot <- FALSE
+        fcol <- NULL
     } else if (method == "t-SNE") {
         requireNamespace("tsne")
         if (missing(methargs))
@@ -344,7 +346,7 @@ plot2D <- function(object,
     } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+        .pca <- do.call(prcomp, c(list(x = exprs(object)),
                                   methargs))
         .data <- .pca$x[, dims]
         .vars <- (.pca$sdev)^2
@@ -357,15 +359,15 @@ plot2D <- function(object,
         if (!missing(methargs))
             warning("'methargs' ignored for MDS")
         ## TODO - use other distances
-        .data <- cmdscale(dist(exprs(object), 
+        .data <- cmdscale(dist(exprs(object),
                                method = "euclidean",
                                diag = FALSE,
                                upper = FALSE),
-                          k = 2)    
+                          k = 2)
         .xlab <- paste("Dimension 1")
         .ylab <- paste("Dimension 2")
         colnames(.data) <- c(.xlab, .ylab)
-    } else if (method == "kpca") { 
+    } else if (method == "kpca") {
         if (missing(methargs)) {
             .kpca <- kpca(exprs(object))
         } else {
@@ -421,7 +423,7 @@ plot2D <- function(object,
         }
         
         col <- rep(unknowncol, nrow(.data))
-        pch <- rep(unknownpch, nrow(.data))        
+        pch <- rep(unknownpch, nrow(.data))
         if (missing(cex)) {
             cex <- rep(1, nrow(.data))
         } else {
@@ -431,7 +433,7 @@ plot2D <- function(object,
                 .n <- nrow(.data) %/% length(cex)
                 .m <- nrow(.data) %% length(cex)
                 cex <- c(rep(cex, .n),
-                         cex[.m])        
+                         cex[.m])
             }
         }
         stopifnot(length(cex) == nrow(.data))
@@ -440,10 +442,10 @@ plot2D <- function(object,
             lvs <- levels(fData(object)[, fcol])
             if ("unknown" %in% lvs) {
                 i <- which(lvs == "unknown")
-                lvs <- c(lvs[-i], lvs[i])        
+                lvs <- c(lvs[-i], lvs[i])
                 fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                                 levels = lvs)
-            } 
+            }
             ukn <- fData(object)[, fcol] == unknown
             .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
@@ -452,7 +454,7 @@ plot2D <- function(object,
             ukn <- rep(TRUE, nrow(.data))
         }
 
-        if (!missing(fpch)) {   
+        if (!missing(fpch)) {
             .fpch <- factor(fData(object)[, fpch])
             pch <- stockpch[as.numeric(.fpch)]
         } else {

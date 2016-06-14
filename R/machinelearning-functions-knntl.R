@@ -71,29 +71,19 @@ thetas <- function(nclass,
 }
 
 ## getNN function to get va and vp matrices 
-## Input: `MSnSet` instance and associated `k` (generated from `knnOptimisation`)
-## Output: Matrix (of dimensions nrow(MSnSet) x nclass)
 ## include.unknowns = TRUE/FALSE to include unknowns in neighbours
-getNN <- function(object, query, fcol, k, 
-                  include.unknowns = FALSE,
-                  include.dist = FALSE) {
-  .markers <- getMarkers(object, fcol, verbose = FALSE)
-  .classes <- getMarkerClasses(object, fcol, verbose = FALSE)
-  if (!include.unknowns) {
-    if(any(.classes=="unknown")) {
-      .classes <- .classes[-(which(.classes=="unknown"))]
-    }
-  }
+getNN <- function(object, query, labels, k) {
+  .classes <- levels(factor(labels))
   if(missing(query)) {
     all <- nrow(object) - 1
     ## Creat matrix of ALL distances
-    .nn <- nndist(exprs(object), k=all)
+    .nn <- nndist(object, k = all)
   } else {
     all <- nrow(object)
-    .nn <- nndist(exprs(object), exprs(query), k=all)
+    .nn <- nndist(object, query, k = all)
   }
-  .indD <- grep(pattern="dist", x=colnames(.nn), ignore.case=FALSE)
-  .indNN <- grep(pattern="index", x=colnames(.nn), ignore.case=FALSE)
+  .indD <- grep(pattern="dist", x = colnames(.nn), ignore.case = FALSE)
+  .indNN <- grep(pattern="index", x = colnames(.nn), ignore.case = FALSE)
   .nnDist <- .nn[, .indD]
   .nnIndex <- .nn[, .indNN]
   nn <- vector("list", nrow(.nnDist))
@@ -103,17 +93,15 @@ getNN <- function(object, query, fcol, k,
       index <- tf[1] + k
       look <- 1:(index - 1)
       nnID <- .nnIndex[n, look]
-      nn[[n]] <- .markers[nnID]
+      nn[[n]] <- labels[nnID]
     } else {
       nnID <- .nnIndex[n, 1:k]
-      nn[[n]] <- .markers[nnID]
+      nn[[n]] <- labels[nnID]
     }
   }
   v <- sapply(.classes, function(x) sapply(nn, function(z) length(which(z==x))))
   rownames(v) <- rownames(.nnDist)
   v <- v/rowSums(v)
-  if (include.dist) 
-    v <- list(v = v, dist = .nn) 
   return(v)
 }
 
@@ -238,30 +226,28 @@ combineParams <- function(object) {
 ## no generation of MSnSet output
 classify <- function(primary,
                      auxiliary,
-                     fcol = "markers",
+                     markers,    
                      bestTheta,
                      k) {
   ## Get k's
   if (missing(k)) {
-    message("Calculating best k's")
-    data <- c(primary, auxiliary)
-    ## Using default parameters for the knnOptimisation.
-    ## Otherwise, use ...
-    k <- lapply(data,
-                function(z) knnOptimisation(z, fcol, verbose = FALSE))
-    k <- sapply(k, function(z) getParams(z))
+    stop("No k passed to function classify")
   } else {
     if(!is.numeric(k)) stop("Input k is not of class 'numeric'")
     if(!length(k)==2) stop("Input k must be of length 2")
   }
   
   ## Generate nearest neighbours for each protein in primary 
-  mP <- markerMSnSet(primary, fcol)
-  mA <- markerMSnSet(auxiliary, fcol)
-  uP <- unknownMSnSet(primary, fcol)
-  uA <- unknownMSnSet(auxiliary, fcol)
-  vp <- getNN(mP, uP, fcol=fcol, k=k[1], include.dist=FALSE)
-  va <- getNN(mA, uA, fcol=fcol, k=k[2], include.dist=FALSE)
+  x <- names(markers[which(markers == "unknown")])
+  l <- names(markers[which(markers != "unknown")])
+  mP <- primary[l, ]
+  mA <- auxiliary[l, ]
+  uP <- primary[x, ]
+  uA <- auxiliary[x, ]
+  labels <- markers[l]
+  vp <- getNN(mP, uP, labels, k=k[1])
+  va <- getNN(mA, uA, labels, k=k[2])
+  
   ## Now select proteins common in both sets
   pn <- rownames(vp)
   an <- rownames(va)
@@ -271,8 +257,8 @@ classify <- function(primary,
   va <- va[an.idx, ]
   vp <- vp[pn.idx, ] 
   ## Get vc matrix to vote over
-  vcMatrix <- vc.res(vp, va, bestTheta)
-  res <- getPrediction(vcMatrix)
+  vcMat <- vc.res(vp, va, bestTheta)
+  res <- getPrediction(vcMat)
   names(res) <- rownames(va)
   return(res)
 }
@@ -300,7 +286,7 @@ BUG_splitTh <- function(theta, cores) {
 
 splitTh <- function(theta, cores) {
   .checkSplitTh <- function(idxl, n) {
-    ## idxl: list with indeices
+    ## idxl: list with indices
     ## n: nrow(theta)
     tmp <- unlist(idxl)
     all(sort(tmp) == seq_len(n))
@@ -313,10 +299,9 @@ splitTh <- function(theta, cores) {
 
 
 ## Core optimisation function for knntlOptimisation. 
-opt <- function(primary, 
-                auxiliary,
-                cmn.markers,
-                fcol,
+opt <- function(primary,   # matrix 
+                auxiliary, # matrix
+                markers,
                 xval,  
                 times,
                 k,
@@ -327,8 +312,8 @@ opt <- function(primary,
   .warnings <- NULL
   if (class(theta) == "numeric") 
     theta <- t(as.matrix(theta))
+  
   ## get markers, classes and initialise objects
-  lev.markers <- levels(cmn.markers)
   .f1Matrices <- vector("list", length = times)
   f1Res <- vector("list", xval)
   
@@ -342,24 +327,29 @@ opt <- function(primary,
     ## ----------Inner loop for xval
     for (.xval in 1:xval) {
       .foldNames <- folds[[.xval]]
-      .m <- cmn.markers[.foldNames]
+      .m <- markers[.foldNames]
+      
       trainP <- primary[train, ]
-      fData(trainP)$xxx <- as.character(fData(trainP)[, fcol])
-      fData(trainP)[.foldNames, "xxx"] <- rep("unknown", length(.foldNames))
       trainA <- auxiliary[train, ]
-      fData(trainA)$xxx <- as.character(fData(trainA)[, fcol])
-      fData(trainA)[.foldNames, "xxx"] <- rep("unknown", length(.foldNames))
+      
+      trainMrk <- as.character(markers)
+      names(trainMrk) <- names(markers)
+      trainMrk <- trainMrk[train]
+      trainMrk[.foldNames] <- "unknown"
+      
+      llmrk <- levels(as.factor(trainMrk))
+      llmrk <- llmrk[which(llmrk != "unknown")]
       
       ## Classify, get results, calculate confusion matrices and macroF1 scores
       f1Res[[.xval]] <- sapply(1:nrow(theta), function(z) {
         .r <- classify(primary = trainP, 
                        auxiliary = trainA,
-                       fcol = "xxx",
+                       markers = trainMrk,
                        bestTheta = theta[z, ], 
                        k = k) 
         ## NB: output of classify is only classified unknowns no
         ## markers are included in the output
-        .r <- factor(.r, levels = lev.markers, ordered = TRUE)
+        .r <- factor(.r, levels = llmrk, ordered = TRUE)
         cm <- table(.r, .m, dnn = c("Prediction", "Reference"))
         f1 <- MLInterfaces:::.macroF1(MLInterfaces:::.precision(cm, naAs0 = TRUE),
                                       MLInterfaces:::.recall(cm, naAs0 = TRUE), 
@@ -551,10 +541,10 @@ knntlOptimisation  <- function(primary,
                                xfolds,
                                BPPARAM = BiocParallel::bpparam(),
                                method = "Breckels",
-                               seed
+                               seed  
                                 
 ) { 
-
+  
   ## Set seed (Originally removed for Darwin HPC, and added
   ## back 22/02/16 to use with SerialParam, unit testing and for 
   ## reproducibility)
@@ -565,8 +555,7 @@ knntlOptimisation  <- function(primary,
     .seed <- as.integer(seed)
     set.seed(.seed)
   }
-  
-  
+
   ## Check object validity
   if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))
     stop("Primary and auxiliary must both be of class 'MSnSet'")
@@ -580,7 +569,7 @@ knntlOptimisation  <- function(primary,
       stop("k must be of class 'numeric' and of length = 2 (one k for each
            data source)")
     }
-    }
+  }
   
   ## Check method is valid
   if (!(method == "Breckels" | method == "Wu"))
@@ -594,19 +583,27 @@ knntlOptimisation  <- function(primary,
   primary <- markerMSnSet(primary, fcol)
   auxiliary <- markerMSnSet(auxiliary, fcol)
   
-  ## Check datasets have some common proteins
-  if (length(intersect(featureNames(primary),
-                       featureNames(auxiliary))) == 0) 
-    stop("No common marker proteins in primary and auxilary data")
-  
-  if (!identical(sort(unique(getMarkers(primary, fcol, verbose = FALSE))),
-                 sort(unique(getMarkers(auxiliary, fcol, verbose = FALSE)))))
-    stop("Different classes in fcol's between data sources")
-  
   ## Filter to remove empty columns - to best tested
   auxiliary <- filterZeroCols(auxiliary, verbose = TRUE)
   classes <- getMarkerClasses(primary, fcol, verbose = FALSE)
   nclass <- length(classes)
+  
+  ## From here on don't use MSnSet's, stick to matrices, profiling showed
+  ## code was slow using MSnSet's due to class validity checks etc.
+  matP <- exprs(primary)
+  matA <- exprs(auxiliary)
+  
+  mrkP <- as.character(fData(primary)[, fcol])
+  mrkA <- as.character(fData(auxiliary)[, fcol])
+  
+  ## Check datasets have some common proteins
+  if (length(intersect(rownames(matP),
+                       rownames(matA))) == 0) 
+    stop("No common marker proteins in primary and auxilary data")
+  
+  if (!identical(sort(unique(mrkP)), sort(unique(mrkA))))
+    stop("Different classes in fcol's between data sources")
+  
   
   ## Generate thetas to test
   if (missing(th)) {
@@ -673,13 +670,19 @@ knntlOptimisation  <- function(primary,
   }
   
   ## Now select proteins common in both sets
-  ## n <- 1:nrow(auxiliary)
-  pn <- featureNames(primary)
-  an <- featureNames(auxiliary)
+  pn <- rownames(matP)
+  an <- rownames(matA)
   cmn <- intersect(pn, an)
   pn.idx <- match(cmn, pn)
-  commonP <- primary[pn.idx, ]
-  markers <- factor(getMarkers(commonP, fcol, verbose=FALSE))
+  an.idx <- match(cmn, an)
+  matP <- matP[pn.idx, ]
+  matA <- matA[an.idx, ]
+  mrkP <- mrkP[pn.idx]
+  mrkA <- mrkA[an.idx]
+  names(mrkP) <- rownames(matP)
+  names(mrkA) <- rownames(mrkA)
+  
+  markers <- mrkP
   
   ## Do subsetting for train/validation partition if not specified in xfolds
   if (missing(xfolds)) {
@@ -691,7 +694,7 @@ knntlOptimisation  <- function(primary,
            "the function pRoloc::createPartitons")
     }
   }
-
+  
   .workers <- BPPARAM$workers
   if (.numTh < .workers) {
     .workers <- .numTh # Is there enough rows in the matrix to split amongst cores
@@ -699,10 +702,10 @@ knntlOptimisation  <- function(primary,
   .thetaSubsets <- splitTh(theta = th, cores = .workers)
   .res <- bplapply(.thetaSubsets,
                    function(z) {
-                     opt(primary = primary, 
-                         auxiliary = auxiliary,
-                         cmn.markers = markers,
-                         fcol = fcol, 
+                     opt(primary = matP, 
+                         auxiliary = matA,
+                         markers = markers,
+                         #fcol = fcol, 
                          xval = xval,
                          times = times,
                          k = k,
@@ -756,7 +759,8 @@ knntlOptimisation  <- function(primary,
     P <- primary
     A <- auxiliary
     
-    fData(P)$xxx <- fData(A)$xxx <- as.character(fData(P)[, fcol])
+    fData(P)$xxx <- as.character(fData(P)[, fcol])
+    fData(A)$xxx <- as.character(fData(A)[, fcol])
     fData(P)[val, "xxx"] <- fData(A)[val, "xxx"] <- rep("unknown", length(val))
     res <- knntlClassification(P, A, fcol = "xxx",
                                bestTheta = .best, k = k)
@@ -893,7 +897,7 @@ knntlClassification <- function(primary,
                                 bestTheta,
                                 k,
                                 scores = c("prediction", "all", "none"),
-                                seed) {  
+                                seed) { 
   
   ## Set seed 
   if (missing(seed)) {
@@ -901,7 +905,7 @@ knntlClassification <- function(primary,
   } 
   .seed <- as.integer(seed)
   set.seed(.seed)
-
+  
   scores <- match.arg(scores)
   if (!inherits(primary, "MSnSet") | !inherits(auxiliary, "MSnSet"))
     stop("Primary and auxiliary must both be of class 'MSnSet'")
@@ -917,8 +921,8 @@ knntlClassification <- function(primary,
   ## knntlOptimisation, where some overlap in needed). We look at
   ## the unknowns' nearest neighbours independently.  [*] it would
   ## be possible to have different ones, but we don't bother.
-  if (!checkSortedFeatureNames(unknownMSnSet(primary, fcol),
-                               unknownMSnSet(auxiliary, fcol)))
+  if (!pRoloc:::checkSortedFeatureNames(unknownMSnSet(primary, fcol),
+                                        unknownMSnSet(auxiliary, fcol)))
     stop("Feature names of unknown features don't match exactly.")
   
   if (inherits(bestTheta, "ThetaRegRes")) {
@@ -940,13 +944,19 @@ knntlClassification <- function(primary,
     if (!length(k) == 2) stop("Input k must be of length 2")
   }
   
-  ## Generate nearest neighbours for each protein in primary 
-  mP <- markerMSnSet(primary, fcol)
-  mA <- markerMSnSet(auxiliary, fcol)
-  uP <- unknownMSnSet(primary, fcol)
-  uA <- unknownMSnSet(auxiliary, fcol)
-  vp <- getNN(mP, uP, fcol=fcol, k=k[1], include.dist=FALSE)
-  va <- getNN(mA, uA, fcol=fcol, k=k[2], include.dist=FALSE)
+  
+  ## Generate nearest neighbours for each protein in primary
+  matP <- exprs(primary)
+  matA <- exprs(auxiliary)
+  x <- names(markers[which(markers == "unknown")])
+  l <- names(markers[which(markers != "unknown")])
+  mP <- matP[l, ]
+  mA <- matA[l, ]
+  uP <- matP[x, ]
+  uA <- matA[x, ]
+  labels <- markers[l]
+  vp <- getNN(mP, uP, labels, k=k[1])
+  va <- getNN(mA, uA, labels, k=k[2])
   
   ## Now select proteins common in both sets
   pn <- rownames(vp)
@@ -958,31 +968,31 @@ knntlClassification <- function(primary,
   vp <- vp[pn.idx, ] 
   
   ## Get vc matrix to vote over
-  vcMatrix <- vc.res(vp, va, bestTheta)
+  vcMat <- vc.res(vp, va, bestTheta)
   
   ## Match labelled and unlabelled with original MSnSet indices
-  L <- match(featureNames(mP), featureNames(primary))
-  X <- match(featureNames(uP), featureNames(primary))
+  L <- match(rownames(mP), featureNames(primary))
+  X <- match(rownames(uP), featureNames(primary))
   
   ## Added as check for LMB (will remove later)
-  if (all(colnames(vcMatrix) != classes))
+  if (all(colnames(vcMat) != classes))
     stop("Column names in vote matrix not equal to classes")
   if (scores == "all") {
-    .scoreMatrix <- matrix(data = NA, nrow = nrow(primary), 
+    .scoreMat <- matrix(data = NA, nrow = nrow(primary), 
                            ncol = length(classes))
-    colnames(.scoreMatrix) <- paste0(colnames(vcMatrix), ".knntl.scores")
+    colnames(.scoreMat) <- paste0(colnames(vcMat), ".knntl.scores")
     for (i in 1:length(classes)) {
       .ind <- which(fData(primary)[, fcol] == classes[i])
       .mark <- rep(1, length(.ind))
       .un <- rep(0, nrow(primary))
       .un[.ind] <- .mark
-      .scoreMatrix[, i] <- .un
+      .scoreMat[, i] <- .un
     }
-    .scoreMatrix[X, ] <- vcMatrix
-    fData(primary) <- cbind(fData(primary), .scoreMatrix)
+    .scoreMat[X, ] <- vcMat
+    fData(primary) <- cbind(fData(primary), .scoreMat)
   }
   else if (scores == "prediction") {
-    scores <- apply(vcMatrix, 1, function(z) max(z))
+    scores <- apply(vcMat, 1, function(z) max(z))
     knntl.scores <- vector("numeric", nrow(primary))
     knntl.scores[L] <- rep(1, length(L))
     knntl.scores[X] <- scores
@@ -990,7 +1000,7 @@ knntlClassification <- function(primary,
   }
   
   ## Get final classification
-  res <- getPrediction(vcMatrix)
+  res <- getPrediction(vcMat)
   y <- rep("unknown", nrow(primary))
   y[L] <- as.character(fData(primary)[L, fcol])
   y[X] <- res

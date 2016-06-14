@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.13.5
+-------------------------
+ o Fixed bug in show method for ThetaRegRes <2016-06-08 Wed>
+ o Profiled knntl code so it's now much faster. Added more unit tests
+   for knntl <2016-06-10 Fri>
+ o Fixed bug in plotDist x-axis labelling <2016-06-14 Tue>
+ 
 CHANGES IN VERSION 1.13.4
 -------------------------
  o Updated mouse pRolocmarkers <2016-06-02 Thu>

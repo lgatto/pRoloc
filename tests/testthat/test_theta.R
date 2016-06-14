@@ -68,7 +68,44 @@ test_that("theta matrices passed to knntl are the same as those output and store
                             BPPARAM = SerialParam(),
                             th = wuweights,
                             seed = seed)
-  expect_equal(tl4, tl4)
+  expect_equal(tl4, tl5)
+  
+  ## Test if the auxiliary is a bigger (more proteins) *and* the markers 
+  ## are the same we get the same results
+  torm <- sample(which(fData(andy2011)$markers.orig == "unknown"), 100)
+  andysmall <- andy2011[-torm, ]
+
+  tl1 <- knntlOptimisation(andysmall, andy2011goCC,
+                           fcol = "markers.orig",
+                           times = 1,
+                           by = 1, k = c(3, 3),
+                           BPPARAM = SerialParam(),
+                           seed = seed)
+                            
+  
+  tl2 <- knntlOptimisation(andy2011, andy2011goCC,
+                           fcol = "markers.orig",
+                           times = 1,
+                           by = 1, k = c(3, 3),
+                           BPPARAM = SerialParam(),
+                           seed = seed)
+  
+                            
+  expect_identical(tl1, tl2)
+  
+  ## Test if the auxiliary is a bigger (more proteins) *and* the markers 
+  ## are different code doesn't break
+  torm <- sample(which(fData(andy2011)$markers.orig != "unknown"), 100)
+  andysmall <- andy2011[-torm, ]
+  tl <- knntlOptimisation(andysmall, andy2011goCC,
+                          fcol = "markers.orig",
+                          times = 1,
+                          by = 1, k = c(3, 3),
+                          BPPARAM = SerialParam(),
+                          seed = seed)
+  expect_true(validObject(tl))
+  
+  
 }) 
 
 ## test_that("results from thetaOptimisation with all primary/auxiliary is the same as knnClassification with primary/auxiliary", {

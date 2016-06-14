@@ -52,15 +52,16 @@ plotDist <- function(object,
       ylim <- range(.data)
   n <- nrow(.data)
   m <- ncol(.data)  
-  if (missing(fractions)) {
-    .frac <- grep("fraction",
-                  casefold(names(pData(object))))
+  if (!missing(fractions)) {
+    .frac <- grep(fractions,
+                  names(pData(object)))
     if (length(.frac) == 1) {
       .frac <- as.character(pData(object)[, .frac])
     } else {
       .frac <- seq_len(m)
     }
-  }
+  } else
+      .frac <- seq_len(m)
   plot(0, ylim = ylim,
        xlim = c(1, m),
        ylab = "Intensity",
@@ -323,7 +324,7 @@ plot2D <- function(object,
     if (method == "scree") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+        .pca <- do.call(prcomp, c(list(x = exprs(object)),
                                   methargs))
         .data <- .pca$x
         plot(.pca, npcs = ncol(.data))
@@ -345,7 +346,7 @@ plot2D <- function(object,
     } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)), 
+        .pca <- do.call(prcomp, c(list(x = exprs(object)),
                                   methargs))
         .data <- .pca$x[, dims]
         .vars <- (.pca$sdev)^2
@@ -441,7 +442,7 @@ plot2D <- function(object,
             lvs <- levels(fData(object)[, fcol])
             if ("unknown" %in% lvs) {
                 i <- which(lvs == "unknown")
-                lvs <- c(lvs[-i], lvs[i])        
+                lvs <- c(lvs[-i], lvs[i])
                 fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                                 levels = lvs)
             }

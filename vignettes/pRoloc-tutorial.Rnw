@@ -6,25 +6,23 @@
 \documentclass[12pt, oneside]{article}
 
 <<style, eval=TRUE, echo=FALSE, results="asis">>=
-BiocStyle::latex()
+BiocStyle::latex2()
 @
 
 
 \author{
-  Laurent Gatto\footnote{\email{lg390@cam.ac.uk}}~and Lisa M. Breckels
+  Laurent Gatto and Lisa M. Breckels\\
+  Computational Proteomics Unit, University of Cambridge
 }
 
 
-\bioctitle[\Biocpkg{pRoloc} tutorial]{A short tutorial on using
-  \Biocpkg{pRoloc} for spatial proteomics data analysis}
+\bioctitle[\Biocpkg{pRoloc} tutorial]{Using \Biocpkg{pRoloc} for
+  spatial proteomics data analysis}
 
 \begin{document}
 
 \maketitle
 
-%% Abstract and keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vskip 0.3in minus 0.1in
-\hrule
 \begin{abstract}
   This tutorial illustrates the usage of the \Biocpkg{pRoloc} \R{}
   package for the analysis and interpretation of spatial proteomics
@@ -34,11 +32,12 @@ BiocStyle::latex()
   visualisation and application of machine learning to predict protein
   localisation.
 \end{abstract}
-\textit{Keywords}: Bioinformatics, organelle proteomics, machine learning, visualisation 
-\vskip 0.1in minus 0.05in
-\hrule
-\vskip 0.2in minus 0.1in
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\packageVersion{\Sexpr{BiocStyle::pkg_ver("pRoloc")}}
+
+Report issues on \url{https://github.com/Bioconductor/pRoloc/issues}
+
+Ask questions on \url{https://support.bioconductor.org/}
 
 \newpage
 
@@ -46,15 +45,15 @@ BiocStyle::latex()
 
 <<env, include=FALSE, echo=FALSE, cache=FALSE>>=
 library("knitr")
-opts_chunk$set(fig.align = 'center', 
-               fig.show = 'hold', 
-               par = TRUE,
-               prompt = TRUE,
+opts_chunk$set(fig.show = 'hold',
+               prompt = FALSE,
                eval = TRUE,
-               stop_on_error = 1L,
-               comment = NA)
-options(replace.assign = TRUE, 
-        width = 55)
+               stop_on_error = 1L)
+               ## comment = NA)
+
+knitr::opts_chunk$set(crop = NULL)
+
+options(replace.assign = TRUE)
 
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
@@ -162,6 +161,7 @@ the code chunk below (see \Rfunction{?setStockcol} for details).  This
 facilitates visualisation of overlapping points.
 
 <<setcols>>=
+setStockcol(NULL) ## reset first
 setStockcol(paste0(getStockcol(), 70))
 @ 
 
@@ -352,7 +352,7 @@ typing \Rfunction{?MSnSet} in the \R{} console.
 
 \begin{figure}[!hbt]
 \centering
-    \includegraphics[width=0.5\textwidth]{./Figures/msnset.png}
+    \includegraphics{./Figures/msnset.png}
 \caption{Dimension requirements for the respective expression, feature and sample meta-data slots. }
 \label{fig:msnset}
 \end{figure}
@@ -550,8 +550,8 @@ plotDist(tan2009r1[i, ],
          markers = featureNames(tan2009r1)[j])
 @ 
 
-\begin{figure}[!htb]
-<<plotdist1, dev='pdf', fig.width=9, fig.height=7, echo=FALSE>>=
+\begin{figure*}[!htb]
+<<plotdist1, echo=FALSE>>=
 par(mfrow = c(2,2), mar = c(4, 4, 2, 0.1))
 cls <- getStockcol()[1:4]
 plotDist(tan2009r1[which(fData(tan2009r1)$PLSDA == "mitochondrion"), ],
@@ -581,7 +581,7 @@ title(main = "PM")
   ER/Golgi (blue, ER markers and green, Golgi markers) and plasma
   membrane (purple). }
 \label{fig:plotdist1}
-\end{figure}
+\end{figure*}
 
 
 Alternatively, we can combine all organelle groups in one single 2
@@ -605,17 +605,17 @@ declaraed with the \Robject{fcol} argument (default is
 the experiment under investigation, the original markers published with
 the data can be found in the slot \texttt{"markers.orig"}).
 
-\begin{figure}[!hbt]
-<<plot2d, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+\begin{figure*}
+<<plot2d, echo=TRUE, fig.asp=1>>=
 plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers.orig")
 addLegend(tan2009r1, fcol = "PLSDA", 
           where = "bottomright", bty = "n", cex = .7)
 @ 
-\caption{ Representation of the \Sexpr{nrow(tan2009r1)} protein of
+\caption{Representation of the \Sexpr{nrow(tan2009r1)} protein of
   \Robject{tan2009r1} after reduction of the 4 reporter quantitation
   data to 2 principal components.}
 \label{fig:plot2d}
-\end{figure}
+\end{figure*}
 
 \subsection{Features of interest}
 
@@ -662,7 +662,6 @@ legend("topright", c("FoI 1", "FoI 2"), bty = "n",
 See \Rfunction{?FeaturesOfInterest} and \Rfunction{?highlightOnPlot}
 for more details.
 
-\clearpage
 
 \subsection{Interactive visualisation}\label{sec:gui}
 
@@ -680,7 +679,7 @@ pRolocVis(tan2009r1)
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.65\linewidth]{./Figures/Screenshot_PCA2.png}
+  \includegraphics{./Figures/Screenshot_PCA2.png}
   \caption{Screenshot of the \Biocpkg{pRolocGUI} interface.}
   \label{fig:gui}
 \end{figure}
@@ -690,8 +689,6 @@ the application by clicking on any of the question marks, by starting
 the vignette from \R{} with \Rfunction{vignette("pRolocGUI")} or can be
 accessed
 online\footnote{\url{http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html}}.
-
-\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -772,8 +769,9 @@ plot(kcl, exprs(tan2009r1))
 
 \begin{figure}[!hbt]
 <<plotHclust, dev='pdf', fig.width=8, fig.height=6, echo=TRUE, tidy = FALSE>>=
-hcl <- MLearn( ~ ., tan2009r1,  
-              hclustI(distFun = dist, cutParm = list(k = 5)))
+hcl <- MLearn( ~ ., tan2009r1,
+              hclustI(distFun = dist,
+                      cutParm = list(k = 5)))
 plot(hcl, labels = FALSE)
 @ 
 \caption{Hierarchical clustering on the \Robject{tan2009r1} data.}
@@ -855,16 +853,17 @@ estimated generalisation performance values (figure
 details, in particular the range of $C$ and $sigma$ parameters and how
 the relevant feature variable is defined by the \Robject{fcol}
 parameters, which defaults to \Robject{"markers"}.  Note that here, we
-demonstrate the function with only perform 10 iterations\footnote{%%
-  In the interest of time, the optimisation is not executed but loaded
+demonstrate the function with only perform 10 iterations\footnote{In
+  the interest of time, the optimisation is not executed but loaded
   from \Rfunction{dir(system.file("extdata", package = "pRoloc"),
-    full.names = TRUE, pattern = "params.rda")}.%%
-} (\Robject{times = 10}), which is enough for testing, but we
-recommend 100 (which is the default value) for a more robust analysis.
+    full.names = TRUE, pattern = "params.rda")}. } (parametrised with
+\Rcode{times = 10}), which is enough for testing, but we recommend 100
+(which is the default value) for a more robust analysis.
 
 <<svmParamOptim, eval = FALSE, message = FALSE, tidy=FALSE>>=
 params <- svmOptimisation(tan2009r1, fcol = "markers.orig", 
-                          times = 10, xval = 5, verbose = FALSE)
+                          times = 10, xval = 5,
+                          verbose = FALSE)
 @ 
 
 <<loadParams, echo = FALSE>>=
@@ -880,7 +879,7 @@ params
 
 
 \begin{figure}[!hbt]
-<<params, dev='pdf', fig.width=4, fig.height=4, echo=TRUE, out.width='.49\\linewidth'>>=
+<<params, dev='pdf', fig.width=4, fig.height=4, echo=TRUE>>=
 plot(params)
 levelPlot(params)
 @ 
@@ -983,9 +982,10 @@ table(p1, p2)
 
 To graphically illustrate the organelle-specific score distributions, use
 
-\begin{figure}[!hbt]
-<<predscoresPlot, dev='pdf', fig.width=6, fig.height=6, echo=TRUE, out.width='.55\\linewidth'>>=
-boxplot(svm.scores ~ svm, data = fData(svmres), ylab = "SVM scores")
+\begin{figure}
+<<predscoresPlot>>=
+boxplot(svm.scores ~ svm, data = fData(svmres),
+        ylab = "SVM scores")
 abline(h = minprob, lwd = 2, lty = 2)
 @ 
 \caption{ Organelle-specific SVM score distributions. }
@@ -1024,11 +1024,13 @@ clusters that have been assigned high confidence members, many other
 proteins have substantially lower prediction scores.
 
 \begin{figure}[!hbt]
-<<svmresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+<<svmresfig>>=
 ptsze <- exp(fData(svmres)$svm.scores) - 1
-plot2D(svmres, fcol = "svm", fpch = "markers.orig", cex = ptsze)
-addLegend(svmres, fcol = "svm", 
-          where = "bottomright", bty = "n", cex = .5)
+plot2D(svmres, fcol = "svm", fpch = "markers.orig",
+       cex = ptsze)
+addLegend(svmres, fcol = "svm",
+          where = "bottomright", bty = "n",
+          cex = .5)
 @ 
 %% $
 \caption{ Representation of the svm prediction on the
@@ -1066,7 +1068,8 @@ function\footnote{In the interest of time, \Rfunction{phenoDisco} is
   with \Rfunction{load}.}.
 
 <<runPhenoDisco, eval=FALSE, warning=FALSE>>=
-pdres <- phenoDisco(tan2009r1, GS = 10, times = 100, fcol = "PLSDA")
+pdres <- phenoDisco(tan2009r1, GS = 10,
+                    times = 100, fcol = "PLSDA")
 @ 
 
 <<loadpdres, echo=FALSE>>=
@@ -1087,17 +1090,16 @@ The \Rfunction{plot2D} function, can, as previously, be utilised to
 visualise the results, as shown on figure \ref{fig:pdres}.
 
 \begin{figure}[!hbt]
-<<pdresfig, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+<<pdresfig, echo=TRUE>>=
 plot2D(pdres, fcol = "pd")
 addLegend(pdres, fcol = "pd", ncol = 2, 
-          where = "bottomright", bty = "n", cex = .5)
+          where = "bottomright", bty = "n",
+          cex = .5)
 @ 
 %% $
 \caption{ Representation of the phenoDisco prediction and cluster discovery results. }
 \label{fig:pdres}
 \end{figure}
-
-\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
@@ -1158,31 +1160,25 @@ The data is visualised as described previously, were we use the svm
 classification a-posteriori probability to set the point size.
 
 \begin{figure}[!hbt]
-<<pdres2fig, dev='pdf', fig.width=6, fig.height=6, echo=TRUE, tidy=FALSE>>=
+<<pdres2fig>>=
 ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
 plot2D(tan2009r1, fcol = "svm", cex = ptsze)
-addLegend(tan2009r1, fcol = "svm", where = "bottomright",
+addLegend(tan2009r1, fcol = "svm",
+          where = "bottomright",
           ncol = 2, bty = "n", cex = .5)
 @ 
 %% $
-\caption{ Second round of classification using the augmented set of markers obtained 
-  using \Rfunction{phenoDisco} as detailed in \cite{Breckels2013} 
-  and a weighted svm classifier. }
+\caption{ Second round of classification using the augmented set of
+  markers obtained using \Rfunction{phenoDisco} as detailed in
+  \cite{Breckels2013} and a weighted svm classifier. }
 \label{fig:pdres2}
 \end{figure}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Section
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\clearpage
 
 \section{Conclusions}\label{sec:ccl}
 
@@ -1202,9 +1198,6 @@ one of the emphasis of the software presented in this document is
 allowing users to track data processing and critically evaluate the
 results.
 
-
-
-\clearpage
 
 \section*{Acknowledgement}
 

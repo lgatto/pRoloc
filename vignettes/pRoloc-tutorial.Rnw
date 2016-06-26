@@ -856,8 +856,8 @@ parameters, which defaults to \Robject{"markers"}.  Note that here, we
 demonstrate the function with only perform 10 iterations\footnote{In
   the interest of time, the optimisation is not executed but loaded
   from \Rfunction{dir(system.file("extdata", package = "pRoloc"),
-    full.names = TRUE, pattern = "params.rda")}. } (parametrised with
-\Rcode{times = 10}), which is enough for testing, but we recommend 100
+    full.names = TRUE, pattern = "params.rda")}. } 
+(\Rcode{times = 10}), which is enough for testing, but we recommend 100
 (which is the default value) for a more robust analysis.
 
 <<svmParamOptim, eval = FALSE, message = FALSE, tidy=FALSE>>=

@@ -6,12 +6,13 @@
 \documentclass[12pt, oneside]{article}
 
 <<style, eval=TRUE, echo=FALSE, results="asis">>=
-BiocStyle::latex()
+BiocStyle::latex2()
 @
 
 
 \author{
-  Laurent Gatto\footnote{\email{lg390@cam.ac.uk}}
+  Laurent Gatto\\
+  Computational Proteomics Unit, University of Cambridge
 }
 
 \bioctitle[\Biocpkg{pRoloc}]{Machine learning techniques available in
@@ -22,32 +23,29 @@ BiocStyle::latex()
 
 \maketitle
 
-% %% Abstract and keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \vskip 0.3in minus 0.1in
-% \hrule
 % \begin{abstract}
 % This document described the machine learning techniques that are made available in the \Biocpkg{pRoloc}.
 % \end{abstract}
-% \textit{Keywords}: Bioinformatics, spatial/organelle proteomics, machine learning, visualisation
-% \vskip 0.1in minus 0.05in
-% \hrule
-% \vskip 0.2in minus 0.1in
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \newpage
+\packageVersion{\Sexpr{BiocStyle::pkg_ver("pRoloc")}}
+
+Report issues on \url{https://github.com/Bioconductor/pRoloc/issues}
+
+Ask questions on \url{https://support.bioconductor.org/}
 
 \tableofcontents
 
 <<env, include=FALSE, echo=FALSE, cache=FALSE>>=
 library("knitr")
-opts_chunk$set(fig.align = 'center', 
-               fig.show = 'hold', 
-               par = TRUE,
-               prompt = TRUE,
+opts_chunk$set(fig.show = 'hold',
+               prompt = FALSE,
                eval = TRUE,
-               comment = NA)
-options(replace.assign = TRUE, 
-        width = 55)
+               stop_on_error = 1L)
+               ## comment = NA)
+
+knitr::opts_chunk$set(crop = NULL)
+
+options(replace.assign = TRUE)
 
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
@@ -69,6 +67,8 @@ please see the \Biocpkg{pRoloc} tutorial for details about the
 package itself.
 
 \paragraph{TODO} Define nomenclature
+
+\input{Foreword.tex}
 
 \section{Introduction}\label{sec:intro} 
 
@@ -139,7 +139,7 @@ to several clustering algorithms.
 
 \paragraph{Note} Current development efforts in terms of clustering
 are described on the \textit{Clustering infrastructure} wiki
-page\footnote{\url{https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure}}
+page (\url{https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure})
 and will be incorporated in future version of the package.
 
 \section{Supervised machine learning}\label{sec:sml}
@@ -257,13 +257,13 @@ generalisation to new instances. We will demonstrate this using
 simulated data taken from \cite{ISLwR} and show what detrimental
 effect \textit{over-fitting} has on new data.
 
-\begin{figure}[!hbt]
+\begin{figure*}
 \centering
-    \includegraphics[width=1\textwidth]{./Figures/knnboundaries.pdf}
+    \includegraphics{./Figures/knnboundaries.pdf}
     \caption{Classification boundaries using $k=1$ or $k=8$ on the
       \Robject{dunkley2006} data.}
 \label{fig:knnboundaries}
-\end{figure}
+\end{figure*}
 
 Figure \ref{fig:ISL1} uses 2 $\times$ 100 simulated data points
 belonging to either of the orange or blue classes. The genuine classes
@@ -280,16 +280,16 @@ bias). On this simulated data set, neither $k = 1$ nor $k = 100$ give
 good predictions and have test error rates (i.e. the proportion of
 wrongly classified points ) of 0.1695 and 0.1925, respectively.
 
-\begin{figure}[!hbt]
+\begin{figure*}[!hbt]
 \centering
-    \includegraphics[width=1\textwidth]{./Figures/ISL-2_16.pdf}
+    \includegraphics{./Figures/ISL-2_16.pdf}
     \caption{The KNN classifier using $k = 1$ (left, solid
       classification boundaries) and $k = 100$ (right, solid
       classification boundaries) compared the Bayes decision boundaries
       (see original material for details). Reproduced with permission
       from \cite{ISLwR}.}
 \label{fig:ISL1}
-\end{figure}
+\end{figure*}
 
 To quantify the effect of flexibility and lack thereof in defining the
 classification boundaries, \cite{ISLwR} calculate the classification
@@ -334,7 +334,7 @@ into training data used to build classification models and independent
 testing data used to assess the model on new data.
 
 We recommend the book \textit{An Introduction to Statistical
-  Learning}\footnote{\url{http://www-bcf.usc.edu/~gareth/ISL/}} by
+  Learning} (\url{http://www-bcf.usc.edu/~gareth/ISL/}) by
 \cite{ISLwR} for a more detailed introduction of machine learning.
 
 
@@ -385,7 +385,8 @@ is provided in the optimisation function manuals, available through
 \Rfunction{?algOptimisation}.
 
 <<svmParamOptim, cache = TRUE, warning = FALSE, message = FALSE>>=
-params <- svmOptimisation(tan2009r1, times = 10, xval = 5, verbose = FALSE)
+params <- svmOptimisation(tan2009r1, times = 10,
+                          xval = 5, verbose = FALSE)
 params
 @ 
 
@@ -458,14 +459,14 @@ distributed in the \Biocexptpkg{pRolocdata} package. On figure
 \ref{fig:f1box}, we illustrate how different algorithms reach very
 similar performances on most of our test datasets.
 
-\begin{figure}[!hbt]
+\begin{figure*}[!hbt]
 \centering
-    \includegraphics[width=0.7\textwidth]{./Figures/F1boxplots.pdf}
+    \includegraphics{./Figures/F1boxplots.pdf}
     \caption{Comparison of classification performances of several
       contemporary classification algorithms on data from the
       \Biocexptpkg{pRolocdata} package.}
 \label{fig:f1box}
-\end{figure}
+\end{figure*}
 
 
 \section{Semi-supervised machine learning and novelty detection}\label{sec:ssml}
@@ -514,9 +515,9 @@ then, a \emph{transfer learning} algorithm will efficiently
 support/complement the primary target domain with auxiliary data
 features without compromising the integrity of our primary data.
 
-We have developed a transfer learning framework and applied to the
-analysis of spatial proteomics data, as described in the
-\texttt{pRoloc-transfer-learning} vignette.
+We have developed a transfer learning framework \cite{Breckels:2016}
+and applied to the analysis of spatial proteomics data, as described
+in the \texttt{pRoloc-transfer-learning} vignette.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section

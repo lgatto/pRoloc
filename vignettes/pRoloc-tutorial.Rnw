@@ -188,8 +188,8 @@ chromatography and analysed by LS-MS/MS on a QSTAR XL
 quadrupole-time-of-flight mass spectrometer (Applied Biosystems). The
 original localisation analysis was performed using partial least
 square discriminant analysis (PLS-DA). Relative quantitation data was
-retrieved from the supplementary file
-\texttt{pr800866n\_si\_004.xls}\footnote{\url{http://pubs.acs.org/doi/suppl/10.1021/pr800866n/suppl\_file/pr800866n\_si\_004.xls}}
+retrieved from the supplementary file \texttt{pr800866n\_si\_004.xls}
+(\url{http://pubs.acs.org/doi/suppl/10.1021/pr800866n/suppl\_file/pr800866n\_si\_004.xls})
 and imported into \R{} as described below. We will concentrate on the
 first replicate.
 
@@ -213,7 +213,8 @@ the appropriate \R{} data.
 ## The original data for replicate 1, available
 ## from the pRolocdata package
 f0 <- dir(system.file("extdata", package = "pRolocdata"), 
-          full.names = TRUE, pattern = "pr800866n_si_004-rep1.csv")
+          full.names = TRUE,
+          pattern = "pr800866n_si_004-rep1.csv")
 csv <- read.csv(f0)
 @ 
 
@@ -311,7 +312,7 @@ The \texttt{ecol} columns can also be queried interactively from \R{}
 using the \Rfunction{getEcols} and \Rfunction{grepEcols} function. The
 former return a character with all column names, given a splitting
 character, i.e. the separation value of the spreadsheet (typically
-\texttt{","} for \texttt{csv}, \texttt{"\t"} for \texttt{tsv},
+\texttt{","} for \texttt{csv}, \texttt{"\textbackslash t"} for \texttt{tsv},
 ...). The latter can be used to grep a pattern of interest to obtain
 the relevant column indices.
 
@@ -407,9 +408,9 @@ can be added from a simple \texttt{csv} markers files using the
 details.
 
 The organelle markers are illustrated below using the convenience
-function \Rfunction{getMarkers}, but could also be done manually with
-\Rfunction{table(fData(tan2009r1)\$markers.orig)} and
-\Rfunction{table(fData(tan2009r1)\$PLSDA)} respectively.
+function \Rfunction{getMarkers}, but could also be done manually by
+accessing the feature variable of interested and the \Rcode{table}
+function, such as \Rcode{table(fData(tan2009r1)\$PLSDA)}.
 
 <<lookAtTan>>=
 getMarkers(tan2009r1, fcol = "markers.orig")
@@ -645,19 +646,23 @@ foic
 \Rclass{FeaturesOfInterest} instances can now be overlaid on the PCA
 plot with the \Rfunction{highlightOnPlot} function.
 
-\begin{figure}[!hbt]
-<<plotfoi, dev='pdf', fig.width=5, fig.height=5, echo=TRUE>>=
+\begin{figure*}[!hbt]
+<<plotfoi, fig.asp=1>>=
 plot2D(tan2009r1, fcol = "PLSDA")
-addLegend(tan2009r1, fcol = "PLSDA", 
-          where = "bottomright", bty = "n", cex = .7)
-highlightOnPlot(tan2009r1, foi1, col = "black", lwd = 2)
-highlightOnPlot(tan2009r1, foi2, col = "purple", lwd = 2)
-legend("topright", c("FoI 1", "FoI 2"), bty = "n",
-       col = c("black", "purple"), pch = 1)
+addLegend(tan2009r1, fcol = "PLSDA",
+          where = "bottomright", bty = "n",
+          cex = .7)
+highlightOnPlot(tan2009r1, foi1,
+                col = "black", lwd = 2)
+highlightOnPlot(tan2009r1, foi2,
+                col = "purple", lwd = 2)
+legend("topright", c("FoI 1", "FoI 2"),
+       bty = "n", col = c("black", "purple"),
+       pch = 1)
 @ 
 \caption{Adding features of interest on a PCA plot. }
 \label{fig:plotfoi}
-\end{figure}
+\end{figure*}
 
 See \Rfunction{?FeaturesOfInterest} and \Rfunction{?highlightOnPlot}
 for more details.
@@ -759,7 +764,7 @@ partitioning around medoids (figure \ref{fig:plotPam} on page
 %%  - maybe some mclust-inspired plots.
 
 \begin{figure}[!hbt]
-<<plotKmeans, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
+<<plotKmeans, echo=TRUE, fig.asp=1>>=
 kcl <- MLearn( ~ ., tan2009r1,  kmeansI, centers=5)
 plot(kcl, exprs(tan2009r1))
 @ 
@@ -768,7 +773,7 @@ plot(kcl, exprs(tan2009r1))
 \end{figure}
 
 \begin{figure}[!hbt]
-<<plotHclust, dev='pdf', fig.width=8, fig.height=6, echo=TRUE, tidy = FALSE>>=
+<<plotHclust, echo=TRUE, tidy = FALSE, fig.asp=1>>=
 hcl <- MLearn( ~ ., tan2009r1,
               hclustI(distFun = dist,
                       cutParm = list(k = 5)))
@@ -779,7 +784,7 @@ plot(hcl, labels = FALSE)
 \end{figure}
 
 \begin{figure}[!hbt]
-<<plotPam, dev='pdf', fig.width=8, fig.height=6, echo=TRUE>>=
+<<plotPam, echo=TRUE, fig.asp=1>>=
 pcl <- MLearn( ~ ., tan2009r1,  pamI(dist), k = 5)
 plot(pcl, data = exprs(tan2009r1))
 @ 
@@ -1024,7 +1029,7 @@ clusters that have been assigned high confidence members, many other
 proteins have substantially lower prediction scores.
 
 \begin{figure}[!hbt]
-<<svmresfig>>=
+<<svmresfig, fig.asp=1>>=
 ptsze <- exp(fData(svmres)$svm.scores) - 1
 plot2D(svmres, fcol = "svm", fpch = "markers.orig",
        cex = ptsze)
@@ -1090,7 +1095,7 @@ The \Rfunction{plot2D} function, can, as previously, be utilised to
 visualise the results, as shown on figure \ref{fig:pdres}.
 
 \begin{figure}[!hbt]
-<<pdresfig, echo=TRUE>>=
+<<pdresfig, echo=TRUE, fig.asp=1>>=
 plot2D(pdres, fcol = "pd")
 addLegend(pdres, fcol = "pd", ncol = 2, 
           where = "bottomright", bty = "n",
@@ -1160,7 +1165,7 @@ The data is visualised as described previously, were we use the svm
 classification a-posteriori probability to set the point size.
 
 \begin{figure}[!hbt]
-<<pdres2fig>>=
+<<pdres2fig, fig.asp=1>>=
 ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
 plot2D(tan2009r1, fcol = "svm", cex = ptsze)
 addLegend(tan2009r1, fcol = "svm",

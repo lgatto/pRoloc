@@ -31,23 +31,30 @@ to be plotted. Always 1:2 for MDS.}
 to consider features to be assigned an organelle. (not yet implemented).}
 
 \item{method}{A \code{character} describe how to transform the
-data or what to plot. One of \code{"PCA"} (default),
-\code{"MDS"}, \code{"kpca"} or \code{"t-SNE"}, defines what
-dimensionality reduction is applied: principal component
-analysis (see \code{\link{prcomp}}), classical
-multidimensional scaling (see \code{\link{cmdscale}}), kernel
-PCA (see \code{kernlab::kpca}) or t-SNE (see
-\code{tsne::tsne}). \code{"scree"} can also be used to produce
-a scree plot. If none is used, the data is plotted as is,
-i.e. without any transformation. In this case, \code{object}
-can either be an \code{MSnSet} or a \code{matrix} (as
-invisibly returned by \code{plot2D}). This enables to
-re-generate the figure without computing the dimensionality
-reduction over and over again, which can be time consuming for
-certain methods. Available methods are listed in
-\code{plot2Dmethods}. If \code{object} is a \code{matrix}, an
-\code{MSnSet} containing the feature metadata must be provided
-in \code{methargs} (see below for details).}
+    data or what to plot. One of \code{"PCA"} (default),
+    \code{"MDS"}, \code{"kpca"}, \code{"t-SNE"} or \code{"lda"},
+    defines what dimensionality reduction is applied: principal
+    component analysis (see \code{\link{prcomp}}), classical
+    multidimensional scaling (see \code{\link{cmdscale}}), kernel
+    PCA (see \code{kernlab::kpca}), t-SNE (see \code{tsne::tsne})
+    or linear discriminant analysis (see
+    \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
+    defined the sub-cellular clusters so that the ration between
+    within ad between cluster variance is maximised. All the other
+    methods are unsupervised and make use \code{fcol} only to
+    annotate the plot. \code{"scree"} can also be used to produce
+    a scree plot.
+
+    If none is used, the data is plotted as is, i.e. without any
+    transformation. In this case, \code{object} can either be an
+    \code{MSnSet} or a \code{matrix} (as invisibly returned by
+    \code{plot2D}). This enables to re-generate the figure without
+    computing the dimensionality reduction over and over again,
+    which can be time consuming for certain methods. Available
+    methods are listed in \code{plot2Dmethods}. If \code{object}
+    is a \code{matrix}, an \code{MSnSet} containing the feature
+    metadata must be provided in \code{methargs} (see below for
+    details).}
 
 \item{methargs}{A \code{list} of arguments to be passed when
 \code{method} is called. If missing, the data will be scaled

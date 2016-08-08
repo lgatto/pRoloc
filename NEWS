@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.13.7
 -------------------------
-
+ o Added an lda method to plot2D <2016-08-08 Mon>
+ 
 CHANGES IN VERSION 1.13.6
 -------------------------
  o Fixed bug in addGoAnnotations <2016-07-29 Fri>

@@ -132,7 +132,7 @@ plotDist <- function(object,
 }
 
 ## Available pRoloc visualisation methods
-pRolocVisMethods <- c("PCA", "MDS", "kpca", "t-SNE", "none")
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "none")
 
 ## Available plot2D methods
 plot2Dmethods <- c(pRolocVisMethods, "scree")
@@ -182,22 +182,29 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' 
 ##' @param method A \code{character} describe how to transform the
 ##'     data or what to plot. One of \code{"PCA"} (default),
-##'     \code{"MDS"}, \code{"kpca"} or \code{"t-SNE"}, defines what
-##'     dimensionality reduction is applied: principal component
-##'     analysis (see \code{\link{prcomp}}), classical
+##'     \code{"MDS"}, \code{"kpca"}, \code{"t-SNE"} or \code{"lda"},
+##'     defines what dimensionality reduction is applied: principal
+##'     component analysis (see \code{\link{prcomp}}), classical
 ##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
-##'     PCA (see \code{kernlab::kpca}) or t-SNE (see
-##'     \code{tsne::tsne}). \code{"scree"} can also be used to produce
-##'     a scree plot. If none is used, the data is plotted as is,
-##'     i.e. without any transformation. In this case, \code{object}
-##'     can either be an \code{MSnSet} or a \code{matrix} (as
-##'     invisibly returned by \code{plot2D}). This enables to
-##'     re-generate the figure without computing the dimensionality
-##'     reduction over and over again, which can be time consuming for
-##'     certain methods. Available methods are listed in
-##'     \code{plot2Dmethods}. If \code{object} is a \code{matrix}, an
-##'     \code{MSnSet} containing the feature metadata must be provided
-##'     in \code{methargs} (see below for details).
+##'     PCA (see \code{kernlab::kpca}), t-SNE (see \code{tsne::tsne})
+##'     or linear discriminant analysis (see
+##'     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
+##'     defined the sub-cellular clusters so that the ration between
+##'     within ad between cluster variance is maximised. All the other
+##'     methods are unsupervised and make use \code{fcol} only to
+##'     annotate the plot. \code{"scree"} can also be used to produce
+##'     a scree plot.
+##'
+##'     If none is used, the data is plotted as is, i.e. without any
+##'     transformation. In this case, \code{object} can either be an
+##'     \code{MSnSet} or a \code{matrix} (as invisibly returned by
+##'     \code{plot2D}). This enables to re-generate the figure without
+##'     computing the dimensionality reduction over and over again,
+##'     which can be time consuming for certain methods. Available
+##'     methods are listed in \code{plot2Dmethods}. If \code{object}
+##'     is a \code{matrix}, an \code{MSnSet} containing the feature
+##'     metadata must be provided in \code{methargs} (see below for
+##'     details).
 ##' 
 ##' @param methargs A \code{list} of arguments to be passed when
 ##'     \code{method} is called. If missing, the data will be scaled
@@ -330,13 +337,33 @@ plot2D <- function(object,
         plot(.pca, npcs = ncol(.data))
         plot <- FALSE
         fcol <- NULL
+    } else if (method == "lda") {
+        if (!is.null(fcol) && !fcol %in% fvarLabels(object))
+            stop("'", fcol, "' not found in feature variables.")        
+        requireNamespace("MASS")
+        X <- data.frame(exprs(object))
+        gr <- getMarkers(object, fcol = fcol, verbose = FALSE)
+        train <- which(gr != "unknown")
+        if (missing(methargs)) {
+            z <- MASS::lda(X, grouping = gr, subset = train)
+        } else {
+            z <- do.call(MASS::lda, c(list(x = X,
+                                           grouping = gr,
+                                           subset = train),
+                                      methargs))
+        }
+        p <- predict(z, X)
+        .data <- p$x[, dims]
+        tr <- round(z$svd^2 / sum(z$svd^2), 4L) * 100
+        .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
+        .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
         requireNamespace("tsne")
         if (missing(methargs))
             .data <- tsne::tsne(exprs(object), k = k)
         else .data <- do.call(tsne::tsne,
                               c(list(X = exprs(object)),
-                                k = k, 
+                                k = k,
                                 methargs))
         .data <- .data[, dims]
         .xlab <- paste("Dimension 1")

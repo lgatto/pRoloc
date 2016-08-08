@@ -21,9 +21,9 @@ prettyGoTermId(x)
 \item{names}{Should a named character be returned? Default is
 \code{TRUE}.}
 
-\item{keepNA}{Should any GO terms that are missing or obsolete
+\item{keepNA}{Should any GO term/id names that are missing or obsolete
 be replaced with a \code{NA}? Default is \code{TRUE}. If 
-\code{FALSE} then the GO term name is kept.}
+\code{FALSE} then the GO term/id names is kept.}
 }
 \value{
 A \code{character} of GO terms (ids) if \code{x} were ids

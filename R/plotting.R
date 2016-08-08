@@ -421,9 +421,10 @@ plot2D <- function(object,
             .xlab <- .ylab
             .ylab <- .tmp
         }
-        
-        col <- rep(unknowncol, nrow(.data))
-        pch <- rep(unknownpch, nrow(.data))
+        if (missing(col))
+            col <- rep(unknowncol, nrow(.data))
+        if (missing(pch))
+            pch <- rep(unknownpch, nrow(.data))
         if (missing(cex)) {
             cex <- rep(1, nrow(.data))
         } else {
@@ -462,9 +463,10 @@ plot2D <- function(object,
         }
         pch[ukn] <- unknownpch
         isbig <- .isbig(object, fcol, stockcol, stockpch)
-        
+
         if (is.null(fcol)) {
-            plot(.data, xlab = .xlab, ylab = .ylab, ...)
+            plot(.data, xlab = .xlab, ylab = .ylab, col = col,
+                 pch = pch, cex = cex, ...)
         } else if (isbig[["big"]]) {
             plot(.data, xlab = .xlab, ylab = .ylab,
                  type = "n", ...)

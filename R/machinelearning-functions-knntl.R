@@ -702,7 +702,7 @@ knntlOptimisation  <- function(primary,
   .thetaSubsets <- splitTh(theta = th, cores = .workers)
   .res <- bplapply(.thetaSubsets,
                    function(z) {
-                     opt(primary = matP, 
+                     pRoloc:::opt(primary = matP, 
                          auxiliary = matA,
                          markers = markers,
                          #fcol = fcol, 
@@ -713,7 +713,7 @@ knntlOptimisation  <- function(primary,
                          xfolds = xfolds
                          ## test.size = test.size
                      )}, 
-                   BPPARAM = BPPARAM)
+                     BPPARAM = BPPARAM)
   .f1Matrices <- sapply(1:times, function(x) 
     unlist(lapply(.res, function(z) z[[x]])), simplify = FALSE)
   

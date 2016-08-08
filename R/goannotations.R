@@ -46,8 +46,8 @@ addGoAnnotations <- function(object, params, evidence,
     evidence = NULL
   if (!inherits(params, "AnnotationParams"))
     stop("params must be of class AnnotationParams")
-  if (any(fvarLabels(object) == "GOAnnotations"))
-    stop("colname GOAnnotations already exists if fData")
+  if (any(fvarLabels(object) == fcol))
+    stop(paste("colname", fcol, "already exists in fData"))
   goSet <- makeGoSet(object, params, evidence = evidence, ...)
   goSet <- filterZeroCols(goSet)
   fData(object)[, fcol] <- exprs(goSet)

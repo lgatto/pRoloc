@@ -80,7 +80,7 @@ and similar designs (see \cite{Gatto2010} for an general
 introduction). Recent optimised experiments result in high quality
 data enabling the identification of over 6000 proteins and
 discriminate numerous sub-cellular and sub-organellar niches
-\cite{Breckels:2015}. Supervised and semi-supervised machine learning
+\cite{Christoforou:2016}. Supervised and semi-supervised machine learning
 algorithms can be applied to assign thousands of proteins to annotated
 sub-cellular niches \cite{Breckels2013,Gatto:2014} (see also the
 \textit{pRoloc-tutorial} vignette). These data constitute our main
@@ -414,7 +414,7 @@ sub-cellular density gradient (\texttt{andy2001}) and
 
 \section{Support vector machine transfer learning}\label{sec:svmtl}
 
-The SVM-TL method descibed in \cite{Breckels:2015} has not yet been
+The SVM-TL method descibed in \cite{Breckels:2016} has not yet been
 incorporated in the \Biocpkg{pRoloc} package. The code implementing
 the method is currently available in its own repository:
 
@@ -689,7 +689,7 @@ proteomics data as primary data and Gene Ontology-derived binary data
 as auxiliary data source. The algorithm can be used with various data
 sources (we show how to compile binary data from the Human Protein
 Atlas in section \ref{sec:hpaaux}) and have successfully applied the
-algorithm \cite{Breckels:2015} on third-party quantitative auxiliary
+algorithm \cite{Breckels:2016} on third-party quantitative auxiliary
 data.
 
 \section*{Session information}\label{sec:sessionInfo} 

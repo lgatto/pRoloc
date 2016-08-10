@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.13.8
 -------------------------
-
+ o fDataToUnknown accepts from = NA <2016-08-10 Wed>
+ 
 CHANGES IN VERSION 1.13.7
 -------------------------
  o Added an lda method to plot2D <2016-08-08 Mon>

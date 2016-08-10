@@ -117,7 +117,8 @@ checkFvarOverlap <- function(x, y, fcolx = "markers", fcoly,
 ##' @param from A \code{character} defining the string or regular
 ##'     expression of the pattern to be replaced. Default is the empty
 ##'     string, i.e. the regular expression \code{"^$"}.  See
-##'     \code{\link{sub}} for details.
+##'     \code{\link{sub}} for details. If \code{NA}, then \code{NA}
+##'     values are replaced by \code{to}.
 ##' @param to A replacement for matched pattern. Default is
 ##'     \code{"unknown"}.  See \code{\link{sub}} for details.
 ##' @param ... Additional arguments passed to \code{\link{sub}}.
@@ -135,9 +136,13 @@ fDataToUnknown <- function(object, fcol = "markers",
                            ...) {
     if (is.null(fcol))
         fcol <- fvarLabels(object)
-    for (.fcol in fcol)
-        fData(object)[, .fcol] <-
-            sub(from, to, fData(object)[, .fcol], ...)
+    for (.fcol in fcol) {
+        if (is.na(from))
+            fData(object)[, .fcol][is.na(fData(object)[, .fcol])] <- to
+        else 
+            fData(object)[, .fcol] <-
+                sub(from, to, fData(object)[, .fcol], ...)
+    }
     if (validObject(object))
         return(object)
 }

@@ -87,6 +87,16 @@ test_that("fDataToUnknown function", {
     expect_identical(x, y)
 })
 
+test_that("fDataToUnknown with NA", {
+    d0 <- dunkley2006
+    fData(d0)[fData(d0)$markers == "unknown", "markers"] <- NA
+    d1 <- fDataToUnknown(d0, from = NA)
+    x <- getMarkers(dunkley2006, "markers", verbose = FALSE)
+    y <- getMarkers(d0, "markers", verbose = FALSE)
+    expect_identical(is.na(x == y), is.na(y))
+    expect_identical(d1, dunkley2006)
+})
+
 
 test_that("fDataToUnknown function, 2nd test", {
     tmp <- dunkley2006
@@ -123,7 +133,7 @@ test_that("check[Sorted]FeatureNames", {
 })
 
 test_that("checkFeatureNamesOverlap", {
-    o <- checkFeatureNamesOverlap(dunkley2006[1:100, ], dunkley2006[90:200, ])    
+    o <- checkFeatureNamesOverlap(dunkley2006[1:100, ], dunkley2006[90:200, ])
     expect_length(o$markersXY, 0)
     expect_length(o$markersX, 49)
     expect_length(o$markersY, 34)

@@ -16,25 +16,25 @@
                       else msg
                   })
 
-QSep <- function(object) {
+QSep <- function(object, fcol = "markers") {
     objname <- MSnbase:::getVariableName(match.call(), "object")
     ## only consider markers
-    hlm <- markerMSnSet(object)
+    mobj <- markerMSnSet(object)
     ## vector of markers
-    um <- unique(getMarkers(hlm, verbose = FALSE))
+    um <- unique(getMarkers(mobj, fcol = fcol, verbose = FALSE))
     ## answer is a square matrix
     ans <- diag(length(um))
     colnames(ans) <- rownames(ans) <- um
     ## euclidean distance between all markers
-    hlmd <- dist(exprs(hlm))
-    hlmd <- as.matrix(hlmd)
-    diag(hlmd) <- NA
+    mrkdist <- dist(exprs(mobj))
+    mrkdist <- as.matrix(mrkdist)
+    diag(mrkdist) <- NA
     ## mean distance between all pairs of subcellular marker clusters
     tmp <- apply(expand.grid(um, um), 1,
                  function(.um) {
-                     sel1 <- fData(hlm)$markers == .um[1]
-                     sel2 <- fData(hlm)$markers == .um[2]
-                     ans[.um[1], .um[2]] <<- mean(hlmd[sel1, sel2],
+                     sel1 <- fData(mobj)$markers == .um[1]
+                     sel2 <- fData(mobj)$markers == .um[2]
+                     ans[.um[1], .um[2]] <<- mean(mrkdist[sel1, sel2],
                                                   na.rm = TRUE)
                  })
     res <- .QSep(x = ans,

@@ -112,4 +112,5 @@ Collate:
     goannotations.R
     clusterdist-functions.R
     clusterdist-framework.R
+    qsep.R
 RoxygenNote: 5.0.1

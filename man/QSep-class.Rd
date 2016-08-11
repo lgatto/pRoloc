@@ -9,6 +9,7 @@
 \alias{names,QSep-method}
 \alias{names<-,QSep,character-method}
 \alias{plot,QSep-method}
+\alias{plot,QSep,missing-method}
 \alias{levelPlot,QSep-method}
 \alias{qsep}
 

@@ -87,10 +87,10 @@ setMethod("levelPlot", "QSep",
                   panel.levelplot(x, y, z, ...)
                   panel.text(x, y, ifelse(is.na(z), "", round(z, 1)))
               }
-              levelplot(qsep(object),
+              levelplot(t(qsep(object, norm = TRUE)),
                         col.regions = pal(50),
                         panel = myPanel,
-                        xlab = "", ylab = "",
+                        xlab = "Reference cluster", ylab = "",
                         scales = list(x = list(cex = .8, rot = 45),
                                       y = list(cex = .8)))
           })

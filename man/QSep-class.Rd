@@ -24,13 +24,29 @@
 
   The \code{QSep} function calculates all between and within cluster
   average distances. These distances are then divided column-wise by the
-  respective within cluster average distance. Normalised distance
-  represent the ratio of between to within average distances, i.e. how
-  much bigger the average distance between cluster c_i and c_j is
-  compared to the avaerage distance within cluster c_i. Note that the
-  normalised distance matrix is not symmetric anymore and the normalised
-  distance ratios are proportional to the tightness of the reference
-  cluster (along the columns).
+  respective within cluster average distance. For example, for a dataset
+  with only 2 spatial clusters, we would obtain
+
+  \tabular{ccc}{
+    \tab  \eqn{c_1} \tab \eqn{c_2} \cr
+    \eqn{c_1} \tab \eqn{d_11} \tab \eqn{d_12} \cr
+    \eqn{c_2} \tab \eqn{d_21} \tab \eqn{d_22} 
+  }
+  
+  Normalised distance represent the ratio of between to within average
+  distances, i.e. how much bigger the average distance between cluster
+  \eqn{c_i} and \eqn{c_j} is compared to the average distance within
+  cluster \eqn{c_i}.
+
+    \tabular{ccc}{
+        \tab \eqn{c_1} \tab \eqn{c_2} \cr
+    \eqn{c_1} \tab 1    \tab \eqn{\frac{d_12}{d_22}} \cr
+    \eqn{c_2} \tab \eqn{\frac{d_21}{d_11}} \tab 1
+  }
+
+  Note that the normalised distance matrix is not symmetric anymore
+  and the normalised distance ratios are proportional to the tightness
+  of the reference cluster (along the columns).
 
 }
 

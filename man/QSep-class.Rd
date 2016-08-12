@@ -21,8 +21,17 @@
   The \code{QSep} infrastructure provide a way to quantify the
   resolution of a spatial proteomics experiment, i.e. to quantify how
   well annotated sub-cellular clusters are separated from each other.
-  
-  
+
+  The \code{QSep} function calculates all between and within cluster
+  average distances. These distances are then divided column-wise by the
+  respective within cluster average distance. Normalised distance
+  represent the ratio of between to within average distances, i.e. how
+  much bigger the average distance between cluster c_i and c_j is
+  compared to the avaerage distance within cluster c_i. Note that the
+  normalised distance matrix is not symmetric anymore and the normalised
+  distance ratios are proportional to the tightness of the reference
+  cluster (along the columns).
+
 }
 
 \section{Objects from the Class}{
@@ -111,6 +120,12 @@ data(hyperLOPIT2015)
 hlq <- QSep(hyperLOPIT2015)
 hlq
 summary(hlq)
+
+## mean distance matrix
+qsep(hlq, norm = FALSE)
+
+## normalised average distance matrix
+qsep(hlq)
 
 ## Update the organelle cluster names for better
 ## rendering on the plots

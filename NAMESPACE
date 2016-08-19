@@ -12,7 +12,7 @@ importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
            "par", "mtext")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
-           "update", "var", "rmultinom")
+           "update", "var", "rmultinom", "na.omit")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",
            "txtProgressBar")
@@ -66,7 +66,8 @@ exportClasses(GenRegRes,
               AnnotationParams,
               SpatProtVis,
               ClustDist,
-	      ClustDistList)
+	      ClustDistList,
+              QSep)
               ## ClustRegRes)
 
 exportMethods(chi2,
@@ -170,4 +171,7 @@ export(## MSnSet manipulation
     ## -- clustdist
     clustDist,
     ClustDistList,    
-    getNormDist)
+    getNormDist,
+    ## -- QSep
+    QSep,
+    qsep)

@@ -532,7 +532,7 @@ the localisation prediction is also essential, to control the validity
 of these results, before proceeding with orthogonal (and often
 expensive) \textit{dry} or \textit{wet} validation.
 
-\bigskip
+\subsection{Profile plots}\label{sec:profplot}
 
 The underlying principle of gradient approaches is that we have
 separated organelles along the gradient and by doing so, generated
@@ -584,6 +584,7 @@ title(main = "PM")
 \label{fig:plotdist1}
 \end{figure*}
 
+\subsection{Dimensionality reduction}\label{sec:pcalot}
 
 Alternatively, we can combine all organelle groups in one single 2
 dimensional figure by applying a dimensionality reduction technique
@@ -601,10 +602,11 @@ experiment, we can easily plot all the proteins on the same figure as
 well a many sub-cellular clusters (see figure \ref{fig:pdres2} for a
 case with 11 clusters). These clusters are defined in a feature
 meta-data column (slot \Robject{featureData}/\Robject{fData}) that is
-declaraed with the \Robject{fcol} argument (default is
+declared with the \Robject{fcol} argument (default is
 \texttt{"markers"} which contains the most current known markers for
-the experiment under investigation, the original markers published with
-the data can be found in the slot \texttt{"markers.orig"}).
+the experiment under investigation, while the original markers
+published with the data can be found in the slot
+\texttt{"markers.orig"}).
 
 \begin{figure*}
 <<plot2d, echo=TRUE, fig.asp=1>>=
@@ -694,6 +696,18 @@ the application by clicking on any of the question marks, by starting
 the vignette from \R{} with \Rfunction{vignette("pRolocGUI")} or can be
 accessed
 online\footnote{\url{http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html}}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Assessing sub-cellular resolution}\label{sec:qsep}
+
+TODO
+
+%% \subsection{The sub-cellular diversity}
+%% \subsection{Interpreting spatial clusters on the PCA plot}
+%% \subsection{Quantitative assessment of the sub-cellular resolution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Section

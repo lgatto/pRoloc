@@ -288,7 +288,7 @@ combineThetaRegRes <- function(object) {
     if (!class(object)=="list")
         stop("Object must be of class list")
 
-    if (!all(sapply(object, inherits, "ThetaRegRed")))
+    if (!all(sapply(object, inherits, "ThetaRegRes")))
         stop("All elements in list must be of class ThetaRegRes")
     .thetaSlots <- slotNames("ThetaRegRes")
     .slotChk <- sapply(object, function(z) slotNames(z) == .thetaSlots)    

@@ -3,6 +3,7 @@ CHANGES IN VERSION 1.13.9
  o new QSep infrastructure to assess spatial resolution
    <2016-08-17 Wed>
  o Use %age of total variance in plot2D's scree plot <2016-08-17 Wed>
+ o fixed bug in combineThetaRegRes <2016-08-19 Fri>
  
 CHANGES IN VERSION 1.13.8
 -------------------------

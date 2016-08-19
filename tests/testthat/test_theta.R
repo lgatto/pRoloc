@@ -22,6 +22,8 @@ test_that("theta matrices passed to knntl are the same as those output and store
                            BPPARAM = SerialParam(),
                            seed = seed)
   expect_equal(tl1, tl2)
+  
+  expect_is(combineThetaRegRes(list(tl1, tl2)), "ThetaRegRes")
 
   par <- getParams(tl1)
   res1 <- knntlClassification(andy2011, andy2011goCC,

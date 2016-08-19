@@ -334,7 +334,11 @@ plot2D <- function(object,
         .pca <- do.call(prcomp, c(list(x = exprs(object)),
                                   methargs))
         .data <- .pca$x
-        plot(.pca, npcs = ncol(.data))
+        ## plot(.pca, npcs = ncol(.data))
+        .vars <- (.pca$sdev)^2
+        barplot(.vars / sum(.vars) * 100,
+                ylab = "Percentage of total variance",
+                xlab = paste0("PC 1 to ", ncol(object)))
         plot <- FALSE
         fcol <- NULL
     } else if (method == "lda") {

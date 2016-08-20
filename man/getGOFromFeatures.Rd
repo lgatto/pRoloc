@@ -5,11 +5,11 @@
 \title{Retrieve GO terms for feature names}
 \usage{
 getGOFromFeatures(id, namespace = "cellular_component", evidence = NULL,
-  params = NULL, verbose = FALSE)
+  params = NULL, verbose = FALSE, nmax = 1000)
 }
 \arguments{
-\item{id}{An \code{character} with feature names to be pulled
-from biomart. If and \code{MSnSet} is provided, then
+\item{id}{An \code{character} with feature names to be pulled from
+biomart. If and \code{MSnSet} is provided, then
 \code{featureNames(id)} is used.}
 
 \item{namespace}{The GO namespace. One of
@@ -17,13 +17,21 @@ from biomart. If and \code{MSnSet} is provided, then
 or \code{molecular_function}.}
 
 \item{evidence}{The GO evidence code. See
-\code{showGOEvidenceCodes} for details. If \code{NULL} (default),
-no filtering based on the evidence code is performed.}
+\code{showGOEvidenceCodes} for details. If \code{NULL}
+(default), no filtering based on the evidence code is
+performed.}
 
-\item{params}{An instance of class \code{"\linkS4class{AnnotationParams}"}.}
+\item{params}{An instance of class
+\code{"\linkS4class{AnnotationParams}"}.}
 
 \item{verbose}{A \code{logical} defining verbosity of the
 function. Default is \code{FALSE}.}
+
+\item{nmax}{As described in
+\url{https://support.bioconductor.org/p/86358/}, the Biomart
+result can be unreliable for large queries. This argument
+splits the input in chunks of length \code{nmax} (default is
+1000). If set to \code{NULL}, the query is performed in full.}
 }
 \value{
 A \code{data.frame} with relevant GO terms.

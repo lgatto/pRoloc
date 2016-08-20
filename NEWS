@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.13.11
+--------------------------
+ o
+ 
 CHANGES IN VERSION 1.13.10
 --------------------------
  o Send biomart queries in getGOFromFeatues in chunks - see issue #85

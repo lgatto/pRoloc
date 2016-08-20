@@ -16,7 +16,8 @@ updated.}
 \item{from}{A \code{character} defining the string or regular
 expression of the pattern to be replaced. Default is the empty
 string, i.e. the regular expression \code{"^$"}.  See
-\code{\link{sub}} for details.}
+\code{\link{sub}} for details. If \code{NA}, then \code{NA}
+values are replaced by \code{to}.}
 
 \item{to}{A replacement for matched pattern. Default is
 \code{"unknown"}.  See \code{\link{sub}} for details.}

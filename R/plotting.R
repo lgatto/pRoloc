@@ -740,6 +740,24 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
         return(FALSE)
 }
 
+##' The function calculates and draws convex hulls on top of a plot
+##' produced by \code{\link{plot2D}}. The hulls are computed in the
+##' two componnets as defined by the \code{plot2D} method and
+##' dimensions.
+##'
+##' @title Overlay convex hulls onto a \code{plot2D} plot
+##' @param object An instance of class \code{MSnSet}
+##' @param fcol A \code{character} that defined which feature data
+##'     variable to be used as marker definition. Default is
+##'     \code{"markers"}.
+##' @param ... Additional parameters passed to `plot2D`.
+##' @return Invisibly returns \code{NULL}.
+##' @author Laurent Gatto
+##' @examples
+##' library("pRolocdata")
+##' data(E14TG2aS1)
+##' plot2D(E14TG2aS1)
+##' pRoloc:::addConvexHulls(E14TG2aS1)
 addConvexHulls <- function(object, fcol = "markers", ...) {
     X <- plot2D(object, fcol = fcol, ...)
     mm <- getMarkerClasses(object, fcol = fcol, verbose = FALSE)

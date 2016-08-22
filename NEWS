@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.13.11
 --------------------------
- o
+ o Add a norm agument to QSep's plotting functions to visualise
+   normalised and raw distances <2016-08-22 Mon>
  
 CHANGES IN VERSION 1.13.10
 --------------------------

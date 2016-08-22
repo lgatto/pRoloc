@@ -739,3 +739,16 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
     else
         return(FALSE)
 }
+
+addConvexHulls <- function(object, fcol = "markers", ...) {
+    X <- plot2D(object, fcol = fcol, ...)
+    mm <- getMarkerClasses(object, fcol = fcol, verbose = FALSE)
+    for (.mm in mm) {
+        sel <- getMarkers(object, fcol = fcol, verbose = FALSE) == .mm
+        .X <- X[sel, ]
+        hpts <- chull(.X)
+        hpts <- c(hpts, hpts[1])
+        lines(.X[hpts, ])
+    }
+    invisible(NULL)
+}

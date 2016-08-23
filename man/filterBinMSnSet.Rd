@@ -51,4 +51,8 @@ exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
 \author{
 Laurent Gatto
 }
+\seealso{
+\code{\link{zerosInBinMSnSet}},
+    \code{\link{filterZeroCols}}, \code{\link{filterZeroRows}}.
+}
 

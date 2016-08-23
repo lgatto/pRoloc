@@ -616,6 +616,69 @@ getMarkerVecClasses <- function(object, fcol, verbose, ...) {
     }
 }
 
+
+##' The function assumes that its input is a binary \code{MSnSet} and
+##' computes, for each marker class, the number of non-zero expression
+##' profiles. The function is meant to be used to produce heatmaps
+##' (see the example) and visualise binary (such as GO) \code{MSnSet}
+##' objects and assess their utility: all zero features/classes will
+##' not be informative at all (and can be filtered out with
+##' \code{\link{filterBinMSnSet}}) while features/classes with many
+##' annotations (GO terms) are likely not be be informative either. 
+##'
+##' @title Compute the number of non-zero values in each marker classes
+##' @param object An instance of class \code{MSnSet} with binary data.
+##' @param fcol A \code{character} defining the feature data variable
+##'     to be used as markers. Default is \code{"markers"}.
+##' @param as.matrix If \code{TRUE} (default) the data is formatted
+##'     and returned as a \code{matrix}. Otherwise, a \code{list} is
+##'     returned.
+##' @param percent If \code{TRUE}, percentages are
+##'     returned. Otherwise, absolute values.
+##' @return A \code{matrix} or a \code{list} indicating the number of
+##'     non-zero value per marker class.
+##' @author Laurent Gatto
+##' @seealso \code{\link{filterBinMSnSet}}
+##' @examples
+##' library(pRolocdata)
+##' data(hyperLOPIT2015goCC)
+##' zerosInBinMSnSet(hyperLOPIT2015goCC)
+##' zerosInBinMSnSet(hyperLOPIT2015goCC, percent = FALSE)
+##' pal <- colorRampPalette(c("white", "blue"))
+##' library(lattice)
+##' levelplot(zerosInBinMSnSet(hyperLOPIT2015goCC),
+##'           xlab = "Number of non-0s",
+##'           ylab = "Marker class",
+##'           col.regions = pal(140))
+zerosInBinMSnSet <- function(object, fcol = "markers",
+                            as.matrix = TRUE,
+                            percent = TRUE) {
+    if (!isBinary(object))
+        warning("Your assay data is not binary!")
+    object <- markerMSnSet(object, fcol = fcol)
+    mm <- getMarkerClasses(object, fcol = fcol, verbose = FALSE)
+    res <- vector("list", length = length(mm))
+    names(res) <- mm
+    for (m in mm) {
+        mobj <- object[fData(object)[, fcol] == m, ]
+        .res <- table(rowSums(exprs(mobj)))
+        if (percent) .res <- .res / ncol(mobj)
+        res[[m]] <- .res
+    }
+    if (as.matrix) {
+        mres <- matrix(0, ncol = length(res),
+                       nrow = max(sapply(res, length)))
+        colnames(mres) <- names(res)
+        rownames(mres) <- seq_len(nrow(mres)) - 1
+        for (m in mm) {
+            x <- res[[m]]
+            mres[1:length(x), m] <- x
+        }
+        res <- mres
+    }
+    res
+}
+
 ##' Removes columns or rows that have a certain proportion or absolute
 ##' number of 0 values.
 ##'
@@ -623,13 +686,15 @@ getMarkerVecClasses <- function(object, fcol, verbose, ...) {
 ##' @param object An \code{MSnSet}
 ##' @param MARGIN 1 or 2. Default is 2.
 ##' @param t Rows/columns that have \code{t} or less \code{1}s, it
-##' will be filtered out. When \code{t} and \code{q} are missing,
-##' default is to use \code{t = 1}.
+##'     will be filtered out. When \code{t} and \code{q} are missing,
+##'     default is to use \code{t = 1}.
 ##' @param q If a row has a higher quantile than defined by \code{q},
-##' it will be filtered out.
+##'     it will be filtered out.
 ##' @param verbose A \code{logical} defining of a message is to be
-##' printed. Default is \code{TRUE}.
+##'     printed. Default is \code{TRUE}.
 ##' @return A filtered \code{MSnSet}.
+##' @seealso \code{\link{zerosInBinMSnSet}},
+##'     \code{\link{filterZeroCols}}, \code{\link{filterZeroRows}}.
 ##' @author Laurent Gatto
 ##' @examples
 ##' set.seed(1)
@@ -687,6 +752,7 @@ filterBinMSnSet <- function(object,
 ##' columns/row (if any).
 ##' @return An \code{MSnSet}.
 ##' @author Laurent Gatto
+
 ##' @examples
 ##' library("pRolocdata")
 ##' data(andy2011goCC)

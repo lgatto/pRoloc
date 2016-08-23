@@ -222,23 +222,30 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param mirrorY A \code{logical} indicating whether the y axis
 ##'     should be mirrored?
 ##' 
-##' @param col A \code{character} of appropriate length defining colours.
-##' @param pch A \code{character} of appropriate length defining point character.
+##' @param col A \code{character} of appropriate length defining
+##'     colours.
+##' @param pch A \code{character} of appropriate length defining point
+##'     character.
 ##' @param cex Character expansion.
-##' @param index A \code{logical} (default is \code{FALSE}, indicating of the
-##' feature indices should be plotted on top of the symbols.
+##' @param index A \code{logical} (default is \code{FALSE}, indicating
+##'     of the feature indices should be plotted on top of the
+##'     symbols.
 ##' @param idx.cex A \code{numeric} specifying the character expansion
-##' (default is 0.75) for the feature indices. Only relevant when \code{index}
-##' is TRUE.
+##'     (default is 0.75) for the feature indices. Only relevant when
+##'     \code{index} is TRUE.
+##' @param addLegend A character indicating where to add the
+##'     legend. See \code{\link{addLegend}}for details. If missing
+##'     (default), no legend is added.
 ##' @param identify A logical (default is \code{TRUE}) defining if
-##' user interaction will be expected to identify individual data
-##' points on the plot. See also \code{\link{identify}}.
-##' @param plot A \code{logical} defining if the figure should be plotted.
-##' Useful when retrieving data only. Default is \code{TRUE}.
+##'     user interaction will be expected to identify individual data
+##'     points on the plot. See also \code{\link{identify}}.
+##' @param plot A \code{logical} defining if the figure should be
+##'     plotted.  Useful when retrieving data only. Default is
+##'     \code{TRUE}.
 ##' @param ... Additional parameters passed to \code{plot} and
-##' \code{points}.
-##' @return Used for its side effects of generating a plot.
-##' Invisibly returns the 2d data.
+##'     \code{points}.
+##' @return Used for its side effects of generating a plot.  Invisibly
+##'     returns the 2d data.
 ##' @author Laurent Gatto <lg390@@cam.ac.uk>
 ##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
 ##'     figures and \code{\link{plotDist}} for alternative graphical
@@ -293,6 +300,7 @@ plot2D <- function(object,
                    cex,
                    index = FALSE,
                    idx.cex = 0.75,
+                   addLegend,
                    identify = FALSE,
                    plot = TRUE,
                    ...) {
@@ -522,7 +530,14 @@ plot2D <- function(object,
             points(.data[!ukn, 1], .data[!ukn, 2],
                    col = col[!ukn],
                    pch = pch[!ukn], cex = cex[!ukn])
-        }  
+        }
+        if (!missing(addLegend)) {
+            where <- match.arg(addLegend,
+                               c("bottomright", "bottom",
+                                 "bottomleft", "left", "topleft",
+                                 "top", "topright", "right", "center"))
+            addLegend(object, fcol = fcol, where = where) 
+        }
         grid()
         if (index) {
             text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
@@ -547,23 +562,24 @@ plot2D <- function(object,
 ##' @title Adds a legend
 ##' @param object An instance of class \code{MSnSet}
 ##' @param fcol Feature meta-data label (fData column name) defining
-##' the groups to be differentiated using different colours. Default
-##' is \code{markers}. 
-##' @param where One of \code{"other"}, \code{"bottomleft"},
-##' \code{"bottomright"}, \code{"topleft"} or \code{"topright"} defining
-##' the location of the legend. \code{"other"} opens a new graphics device,
-##' while the other locations are passed to \code{\link{legend}}.
+##'     the groups to be differentiated using different
+##'     colours. Default is \code{markers}.
+##' @param where One of \code{"bottomleft"} (default),
+##'     \code{"bottomright"}, \code{"topleft"}, \code{"topright"} or
+##'     \code{"other"} defining the location of the
+##'     legend. \code{"other"} opens a new graphics device, while the
+##'     other locations are passed to \code{\link{legend}}.
 ##' @param col A \code{character} defining point colours.
 ##' @param bty Box type, as in \code{legend}. Default is set to
-##' \code{"n"}.
+##'     \code{"n"}.
 ##' @param ... Additional parameters passed to \code{\link{legend}}.
 ##' @return Invisibly returns \code{NULL}
 ##' @author Laurent Gatto
 addLegend <- function(object,
                       fcol = "markers",
-                      where = c("other", "bottomright", "bottom",
-                                "bottomleft", "left", "topleft",
-                                "top", "topright", "right", "center"),
+                      where = c("bottomleft", "bottom", "bottomright",
+                                "left", "topleft", "top", "topright",
+                                "right", "center", "other"),
                       col,
                       bty = "n",
                       ...) {
@@ -760,7 +776,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 ##' pRoloc:::addConvexHulls(E14TG2aS1)
 addConvexHulls <- function(object, fcol = "markers", ...) {
     X <- plot2D(object, fcol = fcol, ...)
-    mm <- getMarkerClasses(object, fcol = fcol, verbose = FALSE)
+    mm <- getMarkerClasses(object, fcol = fcol)
     for (.mm in mm) {
         sel <- getMarkers(object, fcol = fcol, verbose = FALSE) == .mm
         .X <- X[sel, ]

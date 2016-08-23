@@ -1,3 +1,6 @@
+CHANGES IN VERSION 1.13.12
+--------------------------
+
 CHANGES IN VERSION 1.13.11
 --------------------------
  o Add a norm agument to QSep's plotting functions to visualise

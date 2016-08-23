@@ -107,13 +107,16 @@
       distances and prints (when \code{verbose} is \code{TRUE},
       default) a summary of those. }
 
-    \item{levelPlot}{\code{signature(object = "QSep")}: plots an
-	annotated heatmap of all normalised pairwaise distances. }
+    \item{levelPlot}{\code{signature(object = "QSep", norm =
+	"logical")}: plots an annotated heatmap of all normalised
+      pairwaise distances. \code{norm} (default is \code{TRUE})
+      defines whether normalised distances should be plotted. }
 
-    \item{plot}{\code{signature(object = "QSep", ...)}: produces a
-      boxplot of all normalised pairwise distances. The red points
-      represent the within average distance and black points between
-      average distances. }
+    \item{plot}{\code{signature(object = "QSep", norm = "logical"...)}:
+      produces a boxplot of all normalised pairwise distances. The red
+      points represent the within average distance and black points
+      between average distances. \code{norm} (default is \code{TRUE})
+      defines whether normalised distances should be plotted.}
 
   }
   

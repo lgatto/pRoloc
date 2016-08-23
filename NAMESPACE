@@ -104,6 +104,7 @@ export(## MSnSet manipulation
     getOldcol, setOldcol,
     getUnknowncol, getUnknownpch,
     setUnknowncol, setUnknownpch,
+    zerosInBinMSnSet,
     filterBinMSnSet,
     filterZeroCols, filterZeroRows,
     fDataToUnknown,

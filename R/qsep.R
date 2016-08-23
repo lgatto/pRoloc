@@ -81,13 +81,13 @@ setMethod("summary", "QSep",
           })
 
 setMethod("levelPlot", "QSep",
-          function(object) {
+          function(object, norm = TRUE) {
               pal <- colorRampPalette(c("blue", "white", "red"))
               myPanel <- function(x, y, z, ...) {
                   panel.levelplot(x, y, z, ...)
                   panel.text(x, y, ifelse(is.na(z), "", round(z, 1)))
               }
-              levelplot(t(qsep(object, norm = TRUE)),
+              levelplot(t(qsep(object, norm = norm)),
                         col.regions = pal(50),
                         panel = myPanel,
                         xlab = "Reference cluster", ylab = "",
@@ -95,9 +95,9 @@ setMethod("levelPlot", "QSep",
                                       y = list(cex = .8)))
           })
 
-.plotQSep <- function(obj, ...) {
+.plotQSep <- function(obj, norm = TRUE, ...) {
     args <- pairlist(...)
-    x <- qsep(obj, norm = TRUE)
+    x <- qsep(obj, norm = norm)
     n <- nrow(x)
     opar <- par(las = 1)
     on.exit(par(opar))
@@ -117,5 +117,6 @@ setMethod("levelPlot", "QSep",
 }
 
 setMethod("plot", c("QSep", "missing"),
-          function(x, y, ...)
-              .plotQSep(x, ...))
+          function(x, y, norm = TRUE, ...)
+              .plotQSep(x, norm,
+                        ...))

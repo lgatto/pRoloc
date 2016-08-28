@@ -132,7 +132,8 @@ plotDist <- function(object,
 }
 
 ## Available pRoloc visualisation methods
-pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "none")
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "hexbin",
+                      "none")
 
 ## Available plot2D methods
 plot2Dmethods <- c(pRolocVisMethods, "scree")
@@ -168,43 +169,47 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol Feature meta-data label (fData column name) defining
-##' the groups to be differentiated using different colours. Default
-##' is \code{markers}. Use \code{NULL} to suppress any colouring.
+##'     the groups to be differentiated using different
+##'     colours. Default is \code{markers}. Use \code{NULL} to
+##'     suppress any colouring.
 ##' @param fpch Featre meta-data label (fData column name) desining
-##' the groups to be differentiated using different point symbols.
+##'     the groups to be differentiated using different point symbols.
 ##' @param unknown A \code{character} (default is \code{"unknown"})
-##' defining how proteins of unknown/un-labelled localisation are
-##' labelled.
+##'     defining how proteins of unknown/un-labelled localisation are
+##'     labelled.
 ##' @param dims A \code{numeric} of length 2 defining the dimensions
-##' to be plotted. Always 1:2 for MDS.
-##' @param score A numeric specifying the minimum organelle assignment score
-##' to consider features to be assigned an organelle. (not yet implemented).
-##' 
+##'     to be plotted. Always 1:2 for MDS.
+##' @param score A numeric specifying the minimum organelle assignment
+##'     score to consider features to be assigned an organelle. (not
+##'     yet implemented).
 ##' @param method A \code{character} describe how to transform the
 ##'     data or what to plot. One of \code{"PCA"} (default),
 ##'     \code{"MDS"}, \code{"kpca"}, \code{"t-SNE"} or \code{"lda"},
-##'     defines what dimensionality reduction is applied: principal
+##'     defining what dimensionality reduction is applied: principal
 ##'     component analysis (see \code{\link{prcomp}}), classical
 ##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
-##'     PCA (see \code{kernlab::kpca}), t-SNE (see \code{tsne::tsne})
-##'     or linear discriminant analysis (see
+##'     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
+##'     \code{\link[tsne]{tsne}}) or linear discriminant analysis (see
 ##'     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
 ##'     defined the sub-cellular clusters so that the ration between
 ##'     within ad between cluster variance is maximised. All the other
 ##'     methods are unsupervised and make use \code{fcol} only to
 ##'     annotate the plot. \code{"scree"} can also be used to produce
-##'     a scree plot.
+##'     a scree plot. \code{"hexbin"} applies PCA to the data and uses
+##'     bivariate binning into hexagonal cells from
+##'     \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 ##'
 ##'     If none is used, the data is plotted as is, i.e. without any
 ##'     transformation. In this case, \code{object} can either be an
 ##'     \code{MSnSet} or a \code{matrix} (as invisibly returned by
 ##'     \code{plot2D}). This enables to re-generate the figure without
 ##'     computing the dimensionality reduction over and over again,
-##'     which can be time consuming for certain methods. Available
-##'     methods are listed in \code{plot2Dmethods}. If \code{object}
+##'     which can be time consuming for certain methods. If \code{object}
 ##'     is a \code{matrix}, an \code{MSnSet} containing the feature
 ##'     metadata must be provided in \code{methargs} (see below for
 ##'     details).
+##'
+##'     Available methods are listed in \code{plot2Dmethods}.
 ##' 
 ##' @param methargs A \code{list} of arguments to be passed when
 ##'     \code{method} is called. If missing, the data will be scaled
@@ -212,16 +217,12 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     \code{object} is a \code{matrix}, then the first and only
 ##'     argument of \code{methargs} must be an \code{MSnSet} with
 ##'     matching features with \code{object}.
-##' 
 ##' @param axsSwitch A \code{logical} indicating whether the axes
 ##'     should be switched.
-##' 
 ##' @param mirrorX A \code{logical} indicating whether the x axis
 ##'     should be mirrored?
-##' 
 ##' @param mirrorY A \code{logical} indicating whether the y axis
 ##'     should be mirrored?
-##' 
 ##' @param col A \code{character} of appropriate length defining
 ##'     colours.
 ##' @param pch A \code{character} of appropriate length defining point
@@ -257,17 +258,20 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' library("pRolocdata")
 ##' data(dunkley2006)
 ##' plot2D(dunkley2006, fcol = NULL)
-##' ## available methods
-##' plot2Dmethods
-##' plot2D(dunkley2006, fcol = NULL, method = "kpca")
-##' plot2D(dunkley2006, fcol = NULL, method = "kpca",
-##'        methargs = list(kpar = list(sigma = 1)))
+##' plot2D(dunkley2006, fcol = NULL, col = "black")
 ##' plot2D(dunkley2006, fcol = "markers")
 ##' addLegend(dunkley2006,
 ##'           fcol = "markers",
 ##'           where = "topright",
 ##'           cex = 0.5, bty = "n", ncol = 3)
 ##' title(main = "plot2D example")
+##' ## available methods
+##' plot2Dmethods
+##' plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black")
+##' plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black",
+##'        methargs = list(kpar = list(sigma = 1)))
+##' plot2D(dunkley2006, method = "lda")
+##' plot2D(dunkley2006, method = "hexbin")
 ##' ## Using transparent colours
 ##' setStockcol(paste0(getStockcol(), "80"))
 ##' plot2D(dunkley2006, fcol = "markers")
@@ -336,7 +340,20 @@ plot2D <- function(object,
         else
             warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
     }
-    if (method == "scree") {
+    if (method == "hexbin") {
+        requireNamespace("hexbin")
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .data <- plot2D(object,
+                        method = "PCA",
+                        dims = dims,
+                        methargs = methargs,
+                        plot = FALSE)
+        cramp <- colorRampPalette(c("grey90", "blue"))
+        plot(hexbin::hexbin(.data), colramp = cramp)
+        return(invisible(.data))
+    }
+    else if (method == "scree") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
         .pca <- do.call(prcomp, c(list(x = exprs(object)),
@@ -550,7 +567,6 @@ plot2D <- function(object,
     }
     invisible(.data)
 }
-
 
 
 ##' Adds a legend to a \code{\link{plot2D}} figure.
@@ -773,7 +789,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 ##' library("pRolocdata")
 ##' data(E14TG2aS1)
 ##' plot2D(E14TG2aS1)
-##' pRoloc:::addConvexHulls(E14TG2aS1)
+##' addConvexHulls(E14TG2aS1)
 addConvexHulls <- function(object, fcol = "markers", ...) {
     X <- plot2D(object, fcol = fcol, ...)
     mm <- getMarkerClasses(object, fcol = fcol)

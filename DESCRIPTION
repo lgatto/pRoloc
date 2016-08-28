@@ -58,6 +58,7 @@ Suggests:
     synapter,
     xtable,
     tsne,
+    hexbin,
     BiocStyle,
     hpar,
     dplyr,

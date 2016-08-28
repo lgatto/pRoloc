@@ -385,7 +385,7 @@ favourPrimary <- function(primary, auxiliary, object,
   k <- object@hyperparameters$k
   
   ## Initialise new results matrix, otherWeights, confusion matrices
-  ncl <- length(getMarkerClasses(primary, fcol, verbose = FALSE))
+  ncl <- length(getMarkerClasses(primary, fcol))
   results <- matrix(NA, nrow = N, ncol = ncl + 1)
   colnames(results) <- colnames(object@results)
   
@@ -439,7 +439,7 @@ favourPrimary <- function(primary, auxiliary, object,
       
       ## Now calculate macroF1 on validation
       res.x <- unknownMSnSet(res, "xxx")
-      r <- factor(getMarkers(res.x, "knntl", verbose = FALSE),
+      r <- factor(getMarkers(res.x, "knntl"),
                   levels = lev)
       m <- factor(getMarkers(res.x, fcol, verbose = FALSE), levels = lev)
       cm <- table(r, m, dnn = c("Prediction", "Reference"))
@@ -585,7 +585,7 @@ knntlOptimisation  <- function(primary,
   
   ## Filter to remove empty columns - to best tested
   auxiliary <- filterZeroCols(auxiliary, verbose = TRUE)
-  classes <- getMarkerClasses(primary, fcol, verbose = FALSE)
+  classes <- getMarkerClasses(primary, fcol)
   nclass <- length(classes)
   
   ## From here on don't use MSnSet's, stick to matrices, profiling showed
@@ -911,7 +911,7 @@ knntlClassification <- function(primary,
     stop("Primary and auxiliary must both be of class 'MSnSet'")
   
   markers <- getMarkers(primary, fcol, verbose = FALSE)
-  classes <- getMarkerClasses(primary, fcol, verbose = FALSE)
+  classes <- getMarkerClasses(primary, fcol)
   if (!any(markers == "unknown")) 
     stop("No unknown proteins to classify")
   

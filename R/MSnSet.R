@@ -562,9 +562,6 @@ matSampleMSnSet <- function(object, fcol, size) {
 ##' @param object An instance of class \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The name of the markers column in the \code{featureData}
 ##' slot. Default is \code{markers}.
-##' @param verbose If \code{TRUE}, a character vector of the organelle
-##' classes is printed and the classes are returned invisibly. If \code{FALSE}, 
-##' the markers are returned.
 ##' @param ... Additional parameters passed to \code{sort} from the base package.
 ##' @return A \code{character} vector of the organelle classes in the data.
 ##' @author Lisa Breckels and Laurent Gatto
@@ -581,39 +578,26 @@ matSampleMSnSet <- function(object, fcol, size) {
 ##' stopifnot(all.equal(organelles, organelles2))
 getMarkerClasses <- function(object,
                              fcol = "markers",
-                             verbose = TRUE,
                              ...) {
     if (isMrkVec(object, fcol))
-        getMarkerVecClasses(object, fcol, verbose, ...)
+        getMarkerVecClasses(object, fcol, ...)
     else if (isMrkMat(object, fcol))
-        getMarkerMatClasses(object, fcol, verbose)
+        getMarkerMatClasses(object, fcol)
     else
         stop("Your markers are neither vector nor matrix. See ?markers for details.")
 }
 
-getMarkerMatClasses <- function(object, fcol, verbose, ...) {
+getMarkerMatClasses <- function(object, fcol, ...) {
     classes <- colnames(fData(object)[, fcol])
     classes <- sort(classes, ...)
-    classes <- classes[which(classes != "unknown")]
-    if (verbose) {
-        print(classes)
-        invisible(classes)
-    } else {
-        return(classes)
-    }
+    classes[which(classes != "unknown")]
 }
 
-getMarkerVecClasses <- function(object, fcol, verbose, ...) {
+getMarkerVecClasses <- function(object, fcol, ...) {
     organelleMarkers <- getMarkers(object, fcol, verbose = FALSE)
     classes <- unique(organelleMarkers)
     classes <- sort(classes, ...)
-    classes <- classes[which(classes != "unknown")]
-    if (verbose) {
-        print(classes)
-        invisible(classes)
-    } else {
-        return(classes)
-    }
+    classes[which(classes != "unknown")]
 }
 
 
@@ -656,7 +640,7 @@ zerosInBinMSnSet <- function(object, fcol = "markers",
     if (!isBinary(object))
         warning("Your assay data is not binary!")
     object <- markerMSnSet(object, fcol = fcol)
-    mm <- getMarkerClasses(object, fcol = fcol, verbose = FALSE)
+    mm <- getMarkerClasses(object, fcol = fcol)
     res <- vector("list", length = length(mm))
     names(res) <- mm
     for (m in mm) {

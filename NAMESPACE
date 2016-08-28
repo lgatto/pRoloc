@@ -6,10 +6,11 @@ import(methods)
 import(Rcpp)
 importFrom(BiocParallel, bplapply)
 
-importFrom("grDevices", "blues9", "colorRampPalette", "dev.new", "rgb")
+importFrom("grDevices", "blues9", "colorRampPalette", "dev.new",
+           "rgb", "chull")
 importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
-           "matplot", "points", "segments", "smoothScatter", "text",
-           "par", "mtext")
+           "lines", "matplot", "points", "segments", "smoothScatter",
+           "text", "par", "mtext", "barplot")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
            "update", "var", "rmultinom", "na.omit")

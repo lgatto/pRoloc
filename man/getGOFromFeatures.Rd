@@ -5,7 +5,7 @@
 \title{Retrieve GO terms for feature names}
 \usage{
 getGOFromFeatures(id, namespace = "cellular_component", evidence = NULL,
-  params = NULL, verbose = FALSE, nmax = 1000)
+  params = NULL, verbose = FALSE, nmax = 500)
 }
 \arguments{
 \item{id}{An \code{character} with feature names to be pulled from
@@ -31,7 +31,7 @@ function. Default is \code{FALSE}.}
 \url{https://support.bioconductor.org/p/86358/}, the Biomart
 result can be unreliable for large queries. This argument
 splits the input in chunks of length \code{nmax} (default is
-1000). If set to \code{NULL}, the query is performed in full.}
+500). If set to \code{NULL}, the query is performed in full.}
 }
 \value{
 A \code{data.frame} with relevant GO terms.

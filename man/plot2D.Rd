@@ -8,14 +8,15 @@
 plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
   score = 1, method = "PCA", methargs, axsSwitch = FALSE,
   mirrorX = FALSE, mirrorY = FALSE, col, pch, cex, index = FALSE,
-  idx.cex = 0.75, identify = FALSE, plot = TRUE, ...)
+  idx.cex = 0.75, addLegend, identify = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
 
 \item{fcol}{Feature meta-data label (fData column name) defining
-the groups to be differentiated using different colours. Default
-is \code{markers}. Use \code{NULL} to suppress any colouring.}
+the groups to be differentiated using different
+colours. Default is \code{markers}. Use \code{NULL} to
+suppress any colouring.}
 
 \item{fpch}{Featre meta-data label (fData column name) desining
 the groups to be differentiated using different point symbols.}
@@ -27,34 +28,38 @@ labelled.}
 \item{dims}{A \code{numeric} of length 2 defining the dimensions
 to be plotted. Always 1:2 for MDS.}
 
-\item{score}{A numeric specifying the minimum organelle assignment score
-to consider features to be assigned an organelle. (not yet implemented).}
+\item{score}{A numeric specifying the minimum organelle assignment
+score to consider features to be assigned an organelle. (not
+yet implemented).}
 
 \item{method}{A \code{character} describe how to transform the
     data or what to plot. One of \code{"PCA"} (default),
     \code{"MDS"}, \code{"kpca"}, \code{"t-SNE"} or \code{"lda"},
-    defines what dimensionality reduction is applied: principal
+    defining what dimensionality reduction is applied: principal
     component analysis (see \code{\link{prcomp}}), classical
     multidimensional scaling (see \code{\link{cmdscale}}), kernel
-    PCA (see \code{kernlab::kpca}), t-SNE (see \code{tsne::tsne})
-    or linear discriminant analysis (see
+    PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
+    \code{\link[tsne]{tsne}}) or linear discriminant analysis (see
     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
     defined the sub-cellular clusters so that the ration between
     within ad between cluster variance is maximised. All the other
     methods are unsupervised and make use \code{fcol} only to
     annotate the plot. \code{"scree"} can also be used to produce
-    a scree plot.
+    a scree plot. \code{"hexbin"} applies PCA to the data and uses
+    bivariate binning into hexagonal cells from
+    \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 
     If none is used, the data is plotted as is, i.e. without any
     transformation. In this case, \code{object} can either be an
     \code{MSnSet} or a \code{matrix} (as invisibly returned by
     \code{plot2D}). This enables to re-generate the figure without
     computing the dimensionality reduction over and over again,
-    which can be time consuming for certain methods. Available
-    methods are listed in \code{plot2Dmethods}. If \code{object}
+    which can be time consuming for certain methods. If \code{object}
     is a \code{matrix}, an \code{MSnSet} containing the feature
     metadata must be provided in \code{methargs} (see below for
-    details).}
+    details).
+
+    Available methods are listed in \code{plot2Dmethods}.}
 
 \item{methargs}{A \code{list} of arguments to be passed when
 \code{method} is called. If missing, the data will be scaled
@@ -72,32 +77,40 @@ should be mirrored?}
 \item{mirrorY}{A \code{logical} indicating whether the y axis
 should be mirrored?}
 
-\item{col}{A \code{character} of appropriate length defining colours.}
+\item{col}{A \code{character} of appropriate length defining
+colours.}
 
-\item{pch}{A \code{character} of appropriate length defining point character.}
+\item{pch}{A \code{character} of appropriate length defining point
+character.}
 
 \item{cex}{Character expansion.}
 
-\item{index}{A \code{logical} (default is \code{FALSE}, indicating of the
-feature indices should be plotted on top of the symbols.}
+\item{index}{A \code{logical} (default is \code{FALSE}, indicating
+of the feature indices should be plotted on top of the
+symbols.}
 
 \item{idx.cex}{A \code{numeric} specifying the character expansion
-(default is 0.75) for the feature indices. Only relevant when \code{index}
-is TRUE.}
+(default is 0.75) for the feature indices. Only relevant when
+\code{index} is TRUE.}
+
+\item{addLegend}{A character indicating where to add the
+legend. See \code{\link{addLegend}}for details. If missing
+(default), no legend is added.}
 
 \item{identify}{A logical (default is \code{TRUE}) defining if
 user interaction will be expected to identify individual data
 points on the plot. See also \code{\link{identify}}.}
 
-\item{plot}{A \code{logical} defining if the figure should be plotted.
-Useful when retrieving data only. Default is \code{TRUE}.}
+\item{plot}{A \code{logical} defining if the figure should be
+plotted.  Useful when retrieving data only. Default is
+\code{TRUE}.}
 
 \item{...}{Additional parameters passed to \code{plot} and
 \code{points}.}
 }
 \value{
-Used for its side effects of generating a plot.
-Invisibly returns the 2d data.
+Used for its side effects of generating a plot.  Invisibly
+    returns the 2d data.
 }
 \description{
 Generate 2 dimensional or feature distribution plots to illustrate
@@ -130,17 +143,20 @@ localistation clusters. In \code{plot2D}, rows containing
 library("pRolocdata")
 data(dunkley2006)
 plot2D(dunkley2006, fcol = NULL)
-## available methods
-plot2Dmethods
-plot2D(dunkley2006, fcol = NULL, method = "kpca")
-plot2D(dunkley2006, fcol = NULL, method = "kpca",
-       methargs = list(kpar = list(sigma = 1)))
+plot2D(dunkley2006, fcol = NULL, col = "black")
 plot2D(dunkley2006, fcol = "markers")
 addLegend(dunkley2006,
           fcol = "markers",
           where = "topright",
           cex = 0.5, bty = "n", ncol = 3)
 title(main = "plot2D example")
+## available methods
+plot2Dmethods
+plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black")
+plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black",
+       methargs = list(kpar = list(sigma = 1)))
+plot2D(dunkley2006, method = "lda")
+plot2D(dunkley2006, method = "hexbin")
 ## Using transparent colours
 setStockcol(paste0(getStockcol(), "80"))
 plot2D(dunkley2006, fcol = "markers")

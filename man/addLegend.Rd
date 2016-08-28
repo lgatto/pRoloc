@@ -4,21 +4,22 @@
 \alias{addLegend}
 \title{Adds a legend}
 \usage{
-addLegend(object, fcol = "markers", where = c("other", "bottomright",
-  "bottom", "bottomleft", "left", "topleft", "top", "topright", "right",
-  "center"), col, bty = "n", ...)
+addLegend(object, fcol = "markers", where = c("bottomleft", "bottom",
+  "bottomright", "left", "topleft", "top", "topright", "right", "center",
+  "other"), col, bty = "n", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}}
 
 \item{fcol}{Feature meta-data label (fData column name) defining
-the groups to be differentiated using different colours. Default
-is \code{markers}.}
+the groups to be differentiated using different
+colours. Default is \code{markers}.}
 
-\item{where}{One of \code{"other"}, \code{"bottomleft"},
-\code{"bottomright"}, \code{"topleft"} or \code{"topright"} defining
-the location of the legend. \code{"other"} opens a new graphics device,
-while the other locations are passed to \code{\link{legend}}.}
+\item{where}{One of \code{"bottomleft"} (default),
+\code{"bottomright"}, \code{"topleft"}, \code{"topright"} or
+\code{"other"} defining the location of the
+legend. \code{"other"} opens a new graphics device, while the
+other locations are passed to \code{\link{legend}}.}
 
 \item{col}{A \code{character} defining point colours.}
 

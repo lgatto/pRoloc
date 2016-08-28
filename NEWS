@@ -1,3 +1,12 @@
+CHANGES IN VERSION 1.13.12
+--------------------------
+ o Remove verbose argument from getMarkerClasses function
+   <2016-08-23 Tue>
+ o plot2D has new addLegend argument <2016-08-23 Tue> 
+ o addLegend default position is now bottomleft (requested by Lisa)
+   <2016-08-23 Tue>
+ o new hexbin plot2D method <2016-08-28 Sun>
+
 CHANGES IN VERSION 1.13.11
 --------------------------
  o Add a norm agument to QSep's plotting functions to visualise

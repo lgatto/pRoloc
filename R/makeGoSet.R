@@ -20,7 +20,7 @@
 ##'     \url{https://support.bioconductor.org/p/86358/}, the Biomart
 ##'     result can be unreliable for large queries. This argument
 ##'     splits the input in chunks of length \code{nmax} (default is
-##'     1000). If set to \code{NULL}, the query is performed in full.
+##'     500). If set to \code{NULL}, the query is performed in full.
 ##' @return A \code{data.frame} with relevant GO terms.
 ##' @author Laurent Gatto
 ##' @examples
@@ -35,7 +35,7 @@ getGOFromFeatures <- function(id,
                               evidence = NULL,
                               params = NULL,
                               verbose = FALSE,
-                              nmax = 1000) {
+                              nmax = 500) {
     if (inherits(id, "MSnSet"))
         id <- featureNames(id)
     namespace <- tolower(namespace)

@@ -4,17 +4,13 @@
 \alias{getMarkerClasses}
 \title{Returns the organelle classes in an 'MSnSet'}
 \usage{
-getMarkerClasses(object, fcol = "markers", verbose = TRUE, ...)
+getMarkerClasses(object, fcol = "markers", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}
 
 \item{fcol}{The name of the markers column in the \code{featureData}
 slot. Default is \code{markers}.}
-
-\item{verbose}{If \code{TRUE}, a character vector of the organelle
-classes is printed and the classes are returned invisibly. If \code{FALSE}, 
-the markers are returned.}
 
 \item{...}{Additional parameters passed to \code{sort} from the base package.}
 }

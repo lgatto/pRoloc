@@ -311,7 +311,7 @@ plot2D <- function(object,
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
     if ("outliers" %in% names(a))
-        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")
+        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")    
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -319,8 +319,10 @@ plot2D <- function(object,
     }
     if (!missing(pch)) {
         stockpch <- pch
+        userpch <- TRUE
     } else {
         stockpch <- getStockpch()
+        userpch <- FALSE
     }
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
@@ -495,6 +497,7 @@ plot2D <- function(object,
         }
         stopifnot(length(cex) == nrow(.data))
         if (!is.null(fcol)) {
+            nullfcol <- FALSE
             fData(object)[, fcol] <- factor(fData(object)[, fcol])
             lvs <- levels(fData(object)[, fcol])
             if ("unknown" %in% lvs) {
@@ -508,18 +511,21 @@ plot2D <- function(object,
             col <- stockcol[as.numeric(.fcol)]
             col[ukn] <- unknowncol            
         } else {
+            nullfcol <- TRUE
             ukn <- rep(TRUE, nrow(.data))
         }
-
         if (!missing(fpch)) {
             .fpch <- factor(fData(object)[, fpch])
             pch <- stockpch[as.numeric(.fpch)]
         } else {
             pch <- rep(stockpch[1], nrow(.data))
         }
-        pch[ukn] <- unknownpch
+        ## don't set this if fcol is null and pch was passed, as then
+        ## we want all points to be plotted with the user-defined pch
+        if (!(nullfcol & userpch))
+            pch[ukn] <- unknownpch
         isbig <- .isbig(object, fcol, stockcol, stockpch)
-
+        
         if (is.null(fcol)) {
             plot(.data, xlab = .xlab, ylab = .ylab, col = col,
                  pch = pch, cex = cex, ...)
@@ -536,9 +542,9 @@ plot2D <- function(object,
                 points(.data[sel, 1], .data[sel, 2],
                        cex = cex[!ukn],
                        col = stockcol[isbig[["jj"]][i]],
-                       pch = stockpch[isbig[["kk"]][i]]) 
-            }            
-        } else {            
+                       pch = stockpch[isbig[["kk"]][i]])
+            }
+        } else {
             plot(.data, xlab = .xlab, ylab = .ylab,
                  type = "n", ...)
             points(.data[ukn, 1], .data[ukn, 2],
@@ -553,7 +559,7 @@ plot2D <- function(object,
                                c("bottomright", "bottom",
                                  "bottomleft", "left", "topleft",
                                  "top", "topright", "right", "center"))
-            addLegend(object, fcol = fcol, where = where) 
+            addLegend(object, fcol = fcol, where = where)
         }
         grid()
         if (index) {

@@ -612,7 +612,7 @@ published with the data can be found in the slot
 <<plot2d, echo=TRUE, fig.asp=1>>=
 plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers.orig")
 addLegend(tan2009r1, fcol = "PLSDA", 
-          where = "bottomright", bty = "n", cex = .7)
+          where = "bottomright", cex = .7)
 @ 
 \caption{Representation of the \Sexpr{nrow(tan2009r1)} protein of
   \Robject{tan2009r1} after reduction of the 4 reporter quantitation
@@ -652,7 +652,7 @@ plot with the \Rfunction{highlightOnPlot} function.
 <<plotfoi, fig.asp=1>>=
 plot2D(tan2009r1, fcol = "PLSDA")
 addLegend(tan2009r1, fcol = "PLSDA",
-          where = "bottomright", bty = "n",
+          where = "bottomright", 
           cex = .7)
 highlightOnPlot(tan2009r1, foi1,
                 col = "black", lwd = 2)
@@ -1048,7 +1048,7 @@ ptsze <- exp(fData(svmres)$svm.scores) - 1
 plot2D(svmres, fcol = "svm", fpch = "markers.orig",
        cex = ptsze)
 addLegend(svmres, fcol = "svm",
-          where = "bottomright", bty = "n",
+          where = "bottomright", 
           cex = .5)
 @ 
 %% $
@@ -1112,7 +1112,7 @@ visualise the results, as shown on figure \ref{fig:pdres}.
 <<pdresfig, echo=TRUE, fig.asp=1>>=
 plot2D(pdres, fcol = "pd")
 addLegend(pdres, fcol = "pd", ncol = 2, 
-          where = "bottomright", bty = "n",
+          where = "bottomright", 
           cex = .5)
 @ 
 %% $
@@ -1184,7 +1184,7 @@ ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
 plot2D(tan2009r1, fcol = "svm", cex = ptsze)
 addLegend(tan2009r1, fcol = "svm",
           where = "bottomright",
-          ncol = 2, bty = "n", cex = .5)
+          ncol = 2, cex = .5)
 @ 
 %% $
 \caption{ Second round of classification using the augmented set of

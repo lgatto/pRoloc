@@ -53,6 +53,7 @@ Imports:
     graphics
 Suggests:
     testthat,
+    visualTest,
     pRolocdata (>= 1.9.4),
     roxygen2,
     synapter,

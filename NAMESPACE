@@ -34,7 +34,7 @@ importFrom(biomaRt, getBM,
            listAttributes)
 
 importFrom(ggplot2, ggplot, geom_point, theme, scale_size_continuous,
-           xlab, ylab, scale_y_discrete, geom_text,
+           xlab, ylab, scale_y_discrete, geom_text, aes,
            scale_color_manual, element_text, scale_x_discrete)
 
 ## Importing to avoid 'no visible global function definition for' NOTES

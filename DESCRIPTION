@@ -60,6 +60,7 @@ Suggests:
     xtable,
     tsne,
     hexbin,
+    rgl,
     BiocStyle,
     hpar,
     dplyr,

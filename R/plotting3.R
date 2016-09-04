@@ -1,7 +1,20 @@
+##' @param radius1 A \code{numeric} specifying the radius of feature
+##'     of unknown localisation. Default is 0.1, which is specidied on
+##'     the data scale. See \code{\link{rgl}{plot3d}} for details.
+##' @param radius2 A \code{numeric} specifying the radius of marker
+##'     feature. Default is \code{radius} * 2.
+##' @rdname plot2D
+##' @examples
+##'
+##' ## plotting in 3 dimenstions
+##' plot3D(dunkley2006)
+##' plot3D(dunkley2006, radius2 = 0.3)
+##' plot3D(dunkley2006, dims = c(2, 4, 6))
 setMethod("plot3D", "MSnSet",
           function(object, fcol = "markers", dims = c(1, 2, 3),
                    radius1 = 0.1, radius2 = radius1 * 2, plot = TRUE,
                    ...) {
+              requireNamespace("rgl")
               x12 <- plot2D(object, dims = dims[1:2], plot = FALSE, ...)
               x13 <- plot2D(object, dims = dims[2:3], plot = FALSE, ...)
               xx <- cbind(x12, x13[, 2, drop = FALSE])
@@ -21,10 +34,23 @@ setMethod("plot3D", "MSnSet",
               }
               invisible(xx)
           })
-
+##' @param radius Radius of the spheres to be added to the
+##'     visualisation produced by \code{plot3D}. Default is 0.3 (i.e
+##'     \code{plot3D}'s \code{radius1} * 3), to emphasise the features
+##'     with regard to uknown (\code{radius1 = 0.1}) and marker
+##'     (\code{radius1} * 2) features.
+##' @rdname highlightOnPlot
+##' @examples
+##'
+##' ## in 3 dimensions
+##' plot3D(tan2009r1, radius1 = 0.05)
+##' highlightOnPlot3D(tan2009r1, x, labels = TRUE)
+##' highlightOnPlot3D(tan2009r1, x)
 highlightOnPlot3D <- function(object, foi, labels,
+                              args = list(),
                               radius = 0.1 * 3,
-                              args = list(), ...) {
+                              ...) {
+    suppressPackageStartupMessages(library("rgl"))
     if (is.character(foi))
         foi <- FeaturesOfInterest(description = "internally created",
                                   fnames = foi)
@@ -59,6 +85,7 @@ highlightOnPlot3D <- function(object, foi, labels,
         }
         text3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3], labels[sel], ...)
     } else {
-        spheres3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3], radius = radius, ...) 
+        spheres3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3],
+                  radius = radius, ...)
     }
 }

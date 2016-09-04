@@ -28,7 +28,7 @@ dimensions.
 library("pRolocdata")
 data(E14TG2aS1)
 plot2D(E14TG2aS1)
-pRoloc:::addConvexHulls(E14TG2aS1)
+addConvexHulls(E14TG2aS1)
 }
 \author{
 Laurent Gatto

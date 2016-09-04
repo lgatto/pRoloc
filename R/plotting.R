@@ -140,9 +140,11 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 
 ##' Plot organelle assignment data and results.
 ##' 
-##' Generate 2 dimensional or feature distribution plots to illustrate
-##' localistation clusters. In \code{plot2D}, rows containing
-##' \code{NA} values are removed prior to dimention reduction.
+##' Generate 2 or 3 dimensional feature distribution plots to
+##' illustrate localistation clusters. Rows/features containing
+##' \code{NA} values are removed prior to dimention
+##' reduction. \code{plot3D} relies on the \code{rgl} package, that
+##' will be loaded automatically. 
 ##'
 ##' \itemize{
 ##' 
@@ -164,7 +166,6 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'       coordinates, then a matching \code{MSnSet} must be passed to
 ##'       \code{methargs}.
 ##' }
-##'
 ##' 
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
@@ -177,8 +178,9 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param unknown A \code{character} (default is \code{"unknown"})
 ##'     defining how proteins of unknown/un-labelled localisation are
 ##'     labelled.
-##' @param dims A \code{numeric} of length 2 defining the dimensions
-##'     to be plotted. Always 1:2 for MDS.
+##' @param dims A \code{numeric} of length 2 (or 3 for \code{plot3D})
+##'     defining the dimensions to be plotted. Defaults are \code{c(1,
+##'     2)} and \code{c(1, 2, 3)}.  Always \code{1:2} for MDS.
 ##' @param score A numeric specifying the minimum organelle assignment
 ##'     score to consider features to be assigned an organelle. (not
 ##'     yet implemented).
@@ -246,10 +248,11 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param ... Additional parameters passed to \code{plot} and
 ##'     \code{points}.
 ##' @return Used for its side effects of generating a plot.  Invisibly
-##'     returns the 2d data.
+##'     returns the 2 or 3 dimensions that are plotted.
 ##' @author Laurent Gatto <lg390@@cam.ac.uk>
 ##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
-##'     figures and \code{\link{plotDist}} for alternative graphical
+##'     figures (the legend is added by default on \code{plot3D}) and
+##'     \code{\link{plotDist}} for alternative graphical
 ##'     representation of quantitative organelle proteomics
 ##'     data. \code{\link{plot2Ds}} to overlay 2 data sets on the same
 ##'     PCA plot.
@@ -663,10 +666,11 @@ addLegend <- function(object,
 
 ##' Highlights a set of features of interest given as a
 ##' \code{FeaturesOfInterest} instance on a PCA plot produced by
-##' code{plot2D}. If none of the features of interest are found in the
-##' \code{MSnset}'s \code{featureNames}, an warning is thrown.
+##' code{plot2D} or \code{plot3D}. If none of the features of interest
+##' are found in the \code{MSnset}'s \code{featureNames}, an warning
+##' is thrown.
 ##'
-##' @title Highlight features of interest on a plot2D figure
+##' @title Highlight features of interest on a spatial proteomics plot
 ##' 
 ##' @param object The main dataset described as an \code{MSnSet} or a
 ##'     \code{matrix} with the coordinates of the features on the PCA
@@ -688,7 +692,10 @@ addLegend <- function(object,
 ##'     calculated. Ignored if the PCA coordinates are passed
 ##'     directly, i.e. \code{object} is a \code{matrix}.
 ##' 
-##' @param ... Additional parameters passed to \code{points}.
+##' @param ... Additional parameters passed to \code{points} or
+##'     \code{text} (when \code{labels} is \code{TRUE}) when adding to
+##'     \code{plot2D}, or \code{spheres3d} or \code{text3d} when
+##'     adding the \code{plot3D}
 ##' @return NULL; used for its side effects.
 ##' @author Laurent Gatto
 ##' @examples

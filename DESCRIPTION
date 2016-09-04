@@ -101,6 +101,7 @@ Collate:
     phenodisco.R
     plotting.R
     plotting2.R
+    plotting3.R
     environment.R
     utils.R
     lopims.R

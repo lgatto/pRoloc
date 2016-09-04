@@ -81,6 +81,7 @@ exportMethods(chi2,
               f1Count,
               levelPlot,
               plot,
+              plot3D,
               ## clustering
               ## kmeansClustering,
               ## kmeansOptimisation, kmeansOptimization,
@@ -117,6 +118,7 @@ export(## MSnSet manipulation
     addLegend,
     plotDist,
     highlightOnPlot,
+    highlightOnPlot3D,
     SpatProtVis,
     orgQuants,
     ## -- data checks

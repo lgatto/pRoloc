@@ -12,6 +12,7 @@ apt_packages:
 
 r_packages:
   - covr
+  - rmarkdown
   
 after_success:
   - Rscript -e 'covr::codecov()'

@@ -120,3 +120,16 @@ http://dx.doi.org/10.1101/022152
   [web page](http://lgatto.github.io/RforProteomics/) and
   [package](http://www.bioconductor.org/packages/release/data/experiment/html/RforProteomics.html)
 - Bioconductor proteomics [workflow](http://bioconductor.org/help/workflows/proteomics/)
+
+## Contributing
+
+Contributions to the package are more than welcome. If you want to
+contribute to this package, you should follow the same conventions as
+the rest of the functions whenever it makes sense to do so. Feel free
+to get in touch (preferable opening a
+[github issue](https://github.com/lgatto/pRoloc/issues/)) to discuss
+any suggestions. 
+
+Please note that this project is released with a
+[Contributor Code of Conduct](https://github.com/lgatto/MSnbase/blob/pRoloc/CONDUCT.md). By
+participating in this project you agree to abide by its terms.

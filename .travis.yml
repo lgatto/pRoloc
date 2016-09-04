@@ -12,7 +12,9 @@ apt_packages:
 
 r_packages:
   - covr
-  - rmarkdown
+
+r_github_packages:
+  - MangoTheCat/visualTest
   
 after_success:
   - Rscript -e 'covr::codecov()'

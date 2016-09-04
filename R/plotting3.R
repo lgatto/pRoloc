@@ -1,6 +1,6 @@
 ##' @param radius1 A \code{numeric} specifying the radius of feature
 ##'     of unknown localisation. Default is 0.1, which is specidied on
-##'     the data scale. See \code{\link{rgl}{plot3d}} for details.
+##'     the data scale. See \code{\link[rgl]{plot3d}} for details.
 ##' @param radius2 A \code{numeric} specifying the radius of marker
 ##'     feature. Default is \code{radius} * 2.
 ##' @rdname plot2D
@@ -26,11 +26,11 @@ setMethod("plot3D", "MSnSet",
               cls[ukn] <- getUnknowncol()
               sel <- !duplicated(names(cls))
               if (plot) {
-                  plot3d(xx, col = cls, radius = radius1, type = "s")
-                  spheres3d(xx[!ukn, ], radius = radius2, col = cls[!ukn])
-                  legend3d("top", legend = names(cls[sel]),
-                           col = cls[sel], pch = 19, bty = "n",
-                           ncol = 3)
+                  rgl::plot3d(xx, col = cls, radius = radius1, type = "s")
+                  rgl::spheres3d(xx[!ukn, ], radius = radius2, col = cls[!ukn])
+                  rgl::legend3d("top", legend = names(cls[sel]),
+                                col = cls[sel], pch = 19, bty = "n",
+                                ncol = 3)
               }
               invisible(xx)
           })
@@ -50,7 +50,7 @@ highlightOnPlot3D <- function(object, foi, labels,
                               args = list(),
                               radius = 0.1 * 3,
                               ...) {
-    suppressPackageStartupMessages(library("rgl"))
+    requireNamespace("rgl")
     if (is.character(foi))
         foi <- FeaturesOfInterest(description = "internally created",
                                   fnames = foi)
@@ -83,9 +83,9 @@ highlightOnPlot3D <- function(object, foi, labels,
         } else {
             stop("'labels' must be a character or logical of length 1.")
         }
-        text3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3], labels[sel], ...)
+        rgl::text3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3], labels[sel], ...)
     } else {
-        spheres3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3],
-                  radius = radius, ...)
+        rgl::spheres3d(.pca[sel, 1], .pca[sel, 2], .pca[sel, 3],
+                       radius = radius, ...)
     }
 }

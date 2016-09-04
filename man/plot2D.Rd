@@ -116,7 +116,7 @@ plotted.  Useful when retrieving data only. Default is
 
 \item{radius1}{A \code{numeric} specifying the radius of feature
 of unknown localisation. Default is 0.1, which is specidied on
-the data scale. See \code{\link{rgl}{plot3d}} for details.}
+the data scale. See \code{\link[rgl]{plot3d}} for details.}
 
 \item{radius2}{A \code{numeric} specifying the radius of marker
 feature. Default is \code{radius} * 2.}

@@ -798,6 +798,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 ##' @param ... Additional parameters passed to `plot2D`.
 ##' @return Invisibly returns \code{NULL}.
 ##' @author Laurent Gatto
+##' @noRd
 ##' @examples
 ##' library("pRolocdata")
 ##' data(E14TG2aS1)

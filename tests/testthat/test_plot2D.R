@@ -2,22 +2,29 @@ context("plot2D using visualTest")
 ## reference figures are in inst/figs/.
 library("visualTest")
 
+## see https://github.com/MangoTheCat/visualTest/issues/19
+thr <- ifelse(Sys.info()[["nodename"]] == "elyacin", 1e-3, 14)
+
 test_that("Negative control", {
     expect_false(
         isSimilar(system.file("figs/plot2D-null-black.png", package = "pRoloc"),
-                  system.file("figs/plot2D-null.png", package = "pRoloc")))
+                  system.file("figs/plot2D-null.png", package = "pRoloc"),
+                  threshold = thr))
     expect_false(
         isSimilar(system.file("figs/plot2D-null-black.png", package = "pRoloc"),
-                  system.file("figs/plot2D.png", package = "pRoloc")))
+                  system.file("figs/plot2D.png", package = "pRoloc"),
+                  threshold = thr))
 })
 
 test_that("Positive control", {
     expect_true(
         isSimilar(system.file("figs/plot2D-null.png", package = "pRoloc"),
-                  system.file("figs/plot2D-null.png", package = "pRoloc")))
+                  system.file("figs/plot2D-null.png", package = "pRoloc"),
+                  threshold = thr))
     expect_true(
         isSimilar(system.file("figs/plot2D.png", package = "pRoloc"),
-                  system.file("figs/plot2D.png", package = "pRoloc")))
+                  system.file("figs/plot2D.png", package = "pRoloc"),
+                  threshold = thr))
 })
 
 test_that("plot2D(hyperLOPIT2015, fcol = NULL)", {
@@ -27,7 +34,7 @@ test_that("plot2D(hyperLOPIT2015, fcol = NULL)", {
     png(tmpf)
     plot2D(hyperLOPIT2015, fcol = NULL)
     dev.off()
-    expect_true(isSimilar(tmpf, ref))
+    expect_true(isSimilar(tmpf, ref, threshold = thr))
     unlink(tmpf)
 })
 
@@ -38,7 +45,7 @@ test_that("plot2D(hyperLOPIT2015, fcol = NULL, col = 'black')", {
     png(tmpf)
     plot2D(hyperLOPIT2015, fcol = NULL, col = "black")
     dev.off()
-    expect_true(isSimilar(tmpf, ref))
+    expect_true(isSimilar(tmpf, ref, threshold = thr))
     unlink(tmpf)
 })
 
@@ -60,7 +67,7 @@ test_that("plot2D(hyperLOPIT2015, fcol = NULL, cex = 3)", {
     png(tmpf)
     plot2D(hyperLOPIT2015, fcol = NULL, cex = 3)
     dev.off()
-    expect_true(isSimilar(tmpf, ref))
+    expect_true(isSimilar(tmpf, ref, threshold = thr))
     unlink(tmpf)
 })
 
@@ -70,7 +77,9 @@ test_that("plot2D(hyperLOPIT2015, fcol = NULL, pch = 3)", {
     png(tmpf)
     plot2D(hyperLOPIT2015, fcol = NULL, pch = 3)
     dev.off()
-    expect_true(isSimilar(tmpf, system.file("figs/plot2D-null-pch.png", package = "pRoloc")))
+    expect_true(isSimilar(tmpf,
+                          system.file("figs/plot2D-null-pch.png", package = "pRoloc"),
+                          threshold = thr))
     unlink(tmpf)
 })
 
@@ -81,7 +90,7 @@ test_that("plot2D(hyperLOPIT2015, fcol = NULL, pch = 19, col = 'black')", {
     png(tmpf)
     plot2D(hyperLOPIT2015, fcol = NULL, pch = 19, col = "black")
     dev.off()
-    expect_true(isSimilar(tmpf, ref))
+    expect_true(isSimilar(tmpf, ref, threshold = thr))
     unlink(tmpf)
 })
 
@@ -91,7 +100,9 @@ test_that("plot2D(hyperLOPIT2015, method = 'scree')", {
     png(tmpf)
     plot2D(hyperLOPIT2015, method = "scree")
     dev.off()
-    expect_true(isSimilar(tmpf, system.file("figs/plot2D-scree.png", package = "pRoloc")))
+    expect_true(isSimilar(tmpf,
+                          system.file("figs/plot2D-scree.png", package = "pRoloc"),
+                          threshold = thr))
     unlink(tmpf)
 })
 
@@ -102,7 +113,7 @@ test_that("plot2D(hyperLOPIT2015, method = 'hexbin')", {
     png(tmpf)
     plot2D(hyperLOPIT2015, method = "hexbin")
     dev.off()
-    expect_true(isSimilar(tmpf, ref))
+    expect_true(isSimilar(tmpf, ref, threshold = thr))
     unlink(tmpf)
 })
 
@@ -113,6 +124,6 @@ test_that("plot2D(hyperLOPIT2015, method = 'lda')", {
     png(tmpf)
     plot2D(hyperLOPIT2015, method = "lda")
     dev.off()
-    expect_true(isSimilar(tmpf, ref))
+    expect_true(isSimilar(tmpf, ref, threshold = thr))
     unlink(tmpf)
 })

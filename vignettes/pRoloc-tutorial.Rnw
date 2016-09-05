@@ -9,6 +9,7 @@
 BiocStyle::latex2()
 @
 
+\usepackage{animate} 
 
 \author{
   Laurent Gatto and Lisa M. Breckels\\
@@ -620,6 +621,39 @@ addLegend(tan2009r1, fcol = "PLSDA",
 \label{fig:plot2d}
 \end{figure*}
 
+It is also possible to visualise the data along 3 dimensions using the
+\Rfunction{plot3D} function, which works like the 2 dimension
+version. The resulting figure can be rotated by the user.
+
+<<plot3Danim, echo=FALSE, eval=FALSE>>=
+## here's how the animation below was created
+data(hyperLOPIT2015)
+suppressPackageStartupMessages(library("rgl"))
+plot3D(hyperLOPIT2015)
+movie3d(spin3d(c(1, 1, 1), rpm = 10), duration = 5,
+        clean = FALSE,
+        dir = "~/dev/00_github/pRoloc/vignettes/Figures/")
+@
+
+% \begin{center}
+% \animategraphics[controls, loop, width=.8\linewidth]{6}{Figures/movie}{001}{040}
+% \end{center}
+
+<<plot3D, eval = FALSE>>=
+data(hyperLOPIT2015)
+plot3D(hyperLOPIT2015)
+@
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{./Figures/plot3D.png}
+  \caption{Snapshot of the 3-dimensional PCA plot of the hyperLOPIT
+    experiment from \cite{Christoforou:2016} along the first 3
+    principal components.}
+  \label{fig:plot2D}
+\end{figure}
+
 \subsection{Features of interest}
 
 In addition to highlighting sub-cellular niches as coloured clusters
@@ -646,7 +680,9 @@ foic
 @
 
 \Rclass{FeaturesOfInterest} instances can now be overlaid on the PCA
-plot with the \Rfunction{highlightOnPlot} function.
+plot with the \Rfunction{highlightOnPlot} function. The
+\Rfunction{highlightOnPlot3D} can be used to overlay data onto a 3
+dimensional figure produced by \Rfunction{plot3D}.
 
 \begin{figure*}[!hbt]
 <<plotfoi, fig.asp=1>>=

@@ -9,8 +9,6 @@
 BiocStyle::latex2()
 @
 
-\usepackage{animate} 
-
 \author{
   Laurent Gatto and Lisa M. Breckels\\
   Computational Proteomics Unit, University of Cambridge

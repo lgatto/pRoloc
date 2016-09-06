@@ -1012,3 +1012,12 @@ knntlClassification <- function(primary,
   
     return(primary)
 }
+
+
+## Function to empty slots that are not populated during
+## knntlOptimisation(..., log = FALSE).
+nologgin <- function(x) {
+    stopifnot(inherits(x, "ThetaRegRes"))
+    x@log <- x@f1Matrices <- list()
+    if (validObject(x)) return(x)
+}

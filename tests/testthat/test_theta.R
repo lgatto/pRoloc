@@ -39,14 +39,13 @@ test_that("theta matrices passed to knntl are the same as those output and store
   
   ## Test whether passing weights using the thetas function
   ## or calculating internally produces the same results
-  n <- length(getMarkerClasses(andy2011,fcol = "markers.orig",
-                                    verbose = FALSE))
+  n <- length(getMarkerClasses(andy2011,fcol = "markers.orig"))
   weights <- thetas(nclass = n, by = 1, verbose = FALSE)
   
   tl3 <- knntlOptimisation(andy2011, andy2011goCC,
                            fcol = "markers.orig",
                            times = 1, th = weights,
-                           by = 1, k = c(3, 3), 
+                           by = 1, k = c(3, 3),
                            BPPARAM = SerialParam(),
                            seed = seed)
   expect_equal(tl1, tl3)
@@ -57,21 +56,21 @@ test_that("theta matrices passed to knntl are the same as those output and store
   tl4 <-  knntlOptimisation(andy2011, andy2011goCC,
                             fcol = "markers.orig",
                             times = 1,
-                            length.out = 4, 
-                            k = c(3, 3), 
+                            length.out = 4,
+                            k = c(3, 3),
                             BPPARAM = SerialParam(),
                             method = "Wu",
                             seed = seed)
   tl5 <-  knntlOptimisation(andy2011, andy2011goCC,
                             fcol = "markers.orig",
                             times = 1,
-                            length.out = 4, 
-                            k = c(3, 3), 
+                            length.out = 4,
+                            k = c(3, 3),
                             BPPARAM = SerialParam(),
                             th = wuweights,
                             seed = seed)
   expect_equal(tl4, tl5)
-  
+
   ## Test if the auxiliary is a bigger (more proteins) *and* the markers 
   ## are the same we get the same results
   torm <- sample(which(fData(andy2011)$markers.orig == "unknown"), 100)
@@ -83,7 +82,6 @@ test_that("theta matrices passed to knntl are the same as those output and store
                            by = 1, k = c(3, 3),
                            BPPARAM = SerialParam(),
                            seed = seed)
-                            
   
   tl2 <- knntlOptimisation(andy2011, andy2011goCC,
                            fcol = "markers.orig",
@@ -91,7 +89,6 @@ test_that("theta matrices passed to knntl are the same as those output and store
                            by = 1, k = c(3, 3),
                            BPPARAM = SerialParam(),
                            seed = seed)
-  
                             
   expect_identical(tl1, tl2)
   
@@ -107,8 +104,29 @@ test_that("theta matrices passed to knntl are the same as those output and store
                           seed = seed)
   expect_true(validObject(tl))
   
+#   ## check logging and no-logging results in the same results
+#   seed <- sample(.Machine$integer.max, 1)
+#   tl1 <- knntlOptimisation(andy2011, andy2011goCC,
+#                            fcol = "markers.orig",
+#                            times = 1,
+#                            by = 1, k = c(3, 3),
+#                            BPPARAM = SerialParam(),
+#                            seed = seed)
+#   
+#   tl2 <- knntlOptimisation(andy2011, andy2011goCC,
+#                            fcol = "markers.orig",
+#                            times = 1,
+#                            by = 1, k = c(3, 3),
+#                            BPPARAM = SerialParam(),
+#                            seed = seed, 
+#                            log = TRUE)
+#   
+#   expect_identical(tl1@results, tl2@results)
+#   expect_identical(tl1@hyperparameters, tl2@hyperparameters)
   
-}) 
+})
+
+
 
 ## test_that("results from thetaOptimisation with all primary/auxiliary is the same as knnClassification with primary/auxiliary", {
 ##   library("pRolocdata")

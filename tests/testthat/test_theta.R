@@ -103,7 +103,30 @@ test_that("theta matrices passed to knntl are the same as those output and store
                           BPPARAM = SerialParam(),
                           seed = seed)
   expect_true(validObject(tl))
+  
+#   ## check logging and no-logging results in the same results
+#   seed <- sample(.Machine$integer.max, 1)
+#   tl1 <- knntlOptimisation(andy2011, andy2011goCC,
+#                            fcol = "markers.orig",
+#                            times = 1,
+#                            by = 1, k = c(3, 3),
+#                            BPPARAM = SerialParam(),
+#                            seed = seed)
+#   
+#   tl2 <- knntlOptimisation(andy2011, andy2011goCC,
+#                            fcol = "markers.orig",
+#                            times = 1,
+#                            by = 1, k = c(3, 3),
+#                            BPPARAM = SerialParam(),
+#                            seed = seed, 
+#                            log = TRUE)
+#   
+#   expect_identical(tl1@results, tl2@results)
+#   expect_identical(tl1@hyperparameters, tl2@hyperparameters)
+  
 })
+
+
 
 ## test_that("results from thetaOptimisation with all primary/auxiliary is the same as knnClassification with primary/auxiliary", {
 ##   library("pRolocdata")

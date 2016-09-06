@@ -18,6 +18,7 @@ r_github_packages:
 
 r_check_args:
   --no-vignettes
+  --no-build-vignettes
   
 after_success:
   - Rscript -e 'covr::codecov()'

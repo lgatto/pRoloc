@@ -3,7 +3,7 @@ context("plot2D using visualTest")
 library("visualTest")
 
 ## see https://github.com/MangoTheCat/visualTest/issues/19
-thr <- ifelse(Sys.info()[["nodename"]] == "elyacin", 1e-3, 14)
+thr <- ifelse(Sys.info()[["nodename"]] == "elyacin", 1e-3, 25)
 
 test_that("Negative control", {
     expect_false(

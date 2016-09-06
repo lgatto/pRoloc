@@ -17,10 +17,10 @@
 ##'     \code{\link[stats]{hclust}} function.
 ##' @param plot A \code{logical} defining whether the dendrogram
 ##'     should be plotted. Default is \code{TRUE}.
-##' @param ... Additional parameters passed to
-##'     \code{\link[stats]{stats::plot.dendrogram}}.
+##' @param ... Additional parameters passed when plotting the
+##'     \code{\link[stats]{dendrogram}}.
 ##' @return Invisibly returns a matrix of average occupancy profiles
-##'     for all marker classes defined in \code{fcol}. 
+##'     for all marker classes defined in \code{fcol}.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")

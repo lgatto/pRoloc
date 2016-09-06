@@ -22,8 +22,8 @@ colours. Default is \code{markers}.}
 \item{plot}{A \code{logical} defining whether the dendrogram
 should be plotted. Default is \code{TRUE}.}
 
-\item{...}{Additional parameters passed to
-\code{\link[stats]{stats::plot.dendrogram}}.}
+\item{...}{Additional parameters passed when plotting the
+\code{\link[stats]{dendrogram}}.}
 }
 \value{
 Invisibly returns a matrix of average occupancy profiles

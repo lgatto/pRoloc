@@ -13,10 +13,13 @@ importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
            "text", "par", "mtext", "barplot")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
-           "update", "var", "rmultinom", "na.omit")
+           "update", "var", "rmultinom", "na.omit", "hclust",
+           "as.dendrogram")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",
            "txtProgressBar")
+
+importFrom("dendextend", "set")
 
 importMethodsFrom(MLInterfaces, MLearn,
                   predScore, predScores,
@@ -117,6 +120,7 @@ export(## MSnSet manipulation
     move2Ds,
     addLegend,
     plotDist,
+    mrkHClust,
     highlightOnPlot,
     highlightOnPlot3D,
     SpatProtVis,

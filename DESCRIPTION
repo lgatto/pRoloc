@@ -38,7 +38,8 @@ Imports:
     proxy,
     FNN,
     BiocGenerics,
-    stats,
+    stats,    
+    dendextend,
     RColorBrewer,
     scales,
     MASS,
@@ -103,6 +104,7 @@ Collate:
     plotting.R
     plotting2.R
     plotting3.R
+    hclust.R
     environment.R
     utils.R
     lopims.R

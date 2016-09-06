@@ -14,7 +14,9 @@ setMethod("plot3D", "MSnSet",
           function(object, fcol = "markers", dims = c(1, 2, 3),
                    radius1 = 0.1, radius2 = radius1 * 2, plot = TRUE,
                    ...) {
-              requireNamespace("rgl")
+              if (!require("rgl"))
+                  stop(paste0("Plotting in 3D depends on the rgl package.\n",
+                              "Install it with 'install.packages('rlg')'."))
               x12 <- plot2D(object, dims = dims[1:2], plot = FALSE, ...)
               x13 <- plot2D(object, dims = dims[2:3], plot = FALSE, ...)
               xx <- cbind(x12, x13[, 2, drop = FALSE])

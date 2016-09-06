@@ -4,6 +4,8 @@ CHANGES IN VERSION 1.13.13
    <2016-09-03 Sat>
  o Parametrise logging in knntlOptimisation to reduce object size
    <2016-09-06 Tue>
+ o New mrkHClust function to plot a dendrogram of subcellular markers
+   <2016-09-06 Tue>
  
 CHANGES IN VERSION 1.13.12
 --------------------------

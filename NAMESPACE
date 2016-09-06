@@ -13,10 +13,13 @@ importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
            "text", "par", "mtext", "barplot")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
-           "update", "var", "rmultinom", "na.omit")
+           "update", "var", "rmultinom", "na.omit", "hclust",
+           "as.dendrogram")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",
            "txtProgressBar")
+
+importFrom("dendextend", "set")
 
 importMethodsFrom(MLInterfaces, MLearn,
                   predScore, predScores,
@@ -34,7 +37,7 @@ importFrom(biomaRt, getBM,
            listAttributes)
 
 importFrom(ggplot2, ggplot, geom_point, theme, scale_size_continuous,
-           xlab, ylab, scale_y_discrete, geom_text,
+           xlab, ylab, scale_y_discrete, geom_text, aes,
            scale_color_manual, element_text, scale_x_discrete)
 
 ## Importing to avoid 'no visible global function definition for' NOTES
@@ -81,6 +84,7 @@ exportMethods(chi2,
               f1Count,
               levelPlot,
               plot,
+              plot3D,
               ## clustering
               ## kmeansClustering,
               ## kmeansOptimisation, kmeansOptimization,
@@ -116,7 +120,9 @@ export(## MSnSet manipulation
     move2Ds,
     addLegend,
     plotDist,
+    mrkHClust,
     highlightOnPlot,
+    highlightOnPlot3D,
     SpatProtVis,
     orgQuants,
     ## -- data checks

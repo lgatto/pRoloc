@@ -3,18 +3,24 @@ is a Bioconductor package for the analysis of experimental spatial
 proteomics data.  It is available from Bioconductor `>= 2.12` and
 requires `R (>= 3.0.0)`.
 
-<a href="http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html#since"><img border="0" src="http://www.bioconductor.org/shields/years-in-bioc/pRoloc.svg" title="How long since the package was first in a released Bioconductor version (or is it in devel only)."></a> <a href="http://bioconductor.org/packages/stats/bioc/pRoloc.html"><img border="0" src="http://www.bioconductor.org/shields/downloads/pRoloc.svg" title="Percentile (top 5/20/50% or 'available') of downloads over last 6 full months. Comparison is done across all package categories (software, annotation, experiment)."></a> <a href="https://support.bioconductor.org/t/pRoloc/"><img border="0" src="http://www.bioconductor.org/shields/posts/pRoloc.svg" title="Support site activity, last 6 months: tagged questions/avg. answers per question/avg. comments per question/accepted answers, or 0 if no tagged posts."></a> <a href="http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html#svn_source"><img border="0" src="http://www.bioconductor.org/shields/commits/bioc/pRoloc.svg" title="average Subversion commits (to the devel branch) per month for the last 6 months"></a>
-
-**Current build status**:
-- `release` <a href="http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html#archives"><img border="0" src="http://www.bioconductor.org/shields/availability/release/pRoloc.svg" title="Whether the package is available on all platforms; click for details."></a> <a href="http://bioconductor.org/checkResults/release/bioc-LATEST/pRoloc/"><img border="0" src="http://www.bioconductor.org/shields/build/release/bioc/pRoloc.svg" title="build results; click for full report"></a>
-- `devel` <a href="http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html#archives"><img border="0" src="http://www.bioconductor.org/shields/availability/devel/pRoloc.svg" title="Whether the package is available on all platforms; click for details."></a> <a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/pRoloc/"><img border="0" src="http://www.bioconductor.org/shields/build/devel/bioc/pRoloc.svg" title="build results; click for full report"></a>
-
 The `pRoloc` suite set of software are distributed as part of the
 R/[Bioconductor](http://bioconductor.org/) project and are developed
 at the [Computational Proteomics Unit](http://cpu.sysbiol.cam.ac.uk/)
 and
 [Cambridge Centre for Proteomics](http://proteomics.bio.cam.ac.uk/)
 labs, at the University of Cambridge.
+
+
+**Current build status**:
+
+[![Build Status](https://travis-ci.org/lgatto/pRoloc.svg?branch=master)](https://travis-ci.org/lgatto/pRoloc) [![codecov.io](https://codecov.io/github/lgatto/pRoloc/coverage.svg?branch=master)](https://codecov.io/github/lgatto/pRoloc?branch=master)
+
+See the Bioconductor landing pages
+([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
+and
+[devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
+for the Bioc build status. 
+
 
 ## Getting started
 
@@ -114,3 +120,16 @@ http://dx.doi.org/10.1101/022152
   [web page](http://lgatto.github.io/RforProteomics/) and
   [package](http://www.bioconductor.org/packages/release/data/experiment/html/RforProteomics.html)
 - Bioconductor proteomics [workflow](http://bioconductor.org/help/workflows/proteomics/)
+
+## Contributing
+
+Contributions to the package are more than welcome. If you want to
+contribute to this package, you should follow the same conventions as
+the rest of the functions whenever it makes sense to do so. Feel free
+to get in touch (preferable opening a
+[github issue](https://github.com/lgatto/pRoloc/issues/)) to discuss
+any suggestions. 
+
+Please note that this project is released with a
+[Contributor Code of Conduct](https://github.com/lgatto/pRoloc/blob/master/CONDUCT.md).
+By participating in this project you agree to abide by its terms.

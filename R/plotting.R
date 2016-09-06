@@ -140,9 +140,11 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 
 ##' Plot organelle assignment data and results.
 ##' 
-##' Generate 2 dimensional or feature distribution plots to illustrate
-##' localistation clusters. In \code{plot2D}, rows containing
-##' \code{NA} values are removed prior to dimention reduction.
+##' Generate 2 or 3 dimensional feature distribution plots to
+##' illustrate localistation clusters. Rows/features containing
+##' \code{NA} values are removed prior to dimention
+##' reduction. \code{plot3D} relies on the \code{rgl} package, that
+##' will be loaded automatically. 
 ##'
 ##' \itemize{
 ##' 
@@ -164,7 +166,6 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'       coordinates, then a matching \code{MSnSet} must be passed to
 ##'       \code{methargs}.
 ##' }
-##'
 ##' 
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
@@ -177,8 +178,9 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param unknown A \code{character} (default is \code{"unknown"})
 ##'     defining how proteins of unknown/un-labelled localisation are
 ##'     labelled.
-##' @param dims A \code{numeric} of length 2 defining the dimensions
-##'     to be plotted. Always 1:2 for MDS.
+##' @param dims A \code{numeric} of length 2 (or 3 for \code{plot3D})
+##'     defining the dimensions to be plotted. Defaults are \code{c(1,
+##'     2)} and \code{c(1, 2, 3)}.  Always \code{1:2} for MDS.
 ##' @param score A numeric specifying the minimum organelle assignment
 ##'     score to consider features to be assigned an organelle. (not
 ##'     yet implemented).
@@ -246,10 +248,11 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param ... Additional parameters passed to \code{plot} and
 ##'     \code{points}.
 ##' @return Used for its side effects of generating a plot.  Invisibly
-##'     returns the 2d data.
+##'     returns the 2 or 3 dimensions that are plotted.
 ##' @author Laurent Gatto <lg390@@cam.ac.uk>
 ##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
-##'     figures and \code{\link{plotDist}} for alternative graphical
+##'     figures (the legend is added by default on \code{plot3D}) and
+##'     \code{\link{plotDist}} for alternative graphical
 ##'     representation of quantitative organelle proteomics
 ##'     data. \code{\link{plot2Ds}} to overlay 2 data sets on the same
 ##'     PCA plot.
@@ -311,7 +314,7 @@ plot2D <- function(object,
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
     if ("outliers" %in% names(a))
-        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")
+        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")    
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -319,8 +322,10 @@ plot2D <- function(object,
     }
     if (!missing(pch)) {
         stockpch <- pch
+        userpch <- TRUE
     } else {
         stockpch <- getStockpch()
+        userpch <- FALSE
     }
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
@@ -495,6 +500,7 @@ plot2D <- function(object,
         }
         stopifnot(length(cex) == nrow(.data))
         if (!is.null(fcol)) {
+            nullfcol <- FALSE
             fData(object)[, fcol] <- factor(fData(object)[, fcol])
             lvs <- levels(fData(object)[, fcol])
             if ("unknown" %in% lvs) {
@@ -508,18 +514,21 @@ plot2D <- function(object,
             col <- stockcol[as.numeric(.fcol)]
             col[ukn] <- unknowncol            
         } else {
+            nullfcol <- TRUE
             ukn <- rep(TRUE, nrow(.data))
         }
-
         if (!missing(fpch)) {
             .fpch <- factor(fData(object)[, fpch])
             pch <- stockpch[as.numeric(.fpch)]
         } else {
             pch <- rep(stockpch[1], nrow(.data))
         }
-        pch[ukn] <- unknownpch
+        ## don't set this if fcol is null and pch was passed, as then
+        ## we want all points to be plotted with the user-defined pch
+        if (!(nullfcol & userpch))
+            pch[ukn] <- unknownpch
         isbig <- .isbig(object, fcol, stockcol, stockpch)
-
+        
         if (is.null(fcol)) {
             plot(.data, xlab = .xlab, ylab = .ylab, col = col,
                  pch = pch, cex = cex, ...)
@@ -536,9 +545,9 @@ plot2D <- function(object,
                 points(.data[sel, 1], .data[sel, 2],
                        cex = cex[!ukn],
                        col = stockcol[isbig[["jj"]][i]],
-                       pch = stockpch[isbig[["kk"]][i]]) 
-            }            
-        } else {            
+                       pch = stockpch[isbig[["kk"]][i]])
+            }
+        } else {
             plot(.data, xlab = .xlab, ylab = .ylab,
                  type = "n", ...)
             points(.data[ukn, 1], .data[ukn, 2],
@@ -553,7 +562,7 @@ plot2D <- function(object,
                                c("bottomright", "bottom",
                                  "bottomleft", "left", "topleft",
                                  "top", "topright", "right", "center"))
-            addLegend(object, fcol = fcol, where = where) 
+            addLegend(object, fcol = fcol, where = where)
         }
         grid()
         if (index) {
@@ -657,10 +666,11 @@ addLegend <- function(object,
 
 ##' Highlights a set of features of interest given as a
 ##' \code{FeaturesOfInterest} instance on a PCA plot produced by
-##' code{plot2D}. If none of the features of interest are found in the
-##' \code{MSnset}'s \code{featureNames}, an warning is thrown.
+##' code{plot2D} or \code{plot3D}. If none of the features of interest
+##' are found in the \code{MSnset}'s \code{featureNames}, an warning
+##' is thrown.
 ##'
-##' @title Highlight features of interest on a plot2D figure
+##' @title Highlight features of interest on a spatial proteomics plot
 ##' 
 ##' @param object The main dataset described as an \code{MSnSet} or a
 ##'     \code{matrix} with the coordinates of the features on the PCA
@@ -682,7 +692,10 @@ addLegend <- function(object,
 ##'     calculated. Ignored if the PCA coordinates are passed
 ##'     directly, i.e. \code{object} is a \code{matrix}.
 ##' 
-##' @param ... Additional parameters passed to \code{points}.
+##' @param ... Additional parameters passed to \code{points} or
+##'     \code{text} (when \code{labels} is \code{TRUE}) when adding to
+##'     \code{plot2D}, or \code{spheres3d} or \code{text3d} when
+##'     adding the \code{plot3D}
 ##' @return NULL; used for its side effects.
 ##' @author Laurent Gatto
 ##' @examples
@@ -785,6 +798,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 ##' @param ... Additional parameters passed to `plot2D`.
 ##' @return Invisibly returns \code{NULL}.
 ##' @author Laurent Gatto
+##' @noRd
 ##' @examples
 ##' library("pRolocdata")
 ##' data(E14TG2aS1)

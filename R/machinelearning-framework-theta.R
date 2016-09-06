@@ -324,8 +324,10 @@ combineThetaRegRes <- function(object) {
     .predictions <- do.call(c, lapply(object, function(z) z@predictions))
     .cmMatrices <- do.call(c, lapply(object, function(z) z@cmMatrices))
     .f1Matrices <- do.call(c, lapply(object, function(z) z@f1Matrices))
-    .names <- paste("times", 1:.times, sep="")
-    names(.f1Matrices) <- .names
+    if (length(.f1Matrices) > 0) {
+        .names <- paste("times", 1:.times, sep = "")
+        names(.f1Matrices) <- .names
+    }
     .otherWeights <- do.call(c, lapply(object, function(z) z@otherWeights))
     .ds <- object[[1]]@datasize
     .test.partitions <- vector("list", 2)

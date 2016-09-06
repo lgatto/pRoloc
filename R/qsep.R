@@ -81,7 +81,7 @@ setMethod("summary", "QSep",
           })
 
 setMethod("levelPlot", "QSep",
-          function(object, norm = TRUE) {
+          function(object, norm = TRUE, ...) {
               pal <- colorRampPalette(c("blue", "white", "red"))
               myPanel <- function(x, y, z, ...) {
                   panel.levelplot(x, y, z, ...)
@@ -92,7 +92,8 @@ setMethod("levelPlot", "QSep",
                         panel = myPanel,
                         xlab = "Reference cluster", ylab = "",
                         scales = list(x = list(cex = .8, rot = 45),
-                                      y = list(cex = .8)))
+                                      y = list(cex = .8)),
+                        ...)
           })
 
 .plotQSep <- function(obj, norm = TRUE, ...) {

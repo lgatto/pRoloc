@@ -6,20 +6,22 @@
 \usage{
 knntlOptimisation(primary, auxiliary, fcol = "markers", k, times = 50,
   test.size = 0.2, xval = 5, by = 0.5, length.out, th, xfolds,
-  BPPARAM = BiocParallel::bpparam(), method = "Breckels", seed)
+  BPPARAM = BiocParallel::bpparam(), method = "Breckels", log = FALSE,
+  seed)
 }
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
 
-\item{auxiliary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
+\item{auxiliary}{An instance of class
+\code{"\linkS4class{MSnSet}"}.}
 
 \item{fcol}{The feature meta-data containing marker definitions.
 Default is \code{markers}.}
 
 \item{k}{Numeric vector of length 2, containing the best \code{k}
 parameters to use for the primary (\code{k[1]}) and auxiliary
-(\code{k[2]}) datasets. See \code{knnOptimisation} for generating
-best \code{k}.}
+(\code{k[2]}) datasets. See \code{knnOptimisation} for
+generating best \code{k}.}
 
 \item{times}{The number of times cross-validation is
 performed. Default is 50.}
@@ -33,13 +35,13 @@ performed. Default is 50.}
 0.25, 0.2, 0.15, 0.1, 0.05)}}
 
 \item{length.out}{Alternative to using \code{by}
-parameter. Specifies the desired length of the sequence of theta
-to test.}
+parameter. Specifies the desired length of the sequence of
+theta to test.}
 
 \item{th}{A matrix of theta values to test for each class as
-generated from the function \code{\link{thetas}}, the number of
-columns should be equal to the number of classes contained in
-\code{fcol}. Note: columns will be ordered according to
+generated from the function \code{\link{thetas}}, the number
+of columns should be equal to the number of classes contained
+in \code{fcol}. Note: columns will be ordered according to
 \code{getMarkerClasses(primary, fcol)}. This argument is only
 valid if the default method 'Breckels' is used.}
 
@@ -47,20 +49,25 @@ valid if the default method 'Breckels' is used.}
 validation.}
 
 \item{BPPARAM}{Required for parallelisation. If not specified
-selects a default \code{BiocParallelParam}, from global options
-or, if that fails, the most recently registered() back-end.}
+selects a default \code{BiocParallelParam}, from global
+options or, if that fails, the most recently registered()
+back-end.}
 
-\item{method}{The k-NN transfer learning method to use. The default
-is 'Breckels' as described in the Breckels et al (2016). If 'Wu' is
-specificed then the original method implemented Wu and Dietterich
-(2004) is implemented.}
+\item{method}{The k-NN transfer learning method to use. The
+default is 'Breckels' as described in the Breckels et al
+(2016). If 'Wu' is specificed then the original method
+implemented Wu and Dietterich (2004) is implemented.}
+
+\item{log}{A \code{logical} defining whether logging should be
+enabled. Default is \code{FALSE}. Note that logging produes
+considerably bigger objects.}
 
 \item{seed}{The optional random number generator seed.}
 }
 \value{
 A list of containing the theta combinations tested,
-associated macro F1 score and accuracy for each combination over
-each round (specified by times).
+    associated macro F1 score and accuracy for each combination
+    over each round (specified by times).
 }
 \description{
 Classification parameter optimisation for the KNN implementation
@@ -78,10 +85,11 @@ Conference on Machine Learning, pages 871 - 878.  Morgan Kaufmann,
 Lisa Breckels
 }
 \references{
-Breckels LM, Holden S, Wonjar D, Mulvey CM, 
-Christoforou A, Groen AJ, Kohlbacher O, Lilley KS, Gatto L. 
-Learning from heterogeneous data sources: an application 
-in spatial proteomics. bioRxiv. doi: http://dx.doi.org/10.1101/022152
+Breckels LM, Holden S, Wonjar D, Mulvey CM,
+    Christoforou A, Groen AJ, Kohlbacher O, Lilley KS, Gatto L.
+    Learning from heterogeneous data sources: an application in
+    spatial proteomics. bioRxiv. doi:
+    http://dx.doi.org/10.1101/022152
 
 Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary 
 Data Sources. Proceedings of the 21st International Conference on Machine

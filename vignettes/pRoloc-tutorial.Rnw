@@ -398,18 +398,17 @@ data(tan2009r1)
 @ 
 
 The original marker proteins are available as a feature meta-data
-variables called \Robject{markers.orig} and the output of the partial least
-square discriminant analysis, applied in the original publication, in
-the \Robject{PLSDA} feature variable. The most up-to-date marker list for the
-experiment can be found in \Robject{markers}. This feature meta-data column
-can be added from a simple \texttt{csv} markers files using the
-\Rfunction{addMarkers} function - see \Rfunction{?addMarkers} for
-details.
+variables called \Robject{markers.orig} and the output of the partial
+least square discriminant analysis, applied in the original
+publication, in the \Robject{PLSDA} feature variable. The most
+up-to-date marker list for the experiment can be found in
+\Robject{markers}. This feature meta-data column can be added from a
+simple \texttt{csv} markers files using the \Rfunction{addMarkers}
+function - see \Rfunction{?addMarkers} for details.
 
 The organelle markers are illustrated below using the convenience
 function \Rfunction{getMarkers}, but could also be done manually by
-accessing the feature variable of interested and the \Rcode{table}
-function, such as \Rcode{table(fData(tan2009r1)\$PLSDA)}.
+accessing feature variables directly using \Rfunction{fData()}.
 
 <<lookAtTan>>=
 getMarkers(tan2009r1, fcol = "markers.orig")
@@ -589,7 +588,7 @@ To gain a quick overview of the distance/similarity between the
 sub-cellular clusters, it can useful to compare average marker
 profiles, rather than all profiles, as presented in the profile plots
 above. The \Rfunction{mrkHClust} calculates average class profiles and
-generates the resulting dendrogram. 
+generates the resulting dendrogram.
 
 \begin{figure}[h]
   \centering
@@ -609,6 +608,15 @@ that it ignores any variability in individual markers (cluster
 thighness). It is however a good guide for a more thorough exploration
 of the data, as described in the next sections.
 
+
+
+Note the colours of the labels on the dendrogram
+(figure~\ref{fig:dendro}), which match the colours used to annotate
+PCA plots, described in the next section
+(figure~\ref{fig:plot2d}). These colours are defined at the session
+level (see \Rfunction{getStockcol} and \Rfunction{setStockcol}) and
+re-used throughout \Biocpkg{pRoloc} for consistent annotation.
+
 \subsection{Dimensionality reduction}\label{sec:pcalot}
 
 Alternatively, we can combine all organelle groups in one single 2
@@ -624,14 +632,13 @@ PC3, PC4, etc.
 
 Using a PCA representation to visualise a spatial proteomics
 experiment, we can easily plot all the proteins on the same figure as
-well a many sub-cellular clusters (see figure \ref{fig:pdres2} for a
-case with 11 clusters). These clusters are defined in a feature
-meta-data column (slot \Robject{featureData}/\Robject{fData}) that is
+well a many sub-cellular clusters. These clusters are defined in a
+feature meta-data column (slot \Robject{featureData}, accessed as a
+\Robject{data.frame} with the \Robject{fData} function) that is
 declared with the \Robject{fcol} argument (default is
 \texttt{"markers"} which contains the most current known markers for
-the experiment under investigation, while the original markers
-published with the data can be found in the slot
-\texttt{"markers.orig"}).
+this experiment, while the original markers published with the data
+can be found in the slot \texttt{"markers.orig"}).
 
 \begin{figure*}
 <<plot2d, echo=TRUE, fig.asp=1>>=
@@ -639,24 +646,24 @@ plot2D(tan2009r1, fcol = "markers")
 addLegend(tan2009r1, fcol = "markers", cex = .7,
           where = "bottomright", ncol = 2)
 @ 
-\caption{Representation of the \Sexpr{nrow(tan2009r1)} protein of
-  \Robject{tan2009r1} after reduction of the 4 reporter quantitation
-  data to 2 principal components.}
+\caption{PCA plot. Representation of the \Sexpr{nrow(tan2009r1)}
+  protein of \Robject{tan2009r1} after reduction of the 4 reporter
+  quantitation data to 2 principal components.}
 \label{fig:plot2d}
 \end{figure*}
 
 As the default value for the \texttt{fcol} argument is
 \texttt{"markers"}, it is not necessary to specify it. It is however
-mandatory to highlight other annotation, such as to visualise the set
-of markers described in the original publication.
+mandatory to specify other annotation feature variables, such as to
+visualise the set of markers described in the original publication.
 
 \begin{figure*}
 <<plot2dorg, echo=TRUE, fig.asp=1>>=
 plot2D(tan2009r1, fcol = "markers.orig")
 addLegend(tan2009r1, fcol = "markers.orig", where = "bottomright")
 @ 
-\caption{Reduced set of markers for the \Robject{tan2009r1} data
-  projected onto 2 principal components.}
+\caption{PCA plot. Reduced set of markers for the \Robject{tan2009r1}
+  data projected onto 2 principal components.}
 \label{fig:plot2dorg}
 \end{figure*}
 
@@ -687,9 +694,9 @@ plot3D(tan2009r1)
 \begin{figure}[h]
   \centering
   \includegraphics{./Figures/plot3D.png}
-  \caption{Snapshot of the 3-dimensional PCA plot of the hyperLOPIT
-    experiment from \cite{Christoforou:2016} along the first 3
-    principal components.}
+  \caption{Snapshot of the 3-dimensional PCA plot. The
+    \texttt{tan2009r1} data is represented along the first 3 principal
+    components.}
   \label{fig:plot3D}
 \end{figure}
 
@@ -762,7 +769,10 @@ pRolocVis(tan2009r1)
 \begin{figure}[h]
   \centering
   \includegraphics{./Figures/Screenshot_PCA2.png}
-  \caption{Screenshot of the \Biocpkg{pRolocGUI} interface.}
+  \caption{Screenshot of the \Biocpkg{pRolocGUI} interface. The GUI is
+    also available as an online app for the hyperLOPIT experiment from
+    \cite{Christoforou:2016} at
+    \url{https://lgatto.shinyapps.io/christoforou2015/}.}
   \label{fig:gui}
 \end{figure}
 
@@ -1000,21 +1010,23 @@ getParams(params)
 @ 
 
 
-\paragraph{NB} It is essential to emphasise that the accuracy scores
-obtained during parameter optimisation are only a reflection of
-classification performance on a set of distinct and ideally separated
-spatial clusters\footnote{Indeed, we assume that the data is
+\warning{It is essential to emphasise that the accuracy scores
+  obtained during parameter optimisation are only a reflection of the
+  classification performance on a set of distinct and ideally
+  separated spatial clusters. Here, we assume that the data is
   characterised by good separation of the various spatial niches which
   are reflected by sub-cellular markers. Quality control of the data
   and the markers using the visualisation described in section
   \ref{sec:viz} is essential and subsequent analyses are doomed to
-  fail in the absence of such separation.}. These scores are not
-representative of the reliability of the final classification
-(described in section \ref{sec:sml}), in particular along the
-boundaries separating the different sub-cellular niches. High scores
-at the optimisation stage are a requirement to proceed with the
-analysis, but are by no means indicative of the false positive rate in
-the final sub-cellular assignment of non-marker proteins.
+  fail in the absence of such separation.}
+  
+\warning{These classification scores are not representative of the
+  reliability of the final classification (described in section
+  \ref{sec:sml}), in particular along the boundaries separating the
+  different sub-cellular niches. High scores at the optimisation stage
+  are a requirement to proceed with the analysis, but are by no means
+  indicative of the false positive rate in the final sub-cellular
+  assignment of non-marker proteins.}
 
 \subsubsection{Classification}\label{sec:sml}
 
@@ -1025,18 +1037,19 @@ manually), and use them to build a model with all the marker proteins
 and predict unknown residents using the \Rfunction{svmClassification}
 function (see the manual page for more details). By default, the
 organelle markers will be defined by the \Robject{"markers"} feature
-variables (and can be defined by the \Robject{fcol} parameter) e.g. here
-we use the original markers in \Robject{"markers.orig"} as a use case. New
-feature variables containing the organelle assignments and assignment
-probabilities\footnote{%%
-  The calculation of the classification probabilities is dependent on
-  the classification algorithm.  These probabilities are not to be
-  compared across algorithms; they do \textbf{not} reflect any
-  \textbf{biologically relevant} sub-cellular localisation probability
-  but rather an algorithm-specific classification confidence score.}%%
-, called scores hereafter, are automatically added to the
-\Robject{featureData} slot; in this case, using the \Robject{svm} and
-\Robject{svm.scores} labels.
+variables (and can be defined by the \Robject{fcol} parameter)
+e.g. here we use the original markers in \Robject{"markers.orig"} as a
+use case. New feature variables containing the organelle assignments
+and assignment probabilities, called scores hereafter, are
+automatically added to the \Robject{featureData} slot; in this case,
+using the \Robject{svm} and \Robject{svm.scores} labels.
+
+\warning{The calculation of the classification probabilities is
+  dependent on the classification algorithm.  These probabilities are
+  not to be compared across algorithms; they do \textbf{not} reflect
+  any \textbf{biologically relevant} sub-cellular localisation
+  probability but rather an algorithm-specific classification
+  confidence score.}
 
 <<svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE>>=
 ## manual setting of parameters
@@ -1262,9 +1275,10 @@ addLegend(tan2009r1, fcol = "svm",
           ncol = 2, cex = .5)
 @ 
 %% $
-\caption{ Second round of classification using the augmented set of
-  markers obtained using \Rfunction{phenoDisco} as detailed in
-  \cite{Breckels2013} and a weighted svm classifier. }
+\caption{Classification results. The results of the second round of
+  classification, using the augmented set of markers obtained using
+  \Rfunction{phenoDisco} as detailed in \cite{Breckels2013} and a
+  weighted svm classifier. }
 \label{fig:pdres2}
 \end{figure}
 
@@ -1295,7 +1309,7 @@ results.
 
 \section*{Acknowledgement}
 
-We would like to thank Mr Daniel J.H. Nightingale, Dr Arnoud J. Groen,
+We would like to thank Dr Daniel J.H. Nightingale, Dr Arnoud J. Groen,
 Dr Claire M. Mulvey and Dr Andy Christoforou for their organelle
 marker contributions.
 

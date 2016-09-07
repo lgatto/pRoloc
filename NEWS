@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.13.14
 --------------------------
  o Pass ... in levelPlot,QSep <2016-09-06 Tue>
+ o Various improvements to the tutorial vignette <2016-09-07 Wed>
  
 CHANGES IN VERSION 1.13.13
 --------------------------

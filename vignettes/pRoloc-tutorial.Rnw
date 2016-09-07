@@ -583,6 +583,32 @@ title(main = "PM")
 \label{fig:plotdist1}
 \end{figure*}
 
+\subsection{Sub-cellular cluster dendrogram}\label{sec:dendro}
+
+To gain a quick overview of the distance/similarity between the
+sub-cellular clusters, it can useful to compare average marker
+profiles, rather than all profiles, as presented in the profile plots
+above. The \Rfunction{mrkHClust} calculates average class profiles and
+generates the resulting dendrogram. 
+
+\begin{figure}[h]
+  \centering
+<<hclust>>=
+mrkHClust(tan2009r1)
+@  
+  \caption{Average distance between organelle classes.}
+  \label{fig:dendro}
+\end{figure}
+
+On figure~\ref{fig:dendro}, we see that the lysosome and the ribosome
+60S are separated by the smallest distance. The advantage of this
+representation is that it provides a quick snapshot of the average
+similarity between organelles using the complete profiles (as opposed
+to a PCA plot, discussed in the next section). The main drawback is
+that it ignores any variability in individual markers (cluster
+thighness). It is however a good guide for a more thorough exploration
+of the data, as described in the next sections.
+
 \subsection{Dimensionality reduction}\label{sec:pcalot}
 
 Alternatively, we can combine all organelle groups in one single 2
@@ -609,9 +635,9 @@ published with the data can be found in the slot
 
 \begin{figure*}
 <<plot2d, echo=TRUE, fig.asp=1>>=
-plot2D(tan2009r1, fcol = "PLSDA", fpch = "markers.orig")
-addLegend(tan2009r1, fcol = "PLSDA", 
-          where = "bottomright", cex = .7)
+plot2D(tan2009r1, fcol = "markers")
+addLegend(tan2009r1, fcol = "markers", cex = .7,
+          where = "bottomright", ncol = 2)
 @ 
 \caption{Representation of the \Sexpr{nrow(tan2009r1)} protein of
   \Robject{tan2009r1} after reduction of the 4 reporter quantitation
@@ -619,9 +645,25 @@ addLegend(tan2009r1, fcol = "PLSDA",
 \label{fig:plot2d}
 \end{figure*}
 
+As the default value for the \texttt{fcol} argument is
+\texttt{"markers"}, it is not necessary to specify it. It is however
+mandatory to highlight other annotation, such as to visualise the set
+of markers described in the original publication.
+
+\begin{figure*}
+<<plot2dorg, echo=TRUE, fig.asp=1>>=
+plot2D(tan2009r1, fcol = "markers.orig")
+addLegend(tan2009r1, fcol = "markers.orig", where = "bottomright")
+@ 
+\caption{Reduced set of markers for the \Robject{tan2009r1} data
+  projected onto 2 principal components.}
+\label{fig:plot2dorg}
+\end{figure*}
+
 It is also possible to visualise the data along 3 dimensions using the
-\Rfunction{plot3D} function, which works like the 2 dimension
-version. The resulting figure can be rotated by the user.
+\Rfunction{plot3D} function, which works like the 2 dimension version
+(figure~ref{fig:plot3D}). The resulting figure can be rotated by the
+user.
 
 <<plot3Danim, echo=FALSE, eval=FALSE>>=
 ## here's how the animation below was created
@@ -638,8 +680,7 @@ movie3d(spin3d(c(1, 1, 1), rpm = 10), duration = 5,
 % \end{center}
 
 <<plot3D, eval = FALSE>>=
-data(hyperLOPIT2015)
-plot3D(hyperLOPIT2015)
+plot3D(tan2009r1)
 @
 
 
@@ -649,7 +690,7 @@ plot3D(hyperLOPIT2015)
   \caption{Snapshot of the 3-dimensional PCA plot of the hyperLOPIT
     experiment from \cite{Christoforou:2016} along the first 3
     principal components.}
-  \label{fig:plot2D}
+  \label{fig:plot3D}
 \end{figure}
 
 \subsection{Features of interest}

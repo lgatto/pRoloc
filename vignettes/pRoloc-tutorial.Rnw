@@ -695,7 +695,7 @@ plot3D(tan2009r1)
   \centering
   \includegraphics{./Figures/plot3D.png}
   \caption{Snapshot of the 3-dimensional PCA plot. The
-    \texttt{tan2009r1} data is represented along the first 3 principal
+    \Robject{tan2009r1} data is represented along the first 3 principal
     components.}
   \label{fig:plot3D}
 \end{figure}
@@ -710,14 +710,21 @@ we indicate on the axis labels the percentage of total variance
 explained by the individual PCs. It is not unusual to reach over 75\%
 along the first two PCs, even for experiments with several tens of
 fractions. One can calculate this information for all PCs by setting
-\texttt{method = "scree"} in \Rfunction{plot2D}. Below, we see that
-the four PCs in the \texttt{tan2009r1} data account for
-\Sexpr{paste(pcvar[1:3], collapse = ", ")} and \Sexpr{pcvar[4]}
-percent of the total variance.
+\texttt{method = "scree"} in \Rfunction{plot2D}. On
+figure~\ref{fig:scree}, we see that the four PCs in the
+\Robject{tan2009r1} data account for \Sexpr{paste(pcvar[1:3], collapse
+  = ", ")} and \Sexpr{pcvar[4]} percent of the total variance.
 
+
+\begin{figure}[h]
+  \centering
 <<scree>>=
 plot2D(tan2009r1, method = "scree")
-@
+@  
+  \caption{Percentage of variance explained.}
+  \label{fig:scree}
+\end{figure}
+
 
 \subsection{Features of interest}
 
@@ -1106,9 +1113,21 @@ p2 <- fData(p2)$svm.pred
 table(p1, p2)
 @ %%$
 
-To graphically illustrate the organelle-specific score distributions, use
+To graphically illustrate the organelle-specific score distributions,
+we can use a boxplot and plot the scores for the respective predicted
+svm classes, as shown on figure~\ref{fig:predscores}. As can be seen,
+different organelles are characterised by different score
+distributions. Using a unique threshold (\Robject{minprob} with value
+\Sexpr{round(minprob, 2)} above) results in accepting
+\Sexpr{round(sum(p2 == "ER")/sum(p1 == "ER"), 2) * 100} \% of the
+initial ER predictions and only \Sexpr{round(sum(p2 ==
+  "mitochondrion")/sum(p1 == "mitochondrion"), 2) * 100} \% of the
+mitochondrion predictions. The \Rfunction{getPredictions} function
+also accepts organelle-specific score thresholds. Below, we calculate
+organelle-specific median scores.
 
-\begin{figure}
+
+\begin{figure}[!h]
 <<predscoresPlot>>=
 boxplot(svm.scores ~ svm, data = fData(svmres),
         ylab = "SVM scores")
@@ -1118,17 +1137,6 @@ abline(h = minprob, lwd = 2, lty = 2)
 \label{fig:predscores}
 \end{figure}
 
-As can be see on figure \ref{fig:predscores}, different organelles are
-characterised by different score distributions. Using a unique
-threshold (\Robject{minprob} with value \Sexpr{round(minprob, 2)}
-above) results in accepting 
-\Sexpr{round(sum(p2 == "ER")/sum(p1 == "ER"), 2) * 100}
-\% of the initial ER predictions and only
-\Sexpr{round(sum(p2 == "mitochondrion")/sum(p1 == "mitochondrion"), 2)  * 100} 
-\% of the mitochondrion predictions. The
-\Rfunction{getPredictions} function also accepts organelle-specific
-score thresholds. Below, we calculate organelle-specific median
-scores.
 
 <<medscores2, tidy = FALSE>>=
 ts <- orgQuants(svmres, fcol = "svm", t = .5) 

@@ -1036,17 +1036,16 @@ getParams(params)
 @ 
 
 
-\warning{It is essential to emphasise that the accuracy scores
-  obtained during parameter optimisation are only a reflection of the
-  classification performance on a set of distinct and ideally
+\warning[Important]{It is essential to emphasise that the accuracy
+  scores obtained during parameter optimisation are only a reflection
+  of the classification performance on a set of distinct and ideally
   separated spatial clusters. Here, we assume that the data is
   characterised by good separation of the various spatial niches which
   are reflected by sub-cellular markers. Quality control of the data
   and the markers using the visualisation described in section
   \ref{sec:viz} is essential and subsequent analyses are doomed to
-  fail in the absence of such separation.}
-  
-\warning{These classification scores are not representative of the
+  fail in the absence of such separation. \\
+  These classification scores are not representative of the
   reliability of the final classification (described in section
   \ref{sec:sml}), in particular along the boundaries separating the
   different sub-cellular niches. High scores at the optimisation stage
@@ -1070,12 +1069,12 @@ and assignment probabilities, called scores hereafter, are
 automatically added to the \Robject{featureData} slot; in this case,
 using the \Robject{svm} and \Robject{svm.scores} labels.
 
-\warning{The calculation of the classification probabilities is
-  dependent on the classification algorithm.  These probabilities are
-  not to be compared across algorithms; they do \textbf{not} reflect
-  any \textbf{biologically relevant} sub-cellular localisation
-  probability but rather an algorithm-specific classification
-  confidence score.}
+\warning[Important]{The calculation of the classification
+  probabilities is dependent on the classification algorithm.  These
+  probabilities are not to be compared across algorithms; they do
+  \textbf{not} reflect any \textbf{biologically relevant} sub-cellular
+  localisation probability but rather an algorithm-specific
+  classification confidence score.}
 
 <<svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE>>=
 ## manual setting of parameters

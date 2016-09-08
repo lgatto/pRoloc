@@ -700,6 +700,25 @@ plot3D(tan2009r1)
   \label{fig:plot3D}
 \end{figure}
 
+<<scree0, echo=FALSE>>=
+pcvar <- plot2D(tan2009r1, method = "scree", plot = FALSE)
+pcvar <- round(pcvar, 2)
+@
+
+As can be seen on the figures~\ref{fig:plot2d} and~\ref{fig:plot3D},
+we indicate on the axis labels the percentage of total variance
+explained by the individual PCs. It is not unusual to reach over 75\%
+along the first two PCs, even for experiments with several tens of
+fractions. One can calculate this information for all PCs by setting
+\texttt{method = "scree"} in \Rfunction{plot2D}. Below, we see that
+the four PCs in the \texttt{tan2009r1} data account for
+\Sexpr{paste(pcvar[1:3], collapse = ", ")} and \Sexpr{pcvar[4]}
+percent of the total variance.
+
+<<scree>>=
+plot2D(tan2009r1, method = "scree")
+@
+
 \subsection{Features of interest}
 
 In addition to highlighting sub-cellular niches as coloured clusters

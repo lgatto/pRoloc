@@ -85,7 +85,7 @@ setMethod("levelPlot", "QSep",
               pal <- colorRampPalette(c("blue", "white", "red"))
               myPanel <- function(x, y, z, ...) {
                   panel.levelplot(x, y, z, ...)
-                  panel.text(x, y, ifelse(is.na(z), "", round(z, 1)))
+                  panel.text(x, y, ifelse(is.na(z), "", round(z, 2)))
               }
               levelplot(t(qsep(object, norm = norm)),
                         col.regions = pal(50),

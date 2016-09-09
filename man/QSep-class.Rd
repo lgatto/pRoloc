@@ -107,10 +107,12 @@
       distances and prints (when \code{verbose} is \code{TRUE},
       default) a summary of those. }
 
-    \item{levelPlot}{\code{signature(object = "QSep", norm =
-	"logical")}: plots an annotated heatmap of all normalised
-      pairwaise distances. \code{norm} (default is \code{TRUE})
-      defines whether normalised distances should be plotted. }
+    \item{levelPlot}{\code{signature(object = "QSep", norm = "logical",
+	...)}: plots an annotated heatmap of all normalised pairwaise
+	distances. \code{norm} (default is \code{TRUE}) defines whether
+	normalised distances should be plotted. Additional arguments
+	\code{...} are passed to the \code{\link[lattice]{levelplot}}.
+	}
 
     \item{plot}{\code{signature(object = "QSep", norm = "logical"...)}:
       produces a boxplot of all normalised pairwise distances. The red

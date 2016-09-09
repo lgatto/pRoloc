@@ -32,8 +32,8 @@ QSep <- function(object, fcol = "markers") {
     ## mean distance between all pairs of subcellular marker clusters
     tmp <- apply(expand.grid(um, um), 1,
                  function(.um) {
-                     sel1 <- fData(mobj)$markers == .um[1]
-                     sel2 <- fData(mobj)$markers == .um[2]
+                     sel1 <- fData(mobj)[, fcol] == .um[1]
+                     sel2 <- fData(mobj)[, fcol] == .um[2]
                      ans[.um[1], .um[2]] <<- mean(mrkdist[sel1, sel2],
                                                   na.rm = TRUE)
                  })

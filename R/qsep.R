@@ -32,8 +32,8 @@ QSep <- function(object, fcol = "markers") {
     ## mean distance between all pairs of subcellular marker clusters
     tmp <- apply(expand.grid(um, um), 1,
                  function(.um) {
-                     sel1 <- fData(mobj)$markers == .um[1]
-                     sel2 <- fData(mobj)$markers == .um[2]
+                     sel1 <- fData(mobj)[, fcol] == .um[1]
+                     sel2 <- fData(mobj)[, fcol] == .um[2]
                      ans[.um[1], .um[2]] <<- mean(mrkdist[sel1, sel2],
                                                   na.rm = TRUE)
                  })
@@ -81,18 +81,19 @@ setMethod("summary", "QSep",
           })
 
 setMethod("levelPlot", "QSep",
-          function(object, norm = TRUE) {
+          function(object, norm = TRUE, ...) {
               pal <- colorRampPalette(c("blue", "white", "red"))
               myPanel <- function(x, y, z, ...) {
                   panel.levelplot(x, y, z, ...)
-                  panel.text(x, y, ifelse(is.na(z), "", round(z, 1)))
+                  panel.text(x, y, ifelse(is.na(z), "", round(z, 2)))
               }
               levelplot(t(qsep(object, norm = norm)),
                         col.regions = pal(50),
                         panel = myPanel,
                         xlab = "Reference cluster", ylab = "",
                         scales = list(x = list(cex = .8, rot = 45),
-                                      y = list(cex = .8)))
+                                      y = list(cex = .8)),
+                        ...)
           })
 
 .plotQSep <- function(obj, norm = TRUE, ...) {

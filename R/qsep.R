@@ -105,7 +105,9 @@ setMethod("levelPlot", "QSep",
     if (!"ylim" %in% names(args))
         boxplot(x, horizontal = TRUE,
                 col = "#00000010",
-                ylim = c(min(x), max(x)), ...)
+                ylim = c(min(x, na.rm = TRUE),
+                         max(x, na.rm = TRUE)),
+                ...)
     else
         boxplot(x, horizontal = TRUE,
                 col = "#00000010",

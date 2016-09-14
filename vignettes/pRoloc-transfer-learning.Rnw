@@ -320,7 +320,7 @@ makeHpaSet <- function(x, score2, locs = hpalocs) {
         hpamat[i, loc2] <- score
     }
     new("MSnSet", exprs = hpamat,
-        featureData = featureData(lopit))
+        featureData = featureData(x))
 }
 
 hpaset <- makeHpaSet(lopit,

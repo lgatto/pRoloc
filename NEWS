@@ -1,3 +1,6 @@
+CHANGES IN VERSION 1.13.16
+--------------------------
+
 CHANGES IN VERSION 1.13.15
 --------------------------
  o Fix bug in plot,QSep with NAs <2016-09-09 Fri>

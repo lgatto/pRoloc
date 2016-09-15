@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.13.15
 --------------------------
  o Fix bug in plot,QSep with NAs <2016-09-09 Fri>
+ o Adapt tl vignette to new hpar <2016-09-15 Thu>
  
 CHANGES IN VERSION 1.13.14
 --------------------------

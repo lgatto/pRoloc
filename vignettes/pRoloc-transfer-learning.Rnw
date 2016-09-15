@@ -271,10 +271,9 @@ head(bm)
 
 ## HPA data
 library("hpar")
-getHpaVersion()
-getHpaDate()
 
-setHparOptions(hpadata = "SubcellularLoc")
+## using old version for traceability
+setHparOptions(hpadata = "hpaSubcellularLoc14")
 hpa <- getHpa(bm$ensembl_gene_id)
 hpa$Reliability <- droplevels(hpa$Reliability)
 colnames(hpa)[1] <- "ensembl_gene_id"

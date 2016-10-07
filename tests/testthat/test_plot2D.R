@@ -1,6 +1,6 @@
-context("plot2D using visualTest")
+## context("plot2D using visualTest")
 ## reference figures are in inst/figs/.
-library("visualTest")
+## library("visualTest")
 
 ## see https://github.com/MangoTheCat/visualTest/issues/19
 ## thr <- ifelse(Sys.info()[["nodename"]] == "elyacin", 1e-3, 25)

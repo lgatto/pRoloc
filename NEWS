@@ -1,6 +1,9 @@
 CHANGES IN VERSION 1.13.16
 --------------------------
-
+ o removing visualTest from suggest, as plotting tests currently
+   disabled (see https://github.com/MangoTheCat/visualTest/issues/19
+   for details) <2016-10-07 Fri>
+ 
 CHANGES IN VERSION 1.13.15
 --------------------------
  o Fix bug in plot,QSep with NAs <2016-09-09 Fri>

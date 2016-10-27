@@ -68,17 +68,15 @@ citEntry(entry = "article",
              as.person("Claire M. Mulvey"),
              as.person("Andy Christoforou"),
              as.person("Arnoud Groen"),
+             as.person("Matthew W.B. Trotter"),
              as.person("Oliver Kohlbacker"),
              as.person("Kathryn S. Lilley"),
              as.person("Laurent Gatto")
              ),
-         journal = "bioRxiv",
-         publisher = "Cold Spring Harbor Labs Journals",
-         year = "2015",
-         textVersion = 
-             paste("Breckels L.M., Holden S., Wonjar D., Mulvey C.M, Christoforou A.,",
-                   "Groen A., Kohlbacker O., Lilley K.S. and Gatto L.",
-                   "'Learning from heterogeneous data sources: an application in spatial proteomics'",
-                   "bioRxiv doi: http://dx.doi.org/xxx")
-         )
-         
+         journal = "PLoS Comput Biol",
+         year = "2016",
+         textVersion =
+             paste("Breckels LM, Holden SB, Wojnar D, Mulvey CM, Christoforou A, Groen A, Trotter MW",
+                   "Kohlbacher O, Lilley KS, Gatto L. Learning from Heterogeneous Data Sources:",
+                   "An Application in Spatial Proteomics. PLoS Comput Biol. 2016 May",
+                   "13;12(5):e1004920. doi: 10.1371/journal.pcbi.1004920. "))

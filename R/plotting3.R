@@ -17,8 +17,8 @@ setMethod("plot3D", "MSnSet",
               if (!require("rgl"))
                   stop(paste0("Plotting in 3D depends on the rgl package.\n",
                               "Install it with 'install.packages('rlg')'."))
-              x12 <- plot2D(object, dims = dims[1:2], plot = FALSE, ...)
-              x13 <- plot2D(object, dims = dims[2:3], plot = FALSE, ...)
+              x12 <- plot2D(object, dims = dims[1:2], plot = FALSE, fcol = fcol, ...)
+              x13 <- plot2D(object, dims = dims[2:3], plot = FALSE, fcol = fcol, ...)
               xx <- cbind(x12, x13[, 2, drop = FALSE])
               mm <- factor(getMarkers(object, fcol = fcol, verbose = FALSE))
               ukn <- mm == "unknown"

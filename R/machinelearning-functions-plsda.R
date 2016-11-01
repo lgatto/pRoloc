@@ -93,7 +93,7 @@ plsdaOptimisation <- function(object,
           model <- caret::plsda(.train2[, -.x], .train2[, .x], 
                                 probMethod = "Bayes", prior = NULL,
                                 ncomp = .ncomp, ...)
-          ans <- caret::predict.plsda(model, .test2[, -.x], type = "class") 
+          ans <- caret:::predict.plsda(model, .test2[, -.x], type = "class") 
           conf <- confusionMatrix(ans, .test2$markers)$table
           .p <- checkNumbers(MLInterfaces:::.precision(conf))
           .r <- checkNumbers(MLInterfaces:::.recall(conf))
@@ -111,7 +111,7 @@ plsdaOptimisation <- function(object,
     model <- caret::plsda(.train1[, -.x], .train1[, .x], 
                           probMethod = "Bayes", prior = NULL,
                           ncomp = .bestParams["ncomp"], ...)
-    ans <- caret::predict.plsda(model, .test1[, -.x], type = "class") 
+    ans <- caret:::predict.plsda(model, .test1[, -.x], type = "class") 
     .cmMatrices[[.times]] <- conf <- confusionMatrix(ans, .test1$markers)$table ## NEW
     
     p <- checkNumbers(MLInterfaces:::.precision(conf),

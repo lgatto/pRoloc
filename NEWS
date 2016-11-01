@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.15.1
+-------------------------
+ o new plot3D function <2016-10-27 Thu>
+ o update CITATION <2016-10-27 Thu>
+ o use predict:::predict.plsa, as it is not exported anymore
+   <2016-11-01 Tue>
+ 
 CHANGES IN VERSION 1.13.16
 --------------------------
  o removing visualTest from suggest, as plotting tests currently

@@ -79,7 +79,7 @@
 ##' data(dunkley2006)
 ##' par <- setAnnotationParams(inputs =
 ##'                    c("Arabidopsis thaliana genes",
-##'                    "TAIR locus ID"))
+##'                    "Gene stable ID"))
 ##' ## add protein sets/annotation information
 ##' xx <- addGoAnnotations(dunkley2006, par)
 ##' ## filter

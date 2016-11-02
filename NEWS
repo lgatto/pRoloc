@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.15.2
+-------------------------
+
+ o Fix Arabidopsis parameters for biomaRt questions: 'TAIR locus ID'
+   is now 'Stable gene ID'. Changed in several manual files and
+   dunkley2006params. <2016-11-02 Wed>
+ 
 CHANGES IN VERSION 1.15.1
 -------------------------
  o new plot3D function <2016-10-27 Thu>

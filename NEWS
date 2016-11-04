@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.15.4
+-------------------------
+ o
+ 
 CHANGES IN VERSION 1.15.3
 -------------------------
  o Fix bug in plot2D to ignore fcol when using hexbin method

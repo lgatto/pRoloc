@@ -1,6 +1,10 @@
+CHANGES IN VERSION 1.15.3
+-------------------------
+ o Fix bug in plot2D to ignore fcol when using hexbin method
+    <2016-11-04 Fri>
+ 
 CHANGES IN VERSION 1.15.2
 -------------------------
-
  o Fix Arabidopsis parameters for biomaRt questions: 'TAIR locus ID'
    is now 'Stable gene ID'. Changed in several manual files and
    dunkley2006params. <2016-11-02 Wed>

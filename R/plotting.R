@@ -351,6 +351,7 @@ plot2D <- function(object,
             methargs <- list(scale = TRUE, center = TRUE)
         .data <- plot2D(object,
                         method = "PCA",
+                        fcol = NULL,
                         dims = dims,
                         methargs = methargs,
                         plot = FALSE)

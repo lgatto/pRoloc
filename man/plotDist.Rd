@@ -56,9 +56,9 @@ library("pRolocdata")
 data(tan2009r1)
 j <- which(fData(tan2009r1)$markers == "mitochondrion")
 i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-plotDist(tan2009r1[i, ],
-         markers = featureNames(tan2009r1)[j])
-title("Mitochondrion")
+plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j])
+plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j],
+         fractions = "Fractions")
 }
 \author{
 Laurent Gatto

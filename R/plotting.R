@@ -34,9 +34,9 @@
 ##' data(tan2009r1)
 ##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
 ##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-##' plotDist(tan2009r1[i, ],
-##'          markers = featureNames(tan2009r1)[j])
-##' title("Mitochondrion")
+##' plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j])
+##' plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j],
+##'          fractions = "Fractions")
 plotDist <- function(object,
                      markers,
                      mcol = "steelblue",
@@ -54,8 +54,8 @@ plotDist <- function(object,
   m <- ncol(.data)
   if (!missing(fractions)) {
       if (sum(fractions %in% names(pData(object))) != 1)
-          stop("'fractions must be a single pData name.'")
-    fractions <- as.character(pData(object)[, .frac])
+          stop("'fractions' must be a single pData name.")
+    fractions <- as.character(pData(object)[, fractions])
   }
   plot(0, ylim = ylim,
        xlim = c(1, m),

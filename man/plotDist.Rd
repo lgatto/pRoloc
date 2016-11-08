@@ -4,8 +4,9 @@
 \alias{plotDist}
 \title{Plots the distribution of features across fractions}
 \usage{
-plotDist(object, markers, mcol = "steelblue", pcol = "grey90",
-  alpha = 0.3, type = "b", lty = 1, fractions, ylim, ...)
+plotDist(object, markers, mcol = "steelblue", pcol = getUnknowncol(),
+  alpha = 0.3, type = "b", lty = 1, fractions = sampleNames(object),
+  ylim, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -18,7 +19,9 @@ subset \code{object} and define the organelle markers.}
 features.  Default is \code{"steelblue"}.}
 
 \item{pcol}{A \code{character} define the colour of the
-non-markers features.  Default is \code{"grey90"}.}
+non-markers features.  Default is the colour used for features
+of unknown localisation, as returned by
+\code{\link{getUnknowncol}}.}
 
 \item{alpha}{A numeric defining the alpha channel (transparency)
 of the points, where \code{0 <= alpha <= 1}, 0 and 1 being
@@ -31,11 +34,9 @@ example \code{"p"} for points, \code{"l"} for lines,
 \item{lty}{Vector of line types for the marker profiles. Default
 is 1 (solid). See \code{\link{par}} for details.}
 
-\item{fractions}{An optional \code{character} defining the
-\code{phenoData} variable to be used to label the fraction
-along the x axis. If missing, the \code{phenoData} variables
-are searched for a match to \code{fraction}.  If no match is
-found, the fractions are labelled as numericals.}
+\item{fractions}{A \code{character} defining the \code{phenoData}
+variable to be used to label the fraction along the x
+axis. Default is to use \code{sampleNames(object)}.}
 
 \item{ylim}{A numeric vector of length 2, giving the y coordinates
 range.}

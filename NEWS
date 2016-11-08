@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.15.4
+-------------------------
+ o Update human markers - see pRolocdata's issue 21
+   https://github.com/lgatto/pRolocdata/issues/21 <2016-11-08 Tue>
+ 
 CHANGES IN VERSION 1.15.3
 -------------------------
  o Fix bug in plot2D to ignore fcol when using hexbin method

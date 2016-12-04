@@ -45,6 +45,8 @@ plotDist <- function(object,
                      type = "b",
                      lty = 1,
                      fractions = sampleNames(object),
+                     ylab = "Intensity",
+                     xlab = "Fractions",
                      ylim,
                      ...) {
   .data <- exprs(object)
@@ -57,10 +59,8 @@ plotDist <- function(object,
           stop("'fractions' must be a single pData name.")
     fractions <- as.character(pData(object)[, fractions])
   }
-  plot(0, ylim = ylim,
-       xlim = c(1, m),
-       ylab = "Intensity",
-       xlab = "Fractions",
+  plot(0, ylim = ylim, xlim = c(1, m),
+       xlab = xlab, ylab = ylab,
        type = "n", xaxt = "n")
   axis(1, at = seq_len(m), labels = fractions)
   pcol <- col2hcl(pcol, alpha = alpha)

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.15.6
+-------------------------
+ o
+ 
 CHANGES IN VERSION 1.15.5
 -------------------------
  o Update plotDist to use sampleNames() to label x axis ticks and

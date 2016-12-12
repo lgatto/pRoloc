@@ -13,6 +13,13 @@ apt_packages:
 r_packages:
   - covr
 
+bioc_packages:
+  - AnnotationDbi
+  - annotate
+  - pRolocdata
+  - MLInterfaces
+  - synapter
+
 r_github_packages:
   - MangoTheCat/visualTest
 

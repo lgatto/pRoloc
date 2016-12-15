@@ -1,6 +1,6 @@
 CHANGES IN VERSION 1.15.6
 -------------------------
- o
+ o fix (unexported) remap function - see issue #92 <2016-12-15 Thu>
  
 CHANGES IN VERSION 1.15.5
 -------------------------

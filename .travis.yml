@@ -19,6 +19,9 @@ addons:
       - libnetcdf-dev
       - netcdf-bin # libnetcdf-dev doesn't contain nc-config in ubuntu 12.04 (in 16.04 it is part of libnetcdf-dev)
 
+before_script:
+  - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
+
 r_packages:
   - covr
 

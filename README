@@ -1,4 +1,0 @@
-Some documentation files are generated with roxygen2.
-To generate the respective Rd files, use 
- R --vanilla -e "library(roxygen2); roxygenize('pRoloc', roclets='rd')"
-

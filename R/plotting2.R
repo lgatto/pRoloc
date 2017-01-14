@@ -24,45 +24,47 @@
 ##'
 ##' @title Draw 2 data sets on one PCA plot
 ##' @param object An \code{\linkS4class{MSnSet}} or a
-##' \code{MSnSetList}. In the latter case, only the two first elements
-##' of the list will be used for plotting and the others will be
-##' silently ignored.
+##'     \code{MSnSetList}. In the latter case, only the two first
+##'     elements of the list will be used for plotting and the others
+##'     will be silently ignored.
 ##' @param pcol If \code{object} is an \code{MSnSet}, a \code{factor}
-##' or the name of a phenotype variable (\code{phenoData} slot)
-##' defining how to split the single \code{MSnSet} into two or more
-##' data sets.  Ignored if \code{object} is a
-##' \code{\link{MSnSetList}}.
+##'     or the name of a phenotype variable (\code{phenoData} slot)
+##'     defining how to split the single \code{MSnSet} into two or
+##'     more data sets.  Ignored if \code{object} is a
+##'     \code{\link{MSnSetList}}.
 ##' @param fcol Feature meta-data label (fData column name) defining
-##' the groups to be differentiated using different colours. Default
-##' is \code{markers}. Use \code{NULL} to suppress any colouring.
+##'     the groups to be differentiated using different
+##'     colours. Default is \code{markers}. Use \code{NULL} to
+##'     suppress any colouring.
 ##' @param cex.x Character expansion for the first data set. Default
-##' is 1.
+##'     is 1.
 ##' @param cex.y Character expansion for the second data set. Default
-##' is 1.
+##'     is 1.
 ##' @param pch.x Plotting character for the first data set. Default is
-##' 21.
+##'     21.
 ##' @param pch.y Plotting character for the second data set. Default
-##' is 23.
+##'     is 23.
 ##' @param col A vector of colours to highlight the different classes
-##' defined by \code{fcol}. If missing (default), default colours are
-##' used (see \code{\link{getStockcol}}).
+##'     defined by \code{fcol}. If missing (default), default colours
+##'     are used (see \code{\link{getStockcol}}).
 ##' @param mirrorX A \code{logical} indicating whether the x axis
-##' should be mirrored?
+##'     should be mirrored?
 ##' @param mirrorY A \code{logical} indicating whether the y axis
-##' should be mirrored?
+##'     should be mirrored?
 ##' @param plot If \code{TRUE} (default), a plot is produced.
 ##' @param ... Additinal parameters passed to \code{plot} and
-##' \code{points}.
+##'     \code{points}.
 ##' @return Used for its side effects of producing a plot. Invisibly
-##' returns an object of class \code{plot2Ds}, which is a list with
-##' the PCA analyses results (see \code{\link{prcomp}}) of the first
-##' data set and the new coordinates of the second data sets, as used
-##' to produce the plot and the respective point colours. Each of
-##' these elements can be accessed with \code{data1}, \code{data2},
-##' \code{col1} and \code{code2} respectively.
+##'     returns an object of class \code{plot2Ds}, which is a list
+##'     with the PCA analyses results (see \code{\link{prcomp}}) of
+##'     the first data set and the new coordinates of the second data
+##'     sets, as used to produce the plot and the respective point
+##'     colours. Each of these elements can be accessed with
+##'     \code{data1}, \code{data2}, \code{col1} and \code{code2}
+##'     respectively.
 ##' @author Laurent Gatto
 ##' @seealso See \code{\link{plot2D}} to plot a single data set and
-##' \code{\link{move2Ds}} for a animation.
+##'     \code{\link{move2Ds}} for a animation.
 ##' @aliases data1 data2 col1 col2
 ##' @examples
 ##' library("pRolocdata")
@@ -97,6 +99,10 @@ plot2Ds <- function(object, pcol,
     } ## a list or an MSnSetList
     x <- object[[1]]
     y <- object[[2]]
+    ## re-order featureNames so that we know whether to add segments
+    ## of not (see below)
+    x <- x[order(featureNames(x)), ]
+    y <- y[order(featureNames(y)), ]
     ## prepare the data
     pca1 <- prcomp(exprs(x), scale = TRUE, center = TRUE)
     newdata <- exprs(y)
@@ -137,13 +143,16 @@ plot2Ds <- function(object, pcol,
                pch = pch.y, bg = col2[unk2],
                cex = cex.y)
         grid()
-        ## segments
-        segments(pca1$x[, 1],
-                 pca1$x[, 2],
-                 pred2[, 1],
-                 pred2[, 2],
-                 lty = "dotted",
-                 col = "#000000AA")
+        ## only plot segments if the proteins are the same between the
+        ## two MSnSets
+        if (identical(featureNames(x),
+                      featureNames(y)))
+            segments(pca1$x[, 1],
+                     pca1$x[, 2],
+                     pred2[, 1],
+                     pred2[, 2],
+                     lty = "dotted",
+                     col = "#000000AA")
         ## Add other points
         points(pca1$x[!unk1, 1:2], bg = col1[!unk1],
                pch = pch.x,

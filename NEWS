@@ -1,6 +1,8 @@
 CHANGES IN VERSION 1.15.6
 -------------------------
  o fix (unexported) remap function - see issue #92 <2016-12-15 Thu>
+ o plot2Ds now only adds segments when the featureNames are identical 
+   <2017-01-11 Wed>
  
 CHANGES IN VERSION 1.15.5
 -------------------------

@@ -28,7 +28,7 @@ before_script:
 script: 
   - | 
     R CMD build .
-    travis_wait 30 R CMD check MSnbase*tar.gz
+    travis_wait 30 R CMD check pRoloc*tar.gz
 
 r_github_packages:
   - MangoTheCat/visualTest

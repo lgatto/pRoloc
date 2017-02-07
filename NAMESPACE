@@ -4,6 +4,8 @@ useDynLib(pRoloc)
 import(MSnbase)
 import(methods)
 import(Rcpp)
+
+importFrom(hexbin, hexbin)
 importFrom(BiocParallel, bplapply)
 
 importFrom("grDevices", "blues9", "colorRampPalette", "dev.new",

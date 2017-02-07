@@ -9,7 +9,9 @@
 ##' @param mcol A \code{character} define the colour of the marker
 ##'     features.  Default is \code{"steelblue"}.
 ##' @param pcol A \code{character} define the colour of the
-##'     non-markers features.  Default is \code{"grey90"}.
+##'     non-markers features.  Default is the colour used for features
+##'     of unknown localisation, as returned by
+##'     \code{\link{getUnknowncol}}.
 ##' @param alpha A numeric defining the alpha channel (transparency)
 ##'     of the points, where \code{0 <= alpha <= 1}, 0 and 1 being
 ##'     completely transparent and opaque.
@@ -18,11 +20,9 @@
 ##'     \code{"b"} for both. See \code{plot} for all possible types.
 ##' @param lty Vector of line types for the marker profiles. Default
 ##'     is 1 (solid). See \code{\link{par}} for details.
-##' @param fractions An optional \code{character} defining the
-##'     \code{phenoData} variable to be used to label the fraction
-##'     along the x axis. If missing, the \code{phenoData} variables
-##'     are searched for a match to \code{fraction}.  If no match is
-##'     found, the fractions are labelled as numericals.
+##' @param fractions A \code{character} defining the \code{phenoData}
+##'     variable to be used to label the fraction along the x
+##'     axis. Default is to use \code{sampleNames(object)}.
 ##' @param ylim A numeric vector of length 2, giving the y coordinates
 ##'     range.
 ##' @param ... Additional parameters passed to \code{\link{plot}}.
@@ -34,40 +34,35 @@
 ##' data(tan2009r1)
 ##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
 ##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-##' plotDist(tan2009r1[i, ],
-##'          markers = featureNames(tan2009r1)[j])
-##' title("Mitochondrion")
+##' plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j])
+##' plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j],
+##'          fractions = "Fractions")
 plotDist <- function(object,
                      markers,
-                     mcol = "steelblue",                     
-                     pcol = "grey90",
+                     mcol = "steelblue",
+                     pcol = getUnknowncol(),
                      alpha = 0.3,
                      type = "b",
                      lty = 1,
-                     fractions,
+                     fractions = sampleNames(object),
+                     ylab = "Intensity",
+                     xlab = "Fractions",
                      ylim,
                      ...) {
   .data <- exprs(object)
   if (missing(ylim))
       ylim <- range(.data)
   n <- nrow(.data)
-  m <- ncol(.data)  
+  m <- ncol(.data)
   if (!missing(fractions)) {
-    .frac <- grep(fractions,
-                  names(pData(object)))
-    if (length(.frac) == 1) {
-      .frac <- as.character(pData(object)[, .frac])
-    } else {
-      .frac <- seq_len(m)
-    }
-  } else
-      .frac <- seq_len(m)
-  plot(0, ylim = ylim,
-       xlim = c(1, m),
-       ylab = "Intensity",
-       xlab = "Fractions",
+      if (sum(fractions %in% names(pData(object))) != 1)
+          stop("'fractions' must be a single pData name.")
+    fractions <- as.character(pData(object)[, fractions])
+  }
+  plot(0, ylim = ylim, xlim = c(1, m),
+       xlab = xlab, ylab = ylab,
        type = "n", xaxt = "n")
-  axis(1, at = seq_len(m), labels = .frac)
+  axis(1, at = seq_len(m), labels = fractions)
   pcol <- col2hcl(pcol, alpha = alpha)
   matlines(t(.data),
            lty = "solid",

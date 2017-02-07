@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.15.7
+-------------------------
+ o (nothing yet)
+ 
 CHANGES IN VERSION 1.15.6
 -------------------------
  o fix (unexported) remap function - see issue #92 <2016-12-15 Thu>

@@ -100,7 +100,14 @@ setMethod("levelPlot", "QSep",
     args <- pairlist(...)
     x <- qsep(obj, norm = norm)
     n <- nrow(x)
-    opar <- par(las = 1)
+
+    ## add enough space on the left for ytick labels
+    rni <- max(strwidth(rownames(x), "inch"), na.rm = TRUE)
+    mai <- par("mai")
+    mai[2] <- mai[4] + rni + 0.1
+
+    opar <- par(las = 1,
+                mai = mai)
     on.exit(par(opar))
     if (!"ylim" %in% names(args))
         boxplot(x, horizontal = TRUE,

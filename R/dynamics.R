@@ -13,9 +13,9 @@ remap <- function(object, ref = 1) {
     })
     for (i in seq_along(x)) {
         xx <- object@x[[i]]
-        exprs(xx) <- preds[[i]]
         sampleNames(xx) <-
             paste0("PC", 1:ncol(xx))
+        exprs(xx) <- preds[[i]]
         xx <- MSnbase:::logging(xx, "remapped (PCA)")
         object@x[[i]] <- xx
     }

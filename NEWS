@@ -1,3 +1,18 @@
+CHANGES IN VERSION 1.15.6
+-------------------------
+ o fix (unexported) remap function - see issue #92 <2016-12-15 Thu>
+ o plot2Ds now only adds segments when the featureNames are identical 
+   <2017-01-11 Wed>
+ o Import (rather than Suggest) hexbin <2017-01-18 Wed>
+ o Increase margin in QSep plotting (contributed by S. Gibb)
+   <2017-02-07 Tue>
+ 
+CHANGES IN VERSION 1.15.5
+-------------------------
+ o Update plotDist to use sampleNames() to label x axis ticks and
+   getUnknowncol() as default pcol (see issue #91) <2016-11-08 Tue>
+ o xlab and ylab are args in plotDist <2016-12-04 Sun>
+ 
 CHANGES IN VERSION 1.15.4
 -------------------------
  o Update human markers - see pRolocdata's issue 21

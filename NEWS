@@ -4,6 +4,8 @@ CHANGES IN VERSION 1.15.6
  o plot2Ds now only adds segments when the featureNames are identical 
    <2017-01-11 Wed>
  o Import (rather than Suggest) hexbin <2017-01-18 Wed>
+ o Increase margin in QSep plotting (contributed by S. Gibb)
+   <2017-02-07 Tue>
  
 CHANGES IN VERSION 1.15.5
 -------------------------

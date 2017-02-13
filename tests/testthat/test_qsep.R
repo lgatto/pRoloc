@@ -7,7 +7,7 @@ test_that("QSep disance matrices", {
     fData(dunkley2006)$markers <- "unknown"
     match("ER", fData(dunkley2006)$markers0)
     er <- grep("ER", fData(dunkley2006)$markers0)
-    fData(dunkley2006)[er, "markers"] <- 
+    fData(dunkley2006)[er, "markers"] <-
         fData(dunkley2006)[er, "markers0"]
     qs <- QSep(dunkley2006)
     erl <- grep("ER lumen", fData(dunkley2006)$markers0)
@@ -32,4 +32,13 @@ test_that("QSep disance matrices", {
                      mean(tmp[featureNames(dunkley2006)[erm],
                               featureNames(dunkley2006)[erl]]) /
                      mean(dist(exprs(dunkley2006)[erm, ])))
+})
+
+test_that("Mean marker distance", {
+    m <- matrix(1:25, nrow=5)
+    diag(m) <- NA
+    marker <- c("foo", "bar", "bar", "foo", "bar")
+    r <- matrix(c(10, 65 / 6, 85 / 6, 15), nrow=2,
+                dimnames=list(c("foo", "bar"), c("foo", "bar")))
+    expect_identical(pRoloc:::.meanMarkerDist(m, marker), r)
 })

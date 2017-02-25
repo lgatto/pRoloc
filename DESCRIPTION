@@ -119,4 +119,4 @@ Collate:
     clusterdist-functions.R
     clusterdist-framework.R
     qsep.R
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

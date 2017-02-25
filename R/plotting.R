@@ -23,6 +23,8 @@
 ##' @param fractions A \code{character} defining the \code{phenoData}
 ##'     variable to be used to label the fraction along the x
 ##'     axis. Default is to use \code{sampleNames(object)}.
+##' @param ylab y-axis label. Default is "Intensity".
+##' @param xlab x-axis label. Default is "Fractions".
 ##' @param ylim A numeric vector of length 2, giving the y coordinates
 ##'     range.
 ##' @param ... Additional parameters passed to \code{\link{plot}}.

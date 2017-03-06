@@ -392,18 +392,15 @@ plot2D <- function(object,
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
         requireNamespace("Rtsne")
-        if (missing(methargs)) {
+        if (missing(methargs)) 
             .data <- Rtsne::Rtsne(exprs(object), dims = k)
-        } else {
-            .data <- do.call(Rtsne::Rtsne,
-                             c(list(X = exprs(object)),
-                               dims = k,
-                               methargs))
-            .data <- .data$Y                                 
-        }
-        .data <- .data[, dims]
-        .xlab <- paste("Dimension 1")
-        .ylab <- paste("Dimension 2")
+        else .data <- do.call(Rtsne::Rtsne,
+                              c(list(X = exprs(object)),
+                                dims = k,
+                                methargs))
+        .data <- .data$Y[, dims]
+        .xlab <- paste("Dimension", dims[1])
+        .ylab <- paste("Dimension", dims[2])
         colnames(.data) <- c(.xlab, .ylab)
         rownames(.data) <- featureNames(object)
     } else if (method == "PCA") {

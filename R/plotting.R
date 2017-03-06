@@ -188,7 +188,7 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     component analysis (see \code{\link{prcomp}}), classical
 ##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
 ##'     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
-##'     \code{\link[tsne]{tsne}}) or linear discriminant analysis (see
+##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis (see
 ##'     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
 ##'     defined the sub-cellular clusters so that the ration between
 ##'     within ad between cluster variance is maximised. All the other
@@ -391,13 +391,16 @@ plot2D <- function(object,
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
-        requireNamespace("tsne")
-        if (missing(methargs))
-            .data <- tsne::tsne(exprs(object), k = k)
-        else .data <- do.call(tsne::tsne,
-                              c(list(X = exprs(object)),
-                                k = k,
-                                methargs))
+        requireNamespace("Rtsne")
+        if (missing(methargs)) {
+            .data <- Rtsne::Rtsne(exprs(object), dims = k)
+        } else {
+            .data <- do.call(Rtsne::Rtsne,
+                             c(list(X = exprs(object)),
+                               dims = k,
+                               methargs))
+            .data <- .data$Y                                 
+        }
         .data <- .data[, dims]
         .xlab <- paste("Dimension 1")
         .ylab <- paste("Dimension 2")

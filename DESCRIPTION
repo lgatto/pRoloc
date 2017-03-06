@@ -39,7 +39,7 @@ Imports:
     FNN,
     hexbin,
     BiocGenerics,
-    stats,    
+    stats,
     dendextend,
     RColorBrewer,
     scales,
@@ -60,7 +60,7 @@ Suggests:
     roxygen2,
     synapter,
     xtable,
-    tsne,
+    Rtsne,
     rgl,
     BiocStyle,
     hpar (>= 1.15.3),
@@ -119,4 +119,4 @@ Collate:
     clusterdist-functions.R
     clusterdist-framework.R
     qsep.R
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1

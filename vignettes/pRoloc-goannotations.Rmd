@@ -8,21 +8,73 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-  
+
+```{r env, echo=FALSE}
+library("BiocStyle")
+```
 # Foreword
-This document walks users through a typical pipeline for adding annotation information to spatial proteomics data. For a general practical introduction to pRoloc and spatial proteomics data analysis, readers are referred to the tutorial, available using `vignette("pRoloc-tutorial", package = "pRoloc")`. 
+
+This document walks users through a typical pipeline for adding
+annotation information to spatial proteomics data. For a general
+practical introduction to pRoloc and spatial proteomics data analysis,
+readers are referred to the tutorial, available using
+`vignette("pRoloc-tutorial", package = "pRoloc")`.
 
 # Introduction
-Exploring protein annotations and defining sub-cellular localisation markers (i.e. known residents of a specific sub-cellular niche in a species, under a condition of interest) play important roles in the analysis of spatial proteomics data. The latter is essential for downstream supervised machine learning (ML) classification for protein localisation prediction (see `vignette("pRoloc-tutorial", package = "pRoloc")` and `vignette("pRoloc-ml", package = "pRoloc")` for information on available ML methods) and the former is interesting for initial biological interpretation through matching annotations to the data structure. 
 
-Robust protein-localisation prediction is reliant on markers that reflect the true sub-cellular diversity of the multivariate data. The validity of markers is generally assured by expert curation. This can be time consuming and difficult owing to the limited number of marker proteins that exist in databases and elsewhere. The Gene Ontology (GO) database, and in particular the cellular compartment (CC) namespace provide a good starting point for protein annotation and marker definition. Nevertheless, automatic extraction from databases, and in particular GO CC, is only a first step in sub-cellular localisation analysis and requires additional curation to counter unreliable annotation based on data that is inaccurate or out of context for the biological question under investigation.
+Exploring protein annotations and defining sub-cellular localisation
+markers (i.e. known residents of a specific sub-cellular niche in a
+species, under a condition of interest) play important roles in the
+analysis of spatial proteomics data. The latter is essential for
+downstream supervised machine learning (ML) classification for protein
+localisation prediction (see `vignette("pRoloc-tutorial", package =
+"pRoloc")` and `vignette("pRoloc-ml", package = "pRoloc")` for
+information on available ML methods) and the former is interesting for
+initial biological interpretation through matching annotations to the
+data structure.
 
-To facilitate the above, we have developed an annotation retrieval and management system that provides a flexible framework for the exploration of the sub-cellular proteomics data. We have developed a method to correlate annotation information with the multivariate data space to identify densely annotated regions and assess cluster tightness. Given a set of proteins that share some property e.g. a specified GO term, a k-means clustering is used to fit the data (testing `k = 1:5`) and then for each number of `k` components tested, all pairwise Euclidean distances are calculated per component, and then normalised. The minimum mean normalised distance is then extracted and used as a measure of cluster tightness. This is repeated for all protein/annotation sets. These sets are then ranked according to minimum mean normalised distance and then can be displayed and explored using the `r Biocpkg("pRolocGUI")` package.
+Robust protein-localisation prediction is reliant on markers that
+reflect the true sub-cellular diversity of the multivariate data. The
+validity of markers is generally assured by expert curation. This can
+be time consuming and difficult owing to the limited number of marker
+proteins that exist in databases and elsewhere. The Gene Ontology (GO)
+database, and in particular the cellular compartment (CC) namespace
+provide a good starting point for protein annotation and marker
+definition. Nevertheless, automatic extraction from databases, and in
+particular GO CC, is only a first step in sub-cellular localisation
+analysis and requires additional curation to counter unreliable
+annotation based on data that is inaccurate or out of context for the
+biological question under investigation.
 
-In this vignette we present a step-by-step guide showing users how to (1) how to add protein annotations, here we use the GO database as an example, and (2) rank and order information (e.g. GO terms) according to their correlation with the data structure, for the extraction of optimal data specific annotated clusters. 
+To facilitate the above, we have developed an annotation retrieval and
+management system that provides a flexible framework for the
+exploration of the sub-cellular proteomics data. We have developed a
+method to correlate annotation information with the multivariate data
+space to identify densely annotated regions and assess cluster
+tightness. Given a set of proteins that share some property e.g. a
+specified GO term, a k-means clustering is used to fit the data
+(testing `k = 1:5`) and then for each number of `k` components tested,
+all pairwise Euclidean distances are calculated per component, and
+then normalised. The minimum mean normalised distance is then
+extracted and used as a measure of cluster tightness. This is repeated
+for all protein/annotation sets. These sets are then ranked according
+to minimum mean normalised distance and then can be displayed and
+explored using the `r Biocpkg("pRolocGUI")` package.
+
+In this vignette we present a step-by-step guide showing users how to
+(1) how to add protein annotations, here we use the GO database as an
+example, and (2) rank and order information (e.g. GO terms) according
+to their correlation with the data structure, for the extraction of
+optimal data specific annotated clusters.
 
 # Loading the data 
-We will demonstrate our pipeline for adding and ranking annotation information using a LOPIT experiment on Pluripotent Mouse Embryonic stems ([Christoforou et al 2016](http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html)), available and documented in the `r Biocpkg("pRolocdata")` data package as `hyperlopit2015`.
+
+We will demonstrate our pipeline for adding and ranking annotation
+information using a LOPIT experiment on Pluripotent Mouse Embryonic
+stems
+([Christoforou et al 2016](http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html)),
+available and documented in the `r Biocpkg("pRolocdata")` data package
+as `hyperlopit2015`.
 
 ```{r loadData, echo = TRUE, message = FALSE, warning = FALSE}
 library("pRoloc")
@@ -34,17 +86,40 @@ hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
 ```
 
 # Adding sub-cellular localisation information
-All GO terms associated to proteins that appear in the dataset are retrieved and used to create a binary matrix where a 1 (0) at position $(i,j)$ indicates that term $j$ has (not) been used to annotate feature $i$. This matrix is appended and stored in the feature data slot of the `MSnSet` dataset using the `addGoAnnotations` function. We first however need to prepare annotation parameters that will enable us to query the Biomart repository using the \Biocpkg{biomaRt} package, from where we are able to retrieve GO terms. The specific Biomart repository and query
-will depend on the species under study and the type of features. This can be set using the `setAnnotationParams` function.
 
-In the code chunk below we set the annotation parameters for the `hyperLOPIT2015` dataset. As this species used was mouse and the `featureNames` of the da`hyperLOPIT2015` dataset are Uniprot accession numbers the input to the function is defined as `inputs = c("Mus musculus", "UniProt/Swissprot")`. See `?setAnnotationParams` for details.
+All GO terms associated to proteins that appear in the dataset are
+retrieved and used to create a binary matrix where a 1 (0) at position
+$(i,j)$ indicates that term $j$ has (not) been used to annotate
+feature $i$. This matrix is appended and stored in the feature data
+slot of the `MSnSet` dataset using the `addGoAnnotations` function. We
+first however need to prepare annotation parameters that will enable
+us to query the Biomart repository using the \Biocpkg{biomaRt}
+package, from where we are able to retrieve GO terms. The specific
+Biomart repository and query will depend on the species under study
+and the type of features. This can be set using the
+`setAnnotationParams` function.
+
+In the code chunk below we set the annotation parameters for the
+`hyperLOPIT2015` dataset. As this species used was mouse and the
+`featureNames` of the da`hyperLOPIT2015` dataset are Uniprot accession
+numbers the input to the function is defined as `inputs = c("Mus
+musculus", "UniProt/Swissprot")`. See `?setAnnotationParams` for
+details.
 
 ```{r queryparams}
 params <- setAnnotationParams(inputs = c("Mus musculus", 
                                          "UniProt/Swissprot"))
 ```
 
-Now the parameters for the search have been defined we can use the `addGoAnnotations` function to add a GO information matrix to the `featureData` slot of the dataset. The `addGoAnnotations` function takes a `MSnSet` instance as input (from which the `featureNames` will be extracted) and it downloads the CC terms (the default, biological process and the molecular function namespaces are also supported) found for each protein in the dataset. The output `MSnSet` has the CC term binary matrix appended to the `fData`, by default this is called `GOAnnotations` (and changed using the `fcol` argument).
+Now the parameters for the search have been defined we can use the
+`addGoAnnotations` function to add a GO information matrix to the
+`featureData` slot of the dataset. The `addGoAnnotations` function
+takes a `MSnSet` instance as input (from which the `featureNames` will
+be extracted) and it downloads the CC terms (the default, biological
+process and the molecular function namespaces are also supported)
+found for each protein in the dataset. The output `MSnSet` has the CC
+term binary matrix appended to the `fData`, by default this is called
+`GOAnnotations` (and changed using the `fcol` argument).
 
 ```{r addGO, echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE}
 cc <- addGoAnnotations(hyperLOPIT2015, params, 
@@ -52,9 +127,14 @@ cc <- addGoAnnotations(hyperLOPIT2015, params,
 fvarLabels(cc)
 ```
 
-The `addGoAnnotations` function by defualt does not do any filtering of the terms evidence codes unless specified in the `evidence` argument, see `?addGoAnnotations` for more details. 
+The `addGoAnnotations` function by defualt does not do any filtering
+of the terms evidence codes unless specified in the `evidence`
+argument, see `?addGoAnnotations` for more details.
 
-With many well-annotated species and datasets containing typically thousands of proteins, we often find many CC terms, of which many may not be particularly meaningful. These such terms can be filtered out using the `filerMinMarkers` and `filterMaxMarkers` functions.
+With many well-annotated species and datasets containing typically
+thousands of proteins, we often find many CC terms, of which many may
+not be particularly meaningful. These such terms can be filtered out
+using the `filerMinMarkers` and `filterMaxMarkers` functions.
 
 ```{r filterGO, echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE}
 ## Next we filter the GO term matrix removing any terms that have
@@ -66,17 +146,30 @@ cc <- filterMaxMarkers(cc)
 ```
 
 # Correlating and ordering annotation information
-Now we have extracted and filtered annotation information for our dataset we re-order the `GOAnnotations` matrix of terms according to their correlation with the dataset structure. To do this we use the `orderGoAnnotations` function. 
 
-For each piece of annotation information, e.g. for each GO CC term in the matrix, the function:
+Now we have extracted and filtered annotation information for our
+dataset we re-order the `GOAnnotations` matrix of terms according to
+their correlation with the dataset structure. To do this we use the
+`orderGoAnnotations` function.
+
+For each piece of annotation information, e.g. for each GO CC term in
+the matrix, the function:
 
 1. Extracts all instances (proteins) with the specified term
-2. Fits `k` component clusters to this subset using the `kmeans` algorithm (the default to test is `k = 1:5`).
+2. Fits `k` component clusters to this subset using the `kmeans`
+   algorithm (the default to test is `k = 1:5`).
 3. Calculates all pairwise Euclidean distances per component cluster
-4. Normalises each component by the cubed root of the number of instances per component (this was set heuristically through individual tests and can be set using the argument `p`)
-5. Orders the annotation information in `GOAnnotations` according to the minimum normalised Euclidean distance.
+4. Normalises each component by the cubed root of the number of
+   instances per component (this was set heuristically through
+   individual tests and can be set using the argument `p`)
+5. Orders the annotation information in `GOAnnotations` according to
+   the minimum normalised Euclidean distance.
 
-We find that high density clusters have the low mean normalised Euclidean distances. In the below chunk we test try fitting `k = 1:3` component clusters per term and normalise by `p = 1/3`. The ordered terms can be displayed using the `pRolocVis` function in the `pRolocGUI` package.
+We find that high density clusters have the low mean normalised
+Euclidean distances. In the below chunk we test try fitting `k = 1:3`
+component clusters per term and normalise by `p = 1/3`. The ordered
+terms can be displayed using the `pRolocVis` function in the
+`pRolocGUI` package.
 
 ```{r orderMarkers, eval = TRUE, verbose = FALSE}
 ## Extract markers can use n to specify to select top n terms
@@ -89,7 +182,16 @@ pRolocVis(res, fcol = "GOAnnotations")
 ```
 
 ## Examining distances
-Instead of using the `orderGoAnnotations` function which is a wrapper for steps 1 - 5 above, it is possible to calculate the Euclidean distances manually using the `clustDist` function. The input is a `MSnSet` dataset with the matrix of markers e.g. `GOAnnotations` appended to the `fData` slot. The output is a `"ClustDistList"`. The `"ClustDist"` and `"ClustDistList"` class summarises the algorithm information such as the number of k's tested for the kmeans, and mean and normalised pairwise Euclidean distances per numer of component clusters tested. 
+
+Instead of using the `orderGoAnnotations` function which is a wrapper
+for steps 1 - 5 above, it is possible to calculate the Euclidean
+distances manually using the `clustDist` function. The input is a
+`MSnSet` dataset with the matrix of markers e.g. `GOAnnotations`
+appended to the `fData` slot. The output is a `"ClustDistList"`. The
+`"ClustDist"` and `"ClustDistList"` class summarises the algorithm
+information such as the number of k's tested for the kmeans, and mean
+and normalised pairwise Euclidean distances per numer of component
+clusters tested.
 
 ```{r clusterDist, eval = TRUE, verbose = FALSE}
 ## Now calculate distances
@@ -107,9 +209,14 @@ plot(dd, p = 1/3)
 plot(dd[[1]], cc)
 ```
 
-The output of `plotClustDist` is a boxplot of the normalised distances per term and the output of `plotComponents` is a set of principal components analysis (PCA) plots, one for each `k` tested, highlighting the component clusters found according to the kmeans algorithm. 
+The output of `plotClustDist` is a boxplot of the normalised distances
+per term and the output of `plotComponents` is a set of principal
+components analysis (PCA) plots, one for each `k` tested, highlighting
+the component clusters found according to the kmeans algorithm.
 
-The `getNormDist` function can be used to extract a `vector` of normalised distances. Which can then be used to rank and order the terms in the `GOAnnotations` matrix, as per the code chunk below. 
+The `getNormDist` function can be used to extract a `vector` of
+normalised distances. Which can then be used to rank and order the
+terms in the `GOAnnotations` matrix, as per the code chunk below.
 
 ```{r minRank, eval = FALSE}
 ## Normalise by n^1/3
@@ -122,7 +229,8 @@ o <- order(minDist)
 fData(cc)$GOAnnotations <- fData(cc)$GOAnnotations[, o]
 ```
 
-Finally, we can use the `pRolocVis` function in `pRolocGUI` to visualise our clusters. 
+Finally, we can use the `pRolocVis` function in `pRolocGUI` to
+visualise our clusters.
 
 ```{r visAgain, eval=FALSE}
 pRolocVis(cc, fcol = "GOAnnotations")

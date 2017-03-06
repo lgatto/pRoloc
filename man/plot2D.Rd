@@ -45,7 +45,7 @@ yet implemented).}
     component analysis (see \code{\link{prcomp}}), classical
     multidimensional scaling (see \code{\link{cmdscale}}), kernel
     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
-    \code{\link[tsne]{tsne}}) or linear discriminant analysis (see
+    \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis (see
     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
     defined the sub-cellular clusters so that the ration between
     within ad between cluster variance is maximised. All the other

@@ -519,7 +519,7 @@ the sample names can be retrieved with
 %% Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Data visualisation}\label{sec:viz}
+g\section{Data visualisation}\label{sec:viz}
 
 The following sections will focus on two closely related aspects, data
 visualisation and data analysis (i.e. organelle assignments). Data
@@ -705,12 +705,12 @@ pcvar <- plot2D(tan2009r1, method = "scree", plot = FALSE)
 pcvar <- round(pcvar, 2)
 @
 
-As can be seen on the figures~\ref{fig:plot2d} and~\ref{fig:plot3D},
-we indicate on the axis labels the percentage of total variance
-explained by the individual PCs. It is not unusual to reach over 75\%
-along the first two PCs, even for experiments with several tens of
-fractions. One can calculate this information for all PCs by setting
-\texttt{method = "scree"} in \Rfunction{plot2D}. On
+As can be seen on the figures~\ref{fig:plot2d}, \ref{fig:plot2dorg}
+and~\ref{fig:plot3D}, we indicate on the axis labels the percentage of
+total variance explained by the individual PCs. It is not unusual to
+reach over 75\% along the first two PCs, even for experiments with
+several tens of fractions. One can calculate this information for all
+PCs by setting \texttt{method = "scree"} in \Rfunction{plot2D}. On
 figure~\ref{fig:scree}, we see that the four PCs in the
 \Robject{tan2009r1} data account for \Sexpr{paste(pcvar[1:3], collapse
   = ", ")} and \Sexpr{pcvar[4]} percent of the total variance.
@@ -724,6 +724,77 @@ plot2D(tan2009r1, method = "scree")
   \caption{Percentage of variance explained.}
   \label{fig:scree}
 \end{figure}
+
+A variety of dimensionality reduction methods are available in
+\Rfunction{plot2D}: \Sexpr{paste(pRoloc:::plot2Dmethods, collapse = ",
+  ")}. Except for \texttt{scree} (see above) and \texttt{none} (no
+data transformation, which can be useful when the data is already
+transformed and only needs to be plotted), these can used to produce
+visualisation of the data in two dimensions. Two are worth some
+discussion here; the readers are redirected to the manual page for
+more details.
+
+Linear discriminant analysis (LDA) will project the protein occupancy
+profiles in a new set of dimensions using as a criterion the
+separation of marker classes by maximising the between class variance
+to the within class variance ratio. As opposed to the
+\textit{unsupervised} PCA, the \textit{supervised} LDA should not be
+used as an to explore the data or as a quality control, but can be
+useful to assess if one or more organelles have been preferentially
+separated.
+
+The t-Distributed Stochastic Neighbour Embedding
+(t-SNE)\footnote{\url{https://lvdmaaten.github.io/tsne/}}
+\cite{tsne:2008} is widely applied in many areas in computational
+biology and more generally field that need to visualise
+high-dimensional data. The t-SNE method is non-linear, and will
+emphasise separation of different features while grouping features
+with similar profiles. In addition, different transformations are
+applied on different regions leading to plots that can substantially
+differ from a PCA plot. As a result, proximity in two dimensions and
+tightness of the clusters can't be related to these quantities in the
+original data. See \textit{How to Use t-SNE
+  Effectively}\footnote{\url{http://distill.pub/2016/misread-tsne/}}
+for a useful non-technical introduction.
+
+The results of the algorithm crucially depend on the values of its
+input parameters, in particular the \textit{perplexity}, which
+balances global and local aspects of the data. The suggested range of
+value ranges from 5 to 50, and should not be greater than the number
+of data points (which we can assume not to be the case in modern
+spatial proteomics experiments). Below, we test the effect of this
+parameter along the suggested range, including the default value of
+30, at which the algorithm converges.
+
+<<tsne, eval=FALSE>>=
+perps <- sort(c(30, seq(5, 50, 15)))
+data(HEK293T2011)
+par(mfrow = c(2, 3))
+plot2D(HEK293T2011, main = "PCA")
+sapply(perps, 
+       function(perp) {
+           plot2D(HEK293T2011, method = "t-SNE",
+                  methargs = list(perplexity = perp))
+           title(main = paste("t-SNE, perplexity", perp))
+       })
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{./Figures/tsne.pdf}
+  \caption{Effect of t-SNE's perplexity parameter on the human
+    \texttt{HEK293T2011} data.}
+  \label{fig:tsne}
+\end{figure}
+
+Other parameters that can effect the results are the number of
+iterations and the learning rate epsilon. 
+
+The t-SNE algorithm takes much more time to complete than the other
+available methods. In such cases, saving the results and re-plotting
+with method \texttt{none} can be useful (see \texttt{?plot2D}). In the
+case of this document, figure~\ref{fig:tsne}, for instance, was
+pre-generated rather than computed upon compilation.
 
 
 \subsection{Features of interest}

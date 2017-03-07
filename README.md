@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/lgatto/pRoloc.svg?branch=master)](https://travis-ci.org/lgatto/pRoloc) [![codecov.io](https://codecov.io/github/lgatto/pRoloc/coverage.svg?branch=master)](https://codecov.io/github/lgatto/pRoloc?branch=master)
+
+
 [`pRoloc`](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
 is a Bioconductor package for the analysis of experimental spatial
 proteomics data.  It is available from Bioconductor `>= 2.12` and
@@ -11,16 +14,11 @@ and
 labs, at the University of Cambridge.
 
 
-**Current build status**:
-
-[![Build Status](https://travis-ci.org/lgatto/pRoloc.svg?branch=master)](https://travis-ci.org/lgatto/pRoloc) [![codecov.io](https://codecov.io/github/lgatto/pRoloc/coverage.svg?branch=master)](https://codecov.io/github/lgatto/pRoloc?branch=master)
-
 See the Bioconductor landing pages
 ([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
 and
 [devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
 for the Bioc build status. 
-
 
 ## Getting started
 

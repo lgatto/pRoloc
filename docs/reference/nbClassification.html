@@ -54,6 +54,9 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -125,11 +128,11 @@ classification results and scores respectively.</p>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9392  0.9566  0.9740  0.9650  0.9779  0.9818 
-#&gt;  best laplace: 0 5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='nbClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
-#&gt; 5 
+#&gt;  0.9558  0.9569  0.9579  0.9642  0.9684  0.9788 
+#&gt;  best laplace: 0   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='nbClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt; 0 
 #&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='nbClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; laplace 
-#&gt;       5 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nbClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
+#&gt;       0 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nbClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"naiveBayes"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            18           175            98            98            52 
@@ -153,8 +156,8 @@ classification results and scores respectively.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed naiveBayes prediction (laplace=5) Mon Mar  6 21:46:23 2017 
-#&gt; Added naiveBayes predictions according to global threshold = 0 Mon Mar  6 21:46:23 2017 
+#&gt; Performed naiveBayes prediction (laplace=0) Tue Mar  7 17:32:24 2017 
+#&gt; Added naiveBayes predictions according to global threshold = 0 Tue Mar  7 17:32:24 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"naiveBayes"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            45            69            61            43 
@@ -178,8 +181,8 @@ classification results and scores respectively.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed naiveBayes prediction (laplace=5) Mon Mar  6 21:46:23 2017 
-#&gt; Added naiveBayes predictions according to global threshold = 1 Mon Mar  6 21:46:23 2017 
+#&gt; Performed naiveBayes prediction (laplace=0) Tue Mar  7 17:32:24 2017 
+#&gt; Added naiveBayes predictions according to global threshold = 1 Tue Mar  7 17:32:24 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"naiveBayes"</span>)</div><img src='nbClassification-20.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

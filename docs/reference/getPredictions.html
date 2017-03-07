@@ -54,6 +54,9 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -154,8 +157,8 @@ thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Mon Mar  6 21:45:47 2017 
-#&gt; Added svm predictions according to global threshold = 0 Mon Mar  6 21:45:47 2017 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Tue Mar  7 17:31:48 2017 
+#&gt; Added svm predictions according to global threshold = 0 Tue Mar  7 17:31:48 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'>getPredictions</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.9</span>) <span class='co'>## single threshold </span></div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            56            28            55            20 
@@ -179,8 +182,8 @@ thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Mon Mar  6 21:45:47 2017 
-#&gt; Added svm predictions according to global threshold = 0.9 Mon Mar  6 21:45:47 2017 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Tue Mar  7 17:31:48 2017 
+#&gt; Added svm predictions according to global threshold = 0.9 Tue Mar  7 17:31:49 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='co'>## 50% top predictions per class</span>
 <span class='no'>ts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='orgQuants.html'>orgQuants</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;     0.2995766     0.8368847     0.7805362     0.7484314     0.7746137 
@@ -208,8 +211,8 @@ thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Mon Mar  6 21:45:47 2017 
-#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Mon Mar  6 21:45:47 2017 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Tue Mar  7 17:31:48 2017 
+#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Tue Mar  7 17:31:49 2017 
 #&gt;  MSnbase version: 1.17.12 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

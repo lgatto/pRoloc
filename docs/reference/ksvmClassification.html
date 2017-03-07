@@ -54,6 +54,9 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -126,16 +129,16 @@ classification results and scores respectively.</p>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9046  0.9417  0.9788  0.9565  0.9825  0.9862 
-#&gt;  best cost: 0.5 16   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='ksvmClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
-#&gt; 0.5 
-#&gt;   1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='ksvmClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; cost 
-#&gt;  0.5 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>ksvmClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
+#&gt;  0.9579  0.9579  0.9579  0.9673  0.9721  0.9862 
+#&gt;  best cost: 16 0.5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='ksvmClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt; 16 
+#&gt;  1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='ksvmClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; cost 
+#&gt;   16 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>ksvmClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"ksvm"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            19           187           138           110            54 
+#&gt;            20           189           122           133            54 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;            73            19            68            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            57            19            74            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -154,13 +157,13 @@ classification results and scores respectively.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed ksvm prediction (cost=0.5) Mon Mar  6 21:46:17 2017 
-#&gt; Added ksvm predictions according to global threshold = 0 Mon Mar  6 21:46:17 2017 
+#&gt; Performed ksvm prediction (cost=16) Tue Mar  7 17:32:18 2017 
+#&gt; Added ksvm predictions according to global threshold = 0 Tue Mar  7 17:32:18 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"ksvm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14           156            63            55            20 
+#&gt;            14           156            66            55            20 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           282            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            46            19            13           279            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -179,8 +182,8 @@ classification results and scores respectively.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed ksvm prediction (cost=0.5) Mon Mar  6 21:46:17 2017 
-#&gt; Added ksvm predictions according to global threshold = 0.75 Mon Mar  6 21:46:17 2017 
+#&gt; Performed ksvm prediction (cost=16) Tue Mar  7 17:32:18 2017 
+#&gt; Added ksvm predictions according to global threshold = 0.75 Tue Mar  7 17:32:18 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"ksvm"</span>)</div><img src='ksvmClassification-20.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

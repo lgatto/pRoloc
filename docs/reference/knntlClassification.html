@@ -54,6 +54,9 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -150,8 +153,8 @@ for all cluster or none.</dd>
 #&gt;  0.8793  0.8894  0.8994  0.8994  0.9094  0.9195 
 #&gt;  best theta:
 #&gt;          ER Golgi Mitochondrion PM
-#&gt; weight:0  0     2             0  2
-#&gt; weight:1  2     0             2  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
+#&gt; weight:0  1     2             0  2
+#&gt; weight:1  1     0             2  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
 <span class='fu'>plot</span>(<span class='no'>opt</span>)</div><img src='knntlClassification-11.png' alt='' width='540' height='400' /><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knntlClassification</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                            <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>, <span class='no'>th</span>, <span class='no'>k</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)

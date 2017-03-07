@@ -3,6 +3,8 @@
 ## Changes in version 1.15.7
 
  - Fix warnings and notes <2017-02-25 Sat>
+ - Add section about dimensionality methods reduction and t-SNE in the
+   tutorial <2017-03-07 Tue>
  
 ## Changes in version 1.15.6
 

@@ -23,6 +23,8 @@
 ##' @param fractions A \code{character} defining the \code{phenoData}
 ##'     variable to be used to label the fraction along the x
 ##'     axis. Default is to use \code{sampleNames(object)}.
+##' @param ylab y-axis label. Default is "Intensity".
+##' @param xlab x-axis label. Default is "Fractions".
 ##' @param ylim A numeric vector of length 2, giving the y coordinates
 ##'     range.
 ##' @param ... Additional parameters passed to \code{\link{plot}}.
@@ -186,7 +188,7 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     component analysis (see \code{\link{prcomp}}), classical
 ##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
 ##'     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
-##'     \code{\link[tsne]{tsne}}) or linear discriminant analysis (see
+##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis (see
 ##'     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
 ##'     defined the sub-cellular clusters so that the ration between
 ##'     within ad between cluster variance is maximised. All the other
@@ -389,16 +391,16 @@ plot2D <- function(object,
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
-        requireNamespace("tsne")
-        if (missing(methargs))
-            .data <- tsne::tsne(exprs(object), k = k)
-        else .data <- do.call(tsne::tsne,
+        requireNamespace("Rtsne")
+        if (missing(methargs)) 
+            .data <- Rtsne::Rtsne(exprs(object), dims = k)
+        else .data <- do.call(Rtsne::Rtsne,
                               c(list(X = exprs(object)),
-                                k = k,
+                                dims = k,
                                 methargs))
-        .data <- .data[, dims]
-        .xlab <- paste("Dimension 1")
-        .ylab <- paste("Dimension 2")
+        .data <- .data$Y[, dims]
+        .xlab <- paste("Dimension", dims[1])
+        .ylab <- paste("Dimension", dims[2])
         colnames(.data) <- c(.xlab, .ylab)
         rownames(.data) <- featureNames(object)
     } else if (method == "PCA") {

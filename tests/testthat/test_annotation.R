@@ -9,13 +9,13 @@ test_that("AnnotationParams", {
                  "Couldn't find a unique feature type match for 'foo'.")
 
     ap <- setAnnotationParams(inputs = c("Homo sapiens",
-                                         "UniProt/Swissprot Accession"))
+                                         "UniProtKB/Swiss-Prot ID"))
     expect_null(show(ap))    
     
     expect_is(ap, "AnnotationParams")
     expect_identical(ap@martname, "ENSEMBL_MART_ENSEMBL")
     expect_identical(ap@dataset, "hsapiens_gene_ensembl")
-    expect_identical(ap@filter, "uniprot_swissprot")
+    expect_identical(ap@filter, "uniprotswissprot")
     expect_error(setAnnotationParams()) ## only in non-interactive mode
 
     ap2 <- getAnnotationParams()

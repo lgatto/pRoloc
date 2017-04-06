@@ -16,27 +16,33 @@
                       else msg
                   })
 
+.meanMarkerDist <- function(x, markers) {
+  um <- unique(markers)
+  n <- length(um)
+  sel <- lapply(um, "==", markers)
+  ans <- matrix(NA_real_, nrow=n, ncol=n, dimnames=list(um, um))
+
+  for (i in 1L:n) {
+    for (j in 1L:n) {
+      ans[i, j] <- mean(x[sel[[i]], sel[[j]]], na.rm=TRUE)
+    }
+  }
+  ans
+}
+
 QSep <- function(object, fcol = "markers") {
     objname <- MSnbase:::getVariableName(match.call(), "object")
     ## only consider markers
     mobj <- markerMSnSet(object)
     ## vector of markers
-    um <- unique(getMarkers(mobj, fcol = fcol, verbose = FALSE))
-    ## answer is a square matrix
-    ans <- diag(length(um))
-    colnames(ans) <- rownames(ans) <- um
+    markers <- getMarkers(mobj, fcol = fcol, verbose = FALSE)
     ## euclidean distance between all markers
     mrkdist <- dist(exprs(mobj))
     mrkdist <- as.matrix(mrkdist)
     diag(mrkdist) <- NA
-    ## mean distance between all pairs of subcellular marker clusters
-    tmp <- apply(expand.grid(um, um), 1,
-                 function(.um) {
-                     sel1 <- fData(mobj)[, fcol] == .um[1]
-                     sel2 <- fData(mobj)[, fcol] == .um[2]
-                     ans[.um[1], .um[2]] <<- mean(mrkdist[sel1, sel2],
-                                                  na.rm = TRUE)
-                 })
+
+    ans <- .meanMarkerDist(mrkdist, markers)
+
     res <- .QSep(x = ans,
                  xnorm = ans / diag(ans),
                  object = objname)

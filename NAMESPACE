@@ -12,10 +12,10 @@ importFrom("grDevices", "blues9", "colorRampPalette", "dev.new",
            "rgb", "chull")
 importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
            "lines", "matplot", "points", "segments", "smoothScatter",
-           "text", "par", "mtext", "barplot")
+           "text", "par", "mtext", "barplot", "strwidth")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
-           "update", "var", "rmultinom", "na.omit", "hclust",
+           "update", "rmultinom", "na.omit", "hclust",
            "as.dendrogram")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",

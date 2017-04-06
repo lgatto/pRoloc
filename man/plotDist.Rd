@@ -6,7 +6,7 @@
 \usage{
 plotDist(object, markers, mcol = "steelblue", pcol = getUnknowncol(),
   alpha = 0.3, type = "b", lty = 1, fractions = sampleNames(object),
-  ylim, ...)
+  ylab = "Intensity", xlab = "Fractions", ylim, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -37,6 +37,10 @@ is 1 (solid). See \code{\link{par}} for details.}
 \item{fractions}{A \code{character} defining the \code{phenoData}
 variable to be used to label the fraction along the x
 axis. Default is to use \code{sampleNames(object)}.}
+
+\item{ylab}{y-axis label. Default is "Intensity".}
+
+\item{xlab}{x-axis label. Default is "Fractions".}
 
 \item{ylim}{A numeric vector of length 2, giving the y coordinates
 range.}

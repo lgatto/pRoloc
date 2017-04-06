@@ -14,19 +14,20 @@ plot2Ds(object, pcol, fcol = "markers", cex.x = 1, cex.y = 1,
 }
 \arguments{
 \item{object}{An \code{\linkS4class{MSnSet}} or a
-\code{MSnSetList}. In the latter case, only the two first elements
-of the list will be used for plotting and the others will be
-silently ignored.}
+\code{MSnSetList}. In the latter case, only the two first
+elements of the list will be used for plotting and the others
+will be silently ignored.}
 
 \item{pcol}{If \code{object} is an \code{MSnSet}, a \code{factor}
 or the name of a phenotype variable (\code{phenoData} slot)
-defining how to split the single \code{MSnSet} into two or more
-data sets.  Ignored if \code{object} is a
+defining how to split the single \code{MSnSet} into two or
+more data sets.  Ignored if \code{object} is a
 \code{\link{MSnSetList}}.}
 
 \item{fcol}{Feature meta-data label (fData column name) defining
-the groups to be differentiated using different colours. Default
-is \code{markers}. Use \code{NULL} to suppress any colouring.}
+the groups to be differentiated using different
+colours. Default is \code{markers}. Use \code{NULL} to
+suppress any colouring.}
 
 \item{cex.x}{Character expansion for the first data set. Default
 is 1.}
@@ -41,8 +42,8 @@ is 1.}
 is 23.}
 
 \item{col}{A vector of colours to highlight the different classes
-defined by \code{fcol}. If missing (default), default colours are
-used (see \code{\link{getStockcol}}).}
+defined by \code{fcol}. If missing (default), default colours
+are used (see \code{\link{getStockcol}}).}
 
 \item{mirrorX}{A \code{logical} indicating whether the x axis
 should be mirrored?}
@@ -57,12 +58,13 @@ should be mirrored?}
 }
 \value{
 Used for its side effects of producing a plot. Invisibly
-returns an object of class \code{plot2Ds}, which is a list with
-the PCA analyses results (see \code{\link{prcomp}}) of the first
-data set and the new coordinates of the second data sets, as used
-to produce the plot and the respective point colours. Each of
-these elements can be accessed with \code{data1}, \code{data2},
-\code{col1} and \code{code2} respectively.
+    returns an object of class \code{plot2Ds}, which is a list
+    with the PCA analyses results (see \code{\link{prcomp}}) of
+    the first data set and the new coordinates of the second data
+    sets, as used to produce the plot and the respective point
+    colours. Each of these elements can be accessed with
+    \code{data1}, \code{data2}, \code{col1} and \code{code2}
+    respectively.
 }
 \description{
 Takes 2 \code{linkS4class{MSnSet}} instances as input to plot the
@@ -94,6 +96,6 @@ Laurent Gatto
 }
 \seealso{
 See \code{\link{plot2D}} to plot a single data set and
-\code{\link{move2Ds}} for a animation.
+    \code{\link{move2Ds}} for a animation.
 }
 

@@ -101,7 +101,7 @@ and the type of features. This can be set using the
 
 In the code chunk below we set the annotation parameters for the
 `hyperLOPIT2015` dataset. As this species used was mouse and the
-`featureNames` of the da`hyperLOPIT2015` dataset are Uniprot accession
+`featureNames` of the `hyperLOPIT2015` dataset are Uniprot accession
 numbers the input to the function is defined as `inputs = c("Mus
 musculus", "UniProtKB/Swiss-Prot ID")`. See `?setAnnotationParams` for
 details.

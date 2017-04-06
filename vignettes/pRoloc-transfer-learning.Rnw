@@ -180,12 +180,12 @@ selected, a set of possible identifier types is displayed.
 It is also possible to pass patterns\footnote{These patterns must
   match uniquely or an error will be thrown.} to match against the
 species (\texttt{"Homo sapiens"}) and feature type
-(\texttt{"UniProt/Swissprot ID"}).
+(\texttt{"UniProt/Swiss-prot ID"}).
 
 <<ap>>=
 ap <- setAnnotationParams(inputs =
                               c("Homo sapiens",
-                                "UniProt/Swissprot Accession"))
+                                "UniProtKB/Swiss-Prot ID"))
 ap
 @
 
@@ -261,8 +261,8 @@ fvarLabels(andy2011)[1] <- "accession" ## for left_join matching
 library("biomaRt")
 mart <- useMart("ensembl",dataset="hsapiens_gene_ensembl")
 
-filter <- "uniprot_swissprot"
-attrib <- c("uniprot_genename", "uniprot_swissprot", "ensembl_gene_id")
+filter <- "uniprotswissprot"
+attrib <- c("uniprot_gn", "uniprotswissprot", "ensembl_gene_id")
 bm <- getBM(attributes = attrib,
             filters = filter,
             values = fData(andy2011)[, "accession"],
@@ -280,7 +280,7 @@ colnames(hpa)[1] <- "ensembl_gene_id"
 
 library("dplyr")
 hpa <- left_join(hpa, bm)
-hpa <- hpa[!duplicated(hpa$uniprot_swissprot), ]
+hpa <- hpa[!duplicated(hpa$uniprotswissprot), ]
 
 ## match HPA/LOPIT
 colnames(hpa)[7] <- "accession"

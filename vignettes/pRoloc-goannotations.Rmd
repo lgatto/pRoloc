@@ -103,7 +103,7 @@ In the code chunk below we set the annotation parameters for the
 `hyperLOPIT2015` dataset. As this species used was mouse and the
 `featureNames` of the da`hyperLOPIT2015` dataset are Uniprot accession
 numbers the input to the function is defined as `inputs = c("Mus
-musculus", "UniProt/Swissprot")`. See `?setAnnotationParams` for
+musculus", "UniProt/Swiss-prot ID")`. See `?setAnnotationParams` for
 details.
 
 ```{r queryparams}

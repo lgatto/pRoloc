@@ -25,7 +25,6 @@ getFiltersOfInterest <- function()
       "tair_locus",
       "tair_locus_model",
       "tair_symbol",
-      "uniprot_genename",
       "flybase_annotation_id",
       "flybase_gene_id",
       "flybase_transcript_id",

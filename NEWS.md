@@ -5,6 +5,7 @@
  - Fix warnings and notes <2017-02-25 Sat>
  - Add section about dimensionality methods reduction and t-SNE in the
    tutorial <2017-03-07 Tue>
+ - Fix error due to new uniprot attribute names <2017-04-06 Thu>
  
 ## Changes in version 1.15.6
 

@@ -108,7 +108,7 @@ details.
 
 ```{r queryparams}
 params <- setAnnotationParams(inputs = c("Mus musculus", 
-                                         "UniProt/Swissprot"))
+                                         "UniProtKB/Swiss-Prot ID"))
 ```
 
 Now the parameters for the search have been defined we can use the

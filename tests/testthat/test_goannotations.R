@@ -5,7 +5,7 @@ test_that("filtering by min or max matrix annotations gives expected results", {
   data("hyperLOPIT2015")
   hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
   par <- setAnnotationParams(inputs = c("Mus musculus", 
-                                        "UniProt/Swissprot"))
+                                        "UniProtKB/Swiss-Prot ID"))
   cc <- addGoAnnotations(hyperLOPIT2015, par, 
                      namespace = "cellular_component")
   

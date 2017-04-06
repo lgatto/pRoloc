@@ -5,7 +5,7 @@ test_that("output from orderGoAnnotations and manually ordering clusters", {
   data("hyperLOPIT2015")
   hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
   par <- setAnnotationParams(inputs = c("Mus musculus", 
-                                        "UniProt/Swissprot"))
+                                        "UniProtKB/Swiss-Prot ID"))
   seed <- sample(.Machine$integer.max, 1)
 
   cc <- addGoAnnotations(hyperLOPIT2015, par, 

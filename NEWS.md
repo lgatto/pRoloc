@@ -1,5 +1,9 @@
 # MSnbase 1.15
 
+## Changes in version 1.15.8
+- New mrkConsProfiles function to calculate average/consensus marker
+  profiles <2017-04-11 Tue>
+
 ## Changes in version 1.15.7
 
  - Fix warnings and notes <2017-02-25 Sat>

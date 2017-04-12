@@ -123,6 +123,7 @@ export(## MSnSet manipulation
     addLegend,
     plotDist,
     mrkHClust,
+    mrkConsProfiles,
     highlightOnPlot,
     highlightOnPlot3D,
     SpatProtVis,

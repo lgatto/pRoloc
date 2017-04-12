@@ -171,3 +171,43 @@ classWeights <- function(object, fcol = "markers") {
     w <- 1/w[names(w) != "unknown"]
     w
 }
+
+##' A function to calculate average marker profiles.
+##'
+##' @title Marker consensus profiles
+##' @param object An instance of class \code{MSnSet}.
+##' @param fcol Feature meta-data label (fData column name) defining
+##'     the groups to be differentiated using different
+##'     colours. Default is \code{markers}.
+##' @param method A \code{function} to average marker
+##'     profiles. Default is \code{mean}.
+##' @return A \code{matrix} of dimensions \emph{number of clusters}
+##'     (exluding unknowns) by \emph{number of fractions}.
+##' @author Laurent Gatto and Lisa M. Breckels
+##' @seealso The \code{\link{mrkHClust}} function to produce a
+##'     hierarchical cluster.
+##' @examples
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' mrkConsProfiles(dunkley2006)
+##' mrkConsProfiles(dunkley2006, method = median)
+##' mm <- mrkConsProfiles(dunkley2006)
+##' ## Reorder fractions
+##' o <- order(dunkley2006$fraction)
+##' ## Plot mean organelle profiles using the
+##' ## default pRoloc colour palette.
+##' matplot(t(mm[, o]), type = "l",
+##'         xlab = "Fractions", ylab = "Relative intensity",
+##'         main = "Mean organelle profiles",
+##'         col = getStockcol(), lwd = 2, lty = 1)
+##' ## Add a legend
+##' addLegend(markerMSnSet(dunkley2006), where = "topleft")
+mrkConsProfiles <- function(object, fcol = "markers", method = mean) {
+    object <- markerMSnSet(object, fcol)
+    cl <- getMarkerClasses(object, fcol)
+    ind <- lapply(cl, function(x) which(fData(object)[, fcol] == x))
+    names(ind) <- cl
+    profs <- lapply(ind, function(x) exprs(object)[x, , drop = FALSE])
+    mm <- t(sapply(profs, function(z) apply(z, 2, method)))
+    return(mm)
+}

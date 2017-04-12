@@ -123,7 +123,7 @@ term binary matrix appended to the `fData`, by default this is called
 
 ```{r addGO, echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE}
 cc <- addGoAnnotations(hyperLOPIT2015, params, 
-                   namespace = "cellular_component")
+                       namespace = "cellular_component")
 fvarLabels(cc)
 ```
 

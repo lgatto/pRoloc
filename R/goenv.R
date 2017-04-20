@@ -60,7 +60,7 @@ getAttributesOfInterest0 <- function()
       "go_linkage_type")
 
 getAttributesOfInterestX <- function()
-    list(c("go_id", "go_accession"),
+    list(c("go_id", "go_accession", "goslim_goa_accession"),
          c("namespace_1003", "go_namespace_1003"),
          c("name_1006", "go_name_1006"))
 

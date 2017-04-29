@@ -62,8 +62,8 @@
     \item{\code{x}:}{Object of class \code{"matrix"} containing the
       pairwise distance matrix, accessible with \code{qseq(., norm =
       FALSE)}. }
-    
-    \item{\code{xnorm}:}{Object of class \code{"matrix"} containinf the
+
+    \item{\code{xnorm}:}{Object of class \code{"matrix"} containing the
       normalised pairwise distance matrix, accessible with \code{qsep(.,
 	norm = TRUE)} or \code{qsep(.)}. }
   
@@ -72,7 +72,7 @@
       to generate the \code{QSep} object.}
 
     \item{\code{.__classVersion__}:}{Object of class \code{"Versions"}
-      storing the class vesion of the object. }
+      storing the class version of the object. }
 
   }
 }
@@ -108,7 +108,7 @@
       default) a summary of those. }
 
     \item{levelPlot}{\code{signature(object = "QSep", norm = "logical",
-	...)}: plots an annotated heatmap of all normalised pairwaise
+	...)}: plots an annotated heatmap of all normalised pairwise
 	distances. \code{norm} (default is \code{TRUE}) defines whether
 	normalised distances should be plotted. Additional arguments
 	\code{...} are passed to the \code{\link[lattice]{levelplot}}.

@@ -1,3 +1,16 @@
+# MSnbase 1.17
+
+## Changes in version 1.17.0
+- Nothing yet
+
+## Changes in version 1.17.0
+- Version bump for Bioc devel 3.6
+
+# MSnbase 1.16
+
+## Changes in version 1.16.0
+- Version bump for Bioc release 3.5
+
 # MSnbase 1.15
 
 ## Changes in version 1.15.9

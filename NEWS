@@ -1,3 +1,18 @@
+Changes in version 1.17.1
+-------------------------
+- Support Rtsne's new pca_center and pca_scale arguments
+  <2017-05-02 Tue>
+
+Changes in version 1.17.0
+-------------------------
+- Version bump for Bioc devel 3.6
+
+
+Changes in version 1.16.0
+-------------------------
+- Version bump for Bioc release 3.5
+
+
 Changes in version 1.15.9
 -------------------------
 - update biomart attribute names to relect changes <2017-04-20 Thu>

@@ -69,10 +69,12 @@ yet implemented).}
 
 \item{methargs}{A \code{list} of arguments to be passed when
 \code{method} is called. If missing, the data will be scaled
-and centred prior to PCA. If \code{method = "none"} and
-\code{object} is a \code{matrix}, then the first and only
-argument of \code{methargs} must be an \code{MSnSet} with
-matching features with \code{object}.}
+and centred prior to PCA and t-SNE (i.e. \code{Rtsne}'s
+arguments \code{pca_center} and \code{pca_scale} are set to
+\code{TRUE}). If \code{method = "none"} and \code{object} is a
+\code{matrix}, then the first and only argument of
+\code{methargs} must be an \code{MSnSet} with matching
+features with \code{object}.}
 
 \item{axsSwitch}{A \code{logical} indicating whether the axes
 should be switched.}

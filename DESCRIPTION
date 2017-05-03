@@ -60,7 +60,7 @@ Suggests:
     roxygen2,
     synapter,
     xtable,
-    Rtsne,
+    Rtsne (>= 0.13),
     rgl,
     BiocStyle,
     hpar (>= 1.15.3),

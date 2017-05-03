@@ -212,10 +212,12 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' 
 ##' @param methargs A \code{list} of arguments to be passed when
 ##'     \code{method} is called. If missing, the data will be scaled
-##'     and centred prior to PCA. If \code{method = "none"} and
-##'     \code{object} is a \code{matrix}, then the first and only
-##'     argument of \code{methargs} must be an \code{MSnSet} with
-##'     matching features with \code{object}.
+##'     and centred prior to PCA and t-SNE (i.e. \code{Rtsne}'s
+##'     arguments \code{pca_center} and \code{pca_scale} are set to
+##'     \code{TRUE}). If \code{method = "none"} and \code{object} is a
+##'     \code{matrix}, then the first and only argument of
+##'     \code{methargs} must be an \code{MSnSet} with matching
+##'     features with \code{object}.
 ##' @param axsSwitch A \code{logical} indicating whether the axes
 ##'     should be switched.
 ##' @param mirrorX A \code{logical} indicating whether the x axis
@@ -355,8 +357,7 @@ plot2D <- function(object,
         cramp <- colorRampPalette(c("grey90", "blue"))
         plot(hexbin::hexbin(.data), colramp = cramp)
         return(invisible(.data))
-    }
-    else if (method == "scree") {
+    } else if (method == "scree") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
         .pca <- do.call(prcomp, c(list(x = exprs(object)),
@@ -392,12 +393,12 @@ plot2D <- function(object,
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
         requireNamespace("Rtsne")
-        if (missing(methargs)) 
-            .data <- Rtsne::Rtsne(exprs(object), dims = k)
-        else .data <- do.call(Rtsne::Rtsne,
-                              c(list(X = exprs(object)),
-                                dims = k,
-                                methargs))
+        if (missing(methargs))
+            methargs <- list(pca_scale = TRUE, pca_center = TRUE)        
+        .data <- do.call(Rtsne::Rtsne,
+                         c(list(X = exprs(object)),
+                           dims = k,
+                           methargs))
         .data <- .data$Y[, dims]
         .xlab <- paste("Dimension", dims[1])
         .ylab <- paste("Dimension", dims[2])

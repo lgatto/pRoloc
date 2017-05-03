@@ -1,5 +1,8 @@
 # MSnbase 1.17
 
+## Changes in version 1.17.2
+- Nothing yet
+
 ## Changes in version 1.17.1
 - Support Rtsne's new pca_center and pca_scale arguments
   <2017-05-02 Tue>

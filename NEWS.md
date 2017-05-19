@@ -1,5 +1,8 @@
 # MSnbase 1.17
 
+## Changes in version 1.17.3
+- nothing yet
+
 ## Changes in version 1.17.2
 - phenoDisco speed improvements and added support for t-SNE
   <2017-05-19 Fri>

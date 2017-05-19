@@ -7,7 +7,7 @@
 phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   allIter = FALSE, p = 0.05, ndims = 2,
   modelNames = mclust.options("emModelNames"), G = 1:9, BPPARAM, tmpfile,
-  seed, verbose = TRUE)
+  seed, verbose = TRUE, dimred = c("PCA", "t-SNE"), ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -30,33 +30,35 @@ iterations should be saved. Default is \code{FALSE}.}
 the disocvery analysis. Default is 2. Added in version 1.3.9.}
 
 \item{modelNames}{A vector of characters indicating the models to
-be fitted in the EM phase of clustering using \code{Mclust}. The
-help file for \code{mclustModelNames} describes the available
-models. Default model names are \code{c("EII", "VII", "EEI",
-"VEI", "EVI", "VVI", "EEE", "EEV", "VEV", "VVV")}, as returned by
-\code{mclust.options("emModelNames")}. Note that using all these
-possible models substantially increases the running time. Legacy
-models are \code{c("EEE","EEV","VEV","VVV")}, i.e. only
-ellipsoidal models.}
+be fitted in the EM phase of clustering using
+\code{Mclust}. The help file for \code{mclustModelNames}
+describes the available models. Default model names are
+\code{c("EII", "VII", "EEI", "VEI", "EVI", "VVI", "EEE",
+"EEV", "VEV", "VVV")}, as returned by
+\code{mclust.options("emModelNames")}. Note that using all
+these possible models substantially increases the running
+time. Legacy models are \code{c("EEE","EEV","VEV","VVV")},
+i.e. only ellipsoidal models.}
 
 \item{G}{An integer vector specifying the numbers of mixture
-components (clusters) for which the BIC is to be calculated. The
-default is \code{G=1:9} (as in \code{Mclust}).}
+components (clusters) for which the BIC is to be
+calculated. The default is \code{G=1:9} (as in \code{Mclust}).}
 
 \item{BPPARAM}{Support for parallel processing using the
-\code{BiocParallel} infrastructure. When missing (default), the
-default registered \code{BiocParallelParam} parameters are
-used. Alternatively, one can pass a valid \code{BiocParallelParam}
-parameter instance: \code{SnowParam}, \code{MulticoreParam},
-\code{DoparParam}, \ldots see the \code{BiocParallel} package for
-details. To revert to the origianl serial implementation, use
-\code{NULL}.}
+\code{BiocParallel} infrastructure. When missing (default),
+the default registered \code{BiocParallelParam} parameters are
+used. Alternatively, one can pass a valid
+\code{BiocParallelParam} parameter instance: \code{SnowParam},
+\code{MulticoreParam}, \code{DoparParam}, \ldots see the
+\code{BiocParallel} package for details. To revert to the
+origianl serial implementation, use \code{NULL}.}
 
 \item{tmpfile}{An optional \code{character} to save a temporary
-\code{MSnSet} after each iteration. Ignored if missing. This is
-useful for long runs to track phenotypes and possibly kill the run
-when convergence is observed. If the run completes, the temporary
-file is deleted before returning the final result.}
+\code{MSnSet} after each iteration. Ignored if missing. This
+is useful for long runs to track phenotypes and possibly kill
+the run when convergence is observed. If the run completes,
+the temporary file is deleted before returning the final
+result.}
 
 \item{seed}{An optional \code{numeric} of length 1 specifing the
 random number generator seed to be used. Only relevant when
@@ -65,10 +67,24 @@ executed in serialised mode with \code{BPPARAM = NULL}. See
 
 \item{verbose}{Logical, indicating if messages are to be printed
 out during execution of the algorithm.}
+
+\item{dimred}{A \code{characater} defining which of Principal
+Component Analysis (\code{"PCA"}) or t-Distributed Stochastic
+Neighbour Embedding (\code{"t-SNE"}) should be use to reduce
+dimensions prior to running phenoDisco novelty detection.}
+
+\item{...}{Additional arguments passed to the dimensionality
+reduction method. For both PCA and t-SNE, the data is scaled
+and centred by default, and these parameters (\code{scale} and
+\code{centre} for PCA, and \code{pca_scale} and
+\code{pca_center} for t-SNE can't be set). When using t-SNE
+however, it is important to tune the perplexity and max
+iterations parameters. See the \emph{Dimensionality reduction}
+section in the pRoloc vignette for details.}
 }
 \value{
 An instance of class \code{MSnSet} containing the
-\code{phenoDisco} predictions.
+    \code{phenoDisco} predictions.
 }
 \description{
 \code{phenoDisco} is a semi-supervised iterative approach to
@@ -104,6 +120,9 @@ data(tan2009r1)
 pdres <- phenoDisco(tan2009r1, fcol = "PLSDA")
 getPredictions(pdres, fcol = "pd", scol = NULL)
 plot2D(pdres, fcol = "pd")
+
+## to pre-process the data with t-SNE instead of PCA
+pdres <- phenoDisco(tan2009r1, fcol = "PLSDA", dimred = "t-SNE")
 }
 }
 \author{
@@ -111,10 +130,10 @@ Lisa M. Breckels <lms79@cam.ac.uk>
 }
 \references{
 Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong
-ST. Using iterative cluster merging with improved gap statistics
-to perform online phenotype discovery in the context of
-high-throughput RNAi screens. BMC Bioinformatics. 2008 Jun
-5;9:264.  PubMed PMID: 18534020.
+    ST. Using iterative cluster merging with improved gap
+    statistics to perform online phenotype discovery in the
+    context of high-throughput RNAi screens. BMC
+    Bioinformatics. 2008 Jun 5;9:264.  PubMed PMID: 18534020.
 
 Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS and
 Trotter MWB.  The Effect of Organelle Discovery upon Sub-Cellular

@@ -367,8 +367,18 @@ updateobject  <- function(MSnSetToUpdate,
 ##'     \code{BPPARAM} for details.
 ##' @param verbose Logical, indicating if messages are to be printed
 ##'     out during execution of the algorithm.
+##' @param dimred A \code{characater} defining which of Principal
+##'     Component Analysis (\code{"PCA"}) or t-Distributed Stochastic
+##'     Neighbour Embedding (\code{"t-SNE"}) should be use to reduce
+##'     dimensions prior to running phenoDisco novelty detection.
 ##' @param ... Additional arguments passed to the dimensionality
-##'     reduction method.
+##'     reduction method. For both PCA and t-SNE, the data is scaled
+##'     and centred by default, and these parameters (\code{scale} and
+##'     \code{centre} for PCA, and \code{pca_scale} and
+##'     \code{pca_center} for t-SNE can't be set). When using t-SNE
+##'     however, it is important to tune the perplexity and max
+##'     iterations parameters. See the \emph{Dimensionality reduction}
+##'     section in the pRoloc vignette for details.
 ##' @return An instance of class \code{MSnSet} containing the
 ##'     \code{phenoDisco} predictions.
 ##' @author Lisa M. Breckels <lms79@@cam.ac.uk>
@@ -404,6 +414,7 @@ phenoDisco <- function(object,
                        tmpfile,
                        seed,
                        verbose = TRUE,
+                       dimred = c("PCA", "t-SNE"),
                        ...) {
     ## phenoDisco.R 
     ## Changes:
@@ -412,6 +423,7 @@ phenoDisco <- function(object,
     ##   2014-03-17 modelNames 
     ##   2014-03-17 G
     ##   2017-05-19 Compute prcomp once
+    ##   2017-05-19 Add t-SNE
 
     if (!missing(tmpfile))
         on.exit(unlink(tmpfile))
@@ -445,9 +457,22 @@ phenoDisco <- function(object,
     
     ## Note row order
     fnames <- featureNames(object)
+
+    ## Applying dimensionality reduction
+    dimred <- match.arg(dimred)
+    if (dimred == "PCA") {
+        .pca <- prcomp(exprs(object), center = TRUE, scale = TRUE, ...)$x
+    } else { ## t-SNE
+        requireNamespace("Rtsne")
+        .pca <- Rtsne(exprs(object),
+                      dims = ndims,
+                      pca_scale = TRUE, pca_center = TRUE,                      
+                      ...)$Y
+        colnames(.pca) <- paste0("Dim", 1:ndims)
+        rownames(.pca) <- featureNames(object)
+    }
     
     ## Check ndims is sensible
-    .pca <- prcomp(exprs(object), center = TRUE, scale = TRUE, ...)$x
     if (ndims > ncol(.pca)) {
         warning("ndims > number of principal components available, using maximum 
           number of components (ndims = ", ncol(.pca), ")")

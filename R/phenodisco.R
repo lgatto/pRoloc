@@ -17,90 +17,92 @@ tracking <- function(data,
                      markerCol, 
                      ndims, 
                      modelNames, 
-                     G) {
+                     G,
+                     pca) {
 
-  ## ===STAGE 1=== TRANSFORM DATA by PCA to reduce data complexity
-  k <- names(table(fData(data)[, markerCol]))
-  k <- k[which(k!="unknown")]
-  k <- sample(k) ## Sample k to avoid bias (order of classes *does* affect cluster 
-                 ## members but should not affect the ID of new phenotypes)
-  pca <- prcomp(exprs(data), scale=TRUE)$x
-  pca <- pca[, 1:ndims]
-  tmp <- lapply(k, function(z) fData(data)[, markerCol]==z)
-  L <- lapply(tmp, function(z) pca[z , ])
-  X <- pca[fData(data)[, markerCol]=="unknown", ]
-  originalL <- L
-  originalX <- X
-  names(originalL) <- names(L) <- k
+    ## ===STAGE 1=== TRANSFORM DATA by PCA to reduce data complexity
+    k <- names(table(fData(data)[, markerCol]))
+    k <- k[which(k!="unknown")]
+    k <- sample(k) ## Sample k to avoid bias (order of classes *does* affect cluster 
+    ## members but should not affect the ID of new phenotypes)
+    if (missing(pca))
+        pca <- prcomp(exprs(data), scale=TRUE)$x
+    pca <- pca[, 1:ndims]
+    tmp <- lapply(k, function(z) fData(data)[, markerCol]==z)
+    L <- lapply(tmp, function(z) pca[z , ])
+    X <- pca[fData(data)[, markerCol]=="unknown", ]
+    originalL <- L
+    originalX <- X
+    names(originalL) <- names(L) <- k
 
-  ## Define data structure
-  track <- newClassData <- vector("list", length(k))
-  for (i in 1:length(k)) {
-    if (dim(X)[1] > 0) {
-      ## ===STAGE 2=== Cluster the set L(k) U X using a GMM and -
-      ## (A)  Identify potential new members/candidates of organelle class k
-      ## (B)  Get cluster IDs for defining phenotypes at a later stage  
-      kUx <- rbind(L[[i]], X)
-      gmmCluster <- Mclust(data = kUx, G = G, modelNames = modelNames)
-      track[[i]] <- gmmCluster$classification # Get cluster number for each prot
-      Nclass <- nrow(L[[i]])
-      classifyL <- track[[i]][1:Nclass]  
-      classifyX <- track[[i]][(Nclass+1):length(track[[i]])] 
-      ## Do not include clusters where there is only 1 member! Can not call
-      ## outlier detect when cluster contains only one profile! Set min group = 5
-      clusterID <- names(which(table(classifyL) >= 5))
-      percentL <- sapply(clusterID, function(z) 
-        (sum(classifyL == z)/sum(track[[i]] == z)*100))
-      ## If one of the clusters contains ONLY labelled members amd no unassigned  
-      ## proteins we remove the cluster as outlier detection can not be called!
-      if (sum(percentL==100) > 0) {clusterID <- names(which(percentL!=100))}
-      ## An if/else statement is here for the instance when we have no
-      ## profiles to consider i.e. we get 100% labelled profiles in *ALL* clusters
-      if (length(clusterID) < 1) {
-        newClassData[[i]] <- L[[i]]; X <- X
-      } else {
-        ## Get candidates for outlier detection i.e. unlabelled profiles that are
-        ## found in the same clusters as the labelled proteins.  
-        indexCandidates <- unlist(lapply(clusterID, function(z) 
-          which(classifyX==z)))
-        candidates <- X[indexCandidates,]
-        if (!is.matrix(candidates)) { # Might be able to remove this.....
-          candidates <- matrix(candidates, ncol=ncol(L[[i]]), 
-                               dimnames = list(c(
-                                 rownames(X)[indexCandidates]),
-                                               c(colnames(X))))
-        }
-        ## ===Stage 3=== Call outlier detection on candidates
-        outliers <- gmmOutlier(L[[i]], candidates, p=alpha)
-        ## ===Stage 4=== Merge/reject candidates. Profiles classified merged
-        ## with the current class and rejected members are returned to X
-        classified <- names(which(outliers==FALSE))
-        if (length(classified) > 0) {
-          toAdd <- X[classified, ]
-          if(!is.matrix(toAdd)) {
-            toAdd <- t(as.matrix(toAdd))
-            rownames(toAdd) <- classified
-          }
-          L[[i]] <- rbind(L[[i]], toAdd)
-          torm <- sapply(classified, function(z) which(rownames(X)==z))
-          X <- X[-torm, ]
+    ## Define data structure
+    track <- newClassData <- vector("list", length(k))
+    for (i in 1:length(k)) {
+        if (dim(X)[1] > 0) {
+            ## ===STAGE 2=== Cluster the set L(k) U X using a GMM and -
+            ## (A)  Identify potential new members/candidates of organelle class k
+            ## (B)  Get cluster IDs for defining phenotypes at a later stage  
+            kUx <- rbind(L[[i]], X)
+            gmmCluster <- Mclust(data = kUx, G = G, modelNames = modelNames)
+            track[[i]] <- gmmCluster$classification # Get cluster number for each prot
+            Nclass <- nrow(L[[i]])
+            classifyL <- track[[i]][1:Nclass]  
+            classifyX <- track[[i]][(Nclass+1):length(track[[i]])] 
+            ## Do not include clusters where there is only 1 member! Can not call
+            ## outlier detect when cluster contains only one profile! Set min group = 5
+            clusterID <- names(which(table(classifyL) >= 5))
+            percentL <- sapply(clusterID, function(z) 
+            (sum(classifyL == z)/sum(track[[i]] == z)*100))
+            ## If one of the clusters contains ONLY labelled members amd no unassigned  
+            ## proteins we remove the cluster as outlier detection can not be called!
+            if (sum(percentL==100) > 0) {clusterID <- names(which(percentL!=100))}
+            ## An if/else statement is here for the instance when we have no
+            ## profiles to consider i.e. we get 100% labelled profiles in *ALL* clusters
+            if (length(clusterID) < 1) {
+                newClassData[[i]] <- L[[i]]; X <- X
+            } else {
+                ## Get candidates for outlier detection i.e. unlabelled profiles that are
+                ## found in the same clusters as the labelled proteins.  
+                indexCandidates <- unlist(lapply(clusterID, function(z) 
+                    which(classifyX==z)))
+                candidates <- X[indexCandidates,]
+                if (!is.matrix(candidates)) { # Might be able to remove this.....
+                    candidates <- matrix(candidates, ncol=ncol(L[[i]]), 
+                                         dimnames = list(c(
+                                             rownames(X)[indexCandidates]),
+                                             c(colnames(X))))
+                }
+                ## ===Stage 3=== Call outlier detection on candidates
+                outliers <- gmmOutlier(L[[i]], candidates, p=alpha)
+                ## ===Stage 4=== Merge/reject candidates. Profiles classified merged
+                ## with the current class and rejected members are returned to X
+                classified <- names(which(outliers==FALSE))
+                if (length(classified) > 0) {
+                    toAdd <- X[classified, ]
+                    if(!is.matrix(toAdd)) {
+                        toAdd <- t(as.matrix(toAdd))
+                        rownames(toAdd) <- classified
+                    }
+                    L[[i]] <- rbind(L[[i]], toAdd)
+                    torm <- sapply(classified, function(z) which(rownames(X)==z))
+                    X <- X[-torm, ]
+                } else {
+                    L[[i]] <- L[[i]]
+                }
+            }
         } else {
-          L[[i]] <- L[[i]]
-        }
-      }
-    } else {
-      gmmCluster <- Mclust(L[[i]], modelNames = c("EEE","EEV","VEV","VVV"))
-      track[[i]] <- gmmCluster$classification
-      L[[i]] <- L[[i]]
-    }    
-  }
+            gmmCluster <- Mclust(L[[i]], modelNames = c("EEE","EEV","VEV","VVV"))
+            track[[i]] <- gmmCluster$classification
+            L[[i]] <- L[[i]]
+        }    
+    }
   
-  list(trackHistory = track, 
-       X = X,
-       originalX = originalX,
-       L = L,
-       originalL = originalL,
-       k = k)
+    list(trackHistory = track, 
+         X = X,
+         originalX = originalX,
+         L = L,
+         originalL = originalL,
+         k = k)
 }
 
 ## Function to get new phenotypes
@@ -321,55 +323,59 @@ updateobject  <- function(MSnSetToUpdate,
 ##' 
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol A \code{character} indicating the organellar markers
-##' column name in feature meta-data. Default is \code{markers}.
+##'     column name in feature meta-data. Default is \code{markers}.
 ##' @param times Number of runs of tracking. Default is 100.
 ##' @param GS Group size, i.e how many proteins make a group. Default
-##' is 10 (the minimum group size is 4).
+##'     is 10 (the minimum group size is 4).
 ##' @param allIter \code{logical}, defining if predictions for all
-##' iterations should be saved. Default is \code{FALSE}.
+##'     iterations should be saved. Default is \code{FALSE}.
 ##' @param p Significance level for outlier detection. Default is
-##' 0.05.
+##'     0.05.
 ##' @param ndims Number of principal components to use as input for
-##' the disocvery analysis. Default is 2. Added in version 1.3.9.
+##'     the disocvery analysis. Default is 2. Added in version 1.3.9.
 ##' @param modelNames A vector of characters indicating the models to
-##' be fitted in the EM phase of clustering using \code{Mclust}. The
-##' help file for \code{mclustModelNames} describes the available
-##' models. Default model names are \code{c("EII", "VII", "EEI",
-##' "VEI", "EVI", "VVI", "EEE", "EEV", "VEV", "VVV")}, as returned by
-##' \code{mclust.options("emModelNames")}. Note that using all these
-##' possible models substantially increases the running time. Legacy
-##' models are \code{c("EEE","EEV","VEV","VVV")}, i.e. only
-##' ellipsoidal models.
+##'     be fitted in the EM phase of clustering using
+##'     \code{Mclust}. The help file for \code{mclustModelNames}
+##'     describes the available models. Default model names are
+##'     \code{c("EII", "VII", "EEI", "VEI", "EVI", "VVI", "EEE",
+##'     "EEV", "VEV", "VVV")}, as returned by
+##'     \code{mclust.options("emModelNames")}. Note that using all
+##'     these possible models substantially increases the running
+##'     time. Legacy models are \code{c("EEE","EEV","VEV","VVV")},
+##'     i.e. only ellipsoidal models.
 ##' @param G An integer vector specifying the numbers of mixture
-##' components (clusters) for which the BIC is to be calculated. The
-##' default is \code{G=1:9} (as in \code{Mclust}).
+##'     components (clusters) for which the BIC is to be
+##'     calculated. The default is \code{G=1:9} (as in \code{Mclust}).
 ##' @param BPPARAM Support for parallel processing using the
-##' \code{BiocParallel} infrastructure. When missing (default), the
-##' default registered \code{BiocParallelParam} parameters are
-##' used. Alternatively, one can pass a valid \code{BiocParallelParam}
-##' parameter instance: \code{SnowParam}, \code{MulticoreParam},
-##' \code{DoparParam}, \ldots see the \code{BiocParallel} package for
-##' details. To revert to the origianl serial implementation, use
-##' \code{NULL}.
+##'     \code{BiocParallel} infrastructure. When missing (default),
+##'     the default registered \code{BiocParallelParam} parameters are
+##'     used. Alternatively, one can pass a valid
+##'     \code{BiocParallelParam} parameter instance: \code{SnowParam},
+##'     \code{MulticoreParam}, \code{DoparParam}, \ldots see the
+##'     \code{BiocParallel} package for details. To revert to the
+##'     origianl serial implementation, use \code{NULL}.
 ##' @param tmpfile An optional \code{character} to save a temporary
-##' \code{MSnSet} after each iteration. Ignored if missing. This is
-##' useful for long runs to track phenotypes and possibly kill the run
-##' when convergence is observed. If the run completes, the temporary
-##' file is deleted before returning the final result.
+##'     \code{MSnSet} after each iteration. Ignored if missing. This
+##'     is useful for long runs to track phenotypes and possibly kill
+##'     the run when convergence is observed. If the run completes,
+##'     the temporary file is deleted before returning the final
+##'     result.
 ##' @param seed An optional \code{numeric} of length 1 specifing the
-##' random number generator seed to be used. Only relevant when
-##' executed in serialised mode with \code{BPPARAM = NULL}. See
-##' \code{BPPARAM} for details.
+##'     random number generator seed to be used. Only relevant when
+##'     executed in serialised mode with \code{BPPARAM = NULL}. See
+##'     \code{BPPARAM} for details.
 ##' @param verbose Logical, indicating if messages are to be printed
-##' out during execution of the algorithm.
+##'     out during execution of the algorithm.
+##' @param ... Additional arguments passed to the dimensionality
+##'     reduction method.
 ##' @return An instance of class \code{MSnSet} containing the
-##' \code{phenoDisco} predictions.
+##'     \code{phenoDisco} predictions.
 ##' @author Lisa M. Breckels <lms79@@cam.ac.uk>
 ##' @references Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong
-##' ST. Using iterative cluster merging with improved gap statistics
-##' to perform online phenotype discovery in the context of
-##' high-throughput RNAi screens. BMC Bioinformatics. 2008 Jun
-##' 5;9:264.  PubMed PMID: 18534020.
+##'     ST. Using iterative cluster merging with improved gap
+##'     statistics to perform online phenotype discovery in the
+##'     context of high-throughput RNAi screens. BMC
+##'     Bioinformatics. 2008 Jun 5;9:264.  PubMed PMID: 18534020.
 ##' 
 ##' Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS and
 ##' Trotter MWB.  The Effect of Organelle Discovery upon Sub-Cellular
@@ -396,7 +402,8 @@ phenoDisco <- function(object,
                        BPPARAM,
                        tmpfile,
                        seed,
-                       verbose = TRUE) {
+                       verbose = TRUE,
+                       ...) {
     ## phenoDisco.R 
     ## Changes:
     ##   2014-02-03 ndims  
@@ -422,8 +429,23 @@ phenoDisco <- function(object,
         warning("Removing features with missing values.")
         object <- filterNA(object, pNA = 0)
     }
+
+        ## Remove duplicated rows (i.e. identical profiles and add back later)
+    duplicatedRows <- FALSE
+    if (anyDuplicated(exprs(object))>0) {
+        duplicatedRows <- TRUE
+        foo <- duplicated(exprs(object))
+        duplicateSet <- object[foo,]
+        fData(duplicateSet)$pd <- as.character(fData(duplicateSet)[, fcol])
+        uniqueSet <- object[!foo,]
+        object <- uniqueSet
+    }
+    
+    ## Note row order
+    fnames <- featureNames(object)
+    
     ## Check ndims is sensible
-    .pca <- prcomp(exprs(object), center = TRUE, scale = TRUE)$x
+    .pca <- prcomp(exprs(object), center = TRUE, scale = TRUE, ...)$x
     if (ndims > ncol(.pca)) {
         warning("ndims > number of principal components available, using maximum 
           number of components (ndims = ", ncol(.pca), ")")
@@ -442,19 +464,6 @@ phenoDisco <- function(object,
     if (length(test) < 3)
         stop("Not enough classes specified to run phenoDisco: 
           Require a minimum of 2 labelled classes")
-    ## Remove duplicated rows (i.e. identical profiles and add back later)
-    duplicatedRows <- FALSE
-    if (anyDuplicated(exprs(object))>0) {
-        duplicatedRows <- TRUE
-        foo <- duplicated(exprs(object))
-        duplicateSet <- object[foo,]
-        fData(duplicateSet)$pd <- as.character(fData(duplicateSet)[, fcol])
-        uniqueSet <- object[!foo,]
-        object <- uniqueSet
-    }
-    
-    ## Note row order
-    fnames <- featureNames(object)
     
     ## Initial settings
     track <- phenotypes <- vector("list")
@@ -481,17 +490,19 @@ phenoDisco <- function(object,
                                                            markerCol = fcol,
                                                            ndims = ndims,
                                                            modelNames = modelNames,
-                                                           G = G)))
+                                                           G = G,
+                                                           pca = .pca)))
         } else if (inherits(BPPARAM, "BiocParallelParam")) {
             ## using user-specified BiocParallelParam
             track[[i]] <- simplify2array(bplapply(seq_len(times),
                                                   function(x) 
-                                                  tracking(data = object,
-                                                           alpha = p,
-                                                           markerCol = fcol,
-                                                           ndims = ndims,
-                                                           modelNames = modelNames,
-                                                           G = G), 
+                                                      tracking(data = object,
+                                                               alpha = p,
+                                                               markerCol = fcol,
+                                                               ndims = ndims,
+                                                               modelNames = modelNames,
+                                                               G = G,
+                                                               pca = .pca), 
                                                   BPPARAM = BPPARAM))
         } else if (is.null(BPPARAM)) {
             ## serialised version (original implementation)
@@ -502,7 +513,8 @@ phenoDisco <- function(object,
                                         alpha = p,
                                         ndims = ndims,
                                         modelNames = modelNames,
-                                        G = G))
+                                        G = G,
+                                        pca = .pca))
         } else {
             stop("Non valid BPPARAM. See ?phenoDisco for details.")
         }
@@ -569,7 +581,7 @@ phenoDisco <- function(object,
     ## Add back in any duplicated rows with localisation assigned from pd
     if (duplicatedRows) {
         ind <- apply(exprs(duplicateSet), 1, function(x) 
-                     which(apply(exprs(object), 1, function(z) all(x==z))))
+            which(apply(exprs(object), 1, function(z) all(x==z))))
 
         for (i in 1:length(ind)){
             fData(duplicateSet)$pd[i] <- as.character(fData(object)$pd[ind[i]])

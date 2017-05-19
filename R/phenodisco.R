@@ -25,9 +25,10 @@ tracking <- function(data,
     k <- k[which(k!="unknown")]
     k <- sample(k) ## Sample k to avoid bias (order of classes *does* affect cluster 
     ## members but should not affect the ID of new phenotypes)
-    if (missing(pca))
+    if (missing(pca)) {
         pca <- prcomp(exprs(data), scale=TRUE)$x
-    pca <- pca[, 1:ndims]
+        pca <- pca[, 1:ndims]
+    }
     tmp <- lapply(k, function(z) fData(data)[, markerCol]==z)
     L <- lapply(tmp, function(z) pca[z , ])
     X <- pca[fData(data)[, markerCol]=="unknown", ]
@@ -410,6 +411,7 @@ phenoDisco <- function(object,
     ##   2014-02-03 BPARAM 
     ##   2014-03-17 modelNames 
     ##   2014-03-17 G
+    ##   2017-05-19 Compute prcomp once
 
     if (!missing(tmpfile))
         on.exit(unlink(tmpfile))
@@ -455,6 +457,8 @@ phenoDisco <- function(object,
         warning("ndims <= 1, using ndims = 2")
         ndims <- 2
     }
+    ## subset data
+    .pca <- .pca[, 1:ndims]
     ## Check GMM parameters
  
     ## Check we have enough labelled data to start

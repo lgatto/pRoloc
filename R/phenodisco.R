@@ -400,6 +400,9 @@ updateobject  <- function(MSnSetToUpdate,
 ##' pdres <- phenoDisco(tan2009r1, fcol = "PLSDA")
 ##' getPredictions(pdres, fcol = "pd", scol = NULL)
 ##' plot2D(pdres, fcol = "pd")
+##'
+##' ## to pre-process the data with t-SNE instead of PCA
+##' pdres <- phenoDisco(tan2009r1, fcol = "PLSDA", dimred = "t-SNE")
 ##' }
 phenoDisco <- function(object,
                        fcol = "markers",

@@ -1,7 +1,8 @@
 # MSnbase 1.17
 
 ## Changes in version 1.17.3
-- nothing yet
+- Convert the transfer learning vignette to Rmd with html output
+  <2017-05-25 Thu>
 
 ## Changes in version 1.17.2
 - phenoDisco speed improvements and added support for t-SNE

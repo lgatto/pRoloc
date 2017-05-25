@@ -128,16 +128,16 @@ classification results and scores respectively.</p>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9650  0.9685  0.9719  0.9790  0.9860  1.0000 
-#&gt;  best mtry: 5 2   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='rfClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
-#&gt; 5 
-#&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='rfClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; mtry 
-#&gt;    5 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rfClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
+#&gt;  0.9862  0.9931  1.0000  0.9954  1.0000  1.0000 
+#&gt;  best mtry: 2   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='rfClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt; 2 
+#&gt; 2 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='rfClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; mtry 
+#&gt;    2 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rfClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            19           180            98           101            54 
+#&gt;            19           180            95           103            52 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           131            51            20            34 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           134            53            20            33 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -156,13 +156,13 @@ classification results and scores respectively.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed random forest prediction (mtry=5) Fri May 19 10:47:17 2017 
-#&gt; Added rf predictions according to global threshold = 0 Fri May 19 10:47:17 2017 
+#&gt; Performed random forest prediction (mtry=2) Thu May 25 19:11:41 2017 
+#&gt; Added rf predictions according to global threshold = 0 Thu May 25 19:11:41 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14           147            78            90            47 
+#&gt;            14           141            77            89            44 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            96            22            13           155            27 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            95            21            13           168            27 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -181,8 +181,8 @@ classification results and scores respectively.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  &#39;mrk&#39; marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed random forest prediction (mtry=5) Fri May 19 10:47:17 2017 
-#&gt; Added rf predictions according to global threshold = 0.75 Fri May 19 10:47:17 2017 
+#&gt; Performed random forest prediction (mtry=2) Thu May 25 19:11:41 2017 
+#&gt; Added rf predictions according to global threshold = 0.75 Thu May 25 19:11:41 2017 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>)</div><img src='rfClassification-20.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

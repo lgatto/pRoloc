@@ -466,11 +466,10 @@ phenoDisco <- function(object,
     if (dimred == "PCA") {
         .pca <- prcomp(exprs(object), center = TRUE, scale = TRUE, ...)$x
     } else { ## t-SNE
-        requireNamespace("Rtsne")
-        .pca <- Rtsne(exprs(object),
-                      dims = ndims,
-                      pca_scale = TRUE, pca_center = TRUE,                      
-                      ...)$Y
+        .pca <- Rtsne::Rtsne(exprs(object),
+                             dims = ndims,
+                             pca_scale = TRUE, pca_center = TRUE,
+                             ...)$Y
         colnames(.pca) <- paste0("Dim", 1:ndims)
         rownames(.pca) <- featureNames(object)
     }

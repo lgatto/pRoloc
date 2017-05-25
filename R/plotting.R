@@ -392,7 +392,6 @@ plot2D <- function(object,
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
-        requireNamespace("Rtsne")
         if (missing(methargs))
             methargs <- list(pca_scale = TRUE, pca_center = TRUE)        
         .data <- do.call(Rtsne::Rtsne,

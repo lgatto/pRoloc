@@ -1,8 +1,7 @@
 # MSnbase 1.17
 
 ## Changes in version 1.17.3
-- Convert the transfer learning and ml vignettes to Rmd with html
-  output <2017-05-25 Thu>  
+- Convert vignettes to Rmd with html output <2017-05-25 Thu>  
 - Import, rather than suggest Rtsne <2017-05-25 Thu>
 
 ## Changes in version 1.17.2

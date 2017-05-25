@@ -33,10 +33,6 @@ suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
 ``` 
 
-```{r foreword, echo=FALSE, results="asis"}
-cat(readLines("Foreword.md"), sep = "\n")
-```
-
 # Introduction {#sec:intro} 
 
 For a general practical introduction to `r Biocpkg("pRoloc")`, readers
@@ -204,7 +200,7 @@ parameter (controlling the tolerance to mis-classification) of our SVM
 classifier. The number of neighbours $k$ of the KNN classifier is
 equally important as will be discussed in this sections.
 
-Figure \ref{fig:knnboundaries} illustrates the effect of different
+The [next figure](#fig:knnboundaries) illustrates the effect of different
 choices of $k$ using organelle proteomics data from
 [@Dunkley2006] (*dunkley2006* from
 `r Biocexptpkg("pRolocdata")`). As highlighted in the squared region, we can
@@ -225,20 +221,21 @@ effect *over-fitting* has on new data.
 
 ![Classification boundaries using $k=1$ or $k=8$ on the `dunkley2006` data.](./Figures/knnboundaries.png){#fig:knnboundaries}
 
-Figure \@ref{fig:ISL1} uses 2 $\times$ 100 simulated data points
-belonging to either of the orange or blue classes. The genuine classes
-for all the points is known (solid lines) and the KNN algorithm has
-been applied using $k=1$ (left) and $k=100$ (right) respectively
-(purple dashed lines). As in our organelle proteomics examples, we
-observe that when k = 1, the decision boundaries are overly flexible
-and identify patterns in the data that do not reflect to correct
-boundaries (in such cases, the classifier is said to have low bias but
-very high variance). When a large $k$ is used, the classifier becomes
-inflexible and produces approximate and nearly linear separation
-boundaries (such a classifier is said to have low variance but high
-bias). On this simulated data set, neither $k = 1$ nor $k = 100$ give
-good predictions and have test error rates (i.e. the proportion of
-wrongly classified points ) of 0.1695 and 0.1925, respectively.
+The [figure below](#fig:ISL1) uses 2 $\times$ 100 simulated data
+points belonging to either of the orange or blue classes. The genuine
+classes for all the points is known (solid lines) and the KNN
+algorithm has been applied using $k=1$ (left) and $k=100$ (right)
+respectively (purple dashed lines). As in our organelle proteomics
+examples, we observe that when k = 1, the decision boundaries are
+overly flexible and identify patterns in the data that do not reflect
+to correct boundaries (in such cases, the classifier is said to have
+low bias but very high variance). When a large $k$ is used, the
+classifier becomes inflexible and produces approximate and nearly
+linear separation boundaries (such a classifier is said to have low
+variance but high bias). On this simulated data set, neither $k = 1$
+nor $k = 100$ give good predictions and have test error rates
+(i.e. the proportion of wrongly classified points ) of 0.1695 and
+0.1925, respectively.
 
 	
 ![The KNN classifier using $k = 1$ (left, solid classification boundaries) and $k = 100$ (right, solid classification boundaries) compared the Bayes decision boundaries (see original material for details). Reproduced with permission from [@ISLwR].](./Figures/ISL-2_16.png){#fig:ISL1}
@@ -277,9 +274,9 @@ by cross validation, where the initial marker proteins are separated
 into training data used to build classification models and independent
 testing data used to assess the model on new data.
 
-We recommend the book \textit{An Introduction to Statistical
-  Learning} (<http://www-bcf.usc.edu/~gareth/ISL/>) by
-[@ISLwR] for a more detailed introduction of machine learning.
+We recommend the book *An Introduction to Statistical Learning*
+(<http://www-bcf.usc.edu/~gareth/ISL/>) by [@ISLwR] for a more
+detailed introduction of machine learning.
 
 
 ## Default analysis scheme
@@ -321,11 +318,11 @@ The results of the optimisation procedure are stored in an
 *GenRegRes* object that can be inspected, plotted and best
 parameter pairs can be extracted.
 
-For a given algorithm `alg`, the corresponding parameter
-optimisation function is names *algOptimisation* or,
-equivalently, *algOptimization*. See table \ref{tab:algo}
-for details. A description of each of the respective model parameters
-is provided in the optimisation function manuals, available through
+For a given algorithm `alg`, the corresponding parameter optimisation
+function is names *algOptimisation* or, equivalently,
+*algOptimization*. See table \@ref(tab:mltab) for details. A
+description of each of the respective model parameters is provided in
+the optimisation function manuals, available through
 *?algOptimisation*.
 
 ```{r svmParamOptim, cache = TRUE, warning = FALSE, message = FALSE}
@@ -355,7 +352,6 @@ wres <- svmClassification(dunkley2006, wpar, class.weights = w)
 
 
 ```{r getmlfunction, echo=FALSE}
-
 ## Add chi^2.
 tab <- data.frame('parameter optimisation' =
                       grep("Optimisation",
@@ -385,6 +381,7 @@ colnames(tab)[1] <- c("parameter optimisation")
 ```{r comptab, echo=FALSE}
 kable(tab)
 ``` 
+Table:(\#tab:mltab) Machine learning methods in *pRoloc*.
 
 # Comparison of different classifiers
 
@@ -407,7 +404,7 @@ similar performances on most of our test datasets.
 # Semi-supervised machine learning {#sec:ssml}
 
 The *phenoDisco* algorithm is a semi-supervised novelty detection
-method by [@Breckels2013] (figure \ref{fig:pd}). It uses the
+method by [@Breckels2013] ([figure below](#fig:pd)). It uses the
 labelled (i.e. markers, noted $D_L$) and unlabelled (i.e. proteins of
 unknown localisation, noted $D_U$) sets of the input data. The
 algorithm is repeated $N$ times (the `times` argument in the

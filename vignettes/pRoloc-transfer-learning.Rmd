@@ -133,8 +133,7 @@ present a first menu with `r nrow(pRoloc:::getMartTab())`. Once the
 species has been selected, a set of possible identifier types is
 displayed.
 
-![Selecting species (left) and feature type (right) to create an `AnnotationParams` instance for the human `andy2011` data.\label{fig:apgui}](./Figures/ap12.png)
-
+![Selecting species (left) and feature type (right) to create an `AnnotationParams` instance for the human `andy2011` data.](./Figures/ap12.png){#fig:apgui}
 
 It is also possible to pass patterns\footnote{These patterns must
 match uniquely or an error will be thrown.} to match against the

@@ -12,7 +12,7 @@ vignette: >
 ```{r env, echo=FALSE}
 library("BiocStyle")
 ```
-# Foreword
+# Foreword {-}
 
 This document walks users through a typical pipeline for adding
 annotation information to spatial proteomics data. For a general

@@ -1,5 +1,9 @@
 # MSnbase 1.17
 
+## Changes in version 1.17.3
+- Convert vignettes to Rmd with html output <2017-05-25 Thu>  
+- Import, rather than suggest Rtsne <2017-05-25 Thu>
+
 ## Changes in version 1.17.2
 - phenoDisco speed improvements and added support for t-SNE
   <2017-05-19 Fri>

@@ -6,9 +6,8 @@ package: pRoloc
 abstract: >
   This vignette provides a general background about machine learning
   (ML) methods and concepts, and their application to the analysis of
-  spatial proteomics data in the `r Biocpkg("pRoloc")` package. Please
-  see the `pRoloc-tutorial` vignette for details about the package
-  itself.
+  spatial proteomics data in the *pRoloc* package. See the
+  `pRoloc-tutorial` vignette for details about the package itself.  
 output:
   BiocStyle::html_document2:
     toc_float: true

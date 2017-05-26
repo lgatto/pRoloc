@@ -358,8 +358,8 @@ ppi <- MSnSet(ppim, fData = fData(andyppi),
 ppi <- filterZeroCols(ppi)
 ```
 
-We now have two `MSnSet` objects containing respectively `r
-nrow(andyppi)` primary experimental protein profiles along a
+We now have two `MSnSet` objects containing respectively 
+`r nrow(andyppi)` primary experimental protein profiles along a
 sub-cellular density gradient (`andyppi`) and `r nrow(ppi)` auxiliary
 interaction profiles (`ppi`).
 

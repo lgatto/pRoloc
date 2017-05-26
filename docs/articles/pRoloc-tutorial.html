@@ -688,7 +688,7 @@ svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmC
 <span class="kw">processingData</span>(svmres)</code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 11:59:28 2017 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 12:04:02 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -782,8 +782,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 11:59:28 2017 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Fri May 26 11:59:29 2017 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 12:04:02 2017 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Fri May 26 12:04:02 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptsze &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>

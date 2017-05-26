@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Fri May 26 11:58:50 2017</code></pre>
+##  Created on Fri May 26 12:03:28 2017</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -157,7 +157,7 @@ andygoset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Fri May 26 11:58:55 2017] 
+## Constructed GO set using cellular_component namespace [Fri May 26 12:03:33 2017] 
 ##  MSnbase version: 2.3.2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##        GO:0016021 GO:0016020 GO:0005789 GO:0005783
@@ -331,7 +331,7 @@ ppi &lt;-<span class="st"> </span><span class="kw">MSnSet</span>(ppim, <span cla
               <span class="dt">pData =</span> <span class="kw">data.frame</span>(<span class="dt">row.names =</span> <span class="kw">colnames</span>(ppim)))
 ppi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filterZeroCols.html">filterZeroCols</a></span>(ppi)</code></pre></div>
 <pre><code>## Removing 178 columns with only 0s.</code></pre>
-<p>We now have two <code>MSnSet</code> objects containing respectively <code>r nrow(andyppi)</code> primary experimental protein profiles along a sub-cellular density gradient (<code>andyppi</code>) and 520 auxiliary interaction profiles (<code>ppi</code>).</p>
+<p>We now have two <code>MSnSet</code> objects containing respectively 520 primary experimental protein profiles along a sub-cellular density gradient (<code>andyppi</code>) and 520 auxiliary interaction profiles (<code>ppi</code>).</p>
 </div>
 </div>
 <div id="sec:svmtl" class="section level1">

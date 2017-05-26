@@ -111,3 +111,7 @@ pre img {
   background-color: #fff;
   display: block;
 }
+
+img {
+  max-width: 100%;
+}

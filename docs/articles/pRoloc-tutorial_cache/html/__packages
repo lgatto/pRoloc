@@ -1,7 +1,6 @@
 base
 pkgdown
 BiocStyle
-knitr
 BiocGenerics
 Biobase
 Rcpp
@@ -18,4 +17,9 @@ cluster
 MLInterfaces
 pRoloc
 pRolocdata
+GO.db
+knitr
+dplyr
 class
+biomaRt
+hpar

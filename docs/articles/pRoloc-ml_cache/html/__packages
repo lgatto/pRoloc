@@ -6,6 +6,7 @@ grDevices
 graphics
 stats
 pkgdown
+BiocStyle
 parallel
 BiocGenerics
 Biobase
@@ -25,7 +26,4 @@ MLInterfaces
 pRoloc
 pRolocdata
 GO.db
-rgl
-lattice
-BiocStyle
 knitr

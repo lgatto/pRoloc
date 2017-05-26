@@ -420,8 +420,8 @@ itraqnorm &lt;-<span class="st"> </span><span class="kw">normalise</span>(itraqd
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Fri May 26 08:41:39 2017 
-## Normalised (sum): Fri May 26 08:41:39 2017 
+## iTRAQ4 quantification by trapezoidation: Fri May 26 11:59:21 2017 
+## Normalised (sum): Fri May 26 11:59:21 2017 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -688,7 +688,7 @@ svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmC
 <span class="kw">processingData</span>(svmres)</code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 09:38:37 2017 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 11:59:28 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -696,9 +696,9 @@ svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmC
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>)</code></pre></div>
 <pre><code>## ans
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##             7           241            39             8           219 
+##             7           239            36             8           221 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            21             4           282            15            20 
+##            21             4           285            15            20 
 ##  Ribosome 60S 
 ##            32</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">fData</span>(p1)<span class="op">$</span>svm.pred
@@ -706,7 +706,7 @@ minprob &lt;-<span class="st"> </span><span class="kw">median</span>(<span class
 p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>, <span class="dt">t =</span> minprob)</code></pre></div>
 <pre><code>## ans
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##             7           174            21             8           102 
+##             7           172            21             8           104 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
 ##            21             4           148            15            20 
 ##  Ribosome 60S       unknown 
@@ -716,10 +716,10 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredi
 <pre><code>##                p2
 ## p1              Cytoskeleton  ER Golgi Lysosome mitochondrion Nucleus
 ##   Cytoskeleton             7   0     0        0             0       0
-##   ER                       0 174     0        0             0       0
+##   ER                       0 172     0        0             0       0
 ##   Golgi                    0   0    21        0             0       0
 ##   Lysosome                 0   0     0        8             0       0
-##   mitochondrion            0   0     0        0           102       0
+##   mitochondrion            0   0     0        0           104       0
 ##   Nucleus                  0   0     0        0             0      21
 ##   Peroxisome               0   0     0        0             0       0
 ##   PM                       0   0     0        0             0       0
@@ -737,12 +737,12 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredi
 ## p1              unknown
 ##   Cytoskeleton        0
 ##   ER                 67
-##   Golgi              18
+##   Golgi              15
 ##   Lysosome            0
 ##   mitochondrion     117
 ##   Nucleus             0
 ##   Peroxisome          0
-##   PM                134
+##   PM                137
 ##  [ reached getOption("max.print") -- omitted 3 rows ]</code></pre>
 <p>To graphically illustrate the organelle-specific score distributions, we can use a boxplot and plot the scores for the respective predicted svm classes, as shown on figure @ref(fig:predscores). As can be seen, different organelles are characterised by different score distributions. Using a unique threshold (<code>minprob</code> with value 0.78 above) results in accepting 72% of the initial ER predictions and only 47% of the mitochondrion predictions. The <em>getPredictions</em> function also accepts organelle-specific score thresholds. Below, we calculate organelle-specific median scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(svm.scores <span class="op">~</span><span class="st"> </span>svm, <span class="dt">data =</span> <span class="kw">fData</span>(svmres),
@@ -755,16 +755,16 @@ Organelle-specific SVM score distributions.
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/orgQuants.html">orgQuants</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>, <span class="dt">t =</span> .<span class="dv">5</span>) </code></pre></div>
 <pre><code>##            ER         Golgi mitochondrion            PM 
-##     0.8374491     0.6318175     0.7483629     0.7725315</code></pre>
+##     0.8392528     0.6296082     0.7502513     0.7648511</code></pre>
 <p>Using these scores equates to choosing the 50% predictions with highest scores for organelle.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>, <span class="dt">t =</span> ts)</code></pre></div>
 <pre><code>## ans
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##             7           135            26             8           124 
+##             7           134            25             8           125 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            21             4           158            15            20 
+##            21             4           160            15            20 
 ##  Ribosome 60S       unknown 
-##            32           338</code></pre>
+##            32           337</code></pre>
 <pre><code>## MSnSet (storageMode: lockedEnvironment)
 ## assayData: 888 features, 4 samples 
 ##   element names: exprs 
@@ -782,8 +782,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 09:38:37 2017 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Fri May 26 09:38:37 2017 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 26 11:59:28 2017 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Fri May 26 11:59:29 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptsze &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
@@ -912,13 +912,14 @@ Classification results. The results of the second round of classification, using
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] class_7.3-14         knitr_1.16           GO.db_3.4.1         
-##  [4] pRolocdata_1.15.0    pRoloc_1.17.2        MLInterfaces_1.57.0 
-##  [7] cluster_2.0.6        annotate_1.55.0      XML_3.98-1.7        
-## [10] AnnotationDbi_1.39.0 IRanges_2.11.3       S4Vectors_0.15.2    
-## [13] MSnbase_2.3.2        ProtGenerics_1.9.0   BiocParallel_1.11.1 
-## [16] mzR_2.11.0           Rcpp_0.12.11         Biobase_2.37.2      
-## [19] BiocGenerics_0.23.0  BiocStyle_2.5.0      pkgdown_0.1.0.9000  
+##  [1] hpar_1.19.0          biomaRt_2.33.1       class_7.3-14        
+##  [4] dplyr_0.5.0          knitr_1.16           GO.db_3.4.1         
+##  [7] pRolocdata_1.15.0    pRoloc_1.17.3        MLInterfaces_1.57.0 
+## [10] cluster_2.0.6        annotate_1.55.0      XML_3.98-1.7        
+## [13] AnnotationDbi_1.39.0 IRanges_2.11.3       S4Vectors_0.15.2    
+## [16] MSnbase_2.3.2        ProtGenerics_1.9.0   BiocParallel_1.11.1 
+## [19] mzR_2.11.0           Rcpp_0.12.11         Biobase_2.37.2      
+## [22] BiocGenerics_0.23.0  BiocStyle_2.5.0      pkgdown_0.1.0.9000  
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] backports_1.1.0       plyr_1.8.4            lazyeval_0.2.0       
@@ -928,34 +929,34 @@ Classification results. The results of the second round of classification, using
 ##  [13] magrittr_1.5          memoise_1.1.0         doParallel_1.0.10    
 ##  [16] sfsmisc_1.1-0         limma_3.33.2          rda_1.0.2-2          
 ##  [19] lpSolve_5.6.13        prettyunits_1.0.2     colorspace_1.3-2     
-##  [22] dplyr_0.5.0           crayon_1.3.2          RCurl_1.95-4.8       
-##  [25] jsonlite_1.4          hexbin_1.27.1         roxygen2_6.0.1       
-##  [28] genefilter_1.59.0     lme4_1.1-13           impute_1.51.0        
-##  [31] survival_2.41-3       iterators_1.0.8       gtable_0.2.0         
-##  [34] zlibbioc_1.23.0       MatrixModels_0.4-1    car_2.1-4            
-##  [37] kernlab_0.9-25        prabclus_2.2-6        DEoptimR_1.0-8       
-##  [40] SparseM_1.77          scales_0.4.1          vsn_3.45.0           
-##  [43] mvtnorm_1.0-6         DBI_0.6-1             viridisLite_0.2.0    
-##  [46] xtable_1.8-2          progress_1.1.2        proxy_0.4-17         
-##  [49] mclust_5.3            preprocessCore_1.39.0 sampling_2.8         
-##  [52] htmlwidgets_0.8       threejs_0.2.2         FNN_1.1              
-##  [55] RColorBrewer_1.1-2    fpc_2.1-10            modeltools_0.2-21    
-##  [58] flexmix_2.3-14        nnet_7.3-12           caret_6.0-76         
-##  [61] rlang_0.1.1           reshape2_1.4.2        munsell_0.4.3        
-##  [64] mlbench_2.1-1         tools_3.4.0           msdata_0.17.0        
-##  [67] RSQLite_1.1-2         pls_2.6-0             evaluate_0.10        
-##  [70] stringr_1.2.0         mzID_1.15.0           yaml_2.1.14          
-##  [73] ModelMetrics_1.1.0    robustbase_0.92-7     randomForest_4.6-12  
-##  [76] purrr_0.2.2.2         dendextend_1.5.2      nlme_3.1-131         
-##  [79] whisker_0.3-2         mime_0.5              quantreg_5.33        
-##  [82] xml2_1.1.1            biomaRt_2.33.1        compiler_3.4.0       
-##  [85] pbkrtest_0.4-7        e1071_1.6-8           affyio_1.47.0        
-##  [88] tibble_1.3.1          stringi_1.1.5         highr_0.6            
-##  [91] desc_1.1.0            lattice_0.20-35       trimcluster_0.1-2    
-##  [94] Matrix_1.2-10         commonmark_1.2        nloptr_1.0.4         
-##  [97] gbm_2.1.3             MALDIquant_1.16.2     bitops_1.0-6         
-## [100] httpuv_1.3.3         
-##  [ reached getOption("max.print") -- omitted 20 entries ]</code></pre>
+##  [22] crayon_1.3.2          RCurl_1.95-4.8        jsonlite_1.4         
+##  [25] hexbin_1.27.1         roxygen2_6.0.1        genefilter_1.59.0    
+##  [28] lme4_1.1-13           impute_1.51.0         survival_2.41-3      
+##  [31] iterators_1.0.8       gtable_0.2.0          zlibbioc_1.23.0      
+##  [34] MatrixModels_0.4-1    car_2.1-4             kernlab_0.9-25       
+##  [37] prabclus_2.2-6        DEoptimR_1.0-8        SparseM_1.77         
+##  [40] scales_0.4.1          vsn_3.45.0            mvtnorm_1.0-6        
+##  [43] DBI_0.6-1             viridisLite_0.2.0     xtable_1.8-2         
+##  [46] progress_1.1.2        proxy_0.4-17          mclust_5.3           
+##  [49] preprocessCore_1.39.0 sampling_2.8          htmlwidgets_0.8      
+##  [52] threejs_0.2.2         FNN_1.1               RColorBrewer_1.1-2   
+##  [55] fpc_2.1-10            modeltools_0.2-21     flexmix_2.3-14       
+##  [58] nnet_7.3-12           caret_6.0-76          rlang_0.1.1          
+##  [61] reshape2_1.4.2        munsell_0.4.3         mlbench_2.1-1        
+##  [64] tools_3.4.0           msdata_0.17.0         RSQLite_1.1-2        
+##  [67] pls_2.6-0             evaluate_0.10         stringr_1.2.0        
+##  [70] mzID_1.15.0           yaml_2.1.14           ModelMetrics_1.1.0   
+##  [73] robustbase_0.92-7     randomForest_4.6-12   purrr_0.2.2.2        
+##  [76] dendextend_1.5.2      nlme_3.1-131          quantreg_5.33        
+##  [79] whisker_0.3-2         mime_0.5              xml2_1.1.1           
+##  [82] compiler_3.4.0        pbkrtest_0.4-7        e1071_1.6-8          
+##  [85] affyio_1.47.0         tibble_1.3.1          stringi_1.1.5        
+##  [88] highr_0.6             desc_1.1.0            lattice_0.20-35      
+##  [91] trimcluster_0.1-2     Matrix_1.2-10         commonmark_1.2       
+##  [94] nloptr_1.0.4          gbm_2.1.3             MALDIquant_1.16.2    
+##  [97] bitops_1.0-6          httpuv_1.3.3          R6_2.2.1             
+## [100] pcaMethods_1.69.0    
+##  [ reached getOption("max.print") -- omitted 19 entries ]</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

@@ -206,11 +206,12 @@ thus traceable) annotations.
 The feature names of our LOPIT experiment are UniProt identifiers,
 while the Human Protein Atlas uses Ensembl gene identifiers. This
 first code chunk matches both identifier types using the Ensembl
-Biomart server\footnote{This section has been updated on the 30th
-  November to reflect changes in Biomart.}.
+Biomart server. In this section, we copy the experimental data to
+`andyhpa`.
 
 ```{r hparprep, eval=TRUE}
-fvarLabels(andy2011)[1] <- "accession" ## for left_join matching
+andyhpa <- andy2011
+fvarLabels(andyhpa)[1] <- "accession" ## for left_join matching
 ## convert protein accession numbers to ensembl gene identifiers
 
 library("biomaRt")
@@ -220,7 +221,7 @@ filter <- "uniprotswissprot"
 attrib <- c("uniprot_gn", "uniprotswissprot", "ensembl_gene_id")
 bm <- getBM(attributes = attrib,
             filters = filter,
-            values = fData(andy2011)[, "accession"],
+            values = fData(andyhpa)[, "accession"],
             mart = mart)
 head(bm)
 
@@ -239,13 +240,13 @@ hpa <- hpa[!duplicated(hpa$uniprotswissprot), ]
 
 ## match HPA/LOPIT
 colnames(hpa)[7] <- "accession"
-fd <- left_join(fData(andy2011), hpa)
-rownames(fd) <- featureNames(andy2011)
-fData(andy2011) <- fd
-stopifnot(validObject(andy2011))
+fd <- left_join(fData(andyhpa), hpa)
+rownames(fd) <- featureNames(andyhpa)
+fData(andyhpa) <- fd
+stopifnot(validObject(andyhpa))
 
 ## Let's get rid of features without any hpa data
-lopit <- andy2011[!is.na(fData(andy2011)$Main.location), ]
+lopit <- andyhpa[!is.na(fData(andyhpa)$Main.location), ]
 ```
 
 Below, we deparse the multiple ';'-delimited locations contained in
@@ -341,24 +342,25 @@ ppim[1:5, 1:8]
 We now have a contingency matrix reflecting a total of 
 `r sum(ppim != 0)` interactions between `r nrow(ppim)`
 proteins. Below, we only keep proteins that are also available in our
-spatial proteomics data, subset the PPI and LOPIT data, create the
-appropriate `MSnSet` object, and filter out proteins without any
-interaction scores.
+spatial proteomics data (renamed to `andyppi`), subset the PPI and
+LOPIT data, create the appropriate `MSnSet` object, and filter out
+proteins without any interaction scores.
 
 ```{r ppiset2}
-featureNames(andy2011) <- sub("_HUMAN", "", fData(andy2011)$UniProtKB.entry.name)
-cmn <- intersect(featureNames(andy2011), rownames(ppim))
+andyppi <- andy2011
+featureNames(andyppi) <- sub("_HUMAN", "", fData(andyppi)$UniProtKB.entry.name)
+cmn <- intersect(featureNames(andyppi), rownames(ppim))
 ppim <- ppim[cmn, ]
-andy2011 <- andy2011[cmn, ]
+andyppi <- andyppi[cmn, ]
 
-ppi <- MSnSet(ppim, fData = fData(andy2011),
+ppi <- MSnSet(ppim, fData = fData(andyppi),
               pData = data.frame(row.names = colnames(ppim)))
 ppi <- filterZeroCols(ppi)
 ```
 
-We now have two `MSnSet` objects containing respectively 
-`r nrow(andy2011)` primary experimental protein profiles along a
-sub-cellular density gradient (`andy2001`) and `r nrow(ppi)` auxiliary
+We now have two `MSnSet` objects containing respectively `r
+nrow(andyppi)` primary experimental protein profiles along a
+sub-cellular density gradient (`andyppi`) and `r nrow(ppi)` auxiliary
 interaction profiles (`ppi`).
 
 # Support vector machine transfer learning {#sec:svmtl}

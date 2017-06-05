@@ -1,7 +1,9 @@
 # MSnbase 1.17
 
 ## Changes in version 1.17.4
-- Nothing yet
+
+- Added new (private) dimred function that computes dimensionality
+  reduction <2017-06-05 Mon>
 
 ## Changes in version 1.17.3
 - Convert vignettes to Rmd with html output <2017-05-25 Thu>  

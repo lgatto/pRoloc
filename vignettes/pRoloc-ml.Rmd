@@ -9,7 +9,7 @@ abstract: >
   spatial proteomics data in the *pRoloc* package. See the
   `pRoloc-tutorial` vignette for details about the package itself.  
 output:
-  BiocStyle::html_document2:
+  BiocStyle::html_document:
     toc_float: true
 bibliography: pRoloc.bib	
 vignette: >

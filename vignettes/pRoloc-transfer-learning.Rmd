@@ -15,7 +15,7 @@ abstract: >
   improve the sub-cellular assignment given an optimal combination of
   these data sources.
 output:
-  BiocStyle::html_document2:
+  BiocStyle::html_document:
     toc_float: true
 bibliography: pRoloc.bib	
 vignette: >

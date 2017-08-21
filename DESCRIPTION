@@ -62,7 +62,7 @@ Suggests:
     synapter,
     xtable,
     rgl,
-    BiocStyle,
+    BiocStyle (>= 2.5.19),
     hpar (>= 1.15.3),
     dplyr,
     GO.db,

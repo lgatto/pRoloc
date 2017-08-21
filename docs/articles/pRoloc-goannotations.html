@@ -58,14 +58,30 @@
   <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Annotating spatial proteomics data</h1>
-                        <h4 class="author">Lisa Breckels and Laurent Gatto</h4>
-            
-          </div>
+                        <h4 class="author">Lisa M. Breckels</h4>
+            <address class="author_afil">
+      Computational Proteomics Unit, Cambridge, UK<br><h4 class="author">Laurent Gatto</h4>
+            <address class="author_afil">
+      Computational Proteomics Unit, Cambridge, UK<br>
+</address>
+</address>
+</div>
 
     
     
 <div class="contents">
-<div id="foreword" class="section level1 unnumbered">
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelector("h1").className = "title";
+});
+</script><script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+  var links = document.links;  
+  for (var i = 0, linksLength = links.length; i < linksLength; i++)
+    if (links[i].hostname != window.location.hostname)
+      links[i].target = '_blank';
+});
+</script><div id="foreword" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#foreword" class="anchor"></a>Foreword</h1>
 <p>This document walks users through a typical pipeline for adding annotation information to spatial proteomics data. For a general practical introduction to pRoloc and spatial proteomics data analysis, readers are referred to the tutorial, available using <code>vignette("pRoloc-tutorial", package = "pRoloc")</code>.</p>
@@ -152,18 +168,18 @@ dd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustDis
 dd[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>## Object of class "ClustDist"
 ## fcol =  GOAnnotations 
-##  term =  GO:0005856 
-##  id =  cytoskeleton 
-##  nrow =  27 
+##  term =  GO:0005886 
+##  id =  plasma membrane 
+##  nrow =  106 
 ## k's tested: 1 2 3 
-##   Size:  27 
-##   Size:  19 
-##   Size:  13 
+##   Size:  106 
+##   Size:  74, 32 
+##   Size:  13, 27, 66 
 ## Clusters info:
-##       ks.mean    mean ks.norm     norm
-## k = 1       1  0.4288       1  0.14292
-## k = 2       1  0.1602       1  0.06003
-## k = 3       1 *0.1187       1 *0.05050</code></pre>
+##       ks.mean    mean ks.norm    norm
+## k = 1       1  0.5086       1  0.1075
+## k = 2       2  0.3688       2 *0.1033
+## k = 3       3 *0.3385       3  0.1207</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plot normalised distances 
 <span class="kw">plot</span>(dd, <span class="dt">p =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre></div>

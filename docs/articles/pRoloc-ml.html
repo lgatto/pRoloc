@@ -215,7 +215,7 @@ tan2009r1</code></pre></div>
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=1 cost=8) Fri May 26 17:59:35 2017 
+## Performed svm prediction (sigma=1 cost=8) Mon Aug 21 14:06:42 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 </div>
 <div id="customising-model-parameters" class="section level2">
@@ -330,7 +330,7 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2017-02-25 r72256)
+<pre><code>## R version 3.4.0 Patched (2017-06-12 r72786)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -351,52 +351,54 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] pRolocdata_1.15.0    pRoloc_1.17.3        MLInterfaces_1.57.0 
-##  [4] cluster_2.0.6        annotate_1.55.0      XML_3.98-1.7        
-##  [7] AnnotationDbi_1.39.0 IRanges_2.11.3       S4Vectors_0.15.2    
-## [10] MSnbase_2.3.2        ProtGenerics_1.9.0   BiocParallel_1.11.1 
-## [13] mzR_2.11.0           Rcpp_0.12.11         Biobase_2.37.2      
-## [16] BiocGenerics_0.23.0  knitr_1.16           BiocStyle_2.5.0     
+##  [1] pRolocdata_1.15.0    pRoloc_1.17.4        MLInterfaces_1.57.0 
+##  [4] cluster_2.0.6        annotate_1.55.0      XML_3.98-1.9        
+##  [7] AnnotationDbi_1.39.2 IRanges_2.11.12      S4Vectors_0.15.5    
+## [10] MSnbase_2.3.10       ProtGenerics_1.9.0   BiocParallel_1.11.6 
+## [13] mzR_2.11.7           Rcpp_0.12.12         Biobase_2.37.2      
+## [16] BiocGenerics_0.23.0  knitr_1.17           BiocStyle_2.5.19    
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] minqa_1.2.4           Rtsne_0.13            colorspace_1.3-2     
-##   [4] hwriter_1.3.2         class_7.3-14          modeltools_0.2-21    
-##   [7] mclust_5.3            rprojroot_1.2         pls_2.6-0            
-##  [10] base64enc_0.1-3       proxy_0.4-17          hexbin_1.27.1        
-##  [13] MatrixModels_0.4-1    affyio_1.47.0         flexmix_2.3-14       
-##  [16] mvtnorm_1.0-6         codetools_0.2-15      splines_3.4.0        
-##  [19] doParallel_1.0.10     impute_1.51.0         robustbase_0.92-7    
-##  [22] jsonlite_1.4          nloptr_1.0.4          pbkrtest_0.4-7       
-##  [25] caret_6.0-76          rda_1.0.2-2           kernlab_0.9-25       
-##  [28] vsn_3.45.0            sfsmisc_1.1-0         shiny_1.0.3          
-##  [31] compiler_3.4.0        sampling_2.8          backports_1.1.0      
-##  [34] assertthat_0.2.0      Matrix_1.2-10         lazyeval_0.2.0       
-##  [37] limma_3.33.2          quantreg_5.33         htmltools_0.3.6      
-##  [40] prettyunits_1.0.2     tools_3.4.0           ggvis_0.4.3          
-##  [43] gtable_0.2.0          affy_1.55.0           reshape2_1.4.2       
-##  [46] dplyr_0.5.0           MALDIquant_1.16.2     trimcluster_0.1-2    
-##  [49] gdata_2.17.0          preprocessCore_1.39.0 nlme_3.1-131         
-##  [52] iterators_1.0.8       fpc_2.1-10            stringr_1.2.0        
-##  [55] lme4_1.1-13           lpSolve_5.6.13        mime_0.5             
-##  [58] gtools_3.5.0          dendextend_1.5.2      DEoptimR_1.0-8       
-##  [61] zlibbioc_1.23.0       MASS_7.3-47           scales_0.4.1         
-##  [64] BiocInstaller_1.27.2  pcaMethods_1.69.0     SparseM_1.77         
-##  [67] RColorBrewer_1.1-2    yaml_2.1.14           memoise_1.1.0        
-##  [70] gridExtra_2.2.1       ggplot2_2.2.1         biomaRt_2.33.1       
-##  [73] rpart_4.1-11          stringi_1.1.5         RSQLite_1.1-2        
-##  [76] highr_0.6             genefilter_1.59.0     randomForest_4.6-12  
-##  [79] foreach_1.4.3         e1071_1.6-8           rlang_0.1.1.9000     
-##  [82] prabclus_2.2-6        bitops_1.0-6          mzID_1.15.0          
-##  [85] evaluate_0.10         lattice_0.20-35       htmlwidgets_0.8      
-##  [88] gbm_2.1.3             plyr_1.8.4            magrittr_1.5         
-##  [91] R6_2.2.1              DBI_0.6-1             mgcv_1.8-17          
-##  [94] whisker_0.3-2         survival_2.41-3       RCurl_1.95-4.8       
-##  [97] nnet_7.3-12           tibble_1.3.1          car_2.1-4            
-## [100] mlbench_2.1-1         rmarkdown_1.5         viridis_0.4.0        
-## [103] progress_1.1.2        grid_3.4.0            FNN_1.1              
-## [106] ModelMetrics_1.1.0    threejs_0.2.2         digest_0.6.12        
-## [109] diptest_0.75-7        xtable_1.8-2          httpuv_1.3.3         
-## [112] munsell_0.4.3         viridisLite_0.2.0</code></pre>
+##   [1] backports_1.1.0       plyr_1.8.4            lazyeval_0.2.0       
+##   [4] splines_3.4.0         ggvis_0.4.3           ggplot2_2.2.1        
+##   [7] digest_0.6.12         foreach_1.4.3         BiocInstaller_1.27.3 
+##  [10] htmltools_0.3.6       viridis_0.4.0         gdata_2.18.0         
+##  [13] magrittr_1.5          memoise_1.1.0         doParallel_1.0.10    
+##  [16] sfsmisc_1.1-1         limma_3.33.7          rda_1.0.2-2          
+##  [19] lpSolve_5.6.13        prettyunits_1.0.2     colorspace_1.3-2     
+##  [22] blob_1.1.0            dplyr_0.7.2           RCurl_1.95-4.8       
+##  [25] jsonlite_1.5          hexbin_1.27.1         genefilter_1.59.0    
+##  [28] lme4_1.1-13           bindr_0.1             impute_1.51.0        
+##  [31] survival_2.41-3       iterators_1.0.8       glue_1.1.1           
+##  [34] gtable_0.2.0          zlibbioc_1.23.0       MatrixModels_0.4-1   
+##  [37] car_2.1-5             kernlab_0.9-25        prabclus_2.2-6       
+##  [40] DEoptimR_1.0-8        SparseM_1.77          scales_0.4.1         
+##  [43] vsn_3.45.2            mvtnorm_1.0-6         DBI_0.7              
+##  [46] viridisLite_0.2.0     xtable_1.8-2          progress_1.1.2       
+##  [49] bit_1.1-12            proxy_0.4-17          mclust_5.3           
+##  [52] preprocessCore_1.39.0 htmlwidgets_0.9       sampling_2.8         
+##  [55] threejs_0.2.2         FNN_1.1               RColorBrewer_1.1-2   
+##  [58] fpc_2.1-10            modeltools_0.2-21     pkgconfig_2.0.1      
+##  [61] flexmix_2.3-14        nnet_7.3-12           caret_6.0-76         
+##  [64] rlang_0.1.2           reshape2_1.4.2        munsell_0.4.3        
+##  [67] mlbench_2.1-1         tools_3.4.0           RSQLite_2.0          
+##  [70] pls_2.6-0             evaluate_0.10.1       stringr_1.2.0        
+##  [73] mzID_1.15.0           yaml_2.1.14           ModelMetrics_1.1.0   
+##  [76] bit64_0.9-7           robustbase_0.92-7     randomForest_4.6-12  
+##  [79] dendextend_1.5.2      bindrcpp_0.2          nlme_3.1-131         
+##  [82] whisker_0.3-2         mime_0.5              quantreg_5.33        
+##  [85] biomaRt_2.33.4        compiler_3.4.0        pbkrtest_0.4-7       
+##  [88] e1071_1.6-8           affyio_1.47.0         tibble_1.3.3         
+##  [91] stringi_1.1.5         highr_0.6             lattice_0.20-35      
+##  [94] trimcluster_0.1-2     Matrix_1.2-10         nloptr_1.0.4         
+##  [97] gbm_2.1.3             MALDIquant_1.16.2     bitops_1.0-6         
+## [100] httpuv_1.3.5          R6_2.2.2              pcaMethods_1.69.0    
+## [103] affy_1.55.0           hwriter_1.3.2         gridExtra_2.2.1      
+## [106] codetools_0.2-15      MASS_7.3-47           gtools_3.5.0         
+## [109] assertthat_0.2.0      rprojroot_1.2         diptest_0.75-7       
+## [112] mgcv_1.8-18           grid_3.4.0            rpart_4.1-11         
+## [115] class_7.3-14          minqa_1.2.4           rmarkdown_1.6        
+## [118] Rtsne_0.13            shiny_1.0.3           base64enc_0.1-3</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

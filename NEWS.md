@@ -1,4 +1,4 @@
-# MSnbase 1.17
+# pRoloc 1.17
 
 ## Changes in version 1.17.4
 

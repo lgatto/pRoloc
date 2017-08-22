@@ -11,7 +11,7 @@ dist: precise
 # workaround stolen from https://github.com/hadley/devtools/blob/1ce84b04568ff7846c3da754f28e7e22a23c8737/.travis.yml#L23-L26
 before_install:
   - if [[ "$TRAVIS_R_VERSION_STRING" = 'bioc-devel' ]]; then mkdir ~/.R && echo 'CXX1X=g++ -std=c++0x -g -O2 -fPIC' > ~/.R/Makevars; fi
-  - Rscript -e "install.packages('Rcpp'); download.file('https://cran.r-project.org/src/contrib/Archive/RcppArmadillo/RcppArmadillo_0.7.900.2.0.tar.gz', 'RcppArmadillo_0.7.900.2.0.tar.gz'); install.package('RcppArmadillo_0.7.900.2.0.tar.gz', repos = NULL)"
+  - Rscript -e "install.packages('Rcpp'); download.file('https://cran.r-project.org/src/contrib/Archive/RcppArmadillo/RcppArmadillo_0.7.900.2.0.tar.gz', 'RcppArmadillo_0.7.900.2.0.tar.gz'); install.packages('RcppArmadillo_0.7.900.2.0.tar.gz', repos = NULL)"
   
 addons:
   apt:

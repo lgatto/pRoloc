@@ -35,7 +35,7 @@ script:
 #   --no-build-vignettes
   
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - travis wait 20 Rscript -e 'covr::codecov()'
 
 after_failure:
   - find *Rcheck -name '*.fail' -print -exec cat '{}' \;

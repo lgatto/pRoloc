@@ -86,9 +86,6 @@ are stored in a \code{LOPIMS_pipeline} directory.
 For details, please refer to the \code{synapter} vignette and
 reference papers.
 }
-\author{
-Laurent Gatto
-}
 \references{
 Improving qualitative and quantitative performance for
     MSE-based label free proteomics N.J. Bond, P.V. Shliaha,
@@ -107,4 +104,6 @@ Improving qualitative and quantitative performance for
     Jan 15;28(2):288-9.  doi: 10.1093/bioinformatics/btr645. Epub
     2011 Nov 22. PubMed PMID: 22113085.
 }
-
+\author{
+Laurent Gatto
+}

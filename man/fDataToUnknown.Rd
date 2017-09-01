@@ -42,4 +42,3 @@ getMarkers(dunkley2006, "markers")
 \author{
 Laurent Gatto
 }
-

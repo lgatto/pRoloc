@@ -39,11 +39,10 @@ res <- svmClassification(dunkley2006, fcol = "pd.markers",
 ts <- orgQuants(res, fcol = "svm", t = .5)
 getPredictions(res, fcol = "svm", t = ts)
 }
-\author{
-Lisa Breckels
-}
 \seealso{
 \code{\link{getPredictions}} to get organelle predictions based
 on calculated thresholds.
 }
-
+\author{
+Lisa Breckels
+}

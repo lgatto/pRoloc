@@ -86,11 +86,10 @@ if (interactive()) {
 pRolocVis(xx, fcol = "GOAnnotations")
 }
 }
-\author{
-Lisa Breckels
-}
 \seealso{
 For class definitions see \code{"\linkS4class{ClustDistList}"} 
 and \code{"\linkS4class{ClustDist}"}.
 }
-
+\author{
+Lisa Breckels
+}

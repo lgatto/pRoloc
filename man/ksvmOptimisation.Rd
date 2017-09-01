@@ -2,8 +2,8 @@
 % Please edit documentation in R/machinelearning-functions-ksvm.R
 \name{ksvmOptimisation}
 \alias{ksvmOptimisation}
-\alias{ksvmOptimization}
 \alias{ksvmRegularisation}
+\alias{ksvmOptimization}
 \title{ksvm parameter optimisation}
 \usage{
 ksvmOptimisation(object, fcol = "markers", cost = 2^(-4:4), times = 100,
@@ -48,10 +48,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{ksvmClassification}} and example therein.
 }
-
+\author{
+Laurent Gatto
+}

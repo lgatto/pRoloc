@@ -47,10 +47,9 @@ toosmall <- testMarkers(dunkley2006, xval = 15)
 toosmall
 try(testMarkers(dunkley2006, xval = 15, error = TRUE))
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{getMarkers}} and \code{\link{minMarkers}}
 }
-
+\author{
+Laurent Gatto
+}

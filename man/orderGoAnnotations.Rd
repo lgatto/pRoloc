@@ -63,10 +63,9 @@ This function is a wrapper for running \code{clustDist},
 \code{getNormDist}, see the "Annotating spatial proteomics data"
 vignette for more details.
 }
-\author{
-Lisa M Breckels
-}
 \seealso{
 \code{addGoAnnotations} and example therein.
 }
-
+\author{
+Lisa M Breckels
+}

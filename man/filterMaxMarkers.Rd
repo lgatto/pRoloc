@@ -35,4 +35,3 @@ certain number/percentage of proteins
 \seealso{
 \code{addGoAnnotations} and example therein.
 }
-

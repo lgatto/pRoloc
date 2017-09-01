@@ -40,11 +40,10 @@ sample <- testMSnSet(tan2009r1)
 getMarkers(sample, "test")
 all(dim(sample) == dim(markerMSnSet(tan2009r1)))
 }
-\author{
-Lisa Breckels
-}
 \seealso{
 \code{\link{sampleMSnSet}} \code{\link{unknownMSnSet}}
 \code{\link{markerMSnSet}}
 }
-
+\author{
+Lisa Breckels
+}

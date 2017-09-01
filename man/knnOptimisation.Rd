@@ -48,10 +48,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{knnClassification}} and example therein.
 }
-
+\author{
+Laurent Gatto
+}

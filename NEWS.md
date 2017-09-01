@@ -5,6 +5,9 @@
 - Added new (private) dimred function that computes dimensionality
   reduction <2017-06-05 Mon>
 - Add F1000research workflow to citations <2017-06-22 Thu>
+- Classification functions now return the classification score matrix
+  for all classes as a single column in fData, rather that each class
+  as its own fData column. <2017-09-01 Fri>
 
 ## Changes in version 1.17.3
 - Convert vignettes to Rmd with html output <2017-05-25 Thu>  

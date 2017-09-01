@@ -40,4 +40,3 @@ image(goset)
 \author{
 Laurent Gatto
 }
-

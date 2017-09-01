@@ -10,21 +10,23 @@ knntlClassification(primary, auxiliary, fcol = "markers", bestTheta, k,
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
 
-\item{auxiliary}{An instance of class \code{"\linkS4class{MSnSet}"}.}
+\item{auxiliary}{An instance of class
+\code{"\linkS4class{MSnSet}"}.}
 
 \item{fcol}{The feature meta-data containing marker definitions.
 Default is \code{markers}.}
 
 \item{bestTheta}{Best theta vector as output from
-\code{knntlOptimisation}, see \code{knntlOptimisation} for details}
+\code{knntlOptimisation}, see \code{knntlOptimisation} for
+details}
 
-\item{k}{Numeric vector of length 2, containing the best \code{k} 
-parameters to use for the primary and auxiliary datasets. If k \code{k} 
-is not specified it will be calculated internally.}
+\item{k}{Numeric vector of length 2, containing the best \code{k}
+parameters to use for the primary and auxiliary datasets. If k
+\code{k} is not specified it will be calculated internally.}
 
 \item{scores}{One of \code{"prediction"}, \code{"all"} or
-\code{"none"} to report the score for the predicted class only,
-for all cluster or none.}
+\code{"none"} to report the score for the predicted class
+only, for all classes or none.}
 
 \item{seed}{The optional random number generator seed.}
 }
@@ -62,10 +64,9 @@ res <- knntlClassification(andy2011, andy2011goCC,
 res
 }
 }
-\author{
-Lisa Breckels
-}
 \seealso{
 \code{\link{knntlOptimisation}}
 }
-
+\author{
+Lisa Breckels
+}

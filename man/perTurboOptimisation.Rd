@@ -68,10 +68,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Thomas Burger and Samuel Wieczorek
-}
 \seealso{
 \code{\link{perTurboClassification}} and example therein.
 }
-
+\author{
+Thomas Burger and Samuel Wieczorek
+}

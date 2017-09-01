@@ -19,11 +19,10 @@ An numeric of normalised distances, one per protein set in the
 This function computes and outputs normalised distances from a
 \code{"\linkS4class{ClustDistList}"} object.
 }
-\author{
-Lisa Breckels
-}
 \seealso{
 \code{"\linkS4class{ClustDistList}"}, \code{"\linkS4class{ClustDist}"},
 and examples in \code{clustDist}.
 }
-
+\author{
+Lisa Breckels
+}

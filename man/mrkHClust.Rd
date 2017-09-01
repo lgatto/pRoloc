@@ -46,4 +46,3 @@ mrkHClust(dunkley2006)
 \author{
 Laurent Gatto
 }
-

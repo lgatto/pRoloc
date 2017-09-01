@@ -42,4 +42,3 @@ default colours when more organelle classes are provided. See
 \author{
 Laurent Gatto
 }
-

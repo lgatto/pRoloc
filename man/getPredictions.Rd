@@ -52,11 +52,10 @@ getPredictions(res, fcol = "svm", t = .9) ## single threshold
 ts <- orgQuants(res, fcol = "svm", t = .5)
 getPredictions(res, fcol = "svm", t = ts)
 }
-\author{
-Laurent Gatto and Lisa Breckels
-}
 \seealso{
 \code{\link{orgQuants}} for calculating organelle-specific
 thresholds.
 }
-
+\author{
+Laurent Gatto and Lisa Breckels
+}

@@ -2,8 +2,8 @@
 % Please edit documentation in R/machinelearning-functions-nnet.R
 \name{nnetOptimisation}
 \alias{nnetOptimisation}
-\alias{nnetOptimization}
 \alias{nnetRegularisation}
+\alias{nnetOptimization}
 \title{nnet parameter optimisation}
 \usage{
 nnetOptimisation(object, fcol = "markers", decay = c(0, 10^(-1:-5)),
@@ -51,10 +51,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{nnetClassification}} and example therein.
 }
-
+\author{
+Laurent Gatto
+}

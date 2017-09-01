@@ -31,11 +31,10 @@ d2 <- minMarkers(dunkley2006, 20)
 getMarkers(dunkley2006)
 getMarkers(d2, fcol = "markers20")
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{getPredictions}} to filter based on
 classification scores.
 }
-
+\author{
+Laurent Gatto
+}

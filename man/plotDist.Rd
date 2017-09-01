@@ -67,4 +67,3 @@ plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j],
 \author{
 Laurent Gatto
 }
-

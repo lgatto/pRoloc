@@ -39,12 +39,11 @@ dunkley2006 <- mrkVecToMat(dunkley2006, mfcol = "Markers")
 myMmarkers <- getMarkers(dunkley2006, fcol = "Markers")
 head(myMmarkers)
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 See \code{\link{getMarkerClasses}} to get the classes
 only. See \code{\link{markers}} for details about spatial markers
 storage and encoding.
 }
-
+\author{
+Laurent Gatto
+}

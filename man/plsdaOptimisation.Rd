@@ -2,8 +2,8 @@
 % Please edit documentation in R/machinelearning-functions-plsda.R
 \name{plsdaOptimisation}
 \alias{plsdaOptimisation}
-\alias{plsdaOptimization}
 \alias{plsdaRegularisation}
+\alias{plsdaOptimization}
 \title{plsda parameter optimisation}
 \usage{
 plsdaOptimisation(object, fcol = "markers", ncomp = 2:6, times = 100,
@@ -48,10 +48,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{plsdaClassification}} and example therein.
 }
-
+\author{
+Laurent Gatto
+}

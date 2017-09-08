@@ -506,7 +506,7 @@ plot2D <- function(object,
             ukn <- fData(object)[, fcol] == unknown
             .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
-            col[ukn] <- unknowncol            
+            col[ukn] <- unknowncol 
         } else {
             nullfcol <- TRUE
             ukn <- rep(TRUE, nrow(.data))
@@ -809,4 +809,20 @@ addConvexHulls <- function(object, fcol = "markers", ...) {
         lines(.X[hpts, ])
     }
     invisible(NULL)
+}
+
+
+getMarkerCols <- function(object, fcol = "markers") {
+    stopifnot(fcol %in% fvarLabels(object))
+    .fcol <- factor(fData(object)[, fcol])
+    lvs <- levels(.fcol)
+    if ("unknown" %in% lvs) {
+        i <- which(lvs == "unknown")
+        lvs <- c(lvs[-i], lvs[i])
+        .fcol <- factor(.fcol, levels = lvs)
+    }
+    ukn <- .fcol == "unknown"
+    col <- getStockcol()[as.numeric(.fcol)]
+    col[ukn] <- getUnknowncol()
+    col
 }

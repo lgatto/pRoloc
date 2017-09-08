@@ -80,3 +80,20 @@ citEntry(entry = "article",
                    "Kohlbacher O, Lilley KS, Gatto L. Learning from Heterogeneous Data Sources:",
                    "An Application in Spatial Proteomics. PLoS Comput Biol. 2016 May",
                    "13;12(5):e1004920. doi: 10.1371/journal.pcbi.1004920. "))
+
+citEntry(entry = "article",
+         title = "A Bioconductor workflow for processing and analysing spatial proteomics data", 
+         author = personList(
+             as.person("Lisa M. Breckels"),
+             as.person("Claire M. Mulvey"),
+             as.person("Kathryn S. Lilley"),
+             as.person("Laurent Gatto")
+             ),
+         journal = "F1000Research",
+         year = "2016",
+         textVersion =
+             paste("Breckels LM, Mulvey CM, Lilley KS and Gatto L. A Bioconductor workflow", 
+	           "for processing and analysing spatial proteomics data. F1000Research",
+                   "2016, 5:2926 (doi: 10.12688/f1000research.10411.1"))
+
+

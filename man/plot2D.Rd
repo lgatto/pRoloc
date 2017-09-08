@@ -196,9 +196,6 @@ plot3D(dunkley2006)
 plot3D(dunkley2006, radius2 = 0.3)
 plot3D(dunkley2006, dims = c(2, 4, 6))
 }
-\author{
-Laurent Gatto <lg390@cam.ac.uk>
-}
 \seealso{
 \code{\link{addLegend}} to add a legend to \code{plot2D}
     figures (the legend is added by default on \code{plot3D}) and
@@ -207,4 +204,6 @@ Laurent Gatto <lg390@cam.ac.uk>
     data. \code{\link{plot2Ds}} to overlay 2 data sets on the same
     PCA plot.
 }
-
+\author{
+Laurent Gatto <lg390@cam.ac.uk>
+}

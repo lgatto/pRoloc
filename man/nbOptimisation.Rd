@@ -2,8 +2,8 @@
 % Please edit documentation in R/machinelearning-functions-nb.R
 \name{nbOptimisation}
 \alias{nbOptimisation}
-\alias{nbOptimization}
 \alias{nbRegularisation}
+\alias{nbOptimization}
 \title{nb paramter optimisation}
 \usage{
 nbOptimisation(object, fcol = "markers", laplace = seq(0, 5, 0.5),
@@ -48,10 +48,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{nbClassification}} and example therein.
 }
-
+\author{
+Laurent Gatto
+}

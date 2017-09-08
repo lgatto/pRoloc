@@ -70,11 +70,10 @@ highlightOnPlot(data2(tmp), foi, pch = 5, lwd = 2)
 move2Ds(xx, pcol = "replicate")
 move2Ds(xx, pcol = "replicate", hl = foi)
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{plot2Ds}} to a single figure with the two
 datasets.
 }
-
+\author{
+Laurent Gatto
+}

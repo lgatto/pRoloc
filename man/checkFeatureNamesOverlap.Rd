@@ -43,4 +43,3 @@ res$markersY
 \author{
 Laurent Gatto
 }
-

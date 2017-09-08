@@ -48,11 +48,10 @@ exprs(filterBinMSnSet(x, MARGIN = 2, t = 3))
 ## Remove columns that have half or less of 1s
 exprs(filterBinMSnSet(x, MARGIN = 2, q = 0.5))
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{zerosInBinMSnSet}},
     \code{\link{filterZeroCols}}, \code{\link{filterZeroRows}}.
 }
-
+\author{
+Laurent Gatto
+}

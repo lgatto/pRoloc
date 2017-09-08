@@ -60,4 +60,3 @@ pRolocVis(res, fcol = "GOAnnotations")
 \author{
 Lisa M Breckels
 }
-

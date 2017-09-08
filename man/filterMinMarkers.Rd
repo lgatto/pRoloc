@@ -27,10 +27,9 @@ An updated \code{MSnSet}.
 Removes annotation information that contain less that a
 certain number/percentage of proteins
 }
-\author{
-Lisa M Breckels
-}
 \seealso{
 \code{addGoAnnotations} and example therein.
 }
-
+\author{
+Lisa M Breckels
+}

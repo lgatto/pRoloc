@@ -81,9 +81,6 @@ data sources. In Proceedings of the Twenty-First International
 Conference on Machine Learning, pages 871 - 878.  Morgan Kaufmann,
 2004. A grid search for the best theta is performed.
 }
-\author{
-Lisa Breckels
-}
 \references{
 Breckels LM, Holden S, Wonjar D, Mulvey CM,
     Christoforou A, Groen AJ, Kohlbacher O, Lilley KS, Gatto L.
@@ -98,4 +95,6 @@ Learning (ICML); 2004.
 \seealso{
 \code{\link{knntlClassification}} and example therein.
 }
-
+\author{
+Lisa Breckels
+}

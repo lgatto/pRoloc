@@ -406,16 +406,11 @@ plot2D <- function(object,
     } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)
-        .pca <- do.call(prcomp, c(list(x = exprs(object)),
-                                  methargs))
-        .data <- .pca$x[, dims]
-        .vars <- (.pca$sdev)^2
-        .vars <- (.vars / sum(.vars))[dims]
-        .vars <- round(100 * .vars, 2)
-        .xlab <- paste0("PC", dims[1], " (", .vars[1], "%)")
-        .ylab <- paste0("PC", dims[2], " (", .vars[2], "%)")
-        colnames(.data) <- c(.xlab, .ylab)
-    } else if (method == "MDS")  { ## MDS
+        .data <- dimred(object, method = method, methargs = methargs)
+        .data <- .data[, dims]
+        .xlab <- colnames(.data)[1]
+        .ylab <- colnames(.data)[2]
+    } else if (method == "MDS")  { 
         if (!missing(methargs))
             warning("'methargs' ignored for MDS")
         ## TODO - use other distances
@@ -511,7 +506,7 @@ plot2D <- function(object,
             ukn <- fData(object)[, fcol] == unknown
             .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
-            col[ukn] <- unknowncol            
+            col[ukn] <- unknowncol 
         } else {
             nullfcol <- TRUE
             ukn <- rep(TRUE, nrow(.data))
@@ -814,4 +809,20 @@ addConvexHulls <- function(object, fcol = "markers", ...) {
         lines(.X[hpts, ])
     }
     invisible(NULL)
+}
+
+
+getMarkerCols <- function(object, fcol = "markers") {
+    stopifnot(fcol %in% fvarLabels(object))
+    .fcol <- factor(fData(object)[, fcol])
+    lvs <- levels(.fcol)
+    if ("unknown" %in% lvs) {
+        i <- which(lvs == "unknown")
+        lvs <- c(lvs[-i], lvs[i])
+        .fcol <- factor(.fcol, levels = lvs)
+    }
+    ukn <- .fcol == "unknown"
+    col <- getStockcol()[as.numeric(.fcol)]
+    col[ukn] <- getUnknowncol()
+    col
 }

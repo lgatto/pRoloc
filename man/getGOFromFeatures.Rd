@@ -51,4 +51,3 @@ getGOFromFeatures(fn, params = dunkley2006params)
 \author{
 Laurent Gatto
 }
-

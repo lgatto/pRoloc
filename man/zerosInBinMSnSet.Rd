@@ -46,10 +46,9 @@ levelplot(zerosInBinMSnSet(hyperLOPIT2015goCC),
           ylab = "Marker class",
           col.regions = pal(140))
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{filterBinMSnSet}}
 }
-
+\author{
+Laurent Gatto
+}

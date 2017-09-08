@@ -1,48 +1,35 @@
 [![Build Status](https://travis-ci.org/lgatto/pRoloc.svg?branch=master)](https://travis-ci.org/lgatto/pRoloc) [![codecov.io](https://codecov.io/github/lgatto/pRoloc/coverage.svg?branch=master)](https://codecov.io/github/lgatto/pRoloc?branch=master)
 
+# A unifying bioinformatics framework for spatial proteomics
 
-[`pRoloc`](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html)
-is a Bioconductor package for the analysis of experimental spatial
-proteomics data.  It is available from Bioconductor `>= 2.12` and
-requires `R (>= 3.0.0)`.
+<img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRoloc.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocdata.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocGUI.png" height="200">
 
 The `pRoloc` suite set of software are distributed as part of the
 R/[Bioconductor](http://bioconductor.org/) project and are developed
 at the [Computational Proteomics Unit](http://cpu.sysbiol.cam.ac.uk/)
 and
 [Cambridge Centre for Proteomics](http://proteomics.bio.cam.ac.uk/)
-labs, at the University of Cambridge.
-
-
-See the Bioconductor landing pages
-([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
-and
+labs, at the University of Cambridge. See the Bioconductor landing
+pages
+([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html) and
 [devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
-for the Bioc build status. 
+for the Bioc build status.
+
+
 
 ## Getting started
 
-The `pRoloc` software comes with ample documentation. The main
-tutorial
-([release](http://www.bioconductor.org/packages/release/bioc/vignettes/pRoloc/inst/doc/pRoloc-tutorial.pdf)
-and
-[devel](http://www.bioconductor.org/packages/devel/bioc/vignettes/pRoloc/inst/doc/pRoloc-tutorial.pdf))
-provides a broad overview of the package and its functionality. See
-the package page
-([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
-and
-[devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
-for additional manuals.
+The `pRoloc` software comes with ample
+documentation. The
+[main tutorial](https://lgatto.github.io/pRoloc/articles/pRoloc-tutorial.html) provides
+a broad overview of the package and its functionality.  See the
+*Articles* tab for additional manuals.
 
-Two associated packages, `pRolocdata`
-([devel](http://www.bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html)
-and
-[release](http://www.bioconductor.org/packages/release/data/experiment/html/pRolocdata.html))
-and `pRolocGUI`
-([release](http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html)
-and
-[devel](http://www.bioconductor.org/packages/devel/bioc/html/pRolocGUI.html))
-offer spatial proteomics data and a graphical user interface to
+Two associated
+packages,
+[`pRolocdata`](http://www.bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html) and
+[`pRolocGUI`](http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html) offer
+spatial proteomics data and a graphical user interface to
 interactively explore the data.
 
 Here are a set of
@@ -90,34 +77,50 @@ biocLite("ComputationalProteomicsUnit/pRolocGUI")
 
 ## References:
 
-Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley KS.
-Mass-spectrometry-based spatial proteomics data analysis using pRoloc and
-pRolocdata. Bioinformatics. 2014 May 1;30(9):1322-4. doi:
-10.1093/bioinformatics/btu013. Epub 2014 Jan 11. 
-[PubMed PMID: 24413670](http://www.ncbi.nlm.nih.gov/pubmed/24413670).
+For refences about the software, how to use it and spatial proteomics
+data analysis:
 
-Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS, Trotter
-MW. The effect of organelle discovery upon sub-cellular protein
-localisation. J Proteomics. 2013 Aug 2;88:129-40. doi:
-10.1016/j.jprot.2013.02.019. Epub 2013
-Mar 21. [PubMed PMID: 23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
+* Breckels LM, Mulvey CM, Lilley KS and Gatto L. A Bioconductor
+  workflow for processing and analysing spatial proteomics
+  data. F1000Research 2016,
+  5:2926
+  [doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/).
 
-Gatto L, Breckels LM, Burger T, Nightingale DJ, Groen AJ, Campbell C,
-Nikolovski N, Mulvey CM, Christoforou A, Ferro M, Lilley KS. A
-foundation for reliable spatial proteomics data analysis. Mol Cell
-Proteomics. 2014 Aug;13(8):1937-52. doi: 10.1074/mcp.M113.036350. Epub
-2014 May 20. [PubMed PMID: 24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
+* Gatto L, Breckels LM, Burger T, Nightingale DJ, Groen AJ, Campbell
+  C, Nikolovski N, Mulvey CM, Christoforou A, Ferro M, Lilley KS. A
+  foundation for reliable spatial proteomics data analysis. Mol Cell
+  Proteomics. 2014 Aug;13(8):1937-52. doi:
+  10.1074/mcp.M113.036350. Epub 2014
+  May 20. [PubMed PMID: 24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
 
-Breckels LM, Holden S, Wojnar D, Mulvey CMM, Christoforou A, Groen AJ,
-Kohlbacher O, Lilley KS and Gatto L. Learning from heterogeneous data
-sources: an application in spatial proteomics. 2015 biorXiv, doi:
-http://dx.doi.org/10.1101/022152
+* Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley
+  KS. Mass-spectrometry-based spatial proteomics data analysis using
+  pRoloc and pRolocdata. Bioinformatics. 2014 May 1;30(9):1322-4. doi:
+  10.1093/bioinformatics/btu013. Epub 2014
+  Jan 11. [PubMed PMID: 24413670](http://www.ncbi.nlm.nih.gov/pubmed/24413670).
+
+Specific algorithms available in the software:
+
+* Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS, Trotter
+  MW. The effect of organelle discovery upon sub-cellular protein
+  localisation. J Proteomics. 2013 Aug 2;88:129-40. doi:
+  10.1016/j.jprot.2013.02.019. Epub 2013
+  Mar 21. [PubMed PMID: 23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
+
+* Breckels LM, Holden S, Wojnar D, Mulvey CMM, Christoforou A, Groen
+  AJ, Kohlbacher O, Lilley KS and Gatto L. Learning from heterogeneous
+  data sources: an application in spatial proteomics. 2015 biorXiv,
+  doi: http://dx.doi.org/10.1101/022152
+
+
 
 #### More resource
-- R and Bioconductor for proteomics
+
+* R and Bioconductor for proteomics
   [web page](http://lgatto.github.io/RforProteomics/) and
   [package](http://www.bioconductor.org/packages/release/data/experiment/html/RforProteomics.html)
-- Bioconductor proteomics [workflow](http://bioconductor.org/help/workflows/proteomics/)
+  
+* Bioconductor proteomics [workflow](http://bioconductor.org/help/workflows/proteomics/)
 
 ## Contributing
 

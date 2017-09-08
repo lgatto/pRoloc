@@ -2,8 +2,8 @@
 % Please edit documentation in R/machinelearning-functions-svm.R
 \name{svmOptimisation}
 \alias{svmOptimisation}
-\alias{svmOptimization}
 \alias{svmRegularisation}
+\alias{svmOptimization}
 \title{svm parameter optimisation}
 \usage{
 svmOptimisation(object, fcol = "markers", cost = 2^(-4:4),
@@ -51,10 +51,9 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{svmClassification}} and example therein.
 }
-
+\author{
+Laurent Gatto
+}

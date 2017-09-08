@@ -38,4 +38,3 @@ dim(thetas(6, by = 0.2))
 \author{
 Lisa Breckels
 }
-

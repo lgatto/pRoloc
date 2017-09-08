@@ -31,12 +31,11 @@ dunkley2006 <- mrkVecToMat(dunkley2006, mfcol = "Markers")
 organelles2 <- getMarkerClasses(dunkley2006, fcol = "Markers")
 stopifnot(all.equal(organelles, organelles2))
 }
-\author{
-Lisa Breckels and Laurent Gatto
-}
 \seealso{
 \code{\link{getMarkers}} to extract the marker
 proteins. See \code{\link{markers}} for details about spatial
 markers storage and encoding.
 }
-
+\author{
+Lisa Breckels and Laurent Gatto
+}

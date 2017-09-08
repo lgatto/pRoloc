@@ -211,3 +211,22 @@ mrkConsProfiles <- function(object, fcol = "markers", method = mean) {
     mm <- t(sapply(profs, function(z) apply(z, 2, method)))
     return(mm)
 }
+
+
+dimred <- function(object, method = "PCA", methargs) {
+    method <- match.arg(method)
+    if (method == "PCA") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(prcomp, c(list(x = exprs(object)),
+                                  methargs))
+        .vars <- (.pca$sdev)^2
+        .vars <- (.vars / sum(.vars))
+        .vars <- round(100 * .vars, 2)
+        res <- .pca$x
+        colnames(res) <- paste0("PC", seq_len(ncol(object)), " (", .vars, "%)")
+    } else stop("Method not available")
+    return(res) 
+}
+
+

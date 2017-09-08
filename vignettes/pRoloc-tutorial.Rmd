@@ -1,5 +1,5 @@
 ---
-title: "Using *pRoloc* for spatial proteomics data analysis"
+title: "Using pRoloc for spatial proteomics data analysis"
 author: 
 - name: Lisa M. Breckels
   affiliation: Computational Proteomics Unit, Cambridge, UK
@@ -7,7 +7,7 @@ author:
   affiliation: Computational Proteomics Unit, Cambridge, UK
 package: pRoloc
 abstract: >
- This tutorial illustrates the usage of the `r Biocpkg("pRoloc")` R
+ This tutorial illustrates the usage of the `pRoloc` R
  package for the analysis and interpretation of spatial proteomics
  data. It walks the reader through the creation of *MSnSet* instances,
  that hold the quantitative proteomics data and meta-data and
@@ -15,7 +15,7 @@ abstract: >
  visualisation and application of machine learning to predict protein
  localisation.
 output:
-  BiocStyle::html_document2:
+  BiocStyle::html_document:
     toc_float: true
 bibliography: pRoloc.bib	
 vignette: >

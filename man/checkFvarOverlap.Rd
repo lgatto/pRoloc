@@ -39,4 +39,3 @@ str(res)
 \author{
 Laurent Gatto
 }
-

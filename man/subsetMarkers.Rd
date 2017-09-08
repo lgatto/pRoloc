@@ -21,10 +21,9 @@ An updated \code{MSnSet}
 \description{
 Subsets a matrix of markers by specific terms
 }
-\author{
-Lisa M Breckels
-}
 \seealso{
 \code{addGoAnnotations} and example therein.
 }
-
+\author{
+Lisa M Breckels
+}

@@ -125,9 +125,6 @@ plot2D(pdres, fcol = "pd")
 pdres <- phenoDisco(tan2009r1, fcol = "PLSDA", dimred = "t-SNE")
 }
 }
-\author{
-Lisa M. Breckels <lms79@cam.ac.uk>
-}
 \references{
 Yin Z, Zhou X, Bakal C, Li F, Sun Y, Perrimon N, Wong
     ST. Using iterative cluster merging with improved gap
@@ -141,4 +138,6 @@ Protein Localisation.  J Proteomics. 2013 Aug 2;88:129-40. doi:
 10.1016/j.jprot.2013.02.019. Epub 2013 Mar 21.  PubMed PMID:
 23523639.
 }
-
+\author{
+Lisa M. Breckels <lms79@cam.ac.uk>
+}

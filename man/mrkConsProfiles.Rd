@@ -40,11 +40,10 @@ matplot(t(mm[, o]), type = "l",
 ## Add a legend
 addLegend(markerMSnSet(dunkley2006), where = "topleft")
 }
-\author{
-Laurent Gatto and Lisa M. Breckels
-}
 \seealso{
 The \code{\link{mrkHClust}} function to produce a
     hierarchical cluster.
 }
-
+\author{
+Laurent Gatto and Lisa M. Breckels
+}

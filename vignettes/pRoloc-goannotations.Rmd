@@ -1,17 +1,24 @@
 --- 
 title: "Annotating spatial proteomics data" 
-author: "Lisa Breckels and Laurent Gatto" 
-output:  
-  BiocStyle::html_document
+author: 
+- name: Lisa M. Breckels
+  affiliation: Computational Proteomics Unit, Cambridge, UK
+- name: Laurent Gatto
+  affiliation: Computational Proteomics Unit, Cambridge, UK
+package: pRoloc
+output:
+  BiocStyle::html_document:
+    toc_float: true
 vignette: >
   %\VignetteIndexEntry{Annotating spatial proteomics data} 
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r env, echo=FALSE}
-library("BiocStyle")
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
 ```
+
 # Foreword {-}
 
 This document walks users through a typical pipeline for adding

@@ -854,17 +854,19 @@ knntlOptimisation  <- function(primary,
 ##' 
 ##' @title knn transfer learning classification
 ##' @param primary An instance of class \code{"\linkS4class{MSnSet}"}.
-##' @param auxiliary An instance of class \code{"\linkS4class{MSnSet}"}.
+##' @param auxiliary An instance of class
+##'     \code{"\linkS4class{MSnSet}"}.
 ##' @param fcol The feature meta-data containing marker definitions.
-##' Default is \code{markers}.
+##'     Default is \code{markers}.
 ##' @param bestTheta Best theta vector as output from
-##' \code{knntlOptimisation}, see \code{knntlOptimisation} for details
-##' @param k Numeric vector of length 2, containing the best \code{k} 
-##' parameters to use for the primary and auxiliary datasets. If k \code{k} 
-##' is not specified it will be calculated internally.
+##'     \code{knntlOptimisation}, see \code{knntlOptimisation} for
+##'     details
+##' @param k Numeric vector of length 2, containing the best \code{k}
+##'     parameters to use for the primary and auxiliary datasets. If k
+##'     \code{k} is not specified it will be calculated internally.
 ##' @param scores One of \code{"prediction"}, \code{"all"} or
-##' \code{"none"} to report the score for the predicted class only,
-##' for all cluster or none.
+##'     \code{"none"} to report the score for the predicted class
+##'     only, for all classes or none.
 ##' @param seed The optional random number generator seed.
 ##' @return A character vector of the classifications for the unknowns
 ##' @seealso \code{\link{knntlOptimisation}}
@@ -993,7 +995,7 @@ knntlClassification <- function(primary,
             .scoreMat[, i] <- .un
         }
         .scoreMat[X, ] <- vcMat
-        fData(primary) <- cbind(fData(primary), .scoreMat)
+        fData(primary)$knntl.all.scores <- .scoreMat
     }
     else if (scores == "prediction") {
         scores <- apply(vcMat, 1, function(z) max(z))

@@ -34,12 +34,11 @@ dim(smp)
 getMarkers(tan2009r1)
 getMarkers(smp)
 }
-\author{
-Lisa Breckels
-}
 \seealso{
 \code{\link{testMSnSet}} \code{\link{unknownMSnSet}}
 \code{\link{markerMSnSet}}. See \code{\link{markers}} for details
 about markers encoding.
 }
-
+\author{
+Lisa Breckels
+}

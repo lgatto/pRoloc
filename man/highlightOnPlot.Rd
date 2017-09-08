@@ -94,4 +94,3 @@ highlightOnPlot3D(tan2009r1, x)
 \author{
 Laurent Gatto
 }
-

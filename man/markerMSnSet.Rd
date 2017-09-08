@@ -47,11 +47,10 @@ dim(unknownMSnSet(dunkley2006, "Markers"))
 stopifnot(all.equal(featureNames(unknownMSnSet(dunkley2006, "Markers")),
                     featureNames(unknownMSnSet(dunkley2006, "markers"))))
 }
-\author{
-Laurent Gatto
-}
 \seealso{
 \code{\link{sampleMSnSet}} \code{\link{testMSnSet}} and
 \code{\link{markers}} for markers encoding.
 }
-
+\author{
+Laurent Gatto
+}

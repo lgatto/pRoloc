@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Class  — SpatProtVis-class • pRoloc</title>
+<title>Class <code>SpatProtVis</code> — SpatProtVis-class • pRoloc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -77,67 +79,77 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Class </h1>
+    <h1>Class <code>SpatProtVis</code></h1>
     </div>
 
     
-    <p></p>
+    
 
     <p>A class for spatial proteomics visualisation, that upon instantiation,
   pre-computes all defined visualisations. Objects can be created with
   the <code>SpatProtVis</code> constructor and visualised with the <code>plot</code>
   method.</p>
-
-    <p>The class is essentially a wrapper around several calls to
+<p>The class is essentially a wrapper around several calls to
   <code><a href='plot2D.html'>plot2D</a></code> that stores the dimensionality reduction
   outputs, and is likely to be updated in the future.</p>
     
 
-    <pre><span class='fu'>SpatProtVis</span>(<span class='no'>x</span>, <span class='no'>methods</span>, <span class='no'>dims</span>, <span class='no'>methargs</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>SpatProtVis</span>(<span class='no'>x</span>, <span class='no'>methods</span>, <span class='no'>dims</span>, <span class='no'>methargs</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>An instance of class <code>MSnSet</code> to visualise.</dd>
-      <dt>methods</dt>
-      <dd>Dimensionality reduction methods to be used to
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An instance of class <code>MSnSet</code> to visualise.</p></td>
+    </tr>
+    <tr>
+      <th>methods</th>
+      <td><p>Dimensionality reduction methods to be used to
     visualise the data. Must be contained in <code><a href='plot2D.html'>plot2Dmethods</a></code>
-    (except <code>&quot;scree&quot;</code>). See <code><a href='plot2D.html'>plot2D</a></code> for details.</dd>
-      <dt>dims</dt>
-      <dd>A list of numerics defining dimensions used for
+    (except <code>"scree"</code>). See <code><a href='plot2D.html'>plot2D</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>dims</th>
+      <td><p>A list of numerics defining dimensions used for
     plotting. Default are <code>1</code> and <code>2</code>. If provided, the length
-    of this list must be identical to the length of <code>methods</code>. </dd>
-      <dt>methargs</dt>
-      <dd>A list of additional arguments to be passed for each
+    of this list must be identical to the length of <code>methods</code>.</p></td>
+    </tr>
+    <tr>
+      <th>methargs</th>
+      <td><p>A list of additional arguments to be passed for each
     visualisation method. If provided, the length of this list must be
-    identical to the length of <code>methods</code>. </dd>
-      <dt>&#8230;</dt>
-      <dd>Additional arguments. Currently ignored.</dd>
-    </dl>
+    identical to the length of <code>methods</code>.</p></td>
+    </tr>
+    <tr>
+      <th>&#8230;</th>
+      <td><p>Additional arguments. Currently ignored.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
-    <p><dl class='dl-horizontal'></p>
-    <p><dt><code>vismats</code>:</dt><dd>A <code>&quot;list&quot;</code> of matrices containing the
-      feature projections in 2 dimensions. </dd></p>
-    <p><dt><code>data</code>:</dt><dd>The original spatial proteomics data stored as
-      an <code>&quot;MSnSet&quot;</code>. </dd></p>
-    <p><dt><code>methargs</code>:</dt><dd>A <code>&quot;list&quot;</code> of additional plotting
-    arguments. </dd></p>
-    <p><dt><code>objname</code>:</dt><dd>A <code>&quot;character&quot;</code> defining how to name the
+    <p></p><dl class='dl-horizontal'>
+    <dt><code>vismats</code>:</dt><dd><p>A <code>"list"</code> of matrices containing the
+      feature projections in 2 dimensions.</p></dd>
+    <dt><code>data</code>:</dt><dd><p>The original spatial proteomics data stored as
+      an <code>"MSnSet"</code>.</p></dd>
+    <dt><code>methargs</code>:</dt><dd><p>A <code>"list"</code> of additional plotting
+    arguments.</p></dd>
+    <dt><code>objname</code>:</dt><dd><p>A <code>"character"</code> defining how to name the
       dataset. By default, this is set using the variable name used at
-      object creation. </dd></p>
-    <p></dl></p>
+      object creation.</p></dd>
+    </dl>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
-    <p><dl class='dl-horizontal'></p>
-    <p><dt><code>plot</code>:</dt><dd>Generates the figures for the respective
+    <p></p><dl class='dl-horizontal'>
+    <dt><code>plot</code>:</dt><dd><p>Generates the figures for the respective
       <code>methods</code> and additional arguments defined in the
       constructor. If used in an interactive session, the user is
-      prompted to press &#39;Return&#39; before new figures are displayed. </dd></p>
-    <p><dt><code>show</code>:</dt><dd>A simple textual summary of the object.</dd></p>
-    <p></dl></p>
+      prompted to press 'Return' before new figures are displayed.</p></dd>
+    <dt><code>show</code>:</dt><dd><p>A simple textual summary of the object.</p></dd>
+    </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -151,7 +163,7 @@
 <span class='co'>## Default parameters for a set of methods</span>
 <span class='co'>## (in the interest of time, don't use t-SNE)</span>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"PCA"</span>, <span class='st'>"MDS"</span>, <span class='st'>"kpca"</span>)
-<span class='no'>vis</span> <span class='kw'>&lt;-</span> <span class='fu'>SpatProtVis</span>(<span class='no'>dunkley2006</span>, <span class='kw'>methods</span> <span class='kw'>=</span> <span class='no'>m</span>)</div><div class='output co'>#&gt; <span class='message'>Producting PCA visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting MDS visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='input'><span class='no'>vis</span></div><div class='output co'>#&gt; Object of class &quot;SpatProtVis&quot;
+<span class='no'>vis</span> <span class='kw'>&lt;-</span> <span class='fu'>SpatProtVis</span>(<span class='no'>dunkley2006</span>, <span class='kw'>methods</span> <span class='kw'>=</span> <span class='no'>m</span>)</div><div class='output co'>#&gt; <span class='message'>Producting PCA visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting MDS visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='input'><span class='no'>vis</span></div><div class='output co'>#&gt; Object of class "SpatProtVis"
 #&gt;  Data: dunkley2006 
 #&gt;  Visualisation methods: PCA, MDS, kpca</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vis</span>)</div><img src='SpatProtVis-class-8.png' alt='' width='540' height='400' /><img src='SpatProtVis-class-9.png' alt='' width='540' height='400' /><img src='SpatProtVis-class-10.png' alt='' width='540' height='400' /><div class='output co'>#&gt; Done.</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vis</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='st'>"topleft"</span>)</div><img src='SpatProtVis-class-13.png' alt='' width='540' height='400' /><img src='SpatProtVis-class-14.png' alt='' width='540' height='400' /><img src='SpatProtVis-class-15.png' alt='' width='540' height='400' /><div class='output co'>#&gt; Done.</div><div class='input'>
 <span class='co'>## Setting method arguments</span>

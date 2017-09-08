@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -82,10 +84,10 @@
 
     
     <p>Converts GO identifiers to/from GO terms, either explicitly or by
-checking if (any items in) the input contains <code>&quot;GO:&quot;</code>.</p>
+checking if (any items in) the input contains <code>"GO:"</code>.</p>
     
 
-    <pre><span class='fu'>goIdToTerm</span>(<span class='no'>x</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keepNA</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>goIdToTerm</span>(<span class='no'>x</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keepNA</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>goTermToId</span>(<span class='no'>x</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keepNA</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -94,17 +96,24 @@ checking if (any items in) the input contains <code>&quot;GO:&quot;</code>.</p>
 <span class='fu'>prettyGoTermId</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A <code>character</code> of GO ids or terms.</dd>
-      <dt>names</dt>
-      <dd>Should a named character be returned? Default is
-<code>TRUE</code>.</dd>
-      <dt>keepNA</dt>
-      <dd>Should any GO term/id names that are missing or obsolete
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>character</code> of GO ids or terms.</p></td>
+    </tr>
+    <tr>
+      <th>names</th>
+      <td><p>Should a named character be returned? Default is
+<code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>keepNA</th>
+      <td><p>Should any GO term/id names that are missing or obsolete
 be replaced with a <code>NA</code>? Default is <code>TRUE</code>. If 
-<code>FALSE</code> then the GO term/id names is kept.</dd>
-    </dl>
+<code>FALSE</code> then the GO term/id names is kept.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -114,15 +123,15 @@ be replaced with a <code>NA</code>? Default is <code>TRUE</code>. If
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>goIdToTerm</span>(<span class='st'>"GO:0000001"</span>)</div><div class='output co'>#&gt;                  GO:0000001 
-#&gt; &quot;mitochondrion inheritance&quot; </div><div class='input'><span class='fu'>goIdToTerm</span>(<span class='st'>"GO:0000001"</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] &quot;mitochondrion inheritance&quot;</div><div class='input'><span class='fu'>goIdToTerm</span>(<span class='fu'>c</span>(<span class='st'>"GO:0000001"</span>, <span class='st'>"novalid"</span>))</div><div class='output co'>#&gt;                  GO:0000001                     novalid 
-#&gt; &quot;mitochondrion inheritance&quot;                          NA </div><div class='input'><span class='fu'>goIdToTerm</span>(<span class='fu'>c</span>(<span class='st'>"GO:0000001"</span>, <span class='st'>"GO:0000002"</span>, <span class='st'>"notvalid"</span>))</div><div class='output co'>#&gt;                         GO:0000001                         GO:0000002 
-#&gt;        &quot;mitochondrion inheritance&quot; &quot;mitochondrial genome maintenance&quot; 
+#&gt; "mitochondrion inheritance" </div><div class='input'><span class='fu'>goIdToTerm</span>(<span class='st'>"GO:0000001"</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "mitochondrion inheritance"</div><div class='input'><span class='fu'>goIdToTerm</span>(<span class='fu'>c</span>(<span class='st'>"GO:0000001"</span>, <span class='st'>"novalid"</span>))</div><div class='output co'>#&gt;                  GO:0000001                     novalid 
+#&gt; "mitochondrion inheritance"                          NA </div><div class='input'><span class='fu'>goIdToTerm</span>(<span class='fu'>c</span>(<span class='st'>"GO:0000001"</span>, <span class='st'>"GO:0000002"</span>, <span class='st'>"notvalid"</span>))</div><div class='output co'>#&gt;                         GO:0000001                         GO:0000002 
+#&gt;        "mitochondrion inheritance" "mitochondrial genome maintenance" 
 #&gt;                           notvalid 
 #&gt;                                 NA </div><div class='input'><span class='fu'>goTermToId</span>(<span class='st'>"mitochondrion inheritance"</span>)</div><div class='output co'>#&gt; mitochondrion inheritance 
-#&gt;              &quot;GO:0000001&quot; </div><div class='input'><span class='fu'>goTermToId</span>(<span class='st'>"mitochondrion inheritance"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] &quot;GO:0000001&quot;</div><div class='input'><span class='fu'>goTermToId</span>(<span class='fu'>c</span>(<span class='st'>"mitochondrion inheritance"</span>, <span class='st'>"notvalid"</span>))</div><div class='output co'>#&gt; mitochondrion inheritance                  notvalid 
-#&gt;              &quot;GO:0000001&quot;                        NA </div><div class='input'><span class='fu'>prettyGoTermId</span>(<span class='st'>"mitochondrion inheritance"</span>)</div><div class='output co'>#&gt; [1] &quot;mitochondrion inheritance (GO:0000001)&quot;</div><div class='input'><span class='fu'>prettyGoTermId</span>(<span class='st'>"GO:0000001"</span>)</div><div class='output co'>#&gt; [1] &quot;mitochondrion inheritance (GO:0000001)&quot;</div><div class='input'><span class='fu'>flipGoTermId</span>(<span class='st'>"mitochondrion inheritance"</span>)</div><div class='output co'>#&gt; mitochondrion inheritance 
-#&gt;              &quot;GO:0000001&quot; </div><div class='input'><span class='fu'>flipGoTermId</span>(<span class='st'>"GO:0000001"</span>)</div><div class='output co'>#&gt;                  GO:0000001 
-#&gt; &quot;mitochondrion inheritance&quot; </div><div class='input'><span class='fu'>flipGoTermId</span>(<span class='st'>"GO:0000001"</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] &quot;mitochondrion inheritance&quot;</div></pre>
+#&gt;              "GO:0000001" </div><div class='input'><span class='fu'>goTermToId</span>(<span class='st'>"mitochondrion inheritance"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "GO:0000001"</div><div class='input'><span class='fu'>goTermToId</span>(<span class='fu'>c</span>(<span class='st'>"mitochondrion inheritance"</span>, <span class='st'>"notvalid"</span>))</div><div class='output co'>#&gt; mitochondrion inheritance                  notvalid 
+#&gt;              "GO:0000001"                        NA </div><div class='input'><span class='fu'>prettyGoTermId</span>(<span class='st'>"mitochondrion inheritance"</span>)</div><div class='output co'>#&gt; [1] "mitochondrion inheritance (GO:0000001)"</div><div class='input'><span class='fu'>prettyGoTermId</span>(<span class='st'>"GO:0000001"</span>)</div><div class='output co'>#&gt; [1] "mitochondrion inheritance (GO:0000001)"</div><div class='input'><span class='fu'>flipGoTermId</span>(<span class='st'>"mitochondrion inheritance"</span>)</div><div class='output co'>#&gt; mitochondrion inheritance 
+#&gt;              "GO:0000001" </div><div class='input'><span class='fu'>flipGoTermId</span>(<span class='st'>"GO:0000001"</span>)</div><div class='output co'>#&gt;                  GO:0000001 
+#&gt; "mitochondrion inheritance" </div><div class='input'><span class='fu'>flipGoTermId</span>(<span class='st'>"GO:0000001"</span>, <span class='kw'>names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "mitochondrion inheritance"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

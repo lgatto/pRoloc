@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -89,21 +91,30 @@ for <code>nclass</code> columns (one for each class) with all possible
 weight combinations (number of rows).</p>
     
 
-    <pre><span class='fu'>thetas</span>(<span class='no'>nclass</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>length.out</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>thetas</span>(<span class='no'>nclass</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>length.out</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>nclass</dt>
-      <dd>Number of marker classes</dd>
-      <dt>by</dt>
-      <dd>The increment of the weights. One of <code>1</code>,
-<code>0.5</code>, <code>0.25</code>, <code>2</code>, <code>0.1</code> or <code>0.05</code>.</dd>
-      <dt>length.out</dt>
-      <dd>The desired length of the weight sequence.</dd>
-      <dt>verbose</dt>
-      <dd>A <code>logical</code> indicating if the weight sequences
-should be printed out. Default is <code>TRUE</code>.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>nclass</th>
+      <td><p>Number of marker classes</p></td>
+    </tr>
+    <tr>
+      <th>by</th>
+      <td><p>The increment of the weights. One of <code>1</code>,
+<code>0.5</code>, <code>0.25</code>, <code>2</code>, <code>0.1</code> or <code>0.05</code>.</p></td>
+    </tr>
+    <tr>
+      <th>length.out</th>
+      <td><p>The desired length of the weight sequence.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>A <code>logical</code> indicating if the weight sequences
+should be printed out. Default is <code>TRUE</code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

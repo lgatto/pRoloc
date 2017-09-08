@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -85,25 +87,36 @@
 instances.</p>
     
 
-    <pre><span class='fu'>checkFeatureNamesOverlap</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>fcolx</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fcoly</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>checkFeatureNamesOverlap</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>fcolx</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fcoly</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>An <code>MSnSet</code> instance.</dd>
-      <dt>y</dt>
-      <dd>An <code>MSnSet</code> instance.</dd>
-      <dt>fcolx</dt>
-      <dd>The feature variable to separate unknown
-(<code>fData(y)$coly == &quot;unknown&quot;</code>) from the marker features in
-the <code>x</code> object.</dd>
-      <dt>fcoly</dt>
-      <dd>As <code>fcolx</code>, for the <code>y</code> object. If missing,
-the value of <code>fcolx</code> is used.</dd>
-      <dt>verbose</dt>
-      <dd>If <code>TRUE</code> (default), the overlap is printed
-out on the console.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An <code>MSnSet</code> instance.</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>An <code>MSnSet</code> instance.</p></td>
+    </tr>
+    <tr>
+      <th>fcolx</th>
+      <td><p>The feature variable to separate unknown
+(<code>fData(y)$coly == "unknown"</code>) from the marker features in
+the <code>x</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>fcoly</th>
+      <td><p>As <code>fcolx</code>, for the <code>y</code> object. If missing,
+the value of <code>fcolx</code> is used.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>If <code>TRUE</code> (default), the overlap is printed
+out on the console.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -127,7 +140,7 @@ unique <code>x</code> unknowns and unique <code>y</code> unknowns.</p>
 #&gt; Unique y markers:  1 
 #&gt; Common unkowns:  967 
 #&gt; Unique x unknowns:  0 
-#&gt; Unique y unknowns:  0 </div><div class='input'><span class='no'>res</span>$<span class='no'>markersX</span></div><div class='output co'>#&gt; [1] &quot;O00767&quot;</div><div class='input'><span class='no'>res</span>$<span class='no'>markersY</span></div><div class='output co'>#&gt; [1] &quot;ABC&quot;</div></pre>
+#&gt; Unique y unknowns:  0 </div><div class='input'><span class='no'>res</span>$<span class='no'>markersX</span></div><div class='output co'>#&gt; [1] "O00767"</div><div class='input'><span class='no'>res</span>$<span class='no'>markersY</span></div><div class='output co'>#&gt; [1] "ABC"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

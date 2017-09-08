@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -85,37 +87,50 @@
 for a set of feature names.</p>
     
 
-    <pre><span class='fu'>getGOFromFeatures</span>(<span class='no'>id</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"cellular_component"</span>, <span class='kw'>evidence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>getGOFromFeatures</span>(<span class='no'>id</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"cellular_component"</span>, <span class='kw'>evidence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fl'>500</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>id</dt>
-      <dd>An <code>character</code> with feature names to be pulled from
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>id</th>
+      <td><p>An <code>character</code> with feature names to be pulled from
 biomart. If and <code>MSnSet</code> is provided, then
-<code>featureNames(id)</code> is used.</dd>
-      <dt>namespace</dt>
-      <dd>The GO namespace. One of
+<code>featureNames(id)</code> is used.</p></td>
+    </tr>
+    <tr>
+      <th>namespace</th>
+      <td><p>The GO namespace. One of
 <code>biological_process</code>, <code>cellular_component</code> (default)
-or <code>molecular_function</code>.</dd>
-      <dt>evidence</dt>
-      <dd>The GO evidence code. See
+or <code>molecular_function</code>.</p></td>
+    </tr>
+    <tr>
+      <th>evidence</th>
+      <td><p>The GO evidence code. See
 <code>showGOEvidenceCodes</code> for details. If <code>NULL</code>
 (default), no filtering based on the evidence code is
-performed.</dd>
-      <dt>params</dt>
-      <dd>An instance of class
-<code>&quot;<a href='AnnotationParams-class.html'>AnnotationParams</a>&quot;</code>.</dd>
-      <dt>verbose</dt>
-      <dd>A <code>logical</code> defining verbosity of the
-function. Default is <code>FALSE</code>.</dd>
-      <dt>nmax</dt>
-      <dd>As described in
+performed.</p></td>
+    </tr>
+    <tr>
+      <th>params</th>
+      <td><p>An instance of class
+<code>"<a href='AnnotationParams-class.html'>AnnotationParams</a>"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>A <code>logical</code> defining verbosity of the
+function. Default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>nmax</th>
+      <td><p>As described in
 <a href = 'https://support.bioconductor.org/p/86358/'>https://support.bioconductor.org/p/86358/</a>, the Biomart
 result can be unreliable for large queries. This argument
 splits the input in chunks of length <code>nmax</code> (default is
-500). If set to <code>NULL</code>, the query is performed in full.</dd>
-    </dl>
+500). If set to <code>NULL</code>, the query is performed in full.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -126,54 +141,54 @@ splits the input in chunks of length <code>nmax</code> (default is
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>pRolocdata</span>)
 <span class='fu'>data</span>(<span class='no'>dunkley2006</span>)
 <span class='fu'>data</span>(<span class='no'>dunkley2006params</span>)
-<span class='no'>dunkley2006params</span></div><div class='output co'>#&gt; Object of class &quot;AnnotationParams&quot;
-#&gt;  Using the &#39;plants_mart&#39; BioMart database
-#&gt;  Using the &#39;athaliana_eg_gene&#39; dataset
-#&gt;  Using &#39;tair_locus&#39; as filter
+<span class='no'>dunkley2006params</span></div><div class='output co'>#&gt; Object of class "AnnotationParams"
+#&gt;  Using the 'plants_mart' BioMart database
+#&gt;  Using the 'athaliana_eg_gene' dataset
+#&gt;  Using 'tair_locus' as filter
 #&gt;  Created on Thu Apr 20 19:19:37 2017</div><div class='input'><span class='no'>fn</span> <span class='kw'>&lt;-</span> <span class='fu'>featureNames</span>(<span class='no'>dunkley2006</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>]
 <span class='fu'>getGOFromFeatures</span>(<span class='no'>fn</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='no'>dunkley2006params</span>)</div><div class='output co'>#&gt;    tair_locus      go_id     namespace_1003
-#&gt; 1   AT2G32920 GO:0005886 cellular_component
-#&gt; 2   AT2G32920 GO:0005794 cellular_component
-#&gt; 3   AT2G32920 GO:0005788 cellular_component
-#&gt; 4   AT2G32920 GO:0005783 cellular_component
-#&gt; 5   AT2G32920 GO:0005783 cellular_component
-#&gt; 6   AT2G32920 GO:0005773 cellular_component
-#&gt; 13  AT2G32920 GO:0005623 cellular_component
-#&gt; 15  AT1G21750 GO:0016020 cellular_component
-#&gt; 16  AT1G21750 GO:0009579 cellular_component
-#&gt; 17  AT1G21750 GO:0009507 cellular_component
-#&gt; 18  AT1G21750 GO:0009505 cellular_component
-#&gt; 19  AT1G21750 GO:0005788 cellular_component
-#&gt; 20  AT1G21750 GO:0005783 cellular_component
-#&gt; 21  AT1G21750 GO:0005783 cellular_component
-#&gt; 22  AT1G21750 GO:0005773 cellular_component
-#&gt; 23  AT1G21750 GO:0005773 cellular_component
-#&gt; 24  AT1G21750 GO:0000327 cellular_component
-#&gt; 25  AT1G21750 GO:0000326 cellular_component
-#&gt; 40  AT1G56340 GO:0005783 cellular_component
-#&gt; 44  AT1G56340 GO:0048046 cellular_component
+#&gt; 3   AT1G09210 GO:0005739 cellular_component
+#&gt; 4   AT1G09210 GO:0048046 cellular_component
+#&gt; 5   AT1G09210 GO:0005788 cellular_component
+#&gt; 6   AT1G09210 GO:0005783 cellular_component
+#&gt; 7   AT1G09210 GO:0005773 cellular_component
+#&gt; 8   AT1G09210 GO:0005783 cellular_component
+#&gt; 15  AT1G21750 GO:0000326 cellular_component
+#&gt; 21  AT1G21750 GO:0009579 cellular_component
+#&gt; 22  AT1G21750 GO:0009505 cellular_component
+#&gt; 23  AT1G21750 GO:0005788 cellular_component
+#&gt; 24  AT1G21750 GO:0005783 cellular_component
+#&gt; 27  AT1G21750 GO:0016020 cellular_component
+#&gt; 30  AT1G21750 GO:0009507 cellular_component
+#&gt; 32  AT1G21750 GO:0005773 cellular_component
+#&gt; 33  AT1G21750 GO:0005773 cellular_component
+#&gt; 36  AT1G21750 GO:0005783 cellular_component
+#&gt; 38  AT1G21750 GO:0000327 cellular_component
+#&gt; 41  AT1G51760 GO:0005788 cellular_component
+#&gt; 42  AT1G51760 GO:0005783 cellular_component
+#&gt; 43  AT1G51760 GO:0005886 cellular_component
 #&gt;                                       name_1006 go_linkage_type
-#&gt; 1                               plasma membrane             IDA
-#&gt; 2                               Golgi apparatus             IDA
-#&gt; 3                   endoplasmic reticulum lumen             IEA
-#&gt; 4                         endoplasmic reticulum             IDA
-#&gt; 5                         endoplasmic reticulum             IEA
-#&gt; 6                                       vacuole             IDA
-#&gt; 13                                         cell             IEA
-#&gt; 15                                     membrane             IDA
-#&gt; 16                                    thylakoid             IDA
-#&gt; 17                                  chloroplast             IDA
-#&gt; 18                         plant-type cell wall             IDA
-#&gt; 19                  endoplasmic reticulum lumen             IEA
-#&gt; 20                        endoplasmic reticulum             IDA
-#&gt; 21                        endoplasmic reticulum             IEA
-#&gt; 22                                      vacuole             IDA
-#&gt; 23                                      vacuole             IEA
-#&gt; 24 lytic vacuole within protein storage vacuole             IDA
-#&gt; 25                      protein storage vacuole             IDA
-#&gt; 40                        endoplasmic reticulum             IEA
-#&gt; 44                                     apoplast             IDA
-#&gt;  [ reached getOption(&quot;max.print&quot;) -- omitted 16 rows ]</div></pre>
+#&gt; 3                                 mitochondrion             IDA
+#&gt; 4                                      apoplast             IDA
+#&gt; 5                   endoplasmic reticulum lumen             IEA
+#&gt; 6                         endoplasmic reticulum             IDA
+#&gt; 7                                       vacuole             IDA
+#&gt; 8                         endoplasmic reticulum             IEA
+#&gt; 15                      protein storage vacuole             IDA
+#&gt; 21                                    thylakoid             IDA
+#&gt; 22                         plant-type cell wall             IDA
+#&gt; 23                  endoplasmic reticulum lumen             IEA
+#&gt; 24                        endoplasmic reticulum             IDA
+#&gt; 27                                     membrane             IDA
+#&gt; 30                                  chloroplast             IDA
+#&gt; 32                                      vacuole             IDA
+#&gt; 33                                      vacuole             IEA
+#&gt; 36                        endoplasmic reticulum             IEA
+#&gt; 38 lytic vacuole within protein storage vacuole             IDA
+#&gt; 41                  endoplasmic reticulum lumen             IEA
+#&gt; 42                        endoplasmic reticulum             IDA
+#&gt; 43                              plasma membrane             IDA
+#&gt;  [ reached getOption("max.print") -- omitted 16 rows ]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

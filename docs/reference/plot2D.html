@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -88,7 +90,7 @@ reduction. <code>plot3D</code> relies on the <code>rgl</code> package, that
 will be loaded automatically.</p>
     
 
-    <pre><span class='fu'>plot2D</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fpch</span>, <span class='kw'>unknown</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>,
+    <pre class="usage"><span class='fu'>plot2D</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fpch</span>, <span class='kw'>unknown</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>,
   <span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='no'>methargs</span>, <span class='kw'>axsSwitch</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mirrorX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mirrorY</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>col</span>, <span class='no'>pch</span>, <span class='no'>cex</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>idx.cex</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='no'>addLegend</span>, <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
@@ -98,33 +100,47 @@ will be loaded automatically.</p>
   <span class='kw'>radius1</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>radius2</span> <span class='kw'>=</span> <span class='no'>radius1</span> * <span class='fl'>2</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>object</dt>
-      <dd>An instance of class <code>MSnSet</code>.</dd>
-      <dt>fcol</dt>
-      <dd>Feature meta-data label (fData column name) defining
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>An instance of class <code>MSnSet</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fcol</th>
+      <td><p>Feature meta-data label (fData column name) defining
 the groups to be differentiated using different
 colours. Default is <code>markers</code>. Use <code>NULL</code> to
-suppress any colouring.</dd>
-      <dt>fpch</dt>
-      <dd>Featre meta-data label (fData column name) desining
-the groups to be differentiated using different point symbols.</dd>
-      <dt>unknown</dt>
-      <dd>A <code>character</code> (default is <code>&quot;unknown&quot;</code>)
+suppress any colouring.</p></td>
+    </tr>
+    <tr>
+      <th>fpch</th>
+      <td><p>Featre meta-data label (fData column name) desining
+the groups to be differentiated using different point symbols.</p></td>
+    </tr>
+    <tr>
+      <th>unknown</th>
+      <td><p>A <code>character</code> (default is <code>"unknown"</code>)
 defining how proteins of unknown/un-labelled localisation are
-labelled.</dd>
-      <dt>dims</dt>
-      <dd>A <code>numeric</code> of length 2 (or 3 for <code>plot3D</code>)
+labelled.</p></td>
+    </tr>
+    <tr>
+      <th>dims</th>
+      <td><p>A <code>numeric</code> of length 2 (or 3 for <code>plot3D</code>)
 defining the dimensions to be plotted. Defaults are <code>c(1,
-2)</code> and <code>c(1, 2, 3)</code>.  Always <code>1:2</code> for MDS.</dd>
-      <dt>score</dt>
-      <dd>A numeric specifying the minimum organelle assignment
+2)</code> and <code>c(1, 2, 3)</code>.  Always <code>1:2</code> for MDS.</p></td>
+    </tr>
+    <tr>
+      <th>score</th>
+      <td><p>A numeric specifying the minimum organelle assignment
 score to consider features to be assigned an organelle. (not
-yet implemented).</dd>
-      <dt>method</dt>
-      <dd>A <code>character</code> describe how to transform the
-    data or what to plot. One of <code>&quot;PCA&quot;</code> (default),
-    <code>&quot;MDS&quot;</code>, <code>&quot;kpca&quot;</code>, <code>&quot;t-SNE&quot;</code> or <code>&quot;lda&quot;</code>,
+yet implemented).</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>A <code>character</code> describe how to transform the
+    data or what to plot. One of <code>"PCA"</code> (default),
+    <code>"MDS"</code>, <code>"kpca"</code>, <code>"t-SNE"</code> or <code>"lda"</code>,
     defining what dimensionality reduction is applied: principal
     component analysis (see <code>prcomp</code>), classical
     multidimensional scaling (see <code>cmdscale</code>), kernel
@@ -134,12 +150,11 @@ yet implemented).</dd>
     defined the sub-cellular clusters so that the ration between
     within ad between cluster variance is maximised. All the other
     methods are unsupervised and make use <code>fcol</code> only to
-    annotate the plot. <code>&quot;scree&quot;</code> can also be used to produce
-    a scree plot. <code>&quot;hexbin&quot;</code> applies PCA to the data and uses
+    annotate the plot. <code>"scree"</code> can also be used to produce
+    a scree plot. <code>"hexbin"</code> applies PCA to the data and uses
     bivariate binning into hexagonal cells from
-    <code><a href='http://www.rdocumentation.org/packages/hexbin/topics/hexbin'>hexbin</a></code> to emphasise cluster density.
-
-    If none is used, the data is plotted as is, i.e. without any
+    <code><a href='http://www.rdocumentation.org/packages/hexbin/topics/hexbin'>hexbin</a></code> to emphasise cluster density.</p>
+<p>If none is used, the data is plotted as is, i.e. without any
     transformation. In this case, <code>object</code> can either be an
     <code>MSnSet</code> or a <code>matrix</code> (as invisibly returned by
     <code>plot2D</code>). This enables to re-generate the figure without
@@ -147,66 +162,96 @@ yet implemented).</dd>
     which can be time consuming for certain methods. If <code>object</code>
     is a <code>matrix</code>, an <code>MSnSet</code> containing the feature
     metadata must be provided in <code>methargs</code> (see below for
-    details).
-
-    Available methods are listed in <code>plot2Dmethods</code>.</dd>
-      <dt>methargs</dt>
-      <dd>A <code>list</code> of arguments to be passed when
+    details).</p>
+<p>Available methods are listed in <code>plot2Dmethods</code>.</p></td>
+    </tr>
+    <tr>
+      <th>methargs</th>
+      <td><p>A <code>list</code> of arguments to be passed when
 <code>method</code> is called. If missing, the data will be scaled
-and centred prior to PCA and t-SNE (i.e. <code>Rtsne</code>&#39;s
+and centred prior to PCA and t-SNE (i.e. <code>Rtsne</code>'s
 arguments <code>pca_center</code> and <code>pca_scale</code> are set to
-<code>TRUE</code>). If <code>method = &quot;none&quot;</code> and <code>object</code> is a
+<code>TRUE</code>). If <code>method = "none"</code> and <code>object</code> is a
 <code>matrix</code>, then the first and only argument of
 <code>methargs</code> must be an <code>MSnSet</code> with matching
-features with <code>object</code>.</dd>
-      <dt>axsSwitch</dt>
-      <dd>A <code>logical</code> indicating whether the axes
-should be switched.</dd>
-      <dt>mirrorX</dt>
-      <dd>A <code>logical</code> indicating whether the x axis
-should be mirrored?</dd>
-      <dt>mirrorY</dt>
-      <dd>A <code>logical</code> indicating whether the y axis
-should be mirrored?</dd>
-      <dt>col</dt>
-      <dd>A <code>character</code> of appropriate length defining
-colours.</dd>
-      <dt>pch</dt>
-      <dd>A <code>character</code> of appropriate length defining point
-character.</dd>
-      <dt>cex</dt>
-      <dd>Character expansion.</dd>
-      <dt>index</dt>
-      <dd>A <code>logical</code> (default is <code>FALSE</code>, indicating
+features with <code>object</code>.</p></td>
+    </tr>
+    <tr>
+      <th>axsSwitch</th>
+      <td><p>A <code>logical</code> indicating whether the axes
+should be switched.</p></td>
+    </tr>
+    <tr>
+      <th>mirrorX</th>
+      <td><p>A <code>logical</code> indicating whether the x axis
+should be mirrored?</p></td>
+    </tr>
+    <tr>
+      <th>mirrorY</th>
+      <td><p>A <code>logical</code> indicating whether the y axis
+should be mirrored?</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>A <code>character</code> of appropriate length defining
+colours.</p></td>
+    </tr>
+    <tr>
+      <th>pch</th>
+      <td><p>A <code>character</code> of appropriate length defining point
+character.</p></td>
+    </tr>
+    <tr>
+      <th>cex</th>
+      <td><p>Character expansion.</p></td>
+    </tr>
+    <tr>
+      <th>index</th>
+      <td><p>A <code>logical</code> (default is <code>FALSE</code>, indicating
 of the feature indices should be plotted on top of the
-symbols.</dd>
-      <dt>idx.cex</dt>
-      <dd>A <code>numeric</code> specifying the character expansion
+symbols.</p></td>
+    </tr>
+    <tr>
+      <th>idx.cex</th>
+      <td><p>A <code>numeric</code> specifying the character expansion
 (default is 0.75) for the feature indices. Only relevant when
-<code>index</code> is TRUE.</dd>
-      <dt>addLegend</dt>
-      <dd>A character indicating where to add the
+<code>index</code> is TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>addLegend</th>
+      <td><p>A character indicating where to add the
 legend. See <code><a href='addLegend.html'>addLegend</a></code>for details. If missing
-(default), no legend is added.</dd>
-      <dt>identify</dt>
-      <dd>A logical (default is <code>TRUE</code>) defining if
+(default), no legend is added.</p></td>
+    </tr>
+    <tr>
+      <th>identify</th>
+      <td><p>A logical (default is <code>TRUE</code>) defining if
 user interaction will be expected to identify individual data
-points on the plot. See also <code>identify</code>.</dd>
-      <dt>plot</dt>
-      <dd>A <code>logical</code> defining if the figure should be
+points on the plot. See also <code>identify</code>.</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>A <code>logical</code> defining if the figure should be
 plotted.  Useful when retrieving data only. Default is
-<code>TRUE</code>.</dd>
-      <dt>...</dt>
-      <dd>Additional parameters passed to <code>plot</code> and
-<code>points</code>.</dd>
-      <dt>radius1</dt>
-      <dd>A <code>numeric</code> specifying the radius of feature
+<code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to <code>plot</code> and
+<code>points</code>.</p></td>
+    </tr>
+    <tr>
+      <th>radius1</th>
+      <td><p>A <code>numeric</code> specifying the radius of feature
 of unknown localisation. Default is 0.1, which is specidied on
-the data scale. See <code><a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code> for details.</dd>
-      <dt>radius2</dt>
-      <dd>A <code>numeric</code> specifying the radius of marker
-feature. Default is <code>radius</code> * 2.</dd>
-    </dl>
+the data scale. See <code><a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>radius2</th>
+      <td><p>A <code>numeric</code> specifying the radius of marker
+feature. Default is <code>radius</code> * 2.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -215,26 +260,24 @@ feature. Default is <code>radius</code> * 2.</dd>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><ul>
-<li> Note that <code>plot2D</code> has been update in version 1.3.6 to
+    <ul>
+<li><p>Note that <code>plot2D</code> has been update in version 1.3.6 to
        support more organelle classes than colours defined in
-       <code><a href='setLisacol.html'>getStockcol</a></code>. In such cases, the default
+       <code><a href='getStockcol.html'>getStockcol</a></code>. In such cases, the default
        colours are recycled using the default plotting characters
-       defined in <code><a href='setLisacol.html'>getStockpch</a></code>. See the example for
+       defined in <code><a href='getStockcol.html'>getStockpch</a></code>. See the example for
        an illustration. The <code>alpha</code> argument is also
        depreciated in version 1.3.6. Use <code>setStockcol</code> to set
-       colours with transparency instead. See example below.</p>
-    <p></li>
-<li> Version 1.11.3: to plot data as is, i.e. without any
-      transformation, <code>method</code> can be set to &quot;none&quot; (as
+       colours with transparency instead. See example below.</p></li>
+<li><p>Version 1.11.3: to plot data as is, i.e. without any
+      transformation, <code>method</code> can be set to "none" (as
       opposed to passing pre-computed values to <code>method</code> as a
       <code>matrix</code>, in previous versions). If <code>object</code> is an
       <code>MSnSet</code>, the untransformed values in the assay data
       will be plotted. If <code>object</code> is a <code>matrix</code> with
       coordinates, then a matching <code>MSnSet</code> must be passed to
-      <code>methargs</code>.
-</li>
-</ul></p>
+      <code>methargs</code>.</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -253,19 +296,19 @@ feature. Default is <code>radius</code> * 2.</dd>
           <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>,
           <span class='kw'>where</span> <span class='kw'>=</span> <span class='st'>"topright"</span>,
           <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>bty</span> <span class='kw'>=</span> <span class='st'>"n"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'>title</span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"plot2D example"</span>)</div><img src='plot2D-8.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## available methods</span>
-<span class='no'>plot2Dmethods</span></div><div class='output co'>#&gt; [1] &quot;PCA&quot;    &quot;MDS&quot;    &quot;kpca&quot;   &quot;lda&quot;    &quot;t-SNE&quot;  &quot;hexbin&quot; &quot;none&quot;   &quot;scree&quot; </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><img src='plot2D-12.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+<span class='no'>plot2Dmethods</span></div><div class='output co'>#&gt; [1] "PCA"    "MDS"    "kpca"   "lda"    "t-SNE"  "hexbin" "none"   "scree" </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><img src='plot2D-12.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
        <span class='kw'>methargs</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)))</div><img src='plot2D-14.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lda"</span>)</div><img src='plot2D-16.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hexbin"</span>)</div><img src='plot2D-18.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## Using transparent colours</span>
-<span class='fu'><a href='setLisacol.html'>setStockcol</a></span>(<span class='fu'>paste0</span>(<span class='fu'><a href='setLisacol.html'>getStockcol</a></span>(), <span class='st'>"80"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign(&quot;stockcol&quot;, cols, envir = .pRolocEnv): cannot change value of locked binding for &#39;stockcol&#39;</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='co'>## New behavious in 1.3.6 when not enough colours</span>
-<span class='fu'><a href='setLisacol.html'>setStockcol</a></span>(<span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign(&quot;stockcol&quot;, cols, envir = .pRolocEnv): cannot change value of locked binding for &#39;stockcol&#39;</span></div><div class='input'><span class='fu'><a href='setLisacol.html'>getStockcol</a></span>() <span class='co'>## only 3 colours to be recycled</span></div><div class='output co'>#&gt;  [1] &quot;#E41A1C&quot; &quot;#377EB8&quot; &quot;#238B45&quot; &quot;#FF7F00&quot; &quot;#FFD700&quot; &quot;#333333&quot; &quot;#00CED1&quot;
-#&gt;  [8] &quot;#A65628&quot; &quot;#F781BF&quot; &quot;#984EA3&quot; &quot;#9ACD32&quot; &quot;#B0C4DE&quot; &quot;#00008A&quot; &quot;#8B795E&quot;
-#&gt; [15] &quot;#FDAE6B&quot; &quot;#66C2A5&quot; &quot;#276419&quot; &quot;#CD8C95&quot; &quot;#6A51A3&quot; &quot;#EEAD0E&quot; &quot;#0000FF&quot;
-#&gt; [22] &quot;#9ACD32&quot; &quot;#CD6090&quot; &quot;#CD5B45&quot; &quot;#8E0152&quot; &quot;#808000&quot; &quot;#67000D&quot; &quot;#3F007D&quot;
-#&gt; [29] &quot;#6BAED6&quot; &quot;#FC9272&quot;</div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span>(<span class='no'>dunkley2006</span>)</div><div class='output co'>#&gt; organelleMarkers
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='fu'>paste0</span>(<span class='fu'><a href='getStockcol.html'>getStockcol</a></span>(), <span class='st'>"80"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", cols, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='co'>## New behavious in 1.3.6 when not enough colours</span>
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", cols, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'><a href='getStockcol.html'>getStockcol</a></span>() <span class='co'>## only 3 colours to be recycled</span></div><div class='output co'>#&gt;  [1] "#E41A1C" "#377EB8" "#238B45" "#FF7F00" "#FFD700" "#333333" "#00CED1"
+#&gt;  [8] "#A65628" "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#8B795E"
+#&gt; [15] "#FDAE6B" "#66C2A5" "#276419" "#CD8C95" "#6A51A3" "#EEAD0E" "#0000FF"
+#&gt; [22] "#9ACD32" "#CD6090" "#CD5B45" "#8E0152" "#808000" "#67000D" "#3F007D"
+#&gt; [29] "#6BAED6" "#FC9272"</div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span>(<span class='no'>dunkley2006</span>)</div><div class='output co'>#&gt; organelleMarkers
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            45            28            55            20 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
 #&gt;            46            19            13           428            21 </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>)</div><img src='plot2D-29.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## reset colours</span>
-<span class='fu'><a href='setLisacol.html'>setStockcol</a></span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='error'>Error in assign(&quot;stockcol&quot;, stockcol, envir = .pRolocEnv): cannot change value of locked binding for &#39;stockcol&#39;</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along 2 first fractions</span></div><img src='plot2D-33.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>5</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along fractions 3 and 5</span></div><img src='plot2D-35.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", stockcol, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along 2 first fractions</span></div><img src='plot2D-33.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>5</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along fractions 3 and 5</span></div><img src='plot2D-35.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 <span class='fu'>head</span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;           PC1 (64.36%) PC2 (22.34%)
 #&gt; AT1G09210    -4.734261   -0.8204175

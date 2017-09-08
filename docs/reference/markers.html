@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -85,7 +87,7 @@
 an existing matrix (vector) marker set.</p>
     
 
-    <pre><span class='fu'>mrkVecToMat</span>(<span class='no'>object</span>, <span class='kw'>vfcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>mfcol</span> <span class='kw'>=</span> <span class='st'>"Markers"</span>)
+    <pre class="usage"><span class='fu'>mrkVecToMat</span>(<span class='no'>object</span>, <span class='kw'>vfcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>mfcol</span> <span class='kw'>=</span> <span class='st'>"Markers"</span>)
 
 <span class='fu'>mrkMatToVec</span>(<span class='no'>object</span>, <span class='kw'>mfcol</span> <span class='kw'>=</span> <span class='st'>"Markers"</span>, <span class='kw'>vfcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)
 
@@ -100,18 +102,27 @@ an existing matrix (vector) marker set.</p>
 <span class='fu'>mrkEncoding</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>object</dt>
-      <dd>An <code>MSnSet</code> object</dd>
-      <dt>vfcol</dt>
-      <dd>The name of the <em>vector</em> marker feature
-variable. Default is <code>&quot;markers&quot;</code>.</dd>
-      <dt>mfcol</dt>
-      <dd>The name of the <em>matrix</em> marker feature
-variable. Default is <code>&quot;Markers&quot;</code>.</dd>
-      <dt>fcol</dt>
-      <dd>A marker feature variable name.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>An <code>MSnSet</code> object</p></td>
+    </tr>
+    <tr>
+      <th>vfcol</th>
+      <td><p>The name of the <em>vector</em> marker feature
+variable. Default is <code>"markers"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>mfcol</th>
+      <td><p>The name of the <em>matrix</em> marker feature
+variable. Default is <code>"Markers"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fcol</th>
+      <td><p>A marker feature variable name.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -125,7 +136,7 @@ spatial markers can be represented as character <em>vectors</em>
 (<code>character</code> or <code>factor</code>, to be accurate), stored as
 feature metadata, and proteins of unknown or uncertain
 localisation (unlabelled, to be classified) are marked with the
-<code>&quot;unknown&quot;</code> character. While very handy, this encoding
+<code>"unknown"</code> character. While very handy, this encoding
 suffers from some drawbacks, in particular the difficulty to label
 proteins that reside in multiple (possible or actual)
 localisations. The markers vector feature data is typically named
@@ -137,20 +148,20 @@ binary markers matrix and the resident proteins are encoded with
 (i.e. no multi-localisation) or their localisation is unknown
 (unlabelled), then both encodings are equivalent. When the markers
 are encoded as vectors, features of unknown localisation are
-defined as <code>fData(object)[, fcol] == &quot;unknown&quot;</code>. For
+defined as <code>fData(object)[, fcol] == "unknown"</code>. For
 matrix-encoded markers, unlabelled proteins are defined as
 <code>rowSums(fData(object)[, fcol]) == 0</code>.</p>
-    <p>The <code>mrkMatToVec</code> and <code>mrkVecToMat</code> functions enable the
+<p>The <code>mrkMatToVec</code> and <code>mrkVecToMat</code> functions enable the
 conversion from matrix (vector) to vector (matrix). The
 <code>mrkMatAndVec</code> function generates the missing encoding from
 the existing one. If the destination encoding already exists, or,
 more accurately, if the feature variable of the destination
 encoding exists, an error is thrown. During the conversion from
 matrix to vector, if multiple possible label exists, they are
-dropped, i.e. they are converted to <code>&quot;unknown&quot;</code>. Function
+dropped, i.e. they are converted to <code>"unknown"</code>. Function
 <code>isMrkVec</code> and <code>isMrkMat</code> can be used to test if a
 marker set is encoded as a vector or a matrix. <code>mrkEncoding</code>
-returns either <code>&quot;vector&quot;</code> or <code>&quot;matrix&quot;</code> depending on the
+returns either <code>"vector"</code> or <code>"matrix"</code> depending on the
 nature of the markers.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

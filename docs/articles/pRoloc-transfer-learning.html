@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Mon Aug 21 14:07:04 2017</code></pre>
+##  Created on Fri Sep  8 16:41:06 2017</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">andygoset &lt;-<span class="st"> </span><span class="kw"><a href="../reference/makeGoSet.html">makeGoSet</a></span>(andy2011)
 andygoset</code></pre></div>
 <pre><code>## MSnSet (storageMode: lockedEnvironment)
-## assayData: 1371 features, 811 samples 
+## assayData: 1371 features, 822 samples 
 ##   element names: exprs 
 ## protocolData: none
 ## phenoData: none
@@ -157,18 +157,18 @@ andygoset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Mon Aug 21 14:07:27 2017] 
+## Constructed GO set using cellular_component namespace [Fri Sep  8 16:41:30 2017] 
 ##  MSnbase version: 2.3.10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
-<pre><code>##        GO:0005789 GO:0005783 GO:0005730 GO:0016021
+<pre><code>##        GO:0016020 GO:0016021 GO:0005783 GO:0005730
 ## O00767          1          1          1          1
-## P51648          1          1          0          1
-## Q2TAA5          1          1          0          1
-## Q9UKV5          1          1          0          1
-## Q12797          1          1          0          1
-## P16615          1          1          0          1
-## Q96SQ9          1          1          0          0</code></pre>
-<p>We now have a primary data set, composed of 1371 protein quantitative profiles for 8 fractions along the density gradient and an auxiliary data set for 811 cellular compartment GO terms for the same 1371 features.</p>
+## P51648          1          1          1          0
+## Q2TAA5          1          1          1          0
+## Q9UKV5          1          1          1          0
+## Q12797          1          1          1          0
+## P16615          1          1          1          0
+## Q96SQ9          1          0          1          0</code></pre>
+<p>We now have a primary data set, composed of 1371 protein quantitative profiles for 8 fractions along the density gradient and an auxiliary data set for 822 cellular compartment GO terms for the same 1371 features.</p>
 </div>
 <div id="sec:annotrepro" class="section level3">
 <h3 class="hasAnchor">
@@ -405,7 +405,7 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
                           <span class="dt">k =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>),
                           <span class="dt">fcol =</span> <span class="st">"markers.tl"</span>,
                           <span class="dt">times =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>## Removing 433 columns with only 0s.</code></pre>
+<pre><code>## Removing 442 columns with only 0s.</code></pre>
 <pre><code>## Note: vector will be ordered according to classes: Cytosol Cytosol/Nucleus ER Golgi Lysosome Mitochondrion Nucleus PM Ribosome 40S Ribosome 60S (as names are not explicitly defined)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topt</code></pre></div>
 <pre><code>## Object of class "ThetaRegRes"
@@ -420,18 +420,18 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 ## Results
 ##  macro F1:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7999  0.8370  0.8580  0.8584  0.8811  0.9162 
+##  0.7856  0.8460  0.8654  0.8554  0.8783  0.9017 
 ##  best theta:
 ##             Cytosol Cytosol.Nucleus ER Golgi Lysosome Mitochondrion
-## weight:0          0               0  3     2        0             2
-## weight:0.33       0               1  0     2        0             2
-## weight:0.67       1               2  2     1        3             1
-## weight:1          4               2  0     0        2             0
+## weight:0          0               0  4     1        0             1
+## weight:0.33       0               0  0     4        0             4
+## weight:0.67       0               1  1     0        1             0
+## weight:1          5               4  0     0        4             0
 ##             Nucleus PM Ribosome.40S Ribosome.60S
-## weight:0          2  2            2            0
-## weight:0.33       3  2            1            0
-## weight:0.67       0  1            0            4
-## weight:1          0  0            2            1</code></pre>
+## weight:0          1  1            1            0
+## weight:0.33       4  4            0            0
+## weight:0.67       0  0            0            5
+## weight:1          0  0            4            0</code></pre>
 <p>The optimisation is performed on the labelled marker examples only. When removing unlabelled non-marker proteins (the <code>unknowns</code>), some auxiliary GO columns end up containing only 0 (the GO-protein association was only observed in non-marker proteins), which are temporarily removed.</p>
 <p>The <code>topt</code> result stores all the result from the optimisation step, and in particular the observed theta weights, which can be directly plotted as shown on the <a href="#fig:bubble">bubble plot</a> below. These bubble plots give the proportion of best weights for each marker class that was observed during the optimisation phase. We see that the mitochondrion, the cytosol and cytosol/nucleus classes predominantly are scored with height weights (2/3 and 1), consistent with high reliability of the primary data. The Golgi and the ribosomal clusters (and to a lesser extend the ER) favour smaller scores, indicating a substantial benefit of the auxiliary data.</p>
 <div class="figure">
@@ -444,11 +444,11 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 <p>A set of best weights must be chosen and applied to the classification of the unlabelled proteins (formally annotated as <code>unknown</code>). These can be defined manually, based on the pattern observed in the weights <a href="#fig:bubble">bubble plot</a>, or automatically extracted with the <em>getParams</em> method<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>. See <em>?getParams</em> for details and the <em>favourPrimary</em> function, if it is desirable to systematically favour the primary data (i.e. high weights) when different weight combinations perform equally well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/GenRegRes-class.html">getParams</a></span>(topt)</code></pre></div>
 <pre><code>##         Cytosol Cytosol/Nucleus              ER           Golgi 
-##       1.0000000       0.6666667       0.0000000       0.3333333 
+##       1.0000000       1.0000000       0.0000000       0.3333333 
 ##        Lysosome   Mitochondrion         Nucleus              PM 
-##       0.6666667       0.3333333       0.3333333       0.3333333 
+##       1.0000000       0.3333333       0.3333333       0.3333333 
 ##    Ribosome 40S    Ribosome 60S 
-##       0.3333333       0.6666667</code></pre>
+##       1.0000000       0.6666667</code></pre>
 <p>We provide the best parameters for the extensive parameter optimisation search, as provided by <em>getParams</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(bw &lt;-<span class="st"> </span><span class="kw">experimentData</span>(andy2011)<span class="op">@</span>other<span class="op">$</span>knntl<span class="op">$</span>thetas)</code></pre></div>
 <pre><code>##         Cytosol Cytosol/Nucleus              ER           Golgi 
@@ -470,11 +470,11 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">andy2011 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(andy2011, <span class="dt">fcol =</span> <span class="st">"knntl"</span>)</code></pre></div>
 <pre><code>## ans
 ## Chromatin associated              Cytosol      Cytosol/Nucleus 
-##                   11                  283                   53 
+##                   11                  285                   48 
 ##             Endosome                   ER                Golgi 
-##                   12                  209                   64 
+##                   12                  206                   63 
 ##             Lysosome        Mitochondrion              Nucleus 
-##                   62                  257                  108 
+##                   62                  258                  114 
 ##                   PM         Ribosome 40S         Ribosome 60S 
 ##                  237                   20                   55</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/getStockcol.html">setStockcol</a></span>(<span class="kw">paste0</span>(<span class="kw"><a href="../reference/getStockcol.html">getStockcol</a></span>(), <span class="st">"80"</span>))
@@ -525,52 +525,53 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 ##  [1] hpar_1.19.1          biomaRt_2.33.4       class_7.3-14        
 ##  [4] pRolocdata_1.15.0    pRoloc_1.17.4        MLInterfaces_1.57.0 
 ##  [7] cluster_2.0.6        annotate_1.55.0      XML_3.98-1.9        
-## [10] AnnotationDbi_1.39.2 IRanges_2.11.12      S4Vectors_0.15.5    
+## [10] AnnotationDbi_1.39.3 IRanges_2.11.12      S4Vectors_0.15.5    
 ## [13] MSnbase_2.3.10       ProtGenerics_1.9.0   BiocParallel_1.11.6 
-## [16] mzR_2.11.7           Rcpp_0.12.12         Biobase_2.37.2      
-## [19] BiocGenerics_0.23.0  dplyr_0.7.2          knitr_1.17          
+## [16] mzR_2.11.8           Rcpp_0.12.12         Biobase_2.37.2      
+## [19] BiocGenerics_0.23.1  dplyr_0.7.2          knitr_1.17          
 ## [22] BiocStyle_2.5.19    
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] backports_1.1.0       plyr_1.8.4            lazyeval_0.2.0       
-##   [4] splines_3.4.0         ggvis_0.4.3           ggplot2_2.2.1        
-##   [7] digest_0.6.12         foreach_1.4.3         BiocInstaller_1.27.3 
-##  [10] htmltools_0.3.6       viridis_0.4.0         gdata_2.18.0         
-##  [13] magrittr_1.5          memoise_1.1.0         doParallel_1.0.10    
-##  [16] sfsmisc_1.1-1         limma_3.33.7          rda_1.0.2-2          
-##  [19] lpSolve_5.6.13        prettyunits_1.0.2     colorspace_1.3-2     
-##  [22] blob_1.1.0            RCurl_1.95-4.8        jsonlite_1.5         
-##  [25] hexbin_1.27.1         genefilter_1.59.0     lme4_1.1-13          
-##  [28] bindr_0.1             impute_1.51.0         survival_2.41-3      
-##  [31] iterators_1.0.8       glue_1.1.1            gtable_0.2.0         
-##  [34] zlibbioc_1.23.0       MatrixModels_0.4-1    car_2.1-5            
-##  [37] kernlab_0.9-25        prabclus_2.2-6        DEoptimR_1.0-8       
-##  [40] SparseM_1.77          scales_0.4.1          vsn_3.45.2           
-##  [43] mvtnorm_1.0-6         DBI_0.7               viridisLite_0.2.0    
-##  [46] xtable_1.8-2          progress_1.1.2        bit_1.1-12           
-##  [49] proxy_0.4-17          mclust_5.3            preprocessCore_1.39.0
-##  [52] htmlwidgets_0.9       sampling_2.8          threejs_0.2.2        
-##  [55] FNN_1.1               RColorBrewer_1.1-2    fpc_2.1-10           
-##  [58] modeltools_0.2-21     pkgconfig_2.0.1       flexmix_2.3-14       
-##  [61] nnet_7.3-12           caret_6.0-76          rlang_0.1.2          
-##  [64] reshape2_1.4.2        munsell_0.4.3         mlbench_2.1-1        
-##  [67] tools_3.4.0           RSQLite_2.0           pls_2.6-0            
-##  [70] evaluate_0.10.1       stringr_1.2.0         mzID_1.15.0          
-##  [73] yaml_2.1.14           ModelMetrics_1.1.0    bit64_0.9-7          
-##  [76] robustbase_0.92-7     randomForest_4.6-12   dendextend_1.5.2     
-##  [79] bindrcpp_0.2          nlme_3.1-131          whisker_0.3-2        
-##  [82] mime_0.5              quantreg_5.33         compiler_3.4.0       
-##  [85] pbkrtest_0.4-7        e1071_1.6-8           affyio_1.47.0        
-##  [88] tibble_1.3.3          stringi_1.1.5         highr_0.6            
-##  [91] lattice_0.20-35       trimcluster_0.1-2     Matrix_1.2-10        
-##  [94] nloptr_1.0.4          gbm_2.1.3             MALDIquant_1.16.2    
-##  [97] bitops_1.0-6          httpuv_1.3.5          R6_2.2.2             
-## [100] pcaMethods_1.69.0     affy_1.55.0           hwriter_1.3.2        
-## [103] gridExtra_2.2.1       codetools_0.2-15      MASS_7.3-47          
-## [106] gtools_3.5.0          assertthat_0.2.0      rprojroot_1.2        
-## [109] diptest_0.75-7        mgcv_1.8-18           grid_3.4.0           
-## [112] rpart_4.1-11          minqa_1.2.4           rmarkdown_1.6        
-## [115] Rtsne_0.13            shiny_1.0.3           base64enc_0.1-3</code></pre>
+##   [1] backports_1.1.0       plyr_1.8.4            igraph_1.1.2         
+##   [4] lazyeval_0.2.0        splines_3.4.0         ggvis_0.4.3          
+##   [7] crosstalk_1.0.0       ggplot2_2.2.1         digest_0.6.12        
+##  [10] foreach_1.4.3         BiocInstaller_1.27.3  htmltools_0.3.6      
+##  [13] viridis_0.4.0         gdata_2.18.0          magrittr_1.5         
+##  [16] memoise_1.1.0         doParallel_1.0.10     sfsmisc_1.1-1        
+##  [19] limma_3.33.7          rda_1.0.2-2           lpSolve_5.6.13       
+##  [22] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.0           
+##  [25] RCurl_1.95-4.8        hexbin_1.27.1         genefilter_1.59.0    
+##  [28] lme4_1.1-13           bindr_0.1             impute_1.51.0        
+##  [31] survival_2.41-3       iterators_1.0.8       glue_1.1.1           
+##  [34] gtable_0.2.0          zlibbioc_1.23.0       MatrixModels_0.4-1   
+##  [37] car_2.1-5             kernlab_0.9-25        prabclus_2.2-6       
+##  [40] DEoptimR_1.0-8        SparseM_1.77          scales_0.4.1         
+##  [43] vsn_3.45.2            mvtnorm_1.0-6         DBI_0.7              
+##  [46] viridisLite_0.2.0     xtable_1.8-2          progress_1.1.2       
+##  [49] bit_1.1-12            proxy_0.4-17          mclust_5.3           
+##  [52] preprocessCore_1.39.0 htmlwidgets_0.9       sampling_2.8         
+##  [55] threejs_0.3.1         FNN_1.1               RColorBrewer_1.1-2   
+##  [58] fpc_2.1-10            modeltools_0.2-21     pkgconfig_2.0.1      
+##  [61] flexmix_2.3-14        nnet_7.3-12           caret_6.0-76         
+##  [64] rlang_0.1.2           reshape2_1.4.2        munsell_0.4.3        
+##  [67] mlbench_2.1-1         tools_3.4.0           RSQLite_2.0          
+##  [70] pls_2.6-0             evaluate_0.10.1       stringr_1.2.0        
+##  [73] mzID_1.15.0           yaml_2.1.14           ModelMetrics_1.1.0   
+##  [76] bit64_0.9-7           robustbase_0.92-7     randomForest_4.6-12  
+##  [79] dendextend_1.5.2      bindrcpp_0.2          nlme_3.1-131         
+##  [82] whisker_0.3-2         mime_0.5              quantreg_5.33        
+##  [85] compiler_3.4.0        pbkrtest_0.4-7        e1071_1.6-8          
+##  [88] affyio_1.47.0         tibble_1.3.3          stringi_1.1.5        
+##  [91] highr_0.6             lattice_0.20-35       trimcluster_0.1-2    
+##  [94] Matrix_1.2-11         nloptr_1.0.4          gbm_2.1.3            
+##  [97] MALDIquant_1.16.2     bitops_1.0-6          httpuv_1.3.5         
+## [100] R6_2.2.2              pcaMethods_1.69.0     affy_1.55.0          
+## [103] hwriter_1.3.2         gridExtra_2.2.1       codetools_0.2-15     
+## [106] MASS_7.3-47           gtools_3.5.0          assertthat_0.2.0     
+## [109] rprojroot_1.2         diptest_0.75-7        mgcv_1.8-18          
+## [112] grid_3.4.0            rpart_4.1-11          minqa_1.2.4          
+## [115] rmarkdown_1.6         Rtsne_0.13            shiny_1.0.4          
+## [118] base64enc_0.1-3</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

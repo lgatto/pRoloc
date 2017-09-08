@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -85,25 +87,36 @@
 number of 0 values.</p>
     
 
-    <pre><span class='fu'>filterBinMSnSet</span>(<span class='no'>object</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>t</span>, <span class='no'>q</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>filterBinMSnSet</span>(<span class='no'>object</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>t</span>, <span class='no'>q</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>object</dt>
-      <dd>An <code>MSnSet</code></dd>
-      <dt>MARGIN</dt>
-      <dd>1 or 2. Default is 2.</dd>
-      <dt>t</dt>
-      <dd>Rows/columns that have <code>t</code> or less <code>1</code>s, it
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>An <code>MSnSet</code></p></td>
+    </tr>
+    <tr>
+      <th>MARGIN</th>
+      <td><p>1 or 2. Default is 2.</p></td>
+    </tr>
+    <tr>
+      <th>t</th>
+      <td><p>Rows/columns that have <code>t</code> or less <code>1</code>s, it
 will be filtered out. When <code>t</code> and <code>q</code> are missing,
-default is to use <code>t = 1</code>.</dd>
-      <dt>q</dt>
-      <dd>If a row has a higher quantile than defined by <code>q</code>,
-it will be filtered out.</dd>
-      <dt>verbose</dt>
-      <dd>A <code>logical</code> defining of a message is to be
-printed. Default is <code>TRUE</code>.</dd>
-    </dl>
+default is to use <code>t = 1</code>.</p></td>
+    </tr>
+    <tr>
+      <th>q</th>
+      <td><p>If a row has a higher quantile than defined by <code>q</code>,
+it will be filtered out.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>A <code>logical</code> defining of a message is to be
+printed. Default is <code>TRUE</code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

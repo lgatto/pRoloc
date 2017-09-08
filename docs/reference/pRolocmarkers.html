@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -87,13 +89,16 @@ marker sets. The markers can be added to and <code>MSnSet</code> using
 the <code><a href='addMarkers.html'>addMarkers</a></code> function.</p>
     
 
-    <pre><span class='fu'>pRolocmarkers</span>(<span class='no'>species</span>)</pre>
+    <pre class="usage"><span class='fu'>pRolocmarkers</span>(<span class='no'>species</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>species</dt>
-      <dd>The species of interest.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>species</th>
+      <td><p>The species of interest.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -113,7 +118,7 @@ and references).  Curation involved verification of publicly
 available subcellular localisation annotation based on the
 curators knowledge of the organelles/proteins considered and
 tracing the original statement in the literature.</p>
-    <p>These markers are provided as a starting point to generate
+<p>These markers are provided as a starting point to generate
 reliable sets of organelle markers but still need to be verified
 against any new data in the light of the quantitative data and the
 study conditions.</p>
@@ -121,7 +126,7 @@ study conditions.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='addMarkers.html'>addMarkers</a></code> to add markers to an
-<code>MSnSet</code> and <code><a href='mrkVecToMat.html'>markers</a></code> for more information about
+<code>MSnSet</code> and <code><a href='markers.html'>markers</a></code> for more information about
 marker encoding.</p>
     
 

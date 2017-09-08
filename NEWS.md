@@ -1,5 +1,8 @@
 # pRoloc 1.17
 
+## Changes in version 1.17.8
+- Nothing yet <2017-09-08 Fri>
+
 ## Changes in version 1.17.4
 
 - Added new (private) dimred function that computes dimensionality

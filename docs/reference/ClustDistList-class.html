@@ -135,7 +135,7 @@
   <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='addGoAnnotations.html'>addGoAnnotations</a></span>(<span class='no'>dunkley2006</span>, <span class='no'>par</span>)
 
   <span class='co'>## filter</span>
-  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 18 out of 171 in GOAnnotations</span></div><div class='input'>  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>.25</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 13 out of 18 in GOAnnotations</span></div><div class='input'>
+  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 18 out of 172 in GOAnnotations</span></div><div class='input'>  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>.25</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 13 out of 18 in GOAnnotations</span></div><div class='input'>
   <span class='co'>## get distances for protein sets</span>
   <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span>(<span class='no'>xx</span>)</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=====                                                                 |   8%  |                                                                              |===========                                                           |  15%  |                                                                              |================                                                      |  23%  |                                                                              |======================                                                |  31%  |                                                                              |===========================                                           |  38%  |                                                                              |================================                                      |  46%  |                                                                              |======================================                                |  54%  |                                                                              |===========================================                           |  62%  |                                                                              |================================================                      |  69%  |                                                                              |======================================================                |  77%  |                                                                              |===========================================================           |  85%  |                                                                              |=================================================================     |  92%  |                                                                              |======================================================================| 100%</div><div class='input'>
   <span class='co'>## plot distances for all protein sets </span>
@@ -154,20 +154,20 @@
 #&gt; fcol =  GOAnnotations 
 #&gt;  term =  GO:0005739 
 #&gt;  id =  mitochondrion 
-#&gt;  nrow =  152 
+#&gt;  nrow =  153 
 #&gt; k's tested: 1 2 3 4 5 
-#&gt;   Size:  152 
-#&gt;   Size:  123 
-#&gt;   Size:  96 
-#&gt;   Size:  96 
-#&gt;   Size:  78 
+#&gt;   Size:  153 
+#&gt;   Size:  124 
+#&gt;   Size:  97 
+#&gt;   Size:  97 
+#&gt;   Size:  73 
 #&gt; Clusters info:
 #&gt;       ks.mean    mean ks.norm     norm
-#&gt; k = 1       1  0.3797       1  0.07114
-#&gt; k = 2       1  0.2036       1  0.04095
-#&gt; k = 3       1  0.1626       1  0.03552
-#&gt; k = 4       1  0.1626       1  0.03552
-#&gt; k = 5       1 *0.1277       1 *0.02989</div></pre>
+#&gt; k = 1       1  0.3783       1  0.07072
+#&gt; k = 2       1  0.2030       1  0.04070
+#&gt; k = 3       1  0.1623       1  0.03533
+#&gt; k = 4       1  0.1623       1  0.03533
+#&gt; k = 5       1 *0.1249       1 *0.02990</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

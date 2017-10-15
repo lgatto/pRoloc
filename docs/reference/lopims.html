@@ -83,9 +83,9 @@
     </div>
 
     
-    <p>The function processes MSe data using the <code><a href='http://www.rdocumentation.org/packages/synapter/topics/synergise'>synergise</a></code>
-function of the <code><a href='http://www.rdocumentation.org/packages/synapter/topics/synapter-package'>synapter</a></code> package and combines resulting
-<code><a href='http://www.rdocumentation.org/packages/synapter/topics/Synapter'>Synapter</a></code> instances into one <code>"MSnSet"</code>
+    <p>The function processes MSe data using the <code>synergise</code>
+function of the <code>synapter</code> package and combines resulting
+<code>Synapter</code> instances into one <code>"MSnSet"</code>
 and organelle marker data is added as a feature-level annotation variable.</p>
     
 
@@ -130,7 +130,7 @@ If several such files exist, the function reports an error.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional paramters passed to <code><a href='http://www.rdocumentation.org/packages/synapter/topics/synergise'>synergise</a></code>.</p></td>
+      <td><p>Additional paramters passed to <code>synergise</code>.</p></td>
     </tr>
     </table>
     
@@ -146,11 +146,11 @@ level quantitation and respective organelle markers.</p>
 discovery rates uppon all possible combinations of HDMSe final
 peptides files and the best combination smaller or equal to
 <code>mfdr</code> is chosen.  See
-<code><a href='http://www.rdocumentation.org/packages/synapter/topics/estimateMasterFdr'>estimateMasterFdr</a></code> for details.  The
+<code>estimateMasterFdr</code> for details.  The
 corresponding master run is then created as descibed in
-<code><a href='http://www.rdocumentation.org/packages/synapter/topics/makeMaster'>makeMaster</a></code>. (function <code>lopims1</code>)</p></li>
+<code>makeMaster</code>. (function <code>lopims1</code>)</p></li>
 <li><p>Each MSe/pep3D pair is processed using the HDMSe master file
-using <code><a href='http://www.rdocumentation.org/packages/synapter/topics/synergise'>synergise</a></code>. (function <code>lopims2</code>)</p></li>
+using <code>synergise</code>. (function <code>lopims2</code>)</p></li>
 <li><p>The respective peptide-level <code>synergise</code> output objects
 are converted and combined into an single
 <code>"MSnSet"</code> instance. (function <code>lopims3</code>)</p></li>

@@ -1,5 +1,9 @@
 # pRoloc 1.17
 
+## Changes in version 1.17.5
+- Filtering for unique features when running plot2D with t-SNE method
+  <2017-10-15 Sun>
+
 ## Changes in version 1.17.4
 
 - Added new (private) dimred function that computes dimensionality
@@ -10,7 +14,7 @@
   as its own fData column. <2017-09-01 Fri>
 
 ## Changes in version 1.17.3
-- Convert vignettes to Rmd with html output <2017-05-25 Thu>  
+- Convert vignettes to Rmd with html output <2017-05-25 Thu>
 - Import, rather than suggest Rtsne <2017-05-25 Thu>
 
 ## Changes in version 1.17.2

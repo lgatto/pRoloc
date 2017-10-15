@@ -188,13 +188,17 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     component analysis (see \code{\link{prcomp}}), classical
 ##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
 ##'     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
-##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis (see
-##'     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
-##'     defined the sub-cellular clusters so that the ration between
-##'     within ad between cluster variance is maximised. All the other
-##'     methods are unsupervised and make use \code{fcol} only to
-##'     annotate the plot. \code{"scree"} can also be used to produce
-##'     a scree plot. \code{"hexbin"} applies PCA to the data and uses
+##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
+##'     (see \code{\link[MASS]{lda}}). The last method uses
+##'     \code{fcol} to defined the sub-cellular clusters so that the
+##'     ration between within ad between cluster variance is
+##'     maximised. All the other methods are unsupervised and make use
+##'     \code{fcol} only to annotate the plot. Prior to t-SNE,
+##'     duplicated features are removed and a message informs the user
+##'     if such filtering is needed.
+##'
+##'     \code{"scree"} can also be used to produce a scree
+##'     plot. \code{"hexbin"} applies PCA to the data and uses
 ##'     bivariate binning into hexagonal cells from
 ##'     \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 ##'
@@ -391,18 +395,23 @@ plot2D <- function(object,
         tr <- round(z$svd^2 / sum(z$svd^2), 4L) * 100
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
-    } else if (method == "t-SNE") {
+    } else if (method == "t-SNE") {        
         if (missing(methargs))
-            methargs <- list(pca_scale = TRUE, pca_center = TRUE)        
+            methargs <- list(pca_scale = TRUE, pca_center = TRUE)
+        e <- exprs(object)
+        nr0 <- nrow(e)
+        e <- unique(e)
+        if (nrow(e) < nr0)
+            message("Only keeping unique features, dropped ", nr0 - nrow(e), ".")
         .data <- do.call(Rtsne::Rtsne,
-                         c(list(X = exprs(object)),
+                         c(list(X = e),
                            dims = k,
                            methargs))
         .data <- .data$Y[, dims]
         .xlab <- paste("Dimension", dims[1])
         .ylab <- paste("Dimension", dims[2])
         colnames(.data) <- c(.xlab, .ylab)
-        rownames(.data) <- featureNames(object)
+        rownames(.data) <- rownames(e)
     } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)

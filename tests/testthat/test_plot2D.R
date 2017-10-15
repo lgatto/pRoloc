@@ -127,3 +127,15 @@
 ##     expect_true(isSimilar(tmpf, ref, threshold = thr))
 ##     unlink(tmpf)
 ## })
+
+test_that("plot2D(, method = 't-SNE') with duplicated feature", {
+    library("pRolocdata")
+    data("E14TG2aS1")
+    ## Q1HFZ0 Q99LX0 
+    ## 630    894
+    ## are identical    
+    x <- E14TG2aS1[c(600:850,880:900), ]
+    expect_message(tsne <- plot2D(x, method = "t-SNE", plot = FALSE),
+                   "Only keeping unique features, dropped 1.")
+    expect_identical(nrow(x) - nrow(tsne), 1L)
+})

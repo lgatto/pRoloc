@@ -260,7 +260,7 @@ tan2009r1</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Sun Oct 15 20:24:37 2017  using readMSnSet. 
+## Quantitation data loaded: Sun Oct 15 20:35:47 2017  using readMSnSet. 
 ##  MSnbase version: 2.3.13</code></pre>
 </div>
 </div>
@@ -420,8 +420,8 @@ itraqnorm &lt;-<span class="st"> </span><span class="kw">normalise</span>(itraqd
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Fri May 26 11:59:21 2017 
-## Normalised (sum): Fri May 26 11:59:21 2017 
+## iTRAQ4 quantification by trapezoidation: Sun Oct 15 20:35:49 2017 
+## Normalised (sum): Sun Oct 15 20:35:49 2017 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -688,7 +688,7 @@ svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmC
 <span class="kw">processingData</span>(svmres)</code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Sun Oct 15 20:24:43 2017 
+## Performed svm prediction (sigma=0.1 cost=0.5) Sun Oct 15 20:35:55 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -696,9 +696,9 @@ svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmC
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>)</code></pre></div>
 <pre><code>## ans
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##             7           239            36             8           221 
+##             7           241            39             8           219 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            21             4           285            15            20 
+##            21             4           282            15            20 
 ##  Ribosome 60S 
 ##            32</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">fData</span>(p1)<span class="op">$</span>svm.pred
@@ -706,7 +706,7 @@ minprob &lt;-<span class="st"> </span><span class="kw">median</span>(<span class
 p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>, <span class="dt">t =</span> minprob)</code></pre></div>
 <pre><code>## ans
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##             7           172            21             8           104 
+##             7           174            21             8           102 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
 ##            21             4           148            15            20 
 ##  Ribosome 60S       unknown 
@@ -716,10 +716,10 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredi
 <pre><code>##                p2
 ## p1              Cytoskeleton  ER Golgi Lysosome mitochondrion Nucleus
 ##   Cytoskeleton             7   0     0        0             0       0
-##   ER                       0 172     0        0             0       0
+##   ER                       0 174     0        0             0       0
 ##   Golgi                    0   0    21        0             0       0
 ##   Lysosome                 0   0     0        8             0       0
-##   mitochondrion            0   0     0        0           104       0
+##   mitochondrion            0   0     0        0           102       0
 ##   Nucleus                  0   0     0        0             0      21
 ##   Peroxisome               0   0     0        0             0       0
 ##   PM                       0   0     0        0             0       0
@@ -743,12 +743,12 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredi
 ## p1              unknown
 ##   Cytoskeleton        0
 ##   ER                 67
-##   Golgi              15
+##   Golgi              18
 ##   Lysosome            0
 ##   mitochondrion     117
 ##   Nucleus             0
 ##   Peroxisome          0
-##   PM                137
+##   PM                134
 ##   Proteasome          0
 ##   Ribosome 40S        0
 ##   Ribosome 60S        0</code></pre>
@@ -763,16 +763,16 @@ Organelle-specific SVM score distributions.
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/orgQuants.html">orgQuants</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>, <span class="dt">t =</span> .<span class="dv">5</span>) </code></pre></div>
 <pre><code>##            ER         Golgi mitochondrion            PM 
-##     0.8392528     0.6296082     0.7502513     0.7648511</code></pre>
+##     0.8374491     0.6318175     0.7483629     0.7725315</code></pre>
 <p>Using these scores equates to choosing the 50% predictions with highest scores for organelle.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(svmres, <span class="dt">fcol =</span> <span class="st">"svm"</span>, <span class="dt">t =</span> ts)</code></pre></div>
 <pre><code>## ans
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##             7           134            25             8           125 
+##             7           135            26             8           124 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            21             4           160            15            20 
+##            21             4           158            15            20 
 ##  Ribosome 60S       unknown 
-##            32           337</code></pre>
+##            32           338</code></pre>
 <pre><code>## MSnSet (storageMode: lockedEnvironment)
 ## assayData: 888 features, 4 samples 
 ##   element names: exprs 
@@ -790,8 +790,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Sun Oct 15 20:24:43 2017 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Sun Oct 15 20:24:44 2017 
+## Performed svm prediction (sigma=0.1 cost=0.5) Sun Oct 15 20:35:55 2017 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Sun Oct 15 20:35:55 2017 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptsze &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>

@@ -5,8 +5,8 @@ utils
 grDevices
 graphics
 stats
-pkgdown
 BiocStyle
+knitr
 parallel
 BiocGenerics
 Biobase
@@ -25,5 +25,3 @@ cluster
 MLInterfaces
 pRoloc
 pRolocdata
-GO.db
-knitr

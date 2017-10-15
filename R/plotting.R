@@ -391,18 +391,23 @@ plot2D <- function(object,
         tr <- round(z$svd^2 / sum(z$svd^2), 4L) * 100
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
-    } else if (method == "t-SNE") {
+    } else if (method == "t-SNE") {        
         if (missing(methargs))
-            methargs <- list(pca_scale = TRUE, pca_center = TRUE)        
+            methargs <- list(pca_scale = TRUE, pca_center = TRUE)
+        e <- exprs(object)
+        nr0 <- nrow(e)
+        e <- unique(e)
+        if (nrow(e) < nr0)
+            message("Only keeping unique features, dropped ", nr0 - nrow(e), ".")
         .data <- do.call(Rtsne::Rtsne,
-                         c(list(X = exprs(object)),
+                         c(list(X = e),
                            dims = k,
                            methargs))
         .data <- .data$Y[, dims]
         .xlab <- paste("Dimension", dims[1])
         .ylab <- paste("Dimension", dims[2])
         colnames(.data) <- c(.xlab, .ylab)
-        rownames(.data) <- featureNames(object)
+        rownames(.data) <- rownames(e)
     } else if (method == "PCA") {
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE)

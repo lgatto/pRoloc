@@ -188,13 +188,17 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     component analysis (see \code{\link{prcomp}}), classical
 ##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
 ##'     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
-##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis (see
-##'     \code{\link[MASS]{lda}}). The last method uses \code{fcol} to
-##'     defined the sub-cellular clusters so that the ration between
-##'     within ad between cluster variance is maximised. All the other
-##'     methods are unsupervised and make use \code{fcol} only to
-##'     annotate the plot. \code{"scree"} can also be used to produce
-##'     a scree plot. \code{"hexbin"} applies PCA to the data and uses
+##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
+##'     (see \code{\link[MASS]{lda}}). The last method uses
+##'     \code{fcol} to defined the sub-cellular clusters so that the
+##'     ration between within ad between cluster variance is
+##'     maximised. All the other methods are unsupervised and make use
+##'     \code{fcol} only to annotate the plot. Prior to t-SNE,
+##'     duplicated features are removed and a message informs the user
+##'     if such filtering is needed.
+##'
+##'     \code{"scree"} can also be used to produce a scree
+##'     plot. \code{"hexbin"} applies PCA to the data and uses
 ##'     bivariate binning into hexagonal cells from
 ##'     \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 ##'

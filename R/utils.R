@@ -224,7 +224,7 @@ dimred <- function(object, method = "PCA", methargs) {
         .vars <- (.vars / sum(.vars))
         .vars <- round(100 * .vars, 2)
         res <- .pca$x
-        colnames(res) <- paste0("PC", seq_len(ncol(object)), " (", .vars, "%)")
+        colnames(res) <- paste0("PC", seq_len(ncol(res)), " (", .vars, "%)")
     } else stop("Method not available")
     return(res) 
 }

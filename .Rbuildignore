@@ -6,3 +6,4 @@ sandbox
 .travis.yml
 .gitignores
 docs
+^docs$

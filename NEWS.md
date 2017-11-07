@@ -1,3 +1,13 @@
+# pRoloc 1.19
+
+## Changes in version 1.19.0
+- Bioconductor devel 3.7
+
+# pRoloc 1.18
+
+## Changes in version 1.18.0
+- Bioconductor release 3.6
+
 # pRoloc 1.17
 
 ## Changes in version 1.17.5

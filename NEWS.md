@@ -3,6 +3,8 @@
 ## Changes in version 1.19.1
 - Fix bug in private dimred and set appropriate number of colnames
   <2017-11-07 Tue>
+- New `nipals` method in dimensionality reduction for plot2D (closes
+  issue #103) <2018-01-16 Tue>
 
 ## Changes in version 1.19.0
 - Bioconductor devel 3.7

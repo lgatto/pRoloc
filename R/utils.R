@@ -213,7 +213,7 @@ mrkConsProfiles <- function(object, fcol = "markers", method = mean) {
 }
 
 
-dimred <- function(object, method = "PCA", methargs) {
+dimred <- function(object, method = c("PCA", "nipals"), methargs) {
     method <- match.arg(method)
     if (method == "PCA") {
         if (missing(methargs))
@@ -225,6 +225,17 @@ dimred <- function(object, method = "PCA", methargs) {
         .vars <- round(100 * .vars, 2)
         res <- .pca$x
         colnames(res) <- paste0("PC", seq_len(ncol(res)), " (", .vars, "%)")
+    } else if (method == "nipals") {
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE)
+        .pca <- do.call(nipals::nipals,
+                        c(list(x = exprs(object)),
+                          methargs))
+        .vars <- .pca$R2
+        .vars <- (.vars / sum(.vars))
+        .vars <- round(100 * .vars, 2)
+        res <- .pca$scores
+        colnames(res) <- paste0("PC", seq_len(ncol(res)), " (", .vars, "%)")            
     } else stop("Method not available")
     return(res) 
 }

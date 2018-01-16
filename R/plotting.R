@@ -129,8 +129,8 @@ plotDist <- function(object,
 }
 
 ## Available pRoloc visualisation methods
-pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "hexbin",
-                      "none")
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "nipals",
+                      "hexbin", "none")
 
 ## Available plot2D methods
 plot2Dmethods <- c(pRolocVisMethods, "scree")
@@ -139,9 +139,13 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' 
 ##' Generate 2 or 3 dimensional feature distribution plots to
 ##' illustrate localistation clusters. Rows/features containing
-##' \code{NA} values are removed prior to dimention
-##' reduction. \code{plot3D} relies on the \code{rgl} package, that
-##' will be loaded automatically. 
+##' \code{NA} values are removed prior to dimension reduction except
+##' for the \code{"nipals"} method. For this method, it is advised to
+##' set the method argument `ncomp` to a low number of dimensions to
+##' avoid computing all components when analysing large datasets.
+##'
+##' \code{plot3D} relies on the ##' \code{rgl} package, that will be
+##' loaded automatically.
 ##'
 ##' \itemize{
 ##' 
@@ -183,11 +187,15 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     yet implemented).
 ##' @param method A \code{character} describe how to transform the
 ##'     data or what to plot. One of \code{"PCA"} (default),
-##'     \code{"MDS"}, \code{"kpca"}, \code{"t-SNE"} or \code{"lda"},
-##'     defining what dimensionality reduction is applied: principal
-##'     component analysis (see \code{\link{prcomp}}), classical
-##'     multidimensional scaling (see \code{\link{cmdscale}}), kernel
-##'     PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
+##'     \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"}
+##'     or \code{"lda"}, defining what dimensionality reduction is
+##'     applied: principal component analysis (see
+##'     \code{\link{prcomp}}), classical multidimensional scaling (see
+##'     \code{\link{cmdscale}}), kernel PCA (see
+##'     \code{\link[kernlab]{kpca}}), nipals (principal component
+##'     analysis by NIPALS, non-linear iterative partial least squares
+##'     which support missing values; see
+##'     \code{\link[nipals]{nipals}}) t-SNE (see
 ##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
 ##'     (see \code{\link[MASS]{lda}}). The last method uses
 ##'     \code{fcol} to defined the sub-cellular clusters so that the
@@ -339,14 +347,15 @@ plot2D <- function(object,
         dims <- dims[1:2]
     }
     k <- max(dims)
-    if (any(is.na(object))) {
+    if (any(is.na(object)) & method != "nipals") {
         n0 <- nrow(object)
         object <- filterNA(object)
         n1 <- nrow(object)
-        if (n1 == 0)
+        if (n1 == 0) 
             stop("No rows left after removing NAs!")
-        else
-            warning("Removed ", n0 - n1, " row(s) with 'NA' values.")    
+        else 
+            message("Removed ", n0 - n1, " row(s) with 'NA' values.\n",
+                    "Consider using 'nipals' to retain all features.")
     }
     if (method == "hexbin") {
         requireNamespace("hexbin")
@@ -395,7 +404,9 @@ plot2D <- function(object,
         tr <- round(z$svd^2 / sum(z$svd^2), 4L) * 100
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
-    } else if (method == "t-SNE") {        
+    } else if (method == "t-SNE") {
+        if (!require("Rtsne") && packageVersion("Rtsne") >= 0.13)
+            stop("Please install the Rtsne (>= 0.13) package to make use if this functionality.")
         if (missing(methargs))
             methargs <- list(pca_scale = TRUE, pca_center = TRUE)
         e <- exprs(object)
@@ -419,6 +430,15 @@ plot2D <- function(object,
         .data <- .data[, dims]
         .xlab <- colnames(.data)[1]
         .ylab <- colnames(.data)[2]
+    } else if (method == "nipals") {
+        if (!require("nipals"))
+            stop("Please install the nipals package to make use if this functionality.")        
+        if (missing(methargs))
+            methargs <- list(scale = TRUE, center = TRUE, ncomp = ncol(object))
+        .data <- dimred(object, method = method, methargs = methargs)
+        .data <- .data[, dims]
+        .xlab <- colnames(.data)[1]
+        .ylab <- colnames(.data)[2]        
     } else if (method == "MDS")  { 
         if (!missing(methargs))
             warning("'methargs' ignored for MDS")

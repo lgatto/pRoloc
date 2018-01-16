@@ -40,11 +40,15 @@ yet implemented).}
 
 \item{method}{A \code{character} describe how to transform the
     data or what to plot. One of \code{"PCA"} (default),
-    \code{"MDS"}, \code{"kpca"}, \code{"t-SNE"} or \code{"lda"},
-    defining what dimensionality reduction is applied: principal
-    component analysis (see \code{\link{prcomp}}), classical
-    multidimensional scaling (see \code{\link{cmdscale}}), kernel
-    PCA (see \code{\link[kernlab]{kpca}}), t-SNE (see
+    \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"}
+    or \code{"lda"}, defining what dimensionality reduction is
+    applied: principal component analysis (see
+    \code{\link{prcomp}}), classical multidimensional scaling (see
+    \code{\link{cmdscale}}), kernel PCA (see
+    \code{\link[kernlab]{kpca}}), nipals (principal component
+    analysis by NIPALS, non-linear iterative partial least squares
+    which support missing values; see
+    \code{\link[nipals]{nipals}}) t-SNE (see
     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
     (see \code{\link[MASS]{lda}}). The last method uses
     \code{fcol} to defined the sub-cellular clusters so that the
@@ -134,11 +138,15 @@ Used for its side effects of generating a plot.  Invisibly
 \description{
 Generate 2 or 3 dimensional feature distribution plots to
 illustrate localistation clusters. Rows/features containing
-\code{NA} values are removed prior to dimention
-reduction. \code{plot3D} relies on the \code{rgl} package, that
-will be loaded automatically.
+\code{NA} values are removed prior to dimension reduction except
+for the \code{"nipals"} method. For this method, it is advised to
+set the method argument `ncomp` to a low number of dimensions to
+avoid computing all components when analysing large datasets.
 }
 \details{
+\code{plot3D} relies on the ##' \code{rgl} package, that will be
+loaded automatically.
+
 \itemize{
 
 \item Note that \code{plot2D} has been update in version 1.3.6 to

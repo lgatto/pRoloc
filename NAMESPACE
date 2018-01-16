@@ -22,7 +22,8 @@ importFrom("utils", "combn", "head", "menu", "packageDescription",
            "txtProgressBar")
 
 importFrom("dendextend", "set")
-importFrom("Rtsne", "Rtsne")
+
+## importFrom("Rtsne", "Rtsne") ## moved to Suggests
 
 importMethodsFrom(MLInterfaces, MLearn,
                   predScore, predScores,

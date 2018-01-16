@@ -33,7 +33,6 @@ Imports:
     sampling,
     class,
     kernlab,
-    Rtsne (>= 0.13),
     lattice,
     nnet,
     randomForest,
@@ -67,7 +66,9 @@ Suggests:
     hpar (>= 1.15.3),
     dplyr,
     GO.db,
-    AnnotationDbi
+    AnnotationDbi,
+    Rtsne (>= 0.13),
+    nipals    
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr

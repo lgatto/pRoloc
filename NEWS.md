@@ -1,5 +1,9 @@
 # pRoloc 1.19
 
+## Changes in version 1.19.2
+- Fix bug in QSep that prevented to set non-default fcol
+  <2018-01-29 Mon>
+
 ## Changes in version 1.19.1
 - Fix bug in private dimred and set appropriate number of colnames
   <2017-11-07 Tue>

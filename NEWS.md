@@ -1,5 +1,8 @@
 # pRoloc 1.19
 
+## Changes in version 1.19.3
+- Nothing yet
+
 ## Changes in version 1.19.2
 - Fix bug in QSep that prevented to set non-default fcol
   <2018-01-29 Mon>

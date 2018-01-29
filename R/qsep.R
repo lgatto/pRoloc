@@ -33,7 +33,7 @@
 QSep <- function(object, fcol = "markers") {
     objname <- MSnbase:::getVariableName(match.call(), "object")
     ## only consider markers
-    mobj <- markerMSnSet(object)
+    mobj <- markerMSnSet(object, fcol = fcol)
     ## vector of markers
     markers <- getMarkers(mobj, fcol = fcol, verbose = FALSE)
     ## euclidean distance between all markers

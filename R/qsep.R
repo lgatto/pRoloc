@@ -136,3 +136,15 @@ setMethod("plot", c("QSep", "missing"),
           function(x, y, norm = TRUE, ...)
               .plotQSep(x, norm,
                         ...))
+
+## setMethod("c", c("QSep"),
+##           function(x, y, ...) {
+##               .x <- cbind(x@x, y@x)
+##               .xnorm <- cbind(x@xnorm, y@xnorm)
+##               colnames(.xnorm) <-
+##                   colnames(.x) <- c(paste(colnames(x@x), x@object, sep = "."),
+##                                     paste(colnames(y@x), y@object, sep = "."))
+##               .QSep(x = .x,
+##                     xnorm = .xnorm,
+##                     object = c(x@object, y@object))
+##           })

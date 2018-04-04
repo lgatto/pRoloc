@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Mon Jan 29 23:49:48 2018</code></pre>
+##  Created on Wed Apr  4 17:15:37 2018</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -157,8 +157,8 @@ andygoset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Mon Jan 29 23:49:58 2018] 
-##  MSnbase version: 2.5.6</code></pre>
+## Constructed GO set using cellular_component namespace [Wed Apr  4 17:15:46 2018] 
+##  MSnbase version: 2.5.10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##        GO:0016020 GO:0016021 GO:0005783 GO:0005730
 ## O00767          1          1          1          1
@@ -179,7 +179,7 @@ andygoset</code></pre></div>
 <div id="sec:hpaaux" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sec:hpaaux" class="anchor"></a>The Human Protein Atlas</h2>
-<p>The feature names of our LOPIT experiment are UniProt identifiers, while the Human Protein Atlas uses Ensembl gene identifiers. This first code chunk matches both identifier types using the Ensembl Biomart server. In this section, we copy the experimental data to <code>andyhpa</code>.</p>
+<p>The feature names of our LOPIT experiment are UniProt identifiers, while the Human Protein Atlas uses Ensembl gene identifiers. This first code chunk matches both identifier types using the Ensembl Biomart server and <code>left_join</code> from the <em><a href="https://CRAN.R-project.org/package=dplyr">dplyr</a></em> package. In this section, we copy the experimental data to <code>andyhpa</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">andyhpa &lt;-<span class="st"> </span>andy2011
 <span class="kw">fvarLabels</span>(andyhpa)[<span class="dv">1</span>] &lt;-<span class="st"> "accession"</span> ## for left_join matching
 ## convert protein accession numbers to ensembl gene identifiers
@@ -215,8 +215,7 @@ hpa &lt;-<span class="st"> </span><span class="kw">getHpa</span>(bm<span class="
 hpa<span class="op">$</span>Reliability &lt;-<span class="st"> </span><span class="kw">droplevels</span>(hpa<span class="op">$</span>Reliability)
 <span class="kw">colnames</span>(hpa)[<span class="dv">1</span>] &lt;-<span class="st"> "ensembl_gene_id"</span>
 
-<span class="kw">library</span>(<span class="st">"dplyr"</span>)
-hpa &lt;-<span class="st"> </span><span class="kw">left_join</span>(hpa, bm)</code></pre></div>
+hpa &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(hpa, bm)</code></pre></div>
 <pre><code>## Joining, by = "ensembl_gene_id"</code></pre>
 <pre><code>## Warning: Column `ensembl_gene_id` joining factor and character vector,
 ## coercing into character vector</code></pre>
@@ -224,7 +223,7 @@ hpa &lt;-<span class="st"> </span><span class="kw">left_join</span>(hpa, bm)</co
 
 ## match HPA/LOPIT
 <span class="kw">colnames</span>(hpa)[<span class="dv">7</span>] &lt;-<span class="st"> "accession"</span>
-fd &lt;-<span class="st"> </span><span class="kw">left_join</span>(<span class="kw">fData</span>(andyhpa), hpa)</code></pre></div>
+fd &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(<span class="kw">fData</span>(andyhpa), hpa)</code></pre></div>
 <pre><code>## Joining, by = "accession"</code></pre>
 <pre><code>## Warning: Column `accession` joining factor and character vector, coercing
 ## into character vector</code></pre>
@@ -244,7 +243,7 @@ hpalocs &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class
 makeHpaSet &lt;-<span class="st"> </span><span class="cf">function</span>(x, score2, <span class="dt">locs =</span> hpalocs) {
     hpamat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dt">ncol =</span> <span class="kw">length</span>(locs), <span class="dt">nrow =</span> <span class="kw">nrow</span>(x))
     <span class="kw">colnames</span>(hpamat) &lt;-<span class="st"> </span>locs
-    <span class="kw">rownames</span>(hpamat) &lt;-<span class="st"> </span><span class="kw">featureNames</span>(x)    
+    <span class="kw">rownames</span>(hpamat) &lt;-<span class="st"> </span><span class="kw">featureNames</span>(x)
     <span class="cf">for</span>  (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(hpamat)) {
         loc &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(<span class="kw">fData</span>(x)[i, <span class="st">"Main.location"</span>]), <span class="st">";"</span>))
         loc2 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(<span class="kw">fData</span>(x)[i, <span class="st">"Other.location"</span>]), <span class="st">";"</span>))
@@ -393,7 +392,7 @@ th &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thetas.h
 <p>As we use a nearest neighbour classifier, we also need to know how many neighbours to consider when classifying a protein of unknown localisation. The <em>knnOptimisation</em> function (see the <em>pRoloc-tutorial</em> vignette and the functions manual page) can be run on the primary and auxiliary data sources independently to estimate the best <span class="math inline">\(k_P\)</span> and <span class="math inline">\(k_A\)</span> values. Here, based on <em>knnOptimisation</em>, we use 3 and 3, for <span class="math inline">\(k_P\)</span> and <span class="math inline">\(k_A\)</span> respectively.</p>
 <p>Finally, to assess the validity of the weight selection, it should be repeated a certain number of times (default value is 50). As the weight optimisation can become very time consuming for a wide range of weights and many target classes, we would recommend to start with a lower number of iterations, pre-analyse the results, proceed with further iterations and eventually combine the optimisation results data with the <em>combineThetaRegRes</em> function before proceeding with the selection of best weights.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlOptimisation.html">knntlOptimisation</a></span>(andy2011, andygoset,
-                          <span class="dt">th =</span> th, 
+                          <span class="dt">th =</span> th,
                           <span class="dt">k =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>),
                           <span class="dt">fcol =</span> <span class="st">"markers.tl"</span>,
                           <span class="dt">times =</span> <span class="dv">50</span>)</code></pre></div>
@@ -501,7 +500,7 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2017-12-12 r73903)
+<pre><code>## R Under development (unstable) (2018-04-02 r74505)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -522,60 +521,59 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] hpar_1.21.1          biomaRt_2.35.8       class_7.3-14        
-##  [4] pRolocdata_1.17.0    pRoloc_1.19.1        MLInterfaces_1.59.1 
-##  [7] cluster_2.0.6        annotate_1.57.2      XML_3.98-1.9        
-## [10] AnnotationDbi_1.41.4 IRanges_2.13.14      S4Vectors_0.17.28   
-## [13] MSnbase_2.5.6        ProtGenerics_1.11.0  BiocParallel_1.13.1 
-## [16] mzR_2.13.3           Rcpp_0.12.15         Biobase_2.39.2      
-## [19] BiocGenerics_0.25.1  dplyr_0.7.4          knitr_1.18          
-## [22] BiocStyle_2.7.8     
+##  [1] hpar_1.21.1          biomaRt_2.35.13      class_7.3-14        
+##  [4] pRolocdata_1.17.2    pRoloc_1.19.3        MLInterfaces_1.59.1 
+##  [7] cluster_2.0.7        annotate_1.57.3      XML_3.98-1.10       
+## [10] AnnotationDbi_1.41.4 IRanges_2.13.28      S4Vectors_0.17.39   
+## [13] MSnbase_2.5.10       ProtGenerics_1.11.0  BiocParallel_1.13.3 
+## [16] mzR_2.13.6           Rcpp_0.12.16         Biobase_2.39.2      
+## [19] BiocGenerics_0.25.3  knitr_1.20           BiocStyle_2.7.8     
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] backports_1.1.2       plyr_1.8.4            igraph_1.1.2         
-##   [4] lazyeval_0.2.1        splines_3.5.0         ggvis_0.4.3          
-##   [7] crosstalk_1.0.0       ggplot2_2.2.1.9000    digest_0.6.14        
-##  [10] foreach_1.4.4         BiocInstaller_1.29.3  htmltools_0.3.6      
-##  [13] viridis_0.4.1         gdata_2.18.0          magrittr_1.5         
-##  [16] memoise_1.1.0         doParallel_1.0.11     sfsmisc_1.1-1        
-##  [19] limma_3.35.6          recipes_0.1.2         gower_0.1.2          
+##   [1] backports_1.1.2       plyr_1.8.4            igraph_1.2.1         
+##   [4] lazyeval_0.2.1        splines_3.6.0         ggvis_0.4.3          
+##   [7] crosstalk_1.0.0       ggplot2_2.2.1         digest_0.6.15        
+##  [10] foreach_1.4.4         BiocInstaller_1.29.5  htmltools_0.3.6      
+##  [13] viridis_0.5.0         gdata_2.18.0          magrittr_1.5         
+##  [16] memoise_1.1.0         doParallel_1.0.11     sfsmisc_1.1-2        
+##  [19] limma_3.35.14         recipes_0.1.2         gower_0.1.2          
 ##  [22] rda_1.0.2-2           dimRed_0.1.0          lpSolve_5.6.13       
-##  [25] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.0           
-##  [28] RCurl_1.95-4.10       hexbin_1.27.2         genefilter_1.61.1    
-##  [31] bindr_0.1             impute_1.53.0         survival_2.41-3      
-##  [34] iterators_1.0.9       glue_1.2.0            DRR_0.0.3            
-##  [37] gtable_0.2.0          ipred_0.9-6           zlibbioc_1.25.0      
-##  [40] kernlab_0.9-25        ddalpha_1.3.1         prabclus_2.2-6       
-##  [43] DEoptimR_1.0-8        scales_0.5.0.9000     vsn_3.47.1           
-##  [46] mvtnorm_1.0-6         DBI_0.7               viridisLite_0.2.0    
-##  [49] xtable_1.8-2          progress_1.1.2        foreign_0.8-70       
-##  [52] bit_1.1-12            proxy_0.4-21          mclust_5.4           
-##  [55] preprocessCore_1.41.0 lava_1.6              prodlim_1.6.1        
-##  [58] sampling_2.8          htmlwidgets_1.0       httr_1.3.1           
-##  [61] threejs_0.3.1         FNN_1.1               RColorBrewer_1.1-2   
-##  [64] fpc_2.1-11            modeltools_0.2-21     pkgconfig_2.0.1      
-##  [67] flexmix_2.3-14        nnet_7.3-12           caret_6.0-78         
-##  [70] tidyselect_0.2.3      rlang_0.1.6           reshape2_1.4.3       
-##  [73] munsell_0.4.3         mlbench_2.1-1         tools_3.5.0          
-##  [76] RSQLite_2.0           pls_2.6-0             broom_0.4.3          
-##  [79] evaluate_0.10.1       stringr_1.2.0         mzID_1.17.0          
-##  [82] yaml_2.1.16           ModelMetrics_1.1.0    bit64_0.9-7          
-##  [85] robustbase_0.92-8     randomForest_4.6-12   purrr_0.2.4          
-##  [88] dendextend_1.6.0      bindrcpp_0.2          nlme_3.1-135         
-##  [91] whisker_0.3-2         mime_0.5              RcppRoll_0.2.2       
-##  [94] compiler_3.5.0        curl_3.1              e1071_1.6-8          
-##  [97] affyio_1.49.1         tibble_1.4.2          stringi_1.1.6        
-## [100] highr_0.6             lattice_0.20-35       trimcluster_0.1-2    
-## [103] Matrix_1.2-12         psych_1.7.8           gbm_2.1.3            
-## [106] pillar_1.1.0          MALDIquant_1.17       bitops_1.0-6         
-## [109] httpuv_1.3.5          R6_2.2.2              pcaMethods_1.71.0    
-## [112] affy_1.57.0           hwriter_1.3.2         gridExtra_2.3        
-## [115] codetools_0.2-15      MASS_7.3-48           gtools_3.5.0         
-## [118] assertthat_0.2.0      CVST_0.2-1            rprojroot_1.3-2      
-## [121] withr_2.1.1.9000      mnormt_1.5-5          diptest_0.75-7       
-## [124] grid_3.5.0            rpart_4.1-12          timeDate_3042.101    
-## [127] tidyr_0.7.2           rmarkdown_1.8         lubridate_1.7.1      
-## [130] shiny_1.0.5           base64enc_0.1-3</code></pre>
+##  [25] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.1           
+##  [28] dplyr_0.7.4.9003      RCurl_1.95-4.10       hexbin_1.27.2        
+##  [31] genefilter_1.61.1     bindr_0.1.1           impute_1.53.0        
+##  [34] survival_2.41-3       iterators_1.0.9       glue_1.2.0           
+##  [37] DRR_0.0.3             gtable_0.2.0          ipred_0.9-6          
+##  [40] zlibbioc_1.25.0       kernlab_0.9-25        ddalpha_1.3.1.1      
+##  [43] prabclus_2.2-6        DEoptimR_1.0-8        scales_0.5.0         
+##  [46] vsn_3.47.1            mvtnorm_1.0-7         DBI_0.8              
+##  [49] viridisLite_0.3.0     xtable_1.8-2          progress_1.1.2       
+##  [52] foreign_0.8-70        bit_1.1-12            proxy_0.4-21         
+##  [55] mclust_5.4            preprocessCore_1.41.0 lava_1.6.1           
+##  [58] prodlim_1.6.1         sampling_2.8          htmlwidgets_1.0      
+##  [61] httr_1.3.1            threejs_0.3.1         FNN_1.1              
+##  [64] RColorBrewer_1.1-2    fpc_2.1-11            modeltools_0.2-21    
+##  [67] pkgconfig_2.0.1       flexmix_2.3-14        nnet_7.3-12          
+##  [70] caret_6.0-78          tidyselect_0.2.4      rlang_0.2.0          
+##  [73] reshape2_1.4.3        munsell_0.4.3         mlbench_2.1-1        
+##  [76] tools_3.6.0           RSQLite_2.1.0         pls_2.6-0            
+##  [79] broom_0.4.3           evaluate_0.10.1       stringr_1.3.0        
+##  [82] mzID_1.17.0           yaml_2.1.18           ModelMetrics_1.1.0   
+##  [85] bit64_0.9-7           robustbase_0.92-8     randomForest_4.6-14  
+##  [88] purrr_0.2.4           dendextend_1.7.0      bindrcpp_0.2.2.9000  
+##  [91] nlme_3.1-136          whisker_0.3-2         mime_0.5             
+##  [94] RcppRoll_0.2.2        compiler_3.6.0        curl_3.2             
+##  [97] e1071_1.6-8           affyio_1.49.2         tibble_1.4.2         
+## [100] stringi_1.1.7         highr_0.6             lattice_0.20-35      
+## [103] trimcluster_0.1-2     Matrix_1.2-13         psych_1.8.3.3        
+## [106] gbm_2.1.3             pillar_1.2.1          MALDIquant_1.17      
+## [109] bitops_1.0-6          httpuv_1.3.6.2        R6_2.2.2             
+## [112] pcaMethods_1.71.0     affy_1.57.0           hwriter_1.3.2        
+## [115] gridExtra_2.3         codetools_0.2-15      MASS_7.3-49          
+## [118] gtools_3.5.0          assertthat_0.2.0      CVST_0.2-1           
+## [121] rprojroot_1.3-2       withr_2.1.2           mnormt_1.5-5         
+## [124] diptest_0.75-7        grid_3.6.0            rpart_4.1-13         
+## [127] timeDate_3043.102     tidyr_0.8.0           rmarkdown_1.9        
+## [130] lubridate_1.7.3       shiny_1.0.5           base64enc_0.1-3</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

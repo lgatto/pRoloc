@@ -142,17 +142,15 @@ only, for all classes or none.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>library</span>(<span class='no'>pRolocdata</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>This is pRolocdata version 1.17.0.</span>
-#&gt; <span class='message'>Use 'pRolocdata()' to list available data sets.</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>andy2011</span>)
+<span class='fu'>library</span>(<span class='no'>pRolocdata</span>)
+<span class='fu'>data</span>(<span class='no'>andy2011</span>)
 <span class='fu'>data</span>(<span class='no'>andy2011goCC</span>)
 <span class='co'>## reducing calculation time of k by pre-running knnOptimisation</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>)
 <span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='kw'>function</span>(<span class='no'>z</span>)
             <span class='fu'><a href='knnOptimisation.html'>knnOptimisation</a></span>(<span class='no'>z</span>, <span class='kw'>times</span><span class='kw'>=</span><span class='fl'>5</span>,
                             <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>,
-                            <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
-<span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'>sapply</span>(<span class='no'>k</span>, <span class='kw'>function</span>(<span class='no'>z</span>) <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>z</span>))
+                            <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs found in 'precision' with hyperparameters k:11.</span></div><div class='input'><span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'>sapply</span>(<span class='no'>k</span>, <span class='kw'>function</span>(<span class='no'>z</span>) <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>z</span>))
 <span class='no'>k</span></div><div class='output co'>#&gt; k k 
 #&gt; 7 3 </div><div class='input'><span class='co'>## reducing parameter search with theta = 1, </span>
 <span class='co'>## weights of only 1 or 0 will be considered</span>
@@ -172,11 +170,11 @@ only, for all classes or none.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.8664  0.8689  0.8715  0.8715  0.8741  0.8767 
+#&gt;  0.8480  0.8515  0.8550  0.8550  0.8585  0.8621 
 #&gt;  best theta:
 #&gt;          ER Golgi Mitochondrion PM
-#&gt; weight:0  2     2             1  1
-#&gt; weight:1  0     0             1  1</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
+#&gt; weight:0  0     2             1  2
+#&gt; weight:1  2     0             1  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
 <span class='fu'>plot</span>(<span class='no'>opt</span>)</div><img src='knntlClassification-11.png' alt='' width='540' height='400' /><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knntlClassification</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                            <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>, <span class='no'>th</span>, <span class='no'>k</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)

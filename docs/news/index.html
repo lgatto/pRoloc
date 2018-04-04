@@ -91,7 +91,8 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-19-3" class="anchor"></a>Changes in version 1.19.3</h2>
 <ul>
-<li>Nothing yet</li>
+<li>Use <code>dplyr::left_join</code> without attaching <code>dplyr</code> to avoid collision between <code>Biobase::exprs</code> and <code>dplyr::exprs</code> &lt;2018-04-04 Wed&gt;.</li>
+<li>Typo in warning to install rgl &lt;2018-03-27 Tue&gt;</li>
 </ul>
 </div>
 <div id="changes-in-version-1-19-2" class="section level2">
@@ -692,8 +693,7 @@
 <li>new plot2Ds function to overlay two data sets on the same PCA plot [2015-04-17 Fri]</li>
 <li>regenerate biomart data used by setAnnotationParams [2015-04-24 Fri]</li>
 <li>new setStockcolGui function to set the default colours manually via a simple interface [2015-04-29 Wed]</li>
-<li>new move2Ds function to produce an transition movie between two MSnSets [2015-04-29 Wed]<br>
-</li>
+<li>new move2Ds function to produce an transition movie between two MSnSets [2015-04-29 Wed]</li>
 <li>functions to convert GO ids to/from terms. See ?goTermToId for details &lt;2015-05-08 Fri&gt;</li>
 </ul>
 </div>

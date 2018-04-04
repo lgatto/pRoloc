@@ -3,6 +3,7 @@
 ## Changes in version 1.19.3
 - Use `dplyr::left_join` without attaching `dplyr` to avoid collision
   between `Biobase::exprs` and `dplyr::exprs` <2018-04-04 Wed>.
+- Typo in warning to install rgl <2018-03-27 Tue>
 
 ## Changes in version 1.19.2
 - Fix bug in QSep that prevented to set non-default fcol

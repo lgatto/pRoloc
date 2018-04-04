@@ -405,7 +405,7 @@ plot2D <- function(object,
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
         .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
     } else if (method == "t-SNE") {
-        if (!require("Rtsne") && packageVersion("Rtsne") >= 0.13)
+        if (!requireNamespace("Rtsne") && packageVersion("Rtsne") >= 0.13)
             stop("Please install the Rtsne (>= 0.13) package to make use if this functionality.")
         if (missing(methargs))
             methargs <- list(pca_scale = TRUE, pca_center = TRUE)
@@ -431,7 +431,7 @@ plot2D <- function(object,
         .xlab <- colnames(.data)[1]
         .ylab <- colnames(.data)[2]
     } else if (method == "nipals") {
-        if (!require("nipals"))
+        if (!requireNamespace("nipals"))
             stop("Please install the nipals package to make use if this functionality.")        
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE, ncomp = ncol(object))

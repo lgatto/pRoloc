@@ -927,8 +927,8 @@ knntlClassification <- function(primary,
     ## knntlOptimisation, where some overlap in needed). We look at
     ## the unknowns' nearest neighbours independently.  [*] it would
     ## be possible to have different ones, but we don't bother.
-    if (!pRoloc:::checkSortedFeatureNames(unknownMSnSet(primary, fcol),
-                                          unknownMSnSet(auxiliary, fcol)))
+    if (!pRoloc::checkSortedFeatureNames(unknownMSnSet(primary, fcol),
+                                         unknownMSnSet(auxiliary, fcol)))
         stop("Feature names of unknown features don't match exactly.")
   
     if (inherits(bestTheta, "ThetaRegRes")) {

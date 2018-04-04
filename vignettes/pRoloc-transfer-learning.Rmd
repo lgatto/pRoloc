@@ -1,6 +1,6 @@
 ---
 title: "A transfer learning algorithm for spatial proteomics"
-author: 
+author:
 - name: Lisa M. Breckels
   affiliation: Computational Proteomics Unit, Cambridge, UK
 - name: Laurent Gatto
@@ -16,8 +16,8 @@ abstract: >
   these data sources.
 output:
   BiocStyle::html_document:
-    toc_float: true
-bibliography: pRoloc.bib	
+	toc_float: true
+bibliography: pRoloc.bib
 vignette: >
   %\VignetteIndexEntry{A transfer learning algorithm for spatial proteomics}
   %\VignetteEngine{knitr::rmarkdown}
@@ -32,15 +32,14 @@ BiocStyle::markdown()
 ```{r env, include=FALSE, echo=FALSE, cache=FALSE}
 library("knitr")
 opts_chunk$set(stop_on_error = 1L)
-suppressPackageStartupMessages(library("dplyr"))
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
 suppressPackageStartupMessages(library("class"))
 set.seed(1)
-``` 
+```
 
-# Introduction {#sec:intro} 
+# Introduction {#sec:intro}
 
 Our main data source to study protein sub-cellular localisation are
 high-throughput mass spectrometry-based experiments such as LOPIT, PCP
@@ -72,7 +71,7 @@ domain (experimental data) with auxiliary data (annotation) features
 without compromising the integrity of our primary data. In this
 vignette, we describe the application of transfer learning algorithms
 for the localisation of proteins from the `r Biocpkg("pRoloc")` package, as
-described in 
+described in
 
 > Breckels LM, Holden S, Wonjar D, Mulvey CM, Christoforou A, Groen A,
 > Trotter MW, Kohlbacker O, Lilley KS and Gatto L (2016). *Learning
@@ -141,8 +140,8 @@ species (`"Homo sapiens"`) and feature type (`"UniProtKB/Swiss-prot ID"`).
 
 ```{r ap}
 ap <- setAnnotationParams(inputs =
-                              c("Homo sapiens",
-                                "UniProtKB/Swiss-Prot ID"))
+							  c("Homo sapiens",
+								"UniProtKB/Swiss-Prot ID"))
 ap
 ```
 
@@ -206,8 +205,8 @@ thus traceable) annotations.
 The feature names of our LOPIT experiment are UniProt identifiers,
 while the Human Protein Atlas uses Ensembl gene identifiers. This
 first code chunk matches both identifier types using the Ensembl
-Biomart server. In this section, we copy the experimental data to
-`andyhpa`.
+Biomart server and `left_join` from the `r CRANpkg("dplyr")`
+package. In this section, we copy the experimental data to `andyhpa`.
 
 ```{r hparprep, eval=TRUE}
 andyhpa <- andy2011
@@ -220,9 +219,9 @@ mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 filter <- "uniprotswissprot"
 attrib <- c("uniprot_gn", "uniprotswissprot", "ensembl_gene_id")
 bm <- getBM(attributes = attrib,
-            filters = filter,
-            values = fData(andyhpa)[, "accession"],
-            mart = mart)
+			filters = filter,
+			values = fData(andyhpa)[, "accession"],
+			mart = mart)
 head(bm)
 
 ## HPA data
@@ -234,13 +233,12 @@ hpa <- getHpa(bm$ensembl_gene_id)
 hpa$Reliability <- droplevels(hpa$Reliability)
 colnames(hpa)[1] <- "ensembl_gene_id"
 
-library("dplyr")
-hpa <- left_join(hpa, bm)
+hpa <- dplyr::left_join(hpa, bm)
 hpa <- hpa[!duplicated(hpa$uniprotswissprot), ]
 
 ## match HPA/LOPIT
 colnames(hpa)[7] <- "accession"
-fd <- left_join(fData(andyhpa), hpa)
+fd <- dplyr::left_join(fData(andyhpa), hpa)
 rownames(fd) <- featureNames(andyhpa)
 fData(andyhpa) <- fd
 stopifnot(validObject(andyhpa))
@@ -259,27 +257,27 @@ filter proteins without any localisation data.
 ```{r hpadata, eval=TRUE}
 ## HPA localisation
 hpalocs <- c(as.character(fData(lopit)$Main.location),
-             as.character(fData(lopit)$Other.location))
+			 as.character(fData(lopit)$Other.location))
 hpalocs <- hpalocs[!is.na(hpalocs)]
 hpalocs <- unique(unlist(strsplit(hpalocs, ";")))
 
 makeHpaSet <- function(x, score2, locs = hpalocs) {
-    hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
-    colnames(hpamat) <- locs
-    rownames(hpamat) <- featureNames(x)    
-    for  (i in 1:nrow(hpamat)) {
-        loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
-        loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
-        score <- score2[fData(x)[i, "Reliability"]]
-        hpamat[i, loc] <- score
-        hpamat[i, loc2] <- score
-    }
-    new("MSnSet", exprs = hpamat,
-        featureData = featureData(x))
+	hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
+	colnames(hpamat) <- locs
+	rownames(hpamat) <- featureNames(x)
+	for  (i in 1:nrow(hpamat)) {
+		loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
+		loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
+		score <- score2[fData(x)[i, "Reliability"]]
+		hpamat[i, loc] <- score
+		hpamat[i, loc2] <- score
+	}
+	new("MSnSet", exprs = hpamat,
+		featureData = featureData(x))
 }
 
 hpaset <- makeHpaSet(lopit,
-                     score2 = c(Supportive = 1, Uncertain = 0))
+					 score2 = c(Supportive = 1, Uncertain = 0))
 hpaset <- filterZeroRows(hpaset)
 dim(hpaset)
 exprs(hpaset)[c(1, 6, 200), 1:3]
@@ -289,7 +287,7 @@ exprs(hpaset)[c(1, 6, 200), 1:3]
 
 Protein-protein interaction data can also be used as auxiliary data
 input to the transfer learning algorithm. Several sources can be used
-to do so directly from R: 
+to do so directly from R:
 
 * The `r Biocpkg("PSICQUIC")` package provides an R interfaces to the
   HUPO Proteomics Standard Initiative (HUPO-PSI) project, which
@@ -298,14 +296,14 @@ to do so directly from R:
   one go but, as noted in the vignettes, for bulk interactions, it is
   recommended to directly download databases from individual PSICQUIC
   providers.
-  
+
 * The `r Biocpkg("STRINGdb")` package provides a direct interface to
   the STRING protein-protein interactions database. This package can
   be used to generate a table as the one used below. The exact
   procedure is described in the `STRINGdb` vignette and involves
   mapping the protein identifiers with the *map* and retrieve the
   interaction partners with the *get_neighbors* method.
-  
+
 * Finally, it is possible to use any third-party PPI inference results
   and adequately prepare these results for transfer learning. Below,
   we will described this case with PPI data in a tab-delimited format,
@@ -331,15 +329,15 @@ ppim <- diag(length(uid))
 colnames(ppim) <- rownames(ppim) <- uid
 
 for (k in 1:nrow(ppidf)) {
-    i <- ppidf[[k, "X.node1"]]
-    j <- ppidf[[k, "node2"]]
-    ppim[i, j] <- ppidf[[k, "combined_score"]]
+	i <- ppidf[[k, "X.node1"]]
+	j <- ppidf[[k, "node2"]]
+	ppim[i, j] <- ppidf[[k, "combined_score"]]
 }
 
 ppim[1:5, 1:8]
-``` 
+```
 
-We now have a contingency matrix reflecting a total of 
+We now have a contingency matrix reflecting a total of
 `r sum(ppim != 0)` interactions between `r nrow(ppim)`
 proteins. Below, we only keep proteins that are also available in our
 spatial proteomics data (renamed to `andyppi`), subset the PPI and
@@ -354,11 +352,11 @@ ppim <- ppim[cmn, ]
 andyppi <- andyppi[cmn, ]
 
 ppi <- MSnSet(ppim, fData = fData(andyppi),
-              pData = data.frame(row.names = colnames(ppim)))
+			  pData = data.frame(row.names = colnames(ppim)))
 ppi <- filterZeroCols(ppi)
 ```
 
-We now have two `MSnSet` objects containing respectively 
+We now have two `MSnSet` objects containing respectively
 `r nrow(andyppi)` primary experimental protein profiles along a
 sub-cellular density gradient (`andyppi`) and `r nrow(ppi)` auxiliary
 interaction profiles (`ppi`).
@@ -405,8 +403,8 @@ setStockcol(paste0(getStockcol(), "80"))
 plot2D(andy2011, fcol = "markers.tl")
 setStockcol(NULL)
 addLegend(andy2011, fcol = "markers.tl",
-          where = "topright", bty = "n", cex = .7)
-```  
+		  where = "topright", bty = "n", cex = .7)
+```
 
 Let's define a set of three possible weights: 0, 0.5 and 1. A weight
 of 1 indicates that the final results rely exclusively on the
@@ -420,7 +418,7 @@ auxiliary data pair. The optimisation process can be quite time
 consuming for many weights and many sub-cellular classes, as all
 combinations (there are $number~of~classes^{number~of~weights}$
 possibilities; see below). One would generally defined more weights
-(for example `r seq(0, 1, by = 0.25)` or `r round(seq(0, 1, length.out = 4), 2)`) 
+(for example `r seq(0, 1, by = 0.25)` or `r round(seq(0, 1, length.out = 4), 2)`)
 to explore more fine-grained integration opportunities. The possible
 weight combinations can be calculated with the *thetas* function:
 
@@ -479,10 +477,10 @@ proceeding with the selection of best weights.
 
 ```{r thetaopt0, eval=FALSE}
 topt <- knntlOptimisation(andy2011, andygoset,
-                          th = th, 
-                          k = c(3, 3),
-                          fcol = "markers.tl",
-                          times = 50)
+						  th = th,
+						  k = c(3, 3),
+						  fcol = "markers.tl",
+						  times = 50)
 ```
 
 The above code chunk would take too much time to be executed in the
@@ -500,10 +498,10 @@ times below.
 set.seed(1)
 i <- sample(nrow(th), 12)
 topt <- knntlOptimisation(andy2011, andygoset,
-                          th = th[i, ],
-                          k = c(3, 3),
-                          fcol = "markers.tl",
-                          times = 5)
+						  th = th[i, ],
+						  k = c(3, 3),
+						  fcol = "markers.tl",
+						  times = 5)
 topt
 ```
 
@@ -562,9 +560,9 @@ function.
 
 ```{r tlclass}
 andy2011 <- knntlClassification(andy2011, andygoset,
-                                bestTheta = bw,
-                                k = c(3, 3),
-                                fcol = "markers.tl")
+								bestTheta = bw,
+								k = c(3, 3),
+								fcol = "markers.tl")
 ```
 
 This will generate a new instance of class *MSnSet*, identical to the
@@ -584,9 +582,9 @@ ptsze <- exp(fData(andy2011)$knntl.scores) - 1
 plot2D(andy2011, fcol = "knntl", cex = ptsze)
 setStockcol(NULL)
 addLegend(andy2011, where = "topright",
-          fcol = "markers.tl",
-          bty = "n", cex = .7)
-```  
+		  fcol = "markers.tl",
+		  bty = "n", cex = .7)
+```
 
 
 Please read the *pRoloc-tutorial* vignette, and in particular the

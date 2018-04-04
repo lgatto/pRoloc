@@ -1,7 +1,8 @@
 # pRoloc 1.19
 
 ## Changes in version 1.19.3
-- Nothing yet
+- Use `dplyr::left_join` without attaching `dplyr` to avoid collision
+  between `Biobase::exprs` and `dplyr::exprs` <2018-04-04 Wed>.
 
 ## Changes in version 1.19.2
 - Fix bug in QSep that prevented to set non-default fcol
@@ -71,45 +72,45 @@
  - Add section about dimensionality methods reduction and t-SNE in the
    tutorial <2017-03-07 Tue>
  - Fix error due to new uniprot attribute names <2017-04-06 Thu>
- 
+
 ## Changes in version 1.15.6
 
  - fix (unexported) remap function - see issue #92 <2016-12-15 Thu>
- - plot2Ds now only adds segments when the featureNames are identical 
+ - plot2Ds now only adds segments when the featureNames are identical
    <2017-01-11 Wed>
  - Import (rather than Suggest) hexbin <2017-01-18 Wed>
  - Increase margin in QSep plotting (contributed by S. Gibb)
    <2017-02-07 Tue>
- 
+
 ## Changes in version 1.15.5
 
  - Update plotDist to use sampleNames() to label x axis ticks and
    getUnknowncol() as default pcol (see issue #91) <2016-11-08 Tue>
  - xlab and ylab are args in plotDist <2016-12-04 Sun>
- 
+
 ## Changes in version 1.15.4
 
  - Update human markers - see pRolocdata's issue 21
    https://github.com/lgatto/pRolocdata/issues/21 <2016-11-08 Tue>
- 
+
 ## Changes in version 1.15.3
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-    <2016-11-04 Fri>
- 
+	<2016-11-04 Fri>
+
 ## Changes in version 1.15.2
 
  - Fix Arabidopsis parameters for biomaRt questions: 'TAIR locus ID'
    is now 'Stable gene ID'. Changed in several manual files and
    dunkley2006params. <2016-11-02 Wed>
- 
+
 ## Changes in version 1.15.1
 
  - new plot3D function <2016-10-27 Thu>
  - update CITATION <2016-10-27 Thu>
  - use predict:::predict.plsa, as it is not exported anymore
    <2016-11-01 Tue>
- 
+
 # MSnbase 1.13
 
 ## Changes in version 1.13.16
@@ -117,18 +118,18 @@
  - removing visualTest from suggest, as plotting tests currently
    disabled (see https://github.com/MangoTheCat/visualTest/issues/19 for
    details) <2016-10-07 Fri>
- 
+
 ## Changes in version 1.13.15
 
  - Fix bug in plot,QSep with NAs <2016-09-09 Fri>
  - Adapt tl vignette to new hpar <2016-09-15 Thu>
- 
+
 ## Changes in version 1.13.14
 
  - Pass ... in levelPlot,QSep <2016-09-06 Tue>
  - Various improvements to the tutorial vignette <2016-09-07 Wed>
  - Fix bug in QSep to honour fcol <2016-09-09 Fri>
- 
+
 ## Changes in version 1.13.13
 
  - Added plot3D, equivalent to plot2D, but using rgl in 3 dimensions
@@ -137,12 +138,12 @@
    <2016-09-06 Tue>
  - New mrkHClust function to plot a dendrogram of subcellular markers
    <2016-09-06 Tue>
- 
+
 ## Changes in version 1.13.12
 
  - Remove verbose argument from getMarkerClasses function
    <2016-08-23 Tue>
- - plot2D has new addLegend argument <2016-08-23 Tue> 
+ - plot2D has new addLegend argument <2016-08-23 Tue>
  - addLegend default position is now bottomleft (requested by Lisa)
    <2016-08-23 Tue>
  - new hexbin plot2D method <2016-08-28 Sun>
@@ -152,42 +153,42 @@
  - Add a norm agument to QSep's plotting functions to visualise
    normalised and raw distances <2016-08-22 Mon>
  - New zeroInBinMSnSet function to visualise rowSums <2016-08-23 Tue>
- 
+
 ## Changes in version 1.13.10
 
  - Send biomart queries in getGOFromFeatues in chunks - see issue #85
    for details <2016-08-20 Sat>
- 
+
 ## Changes in version 1.13.9
 
  - new QSep infrastructure to assess spatial resolution
    <2016-08-17 Wed>
  - Use %age of total variance in plot2D's scree plot <2016-08-17 Wed>
  - fixed bug in combineThetaRegRes <2016-08-19 Fri>
- 
+
 ## Changes in version 1.13.8
 
  - fDataToUnknown accepts from = NA <2016-08-10 Wed>
- 
+
 ## Changes in version 1.13.7
 
  - Added an lda method to plot2D <2016-08-08 Mon>
- 
+
 ## Changes in version 1.13.6
 
  - Fixed bug in addGoAnnotations <2016-07-29 Fri>
- 
+
 ## Changes in version 1.13.5
 
  - Fixed bug in show method for ThetaRegRes <2016-06-08 Wed>
  - Profiled knntl code so it's now much faster. Added more unit tests
    for knntl <2016-06-10 Fri>
  - Fixed bug in plotDist x-axis labelling <2016-06-14 Tue>
- 
+
 ## Changes in version 1.13.4
 
  - Updated mouse pRolocmarkers <2016-06-02 Thu>
- 
+
 ## Changes in version 1.13.3
 
  - Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue #79 <2016-05-31 Tue>
@@ -204,7 +205,7 @@
 ## Changes in version 1.13.1
 
  - Added keepNA argument to goTermToId so that if a GO term becomes
-   obsolete and you cannot replace it with the ID name, you have 
+   obsolete and you cannot replace it with the ID name, you have
    the option to either replace it with a NA (previous and current
    default option) or now with keepNA = FALSE the term name will be
    replaced with the id name <2016-05-25 Wed>
@@ -215,23 +216,23 @@
    package. This version bump will cause these packages to propagate
    with those R files included. d.tenenbaum
 
- 
+
 ## Changes in version 1.13.0
 
- - Version bump for new Bioc devel 
- 
+ - Version bump for new Bioc devel
+
 # MSnbase 1.12
 
 ## Changes in version 1.12.0
 
- - Version bump for Bioc release version 3.3 
- 
+ - Version bump for Bioc release version 3.3
+
 # MSnbase 1.11
 
 ## Changes in version 1.11.23
 
- - New gomarkers functionality for adding annotation information 
-   to spatial proteomics data and accompanying new vignette 
+ - New gomarkers functionality for adding annotation information
+   to spatial proteomics data and accompanying new vignette
    <2016-04-18 Mon>
  - Added unit tests <2016-04-20 Wed> <2016-04-21 Thu>
  - Moved makeNaData[2] and whichNA to MSnbase <2016-04-21 Thu>
@@ -239,16 +240,16 @@
    and orderGoAnnotations and all associated documentation.
    Vignette also renamed to pRoloc-goannotations
    <2016-04-21 Thu>
- 
+
 ## Changes in version 1.11.22
 
  - fix bug in knntlOptimisation to allow passing of th matrix
    with 1 column <2016-04-08 Fri>
- 
+
 ## Changes in version 1.11.21
 
  - fix bug in getParams method = 'max' <2016-04-07 Thu>
- 
+
 ## Changes in version 1.11.20
 
  - Update plotDist signature to support different types and pch
@@ -257,11 +258,11 @@
 ## Changes in version 1.11.19
 
   - Update dunkley2006params <2016-04-01 Fri>
-  
+
 ## Changes in version 1.11.18
 
  - Update dunkley2006params <2016-03-30 Wed>
- 
+
 ## Changes in version 1.11.17
 
  - Selective imports <2016-03-20 Sun>
@@ -269,19 +270,19 @@
 ## Changes in version 1.11.19
 
   - Update dunkley2006params <2016-04-01 Fri>
-  
+
 ## Changes in version 1.11.18
 
  - Update dunkley2006params <2016-03-30 Wed>
- 
+
 ## Changes in version 1.11.17
 
  - Selective imports <2016-03-20 Sun>
- 
+
 ## Changes in version 1.11.16
 
  - Update package startup msg <2016-03-11 Fri>
- 
+
 ## Changes in version 1.11.15
 
  - Clarify that score during optim are not a reflection of final
@@ -290,54 +291,54 @@
 ## Changes in version 1.11.14
 
  - fix build error due to doi/url confusion <2016-03-01 Tue>
- 
+
 ## Changes in version 1.11.13
 
- - new method argument added to knntlOptimisation that allows 
+ - new method argument added to knntlOptimisation that allows
    optimisation of class weights as per Wu and Dietterich's
    original k-NN TL method <2016-02-19 Fri>
  - seed argument added to knntlOptimisation for reproducibility
    <2016-02-22 Mon>
  - New section in tl vignette describing preparation of auxiliary PPI
    data <2016-02-29 Mon>
- 
+
 ## Changes in version 1.11.12
 
  - the colour and pch setters now invisibly return the old values
    <2016-02-17 Wed>
- 
+
 ## Changes in version 1.11.11
 
  - added error message when sampleNames differ between datasets
    in an MSnSetList when using remap function <2016-02-11 Thu>
- 
+
 ## Changes in version 1.11.10
 
  - Update colours man page to document change in default colour
    palette <2016-02-08 Mon>
- 
+
 ## Changes in version 1.11.9
 
  - Lisa's colour palette is now default. Old colours can be accessed
    and set with get/setOldcol <2016-02-04 Thu>
- 
+
 ## Changes in version 1.11.8
 
  - New Lisa cols and changed default unknown col <2016-02-03 Wed>
  - mrkVecToMat has been updated so that the column order reflects
    the factor levels of fcol, rather than calling unique on fcol.
-   This change means that the order of the classes in fcol are 
+   This change means that the order of the classes in fcol are
    now consistent between plot2D and new visualisation apps that
    rely on mrkVecToMat. <2016-02-03 Wed>
- 
+
 ## Changes in version 1.11.7
 
  - Various non-visible changes. <2016-01-19 Tue>
- 
+
 ## Changes in version 1.11.6
 
  - new classWeights function <2015-12-26 Sat>
- 
+
 ## Changes in version 1.11.5
 
  - highlightOnPlot support labels = TRUE to use featureNames as labels
@@ -345,12 +346,12 @@
  - selective ggplot2 import <2015-12-21 Mon>
  - highlightOnPlot also support a vector of feature names in addition
    to an instance of class FeaturesOfInterest <2015-12-21 Mon>
- 
+
 ## Changes in version 1.11.4
 
  - plot2D: Mirror PCs even when not plotting, addressing issue #68
    <2015-12-18 Fri>
- 
+
 ## Changes in version 1.11.3
 
  - Update dunkley2006params to use plant_mart_30 <2015-12-16 Wed>
@@ -360,33 +361,33 @@
    is an MSnSet, the untransformed values in the assay data will be
    plotted. If object is a matrix with coordinates, then a matching
    MSnSet must be passed to methargs. <2015-12-16 Wed>
- 
+
 ## Changes in version 1.11.2
 
  - Internally using MartInterface to query individual mart servers to
    bypass the biomart.org downtime <2015-12-09 Wed>
- 
+
 ## Changes in version 1.11.1
 
  - New orgQuants function and update to getPredictions
-   <2015-10-13 Tue> 
+   <2015-10-13 Tue>
  - Deprecate minClassScore replaced by getPredictions
    <2015-10-19 Mon>
- - Add pRolocVisMethods and check for new apps in 
+ - Add pRolocVisMethods and check for new apps in
    pRolocGUI <2015-10-19 Mon>
  - new fDataToUnknown function <2015-10-23 Fri>
  - New section in vignette describing readMSnSet2 <2015-11-30 Mon>
- 
+
 ## Changes in version 1.11.0
 
  - Bioc devel version 3.3
- 
+
 # MSnbase 1.10
 
 ## Changes in version 1.10.0
 
  - Bioc release version 3.2
- 
+
 # MSnbase 1.9
 
 ## Changes in version 1.9.7
@@ -394,23 +395,23 @@
  - New SpatProtVis visualisation class <2015-08-13 Thu>
  - add link to explanation of supportive/uncertain reliability scores
    in tl vignette <2015-09-02 Wed>
- 
+
 ## Changes in version 1.9.6
 
  - Update REAMDE with TL ref
  - Update refs in lopims documentation <2015-07-30 Thu>
- 
+
 ## Changes in version 1.9.5
 
  - update doc <2015-07-15 Wed>
- 
+
 ## Changes in version 1.9.4
 
  - Add reference to TL paper and link to lpSVM code <2015-07-06 Mon>
  - highlightOnPlot throws a warning and invisibly returns NULL instead
    of an error when no features are in the object <2015-07-08 Wed>
  - highlightOnPlot has a new labels argument <2015-07-10 Fri>
- 
+
 ## Changes in version 1.9.3
 
  - Clarify error when no annotation params are provided
@@ -429,7 +430,7 @@
 ## Changes in version 1.9.2
 
  - Lisa's colour palette <2015-05-08 Fri>
- 
+
 ## Changes in version 1.9.1
 
  - new plot2Ds function to overlay two data sets on the same PCA plot
@@ -439,25 +440,25 @@
  - new setStockcolGui function to set the default colours manually via
    a simple interface [2015-04-29 Wed]
  - new move2Ds function to produce an transition movie between two
-   MSnSets [2015-04-29 Wed]   
+   MSnSets [2015-04-29 Wed]
  - functions to convert GO ids to/from terms. See ?goTermToId for
    details <2015-05-08 Fri>
 
 ## Changes in version 1.9.0
 
  - new devel version for Bioc 3.2
- 
+
 # MSnbase 1.7
 
 ## Changes in version 1.7.13
 
  - use donttest instead of dontrun [2015-04-09 Thu]
- 
+
 ## Changes in version 1.7.12
 
  - don't run knntl example to reduce checking time and timeout on
    Windows [2015-04-08 Wed]
- 
+
 ## Changes in version 1.7.11
 
  - fix splitTh, closes issue #49 [2015-04-06 Mon]
@@ -477,11 +478,11 @@
 
  - updating tl vig [2015-04-02 Thu]
  - update getParams documentation [2015-04-02 Thu]
- 
+
 ## Changes in version 1.7.7
 
  - renaming theta.scores to knntl.scores [2015-03-24 Tue]
- 
+
 ## Changes in version 1.7.6
 
  - added the theta inductive transfer infrastructure [2015-02-05 Thu]
@@ -493,21 +494,21 @@
  - hpa data section [2015-03-10 Tue]
  - theta sections [2015-03-10 Tue]
  - deprecate getRegulari[z|s]edParams [2015-03-11 Wed]
- 
+
 ## Changes in version 1.7.5
 
  - Fix vignettes: run bibtex and pdflatex twice and typo
    [2015-02-03 Tue]
- 
+
 ## Changes in version 1.7.4
 
  - Use default Sweave call to build vignette [2015-01-24 Sat]
- 
+
 ## Changes in version 1.7.3
 
  - use Biocstyle [2015-01-23 Fri]
  - replace library/require by requireNamespace [2015-01-23 Fri]
- 
+
 ## Changes in version 1.7.2
 
  - added t-SNE method to plot2D [2015-01-14 Wed]
@@ -569,7 +570,7 @@
 
 ## Changes in version 1.5.13
 
- - none 
+ - none
 
 ## Changes in version 1.5.12
 
@@ -599,7 +600,7 @@
  - markerSet and unknownSet renamed to markerMSnSet and unknownMSnSet
    [2014-06-19 Thu]
  - functions sampleMSnSet and testMSnSet added [2014-06-19 Thu]
- - fix keepColNames in pRoloc:::subsetAsDataFrame - fcol was 
+ - fix keepColNames in pRoloc:::subsetAsDataFrame - fcol was
    always renamed to "markers" [2014-06-19 Thu]
 
 ## Changes in version 1.5.7
@@ -621,7 +622,7 @@
 
  - testMarkers gets an error argument [2014-05-14 Wed]
  - plotDist now has a ylim argument [2014-05-21 Wed]
- 
+
 ## Changes in version 1.5.3
 
  - import all MLInterfaces [2014-04-30 Wed]
@@ -659,13 +660,13 @@
  - fixed error introduced with mclust 4.3 (that now returns the data
    in the Mclust output - see comment in pRoloc:::gmmOutliers for
    details) [2014-04-07 Mon]
- 
+
 ## Changes in version 1.3.18
- 
+
  - getPredictions can take class-specific scores [2014-04-04 Fri]
 
 ## Changes in version 1.3.17
- 
+
  - fixed newly introduced bug (see 1.3.16) in
    pRoloc:::subsetAsDataFrame - thank you unit tests for saving me,
    again [2014-03-26 Wed]
@@ -680,8 +681,8 @@
 ## Changes in version 1.3.15
 
  - updated pRolocmarkers("mmus") [2014-03-21 Fri]
- - moved extdata/*csv to pRolocdata [2014-03-23 Sun] 
- - using *csv from pRolocdata [2014-03-23 Sun] 
+ - moved extdata/*csv to pRolocdata [2014-03-23 Sun]
+ - using *csv from pRolocdata [2014-03-23 Sun]
 
 ## Changes in version 1.3.14
 
@@ -699,7 +700,7 @@
 
 ## Changes in version 1.3.12
 
- - added phenoDisco2 for testing, allows choice of GMM 
+ - added phenoDisco2 for testing, allows choice of GMM
    parameters [2014-02-26 Wed]
  - removed duplicated fly markers [2014-02-28 Fri]
  - updated affiliations in vignettes [2014-03-10 Mon]
@@ -711,7 +712,7 @@
 ## Changes in version 1.3.10
 
  - new phenoDisco ndims argument to use more than two two principal
-   components as input for discovery analysis [2014-01-03 Mon] 
+   components as input for discovery analysis [2014-01-03 Mon]
  - fixed and updated phenoDisco logging [2014-02-03 Mon]
  - added support for parallel phenoDisco execution. See BPPARAM
    argument [2014-02-03 Mon]
@@ -721,12 +722,12 @@
 
 ## Changes in version 1.3.9
 
- - bump to force rebuild for new Rcpp 
+ - bump to force rebuild for new Rcpp
 
 ## Changes in version 1.3.8
 
  - Removed trailing space in mmus nucleus markers [2014-01-21 Tue]
- - using filterNA to remove features with missing values 
+ - using filterNA to remove features with missing values
    in plot2D [2014-01-21 Tue]
  - fixed plot2D/addLegend [2014-01-23 Thu]
 
@@ -734,20 +735,20 @@
 
  - fixed addLegend to use correct colours (order) [2014-01-20 Mon]
  - fix typo in addMarkers man [2014-01-20 Mon]
- - re-arranged stockpch so that interleave full and empty 
+ - re-arranged stockpch so that interleave full and empty
    plotting character [2014-01-20 Mon]
  - Removed last stockcol (tomato), too cose to "#FF7F00" [2014-01-20 Mon]
 
 ## Changes in version 1.3.6
 
- - updated human markers: keep new pd.markers phenotypes, 
+ - updated human markers: keep new pd.markers phenotypes,
    validated by Lisa and remove singletons [2014-01-14 Tue]
  - first stockpch is noe 19 [2014-01-16 Thu]
- - plot2D(.., pch) now taken into account for labelled 
+ - plot2D(.., pch) now taken into account for labelled
    data [2014-01-16 Thu]
  - removed alpha plot2D argument [2014-01-17 Fri]
- - updated plot2D and addLegend function with support for more 
-   organelle groups than colours. The previous versions are 
+ - updated plot2D and addLegend function with support for more
+   organelle groups than colours. The previous versions are
    available as plot2D_v1 and addLegend_v1. [2014-01-17 Fri]
 
 ## Changes in version 1.3.5
@@ -807,9 +808,9 @@
 
 ## Changes in version 1.1.3
 
- - new private anyUnknown function, used in phenoDisco, to check 
+ - new private anyUnknown function, used in phenoDisco, to check
    for the presence of unlabelled ('unknown') data [2013-08-27 Tue]
- - added a note in vignette about "unknown" convention to define 
+ - added a note in vignette about "unknown" convention to define
    protein with unknown localisation [2013-08-28 Wed]
  - Added HUPO 2011 poster [2013-09-09 Mon]
 
@@ -829,7 +830,7 @@
 
 ## Changes in version 1.1.1
 
- - Update README.md to reflect availability in stable release 
+ - Update README.md to reflect availability in stable release
    and biocLite installation [2013-04-07 Sun]
  - new MSe pipeline [2013-04-07 Sun]
  - perTurbo using Rcpp [2013-04-16 Tue]
@@ -853,7 +854,7 @@
 
 ## Changes in version 0.99.17
 
- - illustrating class.weights in the 
+ - illustrating class.weights in the
    vignette [2013-03-24 Sun]
 
 ## Changes in version 0.99.16
@@ -868,15 +869,15 @@
 
  - Added scale in tutorial [2013-03-02 Sat]
  - implemented viction [2013-03-09 Sat]
- - New vignette section on phenoDisco follow 
+ - New vignette section on phenoDisco follow
    up classification [2013-03-19 Tue]
  - Using knitr engine [2013-03-19 Tue]
 
 ## Changes in version 0.99.13
 
- - depending on MSnbase ]= 1.7.23 as makeNaData 
+ - depending on MSnbase ]= 1.7.23 as makeNaData
    needs MSnbase:::nologging [2013-02-27 Wed]
- - updated phenoDisco parameters, added error messages when an 
+ - updated phenoDisco parameters, added error messages when an
    insufficient number of markers per class and/or number of
    classes are used and updated phenoDisco help file [2012-02-28 Thu]
  - added first belief diffscores function [2013-03-01 Fri]
@@ -889,12 +890,12 @@
  - new makeNaData2 function [2013-02-21 Thu]
  - new whichNAfunction [2013-02-20 Wed]
  - updated tutorial vignette [2013-02-20 Wed]
- - Now passing ... to predictor functions in 
+ - Now passing ... to predictor functions in
    xxxClassification (reported by Marianne Sandin) [2013-02-26 Tue]
 
 ## Changes in version 0.99.11
 
- - setUnknowncol(NULL) and friedns reset to default 
+ - setUnknowncol(NULL) and friedns reset to default
    values [2013-02-19 Tue]
 
 ## Changes in version 0.99.10
@@ -903,14 +904,14 @@
 
 ## Changes in version 0.99.9
 
- - Updates to phenoDisco: verbose param, fixed error in example, 
-   adding params to processingInfo [2013-02-11 Mon] 
+ - Updates to phenoDisco: verbose param, fixed error in example,
+   adding params to processingInfo [2013-02-11 Mon]
  - Unexported getOtherParams method [2013-02-12 Tue]
  - adding export param documentation [2013-02-12 Tue]
 
 ## Changes in version 0.99.8
 
- - Integration of the perTurbo algorithms, contributed 
+ - Integration of the perTurbo algorithms, contributed
    by Thomas Burger and Samuel Wieczorek [2013-01-18 Fri]
  - summariseMatList now has na.rm = TRUE by default [2013-01-19 Sat]
  - PerTurbo's inv/reg now as other hyperparams [2013-02-11 Mon]
@@ -929,7 +930,7 @@
 
 ## Changes in version 0.99.5
 
- - more reg data into GenRegRes objects 
+ - more reg data into GenRegRes objects
    - cmMatrices (knn) [2012-11-15 Thu] (other) [2012-11-30 Fri]
    - testPartitions (knn) [2012-11-17 Sat] (other) [2012-11-30 Fri]
  - new minMarkers function [2012-11-16 Fri]
@@ -954,7 +955,7 @@
 
 ## Changes in version 0.99.2
 
- - fixed MLearn("formula", "MSnSet", "clusteringSchema", 
+ - fixed MLearn("formula", "MSnSet", "clusteringSchema",
    "missing") - interface was wrong [2012-11-10 Sat]
  - vignette updates [2012-11-10 Sat] [2012-11-11 Sun]
  - nicer knn score names when scores = "all" [2012-11-11 Sun]
@@ -963,7 +964,7 @@
 
  - updated exprsToRatio when ncol(object) is 2 [2012-11-05 Mon]
  - typos in vignette [2012-11-09 Fri] [2012-11-10 Sat]
- - new MLearn method for signature 
+ - new MLearn method for signature
    c("formula", "MSnSet", "clusteringSchema", "missing") [2012-11-09 Fri]
  - Several vignette udpates [2012-11-10 Sat]
 

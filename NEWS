@@ -1,3 +1,7 @@
+Changes in version 1.19.4
+-------------------------
+- Nothing yet.
+
 Changes in version 1.19.3
 -------------------------
 - Use `dplyr::left_join` without attaching `dplyr` to avoid collision

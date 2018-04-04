@@ -1,5 +1,8 @@
 # pRoloc 1.19
 
+## Changes in version 1.19.4
+- Nothing yet.
+
 ## Changes in version 1.19.3
 - Use `dplyr::left_join` without attaching `dplyr` to avoid collision
   between `Biobase::exprs` and `dplyr::exprs` <2018-04-04 Wed>.

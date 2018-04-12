@@ -113,7 +113,7 @@ hyperLOPIT2015 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/AnnotationParams-class.html">setAnnotationParams</a></span>(<span class="dt">inputs =</span> <span class="kw">c</span>(<span class="st">"Mus musculus"</span>, 
                                          <span class="st">"UniProtKB/Swiss-Prot ID"</span>))</code></pre></div>
 <pre><code>## Using species Mus musculus genes (GRCm38.p4)</code></pre>
-<pre><code>## Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A0A6YXX9]</code></pre>
+<pre><code>## Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A087WPF7]</code></pre>
 <pre><code>## Connecting to Biomart...</code></pre>
 <p>Now the parameters for the search have been defined we can use the <code>addGoAnnotations</code> function to add a GO information matrix to the <code>featureData</code> slot of the dataset. The <code>addGoAnnotations</code> function takes a <code>MSnSet</code> instance as input (from which the <code>featureNames</code> will be extracted) and it downloads the CC terms (the default, biological process and the molecular function namespaces are also supported) found for each protein in the dataset. The output <code>MSnSet</code> has the CC term binary matrix appended to the <code>fData</code>, by default this is called <code>GOAnnotations</code> (and changed using the <code>fcol</code> argument).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addGoAnnotations.html">addGoAnnotations</a></span>(hyperLOPIT2015, params, 
@@ -168,18 +168,18 @@ dd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustDis
 dd[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>## Object of class "ClustDist"
 ## fcol =  GOAnnotations 
-##  term =  GO:0005886 
-##  id =  plasma membrane 
-##  nrow =  108 
+##  term =  GO:0005856 
+##  id =  cytoskeleton 
+##  nrow =  27 
 ## k's tested: 1 2 3 
-##   Size:  108 
-##   Size:  32, 76 
-##   Size:  24, 31, 53 
+##   Size:  27 
+##   Size:  19 
+##   Size:  13 
 ## Clusters info:
-##       ks.mean    mean ks.norm    norm
-## k = 1       1  0.5083       1  0.1067
-## k = 2       2  0.3712       2  0.1035
-## k = 3       3 *0.3041       3 *0.0943</code></pre>
+##       ks.mean    mean ks.norm     norm
+## k = 1       1  0.4288       1  0.14292
+## k = 2       1  0.1602       1  0.06003
+## k = 3       1 *0.1187       1 *0.05050</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plot normalised distances 
 <span class="kw">plot</span>(dd, <span class="dt">p =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre></div>

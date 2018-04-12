@@ -153,29 +153,29 @@ package <code>nnet</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9200  0.9232  0.9263  0.9488  0.9632  1.0000 
+#&gt;  0.9412  0.9503  0.9594  0.9583  0.9669  0.9743 
 #&gt;  best decay: 1e-05 0.1   
 #&gt;  best size: 10   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='nnetClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;       10
 #&gt; 1e-05  1
 #&gt; 0.1    0</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='nnetClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; decay  size 
 #&gt; 1e-05 1e+01 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)</div><div class='output co'>#&gt; # weights:  269
-#&gt; initial  value 625.671054 
-#&gt; iter  10 value 259.079515
-#&gt; iter  20 value 34.428717
-#&gt; iter  30 value 4.887082
-#&gt; iter  40 value 0.566331
-#&gt; iter  50 value 0.433219
-#&gt; iter  60 value 0.340727
-#&gt; iter  70 value 0.290224
-#&gt; iter  80 value 0.270675
-#&gt; iter  90 value 0.250393
-#&gt; iter 100 value 0.230280
-#&gt; final  value 0.230280 
+#&gt; initial  value 557.248643 
+#&gt; iter  10 value 383.884386
+#&gt; iter  20 value 53.270473
+#&gt; iter  30 value 5.729583
+#&gt; iter  40 value 1.090606
+#&gt; iter  50 value 0.746192
+#&gt; iter  60 value 0.527040
+#&gt; iter  70 value 0.448269
+#&gt; iter  80 value 0.371733
+#&gt; iter  90 value 0.332361
+#&gt; iter 100 value 0.301828
+#&gt; final  value 0.301828 
 #&gt; stopped after 100 iterations</div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            20           168            95           109            48 
+#&gt;            25           170            94           102            52 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           138            60            20            31 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           150            42            19            35 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -194,13 +194,13 @@ package <code>nnet</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed nnet prediction (decay=1e-05 size=10) Wed Apr  4 17:12:09 2018 
-#&gt; Added nnet predictions according to global threshold = 0 Wed Apr  4 17:12:09 2018 
+#&gt; Performed nnet prediction (decay=1e-05 size=10) Thu Apr 12 14:53:41 2018 
+#&gt; Added nnet predictions according to global threshold = 0 Thu Apr 12 14:53:41 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            19           165            93           106            48 
+#&gt;            24           169            94           102            52 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;           132            57            19            20            30 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           147            41            18             8            34 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -219,8 +219,8 @@ package <code>nnet</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed nnet prediction (decay=1e-05 size=10) Wed Apr  4 17:12:09 2018 
-#&gt; Added nnet predictions according to global threshold = 0.75 Wed Apr  4 17:12:09 2018 
+#&gt; Performed nnet prediction (decay=1e-05 size=10) Thu Apr 12 14:53:41 2018 
+#&gt; Added nnet predictions according to global threshold = 0.75 Thu Apr 12 14:53:41 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><img src='nnetClassification-22.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

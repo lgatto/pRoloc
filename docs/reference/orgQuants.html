@@ -138,13 +138,13 @@ on calculated thresholds.</p>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='svmClassification.html'>svmClassification</a></span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"pd.markers"</span>,
                          <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cost</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: first element used of 'length.out' argument</span></div><div class='input'><span class='co'>## 50% top predictions per class</span>
 <span class='no'>ts</span> <span class='kw'>&lt;-</span> <span class='fu'>orgQuants</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;     0.3378893     0.8412504     0.7799602     0.7485933     0.7731243 
+#&gt;     0.3284755     0.8353733     0.7662083     0.7457670     0.7756277 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;     0.7330514     0.5603888     0.5570352     0.5665533 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='no'>ts</span>)</div><div class='output co'>#&gt; ans
+#&gt;     0.7307589     0.5456191     0.5414476     0.5621217 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='no'>ts</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            15           117            65            78            36 
+#&gt;            15           117            65            78            37 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            85            40            15           213            25 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            86            39            15           211            26 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -163,8 +163,8 @@ on calculated thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Wed Apr  4 17:12:10 2018 
-#&gt; Added svm predictions according to thresholds: ER lumen = 0.34, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.56, TGN = 0.56, vacuole = 0.57 Wed Apr  4 17:12:10 2018 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Thu Apr 12 14:53:41 2018 
+#&gt; Added svm predictions according to thresholds: ER lumen = 0.33, ER membrane = 0.84, Golgi = 0.77, Mitochondrion = 0.75, Plastid = 0.78, PM = 0.73, Ribosome = 0.55, TGN = 0.54, vacuole = 0.56 Thu Apr 12 14:53:41 2018 
 #&gt;  MSnbase version: 1.17.12 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

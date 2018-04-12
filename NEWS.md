@@ -1,7 +1,7 @@
 # pRoloc 1.19
 
 ## Changes in version 1.19.4
-- Nothing yet.
+- Fix regression bug in knntl function <2018-04-12 Thu>
 
 ## Changes in version 1.19.3
 - Use `dplyr::left_join` without attaching `dplyr` to avoid collision

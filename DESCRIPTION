@@ -91,6 +91,7 @@ Collate:
     machinelearning-functions-rf.R
     machinelearning-functions-svm.R
     machinelearning-functions-knntl.R
+    machinelearning-functions-tagm-map.R
     belief.R
     distances.R
     markers.R

@@ -10,6 +10,31 @@ setClass("GenRegRes",
                         testPartitions = "list",
                         datasize = "list"))
 
+#' @title Class \code{"MAPparams"}
+#' @description TAGM parameters container.
+#' 
+#' @slot algorithm Object of class \code{"character"} storing
+#' the machine learning algorithm name.
+#' @slot priors Object of class \code{"list"} with the priors for the parameters
+#' @slot design Object of class \code{"numeric"} describing any cross-validation
+#' parameters
+#' @slot log Object of class \code{"list"} with warnings
+#' @slot seed Object of class \code{"integer"} with the random
+#' number generation seed.
+#' @slot posteriors Object of class \code{"list"} with the updated posterior parameters
+#' and log-posterior of the model.
+#' @slot datasize Object of class \code{"list"} with details about size of data
+#' @aliases class:MAPparams MAPparams-class
+#' @exportClass  
+setClass("MAPparams",
+         representation(algorithm = "character",
+                        priors = "list",
+                        design = "numeric",
+                        log = "list",
+                        seed = "integer",
+                        posteriors = "list",
+                        datasize = "list"))
+
 setMethod("show",
           signature(object = "GenRegRes"),
           function(object) {

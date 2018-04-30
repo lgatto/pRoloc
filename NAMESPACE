@@ -71,6 +71,7 @@ importFrom(plyr, colwise, catcolwise, ddply)
 
 exportClasses(GenRegRes,
               ThetaRegRes,
+              MAPparams,
               AnnotationParams,
               SpatProtVis,
               ClustDist,

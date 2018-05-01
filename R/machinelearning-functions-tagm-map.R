@@ -38,7 +38,7 @@ tagmTrain <- function(object,
   #get expression marker data
   markersubset <- markerMSnSet(object, fcol = fcol)
   mydata <- exprs(markersubset)
-  X <- exprs(unknownMSnSet(object))
+  X <- exprs(unknownMSnSet(object, fcol = fcol))
   
   if (is.null(seed)) {
     seed <- sample(.Machine$integer.max, 1)
@@ -50,7 +50,7 @@ tagmTrain <- function(object,
   #get data dize
   N <- nrow(mydata)
   D <- ncol(mydata)
-  K <- length(getMarkerClasses(markersubset))
+  K <- length(getMarkerClasses(markersubset, fcol = fcol))
   
   #set empirical priors
   if (is.null(nu0)) {
@@ -86,15 +86,15 @@ tagmTrain <- function(object,
   #update prior with training data
   nk <- tabulate(fData(markersubset)[, fcol])
   for(j in 1:K){
-    xk[j, ] <- colSums(mydata[fData(markersubset)[, fcol] == getMarkerClasses(markersubset)[j], ])/nk[j]
+    xk[j, ] <- colSums(mydata[fData(markersubset)[, fcol] == getMarkerClasses(markersubset, fcol = fcol)[j], ])/nk[j]
   }
   lambdak <- lambda0 + nk
   nuk <- nu0 + nk
   mk <- (nk * xk + lambda0 * mu0) / lambdak
   
   for(j in seq.int(K)){
-    sk[j, , ] <- S0 + t(mydata[fData(markersubset)[, fcol] == getMarkerClasses(markersubset)[j], ]) %*% 
-      mydata[fData(markersubset)[, fcol] == getMarkerClasses(markersubset)[j],] +
+    sk[j, , ] <- S0 + t(mydata[fData(markersubset)[, fcol] == getMarkerClasses(markersubset, fcol = fcol)[j], ]) %*% 
+      mydata[fData(markersubset)[, fcol] == getMarkerClasses(markersubset, fcol = fcol)[j],] +
       lambda0 * mu0 %*% t(mu0) - lambdak[j] * mk[j, ] %*% t(mk[j, ]) 
   }
   betak <- beta0 + nk
@@ -237,9 +237,13 @@ tagmPredict <- function(object,
   sigma <- posteriors$sigma
   weights <- posteriors$weights
   
+  #split unknowns and markers
+  unknownsubset <- unknownMSnSet(object, fcol = fcol)
+  markersubset <- markerMSnSet(object, fcol = fcol)
+  
   #get data to predict
-  X <- exprs(unknownMSnSet(object))
-  K <- length(getMarkerClasses(markerMSnSet(object, fcol = fcol)))
+  X <- exprs(unknownsubset)
+  K <- length(getMarkerClasses(markersubset, fcol = fcol))
   
   a <- matrix(0, nrow = nrow(X), ncol = K)
   b <- matrix(0, nrow = nrow(X), ncol = K)
@@ -263,32 +267,27 @@ tagmPredict <- function(object,
   b <- ab[, (K + 1):(2 * K)]
   .predictProb <- a + b
   
-  colnames(.predictProb) <- getMarkerClasses(object)
+  colnames(.predictProb) <- getMarkerClasses(markersubset, fcol = fcol)
   
-  organelleAlloc[, 1] <- getMarkerClasses(object)[apply(a, 1, which.max)]
+  organelleAlloc[, 1] <- getMarkerClasses(markersubset, fcol = fcol)[apply(a, 1, which.max)]
   probAlloc <- apply(a, 1, which.max)
   
   for(i in seq.int(nrow(X))){
     organelleAlloc[i, 2] <- as.numeric(a[i, probAlloc[i]])
   }
-  rownames(a) <- rownames(unknownMSnSet(object))
-  rownames(b) <- rownames(unknownMSnSet(object))
-  rownames(predictProb) <- rownames(unknownMSnSet(object))
-  rownames(organelleAlloc) <- rownames(unknownMSnSet(object))
-  
+  rownames(b) <- rownames(a) <- rownames(unknownsubset)
+  rownames(organelleAlloc) <- rownames(predictProb) <- rownames(unknownsubset)
+
   #predicted classes and probabilities (markers set to 1)
-  .pred <- c(organelleAlloc[, 1], as.character(fData(markerMSnSet(object))[,fcol]))
-  .prob <- c(organelleAlloc[, 2], rep(1, nrow(markerMSnSet(object))))
+  .pred <- c(organelleAlloc[, 1], as.character(fData(markersubset)[,fcol]))
+  .prob <- c(organelleAlloc[, 2], rep(1, nrow(markersubset)))
   
   #outlier probablities (markers set to 0)
-  .outlier <- c(rowSums(b), rep(0, nrow(markerMSnSet(object))))
+  .outlier <- c(rowSums(b), rep(0, nrow(markersubset)))
   
   #making sure rownames align
-  names(.prob) <- c(rownames(unknownMSnSet(object)), rownames(fData(markerMSnSet(object))))
-  names(.pred) <- c(rownames(unknownMSnSet(object)), rownames(fData(markerMSnSet(object))))
-  names(.outlier) <- c(rownames(unknownMSnSet(object)), rownames(fData(markerMSnSet(object))))
-  
-  
+  names(.outlier) <- names(.pred) <- names(.prob) <- c(rownames(unknownsubset), rownames(markersubset))
+
   if (probreturn == "prediction") {
    #add new columns to MSnSet
    fData(object)$tagm.allocation <- .pred[rownames(fData(object))] 
@@ -304,8 +303,8 @@ tagmPredict <- function(object,
     for(j in seq_along(nrow(markerMSnSet(object)))){
       .probmat[j, as.numeric(factor(.class), seq(1,length(unique(.class))))[j]] <- 1 #give markers prob 1
     }
-    colnames(.probmat) <- getMarkerClasses(object)
-    rownames(.probmat) <- rownames(markerMSnSet(object))
+    colnames(.probmat) <- getMarkerClasses(markersubset, fcol = fcol)
+    rownames(.probmat) <- rownames(markersubset)
     .joint <- rbind(.predictProb, .probmat)
     fData(object)$tagm.joint <- .joint[rownames(fData(object))]
   }

@@ -36,7 +36,7 @@ tagmTrain <- function(object,
 ) {
   
   #get expression marker data
-  markersubset <- markerMSnSet(object)
+  markersubset <- markerMSnSet(object, fcol = fcol)
   mydata <- exprs(markersubset)
   X <- exprs(unknownMSnSet(object))
   
@@ -50,7 +50,7 @@ tagmTrain <- function(object,
   #get data dize
   N <- nrow(mydata)
   D <- ncol(mydata)
-  K <- length(getMarkerClasses(object))
+  K <- length(getMarkerClasses(markersubset))
   
   #set empirical priors
   if (is.null(nu0)) {
@@ -174,10 +174,14 @@ tagmTrain <- function(object,
     #compute log-likelihood, using recursive addition method 
     for (j in seq.int(K)){
       loglike[t] <- loglike[t] + sum( a[, j] * mvtnorm::dmvnorm(X, mean = muk[j, ], sigma = sigmak[j, , ], log = TRUE)) +
-        sum( w[,j] * log(pik[j]) )
+        sum( w[,j] * log(pik[j]) ) + dinvwishart(Sigma = sigmak[j, , ], nu = nu0, S = S0, log = TRUE) +
+        mvtnorm::dmvnorm(muk[j, ], mean = mu0, sigma = sigmak[j, , ], log = TRUE)
+      
     }
     loglike[t] <- loglike[t] + sum(a) * log(1 - eps) + sum(b) * log(eps) + 
-      sum(rowSums(b) *  mvtnorm::dmvt(X, delta = M, sigma = V, df = 4, log = TRUE))
+      sum(rowSums(b) *  mvtnorm::dmvt(X, delta = M, sigma = V, df = 4, log = TRUE)) + 
+    dbeta(eps, shape1 = u, shape2 = v, log = TRUE) + ddirichlet(pik, alpha = beta0/K, log = TRUE)
+   
     
   }
   
@@ -235,7 +239,7 @@ tagmPredict <- function(object,
   
   #get data to predict
   X <- exprs(unknownMSnSet(object))
-  K <- length(getMarkerClasses(object))
+  K <- length(getMarkerClasses(markerMSnSet(object, fcol = fcol)))
   
   a <- matrix(0, nrow = nrow(X), ncol = K)
   b <- matrix(0, nrow = nrow(X), ncol = K)
@@ -265,7 +269,7 @@ tagmPredict <- function(object,
   probAlloc <- apply(a, 1, which.max)
   
   for(i in seq.int(nrow(X))){
-    organellAlloc[i, 2] <- as.numeric(a[i, probAlloc[i]])
+    organelleAlloc[i, 2] <- as.numeric(a[i, probAlloc[i]])
   }
   rownames(a) <- rownames(unknownMSnSet(object))
   rownames(b) <- rownames(unknownMSnSet(object))

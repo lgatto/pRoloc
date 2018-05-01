@@ -47,6 +47,7 @@ Imports:
     MASS,
     knitr,
     mvtnorm,
+    LaplacesDemon,
     gtools,
     plyr,
     ggplot2,

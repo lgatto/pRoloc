@@ -1,3 +1,14 @@
+# pRoloc 1.21
+
+## Changes in version 1.21.1
+- Fix bug in higlightOnPlot with missing fcol (see #105)
+  <2018-05-03 Thu>
+
+# pRoloc 1.20
+
+## Changes in version 1.20.0
+- New Bioconductor release 3.7
+
 # pRoloc 1.19
 
 ## Changes in version 1.19.4

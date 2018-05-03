@@ -766,7 +766,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
         return(invisible(NULL))
     }
     if (inherits(object, "MSnSet")) {
-        .args <- list(object = object, plot = FALSE)
+        .args <- list(object = object, plot = FALSE, fcol = NULL)
         args <- c(args, .args)
         .pca <- do.call(plot2D, args = args)
         sel <- featureNames(object) %in% foi(foi)

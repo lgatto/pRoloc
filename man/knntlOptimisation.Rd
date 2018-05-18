@@ -88,7 +88,7 @@ Breckels LM, Holden S, Wonjar D, Mulvey CM,
     spatial proteomics. bioRxiv. doi:
     http://dx.doi.org/10.1101/022152
 
-Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary 
+Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary
 Data Sources. Proceedings of the 21st International Conference on Machine
 Learning (ICML); 2004.
 }

@@ -41,6 +41,20 @@ test_that("svm consistency", {
     expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
+
+test_that("TAGM consistency", {
+  .numIter <- 2
+  map1 <- tagmTrain(object = d1, fcol = "markers",
+                    numIter = .numIter, seed = .seed)
+  map2 <- tagmTrain(object = d2, fcol = "xx",
+                    numIter = .numIter, seed = .seed)
+  expect_equal(map1, map2)
+  ans1 <- tagmPredict(object = d1, MAPparams = map1, fcol = "markers", probreturn = "prediction")
+  ans2 <- tagmPredict(object = d2, MAPparams = map2, fcol = "xx", probreturn = "prediction")
+  
+  expect_equal(ans1, ans2, check.attributes = FALSE)
+})
+
 test_that("nb consistency", {
     .laplace <- c(0, 5)
     reg1 <- nbOptimisation(d1, fcol = "markers",

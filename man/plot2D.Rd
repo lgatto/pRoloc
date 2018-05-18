@@ -214,7 +214,8 @@ plot3D(dunkley2006, dims = c(2, 4, 6))
     \code{\link{plotDist}} for alternative graphical
     representation of quantitative organelle proteomics
     data. \code{\link{plot2Ds}} to overlay 2 data sets on the same
-    PCA plot.
+    PCA plot. The \code{\link{plotEllipse}} function can be used
+    to visualise TAGM models on PCA plots with ellipses.
 }
 \author{
 Laurent Gatto <lg390@cam.ac.uk>

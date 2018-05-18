@@ -12,8 +12,7 @@
 ##' @title Localisation of proteins using the TAGM MAP method
 ##'
 ##' @param object An [`MSnbase::MSnSet`] containing the spatial
-##'     proteomics data to be passed to `tagmTrain` and
-##'     `tagmPredict`.
+##'     proteomics data to be passed to `tagmTrain` and `tagmPredict`.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##'     Default is `markers`.
 ##' @param method A `charachter()` describing the inference method for
@@ -39,6 +38,8 @@
 ##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 ##'     https://doi.org/10.1101/282269
 ##' @author Oliver M. Crook
+##' @seealso The [plotEllipse()] function can be used to visualise
+##'     TAGM models on PCA plots with ellipses.
 ##' @rdname tagm-map
 tagmTrain <- function(object,
                       fcol = "markers",

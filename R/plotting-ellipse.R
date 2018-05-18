@@ -1,4 +1,5 @@
-##' A function to plot probabiltiy ellipses on marker data.
+##' A function to plot probabiltiy ellipses on marker PCA plots to
+##' visualise and assess TAGM models.
 ##'
 ##' Note that when running PCA, this function does not scale the data
 ##' (centring is performed), as opposed to [plot2D()]. Only marker
@@ -20,7 +21,9 @@
 ##'     clusters are represented by black circumpunct (circled dot).
 ##'
 ##' @seealso [plot2D()] to visualise spatial proteomics data using
-##'     various dimensionality reduction methods.
+##'     various dimensionality reduction methods. For details about
+##'     TAGM models, see [tagmPredict()] and the *pRoloc-bayesian*
+##'     vignette.
 plotEllipse <- function(object,
                          params,
                          dims = c(1,2),

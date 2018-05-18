@@ -22,8 +22,7 @@ tagmPredict(object, params, fcol = "markers", probJoint = FALSE,
 }
 \arguments{
 \item{object}{An \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the spatial
-proteomics data to be passed to \code{tagmTrain} and
-\code{tagmPredict}.}
+proteomics data to be passed to \code{tagmTrain} and \code{tagmPredict}.}
 
 \item{fcol}{The feature meta-data containing marker definitions.
 Default is \code{markers}.}
@@ -106,6 +105,10 @@ and log-posterior of the model.}
 Proteomics} Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
 Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 https://doi.org/10.1101/282269
+}
+\seealso{
+The \code{\link[=plotEllipse]{plotEllipse()}} function can be used to visualise
+TAGM models on PCA plots with ellipses.
 }
 \author{
 Oliver M. Crook

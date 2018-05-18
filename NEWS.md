@@ -5,6 +5,8 @@
   <2018-05-03 Thu>
 - New TAGM-MAP generative model, contributed by Oliver Crook
   <2018-05-18 Fri>
+- New `plotEllipse` function to visualise and assess TAGM models
+  <2018-05-18 Fri>
 
 # pRoloc 1.20
 

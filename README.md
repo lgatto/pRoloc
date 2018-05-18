@@ -77,38 +77,40 @@ biocLite("ComputationalProteomicsUnit/pRolocGUI")
 For refences about the software, how to use it and spatial proteomics
 data analysis:
 
-* Breckels LM, Mulvey CM, Lilley KS and Gatto L. A Bioconductor
-  workflow for processing and analysing spatial proteomics
-  data. F1000Research 2016,
-  5:2926
+* Breckels LM, Mulvey CM, Lilley KS and Gatto L. *A Bioconductor
+  workflow for processing and analysing spatial proteomics data*
+  F1000Research 2016, 5:2926
   [doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/).
 
 * Gatto L, Breckels LM, Burger T, Nightingale DJ, Groen AJ, Campbell
-  C, Nikolovski N, Mulvey CM, Christoforou A, Ferro M, Lilley KS. A
-  foundation for reliable spatial proteomics data analysis. Mol Cell
+  C, Nikolovski N, Mulvey CM, Christoforou A, Ferro M, Lilley KS. *A
+  foundation for reliable spatial proteomics data analysis* Mol Cell
   Proteomics. 2014 Aug;13(8):1937-52. doi:
-  10.1074/mcp.M113.036350. Epub 2014
-  May 20. [PubMed PMID: 24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
+  10.1074/mcp.M113.036350. Epub 2014 May 20. [PubMed PMID:
+  24846987](http://www.ncbi.nlm.nih.gov/pubmed/24846987)
 
 * Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley
-  KS. Mass-spectrometry-based spatial proteomics data analysis using
-  pRoloc and pRolocdata. Bioinformatics. 2014 May 1;30(9):1322-4. doi:
-  10.1093/bioinformatics/btu013. Epub 2014
-  Jan 11. [PubMed PMID: 24413670](http://www.ncbi.nlm.nih.gov/pubmed/24413670).
+  KS. *Mass-spectrometry-based spatial proteomics data analysis using
+  pRoloc and pRolocdata* Bioinformatics. 2014 May 1;30(9):1322-4. doi:
+  10.1093/bioinformatics/btu013. Epub 2014 Jan 11. [PubMed PMID:
+  24413670](http://www.ncbi.nlm.nih.gov/pubmed/24413670).
 
 Specific algorithms available in the software:
 
 * Breckels LM, Gatto L, Christoforou A, Groen AJ, Lilley KS, Trotter
-  MW. The effect of organelle discovery upon sub-cellular protein
-  localisation. J Proteomics. 2013 Aug 2;88:129-40. doi:
-  10.1016/j.jprot.2013.02.019. Epub 2013
-  Mar 21. [PubMed PMID: 23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
+  MW. *The effect of organelle discovery upon sub-cellular protein
+  localisation* J Proteomics. 2013 Aug 2;88:129-40. doi:
+  10.1016/j.jprot.2013.02.019. Epub 2013 Mar 21. [PubMed PMID:
+  23523639](http://www.ncbi.nlm.nih.gov/pubmed/23523639).
 
 * Breckels LM, Holden S, Wojnar D, Mulvey CMM, Christoforou A, Groen
-  AJ, Kohlbacher O, Lilley KS and Gatto L. Learning from heterogeneous
-  data sources: an application in spatial proteomics. 2015 biorXiv,
-  doi: http://dx.doi.org/10.1101/022152
+  AJ, Kohlbacher O, Lilley KS and Gatto L. *Learning from
+  heterogeneous data sources: an application in spatial proteomics*
+  2015 biorXiv, doi: http://dx.doi.org/10.1101/022152
 
+* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley,
+ Laurent Gatto *A Bayesian Mixture Modelling Approach For Spatial
+ Proteomics* bioRxiv 282269; doi: https://doi.org/10.1101/282269
 
 
 #### More resource

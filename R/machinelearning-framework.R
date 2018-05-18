@@ -129,36 +129,28 @@ setMethod("levelPlot", "GenRegRes",
           })
 
 
-##' @title Class `MAPparams`
-##' @description TAGM parameters container.
-##'
 ##' @slot algorithm A `character()` storing the machine learning
 ##'     algorithm name.
 ##' @slot priors A `list()` with the priors for the parameters
-##' @slot design A `numeric()` describing any cross-validation
-##'     parameters
-##' @slot log A `list()` with warnings
 ##' @slot seed An `integer()` with the random number generation seed.
 ##' @slot posteriors A `list()` with the updated posterior parameters
 ##'     and log-posterior of the model.
 ##' @slot datasize A `list()` with details about size of data
 ##' @md
-##' @author Oliver M. Crook
-##' @aliases class:MAPparams MAPparams-class MAPparams
-setClass("MAPparams",
+##' @aliases class:MAPParams MAPParams-class MAPParams
+##' @rdname tagm-map
+setClass("MAPParams",
          representation(algorithm = "character",
                         priors = "list",
-                        design = "numeric",
-                        log = "list",
                         seed = "integer",
                         posteriors = "list",
                         datasize = "list"))
 
-setMethod("show", "MAPparams",
+##' @slot object An `MAPParams` object.
+##' @rdname tagm-map
+setMethod("show", "MAPParams",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
             cat("Algorithm:", object@algorithm, "\n")
-            if ("warnings" %in% names(object@log))
-              cat("Use getWarnings() to see warnings.\n")
             invisible(NULL)
           })

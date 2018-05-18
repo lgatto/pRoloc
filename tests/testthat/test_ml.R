@@ -17,7 +17,7 @@ test_that("knn consistency", {
     reg2 <- knnOptimisation(d2, fcol = "xx",
                             times = .times, k = .k,
                             seed = .seed, verbose = FALSE)
-    expect_equal(reg1, reg2)  
+    expect_equal(reg1, reg2)
     ans1 <- knnClassification(d1, reg1, fcol = "markers")
     ans2 <- knnClassification(d2, reg1, fcol = "xx")
     expect_equal(ans1, ans2, check.attributes=FALSE)
@@ -29,13 +29,13 @@ test_that("svm consistency", {
     .sigma <- 10^seq(-1, 1, 1)
     reg1 <- svmOptimisation(d1, fcol = "markers",
                             cost = .cost, sigma = .sigma,
-                            times = .times, 
+                            times = .times,
                             seed = .seed, verbose = FALSE)
     reg2 <- svmOptimisation(d2, fcol = "xx",
                             cost = .cost, sigma = .sigma,
                             times = .times,
                             seed = .seed, verbose = FALSE)
-    expect_equal(reg1, reg2)  
+    expect_equal(reg1, reg2)
     ans1 <- svmClassification(d1, reg1, fcol = "markers")
     ans2 <- svmClassification(d2, reg1, fcol = "xx")
     expect_equal(ans1, ans2, check.attributes=FALSE)
@@ -49,9 +49,9 @@ test_that("TAGM consistency", {
   map2 <- tagmTrain(object = d2, fcol = "xx",
                     numIter = .numIter, seed = .seed)
   expect_equal(map1, map2)
-  ans1 <- tagmPredict(object = d1, MAPparams = map1, fcol = "markers", probreturn = "prediction")
-  ans2 <- tagmPredict(object = d2, MAPparams = map2, fcol = "xx", probreturn = "prediction")
-  
+  ans1 <- tagmPredict(object = d1, map1, fcol = "markers")
+  ans2 <- tagmPredict(object = d2, map2, fcol = "xx")
+
   expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 
@@ -65,7 +65,7 @@ test_that("nb consistency", {
                            laplace = .laplace,
                            times = .times, seed = .seed,
                            verbose = FALSE)
-    expect_equal(reg1, reg2)  
+    expect_equal(reg1, reg2)
     ans1 <- nbClassification(d1, reg1, fcol = "markers")
     ans2 <- nbClassification(d2, reg1, fcol = "xx")
     expect_equal(ans1, ans2, check.attributes=FALSE)
@@ -82,7 +82,7 @@ test_that("nb consistency", {
 ##                               ncomp = .ncomp,
 ##                               times = 1, seed = .seed,
 ##                               verbose = FALSE)
-##     expect_equal(reg1, reg2)  
+##     expect_equal(reg1, reg2)
 ##     ans1 <- plsdaClassification(d1, reg1, fcol = "markers")
 ##     ans2 <- plsdaClassification(d2, reg1, fcol = "xx")
 ##     expect_equal(ans1, ans2, check.attributes=FALSE)
@@ -122,7 +122,7 @@ test_that("rf consistency", {
     set.seed(.seed)
     ans1 <- rfClassification(d1, reg1, fcol = "markers")
     set.seed(.seed)
-    ans2 <- rfClassification(d2, reg1, fcol = "xx")  
+    ans2 <- rfClassification(d2, reg1, fcol = "xx")
     expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 
@@ -141,7 +141,7 @@ test_that("rf consistency", {
 ##     set.seed(.seed)
 ##     ans1 <- ksvmClassification(d1, reg1, fcol = "markers")
 ##     set.seed(.seed)
-##     ans2 <- ksvmClassification(d2, reg1, fcol = "xx")  
+##     ans2 <- ksvmClassification(d2, reg1, fcol = "xx")
 ##     expect_equal(ans1, ans2, check.attributes = FALSE)
 ## })
 
@@ -154,7 +154,7 @@ test_that("rf consistency", {
 ##   reg2 <- knnRegularisation(d2, fcol = "xx",
 ##                             times = .times, k = .k,
 ##                             seed = .seed, verbose = FALSE)
-##   expect_equal(reg1, reg2)  
+##   expect_equal(reg1, reg2)
 ##   ans1 <- knnPrediction(d1, reg1, fcol = "markers")
 ##   ans2 <- knnPrediction(d2, reg1, fcol = "xx")
 ##   expect_equal(ans1, ans2, check.attributes=FALSE)
@@ -163,13 +163,13 @@ test_that("rf consistency", {
 ##   .sigma <- 10^seq(-1, 1, 1)
 ##   reg1 <- svmRegularisation(d1, fcol = "markers",
 ##                             cost = .cost, sigma = .sigma,
-##                             times = .times, 
+##                             times = .times,
 ##                             seed = .seed, verbose = FALSE)
 ##   reg2 <- svmRegularisation(d2, fcol = "xx",
 ##                             cost = .cost, sigma = .sigma,
 ##                             times = .times,
 ##                             seed = .seed, verbose = FALSE)
-##   expect_equal(reg1, reg2)  
+##   expect_equal(reg1, reg2)
 ##   ans1 <- svmPrediction(d1, reg1, fcol = "markers")
 ##   ans2 <- svmPrediction(d2, reg1, fcol = "xx")
 ##   expect_equal(ans1, ans2, check.attributes=FALSE)
@@ -183,8 +183,8 @@ test_that("rf consistency", {
 ##                               ncomp = .ncomp,
 ##                               times = 1, seed = .seed,
 ##                               verbose = FALSE)
-##   expect_equal(reg1, reg2)  
+##   expect_equal(reg1, reg2)
 ##   ans1 <- plsdaPrediction(d1, reg1, fcol = "markers")
 ##   ans2 <- plsdaPrediction(d2, reg1, fcol = "xx")
-##   expect_equal(ans1, ans2, check.attributes=FALSE)  
+##   expect_equal(ans1, ans2, check.attributes=FALSE)
 ## })

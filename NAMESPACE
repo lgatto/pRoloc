@@ -15,7 +15,7 @@ importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
            "text", "par", "mtext", "barplot", "strwidth")
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
-           "update", "rmultinom", "na.omit", "hclust",
+           "update", "rmultinom", "na.omit", "hclust", "dbeta",
            "as.dendrogram")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",
@@ -72,7 +72,7 @@ importFrom(plyr, colwise, catcolwise, ddply)
 
 exportClasses(GenRegRes,
               ThetaRegRes,
-              MAPparams,
+              MAPParams,
               AnnotationParams,
               SpatProtVis,
               ClustDist,

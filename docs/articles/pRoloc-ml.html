@@ -8,14 +8,17 @@
 <title>Machine learning techniques available in pRoloc • pRoloc</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Machine learning techniques available in pRoloc">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +27,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/index.html">Articles</a>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -55,12 +86,16 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Machine learning techniques available in pRoloc</h1>
                         <h4 class="author">Laurent Gatto</h4>
                         
-          </div>
+      
+      <small class="dont-index">Source: <a href="https://github.com/lgatto/pRoloc/blob/master/vignettes/pRoloc-ml.Rmd"><code>vignettes/pRoloc-ml.Rmd</code></a></small>
+      <div class="hidden name"><code>pRoloc-ml.Rmd</code></div>
+
+    </div>
 
     
         <div class="abstract">
@@ -68,7 +103,6 @@
       <p>This vignette provides a general background about machine learning (ML) methods and concepts, and their application to the analysis of spatial proteomics data in the <em>pRoloc</em> package. See the <code>pRoloc-tutorial</code> vignette for details about the package itself.</p>
     </div>
     
-<div class="contents">
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
   document.querySelector("h1").className = "title";
@@ -83,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><div id="sec:intro" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sec:intro" class="anchor"></a>Introduction</h1>
-<p>For a general practical introduction to <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em>, readers are referred to the tutorial, available using <code>vignette("pRoloc-tutorial", package = "pRoloc")</code>. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), semi-supervised machine learning (SSML) as implemented in the novelty detection algorithm and transfer learning.</p>
+<p>For a general practical introduction to <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em>, readers are referred to the tutorial, available using <code><a href="../articles/pRoloc-tutorial.html">vignette("pRoloc-tutorial", package = "pRoloc")</a></code>. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), semi-supervised machine learning (SSML) as implemented in the novelty detection algorithm and transfer learning.</p>
 </div>
 <div id="data-sets" class="section level1">
 <h1 class="hasAnchor">
@@ -188,9 +222,9 @@ params</code></pre></div>
 ## Results
 ##  macro F1:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7403  0.7855  0.8481  0.8380  0.8885  0.9185 
+##  0.7583  0.8270  0.8569  0.8445  0.8715  0.9069 
 ##  best sigma: 1 0.1   
-##  best cost: 2 16 4 1   
+##  best cost: 16 4 2 8   
 ## Use getWarnings() to see warnings.</code></pre>
 </div>
 <div id="classification" class="section level2 unnumbered">
@@ -215,7 +249,7 @@ tan2009r1</code></pre></div>
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=1 cost=4) Thu May  3 01:57:58 2018 
+## Performed svm prediction (sigma=1 cost=2) Fri May 18 10:43:06 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 </div>
 <div id="customising-model-parameters" class="section level2">
@@ -351,59 +385,63 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] pRolocdata_1.17.3    pRoloc_1.19.4        MLInterfaces_1.59.1 
-##  [4] cluster_2.0.7        annotate_1.57.3      XML_3.98-1.10       
-##  [7] AnnotationDbi_1.41.4 IRanges_2.13.28      S4Vectors_0.17.41   
-## [10] MSnbase_2.5.15       ProtGenerics_1.11.0  BiocParallel_1.13.3 
-## [13] mzR_2.13.6           Rcpp_0.12.16         Biobase_2.39.2      
-## [16] BiocGenerics_0.25.3  knitr_1.20           BiocStyle_2.7.8     
+##  [1] pRolocdata_1.19.0    pRoloc_1.21.0        MLInterfaces_1.61.1 
+##  [4] cluster_2.0.7-1      annotate_1.59.0      XML_3.98-1.11       
+##  [7] AnnotationDbi_1.43.1 IRanges_2.15.9       S4Vectors_0.19.2    
+## [10] MSnbase_2.7.1        ProtGenerics_1.13.0  BiocParallel_1.15.3 
+## [13] mzR_2.15.1           Rcpp_0.12.16         Biobase_2.41.0      
+## [16] BiocGenerics_0.27.0  knitr_1.20           BiocStyle_2.9.0     
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] backports_1.1.2       plyr_1.8.4            igraph_1.2.1         
-##   [4] lazyeval_0.2.1        splines_3.6.0         ggvis_0.4.3          
-##   [7] crosstalk_1.0.0       ggplot2_2.2.1         digest_0.6.15        
-##  [10] foreach_1.4.4         BiocInstaller_1.30.0  htmltools_0.3.6      
-##  [13] viridis_0.5.1         gdata_2.18.0          magrittr_1.5         
-##  [16] memoise_1.1.0         doParallel_1.0.11     sfsmisc_1.1-2        
-##  [19] limma_3.35.14         recipes_0.1.2         gower_0.1.2          
-##  [22] rda_1.0.2-2           dimRed_0.1.0          lpSolve_5.6.13       
-##  [25] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.1           
-##  [28] dplyr_0.7.4.9003      RCurl_1.95-4.10       hexbin_1.27.2        
-##  [31] genefilter_1.61.1     bindr_0.1.1           impute_1.53.0        
-##  [34] survival_2.41-3       iterators_1.0.9       glue_1.2.0           
-##  [37] DRR_0.0.3             gtable_0.2.0          ipred_0.9-6          
-##  [40] zlibbioc_1.25.0       kernlab_0.9-25        ddalpha_1.3.1.1      
-##  [43] prabclus_2.2-6        DEoptimR_1.0-8        scales_0.5.0         
-##  [46] vsn_3.47.1            mvtnorm_1.0-7         DBI_0.8              
-##  [49] viridisLite_0.3.0     xtable_1.8-2          progress_1.1.2       
-##  [52] foreign_0.8-70        bit_1.1-12            proxy_0.4-22         
-##  [55] mclust_5.4            preprocessCore_1.41.0 lava_1.6.1           
-##  [58] prodlim_1.6.1         sampling_2.8          htmlwidgets_1.0      
-##  [61] httr_1.3.1            threejs_0.3.1         FNN_1.1              
-##  [64] RColorBrewer_1.1-2    fpc_2.1-11            modeltools_0.2-21    
-##  [67] pkgconfig_2.0.1       flexmix_2.3-14        nnet_7.3-12          
-##  [70] caret_6.0-78          tidyselect_0.2.4      rlang_0.2.0          
-##  [73] reshape2_1.4.3        munsell_0.4.3         mlbench_2.1-1        
-##  [76] tools_3.6.0           RSQLite_2.1.0         pls_2.6-0            
-##  [79] broom_0.4.4           evaluate_0.10.1       stringr_1.3.0        
-##  [82] mzID_1.17.0           yaml_2.1.18           ModelMetrics_1.1.0   
-##  [85] bit64_0.9-7           robustbase_0.92-8     randomForest_4.6-14  
-##  [88] purrr_0.2.4           dendextend_1.7.0      bindrcpp_0.2.2.9000  
-##  [91] nlme_3.1-136          whisker_0.3-2         mime_0.5             
-##  [94] RcppRoll_0.2.2        biomaRt_2.35.13       compiler_3.6.0       
-##  [97] e1071_1.6-8           affyio_1.49.2         tibble_1.4.2         
-## [100] stringi_1.1.7         highr_0.6             lattice_0.20-35      
-## [103] trimcluster_0.1-2     Matrix_1.2-13         psych_1.8.3.3        
-## [106] gbm_2.1.3             pillar_1.2.1          MALDIquant_1.17      
-## [109] bitops_1.0-6          httpuv_1.3.6.2        R6_2.2.2             
-## [112] pcaMethods_1.71.0     affy_1.57.0           hwriter_1.3.2        
-## [115] gridExtra_2.3         codetools_0.2-15      MASS_7.3-49          
-## [118] gtools_3.5.0          assertthat_0.2.0      CVST_0.2-1           
-## [121] rprojroot_1.3-2       withr_2.1.2           mnormt_1.5-5         
-## [124] diptest_0.75-7        grid_3.6.0            rpart_4.1-13         
-## [127] timeDate_3043.102     tidyr_0.8.0           class_7.3-14         
-## [130] rmarkdown_1.9         lubridate_1.7.4       shiny_1.0.5          
-## [133] base64enc_0.1-3</code></pre>
+##   [1] tidyselect_0.2.4      RSQLite_2.1.1         htmlwidgets_1.2      
+##   [4] grid_3.6.0            trimcluster_0.1-2     lpSolve_5.6.13       
+##   [7] rda_1.0.2-2           munsell_0.4.3         codetools_0.2-15     
+##  [10] preprocessCore_1.43.0 withr_2.1.2           colorspace_1.3-2     
+##  [13] BiocInstaller_1.31.1  highr_0.6             geometry_0.3-6       
+##  [16] robustbase_0.93-0     dimRed_0.1.0          mzID_1.19.0          
+##  [19] mnormt_1.5-5          hwriter_1.3.2         bit64_0.9-7          
+##  [22] ggvis_0.4.3           rprojroot_1.3-2       ipred_0.9-6          
+##  [25] xfun_0.1              randomForest_4.6-14   diptest_0.75-7       
+##  [28] R6_2.2.2              doParallel_1.0.11     flexmix_2.3-14       
+##  [31] DRR_0.0.3             bitops_1.0-6          assertthat_0.2.0     
+##  [34] promises_1.0.1        scales_0.5.0          nnet_7.3-12          
+##  [37] gtable_0.2.0          affy_1.59.0           ddalpha_1.3.3        
+##  [40] timeDate_3043.102     rlang_0.2.0           CVST_0.2-1           
+##  [43] genefilter_1.63.0     RcppRoll_0.2.2        splines_3.6.0        
+##  [46] lazyeval_0.2.1        ModelMetrics_1.1.0    impute_1.55.0        
+##  [49] hexbin_1.27.2         broom_0.4.4           yaml_2.1.19          
+##  [52] reshape2_1.4.3        abind_1.4-5           threejs_0.3.1        
+##  [55] crosstalk_1.0.0       backports_1.1.2       httpuv_1.4.3         
+##  [58] caret_6.0-79          tools_3.6.0           lava_1.6.1           
+##  [61] bookdown_0.7          psych_1.8.4           ggplot2_2.2.1        
+##  [64] affyio_1.51.0         RColorBrewer_1.1-2    proxy_0.4-22         
+##  [67] plyr_1.8.4            base64enc_0.1-3       progress_1.1.2       
+##  [70] zlibbioc_1.27.0       purrr_0.2.4           RCurl_1.95-4.10      
+##  [73] prettyunits_1.0.2     rpart_4.1-13          viridis_0.5.1        
+##  [76] sampling_2.8          sfsmisc_1.1-2         fs_1.2.2             
+##  [79] magrittr_1.5          pcaMethods_1.73.0     mvtnorm_1.0-7        
+##  [82] whisker_0.3-2         mime_0.5              evaluate_0.10.1      
+##  [85] xtable_1.8-2          mclust_5.4            gridExtra_2.3        
+##  [88] compiler_3.6.0        biomaRt_2.37.0        tibble_1.4.2         
+##  [91] crayon_1.3.4          htmltools_0.3.6       later_0.7.2          
+##  [94] tidyr_0.8.0           lubridate_1.7.4       DBI_1.0.0            
+##  [97] magic_1.5-8           MASS_7.3-50           fpc_2.1-11           
+## [100] Matrix_1.2-14         vsn_3.49.0            gdata_2.18.0         
+## [103] mlbench_2.1-1         bindr_0.1.1           gower_0.1.2          
+## [106] igraph_1.2.1          pkgconfig_2.0.1       pkgdown_1.0.0        
+## [109] foreign_0.8-70        recipes_0.1.2         MALDIquant_1.17      
+## [112] xml2_1.2.0            roxygen2_6.0.1        foreach_1.4.4        
+## [115] prodlim_2018.04.18    stringr_1.3.1         digest_0.6.15        
+## [118] pls_2.6-0             rmarkdown_1.9         dendextend_1.8.0     
+## [121] kernlab_0.9-26        shiny_1.0.5           gtools_3.5.0         
+## [124] commonmark_1.5        modeltools_0.2-21     nlme_3.1-137         
+## [127] bindrcpp_0.2.2        desc_1.2.0            viridisLite_0.3.0    
+## [130] limma_3.37.1          pillar_1.2.2          lattice_0.20-35      
+## [133] httr_1.3.1            DEoptimR_1.0-8        survival_2.42-3.1    
+## [136] glue_1.2.0            FNN_1.1               gbm_2.1.3            
+## [139] prabclus_2.2-6        iterators_1.0.9       bit_1.1-12           
+## [142] class_7.3-14          stringi_1.2.2         blob_1.1.1           
+## [145] memoise_1.1.0         dplyr_0.7.4           e1071_1.6-8</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -453,12 +491,12 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 <li id="fn1"><p>Gatto, Laurent; Breckels, Lisa M.; Trotter, Matthew W.B.; Lilley, Kathryn S. (2011): <code>pRoloc</code> - A unifying bioinformatics framework for organelle proteomics. <a href="https://doi.org/10.6084/m9.figshare.5042965.v1" class="uri">https://doi.org/10.6084/m9.figshare.5042965.v1</a><a href="#fnref1">↩</a></p></li>
 </ol>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#sec:intro">Introduction</a></li>
       <li>
@@ -490,15 +528,17 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 
 
       <footer><div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

@@ -18,11 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="plsda classification — plsdaClassification" />
+
+<meta property="og:description" content="Classification using the partial least square
+distcriminant analysis algorithm." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +57,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,21 +116,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>plsda classification</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-plsda.R'><code>R/machinelearning-functions-plsda.R</code></a></small>
+    <div class="hidden name"><code>plsdaClassification.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Classification using the partial least square
 distcriminant analysis algorithm.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>plsdaClassification</span>(<span class='no'>object</span>, <span class='no'>assessRes</span>, <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"prediction"</span>, <span class='st'>"all"</span>,
   <span class='st'>"none"</span>), <span class='no'>ncomp</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -134,8 +178,7 @@ from package <code>caret</code>.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## not running this one for time considerations</span>
+    <pre class="examples"><div class='input'><span class='co'>## not running this one for time considerations</span>
 <span class='fu'>library</span>(<span class='no'>pRolocdata</span>)
 <span class='fu'>data</span>(<span class='no'>dunkley2006</span>)
 <span class='co'>## reducing parameter search space and iterations </span>
@@ -149,10 +192,10 @@ from package <code>caret</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9422  0.9467  0.9513  0.9513  0.9558  0.9603 
-#&gt;  best ncomp: 3   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='plsdaClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt;  0.9320  0.9413  0.9506  0.9506  0.9599  0.9692 
+#&gt;  best ncomp: 3   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='plsdaClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
 #&gt; 3 
-#&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='plsdaClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; ncomp 
+#&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='plsdaClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; ncomp 
 #&gt;     3 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>plsdaClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
@@ -177,8 +220,8 @@ from package <code>caret</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed pls-da prediction (ncomp=3) Thu May  3 01:55:07 2018 
-#&gt; Added plsda predictions according to global threshold = 0 Thu May  3 01:55:07 2018 
+#&gt; Performed pls-da prediction (ncomp=3) Fri May 18 10:40:26 2018 
+#&gt; Added plsda predictions according to global threshold = 0 Fri May 18 10:40:26 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            17           173            90           102            50 
@@ -202,10 +245,9 @@ from package <code>caret</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed pls-da prediction (ncomp=3) Thu May  3 01:55:07 2018 
-#&gt; Added plsda predictions according to global threshold = 0.9 Thu May  3 01:55:07 2018 
-#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>)</div><img src='plsdaClassification-20.png' alt='' width='540' height='400' /><div class='input'>
-</div></pre>
+#&gt; Performed pls-da prediction (ncomp=3) Fri May 18 10:40:26 2018 
+#&gt; Added plsda predictions according to global threshold = 0.9 Fri May 18 10:40:26 2018 
+#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>)</div><div class='img'><img src='plsdaClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -226,15 +268,18 @@ Laurent Gatto
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

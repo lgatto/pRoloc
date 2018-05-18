@@ -18,11 +18,32 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="The PCP 'chi square' method — chi2-methods" />
+
+<meta property="og:description" content="In the original protein correlation profiling (PCP), Andersen et
+  al. use the peptide normalised profiles along gradient fractions and
+  compared them with the reference profiles (or set of profiles) by
+  computing \(Chi^2\) values,
+  \(\frac{\sum (x_i - x_p)^2}{x_p}\),
+  where \(x_i\) is the normalised value of the peptide in fraction i
+  and \(x_p\) is the value of the marker (from Wiese et al., 2007). The
+  protein \(Chi^2\) is then computed as the median of the peptide
+  \(Chi^2\) values. Peptides and proteins with similar profiles to the
+  markers will have small \(Chi^2\) values.
+The chi2 methods implement this idea and compute such Chi^2
+  values for sets of proteins." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +67,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +118,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,12 +126,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>The PCP 'chi square' method</h1>
+    
+    <div class="hidden name"><code>chi2-methods.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>In the original protein correlation profiling (PCP), Andersen et
   al. use the peptide normalised profiles along gradient fractions and
@@ -96,6 +149,7 @@
 <p>The <code>chi2</code> methods implement this idea and compute such Chi^2
   values for sets of proteins.</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -134,29 +188,29 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='empPvalues.html'>empPvalues</a></code></p>
+    <div class='dont-index'><p><code><a href='empPvalues.html'>empPvalues</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mrk</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fl'>6</span>)
 <span class='no'>prot</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 1.3707752 1.5480447 1.1981554 1.0369692 0.8176644 1.6454796 0.6845280
-#&gt;  [8] 1.7997812 0.6708694 1.3382119</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1] 66.038189  4.992205 40.766876 12.386142  9.155870 26.025770 -3.736700
-#&gt;  [8]  6.018916 -1.584811 -1.428004</div><div class='input'>
+<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 2.1299623 0.7937039 1.7010339 1.1377624 0.6292939 0.6639843 2.1496029
+#&gt;  [8] 3.9046051 0.9917031 3.1618848</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1] 14.6543228  3.4801980 -4.2756919 -2.0614175  0.3742208 -2.3285601
+#&gt;  [7]  3.9735613 12.8193304  2.4246617  4.2294876</div><div class='input'>
 <span class='no'>pepmark</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>18</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
 <span class='no'>pepprot</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;           [,1]      [,2]      [,3]
-#&gt;  [1,] 3.010253 2.7466228 1.5185697
-#&gt;  [2,] 1.157640 0.8748569 1.1375407
-#&gt;  [3,] 2.842707 3.4703853 2.0832931
-#&gt;  [4,] 3.496379 2.7366937 2.0541851
-#&gt;  [5,] 2.294758 1.7375790 1.6865121
-#&gt;  [6,] 1.825615 1.2432674 0.8789641
-#&gt;  [7,] 2.816468 1.0957731 1.9526633
-#&gt;  [8,] 1.978953 1.4514045 1.1927847
-#&gt;  [9,] 1.990836 2.0811884 1.2115050
-#&gt; [10,] 3.935618 1.9849805 2.2867605</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1] 7.275445 3.170038 8.396385 8.287258 5.718849 3.947846 5.864905 4.623142
-#&gt;  [9] 5.283530 8.207360</div></pre>
+<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;            [,1]      [,2]      [,3]
+#&gt;  [1,] 0.6679420 2.1045989 1.1605537
+#&gt;  [2,] 3.1380627 3.0980545 3.1625716
+#&gt;  [3,] 2.1577276 3.3401388 2.1971596
+#&gt;  [4,] 1.5717384 2.2462790 2.0639384
+#&gt;  [5,] 1.5524689 1.8407759 1.1656825
+#&gt;  [6,] 1.1029080 2.1919204 1.1280035
+#&gt;  [7,] 1.4978413 2.8187029 1.3009294
+#&gt;  [8,] 1.3544892 1.0737937 0.9714045
+#&gt;  [9,] 1.2698819 2.4089040 1.3382354
+#&gt; [10,] 0.4208826 0.6813714 0.4568825</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1] 3.933095 9.398689 7.695026 5.881956 4.558927 4.422832 5.617474 3.399687
+#&gt;  [9] 5.017021 1.559136</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -180,15 +234,18 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

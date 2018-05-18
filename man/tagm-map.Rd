@@ -13,8 +13,8 @@ tagmPredict(object, params, fcol = "markers", probreturn = c("prediction",
   "joint"), proboutlier = TRUE)
 }
 \arguments{
-\item{object}{An \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the spatial proteomics
-data.}
+\item{object}{An \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the spatial
+proteomics data.}
 
 \item{fcol}{The feature meta-data containing marker definitions.
 Default is \code{markers}.}
@@ -70,8 +70,8 @@ spectrometry-based spatial proteomics datasets optimisation
 routine using empirical Bayes methods (MAP).
 }
 \references{
-A Bayesian Mixture Modelling Approach For Spatial
-Proteomics Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
+\emph{A Bayesian Mixture Modelling Approach For Spatial
+Proteomics} Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
 Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 https://doi.org/10.1101/282269
 }

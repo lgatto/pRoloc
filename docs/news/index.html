@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • pRoloc</title>
+<title>Changelog • pRoloc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,11 +18,18 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Changelog" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +53,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +104,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,27 +112,27 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/lgatto/pRoloc/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
     <div id="proloc-1-21" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#proloc-1-21" class="anchor"></a>pRoloc 1.21</h1>
 <div id="changes-in-version-1-21-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-21-1" class="anchor"></a>Changes in version 1.21.1</h2>
 <ul>
-<li>Fix bug in higlightOnPlot with missing fcol (see #105) &lt;2018-05-03 Thu&gt;</li>
+<li>Fix bug in higlightOnPlot with missing fcol (see <a href='https://github.com/lgatto/pRoloc/issues/105'>#105</a>) &lt;2018-05-03 Thu&gt;</li>
+<li>New TAGM-MAP generative model, contributed by Oliver Crook &lt;2018-05-18 Fri&gt;</li>
 </ul>
 </div>
 </div>
     <div id="proloc-1-20" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#proloc-1-20" class="anchor"></a>pRoloc 1.20</h1>
 <div id="changes-in-version-1-20-0" class="section level2">
 <h2 class="hasAnchor">
@@ -107,7 +143,7 @@
 </div>
 </div>
     <div id="proloc-1-19" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#proloc-1-19" class="anchor"></a>pRoloc 1.19</h1>
 <div id="changes-in-version-1-19-4" class="section level2">
 <h2 class="hasAnchor">
@@ -120,7 +156,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-19-3" class="anchor"></a>Changes in version 1.19.3</h2>
 <ul>
-<li>Use <code>dplyr::left_join</code> without attaching <code>dplyr</code> to avoid collision between <code>Biobase::exprs</code> and <code>dplyr::exprs</code> &lt;2018-04-04 Wed&gt;.</li>
+<li>Use <code><a href="http://dplyr.tidyverse.org/reference/join.html">dplyr::left_join</a></code> without attaching <code>dplyr</code> to avoid collision between <code><a href="http://www.rdocumentation.org/packages/Biobase/topics/exprs">Biobase::exprs</a></code> and <code>dplyr::exprs</code> &lt;2018-04-04 Wed&gt;.</li>
 <li>Typo in warning to install rgl &lt;2018-03-27 Tue&gt;</li>
 </ul>
 </div>
@@ -136,7 +172,7 @@
 <a href="#changes-in-version-1-19-1" class="anchor"></a>Changes in version 1.19.1</h2>
 <ul>
 <li>Fix bug in private dimred and set appropriate number of colnames &lt;2017-11-07 Tue&gt;</li>
-<li>New <code>nipals</code> method in dimensionality reduction for plot2D (closes issue #103) &lt;2018-01-16 Tue&gt;</li>
+<li>New <code>nipals</code> method in dimensionality reduction for plot2D (closes issue <a href='https://github.com/lgatto/pRoloc/issues/103'>#103</a>) &lt;2018-01-16 Tue&gt;</li>
 </ul>
 </div>
 <div id="changes-in-version-1-19-0" class="section level2">
@@ -148,7 +184,7 @@
 </div>
 </div>
     <div id="proloc-1-18" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#proloc-1-18" class="anchor"></a>pRoloc 1.18</h1>
 <div id="changes-in-version-1-18-0" class="section level2">
 <h2 class="hasAnchor">
@@ -159,7 +195,7 @@
 </div>
 </div>
     <div id="proloc-1-17" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#proloc-1-17" class="anchor"></a>pRoloc 1.17</h1>
 <div id="changes-in-version-1-17-5" class="section level2">
 <h2 class="hasAnchor">
@@ -208,7 +244,7 @@
 </div>
 </div>
     <div id="msnbase-1-16" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-16" class="anchor"></a>MSnbase 1.16</h1>
 <div id="changes-in-version-1-16-0" class="section level2">
 <h2 class="hasAnchor">
@@ -219,7 +255,7 @@
 </div>
 </div>
     <div id="msnbase-1-15" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-15" class="anchor"></a>MSnbase 1.15</h1>
 <div id="changes-in-version-1-15-9" class="section level2">
 <h2 class="hasAnchor">
@@ -248,7 +284,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-15-6" class="anchor"></a>Changes in version 1.15.6</h2>
 <ul>
-<li>fix (unexported) remap function - see issue #92 &lt;2016-12-15 Thu&gt;</li>
+<li>fix (unexported) remap function - see issue <a href='https://github.com/lgatto/pRoloc/issues/92'>#92</a> &lt;2016-12-15 Thu&gt;</li>
 <li>plot2Ds now only adds segments when the featureNames are identical &lt;2017-01-11 Wed&gt;</li>
 <li>Import (rather than Suggest) hexbin &lt;2017-01-18 Wed&gt;</li>
 <li>Increase margin in QSep plotting (contributed by S. Gibb) &lt;2017-02-07 Tue&gt;</li>
@@ -258,7 +294,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-15-5" class="anchor"></a>Changes in version 1.15.5</h2>
 <ul>
-<li>Update plotDist to use sampleNames() to label x axis ticks and getUnknowncol() as default pcol (see issue #91) &lt;2016-11-08 Tue&gt;</li>
+<li>Update plotDist to use sampleNames() to label x axis ticks and getUnknowncol() as default pcol (see issue <a href='https://github.com/lgatto/pRoloc/issues/91'>#91</a>) &lt;2016-11-08 Tue&gt;</li>
 <li>xlab and ylab are args in plotDist &lt;2016-12-04 Sun&gt;</li>
 </ul>
 </div>
@@ -294,7 +330,7 @@
 </div>
 </div>
     <div id="msnbase-1-13" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-13" class="anchor"></a>MSnbase 1.13</h1>
 <div id="changes-in-version-1-13-16" class="section level2">
 <h2 class="hasAnchor">
@@ -351,7 +387,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-13-10" class="anchor"></a>Changes in version 1.13.10</h2>
 <ul>
-<li>Send biomart queries in getGOFromFeatues in chunks - see issue #85 for details &lt;2016-08-20 Sat&gt;</li>
+<li>Send biomart queries in getGOFromFeatues in chunks - see issue <a href='https://github.com/lgatto/pRoloc/issues/85'>#85</a> for details &lt;2016-08-20 Sat&gt;</li>
 </ul>
 </div>
 <div id="changes-in-version-1-13-9" class="section level2">
@@ -404,7 +440,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-13-3" class="anchor"></a>Changes in version 1.13.3</h2>
 <ul>
-<li>Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue #79 &lt;2016-05-31 Tue&gt;</li>
+<li>Fix bug in mirrorX/Y highlightOnPlot - see problem 1 in issue <a href='https://github.com/lgatto/pRoloc/issues/79'>#79</a> &lt;2016-05-31 Tue&gt;</li>
 </ul>
 </div>
 <div id="changes-in-version-1-13-2" class="section level2">
@@ -431,7 +467,7 @@
 </div>
 </div>
     <div id="msnbase-1-12" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-12" class="anchor"></a>MSnbase 1.12</h1>
 <div id="changes-in-version-1-12-0" class="section level2">
 <h2 class="hasAnchor">
@@ -442,7 +478,7 @@
 </div>
 </div>
     <div id="msnbase-1-11" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-11" class="anchor"></a>MSnbase 1.11</h1>
 <div id="changes-in-version-1-11-23" class="section level2">
 <h2 class="hasAnchor">
@@ -610,7 +646,7 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-11-4" class="anchor"></a>Changes in version 1.11.4</h2>
 <ul>
-<li>plot2D: Mirror PCs even when not plotting, addressing issue #68 &lt;2015-12-18 Fri&gt;</li>
+<li>plot2D: Mirror PCs even when not plotting, addressing issue <a href='https://github.com/lgatto/pRoloc/issues/68'>#68</a> &lt;2015-12-18 Fri&gt;</li>
 </ul>
 </div>
 <div id="changes-in-version-1-11-3" class="section level2">
@@ -648,7 +684,7 @@
 </div>
 </div>
     <div id="msnbase-1-10" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-10" class="anchor"></a>MSnbase 1.10</h1>
 <div id="changes-in-version-1-10-0" class="section level2">
 <h2 class="hasAnchor">
@@ -659,7 +695,7 @@
 </div>
 </div>
     <div id="msnbase-1-9" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-9" class="anchor"></a>MSnbase 1.9</h1>
 <div id="changes-in-version-1-9-7" class="section level2">
 <h2 class="hasAnchor">
@@ -735,7 +771,7 @@
 </div>
 </div>
     <div id="msnbase-1-7" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-7" class="anchor"></a>MSnbase 1.7</h1>
 <div id="changes-in-version-1-7-13" class="section level2">
 <h2 class="hasAnchor">
@@ -755,14 +791,14 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-7-11" class="anchor"></a>Changes in version 1.7.11</h2>
 <ul>
-<li>fix splitTh, closes issue #49 [2015-04-06 Mon]</li>
+<li>fix splitTh, closes issue <a href='https://github.com/lgatto/pRoloc/issues/49'>#49</a> [2015-04-06 Mon]</li>
 </ul>
 </div>
 <div id="changes-in-version-1-7-10" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-7-10" class="anchor"></a>Changes in version 1.7.10</h2>
 <ul>
-<li>Change in vignette to work on zin1: using 12 random th rows. See issue #49 for details. Fixed in version 1.7.11. [2015-04-03 Fri]</li>
+<li>Change in vignette to work on zin1: using 12 random th rows. See issue <a href='https://github.com/lgatto/pRoloc/issues/49'>#49</a> for details. Fixed in version 1.7.11. [2015-04-03 Fri]</li>
 </ul>
 </div>
 <div id="changes-in-version-1-7-9" class="section level2">
@@ -850,7 +886,7 @@
 </div>
 </div>
     <div id="msnbase-1-6" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-6" class="anchor"></a>MSnbase 1.6</h1>
 <div id="changes-in-version-1-6-0" class="section level2">
 <h2 class="hasAnchor">
@@ -861,7 +897,7 @@
 </div>
 </div>
     <div id="msnbase-1-5" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-5" class="anchor"></a>MSnbase 1.5</h1>
 <div id="changes-in-version-1-5-19" class="section level2">
 <h2 class="hasAnchor">
@@ -1020,7 +1056,7 @@
 </div>
 </div>
     <div id="msnbase-1-4" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-4" class="anchor"></a>MSnbase 1.4</h1>
 <div id="changes-in-version-1-4-0" class="section level2">
 <h2 class="hasAnchor">
@@ -1031,7 +1067,7 @@
 </div>
 </div>
     <div id="msnbase-1-3" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-3" class="anchor"></a>MSnbase 1.3</h1>
 <div id="changes-in-version-1-3-19" class="section level2">
 <h2 class="hasAnchor">
@@ -1204,7 +1240,7 @@
 </div>
 </div>
     <div id="msnbase-1-1" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-1" class="anchor"></a>MSnbase 1.1</h1>
 <div id="changes-in-version-1-1-8" class="section level2">
 <h2 class="hasAnchor">
@@ -1258,12 +1294,12 @@
 <h2 class="hasAnchor">
 <a href="#changes-in-version-1-1-2" class="anchor"></a>Changes in version 1.1.2</h2>
 <ul>
-<li>fixed Author[s]@R [2013-05-16 Thu]</li>
+<li>fixed Author[s]<a href='http://github.com/R'>@R</a> [2013-05-16 Thu]</li>
 <li>na.rm=TRUE in f1Count [2013-05-19 Sun]</li>
 <li>added CITATION file [2013-06-07 Fri]</li>
 <li>new testMarkers function [2013-06-29 Sat]</li>
 <li>error message in getBestParams suggests to use testMarkers [2013-06-29 Sat]</li>
-<li>nndist methods (see issue #23) [2013-07-01 Mon]</li>
+<li>nndist methods (see issue <a href='https://github.com/lgatto/pRoloc/issues/23'>#23</a>) [2013-07-01 Mon]</li>
 <li>remove unnecessary as.matrix in plot2D’s cmdscale [2013-07-19 Fri]</li>
 <li>added plot2D(…, method = “MDS”) example [2013-07-19 Fri]</li>
 <li>changed ‘euclidian’ to ‘euclidean’ in nndist_matrix [2013-07-26 Fri]</li>
@@ -1294,7 +1330,7 @@
 </div>
 </div>
     <div id="msnbase-1-0" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-1-0" class="anchor"></a>MSnbase 1.0</h1>
 <div id="changes-in-version-1-0-0" class="section level2">
 <h2 class="hasAnchor">
@@ -1305,7 +1341,7 @@
 </div>
 </div>
     <div id="msnbase-0-99" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#msnbase-0-99" class="anchor"></a>MSnbase 0.99</h1>
 <div id="changes-in-version-0-99-17" class="section level2">
 <h2 class="hasAnchor">
@@ -1470,7 +1506,6 @@
 </ul>
 </div>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -1505,15 +1540,18 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -30,3 +30,6 @@ and log-posterior of the model.}
 \item{\code{datasize}}{A \code{list()} with details about size of data}
 }}
 
+\author{
+Oliver M. Crook
+}

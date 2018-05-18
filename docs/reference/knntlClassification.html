@@ -18,11 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="knn transfer learning classification — knntlClassification" />
+
+<meta property="og:description" content="Classification using a variation of the KNN implementation
+of Wu and Dietterich's transfer learning schema" />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +57,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,21 +116,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>knn transfer learning classification</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-knntl.R'><code>R/machinelearning-functions-knntl.R</code></a></small>
+    <div class="hidden name"><code>knntlClassification.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Classification using a variation of the KNN implementation
 of Wu and Dietterich's transfer learning schema</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>knntlClassification</span>(<span class='no'>primary</span>, <span class='no'>auxiliary</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>bestTheta</span>, <span class='no'>k</span>,
   <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"prediction"</span>, <span class='st'>"all"</span>, <span class='st'>"none"</span>), <span class='no'>seed</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -137,12 +181,11 @@ only, for all classes or none.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='knntlOptimisation.html'>knntlOptimisation</a></code></p>
+    <div class='dont-index'><p><code><a href='knntlOptimisation.html'>knntlOptimisation</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>library</span>(<span class='no'>pRolocdata</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>pRolocdata</span>)
 <span class='fu'>data</span>(<span class='no'>andy2011</span>)
 <span class='fu'>data</span>(<span class='no'>andy2011goCC</span>)
 <span class='co'>## reducing calculation time of k by pre-running knnOptimisation</span>
@@ -152,7 +195,7 @@ only, for all classes or none.</p></td>
                             <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>,
                             <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs found in 'precision' with hyperparameters k:11.</span></div><div class='input'><span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'>sapply</span>(<span class='no'>k</span>, <span class='kw'>function</span>(<span class='no'>z</span>) <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>z</span>))
 <span class='no'>k</span></div><div class='output co'>#&gt; k k 
-#&gt; 7 3 </div><div class='input'><span class='co'>## reducing parameter search with theta = 1, </span>
+#&gt; 7 3 </div><div class='input'><span class='co'>## reducing parameter search with theta = 1,</span>
 <span class='co'>## weights of only 1 or 0 will be considered</span>
 <span class='no'>opt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='knntlOptimisation.html'>knntlOptimisation</a></span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                          <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>,
@@ -170,12 +213,12 @@ only, for all classes or none.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.8621  0.8740  0.8860  0.8860  0.8980  0.9099 
+#&gt;  0.8621  0.8772  0.8923  0.8923  0.9074  0.9225 
 #&gt;  best theta:
 #&gt;          ER Golgi Mitochondrion PM
-#&gt; weight:0  1     2             1  2
-#&gt; weight:1  1     0             1  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
-<span class='fu'>plot</span>(<span class='no'>opt</span>)</div><img src='knntlClassification-11.png' alt='' width='540' height='400' /><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knntlClassification</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
+#&gt; weight:0  2     2             0  2
+#&gt; weight:1  0     0             2  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
+<span class='fu'>plot</span>(<span class='no'>opt</span>)</div><div class='img'><img src='knntlClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knntlClassification</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                            <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>, <span class='no'>th</span>, <span class='no'>k</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 1371 features, 8 samples 
@@ -195,8 +238,7 @@ only, for all classes or none.</p></td>
 #&gt; Loaded on Fri Sep 23 15:43:47 2016. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Fri Sep 23 15:43:47 2016 
-#&gt;  MSnbase version: 1.99.2 </div><div class='input'>
-</div></pre>
+#&gt;  MSnbase version: 1.99.2 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -219,15 +261,18 @@ Lisa Breckels
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

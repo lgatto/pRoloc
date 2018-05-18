@@ -18,11 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Returns the predictions in an 'MSnSet' — getPredictions" />
+
+<meta property="og:description" content="Convenience accessor to the predicted feature localisation in an 'MSnSet'.
+This function returns the predictions of an
+MSnSet instance. As a side effect, it prints out a prediction table." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +58,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +109,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,22 +117,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Returns the predictions in an 'MSnSet'</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/MSnSet.R'><code>R/MSnSet.R</code></a></small>
+    <div class="hidden name"><code>getPredictions.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Convenience accessor to the predicted feature localisation in an 'MSnSet'.
 This function returns the predictions of an
 <code>MSnSet</code> instance. As a side effect, it prints out a prediction table.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>getPredictions</span>(<span class='no'>object</span>, <span class='no'>fcol</span>, <span class='no'>scol</span>, <span class='kw'>mcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -137,15 +182,16 @@ variable storing the prediction results according to the chosen threshold.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='orgQuants.html'>orgQuants</a></code> for calculating organelle-specific
-thresholds.</p>
+    <div class='dont-index'><p><code><a href='orgQuants.html'>orgQuants</a></code> for calculating organelle-specific
+thresholds.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"pRolocdata"</span>)
 <span class='fu'>data</span>(<span class='no'>dunkley2006</span>)
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='svmClassification.html'>svmClassification</a></span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"pd.markers"</span>,
-                         <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cost</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: first element used of 'length.out' argument</span></div><div class='input'><span class='fu'>fData</span>(<span class='no'>res</span>)$<span class='no'>svm</span>[<span class='fl'>500</span>:<span class='fl'>510</span>]</div><div class='output co'>#&gt;  [1] Plastid     Plastid     ER membrane Ribosome    Ribosome    Ribosome   
+                         <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cost</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
+<span class='fu'>fData</span>(<span class='no'>res</span>)$<span class='no'>svm</span>[<span class='fl'>500</span>:<span class='fl'>510</span>]</div><div class='output co'>#&gt;  [1] Plastid     Plastid     ER membrane Ribosome    Ribosome    Ribosome   
 #&gt;  [7] Ribosome    Ribosome    Ribosome    Ribosome    Ribosome   
 #&gt; 9 Levels: ER lumen ER membrane Golgi Mitochondrion Plastid PM Ribosome ... vacuole</div><div class='input'><span class='fu'>fData</span>(<span class='no'>res</span>)$<span class='no'>svm.scores</span>[<span class='fl'>500</span>:<span class='fl'>510</span>]</div><div class='output co'>#&gt;  [1] 0.6593303 0.7701427 0.6752305 0.4882591 0.5751725 0.5766412 0.6376513
 #&gt;  [8] 0.6215169 0.5313678 0.6123313 0.6602089</div><div class='input'><span class='fu'>getPredictions</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0</span>) <span class='co'>## all predictions</span></div><div class='output co'>#&gt; ans
@@ -171,8 +217,8 @@ thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Thu May  3 01:52:52 2018 
-#&gt; Added svm predictions according to global threshold = 0 Thu May  3 01:52:53 2018 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Fri May 18 10:38:09 2018 
+#&gt; Added svm predictions according to global threshold = 0 Fri May 18 10:38:09 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'>getPredictions</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.9</span>) <span class='co'>## single threshold </span></div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            56            28            55            20 
@@ -196,8 +242,8 @@ thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Thu May  3 01:52:52 2018 
-#&gt; Added svm predictions according to global threshold = 0.9 Thu May  3 01:52:53 2018 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Fri May 18 10:38:09 2018 
+#&gt; Added svm predictions according to global threshold = 0.9 Fri May 18 10:38:09 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='co'>## 50% top predictions per class</span>
 <span class='no'>ts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='orgQuants.html'>orgQuants</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;     0.2995766     0.8368847     0.7805362     0.7484314     0.7746137 
@@ -225,8 +271,8 @@ thresholds.</p>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Thu May  3 01:52:52 2018 
-#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Thu May  3 01:52:53 2018 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Fri May 18 10:38:09 2018 
+#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Fri May 18 10:38:09 2018 
 #&gt;  MSnbase version: 1.17.12 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -250,15 +296,18 @@ Laurent Gatto and Lisa Breckels
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

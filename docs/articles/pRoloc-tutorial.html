@@ -8,14 +8,17 @@
 <title>Using pRoloc for spatial proteomics data analysis • pRoloc</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Using pRoloc for spatial proteomics data analysis">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +27,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/index.html">Articles</a>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -55,15 +86,17 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Using pRoloc for spatial proteomics data analysis</h1>
                         <h4 class="author">Lisa M. Breckels</h4>
             <address class="author_afil">
       Computational Proteomics Unit, Cambridge, UK<br><h4 class="author">Laurent Gatto</h4>
             <address class="author_afil">
-      Computational Proteomics Unit, Cambridge, UK<br>
-</address>
+      Computational Proteomics Unit, Cambridge, UK<br><small class="dont-index">Source: <a href="https://github.com/lgatto/pRoloc/blob/master/vignettes/pRoloc-tutorial.Rmd"><code>vignettes/pRoloc-tutorial.Rmd</code></a></small>
+      <div class="hidden name"><code>pRoloc-tutorial.Rmd</code></div>
+
+    </address>
 </address>
 </div>
 
@@ -73,7 +106,6 @@
       <p>This tutorial illustrates the usage of the <code>pRoloc</code> R package for the analysis and interpretation of spatial proteomics data. It walks the reader through the creation of <em>MSnSet</em> instances, that hold the quantitative proteomics data and meta-data and introduces several aspects of data analysis, including data visualisation and application of machine learning to predict protein localisation.</p>
     </div>
     
-<div class="contents">
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
   document.querySelector("h1").className = "title";
@@ -239,7 +271,7 @@ pdataCsv &lt;-<span class="st"> </span><span class="kw">read.csv</span>(f3)</cod
 ## 3        X116        19
 ## 4        X117        21</code></pre>
 <p>A self-contained data structure, called <em>MSnSet</em> (defined in the <em><a href="http://bioconductor.org/packages/MSnbase">MSnbase</a></em> package) can now easily be generated using the <em>readMSnSet</em> constructor, providing the respective <code>csv</code> file names shown above and specifying that the data is comma-separated (with <code>sep = ","</code>). Below, we call that object <code>tan2009r1</code> and display its content.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tan2009r1 &lt;-<span class="st"> </span><span class="kw">readMSnSet</span>(<span class="dt">exprsFile =</span> f1,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tan2009r1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/readMSnSet">readMSnSet</a></span>(<span class="dt">exprsFile =</span> f1,
                         <span class="dt">featureDataFile =</span> f2,
                         <span class="dt">phenoDataFile =</span> f3,
                         <span class="dt">sep =</span> <span class="st">","</span>)
@@ -260,8 +292,8 @@ tan2009r1</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Thu May  3 01:59:10 2018  using readMSnSet. 
-##  MSnbase version: 2.5.15</code></pre>
+## Quantitation data loaded: Fri May 18 10:44:13 2018  using readMSnSet. 
+##  MSnbase version: 2.7.1</code></pre>
 </div>
 </div>
 <div id="a-shorter-input-work-flow" class="section level2">
@@ -270,7 +302,7 @@ tan2009r1</code></pre></div>
 <p>The <code>readMSnSet2</code> function provides a simplified import pipeline. It takes a single spreadsheet as input (default is <code>csv</code>) and extract the columns identified by <code>ecol</code> to create the expression data, while the others are used as feature meta-data. <code>ecol</code> can be a <code>character</code> with the respective column labels or a numeric with their indices. In the former case, it is important to make sure that the names match exactly. Special characters like <code>'-'</code> or <code>'('</code> will be transformed by R into <code>'.'</code> when the <code>csv</code> file is read in. Optionally, one can also specify a column to be used as feature names. Note that these must be unique to guarantee the final object validity.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ecol &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"area"</span>, <span class="dv">114</span><span class="op">:</span><span class="dv">117</span>, <span class="dt">sep =</span> <span class="st">"."</span>)
 fname &lt;-<span class="st"> "Protein.ID"</span>
-eset &lt;-<span class="st"> </span><span class="kw">readMSnSet2</span>(f0, ecol, fname)
+eset &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/readMSnSet">readMSnSet2</a></span>(f0, ecol, fname)
 eset</code></pre></div>
 <pre><code>## MSnSet (storageMode: lockedEnvironment)
 ## assayData: 888 features, 4 samples 
@@ -284,9 +316,9 @@ eset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-##  MSnbase version: 2.5.15</code></pre>
+##  MSnbase version: 2.7.1</code></pre>
 <p>The <code>ecol</code> columns can also be queried interactively from R using the <code>getEcols</code> and <code>grepEcols</code> function. The former return a character with all column names, given a splitting character, i.e. the separation value of the spreadsheet (typically <code>","</code> for <code>csv</code>, <code>"\t"</code> for <code>tsv</code>, …). The latter can be used to grep a pattern of interest to obtain the relevant column indices.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getEcols</span>(f0, <span class="st">","</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/grepEcols">getEcols</a></span>(f0, <span class="st">","</span>)</code></pre></div>
 <pre><code>##  [1] "\"Protein ID\""              "\"FBgn\""                   
 ##  [3] "\"Flybase Symbol\""          "\"No. peptide IDs\""        
 ##  [5] "\"Mascot score\""            "\"No. peptides quantified\""
@@ -295,10 +327,10 @@ eset</code></pre></div>
 ## [11] "\"PLS-DA classification\""   "\"Peptide sequence\""       
 ## [13] "\"Precursor ion mass\""      "\"Precursor ion charge\""   
 ## [15] "\"pd.2013\""                 "\"pd.markers\""</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">grepEcols</span>(f0, <span class="st">"area"</span>, <span class="st">","</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/grepEcols">grepEcols</a></span>(f0, <span class="st">"area"</span>, <span class="st">","</span>)</code></pre></div>
 <pre><code>## [1]  7  8  9 10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="kw">grepEcols</span>(f0, <span class="st">"area"</span>, <span class="st">","</span>)
-<span class="kw">readMSnSet2</span>(f0, e)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/grepEcols">grepEcols</a></span>(f0, <span class="st">"area"</span>, <span class="st">","</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/readMSnSet">readMSnSet2</a></span>(f0, e)</code></pre></div>
 <pre><code>## MSnSet (storageMode: lockedEnvironment)
 ## assayData: 888 features, 4 samples 
 ##   element names: exprs 
@@ -311,8 +343,8 @@ eset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-##  MSnbase version: 2.5.15</code></pre>
-<p>The <code>phenoData</code> slot can now be updated accordingly using the replacement functions <code>phenoData&lt;-</code> or <code>pData&lt;-</code> (see <code>?MSnSet</code> for details).</p>
+##  MSnbase version: 2.7.1</code></pre>
+<p>The <code>phenoData</code> slot can now be updated accordingly using the replacement functions <code>phenoData&lt;-</code> or <code>pData&lt;-</code> (see <code><a href="http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class">?MSnSet</a></code> for details).</p>
 <div id="the-msnset-class" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-msnset-class" class="anchor"></a>The <em>MSnSet</em> class</h3>
@@ -321,7 +353,7 @@ eset</code></pre></div>
 <li><p>the number of row in the expression/quantitation data and feature data must be equal and the row names must match exactly, and</p></li>
 <li><p>the number of columns in the expression/quantitation data and number of row in the sample meta-data must be equal and the column/row names must match exactly.</p></li>
 </ul>
-<p>It is common, in the context of <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em> to update the feature meta-data (described in section @ref(sec:analysis)) by adding new columns, without breaking the objects validity. Similarly, the sample meta-data can also be updated by adding new sample variables. A detailed description of the <code>MSnSet</code> class is available by typing <code>?MSnSet</code> in the R console.</p>
+<p>It is common, in the context of <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em> to update the feature meta-data (described in section @ref(sec:analysis)) by adding new columns, without breaking the objects validity. Similarly, the sample meta-data can also be updated by adding new sample variables. A detailed description of the <code>MSnSet</code> class is available by typing <code><a href="http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class">?MSnSet</a></code> in the R console.</p>
 <div class="figure">
 <img src="Figures/msnset.png" alt="Dimension requirements for the respective expression, feature and sample meta-data slots." id="fig:msnset"><p class="caption">Dimension requirements for the respective expression, feature and sample meta-data slots.</p>
 </div>
@@ -333,7 +365,7 @@ eset</code></pre></div>
 </ul>
 <p>The advantage of this structure is that it can be manipulated as a whole and the respective parts of the data object will remain compatible. The code chunk below, for example, shows how to extract the first 5 proteins and 2 first samples:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">smallTan &lt;-<span class="st"> </span>tan2009r1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
-<span class="kw">dim</span>(smallTan)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">dim</a></span>(smallTan)</code></pre></div>
 <pre><code>## [1] 5 2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(smallTan)</code></pre></div>
 <pre><code>##                 X114     X115
@@ -399,11 +431,11 @@ eset</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">rowSums</span>(<span class="kw">exprs</span>(tan2009r1)))</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.9990  0.9999  1.0000  1.0000  1.0001  1.0010</code></pre>
-<p>The <code>normalise</code> method (also available as <code>normalize</code>) from the <em><a href="http://bioconductor.org/packages/MSnbase">MSnbase</a></em> package can be used to obtain relative quantitation data, as illustrated below on another iTRAQ test data set, available from <em><a href="http://bioconductor.org/packages/MSnbase">MSnbase</a></em>. Several normalisation <code>methods</code> are available and described in <code>?normalise</code>. For many algorithms, including classifiers in general and support vector machines in particular, it is important to properly per-process the data. Centering and scaling of the data is also available with the <code>scale</code> method.</p>
-<p>In the code chunk below, we first create a test <em>MSnSet</em> instance<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> and illustrate the effect of <code>normalise(..., method = "sum")</code>.</p>
+<p>The <code>normalise</code> method (also available as <code>normalize</code>) from the <em><a href="http://bioconductor.org/packages/MSnbase">MSnbase</a></em> package can be used to obtain relative quantitation data, as illustrated below on another iTRAQ test data set, available from <em><a href="http://bioconductor.org/packages/MSnbase">MSnbase</a></em>. Several normalisation <code>methods</code> are available and described in <code><a href="http://www.rdocumentation.org/packages/MSnbase/topics/normalise-methods">?normalise</a></code>. For many algorithms, including classifiers in general and support vector machines in particular, it is important to properly per-process the data. Centering and scaling of the data is also available with the <code>scale</code> method.</p>
+<p>In the code chunk below, we first create a test <em>MSnSet</em> instance<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> and illustrate the effect of <code><a href="http://www.rdocumentation.org/packages/MSnbase/topics/normalise-methods">normalise(..., method = "sum")</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## create a small illustrative test data
 <span class="kw">data</span>(itraqdata)
-itraqdata &lt;-<span class="st"> </span><span class="kw">quantify</span>(itraqdata, <span class="dt">method =</span> <span class="st">"trap"</span>,
+itraqdata &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/quantify-methods">quantify</a></span>(itraqdata, <span class="dt">method =</span> <span class="st">"trap"</span>,
                       <span class="dt">reporters =</span> iTRAQ4)
 ## the quantification data
 <span class="kw">head</span>(<span class="kw">exprs</span>(itraqdata), <span class="dt">n =</span> <span class="dv">3</span>)</code></pre></div>
@@ -415,13 +447,13 @@ itraqdata &lt;-<span class="st"> </span><span class="kw">quantify</span>(itraqda
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's 
 ##     59.06   5638.09  15344.43  38010.87  42256.61 305739.04         1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## normalising to the sum of feature intensitites
-itraqnorm &lt;-<span class="st"> </span><span class="kw">normalise</span>(itraqdata, <span class="dt">method =</span> <span class="st">"sum"</span>)
-<span class="kw">processingData</span>(itraqnorm)</code></pre></div>
+itraqnorm &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/normalise-methods">normalise</a></span>(itraqdata, <span class="dt">method =</span> <span class="st">"sum"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(itraqnorm)</code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Thu May  3 01:59:12 2018 
-## Normalised (sum): Thu May  3 01:59:12 2018 
+## iTRAQ4 quantification by trapezoidation: Fri May 18 10:44:15 2018 
+## Normalised (sum): Fri May 18 10:44:15 2018 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -453,7 +485,7 @@ i &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">f
 <span class="kw"><a href="../reference/plotDist.html">plotDist</a></span>(tan2009r1[i, ],
          <span class="dt">markers =</span> <span class="kw">featureNames</span>(tan2009r1)[j])</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plotdist1-1.png" alt="Distribution of protein intensities along the fractions of the separation gradient for 4 organelles: mitochondrion (red), ER/Golgi (blue, ER markers and green, Golgi markers) and plasma membrane (purple)." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plotdist1-1.png" alt="Distribution of protein intensities along the fractions of the separation gradient for 4 organelles: mitochondrion (red), ER/Golgi (blue, ER markers and green, Golgi markers) and plasma membrane (purple)." width="700"><p class="caption">
 Distribution of protein intensities along the fractions of the separation gradient for 4 organelles: mitochondrion (red), ER/Golgi (blue, ER markers and green, Golgi markers) and plasma membrane (purple).
 </p>
 </div>
@@ -464,7 +496,7 @@ Distribution of protein intensities along the fractions of the separation gradie
 <p>To gain a quick overview of the distance/similarity between the sub-cellular clusters, it can useful to compare average marker profiles, rather than all profiles, as presented in the profile plots above. The <code>mrkHClust</code> calculates average class profiles and generates the resulting dendrogram.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mrkHClust.html">mrkHClust</a></span>(tan2009r1)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/dendro-1.png" alt="Hierarchical clustering. Average distance between organelle classes." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/dendro-1.png" alt="Hierarchical clustering. Average distance between organelle classes." width="700"><p class="caption">
 Hierarchical clustering. Average distance between organelle classes.
 </p>
 </div>
@@ -480,7 +512,7 @@ Hierarchical clustering. Average distance between organelle classes.
 <span class="kw"><a href="../reference/addLegend.html">addLegend</a></span>(tan2009r1, <span class="dt">fcol =</span> <span class="st">"markers"</span>, <span class="dt">cex =</span> .<span class="dv">7</span>,
           <span class="dt">where =</span> <span class="st">"bottomright"</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plot2d-1.png" alt="PCA plot. Representation of the proteins of `tan2009r1` after reduction of the 4 reporter quantitation data to 2 principal components." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plot2d-1.png" alt="PCA plot. Representation of the proteins of `tan2009r1` after reduction of the 4 reporter quantitation data to 2 principal components." width="700"><p class="caption">
 PCA plot. Representation of the proteins of <code>tan2009r1</code> after reduction of the 4 reporter quantitation data to 2 principal components.
 </p>
 </div>
@@ -488,19 +520,19 @@ PCA plot. Representation of the proteins of <code>tan2009r1</code> after reducti
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot2D.html">plot2D</a></span>(tan2009r1, <span class="dt">fcol =</span> <span class="st">"markers.orig"</span>)
 <span class="kw"><a href="../reference/addLegend.html">addLegend</a></span>(tan2009r1, <span class="dt">fcol =</span> <span class="st">"markers.orig"</span>, <span class="dt">where =</span> <span class="st">"bottomright"</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plot2dorg-1.png" alt="PCA plot. Reduced set of markers for the `tan2009r1` data projected onto 2 principal components." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plot2dorg-1.png" alt="PCA plot. Reduced set of markers for the `tan2009r1` data projected onto 2 principal components." width="700"><p class="caption">
 PCA plot. Reduced set of markers for the <code>tan2009r1</code> data projected onto 2 principal components.
 </p>
 </div>
 <p>It is also possible to visualise the data along 3 dimensions using the <em>plot3D</em> function, which works like the 2 dimension version (<a href="#fig:plot3D">figure below</a>). The resulting figure can be rotated by the user.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot3D</span>(tan2009r1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/MSmap-class">plot3D</a></span>(tan2009r1)</code></pre></div>
 <div class="figure">
 <img src="Figures/plot3D.png" alt="Snapshot of the 3-dimensional PCA plot. The tan2009r1 data is represented along the first 3 principal components." id="fig:plot3D"><p class="caption">Snapshot of the 3-dimensional PCA plot. The <code>tan2009r1</code> data is represented along the first 3 principal components.</p>
 </div>
 <p>As can be seen on the figures @ref(fig:plot2d), @ref(fig:plot2dorg) and on the <a href="#fig:plot3D">3D plot above</a>, we indicate on the axis labels the percentage of total variance explained by the individual PCs. It is not unusual to reach over 75% along the first two PCs, even for experiments with several tens of fractions. One can calculate this information for all PCs by setting <code>method = "scree"</code> in <code>plot2D</code>. On figure @ref(fig:scree), we see that the four PCs in the <code>tan2009r1</code> data account for 58.53, 29.96, 11.52 and 0 percent of the total variance.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot2D.html">plot2D</a></span>(tan2009r1, <span class="dt">method =</span> <span class="st">"scree"</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/scree-1.png" alt="Percentage of variance explained." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/scree-1.png" alt="Percentage of variance explained." width="700"><p class="caption">
 Percentage of variance explained.
 </p>
 </div>
@@ -528,17 +560,17 @@ Percentage of variance explained.
 <h2 class="hasAnchor">
 <a href="#features-of-interest" class="anchor"></a>Features of interest</h2>
 <p>In addition to highlighting sub-cellular niches as coloured clusters on the PCA plot, it is also possible to define some arbitrary <em>features of interest</em> that represent, for example, proteins of a particular pathway or a set of interaction partners. Such sets of proteins are recorded as <em>FeaturesOfInterest</em> instances, as illstrated below (using the ten first features of our experiment):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foi1 &lt;-<span class="st"> </span><span class="kw">FeaturesOfInterest</span>(<span class="dt">description =</span> <span class="st">"Feats of interest 1"</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foi1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/FeaturesOfInterest-class">FeaturesOfInterest</a></span>(<span class="dt">description =</span> <span class="st">"Feats of interest 1"</span>,
                            <span class="dt">fnames =</span> <span class="kw">featureNames</span>(tan2009r1[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]))
 <span class="kw">description</span>(foi1)</code></pre></div>
 <pre><code>## [1] "Feats of interest 1"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">foi</span>(foi1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/FeaturesOfInterest-class">foi</a></span>(foi1)</code></pre></div>
 <pre><code>##  [1] "P20353" "P53501" "Q7KU78" "P04412" "Q7KJ73" "Q7JZN0" "Q7KLV9"
 ##  [8] "Q9VM65" "Q9VCK0" "Q9VIU7"</code></pre>
 <p>Several such features of interest can be combined into collections:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foi2 &lt;-<span class="st"> </span><span class="kw">FeaturesOfInterest</span>(<span class="dt">description =</span> <span class="st">"Feats of interest 2"</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foi2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/FeaturesOfInterest-class">FeaturesOfInterest</a></span>(<span class="dt">description =</span> <span class="st">"Feats of interest 2"</span>,
                            <span class="dt">fnames =</span> <span class="kw">featureNames</span>(tan2009r1[<span class="dv">880</span><span class="op">:</span><span class="dv">888</span>]))
-foic &lt;-<span class="st"> </span><span class="kw">FoICollection</span>(<span class="kw">list</span>(foi1, foi2))
+foic &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/FeaturesOfInterest-class">FoICollection</a></span>(<span class="kw">list</span>(foi1, foi2))
 foic</code></pre></div>
 <pre><code>## A collection of 2 features of interest.</code></pre>
 <p><em>FeaturesOfInterest</em> instances can now be overlaid on the PCA plot with the <code>highlightOnPlot</code> function. The <code>highlightOnPlot3D</code> can be used to overlay data onto a 3 dimensional figure produced by <code>plot3D</code>.</p>
@@ -554,24 +586,24 @@ foic</code></pre></div>
        <span class="dt">bty =</span> <span class="st">"n"</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">"black"</span>, <span class="st">"purple"</span>),
        <span class="dt">pch =</span> <span class="dv">1</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plotfoi-1.png" alt="Adding features of interest on a PCA plot." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plotfoi-1.png" alt="Adding features of interest on a PCA plot." width="700"><p class="caption">
 Adding features of interest on a PCA plot.
 </p>
 </div>
-<p>See <code>?FeaturesOfInterest</code> and <code><a href="../reference/highlightOnPlot.html">?highlightOnPlot</a></code> for more details.</p>
+<p>See <code><a href="http://www.rdocumentation.org/packages/MSnbase/topics/FeaturesOfInterest-class">?FeaturesOfInterest</a></code> and <code><a href="../reference/highlightOnPlot.html">?highlightOnPlot</a></code> for more details.</p>
 </div>
 <div id="sec:gui" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sec:gui" class="anchor"></a>Interactive visualisation</h2>
 <p>The <em><a href="http://bioconductor.org/packages/pRolocGUI">pRolocGUI</a></em> application allows one to explore the spatial proteomics data using an interactive, web-based  interface <span class="citation">(RStudio and Inc. 2014)</span>. The package is available from Bioconductor and can be installed and started as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"BiocInstaller"</span>)
-<span class="kw">biocLite</span>(<span class="st">"pRolocGUI"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/BiocInstaller/topics/biocLite">biocLite</a></span>(<span class="st">"pRolocGUI"</span>)
 <span class="kw">library</span>(<span class="st">"pRolocGUI"</span>)
-<span class="kw">pRolocVis</span>(tan2009r1)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/pRolocGUI/topics/pRolocVis-apps">pRolocVis</a></span>(tan2009r1)</code></pre></div>
 <div class="figure">
 <img src="Figures/Screenshot_PCA2.png" alt="Screenshot of the pRolocGUI interface. The GUI is also available as an online app for the hyperLOPIT experiment from (A. Christoforou et al. 2016) at https://lgatto.shinyapps.io/christoforou2015/." id="fig:gui"><p class="caption">Screenshot of the <em><a href="http://bioconductor.org/packages/pRolocGUI">pRolocGUI</a></em> interface. The GUI is also available as an online app for the hyperLOPIT experiment from <span class="citation">(A. Christoforou et al. 2016)</span> at <a href="https://lgatto.shinyapps.io/christoforou2015/" class="uri">https://lgatto.shinyapps.io/christoforou2015/</a>.</p>
 </div>
-<p>More details are available in the vignette that can be started from the application by clicking on any of the question marks, by starting the vignette from R with <code><a href="../articles/pRolocGUI.html">vignette("pRolocGUI")</a></code> or can be accessed online (<a href="http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html" class="uri">http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html</a>).</p>
+<p>More details are available in the vignette that can be started from the application by clicking on any of the question marks, by starting the vignette from R with <code>vignette("pRolocGUI")</code> or can be accessed online (<a href="http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html" class="uri">http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html</a>).</p>
 </div>
 </div>
 <div id="sec:qsep" class="section level1">
@@ -590,31 +622,31 @@ Adding features of interest on a PCA plot.
 <p>The <code>plot2D</code> can also be used to visualise the data on a PCA plot omitting any marker definitions, as shown on figure @ref(fig:plot2dnull). This approach avoids any bias towards marker definitions and concentrate on the data and its underlying structure itself.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot2D.html">plot2D</a></span>(tan2009r1, <span class="dt">fcol =</span> <span class="ot">NULL</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plot2dnull-1.png" alt="Plain PCA representation of the `tan2009r1` data." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plot2dnull-1.png" alt="Plain PCA representation of the `tan2009r1` data." width="700"><p class="caption">
 Plain PCA representation of the <code>tan2009r1</code> data.
 </p>
 </div>
 <p>Alternatively, <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em> also gives access to <em><a href="http://bioconductor.org/packages/MLInterfaces">MLInterfaces</a></em>’s <code>MLean</code> unified interface for, among others, unsupervised approaches using k-means (figure @ref(fig:plotKmeans)), hierarchical (figure @ref(fig:plotHclust)) or partitioning around medoids (figure @ref(fig:plotPam)), clustering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kcl &lt;-<span class="st"> </span><span class="kw">MLearn</span>( <span class="op">~</span><span class="st"> </span>., tan2009r1,  kmeansI, <span class="dt">centers=</span><span class="dv">5</span>)
-<span class="kw">plot</span>(kcl, <span class="kw">exprs</span>(tan2009r1))</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/plot-methods">plot</a></span>(kcl, <span class="kw">exprs</span>(tan2009r1))</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plotKmeans-1.png" alt="k-means clustering on the `tan2009r1` data." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plotKmeans-1.png" alt="k-means clustering on the `tan2009r1` data." width="700"><p class="caption">
 k-means clustering on the <code>tan2009r1</code> data.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hcl &lt;-<span class="st"> </span><span class="kw">MLearn</span>( <span class="op">~</span><span class="st"> </span>., tan2009r1,
               <span class="kw">hclustI</span>(<span class="dt">distFun =</span> dist,
                       <span class="dt">cutParm =</span> <span class="kw">list</span>(<span class="dt">k =</span> <span class="dv">5</span>)))
-<span class="kw">plot</span>(hcl, <span class="dt">labels =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/plot-methods">plot</a></span>(hcl, <span class="dt">labels =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plotHclust-1.png" alt="Hierarchical clustering on the `tan2009r1` data." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plotHclust-1.png" alt="Hierarchical clustering on the `tan2009r1` data." width="700"><p class="caption">
 Hierarchical clustering on the <code>tan2009r1</code> data.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pcl &lt;-<span class="st"> </span><span class="kw">MLearn</span>( <span class="op">~</span><span class="st"> </span>., tan2009r1,  <span class="kw">pamI</span>(dist), <span class="dt">k =</span> <span class="dv">5</span>)
-<span class="kw">plot</span>(pcl, <span class="dt">data =</span> <span class="kw">exprs</span>(tan2009r1))</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/plot-methods">plot</a></span>(pcl, <span class="dt">data =</span> <span class="kw">exprs</span>(tan2009r1))</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/plotPam-1.png" alt="Partitioning around medoids on the `tan2009r1` data." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/plotPam-1.png" alt="Partitioning around medoids on the `tan2009r1` data." width="700"><p class="caption">
 Partitioning around medoids on the <code>tan2009r1</code> data.
 </p>
 </div>
@@ -651,15 +683,15 @@ Partitioning around medoids on the <code>tan2009r1</code> data.
 ##  0.8889  0.8889  1.0000  0.9556  1.0000  1.0000 
 ##  best sigma: 0.1 1   
 ##  best cost: 0.5 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(params)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/plot-methods">plot</a></span>(params)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/params-1.png" alt="Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of *f1Count* in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/params-1.png" alt="Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of *f1Count* in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values." width="700"><p class="caption">
 Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of <em>f1Count</em> in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/GenRegRes-class.html">levelPlot</a></span>(params)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/params-2.png" alt="Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of *f1Count* in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/params-2.png" alt="Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of *f1Count* in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values." width="700"><p class="caption">
 Assessing parameter optimisation. On the left, we see the respective distributions of the 10 macro F1 scores for the best cost/sigma parameter pairs. See also the output of <em>f1Count</em> in relation to this plot. On the right, we see the averaged macro F1 scores, for the full range of parameter values.
 </p>
 </div>
@@ -685,10 +717,10 @@ svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmC
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## using default best parameters
 svmres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmClassification.html">svmClassification</a></span>(tan2009r1, <span class="dt">fcol =</span> <span class="st">"markers.orig"</span>,
                             <span class="dt">assessRes =</span> params)
-<span class="kw">processingData</span>(svmres)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(svmres)</code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Thu May  3 01:59:18 2018 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 18 10:44:20 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -757,7 +789,7 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredi
         <span class="dt">ylab =</span> <span class="st">"SVM scores"</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> minprob, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/predscores-1.png" alt="Organelle-specific SVM score distributions." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/predscores-1.png" alt="Organelle-specific SVM score distributions." width="700"><p class="caption">
 Organelle-specific SVM score distributions.
 </p>
 </div>
@@ -790,8 +822,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Thu May  3 01:59:18 2018 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Thu May  3 01:59:18 2018 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri May 18 10:44:20 2018 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Fri May 18 10:44:20 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ptsze &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
@@ -801,7 +833,7 @@ Organelle-specific SVM score distributions.
           <span class="dt">where =</span> <span class="st">"bottomright"</span>, 
           <span class="dt">cex =</span> .<span class="dv">5</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/svmres-1.png" alt="Representation of the svm prediction on the `tan2009r1` data set. The svm scores have been used to set the point size (`cex` argument; the scores have been transformed to emphasise the extremes). Different symbols (`fpch`) are used to differentiate markers and new assignments." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/svmres-1.png" alt="Representation of the svm prediction on the `tan2009r1` data set. The svm scores have been used to set the point size (`cex` argument; the scores have been transformed to emphasise the extremes). Different symbols (`fpch`) are used to differentiate markers and new assignments." width="700"><p class="caption">
 Representation of the svm prediction on the <code>tan2009r1</code> data set. The svm scores have been used to set the point size (<code>cex</code> argument; the scores have been transformed to emphasise the extremes). Different symbols (<code>fpch</code>) are used to differentiate markers and new assignments.
 </p>
 </div>
@@ -819,7 +851,7 @@ Representation of the svm prediction on the <code>tan2009r1</code> data set. The
           <span class="dt">full.names =</span> <span class="ot">TRUE</span>, <span class="dt">pattern =</span> <span class="st">"pdres.rda"</span>)
 <span class="kw">load</span>(fn)</code></pre></div>
 <p>The results are also appended to the <code>featureData</code> slot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">processingData</span>(pdres)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(pdres)</code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Combined [888,4] and [1,4] MSnSets Wed Feb 13 17:28:54 2013 
 ## Run phenoDisco using 'PLSDA': Wed Feb 13 17:28:54 2013 
@@ -833,7 +865,7 @@ Representation of the svm prediction on the <code>tan2009r1</code> data set. The
           <span class="dt">where =</span> <span class="st">"bottomright"</span>, 
           <span class="dt">cex =</span> .<span class="dv">5</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/pdres-1.png" alt="Representation of the phenoDisco prediction and cluster discovery results." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/pdres-1.png" alt="Representation of the phenoDisco prediction and cluster discovery results." width="700"><p class="caption">
 Representation of the phenoDisco prediction and cluster discovery results.
 </p>
 </div>
@@ -878,7 +910,7 @@ w</code></pre></div>
           <span class="dt">where =</span> <span class="st">"bottomright"</span>,
           <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">cex =</span> .<span class="dv">5</span>)</code></pre></div>
 <div class="figure">
-<img src="pRoloc-tutorial_files/figure-html/pdres2-1.png" alt="Classification results. The results of the second round of classification, using the augmented set of markers obtained using *phenoDisco* as detailed in [@Breckels2013] and a weighted svm classifier." width="672"><p class="caption">
+<img src="pRoloc-tutorial_files/figure-html/pdres2-1.png" alt="Classification results. The results of the second round of classification, using the augmented set of markers obtained using *phenoDisco* as detailed in [@Breckels2013] and a weighted svm classifier." width="700"><p class="caption">
 Classification results. The results of the second round of classification, using the augmented set of markers obtained using <em>phenoDisco</em> as detailed in <span class="citation">(L. M. Breckels et al. 2013)</span> and a weighted svm classifier.
 </p>
 </div>
@@ -920,59 +952,64 @@ Classification results. The results of the second round of classification, using
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] class_7.3-14         pRolocdata_1.17.3    pRoloc_1.19.4       
-##  [4] MLInterfaces_1.59.1  cluster_2.0.7        annotate_1.57.3     
-##  [7] XML_3.98-1.10        AnnotationDbi_1.41.4 IRanges_2.13.28     
-## [10] S4Vectors_0.17.41    MSnbase_2.5.15       ProtGenerics_1.11.0 
-## [13] BiocParallel_1.13.3  mzR_2.13.6           Rcpp_0.12.16        
-## [16] Biobase_2.39.2       BiocGenerics_0.25.3  knitr_1.20          
-## [19] BiocStyle_2.7.8     
+##  [1] class_7.3-14         pRolocdata_1.19.0    pRoloc_1.21.0       
+##  [4] MLInterfaces_1.61.1  cluster_2.0.7-1      annotate_1.59.0     
+##  [7] XML_3.98-1.11        AnnotationDbi_1.43.1 IRanges_2.15.9      
+## [10] S4Vectors_0.19.2     MSnbase_2.7.1        ProtGenerics_1.13.0 
+## [13] BiocParallel_1.15.3  mzR_2.15.1           Rcpp_0.12.16        
+## [16] Biobase_2.41.0       BiocGenerics_0.27.0  knitr_1.20          
+## [19] BiocStyle_2.9.0     
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] backports_1.1.2       plyr_1.8.4            igraph_1.2.1         
-##   [4] lazyeval_0.2.1        splines_3.6.0         ggvis_0.4.3          
-##   [7] crosstalk_1.0.0       ggplot2_2.2.1         digest_0.6.15        
-##  [10] foreach_1.4.4         BiocInstaller_1.30.0  htmltools_0.3.6      
-##  [13] viridis_0.5.1         gdata_2.18.0          magrittr_1.5         
-##  [16] memoise_1.1.0         doParallel_1.0.11     sfsmisc_1.1-2        
-##  [19] limma_3.35.14         recipes_0.1.2         gower_0.1.2          
-##  [22] rda_1.0.2-2           dimRed_0.1.0          lpSolve_5.6.13       
-##  [25] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.1           
-##  [28] dplyr_0.7.4.9003      RCurl_1.95-4.10       hexbin_1.27.2        
-##  [31] genefilter_1.61.1     bindr_0.1.1           impute_1.53.0        
-##  [34] survival_2.41-3       iterators_1.0.9       glue_1.2.0           
-##  [37] DRR_0.0.3             gtable_0.2.0          ipred_0.9-6          
-##  [40] zlibbioc_1.25.0       kernlab_0.9-25        ddalpha_1.3.1.1      
-##  [43] prabclus_2.2-6        DEoptimR_1.0-8        scales_0.5.0         
-##  [46] vsn_3.47.1            mvtnorm_1.0-7         DBI_0.8              
-##  [49] viridisLite_0.3.0     xtable_1.8-2          progress_1.1.2       
-##  [52] foreign_0.8-70        bit_1.1-12            proxy_0.4-22         
-##  [55] mclust_5.4            preprocessCore_1.41.0 lava_1.6.1           
-##  [58] prodlim_1.6.1         sampling_2.8          htmlwidgets_1.0      
-##  [61] httr_1.3.1            threejs_0.3.1         FNN_1.1              
-##  [64] RColorBrewer_1.1-2    fpc_2.1-11            modeltools_0.2-21    
-##  [67] pkgconfig_2.0.1       flexmix_2.3-14        nnet_7.3-12          
-##  [70] caret_6.0-78          tidyselect_0.2.4      rlang_0.2.0          
-##  [73] reshape2_1.4.3        munsell_0.4.3         mlbench_2.1-1        
-##  [76] tools_3.6.0           RSQLite_2.1.0         pls_2.6-0            
-##  [79] broom_0.4.4           evaluate_0.10.1       stringr_1.3.0        
-##  [82] mzID_1.17.0           yaml_2.1.18           ModelMetrics_1.1.0   
-##  [85] bit64_0.9-7           robustbase_0.92-8     randomForest_4.6-14  
-##  [88] purrr_0.2.4           dendextend_1.7.0      bindrcpp_0.2.2.9000  
-##  [91] nlme_3.1-136          whisker_0.3-2         mime_0.5             
-##  [94] RcppRoll_0.2.2        biomaRt_2.35.13       compiler_3.6.0       
-##  [97] e1071_1.6-8           affyio_1.49.2         tibble_1.4.2         
-## [100] stringi_1.1.7         highr_0.6             lattice_0.20-35      
-## [103] trimcluster_0.1-2     Matrix_1.2-13         psych_1.8.3.3        
-## [106] gbm_2.1.3             pillar_1.2.1          MALDIquant_1.17      
-## [109] bitops_1.0-6          httpuv_1.3.6.2        R6_2.2.2             
-## [112] pcaMethods_1.71.0     affy_1.57.0           hwriter_1.3.2        
-## [115] gridExtra_2.3         codetools_0.2-15      MASS_7.3-49          
-## [118] gtools_3.5.0          assertthat_0.2.0      CVST_0.2-1           
-## [121] rprojroot_1.3-2       withr_2.1.2           mnormt_1.5-5         
-## [124] diptest_0.75-7        grid_3.6.0            rpart_4.1-13         
-## [127] timeDate_3043.102     tidyr_0.8.0           rmarkdown_1.9        
-## [130] lubridate_1.7.4       shiny_1.0.5           base64enc_0.1-3</code></pre>
+##   [1] tidyselect_0.2.4      RSQLite_2.1.1         htmlwidgets_1.2      
+##   [4] grid_3.6.0            trimcluster_0.1-2     lpSolve_5.6.13       
+##   [7] rda_1.0.2-2           munsell_0.4.3         codetools_0.2-15     
+##  [10] preprocessCore_1.43.0 withr_2.1.2           colorspace_1.3-2     
+##  [13] BiocInstaller_1.31.1  highr_0.6             geometry_0.3-6       
+##  [16] robustbase_0.93-0     dimRed_0.1.0          mzID_1.19.0          
+##  [19] mnormt_1.5-5          hwriter_1.3.2         bit64_0.9-7          
+##  [22] ggvis_0.4.3           rprojroot_1.3-2       ipred_0.9-6          
+##  [25] xfun_0.1              randomForest_4.6-14   diptest_0.75-7       
+##  [28] R6_2.2.2              doParallel_1.0.11     flexmix_2.3-14       
+##  [31] DRR_0.0.3             bitops_1.0-6          assertthat_0.2.0     
+##  [34] promises_1.0.1        scales_0.5.0          nnet_7.3-12          
+##  [37] gtable_0.2.0          affy_1.59.0           ddalpha_1.3.3        
+##  [40] timeDate_3043.102     rlang_0.2.0           CVST_0.2-1           
+##  [43] genefilter_1.63.0     RcppRoll_0.2.2        splines_3.6.0        
+##  [46] lazyeval_0.2.1        ModelMetrics_1.1.0    impute_1.55.0        
+##  [49] hexbin_1.27.2         broom_0.4.4           yaml_2.1.19          
+##  [52] reshape2_1.4.3        abind_1.4-5           threejs_0.3.1        
+##  [55] crosstalk_1.0.0       backports_1.1.2       httpuv_1.4.3         
+##  [58] caret_6.0-79          tools_3.6.0           lava_1.6.1           
+##  [61] bookdown_0.7          psych_1.8.4           ggplot2_2.2.1        
+##  [64] affyio_1.51.0         RColorBrewer_1.1-2    proxy_0.4-22         
+##  [67] plyr_1.8.4            base64enc_0.1-3       progress_1.1.2       
+##  [70] zlibbioc_1.27.0       purrr_0.2.4           RCurl_1.95-4.10      
+##  [73] prettyunits_1.0.2     rpart_4.1-13          viridis_0.5.1        
+##  [76] sampling_2.8          sfsmisc_1.1-2         fs_1.2.2             
+##  [79] magrittr_1.5          pcaMethods_1.73.0     mvtnorm_1.0-7        
+##  [82] whisker_0.3-2         mime_0.5              evaluate_0.10.1      
+##  [85] xtable_1.8-2          mclust_5.4            gridExtra_2.3        
+##  [88] compiler_3.6.0        biomaRt_2.37.0        tibble_1.4.2         
+##  [91] crayon_1.3.4          htmltools_0.3.6       later_0.7.2          
+##  [94] tidyr_0.8.0           lubridate_1.7.4       DBI_1.0.0            
+##  [97] magic_1.5-8           MASS_7.3-50           fpc_2.1-11           
+## [100] Matrix_1.2-14         vsn_3.49.0            gdata_2.18.0         
+## [103] mlbench_2.1-1         bindr_0.1.1           gower_0.1.2          
+## [106] igraph_1.2.1          pkgconfig_2.0.1       pkgdown_1.0.0        
+## [109] foreign_0.8-70        recipes_0.1.2         MALDIquant_1.17      
+## [112] xml2_1.2.0            roxygen2_6.0.1        foreach_1.4.4        
+## [115] prodlim_2018.04.18    stringr_1.3.1         digest_0.6.15        
+## [118] pls_2.6-0             rmarkdown_1.9         dendextend_1.8.0     
+## [121] kernlab_0.9-26        shiny_1.0.5           gtools_3.5.0         
+## [124] commonmark_1.5        modeltools_0.2-21     nlme_3.1-137         
+## [127] bindrcpp_0.2.2        desc_1.2.0            viridisLite_0.3.0    
+## [130] limma_3.37.1          pillar_1.2.2          lattice_0.20-35      
+## [133] httr_1.3.1            DEoptimR_1.0-8        survival_2.42-3.1    
+## [136] glue_1.2.0            FNN_1.1               gbm_2.1.3            
+## [139] prabclus_2.2-6        iterators_1.0.9       bit_1.1-12           
+## [142] stringi_1.2.2         blob_1.1.1            memoise_1.1.0        
+## [145] dplyr_0.7.4           e1071_1.6-8</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -1025,12 +1062,12 @@ Classification results. The results of the second round of classification, using
 <li id="fn4"><p><a href="http://distill.pub/2016/misread-tsne/" class="uri">http://distill.pub/2016/misread-tsne/</a><a href="#fnref4">↩</a></p></li>
 </ol>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#foreword">Foreword</a></li>
       <li><a href="#questions-and-bugs">Questions and bugs</a></li>
@@ -1079,15 +1116,17 @@ Classification results. The results of the second round of classification, using
 
 
       <footer><div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

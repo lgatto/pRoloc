@@ -143,6 +143,7 @@ setMethod("levelPlot", "GenRegRes",
 ##'     and log-posterior of the model.
 ##' @slot datasize A `list()` with details about size of data
 ##' @md
+##' @author Oliver M. Crook
 ##' @aliases class:MAPparams MAPparams-class MAPparams
 setClass("MAPparams",
          representation(algorithm = "character",
@@ -157,8 +158,7 @@ setMethod("show", "MAPparams",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
             cat("Algorithm:", object@algorithm, "\n")
-            if ("warnings" %in% names(object@log)) {
+            if ("warnings" %in% names(object@log))
               cat("Use getWarnings() to see warnings.\n")
-            }
             invisible(NULL)
           })

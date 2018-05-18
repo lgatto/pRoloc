@@ -18,11 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="theta parameter optimisation — knntlOptimisation" />
+
+<meta property="og:description" content="Classification parameter optimisation for the KNN implementation
+of Wu and Dietterich's transfer learning schema" />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +57,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,23 +116,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>theta parameter optimisation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-knntl.R'><code>R/machinelearning-functions-knntl.R</code></a></small>
+    <div class="hidden name"><code>knntlOptimisation.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Classification parameter optimisation for the KNN implementation
 of Wu and Dietterich's transfer learning schema</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>knntlOptimisation</span>(<span class='no'>primary</span>, <span class='no'>auxiliary</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>k</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>50</span>,
   <span class='kw'>test.size</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>xval</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>length.out</span>, <span class='no'>th</span>, <span class='no'>xfolds</span>,
-  <span class='kw'>BPPARAM</span> <span class='kw'>=</span> <span class='kw'>BiocParallel</span><span class='kw'>::</span><span class='fu'>bpparam</span>(), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Breckels"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>BPPARAM</span> <span class='kw'>=</span> <span class='kw pkg'>BiocParallel</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/BiocParallel/topics/register'>bpparam</a></span>(), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Breckels"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>seed</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -147,7 +191,7 @@ theta to test.</p></td>
 generated from the function <code><a href='thetas.html'>thetas</a></code>, the number
 of columns should be equal to the number of classes contained
 in <code>fcol</code>. Note: columns will be ordered according to
-<code>getMarkerClasses(primary, fcol)</code>. This argument is only
+<code><a href='getMarkerClasses.html'>getMarkerClasses(primary, fcol)</a></code>. This argument is only
 valid if the default method 'Breckels' is used.</p></td>
     </tr>
     <tr>
@@ -203,13 +247,13 @@ Conference on Machine Learning, pages 871 - 878.  Morgan Kaufmann,
     Learning from heterogeneous data sources: an application in
     spatial proteomics. bioRxiv. doi:
     http://dx.doi.org/10.1101/022152</p>
-<p>Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary 
+<p>Wu P, Dietterich TG. Improving SVM Accuracy by Training on Auxiliary
 Data Sources. Proceedings of the 21st International Conference on Machine
 Learning (ICML); 2004.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='knntlClassification.html'>knntlClassification</a></code> and example therein.</p>
+    <div class='dont-index'><p><code><a href='knntlClassification.html'>knntlClassification</a></code> and example therein.</p></div>
     
 
   </div>
@@ -236,15 +280,18 @@ Lisa Breckels
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

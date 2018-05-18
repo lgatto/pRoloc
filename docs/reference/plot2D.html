@@ -18,11 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Plot organelle assignment data and results. — plot2D" />
+
+<meta property="og:description" content="Generate 2 or 3 dimensional feature distribution plots to
+illustrate localistation clusters. Rows/features containing
+NA values are removed prior to dimension reduction except
+for the "nipals" method. For this method, it is advised to
+set the method argument `ncomp` to a low number of dimensions to
+avoid computing all components when analysing large datasets." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +61,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +112,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,12 +120,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot organelle assignment data and results.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/plotting.R'><code>R/plotting.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/plotting3.R'><code>R/plotting3.R</code></a></small>
+    <div class="hidden name"><code>plot2D.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Generate 2 or 3 dimensional feature distribution plots to
 illustrate localistation clusters. Rows/features containing
@@ -90,6 +137,7 @@ for the <code>"nipals"</code> method. For this method, it is advised to
 set the method argument `ncomp` to a low number of dimensions to
 avoid computing all components when analysing large datasets.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>plot2D</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fpch</span>, <span class='kw'>unknown</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>,
   <span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='no'>methargs</span>, <span class='kw'>axsSwitch</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -100,7 +148,7 @@ avoid computing all components when analysing large datasets.</p>
 <span class='fu'>plot3D</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
   <span class='kw'>radius1</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>radius2</span> <span class='kw'>=</span> <span class='no'>radius1</span> * <span class='fl'>2</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -269,7 +317,8 @@ feature. Default is <code>radius</code> * 2.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>plot3D</code> relies on the ##' <code>rgl</code> package, that will be
-loaded automatically.</p><ul>
+loaded automatically.</p>
+<ul>
 <li><p>Note that <code>plot2D</code> has been update in version 1.3.6 to
        support more organelle classes than colours defined in
        <code><a href='getStockcol.html'>getStockcol</a></code>. In such cases, the default
@@ -290,24 +339,24 @@ loaded automatically.</p><ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='addLegend.html'>addLegend</a></code> to add a legend to <code>plot2D</code>
+    <div class='dont-index'><p><code><a href='addLegend.html'>addLegend</a></code> to add a legend to <code>plot2D</code>
     figures (the legend is added by default on <code>plot3D</code>) and
     <code><a href='plotDist.html'>plotDist</a></code> for alternative graphical
     representation of quantitative organelle proteomics
     data. <code><a href='plot2Ds.html'>plot2Ds</a></code> to overlay 2 data sets on the same
-    PCA plot.</p>
+    PCA plot.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"pRolocdata"</span>)
 <span class='fu'>data</span>(<span class='no'>dunkley2006</span>)
-<span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><img src='plot2D-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><img src='plot2D-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span>(<span class='no'>dunkley2006</span>,
+<span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='img'><img src='plot2D-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><div class='img'><img src='plot2D-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span>(<span class='no'>dunkley2006</span>,
           <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>,
           <span class='kw'>where</span> <span class='kw'>=</span> <span class='st'>"topright"</span>,
-          <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>bty</span> <span class='kw'>=</span> <span class='st'>"n"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'>title</span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"plot2D example"</span>)</div><img src='plot2D-8.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## available methods</span>
+          <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>bty</span> <span class='kw'>=</span> <span class='st'>"n"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'>title</span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"plot2D example"</span>)</div><div class='img'><img src='plot2D-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## available methods</span>
 <span class='no'>plot2Dmethods</span></div><div class='output co'>#&gt; [1] "PCA"    "MDS"    "kpca"   "lda"    "t-SNE"  "nipals" "hexbin" "none"  
-#&gt; [9] "scree" </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><img src='plot2D-12.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-       <span class='kw'>methargs</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)))</div><img src='plot2D-14.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lda"</span>)</div><img src='plot2D-16.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hexbin"</span>)</div><img src='plot2D-18.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## Using transparent colours</span>
+#&gt; [9] "scree" </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><div class='img'><img src='plot2D-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+       <span class='kw'>methargs</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)))</div><div class='img'><img src='plot2D-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lda"</span>)</div><div class='img'><img src='plot2D-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hexbin"</span>)</div><div class='img'><img src='plot2D-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## Using transparent colours</span>
 <span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='fu'>paste0</span>(<span class='fu'><a href='getStockcol.html'>getStockcol</a></span>(), <span class='st'>"80"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", cols, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='co'>## New behavious in 1.3.6 when not enough colours</span>
 <span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", cols, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'><a href='getStockcol.html'>getStockcol</a></span>() <span class='co'>## only 3 colours to be recycled</span></div><div class='output co'>#&gt;  [1] "#E41A1C" "#377EB8" "#238B45" "#FF7F00" "#FFD700" "#333333" "#00CED1"
 #&gt;  [8] "#A65628" "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#8B795E"
@@ -317,8 +366,8 @@ loaded automatically.</p><ul>
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            45            28            55            20 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           428            21 </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>)</div><img src='plot2D-29.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## reset colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", stockcol, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along 2 first fractions</span></div><img src='plot2D-33.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>5</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along fractions 3 and 5</span></div><img src='plot2D-35.png' alt='' width='540' height='400' /><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
+#&gt;            46            19            13           428            21 </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>)</div><div class='img'><img src='plot2D-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## reset colours</span>
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", stockcol, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along 2 first fractions</span></div><div class='img'><img src='plot2D-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>5</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along fractions 3 and 5</span></div><div class='img'><img src='plot2D-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
 <span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 <span class='fu'>head</span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;           PC1 (64.36%) PC2 (22.34%)
 #&gt; AT1G09210    -4.734261   -0.8204175
@@ -326,7 +375,7 @@ loaded automatically.</p><ul>
 #&gt; AT1G51760    -4.770573   -1.6292717
 #&gt; AT1G56340    -5.318056   -0.9972462
 #&gt; AT2G32920    -5.135122   -1.5283630
-#&gt; AT2G47470    -4.899410   -0.8145343</div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>pca</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>methargs</span>  <span class='kw'>=</span> <span class='fu'>list</span>(<span class='no'>dunkley2006</span>))</div><img src='plot2D-39.png' alt='' width='540' height='400' /><div class='input'>
+#&gt; AT2G47470    -4.899410   -0.8145343</div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>pca</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>methargs</span>  <span class='kw'>=</span> <span class='fu'>list</span>(<span class='no'>dunkley2006</span>))</div><div class='img'><img src='plot2D-11.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## plotting in 3 dimenstions</span>
 <span class='fu'>plot3D</span>(<span class='no'>dunkley2006</span>)
 <span class='fu'>plot3D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>radius2</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
@@ -355,15 +404,18 @@ Laurent Gatto &lt;lg390@cam.ac.uk&gt;
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

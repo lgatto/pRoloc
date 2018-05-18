@@ -3,8 +3,8 @@
 ##' routine using empirical Bayes methods (MAP).
 ##'
 ##' @title TAGM MAP parameter estimation
-##' @param object An [`MSnbase::MSnSet`] containing the spatial proteomics
-##'     data.
+##' @param object An [`MSnbase::MSnSet`] containing the spatial
+##'     proteomics data.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##'     Default is `markers`.
 ##' @param method A `charachter()` describing the inference method for
@@ -25,8 +25,8 @@
 ##' @param seed The optional random number generator seed.
 ##' @return An instance of class [MAPparams()].
 ##' @md
-##' @references A Bayesian Mixture Modelling Approach For Spatial
-##'     Proteomics Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
+##' @references *A Bayesian Mixture Modelling Approach For Spatial
+##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
 ##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 ##'     https://doi.org/10.1101/282269
 ##' @author Oliver M. Crook
@@ -321,11 +321,9 @@ tagmPredict <- function(object,
         c(rownames(unknownsubset), rownames(markersubset))
 
     if (probreturn == "prediction") {
-        ## add new columns to MSnSet
         fData(object)$tagm.allocation <- .pred[rownames(fData(object))]
         fData(object)$tagm.probability <- .prob[rownames(fData(object))]
     } else { ## probreturn == "joint")
-        ## add new columns to MSnSet
         fData(object)$tagm.allocation <- .pred[rownames(fData(object))]
         fData(object)$tagm.probability <- .prob[rownames(fData(object))]
         ## create allocation matrix for markers

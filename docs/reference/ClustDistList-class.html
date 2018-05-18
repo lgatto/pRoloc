@@ -18,11 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Storing multiple ClustDist instances — ClustDistList-class" />
+
+<meta property="og:description" content="A class for storing lists of ClustDist
+  instances." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +57,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,16 +116,20 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Storing multiple ClustDist instances</h1>
+    
+    <div class="hidden name"><code>ClustDistList-class.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>A class for storing lists of <code><a href='ClustDist-class.html'>ClustDist</a></code>
   instances.</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="objects-from-the-class"><a class="anchor" href="#objects-from-the-class"></a>Objects from the Class</h2>
@@ -130,23 +174,44 @@
   <span class='fu'>data</span>(<span class='no'>dunkley2006</span>)
   <span class='no'>par</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='AnnotationParams-class.html'>setAnnotationParams</a></span>(<span class='kw'>inputs</span> <span class='kw'>=</span>
                     <span class='fu'>c</span>(<span class='st'>"Arabidopsis thaliana genes"</span>,
-                    <span class='st'>"Gene stable ID"</span>))</div><div class='output co'>#&gt; <span class='message'>Using species Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))</span></div><div class='output co'>#&gt; <span class='message'>Request to BioMart web service failed.</span>
-#&gt; <span class='message'>The BioMart web service you're accessing may be down.</span>
-#&gt; <span class='message'>Check the following URL and see if this website is available:</span>
-#&gt; <span class='message'>http://plants.ensembl.org:80/biomart/martservice?type=registry&amp;requestid=biomaRt</span></div><div class='output co'>#&gt; <span class='error'>Error in if (!grepl(x = registry, pattern = "^\n*&lt;MartRegistry&gt;")) {    stop("Unexpected format to the list of available marts.\n",         "Please check the following URL manually, ", "and try ?listMarts for advice.\n",         request)}: argument is of length zero</span></div><div class='input'>
+                    <span class='st'>"Gene stable ID"</span>))</div><div class='output co'>#&gt; <span class='message'>Using species Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))</span></div><div class='output co'>#&gt; <span class='message'>Using feature type Gene stable ID(s) [e.g. AT1G01010]</span></div><div class='output co'>#&gt; Connecting to Biomart...</div><div class='input'>
   <span class='co'>## add protein set/annotation information                  </span>
-  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='addGoAnnotations.html'>addGoAnnotations</a></span>(<span class='no'>dunkley2006</span>, <span class='no'>par</span>)</div><div class='output co'>#&gt; <span class='error'>Error in addGoAnnotations(dunkley2006, par): params must be of class AnnotationParams</span></div><div class='input'>
+  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='addGoAnnotations.html'>addGoAnnotations</a></span>(<span class='no'>dunkley2006</span>, <span class='no'>par</span>)
+
   <span class='co'>## filter</span>
-  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='error'>Error in fvarLabels(object): object 'xx' not found</span></div><div class='input'>  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>.25</span>)</div><div class='output co'>#&gt; <span class='error'>Error in fvarLabels(object): object 'xx' not found</span></div><div class='input'>
+  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 18 out of 175 in GOAnnotations</span></div><div class='input'>  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>.25</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 13 out of 18 in GOAnnotations</span></div><div class='input'>
   <span class='co'>## get distances for protein sets</span>
-  <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span>(<span class='no'>xx</span>)</div><div class='output co'>#&gt; <span class='error'>Error in fData(object): object 'xx' not found</span></div><div class='input'>
+  <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span>(<span class='no'>xx</span>)</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=====                                                                 |   8%  |                                                                              |===========                                                           |  15%  |                                                                              |================                                                      |  23%  |                                                                              |======================                                                |  31%  |                                                                              |===========================                                           |  38%  |                                                                              |================================                                      |  46%  |                                                                              |======================================                                |  54%  |                                                                              |===========================================                           |  62%  |                                                                              |================================================                      |  69%  |                                                                              |======================================================                |  77%  |                                                                              |===========================================================           |  85%  |                                                                              |=================================================================     |  92%  |                                                                              |======================================================================| 100%</div><div class='input'>
   <span class='co'>## plot distances for all protein sets </span>
-  <span class='fu'>plot</span>(<span class='no'>dd</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(dd): object 'dd' not found</span></div><div class='input'>
-  <span class='fu'>names</span>(<span class='no'>dd</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'dd' not found</span></div><div class='input'>
+  <span class='fu'>plot</span>(<span class='no'>dd</span>)</div><div class='img'><img src='ClustDistList-class-1.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>names</span>(<span class='no'>dd</span>)</div><div class='output co'>#&gt;  [1] "mitochondrion"                  "vacuole"                       
+#&gt;  [3] "chloroplast"                    "vacuolar membrane"             
+#&gt;  [5] "plasmodesma"                    "endoplasmic reticulum membrane"
+#&gt;  [7] "cytoplasm"                      "cytosol"                       
+#&gt;  [9] "plastid"                        "Golgi membrane"                
+#&gt; [11] "chloroplast envelope"           "endosome"                      
+#&gt; [13] "trans-Golgi network"           </div><div class='input'>
   <span class='co'>## Extract first 4 ClustDist objects of the ClustDistList</span>
-  <span class='no'>dd</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'dd' not found</span></div><div class='input'>
+  <span class='no'>dd</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt; Instance of class 'ClustDistList' containig 4 objects.</div><div class='input'>
   <span class='co'>## Extract 1st ClustDist object</span>
-  <span class='no'>dd</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'dd' not found</span></div></pre>
+  <span class='no'>dd</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; Object of class "ClustDist"
+#&gt; fcol =  GOAnnotations 
+#&gt;  term =  GO:0005739 
+#&gt;  id =  mitochondrion 
+#&gt;  nrow =  153 
+#&gt; k's tested: 1 2 3 4 5 
+#&gt;   Size:  153 
+#&gt;   Size:  124 
+#&gt;   Size:  97 
+#&gt;   Size:  97 
+#&gt;   Size:  73 
+#&gt; Clusters info:
+#&gt;       ks.mean    mean ks.norm     norm
+#&gt; k = 1       1  0.3783       1  0.07072
+#&gt; k = 2       1  0.2030       1  0.04070
+#&gt; k = 3       1  0.1623       1  0.03533
+#&gt; k = 4       1  0.1623       1  0.03533
+#&gt; k = 5       1 *0.1249       1 *0.02990</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,15 +235,18 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

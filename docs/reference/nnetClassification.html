@@ -18,11 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="nnet classification — nnetClassification" />
+
+<meta property="og:description" content="Classification using the artificial neural network
+algorithm." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +57,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pRoloc</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pRoloc</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+    </li>
+    <li>
+      <a href="../articles/pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,21 +116,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>nnet classification</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-nnet.R'><code>R/machinelearning-functions-nnet.R</code></a></small>
+    <div class="hidden name"><code>nnetClassification.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Classification using the artificial neural network
 algorithm.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>nnetClassification</span>(<span class='no'>object</span>, <span class='no'>assessRes</span>, <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"prediction"</span>, <span class='st'>"all"</span>, <span class='st'>"none"</span>),
   <span class='no'>decay</span>, <span class='no'>size</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -153,29 +197,29 @@ package <code>nnet</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;       1       1       1       1       1       1 
+#&gt;  0.8772  0.8975  0.9179  0.9197  0.9409  0.9639 
 #&gt;  best decay: 1e-05 0.1   
-#&gt;  best size: 10 5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><img src='nnetClassification-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;        5 10
+#&gt;  best size: 10 5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='nnetClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;        5 10
 #&gt; 1e-05 NA  1
-#&gt; 0.1    1  1</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><img src='nnetClassification-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; decay  size 
+#&gt; 0.1    0  0</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='nnetClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; decay  size 
 #&gt; 1e-05 1e+01 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)</div><div class='output co'>#&gt; # weights:  269
-#&gt; initial  value 701.743779 
-#&gt; iter  10 value 312.402836
-#&gt; iter  20 value 39.272850
-#&gt; iter  30 value 5.614560
-#&gt; iter  40 value 0.844221
-#&gt; iter  50 value 0.588760
-#&gt; iter  60 value 0.500980
-#&gt; iter  70 value 0.452678
-#&gt; iter  80 value 0.419480
-#&gt; iter  90 value 0.378616
-#&gt; iter 100 value 0.329771
-#&gt; final  value 0.329771 
+#&gt; initial  value 658.244436 
+#&gt; iter  10 value 405.025589
+#&gt; iter  20 value 74.939940
+#&gt; iter  30 value 46.889646
+#&gt; iter  40 value 5.016719
+#&gt; iter  50 value 1.590317
+#&gt; iter  60 value 1.143212
+#&gt; iter  70 value 0.705239
+#&gt; iter  80 value 0.564944
+#&gt; iter  90 value 0.491590
+#&gt; iter 100 value 0.436701
+#&gt; final  value 0.436701 
 #&gt; stopped after 100 iterations</div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            17           175            94           107            52 
+#&gt;            17           171            99           101            56 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           125            54            32            33 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           135            59            19            32 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -194,13 +238,13 @@ package <code>nnet</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed nnet prediction (decay=1e-05 size=10) Thu May  3 01:53:30 2018 
-#&gt; Added nnet predictions according to global threshold = 0 Thu May  3 01:53:30 2018 
+#&gt; Performed nnet prediction (decay=1e-05 size=10) Fri May 18 10:38:46 2018 
+#&gt; Added nnet predictions according to global threshold = 0 Fri May 18 10:38:46 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            17           171            94           106            52 
+#&gt;            16           166            97           101            53 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;           123            52            29            13            32 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           129            56            19            20            32 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -219,9 +263,9 @@ package <code>nnet</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed nnet prediction (decay=1e-05 size=10) Thu May  3 01:53:30 2018 
-#&gt; Added nnet predictions according to global threshold = 0.75 Thu May  3 01:53:30 2018 
-#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><img src='nnetClassification-22.png' alt='' width='540' height='400' /></pre>
+#&gt; Performed nnet prediction (decay=1e-05 size=10) Fri May 18 10:38:46 2018 
+#&gt; Added nnet predictions according to global threshold = 0.75 Fri May 18 10:38:46 2018 
+#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><div class='img'><img src='nnetClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -242,15 +286,18 @@ Laurent Gatto
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels.</p>
+  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

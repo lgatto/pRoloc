@@ -7,14 +7,11 @@
 The `pRoloc` suite set of software are distributed as part of the
 R/[Bioconductor](http://bioconductor.org/) project and are developed
 at the [Computational Proteomics Unit](http://cpu.sysbiol.cam.ac.uk/)
+at the University of Cambridge. See the Bioconductor landing pages
+([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
 and
-[Cambridge Centre for Proteomics](http://proteomics.bio.cam.ac.uk/)
-labs, at the University of Cambridge. See the Bioconductor landing
-pages
-([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html) and
 [devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
 for the Bioc build status.
-
 
 
 ## Getting started
@@ -56,7 +53,7 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("pRoloc")
 biocLite("pRolocdata")
 biocLite("pRolocGUI")
-```  
+```
 
 ### Pre-release/development version
 
@@ -119,7 +116,7 @@ Specific algorithms available in the software:
 * R and Bioconductor for proteomics
   [web page](http://lgatto.github.io/RforProteomics/) and
   [package](http://www.bioconductor.org/packages/release/data/experiment/html/RforProteomics.html)
-  
+
 * Bioconductor proteomics [workflow](http://bioconductor.org/help/workflows/proteomics/)
 
 ## Contributing
@@ -129,7 +126,7 @@ contribute to this package, you should follow the same conventions as
 the rest of the functions whenever it makes sense to do so. Feel free
 to get in touch (preferable opening a
 [github issue](https://github.com/lgatto/pRoloc/issues/)) to discuss
-any suggestions. 
+any suggestions.
 
 Please note that this project is released with a
 [Contributor Code of Conduct](https://github.com/lgatto/pRoloc/blob/master/CONDUCT.md).

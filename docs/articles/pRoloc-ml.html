@@ -207,10 +207,10 @@ tan2009r1</code></pre></div>
 <div id="parameter-optimisation" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#parameter-optimisation" class="anchor"></a>Parameter optimisation</h2>
-<p>Algorithmic performance is estimated using a stratified 20/80 partitioning. The 80% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20%. The procedure is repeated <span class="math inline">\(n = 100\)</span> <code>times</code> to sample <span class="math inline">\(n\)</span> accuracy metrics (see below) values using <span class="math inline">\(n\)</span>, possibly different, optimised parameters for evaluation.</p>
+<p>Algorithmic performance is estimated using a stratified 20/80 partitioning. The 80% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20%. The procedure is repeated <em>n = 100</em> <code>times</code> to sample <em>n</em> accuracy metrics (see below) values using <em>n</em>, possibly different, optimised parameters for evaluation.</p>
 <p>Models accuracy is evaluated using the F1 score, <span class="math inline">\(F1 = 2 ~ \frac{precision \times recall}{precision + recall}\)</span>, calculated as the harmonic mean of the precision (<span class="math inline">\(precision = \frac{tp}{tp+fp}\)</span>, a measure of <em>exactness</em> – returned output is a relevant result) and recall (<span class="math inline">\(recall=\frac{tp}{tp+fn}\)</span>, a measure of <em>completeness</em> – indicating how much was missed from the output). What we are aiming for are high generalisation accuracy, i.e high <span class="math inline">\(F1\)</span>, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.</p>
 <p>The results of the optimisation procedure are stored in an <em>GenRegRes</em> object that can be inspected, plotted and best parameter pairs can be extracted.</p>
-<p>For a given algorithm <code>alg</code>, the corresponding parameter optimisation function is names <em>algOptimisation</em> or, equivalently, <em>algOptimization</em>. See table @ref(tab:mltab) for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through <em>?algOptimisation</em>.</p>
+<p>For a given algorithm <code>alg</code>, the corresponding parameter optimisation function is names <em>algOptimisation</em> or, equivalently, <em>algOptimization</em>. See the table below for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through <em>?algOptimisation</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmOptimisation.html">svmOptimisation</a></span>(tan2009r1, <span class="dt">times =</span> <span class="dv">10</span>,
                           <span class="dt">xval =</span> <span class="dv">5</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)
 params</code></pre></div>
@@ -225,9 +225,9 @@ params</code></pre></div>
 ## Results
 ##  macro F1:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7596  0.7917  0.8617  0.8479  0.9020  0.9134 
-##  best sigma: 1 0.1   
-##  best cost: 4 16 2 8   
+##  0.7833  0.8168  0.8383  0.8369  0.8547  0.8981 
+##  best sigma: 0.1 1   
+##  best cost: 8 1 16 2   
 ## Use getWarnings() to see warnings.</code></pre>
 </div>
 <div id="classification" class="section level2 unnumbered">
@@ -252,7 +252,7 @@ tan2009r1</code></pre></div>
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=1 cost=2) Fri May 18 17:46:22 2018 
+## Performed svm prediction (sigma=0.1 cost=16) Fri May 18 21:44:01 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 </div>
 <div id="customising-model-parameters" class="section level2">
@@ -324,12 +324,6 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 <td align="left">support vector machine</td>
 <td align="left">e1071</td>
 </tr>
-<tr class="even">
-<td align="left">Table:(#tab:mltab) Machi</td>
-<td align="left">ne learning methods in *p</td>
-<td align="left">Roloc*.</td>
-<td align="left"></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -341,6 +335,15 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 <div class="figure">
 <img src="Figures/F1boxplots.png" alt="Comparison of classification performances of several contemporary classification algorithms on data from the pRolocdata package." id="fig:f1box"><p class="caption">Comparison of classification performances of several contemporary classification algorithms on data from the <em><a href="http://bioconductor.org/packages/pRolocdata">pRolocdata</a></em> package.</p>
 </div>
+</div>
+<div id="sec:bayes" class="section level1">
+<h1 class="hasAnchor">
+<a href="#sec:bayes" class="anchor"></a>Bayesian generative models</h1>
+<p>We also offer generative models that, as opposed to the descriptive classifier presented above, explicitly model the spatial proteomics data. In <code>pRoloc</code>, we probose two models using T-augmented Gaussian mixtures using repectively a Expectration-Maximisation approach to <em>maximum a posteriori</em> estimation of the model parameters (TAGM-MAP), and an MCMC approach (TAGM-MCMC) that enables a proteome-wide uncertainty quantitation. These methods are described in the <em>pRoloc-bayesian</em> vignette.</p>
+<p>For a details description of the methods and their validation, please refer to <span class="citation">(Crook et al. 2018)</span>:</p>
+<blockquote>
+<p>A Bayesian Mixture Modelling Approach For Spatial Proteomics Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi: <a href="https://doi.org/10.1101/282269" class="uri">https://doi.org/10.1101/282269</a></p>
+</blockquote>
 </div>
 <div id="sec:ssml" class="section level1">
 <h1 class="hasAnchor">
@@ -466,6 +469,9 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 <div id="ref-perturbo">
 <p>Courty, Nicolas, Thomas Burger, and Johann Laurent. 2011. “PerTurbo: A New Classification Algorithm Based on the Spectrum Perturbations of the Laplace-Beltrami Operator.” In <em>In the Proceedings of Ecml/Pkdd (1)</em>, edited by Dimitrios Gunopulos, Thomas Hofmann, Donato Malerba, and Michalis Vazirgiannis, 6911:359–74. Lecture Notes in Computer Science. Springer.</p>
 </div>
+<div id="ref-Crook:2018">
+<p>Crook, Oliver M, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, and Laurent Gatto. 2018. “A Bayesian Mixture Modelling Approach for Spatial Proteomics.” <em>bioRxiv</em>. Cold Spring Harbor Laboratory. doi:<a href="https://doi.org/10.1101/282269">10.1101/282269</a>.</p>
+</div>
 <div id="ref-Dunkley2006">
 <p>Dunkley, Tom P. J., Svenja Hester, Ian P. Shadforth, John Runions, Thilo Weimar, Sally L. Hanton, Julian L. Griffin, et al. 2006. “Mapping the Arabidopsis Organelle Proteome.” <em>Proc Natl Acad Sci USA</em> 103 (17). Department of Biochemistry, University of Cambridge, Downing Site, Cambridge CB2 1QW, United Kingdom.: 6518–23. doi:<a href="https://doi.org/10.1073/pnas.0506958103">10.1073/pnas.0506958103</a>.</p>
 </div>
@@ -520,6 +526,7 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
       </ul>
 </li>
       <li><a href="#comparison-of-different-classifiers">Comparison of different classifiers</a></li>
+      <li><a href="#sec:bayes">Bayesian generative models</a></li>
       <li><a href="#sec:ssml">Semi-supervised machine learning</a></li>
       <li><a href="#sec:tl">Transfer learning</a></li>
       <li><a href="#session-information">Session information</a></li>

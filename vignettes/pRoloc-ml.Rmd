@@ -10,7 +10,7 @@ abstract: >
   `pRoloc-tutorial` vignette for details about the package itself.
 output:
   BiocStyle::html_document:
-	toc_float: true
+   toc_float: true
 bibliography: pRoloc.bib
 vignette: >
   %\VignetteIndexEntry{Machine learning techniques available in pRoloc}

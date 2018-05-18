@@ -16,7 +16,7 @@ abstract: >
  localisation.
 output:
   BiocStyle::html_document:
-	toc_float: true
+   toc_float: true
 bibliography: pRoloc.bib
 vignette: >
   %\VignetteIndexEntry{Using pRoloc for spatial proteomics data analysis}

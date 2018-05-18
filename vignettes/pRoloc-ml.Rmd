@@ -1,17 +1,17 @@
 ---
 title: "Machine learning techniques available in pRoloc"
-author: 
+author:
 - name: Laurent Gatto
 package: pRoloc
 abstract: >
   This vignette provides a general background about machine learning
   (ML) methods and concepts, and their application to the analysis of
   spatial proteomics data in the *pRoloc* package. See the
-  `pRoloc-tutorial` vignette for details about the package itself.  
+  `pRoloc-tutorial` vignette for details about the package itself.
 output:
   BiocStyle::html_document:
-    toc_float: true
-bibliography: pRoloc.bib	
+	toc_float: true
+bibliography: pRoloc.bib
 vignette: >
   %\VignetteIndexEntry{Machine learning techniques available in pRoloc}
   %\VignetteEngine{knitr::rmarkdown}
@@ -30,9 +30,9 @@ opts_chunk$set(stop_on_error = 1L)
 suppressPackageStartupMessages(library("MSnbase"))
 suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
-``` 
+```
 
-# Introduction {#sec:intro} 
+# Introduction {#sec:intro}
 
 For a general practical introduction to `r Biocpkg("pRoloc")`, readers
 are referred to the tutorial, available using
@@ -45,8 +45,8 @@ transfer learning.
 
 # Data sets
 
-We provide `r nrow(pRolocdata()$results)` test data sets in the 
-`r Biocexptpkg("pRolocdata")` package that can be readily used with 
+We provide `r nrow(pRolocdata()$results)` test data sets in the
+`r Biocexptpkg("pRolocdata")` package that can be readily used with
 `r Biocpkg("pRoloc")`. The data set can be listed with *pRolocdata*
 and loaded with the *data* function. Each data set, including its
 origin, is individually documented.
@@ -119,7 +119,7 @@ corresponding mapped class.
 
 ## Algorithms used {#sec:algo}
 
-**k-nearest neighbour (KNN)** Function *knn* from package 
+**k-nearest neighbour (KNN)** Function *knn* from package
 `r Biocpkg("class")`. For each row of the test set, the $k$ nearest
 (in Euclidean distance) training set vectors are found, and the
 classification is decided by majority vote over the $k$ classes, with
@@ -236,7 +236,7 @@ nor $k = 100$ give good predictions and have test error rates
 (i.e. the proportion of wrongly classified points ) of 0.1695 and
 0.1925, respectively.
 
-	
+
 ![The KNN classifier using $k = 1$ (left, solid classification boundaries) and $k = 100$ (right, solid classification boundaries) compared the Bayes decision boundaries (see original material for details). Reproduced with permission from [@ISLwR].](./Figures/ISL-2_16.png){#fig:ISL1}
 
 To quantify the effect of flexibility and lack thereof in defining the
@@ -296,18 +296,18 @@ used to infer the sub-cellular location of the unlabelled examples.
 ## Parameter optimisation {-}
 
 Algorithmic performance is estimated using a stratified 20/80
-partitioning. The 80\% partitions are subjected to 5-fold
+partitioning. The 80% partitions are subjected to 5-fold
 cross-validation in order to optimise free parameters via a grid
 search, and these parameters are then applied to the remaining
-20\%. The procedure is repeated $n = 100$ `times` to sample $n$
-accuracy metrics (see below) values using $n$, possibly different,
+20%. The procedure is repeated *n = 100* `times` to sample *n*
+accuracy metrics (see below) values using *n*, possibly different,
 optimised parameters for evaluation.
 
-Models accuracy is evaluated using the F1 score, $F1 = 2 ~
-\frac{precision \times recall}{precision + recall}$, calculated as the
-harmonic mean of the precision ($precision = \frac{tp}{tp+fp}$, a
-measure of *exactness* -- returned output is a relevant result)
-and recall ($recall=\frac{tp}{tp+fn}$, a measure of
+Models accuracy is evaluated using the F1 score,
+$F1 = 2 ~ \frac{precision \times recall}{precision + recall}$,
+calculated as the harmonic mean of the precision ($precision =
+\frac{tp}{tp+fp}$, a measure of *exactness* -- returned output is a
+relevant result) and recall ($recall=\frac{tp}{tp+fn}$, a measure of
 *completeness* -- indicating how much was missed from the
 output). What we are aiming for are high generalisation accuracy, i.e
 high $F1$, indicating that the marker proteins in the test data set
@@ -319,68 +319,66 @@ parameter pairs can be extracted.
 
 For a given algorithm `alg`, the corresponding parameter optimisation
 function is names *algOptimisation* or, equivalently,
-*algOptimization*. See table \@ref(tab:mltab) for details. A
-description of each of the respective model parameters is provided in
-the optimisation function manuals, available through
-*?algOptimisation*.
+*algOptimization*. See the table below for details. A description of
+each of the respective model parameters is provided in the
+optimisation function manuals, available through *?algOptimisation*.
 
 ```{r svmParamOptim, cache = TRUE, warning = FALSE, message = FALSE}
 params <- svmOptimisation(tan2009r1, times = 10,
-                          xval = 5, verbose = FALSE)
+						  xval = 5, verbose = FALSE)
 params
-``` 
+```
 
 ## Classification {-}
 
 ```{r svmRes, warning=FALSE, tidy=FALSE, eval=TRUE}
 tan2009r1 <- svmClassification(tan2009r1, params)
 tan2009r1
-``` 
+```
 
 ## Customising model parameters
 
-Below we illustrate how to weight different classes according to the 
-number of labelled instances, where large sets are down weighted. 
+Below we illustrate how to weight different classes according to the
+number of labelled instances, where large sets are down weighted.
 This strategy can help with imbalanced designs.
 
 ```{r weigths, eval=FALSE}
 w <- table(fData(markerMSnSet(dunkley2006))$markers)
 wpar <- svmOptimisation(dunkley2006, class.weights = w)
 wres <- svmClassification(dunkley2006, wpar, class.weights = w)
-``` 
+```
 
 
 ```{r getmlfunction, echo=FALSE}
 ## Add chi^2.
 tab <- data.frame('parameter optimisation' =
-                      grep("Optimisation",
-                           ls("package:pRoloc"), value = TRUE), 
-                  'classification' =
-                      grep("Classification",
-                           ls("package:pRoloc"), value = TRUE))
+					  grep("Optimisation",
+						   ls("package:pRoloc"), value = TRUE),
+				  'classification' =
+					  grep("Classification",
+						   ls("package:pRoloc"), value = TRUE))
 
 tab$algorithm <- c("nearest neighbour",
-                   "nearest neighbour transfer learning",
-                   "support vector machine",
-                   "naive bayes",
-                   "neural networks",
-                   "PerTurbo",
-                   "partial least square", 
-                   "random forest",
-                   "support vector machine")
+				   "nearest neighbour transfer learning",
+				   "support vector machine",
+				   "naive bayes",
+				   "neural networks",
+				   "PerTurbo",
+				   "partial least square",
+				   "random forest",
+				   "support vector machine")
 
 tab$package <- c("class", "pRoloc", "kernlab", "e1071",
-                 "nnet", "pRoloc", "caret",
-                 "randomForest", "e1071")
+				 "nnet", "pRoloc", "caret",
+				 "randomForest", "e1071")
 
 colnames(tab)[1] <- c("parameter optimisation")
-``` 
+```
 
 
 ```{r comptab, echo=FALSE}
 kable(tab)
-``` 
-Table:(\#tab:mltab) Machine learning methods in *pRoloc*.
+```
 
 # Comparison of different classifiers
 
@@ -399,6 +397,24 @@ similar performances on most of our test datasets.
 
 
 ![Comparison of classification performances of several contemporary classification algorithms on data from the `r Biocexptpkg("pRolocdata")` package.](./Figures/F1boxplots.png){#fig:f1box}
+
+# Bayesian generative models {#sec:bayes}
+
+We also offer generative models that, as opposed to the descriptive
+classifier presented above, explicitly model the spatial proteomics
+data. In `pRoloc`, we probose two models using T-augmented Gaussian
+mixtures using repectively a Expectration-Maximisation approach to
+*maximum a posteriori* estimation of the model parameters (TAGM-MAP),
+and an MCMC approach (TAGM-MCMC) that enables a proteome-wide
+uncertainty quantitation. These methods are described in the
+*pRoloc-bayesian* vignette.
+
+For a details description of the methods and their validation, please
+refer to [@Crook:2018]:
+
+> A Bayesian Mixture Modelling Approach For Spatial Proteomics Oliver
+> M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, Laurent
+> Gatto bioRxiv 282269; doi: https://doi.org/10.1101/282269
 
 # Semi-supervised machine learning {#sec:ssml}
 
@@ -445,7 +461,7 @@ We have developed a transfer learning framework [@Breckels:2016]
 and applied to the analysis of spatial proteomics data, as described
 in the `pRoloc-transfer-learning` vignette.
 
-# Session information 
+# Session information
 
 All software and respective versions used to produce this document are listed below.
 
@@ -453,5 +469,4 @@ All software and respective versions used to produce this document are listed be
 sessionInfo()
 ```
 
-# References 
-
+# References

@@ -1,0 +1,123 @@
+---
+title: "Bayesian spatial proteomics with pRoloc"
+author:
+- name: Oliver Crook
+- name: Laurent Gatto
+package: pRoloc
+output:
+  BiocStyle::html_document:
+	toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Bayesian spatial proteomics with pRoloc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+```{r env, echo=FALSE, message=FALSE}
+library("pRoloc")
+library("pRolocdata")
+```
+
+# Introduction
+
+For an in-depth description of the infrastructure for Bayesian spatial
+proteomics, please see
+
+> A Bayesian Mixture Modelling Approach For Spatial Proteomics Oliver
+> M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, Laurent
+> Gatto bioRxiv 282269; doi: https://doi.org/10.1101/282269
+
+Analysis of the spatial sub-cellular distribution of proteins is of
+vital importance to fully understand context specific protein
+function. Some proteins can be found with a single location within a
+cell, but up to half of proteins may reside in multiple locations, can
+dynamically relocalise, or reside within an unknown functional
+compartment. These considerations lead to uncertainty in associating a
+protein to a single location. Currently, mass spectrometry (MS) based
+spatial proteomics relies on supervised machine learning algorithms to
+assign proteins to sub-cellular locations based on common gradient
+profiles. However, such methods fail to quantify uncertainty
+associated with sub-cellular class assignment. Here we reformulate the
+framework on which we perform statistical analysis. We propose a
+Bayesian generative classifier based on Gaussian mixture models to
+assign proteins probabilistically to sub-cellular niches, thus
+proteins have a probability distribution over sub-cellular locations,
+with Bayesian computation performed using the expectation-maximisation
+(EM) algorithm (coined TAGM-MAP, for *maximum a posteriori*), as well
+as Markov-chain Monte-Carlo (coined TAGM-MCMC). Our methodology allows
+proteome-wide uncertainty quantification, thus adding a further layer
+to the analysis of spatial proteomics. Our framework is flexible,
+allowing many different systems to be analysed and reveals new
+modelling opportunities for spatial proteomics. We find our methods
+perform competitively with current state-of-the art machine learning
+methods, whilst simultaneously providing more information. We
+highlight several examples where classification based on the support
+vector machine is unable to make any conclusions, while uncertainty
+quantification using our approach provides biologically intriguing
+results.  To our knowledge this is the first Bayesian model of
+MS-based spatial proteomics data.
+
+# The *TAGM-MAP* method
+
+We will use a subsest of the `tan2009r1` dataset from the
+`Biocexptpkg("pRolocdata")` to illustrate the TAGM-MAP method
+
+```{r tan}
+library("pRolocdata")
+data(tan2009r1)
+set.seed(1)
+tan2009r1 <- tan2009r1[sample(nrow(tan2009r1), 400), ]
+```
+
+The first step is to generate the model parameters using the
+`tagmTrain` function, that will generate an instance of class
+`MAPParams`.
+
+```{r tagmTrain}
+library("pRoloc")
+p <- tagmTrain(tan2009r1)
+p
+```
+
+The `MAPParams` object can now be used to classify the proteins of
+unknown localisation using `tagmPredict`.
+
+
+```{r tagmPredict}
+res <- tagmPredict(tan2009r1, p)
+```
+
+The new feature variables that are generated are:
+
+- `tagm.allocation`: the TAGM-MAP predictions for the most likely
+  protein sub-cellular allocation.
+
+```{r alloc}
+table(fData(res)$tagm.allocation)
+```
+
+- `tagm.probability`: the posterior probability for the protein
+  sub-cellular allocations.
+
+```{r prob}
+summary(fData(res)$tagm.probability)
+```
+
+- `tagm.outlier`: the probability for a protein to be assigned to the
+  outliers class rather than any of the provided sub-cellular classes.
+
+```{r oultlier}
+summary(fData(res)$tagm.outlier)
+```
+
+# The *TAGM-MCMC* method
+
+# Session information {-}
+
+```{r si}
+sessionInfo()
+```

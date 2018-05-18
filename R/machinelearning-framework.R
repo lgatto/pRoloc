@@ -4,35 +4,10 @@ setClass("GenRegRes",
                         design = "numeric",
                         log = "list",
                         seed = "integer",
-                        results = "matrix", 
+                        results = "matrix",
                         f1Matrices = "list", ## these are F1 matrices
                         cmMatrices = "list", ## these are continengy mat
                         testPartitions = "list",
-                        datasize = "list"))
-
-#' @title Class \code{"MAPparams"}
-#' @description TAGM parameters container.
-#' 
-#' @slot algorithm Object of class \code{"character"} storing
-#' the machine learning algorithm name.
-#' @slot priors Object of class \code{"list"} with the priors for the parameters
-#' @slot design Object of class \code{"numeric"} describing any cross-validation
-#' parameters
-#' @slot log Object of class \code{"list"} with warnings
-#' @slot seed Object of class \code{"integer"} with the random
-#' number generation seed.
-#' @slot posteriors Object of class \code{"list"} with the updated posterior parameters
-#' and log-posterior of the model.
-#' @slot datasize Object of class \code{"list"} with details about size of data
-#' @aliases class:MAPparams MAPparams-class
-#' @exportClass  
-setClass("MAPparams",
-         representation(algorithm = "character",
-                        priors = "list",
-                        design = "numeric",
-                        log = "list",
-                        seed = "integer",
-                        posteriors = "list",
                         datasize = "list"))
 
 setMethod("show",
@@ -44,21 +19,21 @@ setMethod("show",
             for (i in 1:length(object@hyperparameters)) {
               cat(" ", names(object@hyperparameters)[i],": ",
                   paste(object@hyperparameters[[i]], collapse = " "),
-                  "\n", sep = "")              
+                  "\n", sep = "")
             }
             cat("Design:\n")
             cat(" Replication: ",
                 object@design["times"], " x ",
                 object@design["xval"], "-fold X-validation\n",
                 sep = "")
-            
-            cat(" Partitioning: ",                
+
+            cat(" Partitioning: ",
                 object@design["test.size"], "/",
                 1-object@design["test.size"], " (test/train)\n",
                 sep = "")
-            
+
             cat("Results\n")
-            res <- object@results            
+            res <- object@results
             cat(" macro F1:\n")
             print(summary(res[, "F1"]))
             for (i in 2:ncol(res)) {
@@ -68,7 +43,7 @@ setMethod("show",
             if ("warnings" %in% names(object@log)) {
               cat("Use getWarnings() to see warnings.\n")
             }
-            invisible(NULL)            
+            invisible(NULL)
           })
 
 setMethod("getWarnings", "GenRegRes",
@@ -138,17 +113,52 @@ setMethod("plot", c("GenRegRes", "missing"),
                         panel = function(...) {
                           panel.grid(h = -1, v = 0)
                           panel.bwplot(...)
-                        })            
+                        })
             p
           })
 
 
-setMethod("levelPlot", "GenRegRes", 
+setMethod("levelPlot", "GenRegRes",
           function(object, fun = mean, ...) {
-            x <- summariseMatList(object@f1Matrices, fun)            
+            x <- summariseMatList(object@f1Matrices, fun)
             labs <- names(dimnames(x))
             p <- levelplot(x, ylab = labs[2], xlab = labs[1],
                            main = object@algorithm,
                            ...)
             p
+          })
+
+
+##' @title Class `MAPparams`
+##' @description TAGM parameters container.
+##'
+##' @slot algorithm A `character()` storing the machine learning
+##'     algorithm name.
+##' @slot priors A `list()` with the priors for the parameters
+##' @slot design A `numeric()` describing any cross-validation
+##'     parameters
+##' @slot log A `list()` with warnings
+##' @slot seed An `integer()` with the random number generation seed.
+##' @slot posteriors A `list()` with the updated posterior parameters
+##'     and log-posterior of the model.
+##' @slot datasize A `list()` with details about size of data
+##' @md
+##' @aliases class:MAPparams MAPparams-class MAPparams
+setClass("MAPparams",
+         representation(algorithm = "character",
+                        priors = "list",
+                        design = "numeric",
+                        log = "list",
+                        seed = "integer",
+                        posteriors = "list",
+                        datasize = "list"))
+
+setMethod("show", "MAPparams",
+          function(object) {
+            cat("Object of class \"", class(object), "\"\n", sep = "")
+            cat("Algorithm:", object@algorithm, "\n")
+            if ("warnings" %in% names(object@log)) {
+              cat("Use getWarnings() to see warnings.\n")
+            }
+            invisible(NULL)
           })

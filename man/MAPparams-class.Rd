@@ -4,29 +4,29 @@
 \name{MAPparams-class}
 \alias{MAPparams-class}
 \alias{class:MAPparams}
-\title{Class \code{"MAPparams"}}
+\alias{MAPparams}
+\title{Class \code{MAPparams}}
 \description{
 TAGM parameters container.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{algorithm}}{Object of class \code{"character"} storing
-the machine learning algorithm name.}
+\item{\code{algorithm}}{A \code{character()} storing the machine learning
+algorithm name.}
 
-\item{\code{priors}}{Object of class \code{"list"} with the priors for the parameters}
+\item{\code{priors}}{A \code{list()} with the priors for the parameters}
 
-\item{\code{design}}{Object of class \code{"numeric"} describing any cross-validation
+\item{\code{design}}{A \code{numeric()} describing any cross-validation
 parameters}
 
-\item{\code{log}}{Object of class \code{"list"} with warnings}
+\item{\code{log}}{A \code{list()} with warnings}
 
-\item{\code{seed}}{Object of class \code{"integer"} with the random
-number generation seed.}
+\item{\code{seed}}{An \code{integer()} with the random number generation seed.}
 
-\item{\code{posteriors}}{Object of class \code{"list"} with the updated posterior parameters
+\item{\code{posteriors}}{A \code{list()} with the updated posterior parameters
 and log-posterior of the model.}
 
-\item{\code{datasize}}{Object of class \code{"list"} with details about size of data}
+\item{\code{datasize}}{A \code{list()} with details about size of data}
 }}
 

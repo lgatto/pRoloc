@@ -3,6 +3,8 @@
 ## Changes in version 1.21.1
 - Fix bug in higlightOnPlot with missing fcol (see #105)
   <2018-05-03 Thu>
+- New TAGM-MAP generative model, contributed by Oliver Crook
+  <2018-05-18 Fri>
 
 # pRoloc 1.20
 

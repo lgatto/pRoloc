@@ -50,7 +50,7 @@ k <- lapply(x, function(z)
                             verbose = FALSE))
 k <- sapply(k, function(z) getParams(z))
 k
-## reducing parameter search with theta = 1, 
+## reducing parameter search with theta = 1,
 ## weights of only 1 or 0 will be considered
 opt <- knntlOptimisation(andy2011, andy2011goCC,
                          fcol = "markers.orig",

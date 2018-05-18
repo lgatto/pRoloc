@@ -266,7 +266,8 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     \code{\link{plotDist}} for alternative graphical
 ##'     representation of quantitative organelle proteomics
 ##'     data. \code{\link{plot2Ds}} to overlay 2 data sets on the same
-##'     PCA plot.
+##'     PCA plot. The \code{\link{plotEllipse}} function can be used
+##'     to visualise TAGM models on PCA plots with ellipses.
 ##' @aliases plot2Dmethods
 ##' @examples
 ##' library("pRolocdata")

@@ -122,6 +122,7 @@ export(## MSnSet manipulation
     ## -- plotting
     plot2D,
     plot2Dmethods,
+    plotEllipse,
     plot2Ds, data1, data2, col1, col2,
     move2Ds,
     addLegend,

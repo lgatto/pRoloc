@@ -61,6 +61,7 @@ quantification using our approach provides biologically intriguing
 results.  To our knowledge this is the first Bayesian model of
 MS-based spatial proteomics data.
 
+
 # The *TAGM-MAP* method
 
 We will use a subsest of the `tan2009r1` dataset from the
@@ -81,6 +82,16 @@ The first step is to generate the model parameters using the
 library("pRoloc")
 p <- tagmTrain(tan2009r1)
 p
+```
+
+The results of the modelling can be visualised with the `plotEllipse`
+function. The outer ellipse contains 99% of the total probability
+whilst the middle and inner ellipses contain 95% and 90% of the
+probability respectively. The centres of the clusters are represented
+by black circumpunct (circled dot).
+
+```{r plotEllipse}
+plotEllipse(tan2009r1, p)
 ```
 
 The `MAPParams` object can now be used to classify the proteins of

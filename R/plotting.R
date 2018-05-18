@@ -70,7 +70,7 @@ plotDist <- function(object,
            lty = "solid",
            col = pcol)
   if (!missing(markers)) {
-      mcol <- col2hcl(mcol)      
+      mcol <- col2hcl(mcol)
       .mrk <- exprs(object[markers, ])
       matlines(t(.mrk),
                col = mcol,
@@ -95,7 +95,7 @@ plotDist <- function(object,
 ##' @return A \code{list} of necessary variables for plot and legend
 ##' printing. See code for details.
 ##' @author Laurent Gatto
-##' @noRd 
+##' @noRd
 .isbig <- function(object, fcol, stockcol, stockpch) {
     if (is.null(fcol))
         return(list(big = FALSE, toobig = FALSE,
@@ -103,7 +103,7 @@ plotDist <- function(object,
                     ncol = NA, npch = NA,
                     k = NA, kk = NA, jj = NA))
     ## number of clusters to be coloured
-    clsts <- unique(fData(object)[, fcol])    
+    clsts <- unique(fData(object)[, fcol])
     nclst <- length(clsts[clsts != "unknown"])
     ## number of available colours
     ncol <- length(stockcol)
@@ -136,7 +136,7 @@ pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "nipals",
 plot2Dmethods <- c(pRolocVisMethods, "scree")
 
 ##' Plot organelle assignment data and results.
-##' 
+##'
 ##' Generate 2 or 3 dimensional feature distribution plots to
 ##' illustrate localistation clusters. Rows/features containing
 ##' \code{NA} values are removed prior to dimension reduction except
@@ -148,7 +148,7 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' loaded automatically.
 ##'
 ##' \itemize{
-##' 
+##'
 ##' \item Note that \code{plot2D} has been update in version 1.3.6 to
 ##'        support more organelle classes than colours defined in
 ##'        \code{\link{getStockcol}}. In such cases, the default
@@ -167,8 +167,8 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'       coordinates, then a matching \code{MSnSet} must be passed to
 ##'       \code{methargs}.
 ##' }
-##' 
-##' 
+##'
+##'
 ##' @param object An instance of class \code{MSnSet}.
 ##' @param fcol Feature meta-data label (fData column name) defining
 ##'     the groups to be differentiated using different
@@ -221,7 +221,7 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     details).
 ##'
 ##'     Available methods are listed in \code{plot2Dmethods}.
-##' 
+##'
 ##' @param methargs A \code{list} of arguments to be passed when
 ##'     \code{method} is called. If missing, the data will be scaled
 ##'     and centred prior to PCA and t-SNE (i.e. \code{Rtsne}'s
@@ -325,7 +325,7 @@ plot2D <- function(object,
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
     if ("outliers" %in% names(a))
-        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")    
+        stop("'outliers' is deprecated. Use xlim/ylim to focus your plot")
     if (!missing(col)) {
         stockcol <- col
     } else {
@@ -351,9 +351,9 @@ plot2D <- function(object,
         n0 <- nrow(object)
         object <- filterNA(object)
         n1 <- nrow(object)
-        if (n1 == 0) 
+        if (n1 == 0)
             stop("No rows left after removing NAs!")
-        else 
+        else
             message("Removed ", n0 - n1, " row(s) with 'NA' values.\n",
                     "Consider using 'nipals' to retain all features.")
     }
@@ -386,7 +386,7 @@ plot2D <- function(object,
         fcol <- NULL
     } else if (method == "lda") {
         if (!is.null(fcol) && !fcol %in% fvarLabels(object))
-            stop("'", fcol, "' not found in feature variables.")        
+            stop("'", fcol, "' not found in feature variables.")
         requireNamespace("MASS")
         X <- data.frame(exprs(object))
         gr <- getMarkers(object, fcol = fcol, verbose = FALSE)
@@ -403,7 +403,7 @@ plot2D <- function(object,
         .data <- p$x[, dims]
         tr <- round(z$svd^2 / sum(z$svd^2), 4L) * 100
         .xlab <- paste0("LD", dims[1], " (", tr[dims[1]], "%)")
-        .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")        
+        .ylab <- paste0("LD", dims[2], " (", tr[dims[2]], "%)")
     } else if (method == "t-SNE") {
         if (!requireNamespace("Rtsne") && packageVersion("Rtsne") >= 0.13)
             stop("Please install the Rtsne (>= 0.13) package to make use if this functionality.")
@@ -412,8 +412,10 @@ plot2D <- function(object,
         e <- exprs(object)
         nr0 <- nrow(e)
         e <- unique(e)
-        if (nrow(e) < nr0)
+        if (nrow(e) < nr0) {
             message("Only keeping unique features, dropped ", nr0 - nrow(e), ".")
+            object <- object[rownames(e), ] ## see #108
+        }
         .data <- do.call(Rtsne::Rtsne,
                          c(list(X = e),
                            dims = k,
@@ -432,14 +434,14 @@ plot2D <- function(object,
         .ylab <- colnames(.data)[2]
     } else if (method == "nipals") {
         if (!requireNamespace("nipals"))
-            stop("Please install the nipals package to make use if this functionality.")        
+            stop("Please install the nipals package to make use if this functionality.")
         if (missing(methargs))
             methargs <- list(scale = TRUE, center = TRUE, ncomp = ncol(object))
         .data <- dimred(object, method = method, methargs = methargs)
         .data <- .data[, dims]
         .xlab <- colnames(.data)[1]
-        .ylab <- colnames(.data)[2]        
-    } else if (method == "MDS")  { 
+        .ylab <- colnames(.data)[2]
+    } else if (method == "MDS")  {
         if (!missing(methargs))
             warning("'methargs' ignored for MDS")
         ## TODO - use other distances
@@ -535,7 +537,7 @@ plot2D <- function(object,
             ukn <- fData(object)[, fcol] == unknown
             .fcol <- fData(object)[, fcol]
             col <- stockcol[as.numeric(.fcol)]
-            col[ukn] <- unknowncol 
+            col[ukn] <- unknowncol
         } else {
             nullfcol <- TRUE
             ukn <- rep(TRUE, nrow(.data))
@@ -551,7 +553,7 @@ plot2D <- function(object,
         if (!(nullfcol & userpch))
             pch[ukn] <- unknownpch
         isbig <- .isbig(object, fcol, stockcol, stockpch)
-        
+
         if (is.null(fcol)) {
             plot(.data, xlab = .xlab, ylab = .ylab, col = col,
                  pch = pch, cex = cex, ...)
@@ -594,7 +596,7 @@ plot2D <- function(object,
         if (identify) {
             ids <- identify(.data[, 1], .data[, 2],
                             rownames(.data))
-            return(ids)    
+            return(ids)
         }
     }
     invisible(.data)
@@ -636,7 +638,7 @@ addLegend <- function(object,
     lvs <- levels(fData(object)[, fcol])
     if ("unknown" %in% lvs) {
         i <- which(lvs == "unknown")
-        lvs <- c(lvs[-i], lvs[i])        
+        lvs <- c(lvs[-i], lvs[i])
         fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                         levels = lvs)
     } else {
@@ -649,7 +651,7 @@ addLegend <- function(object,
         plot(0, type = "n", bty = "n",
              xaxt = "n", yaxt = "n",
              xlab = "", ylab = "")
-    }    
+    }
     if (is.null(fcol))
         fcol <- "markers"
     if (!fcol %in% fvarLabels(object))
@@ -658,16 +660,16 @@ addLegend <- function(object,
         stockcol <- getStockcol()
     } else {
         stockcol <- col
-    } 
+    }
     stockpch <- getStockpch()
     unknowncol <- getUnknowncol()
     unknownpch <- getUnknownpch()
-    txt <- levels(as.factor(fData(object)[, fcol])) 
-    isbig <- .isbig(object, fcol, stockcol, stockpch)    
+    txt <- levels(as.factor(fData(object)[, fcol]))
+    isbig <- .isbig(object, fcol, stockcol, stockpch)
     if (isbig[["big"]]) {
         col <- stockcol[isbig[["jj"]]]
         pch <- stockpch[isbig[["kk"]]]
-        if ("unknown" %in% txt) {            
+        if ("unknown" %in% txt) {
             col <- c(col, unknowncol)
             pch <- c(pch, unknownpch)
         }
@@ -679,7 +681,7 @@ addLegend <- function(object,
             col[-i] <- col[-length(col)]
             col[i] <- unknowncol
             pch[-i] <- pch[-length(pch)]
-            pch[i] <- unknownpch            
+            pch[i] <- unknownpch
         }
     }
     if ("bty" %in% names(pairlist(...))) legend(where, txt, col = col, pch = pch, ...)
@@ -694,11 +696,11 @@ addLegend <- function(object,
 ##' is thrown.
 ##'
 ##' @title Highlight features of interest on a spatial proteomics plot
-##' 
+##'
 ##' @param object The main dataset described as an \code{MSnSet} or a
 ##'     \code{matrix} with the coordinates of the features on the PCA
-##'     plot produced (and invisibly returned) by \code{plot2D}. 
-##' 
+##'     plot produced (and invisibly returned) by \code{plot2D}.
+##'
 ##' @param foi An instance of \code{\linkS4class{FeaturesOfInterest}},
 ##'     or, alternatively, a \code{character} of feautre names.
 ##'
@@ -709,12 +711,12 @@ addLegend <- function(object,
 ##'     \code{featureNames(object)} (or code{rownames(object)}, if
 ##'     \code{object} is a \code{matrix}) are used. Default is
 ##'     missing, which does not add any label.s
-##' 
+##'
 ##' @param args A named list of arguments to be passed to
 ##'     \code{plot2D} if the PCA coordinates are to be
 ##'     calculated. Ignored if the PCA coordinates are passed
 ##'     directly, i.e. \code{object} is a \code{matrix}.
-##' 
+##'
 ##' @param ... Additional parameters passed to \code{points} or
 ##'     \code{text} (when \code{labels} is \code{TRUE}) when adding to
 ##'     \code{plot2D}, or \code{spheres3d} or \code{text3d} when
@@ -734,7 +736,7 @@ addLegend <- function(object,
 ##' highlightOnPlot(tan2009r1, x)
 ##' plot2D(tan2009r1)
 ##' highlightOnPlot(tan2009r1, featureNames(tan2009r1)[1:10])
-##' 
+##'
 ##' .pca <- plot2D(tan2009r1)
 ##' head(.pca)
 ##' highlightOnPlot(.pca, x, col = "red")
@@ -760,7 +762,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
         foi <- FeaturesOfInterest(description = "internally created",
                                   fnames = foi)
     stopifnot(inherits(foi, "FeaturesOfInterest"))
-    
+
     if (!fnamesIn(foi, object)) {
         warning("None of the features of interest are present in the data.")
         return(invisible(NULL))
@@ -797,7 +799,7 @@ highlightOnPlot <- function(object, foi, labels, args = list(), ...) {
 
 
 ## Tests whether the object is visualisation method available
-## in pRoloc 
+## in pRoloc
 .validpRolocVisMethod <- function(object) {
     if (class(object) == "matrix" && ncol(object) == 2)
         return(TRUE)

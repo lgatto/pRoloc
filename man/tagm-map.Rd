@@ -22,7 +22,8 @@ tagmPredict(object, params, fcol = "markers", probJoint = FALSE,
 }
 \arguments{
 \item{object}{An \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the spatial
-proteomics data.}
+proteomics data to be passed to \code{tagmTrain} and
+\code{tagmPredict}.}
 
 \item{fcol}{The feature meta-data containing marker definitions.
 Default is \code{markers}.}
@@ -98,8 +99,6 @@ algorithm name.}
 and log-posterior of the model.}
 
 \item{\code{datasize}}{A \code{list()} with details about size of data}
-
-\item{\code{object}}{An `MAPParams` object.}
 }}
 
 \references{

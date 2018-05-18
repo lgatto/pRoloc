@@ -12,7 +12,8 @@
 ##' @title Localisation of proteins using the TAGM MAP method
 ##'
 ##' @param object An [`MSnbase::MSnSet`] containing the spatial
-##'     proteomics data.
+##'     proteomics data to be passed to `tagmTrain` and
+##'     `tagmPredict`.
 ##' @param fcol The feature meta-data containing marker definitions.
 ##'     Default is `markers`.
 ##' @param method A `charachter()` describing the inference method for

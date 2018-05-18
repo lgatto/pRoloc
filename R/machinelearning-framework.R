@@ -146,7 +146,6 @@ setClass("MAPParams",
                         posteriors = "list",
                         datasize = "list"))
 
-##' @slot object An `MAPParams` object.
 ##' @rdname tagm-map
 setMethod("show", "MAPParams",
           function(object) {

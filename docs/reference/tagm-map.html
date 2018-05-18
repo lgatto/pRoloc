@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TAGM MAP parameter estimation — tagmTrain • pRoloc</title>
+<title>Localisation of proteins using the TAGM MAP method — MAPParams-class • pRoloc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,11 +28,11 @@
 
 
 
-<meta property="og:title" content="TAGM MAP parameter estimation — tagmTrain" />
+<meta property="og:title" content="Localisation of proteins using the TAGM MAP method — MAPParams-class" />
 
-<meta property="og:description" content="T augmented Gaussian mixture (TAGM) model for mass
-spectrometry-based spatial proteomics datasets optimisation
-routine using empirical Bayes methods (MAP)." />
+<meta property="og:description" content="These functions implement the T augmented Gaussian mixture (TAGM)
+model for mass spectrometry-based spatial proteomics datasets
+using the maximum a posteriori (MAP) optimisation routine." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -83,6 +83,9 @@ routine using empirical Bayes methods (MAP)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/pRoloc-bayesian.html">Bayesian spatial proteomics with pRoloc</a>
+    </li>
+    <li>
       <a href="../articles/pRoloc-goannotations.html">Annotating spatial proteomics data</a>
     </li>
     <li>
@@ -120,25 +123,28 @@ routine using empirical Bayes methods (MAP)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>TAGM MAP parameter estimation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a></small>
+    <h1>Localisation of proteins using the TAGM MAP method</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-framework.R'><code>R/machinelearning-framework.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a></small>
     <div class="hidden name"><code>tagm-map.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>T augmented Gaussian mixture (TAGM) model for mass
-spectrometry-based spatial proteomics datasets optimisation
-routine using empirical Bayes methods (MAP).</p>
+    <p>These functions implement the T augmented Gaussian mixture (TAGM)
+model for mass spectrometry-based spatial proteomics datasets
+using the maximum a posteriori (MAP) optimisation routine.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>tagmTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MAP"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+    <pre class="usage"><span class='co'># S4 method for MAPParams</span>
+<span class='fu'>show</span>(<span class='no'>object</span>)
+
+<span class='fu'>tagmTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MAP"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>tagmPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probreturn</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"prediction"</span>,
-  <span class='st'>"joint"</span>), <span class='kw'>proboutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>tagmPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,7 +152,7 @@ routine using empirical Bayes methods (MAP).</p>
     <tr>
       <th>object</th>
       <td><p>An <code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the spatial
-proteomics data.</p></td>
+proteomics data to be passed to <code>tagmTrain</code> and <code>tagmPredict</code>.</p></td>
     </tr>
     <tr>
       <th>fcol</th>
@@ -201,18 +207,17 @@ concentration. Default is 1 for each class.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An instance of class <code><a href='MAPparams-class.html'>MAPparams</a></code>, as generated by
+      <td><p>An instance of class <code>MAPParams</code>, as generated by
 <code>tagmTrain()</code>.</p></td>
     </tr>
     <tr>
-      <th>probreturn</th>
-      <td><p>One of <code>"prediction"</code> or <code>"joint"</code> to report the
-probability for the predicted class only (as a new
-<code>tagm.probability</code> feature variable), or for all classes (as a
-new <code>tagm.joint</code> feature variable).</p></td>
+      <th>probJoint</th>
+      <td><p>A <code>logical(1)</code> indicating whether to return the
+joint probability, i.e. the probability for all classes as a
+new <code>tagm.joint</code> feature variable.</p></td>
     </tr>
     <tr>
-      <th>proboutlier</th>
+      <th>probOutlier</th>
       <td><p>A <code>logical(1)</code> indicating whether to return the
 probability of being an outlier as a new <code>tagm.outlier</code>
 feature variable.</p></td>
@@ -221,10 +226,32 @@ feature variable.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An instance of class <code><a href='MAPparams-class.html'>MAPparams()</a></code>.</p>
-<p>An instance of class <code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the
-localisation predictions as a new <code>tagm.allocation</code> feature
-variable.</p>
+    <p><code>tagmTrain</code> returns an instance of class <code>MAPParams()</code>.</p>
+<p><code>tagmPredict</code> returns an instance of class
+<code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the localisation predictions as
+a new <code>tagm.allocation</code> feature variable.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>tagmTrain</code> function generates the MAP parameters (object or
+class <code>MAPParams</code>) based on an annotated quantitative spatial
+proteomics dataset (object of class <code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are
+then passed to the <code>tagmPredict</code> function to predict the
+sub-cellular localisation of protein of unknown localisation. See
+the <code>pRoloc-bayesian</code> vignette for details and examples.</p>
+    
+    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
+
+    
+    <dl class='dl-horizontal'>
+<dt><code>algorithm</code></dt><dd><p>A <code>character()</code> storing the machine learning
+algorithm name.</p></dd>
+    <dt><code>priors</code></dt><dd><p>A <code>list()</code> with the priors for the parameters</p></dd>
+    <dt><code>seed</code></dt><dd><p>An <code>integer()</code> with the random number generation seed.</p></dd>
+    <dt><code>posteriors</code></dt><dd><p>A <code>list()</code> with the updated posterior parameters
+and log-posterior of the model.</p></dd>
+    <dt><code>datasize</code></dt><dd><p>A <code>list()</code> with details about size of data</p></dd>
+</dl>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -232,6 +259,11 @@ variable.</p>
 Proteomics</em> Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
 Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 https://doi.org/10.1101/282269</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>The <code><a href='plotEllipse.html'>plotEllipse()</a></code> function can be used to visualise
+TAGM models on PCA plots with ellipses.</p></div>
     
 
   </div>
@@ -242,7 +274,13 @@ https://doi.org/10.1101/282269</p>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#slots">Slots</a></li>
+
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
     <h2>Author</h2>

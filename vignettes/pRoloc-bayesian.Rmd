@@ -6,7 +6,7 @@ author:
 package: pRoloc
 output:
   BiocStyle::html_document:
-	toc_float: true
+   toc_float: true
 vignette: >
   %\VignetteIndexEntry{Bayesian spatial proteomics with pRoloc}
   %\VignetteEngine{knitr::rmarkdown}

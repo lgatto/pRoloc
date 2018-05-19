@@ -216,11 +216,11 @@ only, for all classes or none.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.8480  0.8515  0.8550  0.8550  0.8585  0.8621 
+#&gt;  0.8678  0.8806  0.8934  0.8934  0.9062  0.9190 
 #&gt;  best theta:
 #&gt;          ER Golgi Mitochondrion PM
-#&gt; weight:0  1     2             1  2
-#&gt; weight:1  1     0             1  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
+#&gt; weight:0  1     2             0  2
+#&gt; weight:1  1     0             2  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
 <span class='fu'>plot</span>(<span class='no'>opt</span>)</div><div class='img'><img src='knntlClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knntlClassification</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                            <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>, <span class='no'>th</span>, <span class='no'>k</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)

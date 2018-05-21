@@ -147,22 +147,28 @@ p</code></pre></div>
 <li>
 <code>tagm.map.allocation</code>: the TAGM-MAP predictions for the most likely protein sub-cellular allocation.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.allocation)</code></pre></div>
-<pre><code>## &lt; table of extent 0 &gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.map.allocation)</code></pre></div>
+<pre><code>## 
+##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
+##            17            95            24             8            34 
+##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
+##            25             3           114            19            30 
+##  Ribosome 60S 
+##            31</code></pre>
 <ul>
 <li>
 <code>tagm.map.probability</code>: the posterior probability for the protein sub-cellular allocations.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.probability)</code></pre></div>
-<pre><code>## Length  Class   Mode 
-##      0   NULL   NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.map.probability)</code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## 0.0000000 0.0003256 0.0049051 0.2731639 1.0000000 1.0000000</code></pre>
 <ul>
 <li>
 <code>tagm.map.outlier</code>: the probability for a protein to be assigned to the outliers class rather than any of the provided sub-cellular classes.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.outlier)</code></pre></div>
-<pre><code>## Length  Class   Mode 
-##      0   NULL   NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.map.outlier)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.9948  0.7266  0.9996  1.0000</code></pre>
 </div>
 <div id="the-tagm-mcmc-method" class="section level1">
 <h1 class="hasAnchor">

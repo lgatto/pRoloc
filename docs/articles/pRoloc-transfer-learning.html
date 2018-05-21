@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Mon May 21 16:01:20 2018</code></pre>
+##  Created on Mon May 21 16:20:33 2018</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -192,7 +192,7 @@ andygoset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Mon May 21 16:01:28 2018] 
+## Constructed GO set using cellular_component namespace [Mon May 21 16:20:42 2018] 
 ##  MSnbase version: 2.7.1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##        GO:0016020 GO:0016021 GO:0005783 GO:0005730
@@ -454,18 +454,18 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 ## Results
 ##  macro F1:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7856  0.8370  0.8514  0.8476  0.8783  0.8859 
+##  0.7856  0.8370  0.8514  0.8483  0.8814  0.8859 
 ##  best theta:
 ##             Cytosol Cytosol.Nucleus ER Golgi Lysosome Mitochondrion
-## weight:0          0               0  4     1        0             1
-## weight:0.33       0               1  0     3        0             3
-## weight:0.67       1               1  1     1        2             1
-## weight:1          4               3  0     0        3             0
+## weight:0          0               0  4     1        1             2
+## weight:0.33       0               1  0     3        0             2
+## weight:0.67       2               2  1     1        2             1
+## weight:1          3               2  0     0        2             0
 ##             Nucleus PM Ribosome.40S Ribosome.60S
-## weight:0          1  1            1            0
-## weight:0.33       4  3            1            0
-## weight:0.67       0  1            0            4
-## weight:1          0  0            3            1</code></pre>
+## weight:0          1  1            1            1
+## weight:0.33       3  3            2            0
+## weight:0.67       0  1            0            3
+## weight:1          1  0            2            1</code></pre>
 <p>The optimisation is performed on the labelled marker examples only. When removing unlabelled non-marker proteins (the <code>unknowns</code>), some auxiliary GO columns end up containing only 0 (the GO-protein association was only observed in non-marker proteins), which are temporarily removed.</p>
 <p>The <code>topt</code> result stores all the result from the optimisation step, and in particular the observed theta weights, which can be directly plotted as shown on the <a href="#fig:bubble">bubble plot</a> below. These bubble plots give the proportion of best weights for each marker class that was observed during the optimisation phase. We see that the mitochondrion, the cytosol and cytosol/nucleus classes predominantly are scored with height weights (2/3 and 1), consistent with high reliability of the primary data. The Golgi and the ribosomal clusters (and to a lesser extend the ER) favour smaller scores, indicating a substantial benefit of the auxiliary data.</p>
 <div class="figure">
@@ -478,11 +478,11 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 <p>A set of best weights must be chosen and applied to the classification of the unlabelled proteins (formally annotated as <code>unknown</code>). These can be defined manually, based on the pattern observed in the weights <a href="#fig:bubble">bubble plot</a>, or automatically extracted with the <em>getParams</em> method<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>. See <em>?getParams</em> for details and the <em>favourPrimary</em> function, if it is desirable to systematically favour the primary data (i.e. high weights) when different weight combinations perform equally well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/GenRegRes-class.html">getParams</a></span>(topt)</code></pre></div>
 <pre><code>##         Cytosol Cytosol/Nucleus              ER           Golgi 
-##       1.0000000       1.0000000       0.0000000       0.3333333 
+##       1.0000000       0.6666667       0.0000000       0.3333333 
 ##        Lysosome   Mitochondrion         Nucleus              PM 
-##       1.0000000       0.3333333       0.3333333       0.3333333 
+##       0.6666667       0.3333333       0.3333333       0.3333333 
 ##    Ribosome 40S    Ribosome 60S 
-##       1.0000000       0.6666667</code></pre>
+##       0.3333333       0.6666667</code></pre>
 <p>We provide the best parameters for the extensive parameter optimisation search, as provided by <em>getParams</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(bw &lt;-<span class="st"> </span><span class="kw">experimentData</span>(andy2011)<span class="op">@</span>other<span class="op">$</span>knntl<span class="op">$</span>thetas)</code></pre></div>
 <pre><code>##         Cytosol Cytosol/Nucleus              ER           Golgi 

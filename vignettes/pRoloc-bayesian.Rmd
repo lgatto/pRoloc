@@ -75,12 +75,12 @@ tan2009r1 <- tan2009r1[sample(nrow(tan2009r1), 400), ]
 ```
 
 The first step is to generate the model parameters using the
-`tagmTrain` function, that will generate an instance of class
+`tagmMapTrain` function, that will generate an instance of class
 `MAPParams`.
 
-```{r tagmTrain}
+```{r tagmMapTrain}
 library("pRoloc")
-p <- tagmTrain(tan2009r1)
+p <- tagmMapTrain(tan2009r1)
 p
 ```
 
@@ -104,22 +104,23 @@ res <- tagmPredict(tan2009r1, p)
 
 The new feature variables that are generated are:
 
-- `tagm.allocation`: the TAGM-MAP predictions for the most likely
+- `tagm.map.allocation`: the TAGM-MAP predictions for the most likely
   protein sub-cellular allocation.
 
 ```{r alloc}
 table(fData(res)$tagm.allocation)
 ```
 
-- `tagm.probability`: the posterior probability for the protein
+- `tagm.map.probability`: the posterior probability for the protein
   sub-cellular allocations.
 
 ```{r prob}
 summary(fData(res)$tagm.probability)
 ```
 
-- `tagm.outlier`: the probability for a protein to be assigned to the
-  outliers class rather than any of the provided sub-cellular classes.
+- `tagm.map.outlier`: the probability for a protein to be assigned to
+  the outliers class rather than any of the provided sub-cellular
+  classes.
 
 ```{r oultlier}
 summary(fData(res)$tagm.outlier)

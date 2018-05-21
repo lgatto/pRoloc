@@ -8,6 +8,12 @@
                                   chains = "MCMCChains",
                                   summary = "MCMCSummary"))
 
+chains <- function(x) {
+    stopifnot(inherits(x, "MCMCParams"))
+    x@chains
+}
+
+
 setMethod("show", "MCMCParams",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
@@ -85,40 +91,40 @@ setMethod("show", "ComponentParam",
 ##' @slot n `integer(1)` indicating the number of MCMC interactions.
 ##' @slot K `integer(1)` indicating the number of components.
 ##' @slot N `integer(1)` indicating the number of proteins.
-##' @slot component `matrix(N, n)` component allocation results.
-##' @slot component_prob `matrix(N, n, K)` component allocation probabilities.
-##' @slot outlier `matrix(N, n)` outlier allocation results.
-##' @slot outlier_prob `matrix(N, n, 2)` outlier allocation probabilities.
+##' @slot Component `matrix(N, n)` component allocation results.
+##' @slot ComponentProb `matrix(N, n, K)` component allocation probabilities.
+##' @slot Outlier `matrix(N, n)` outlier allocation results.
+##' @slot OutlierProb `matrix(N, n, 2)` outlier allocation probabilities.
 .MCMCChain <- setClass("MCMCChain",
                        slots = c(n = "integer",
                                  K = "integer",
                                  N = "integer",
-                                 component = "matrix",
-                                 component_prob = "array",
-                                 outlier = "matrix",
-                                 outlier_prob = "array",
-                                 component_protein = "array",
+                                 Component = "matrix",
+                                 ComponentProb = "array",
+                                 Outlier = "matrix",
+                                 OutlierProb = "array",
+                                 ComponentProtein = "array",
                                  ComponentParam = "ComponentParam"),
                        validity = function(object) {
                            msg <- validMsg(NULL, NULL)
                            N <- object@N
                            n <- object@n
                            K <- object@K
-                           if (!identical(nrow(object@component), N))
+                           if (!identical(nrow(object@Component), N))
                                msg <- validMsg(msg, "Wrong number of proteins in component")
-                           if (!identical(nrow(object@outlier), N))
+                           if (!identical(nrow(object@Outlier), N))
                                msg <- validMsg(msg, "Wrong number of proteins in outlier")
-                           if (!identical(ncol(object@component), n))
+                           if (!identical(ncol(object@Component), n))
                                msg <- validMsg(msg, "Wrong number of iterations in component")
-                           if (!identical(ncol(object@outlier), n))
+                           if (!identical(ncol(object@Outlier), n))
                                msg <- validMsg(msg, "Wrong number of iterations in outlier")
-                           if (!identical(rownames(object@component), rownames(object@component_prob)))
+                           if (!identical(rownames(object@Component), rownames(object@ComponentProb)))
                                msg <- validMsg(msg, "Component rownames don't match")
-                           if (!identical(rownames(object@outlier), rownames(object@outlier_prob)))
+                           if (!identical(rownames(object@Outlier), rownames(object@OutlierProb)))
                                msg <- validMsg(msg, "Outlier rownames don't match")
-                           if (!identical(rownames(object@outlier), rownames(object@component)))
+                           if (!identical(rownames(object@Outlier), rownames(object@Component)))
                                msg <- validMsg(msg, "Proteins don't match between component and outlier")
-                           if (!identical(dim(object@component_prob)[3], K))
+                           if (!identical(dim(object@ComponentProb)[3], K))
                                msg <- validMsg(msg, "Wrong number of components in component probability")
                            if (is.null(msg)) TRUE
                            else msg
@@ -150,6 +156,7 @@ setMethod("show", "MCMCChain",
                             else msg
                         })
 
+
 setMethod("length", "MCMCChains",
           function(x) length(x@chains))
 
@@ -164,7 +171,6 @@ setMethod("[", "MCMCChains",
               x@chains <- x@chains[i]
               x
           })
-
 
 
 

@@ -229,7 +229,7 @@ tagmMapTrain <- function(object,
                         logposterior = loglike)
 
     new("MAPParams",
-        algorithm = method,
+        method = method,
         seed = .seed,
         priors = .priors,
         posteriors = .posteriors,

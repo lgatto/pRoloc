@@ -192,11 +192,11 @@ Default is <code>markers</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9818  0.9840  0.9862  0.9893  0.9931  1.0000 
-#&gt;  best laplace: 5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='nbClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
-#&gt; 5 
+#&gt;  0.9546  0.9578  0.9611  0.9719  0.9806  1.0000 
+#&gt;  best laplace: 5 0   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='nbClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt; 0 
 #&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='nbClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; laplace 
-#&gt;       5 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nbClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
+#&gt;       0 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nbClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"naiveBayes"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            18           175            98            98            52 
@@ -220,8 +220,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed naiveBayes prediction (laplace=5) Fri May 18 22:09:28 2018 
-#&gt; Added naiveBayes predictions according to global threshold = 0 Fri May 18 22:09:28 2018 
+#&gt; Performed naiveBayes prediction (laplace=0) Mon May 21 15:56:18 2018 
+#&gt; Added naiveBayes predictions according to global threshold = 0 Mon May 21 15:56:18 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"naiveBayes"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            45            69            61            43 
@@ -245,8 +245,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed naiveBayes prediction (laplace=5) Fri May 18 22:09:28 2018 
-#&gt; Added naiveBayes predictions according to global threshold = 1 Fri May 18 22:09:28 2018 
+#&gt; Performed naiveBayes prediction (laplace=0) Mon May 21 15:56:18 2018 
+#&gt; Added naiveBayes predictions according to global threshold = 1 Mon May 21 15:56:18 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"naiveBayes"</span>)</div><div class='img'><img src='nbClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

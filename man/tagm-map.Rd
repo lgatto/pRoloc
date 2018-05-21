@@ -88,8 +88,7 @@ the \code{pRoloc-bayesian} vignette for details and examples.
 \section{Slots}{
 
 \describe{
-\item{\code{algorithm}}{A \code{character()} storing the machine learning
-algorithm name.}
+\item{\code{method}}{A \code{character()} storing the TAGM method name.}
 
 \item{\code{priors}}{A \code{list()} with the priors for the parameters}
 

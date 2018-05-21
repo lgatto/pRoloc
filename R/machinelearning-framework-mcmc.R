@@ -1,11 +1,13 @@
 ##' @slot method `character(1)` describing the method.
 ##' @slot chains Object of class `MCMCChains` containing the full MCMC
 ##'     chain results.
+##' @slot priors `list()`
 ##' @slot summary Object of class `MCMCSummary` the summarised MCMC
 ##'     results.
 .MCMCParams <- setClass("MCMCParams",
                         slots = c(method = "character",
                                   chains = "MCMCChains",
+                                  priors = "list",
                                   summary = "MCMCSummary"))
 
 chains <- function(x) {

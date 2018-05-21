@@ -129,8 +129,7 @@ setMethod("levelPlot", "GenRegRes",
           })
 
 
-##' @slot algorithm A `character()` storing the machine learning
-##'     algorithm name.
+##' @slot method A `character()` storing the TAGM method name.
 ##' @slot priors A `list()` with the priors for the parameters
 ##' @slot seed An `integer()` with the random number generation seed.
 ##' @slot posteriors A `list()` with the updated posterior parameters
@@ -140,7 +139,7 @@ setMethod("levelPlot", "GenRegRes",
 ##' @aliases class:MAPParams MAPParams-class MAPParams
 ##' @rdname tagm-map
 setClass("MAPParams",
-         representation(algorithm = "character",
+         representation(method = "character",
                         priors = "list",
                         seed = "integer",
                         posteriors = "list",
@@ -150,6 +149,6 @@ setClass("MAPParams",
 setMethod("show", "MAPParams",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
-            cat("Algorithm:", object@algorithm, "\n")
+            cat(" Method:", object@method, "\n")
             invisible(NULL)
           })

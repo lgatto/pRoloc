@@ -85,6 +85,7 @@ Collate:
     AllGenerics.R
     machinelearning-framework.R
     machinelearning-framework-theta.R
+    machinelearning-framework-mcmc.R
     machinelearning-utils.R
     machinelearning-functions-knn.R
     machinelearning-functions-ksvm.R
@@ -96,6 +97,7 @@ Collate:
     machinelearning-functions-svm.R
     machinelearning-functions-knntl.R
     machinelearning-functions-tagm-map.R
+    machinelearning-functions-tagm-mcmc.R
     belief.R
     distances.R
     markers.R

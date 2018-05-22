@@ -135,8 +135,6 @@ return out;
 
 
 
-
-
 // [[Rcpp::export]]
 SEXP dmvtCpp( arma::mat X_,  
               arma::vec mu_,  
@@ -144,9 +142,7 @@ SEXP dmvtCpp( arma::mat X_,
               double df_, 
               bool log_,
               unsigned int ncores_,
-              bool isChol_) 
-{ 
-  
+              bool isChol_) { 
   
   try{
     arma::mat X = X_;

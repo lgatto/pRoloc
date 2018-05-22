@@ -44,10 +44,10 @@ test_that("svm consistency", {
 
 test_that("TAGM consistency", {
   .numIter <- 2
-  map1 <- tagmTrain(object = d1, fcol = "markers",
-                    numIter = .numIter, seed = .seed)
-  map2 <- tagmTrain(object = d2, fcol = "xx",
-                    numIter = .numIter, seed = .seed)
+  map1 <- tagmMapTrain(object = d1, fcol = "markers",
+                       numIter = .numIter, seed = .seed)
+  map2 <- tagmMapTrain(object = d2, fcol = "xx",
+                       numIter = .numIter, seed = .seed)
   expect_equal(map1, map2)
   ans1 <- tagmPredict(object = d1, map1, fcol = "markers")
   ans2 <- tagmPredict(object = d2, map2, fcol = "xx")

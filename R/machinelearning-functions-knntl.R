@@ -299,14 +299,14 @@ splitTh <- function(theta, cores) {
 
 
 ## Core optimisation function for knntlOptimisation.
-opt <- function(primary,   # matrix
-                auxiliary, # matrix
-                markers,
-                xval,
-                times,
-                k,
-                theta,
-                xfolds) {
+tlopt <- function(primary,   # matrix
+                  auxiliary, # matrix
+                  markers,
+                  xval,
+                  times,
+                  k,
+                  theta,
+                  xfolds) {
     ## set warnings
     .warnings <- NULL
     if (class(theta) == "numeric")
@@ -704,17 +704,17 @@ knntlOptimisation  <- function(primary,
     .thetaSubsets <- splitTh(theta = th, cores = .workers)
     .res <- bplapply(.thetaSubsets,
                      function(z) {
-                         pRoloc:::opt(primary = matP,
-                                      auxiliary = matA,
-                                      markers = markers,
-                                        #fcol = fcol,
-                                      xval = xval,
-                                      times = times,
-                                      k = k,
-                                      theta = z,
-                                      xfolds = xfolds
-                                      ## test.size = test.size
-                                      )},
+                         tlopt(primary = matP,
+                               auxiliary = matA,
+                               markers = markers,
+                               ## fcol = fcol,
+                               xval = xval,
+                               times = times,
+                               k = k,
+                               theta = z,
+                               xfolds = xfolds
+                               ## test.size = test.size
+                               )},
                      BPPARAM = BPPARAM)
     .f1Matrices <- sapply(1:times, function(x)
         unlist(lapply(.res, function(z) z[[x]])), simplify = FALSE)

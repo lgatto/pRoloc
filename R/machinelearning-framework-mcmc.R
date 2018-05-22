@@ -105,7 +105,6 @@ setMethod("show", "ComponentParam",
                                  ComponentProb = "array",
                                  Outlier = "matrix",
                                  OutlierProb = "array",
-                                 ComponentProtein = "array",
                                  ComponentParam = "ComponentParam"),
                        validity = function(object) {
                            msg <- validMsg(NULL, NULL)

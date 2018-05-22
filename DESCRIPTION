@@ -130,4 +130,5 @@ Collate:
     clusterdist-functions.R
     clusterdist-framework.R
     qsep.R
+    RcppExports.R
 RoxygenNote: 6.0.1

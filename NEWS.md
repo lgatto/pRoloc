@@ -1,5 +1,8 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.2
+- Nothing yet
+
 ## Changes in version 1.21.1
 - Fix bug in higlightOnPlot with missing fcol (see #105)
   <2018-05-03 Thu>

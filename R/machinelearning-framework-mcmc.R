@@ -26,7 +26,9 @@ setMethod("show", "MCMCParams",
 
 
 .MCMCSummary <- setClass("MCMCSummary",
-                         slots = c(summary = "list"))
+                         slots = c(summary = "list",
+                                   diagnostics = "matrix",
+                                   tagm.joint = "matrix"))
 
 ##' @slot K `integer(1)` indicating the number of components.
 ##' @slot D = "integer", ## number of samples.

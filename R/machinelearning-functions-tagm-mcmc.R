@@ -89,6 +89,9 @@ tagmMcmcProcess <- function(MCMCParams
   rownames(tagm.joint) <- names(tagm.probability) <- names(tagm.allocation) <- rownames(myChain@Component)
   colnames(tagm.joint) <- rownames(myChain@ComponentParam@mk)
   
+  ## Outlier colNames
+  colnames(tagm.outlier) <- c("tagm.probability.notOutlier", "tagm.probability.Outlier")
+  
   ## Compute convergence diagnostics
   outlierTotal <- vector("list", length = numChains)
   for(j in seq_len(numChains)){
@@ -97,7 +100,7 @@ tagmMcmcProcess <- function(MCMCParams
   }
   
   ## Summary of posterior estimates
-  tagm.summary <- data.frame(tagm.allocation, tagm.probability, 
+  tagm.summary <- data.frame(tagm.allocation, tagm.probability, tagm.outlier, 
                              tagm.probability.lowerquantile, 
                              tagm.probability.upperquantile, tagm.mean.shannon)
   

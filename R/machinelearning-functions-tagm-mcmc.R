@@ -96,17 +96,21 @@ tagmMcmcProcess <- function(MCMCParams
     outlierTotal[[j]] <- mcmc(colSums(mc@Outlier))
   }
   
+  ## Summary of posterior estimates
   tagm.summary <- data.frame(tagm.allocation, tagm.probability, 
                              tagm.probability.lowerquantile, 
                              tagm.probability.upperquantile, tagm.mean.shannon)
   
-  
+  ## Compute covergence diagnostics
+  .diagnostics <- matrix(0, nrow = 1, ncol = 2)
   outlierTotal <- coda::as.mcmc.list(outlierTotal)
   gd <- coda::gelman.diag(x = outlierTotal, autoburnin = F)
-  rownames(gd$psrf) <- "R_hat"
+  .diagnostics <- gd$psrf
+  rownames(.diagnostics) <- c("outlierTotal")
   
-  myParams@summary <- pRoloc:::.MCMCSummary(summary = tagm.summary,
-                                   diagnostics = gd$psrf,
+  ## Constructor for summary
+  myParams@summary <- pRoloc:::.MCMCSummary(posteriorEstimates = tagm.summary,
+                                   diagnostics = .diagnostics,
                                    tagm.joint = tagm.joint)
   
   return(myParams)

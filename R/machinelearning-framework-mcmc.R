@@ -26,7 +26,7 @@ setMethod("show", "MCMCParams",
 
 
 .MCMCSummary <- setClass("MCMCSummary",
-                         slots = c(summary = "list",
+                         slots = c(summary = "data.frame",
                                    diagnostics = "matrix",
                                    tagm.joint = "matrix"))
 

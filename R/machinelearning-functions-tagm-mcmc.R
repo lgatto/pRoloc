@@ -103,8 +103,9 @@ tagmMcmcProcess <- function(MCMCParams
   
   outlierTotal <- coda::as.mcmc.list(outlierTotal)
   gd <- coda::gelman.diag(x = outlierTotal, autoburnin = F)
+  rownames(gd$psrf) <- "R_hat"
   
-  myParams@summary <- .MCMCSummary(summary = tagm.summary,
+  myParams@summary <- pRoloc:::.MCMCSummary(summary = tagm.summary,
                                    diagnostics = gd$psrf,
                                    tagm.joint = tagm.joint)
   

@@ -51,6 +51,7 @@ Imports:
     knitr,
     mvtnorm,
     LaplacesDemon,
+    code,
     mixtools,
     gtools,
     plyr,

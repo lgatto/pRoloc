@@ -363,6 +363,8 @@ tagmPredict <- function(object,
                         probOutlier = TRUE) {
     if (inherits(params, "MAPParams"))
         tagmMapPredict(object, ...)
-    else ## MCMCParams
-        tagmMapPredict(object, ...)
+    else if (inherits(params, "MCMCParams"))
+        tagmMcmcPredict(object, ...)
+    else
+        stop("Parameters must either be 'MAPParams' or 'MCMCParams'.")
 }

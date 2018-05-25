@@ -67,7 +67,7 @@ tagmMcmcProcess <- function(MCMCParams
   tagm.probability <- apply(tagm.joint, 1, max)
   tagm.allocation <- colnames(tagm.joint)[apply(tagm.joint, 1, which.max)]
   
-  ## Calculate quantiles
+  ## Calculate quantiles (0.95 equi-tailed credible interval)
   for (i in seq_len(N)) {
     for (j in seq_len(K)) {
       .tagm.quantiles[i, j, ] <- quantile(pooled.ComponentProb[i, , j], probs = c(0.025, 0.975))
@@ -79,7 +79,7 @@ tagmMcmcProcess <- function(MCMCParams
   tagm.probability.upperquantile <- .tagm.quantiles[cbind(1:N, apply(tagm.joint, 1, which.max), rep(2, N))]
   
   ## Compute Shannon Entropy
-  tagm.shannon <- -apply(pooled.ComponentProb * log(pooled.ComponentProb), c(1,2), sum)
+  tagm.shannon <- -apply(pooled.ComponentProb * log(pooled.ComponentProb), c(1, 2), sum)
   tagm.shannon[is.na(tagm.shannon)] <- 0
   tagm.mean.shannon <- rowMeans(tagm.shannon) 
   
@@ -112,11 +112,11 @@ tagmMcmcProcess <- function(MCMCParams
   rownames(.diagnostics) <- c("outlierTotal")
   
   ## Constructor for summary
-  myParams@summary <- pRoloc:::.MCMCSummary(posteriorEstimates = tagm.summary,
+  MCMCParams@summary <- pRoloc:::.MCMCSummary(posteriorEstimates = tagm.summary,
                                    diagnostics = .diagnostics,
                                    tagm.joint = tagm.joint)
   
-  return(myParams)
+  return(MCMCParams)
 }
 
 

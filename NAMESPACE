@@ -23,6 +23,7 @@ importFrom("utils", "combn", "head", "menu", "packageDescription",
 
 importFrom("dendextend", "set")
 importFrom("LaplacesDemon", "dinvwishart", "ddirichlet")
+importFrom("coda", "as.mcmc.list", "gelman.diag")
 importFrom("mixtools", "ellipse")
 
 ## importFrom("Rtsne", "Rtsne") ## moved to Suggests

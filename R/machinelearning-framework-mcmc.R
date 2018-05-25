@@ -4,18 +4,26 @@
 ##' @slot priors `list()`
 ##' @slot summary Object of class `MCMCSummary` the summarised MCMC
 ##'     results.
+##' @md
+##' @rdname MCMCParams
 .MCMCParams <- setClass("MCMCParams",
                         slots = c(method = "character",
                                   chains = "MCMCChains",
                                   priors = "list",
                                   summary = "MCMCSummary"))
 
-chains <- function(x) {
-    stopifnot(inherits(x, "MCMCParams"))
+
+##' @param object An instance of appropriate class.
+##' @md
+##' @rdname MCMCParams
+chains <- function(object) {
+    stopifnot(inherits(object, "MCMCParams"))
     x@chains
 }
 
 
+##' @md
+##' @rdname MCMCParams
 setMethod("show", "MCMCParams",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
@@ -25,6 +33,14 @@ setMethod("show", "MCMCParams",
           })
 
 
+##' @slot posteriorEstimates A `data.frame` with N rows and columns
+##'     `tagm.allocation`, `tagm.probability`, `tagm.outlier`,
+##'     `tagm.probability.lowerquantile`,
+##'     `tagm.probability.upperquantile` and `tagm.mean.shannon`.
+##' @slot diagnostics A `matrix` of dimensions 1 by 2.
+##' @slot tagm.joint A `matrix` of dimensions N by K.
+##' @md
+##' @rdname MCMCParams
 .MCMCSummary <- setClass("MCMCSummary",
                          slots = c(posteriorEstimates = "data.frame",
                                    diagnostics = "matrix",
@@ -38,6 +54,8 @@ setMethod("show", "MCMCParams",
 ##' @slot lambdak `numeric(K)`
 ##' @slot nuk `numeric(K)`
 ##' @slot sk `array(K, D, D)`
+##' @md
+##' @rdname MCMCParams
 .ComponentParam <- setClass("ComponentParam",
                             slots = c(K = "integer",
                                       D = "integer",
@@ -49,7 +67,7 @@ setMethod("show", "MCMCParams",
                             prototype = prototype(
                                 method = "TAGM.MCMC"
                                 ),
-                            validity = function(object){
+                            validity = function(object) {
                                 msg <- validMsg(NULL, NULL)
                                 K <- object@K
                                 D <- object@D
@@ -78,7 +96,8 @@ setMethod("show", "MCMCParams",
                                 if (is.null(msg)) TRUE
                                 else msg
                             })
-
+##' @md
+##' @rdname MCMCParams
 setMethod("show", "ComponentParam",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
@@ -99,6 +118,8 @@ setMethod("show", "ComponentParam",
 ##' @slot ComponentProb `matrix(N, n, K)` component allocation probabilities.
 ##' @slot Outlier `matrix(N, n)` outlier allocation results.
 ##' @slot OutlierProb `matrix(N, n, 2)` outlier allocation probabilities.
+##' @md
+##' @rdname MCMCParams
 .MCMCChain <- setClass("MCMCChain",
                        slots = c(n = "integer",
                                  K = "integer",
@@ -133,7 +154,8 @@ setMethod("show", "ComponentParam",
                            else msg
                        })
 
-
+##' @md
+##' @rdname MCMCParams
 setMethod("show", "MCMCChain",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
@@ -144,9 +166,10 @@ setMethod("show", "MCMCChain",
           })
 
 
-##'
 ##' @slot chains `list()` containing the individual full MCMC chain
 ##'     results. Each element must be of class `MCMCChain`.
+##' @md
+##' @rdname MCMCParams
 .MCMCChains <- setClass("MCMCChains",
                         slots = c(chains = "list"),
                         validity = function(object) {
@@ -160,13 +183,20 @@ setMethod("show", "MCMCChain",
                         })
 
 
+##' @md
+##' @rdname MCMCParams
 setMethod("length", "MCMCChains",
           function(x) length(x@chains))
 
+##' @param x An object of class `MCMCChains`
+##' @param i An `integer()`. Should be of length 1 for `[[`.
+##' @md
+##' @rdname MCMCParams
 setMethod("[[", "MCMCChains",
           function(x, i, j = "missing", drop = "missing") x@chains[[i]])
 
-
+##' @md
+##' @rdname MCMCParams
 setMethod("[", "MCMCChains",
           function(x, i, j = "missing", drop = "missing") {
               if (any(i > length(x)))
@@ -175,8 +205,8 @@ setMethod("[", "MCMCChains",
               x
           })
 
-
-
+##' @md
+##' @rdname MCMCParams
 setMethod("show", "MCMCChains",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")

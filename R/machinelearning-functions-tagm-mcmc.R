@@ -26,7 +26,9 @@
 
 tagmPredict <- function(object,
                         MCMCParams,
-                        fcol = "markers"){
+                        fcol = "markers",
+                        probJoint = FALSE,
+                        probOutlier = TRUE){
   
   ## Checks for object and MCMCParams match
   stopifnot(featureNames(unknownMSnSet(object)) 
@@ -34,17 +36,16 @@ tagmPredict <- function(object,
 
   ## Create marker set and size
   markerSet <- markerMSnSet(object)
+  markers <- getMarkerClasses(object)
   M <- nrow(markerSet)
+  K <- chains(MCMCParams)[[1]]@K
+  
   
   ## Get Summary object from MCMCParams maybe better to check columns exist/pass which objects we need
   .tagm.allocation <- c(as.character(MCMCParams@summary@posteriorEstimates[,"tagm.allocation"]),
                        as.character(fData(markerSet)[, fcol]))
   .tagm.probability <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability"], 
                         rep(1, M)) ## set all probabilities of markers to 1.
-  .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"], 
-                                    rep(1, M)) ## set all probabilities of markers to 1.
-  .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"], 
-                                    rep(0, M)) ## set all probabilities of markers to 1.
   .tagm.probability.lowerquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.lowerquantile"], 
                                       rep(1, M)) ## set all probabilities of markers to 1.
   .tagm.probability.upperquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.upperquantile"], 
@@ -53,13 +54,20 @@ tagmPredict <- function(object,
                                       rep(0, M)) ## set all probabilities of markers to 1.
   
   ## Create data frame to store new summaries
-  .tagm.summary <-  data.frame(tagm.allocation = .tagm.allocation ,
+  .tagm.summary <- data.frame(tagm.allocation = .tagm.allocation ,
                                tagm.probability = .tagm.probability,
-                               tagm.probability.Outlier = .tagm.probability.Outlier,
-                               tagm.probability.notOutlier = .tagm.probability.notOutlier,
                                tagm.probability.lowerquantile = .tagm.probability.lowerquantile, 
                                tagm.probability.upperquantile = .tagm.probability.upperquantile,
                                tagm.mean.shannon = .tagm.mean.shannon)
+  if(probOutlier){
+    .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"], 
+                                      rep(1, M)) ## set all probabilities of markers to 1.
+    .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"], 
+                                   rep(0, M)) ## set all probabilities of markers to 1.
+    .tagm.summary$tagm.probability.Outlier = .tagm.probability.Outlier
+    .tagm.summary$tagm.probability.notOutlier = .tagm.probability.notOutlier
+  }
+  
   
   ## Check number of rows match and add feature names
   stopifnot(nrow(.tagm.summary) == nrow(object))
@@ -68,6 +76,21 @@ tagmPredict <- function(object,
   
   ## Append data to fData of MSnSet
   fData(object) <- cbind(fData(object), .tagm.summary[rownames(fData(object)),])
+  
+  if  (probJoint) {
+    ## create allocation matrix for markers
+    .probmat <- matrix(0, nrow = nrow(markerSet), ncol = K)
+    .class <- fData(markerSet)[, fcol]
+    for (j in seq_len(nrow(markerSet))) {
+      ## give markers prob 1
+      .probmat[j, as.numeric(factor(.class), seq(1, length(unique(.class))))[j]] <- 1
+    }
+    colnames(.probmat) <- markers
+    rownames(.probmat) <- rownames(markerSet)
+    .joint <- rbind(MCMCParams@summary@tagm.joint, .probmat)
+    fData(object)$tagm.map.joint <- .joint[rownames(fData(object)), ]
+  }
+    
   
   return(object)
 

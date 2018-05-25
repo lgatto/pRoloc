@@ -24,7 +24,7 @@
 ##' @author Oliver M. Crook
 ##' @rdname tagm-mcmc
 
-tagmPredict <- function(object,
+tagmMcmcPredict <- function(object,
                         MCMCParams,
                         fcol = "markers",
                         probJoint = FALSE,

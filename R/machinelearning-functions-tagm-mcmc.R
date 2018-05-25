@@ -9,7 +9,69 @@
 ##' sub-cellular localisation of protein of unknown localisation. See
 ##' the `pRoloc-bayesian` vignette for details and examples.
 ##'
+##'
 ##' @title Localisation of proteins using the TAGM MCMC method
+##'
+##' @param object An object of class [`MSnbase::MSnSet`],
+##' @param MCMCParams An object of class [MCMCParams]
+##' @return The [`MSnbase::MSnSet`] with Summary data appended to the fData
+##' @md
+##' @references *A Bayesian Mixture Modelling Approach For Spatial
+##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
+##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
+##'     https://doi.org/10.1101/282269
+##' @author Oliver M. Crook
+##' @rdname tagm-mcmc    
+
+tagmPredict <- function(object,
+                        MCMCParams,
+                        fcol = "markers"){
+  
+  ## Checks for object and MCMCParams match
+  stopifnot(featureNames(unknownMSnSet(object)) 
+            == rownames(MCMCParams@summary@posteriorEstimates))
+
+  ## Create marker set and size
+  markerSet <- markerMSnSet(object)
+  M <- nrow(markerSet)
+  
+  ## Get Summary object from MCMCParams maybe better to check columns exist/pass which objects we need
+  .tagm.allocation <- c(as.character(MCMCParams@summary@posteriorEstimates[,"tagm.allocation"]),
+                       as.character(fData(markerSet)[, fcol]))
+  .tagm.probability <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability"], 
+                        rep(1, M)) ## set all probabilities of markers to 1.
+  .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"], 
+                                    rep(1, M)) ## set all probabilities of markers to 1.
+  .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"], 
+                                    rep(0, M)) ## set all probabilities of markers to 1.
+  .tagm.probability.lowerquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.lowerquantile"], 
+                                      rep(1, M)) ## set all probabilities of markers to 1.
+  .tagm.probability.upperquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.upperquantile"], 
+                                      rep(1, M)) ## set all probabilities of markers to 1.
+  .tagm.mean.shannon <- c(MCMCParams@summary@posteriorEstimates[,"tagm.mean.shannon"], 
+                                      rep(0, M)) ## set all probabilities of markers to 1.
+  
+  ## Create data frame to store new summaries
+  .tagm.summary <-  data.frame(tagm.allocation = .tagm.allocation ,
+                               tagm.probability = .tagm.probability,
+                               tagm.probability.Outlier = .tagm.probability.Outlier,
+                               tagm.probability.notOutlier = .tagm.probability.notOutlier,
+                               tagm.probability.lowerquantile = .tagm.probability.lowerquantile, 
+                               tagm.probability.upperquantile = .tagm.probability.upperquantile,
+                               tagm.mean.shannon = .tagm.mean.shannon)
+  
+  ## Check number of rows match and add feature names
+  stopifnot(nrow(.tagm.summary) == nrow(object))
+  rownames(.tagm.summary) <- c(rownames(MCMCParams@summary@posteriorEstimates),
+                               rownames(markerSet))
+  
+  ## Append data to fData of MSnSet
+  fData(object) <- cbind(fData(object), .tagm.summary[rownames(fData(object)),])
+  
+  return(object)
+
+}
+
 ##'
 ##' @param MCMCParams An object of class [MCMCParams]
 ##' @return `MCMCParams` returns an instance of class [MCMCParams()] with summary populated.

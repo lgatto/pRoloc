@@ -337,7 +337,7 @@ tagmPredict <- function(object,
         ## create allocation matrix for markers
         .probmat <- matrix(0, nrow = nrow(markerMSnSet(object)), ncol = K)
         .class <- fData(markerMSnSet(object))[, fcol]
-        for (j in seq_along(nrow(markerMSnSet(object)))) {
+        for (j in seq_len(nrow(markerMSnSet(object)))) {
             ## give markers prob 1
             .probmat[j, as.numeric(factor(.class), seq(1,length(unique(.class))))[j]] <- 1
         }

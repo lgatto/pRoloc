@@ -7,7 +7,7 @@
 ##' an annotated quantitative spatial proteomics dataset (object of
 ##' class [`MSnbase::MSnSet`]). Both are then passed to the
 ##' `tagmPredict` function to predict the sub-cellular localisation of
-##' protein of unknown localisation. See the `pRoloc-bayesian`
+##' protein of unknown localisation. See the *pRoloc-bayesian*
 ##' vignette for details and examples.
 ##'
 ##'
@@ -22,16 +22,16 @@
 ##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 ##'     https://doi.org/10.1101/282269
 ##' @author Oliver M. Crook
-##' @rdname tagm-mcmc    
+##' @rdname tagm-mcmc
 
 tagmPredict <- function(object,
                         MCMCParams,
                         fcol = "markers",
                         probJoint = FALSE,
                         probOutlier = TRUE){
-  
+
   ## Checks for object and MCMCParams match
-  stopifnot(featureNames(unknownMSnSet(object)) 
+  stopifnot(featureNames(unknownMSnSet(object))
             == rownames(MCMCParams@summary@posteriorEstimates))
 
   ## Create marker set and size
@@ -39,44 +39,44 @@ tagmPredict <- function(object,
   markers <- getMarkerClasses(object)
   M <- nrow(markerSet)
   K <- chains(MCMCParams)[[1]]@K
-  
-  
+
+
   ## Get Summary object from MCMCParams maybe better to check columns exist/pass which objects we need
   .tagm.allocation <- c(as.character(MCMCParams@summary@posteriorEstimates[,"tagm.allocation"]),
                        as.character(fData(markerSet)[, fcol]))
-  .tagm.probability <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability"], 
+  .tagm.probability <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability"],
                         rep(1, M)) ## set all probabilities of markers to 1.
-  .tagm.probability.lowerquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.lowerquantile"], 
+  .tagm.probability.lowerquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.lowerquantile"],
                                       rep(1, M)) ## set all probabilities of markers to 1.
-  .tagm.probability.upperquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.upperquantile"], 
+  .tagm.probability.upperquantile <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.upperquantile"],
                                       rep(1, M)) ## set all probabilities of markers to 1.
-  .tagm.mean.shannon <- c(MCMCParams@summary@posteriorEstimates[,"tagm.mean.shannon"], 
+  .tagm.mean.shannon <- c(MCMCParams@summary@posteriorEstimates[,"tagm.mean.shannon"],
                                       rep(0, M)) ## set all probabilities of markers to 1.
-  
+
   ## Create data frame to store new summaries
   .tagm.summary <- data.frame(tagm.allocation = .tagm.allocation ,
                                tagm.probability = .tagm.probability,
-                               tagm.probability.lowerquantile = .tagm.probability.lowerquantile, 
+                               tagm.probability.lowerquantile = .tagm.probability.lowerquantile,
                                tagm.probability.upperquantile = .tagm.probability.upperquantile,
                                tagm.mean.shannon = .tagm.mean.shannon)
   if(probOutlier){
-    .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"], 
+    .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"],
                                       rep(1, M)) ## set all probabilities of markers to 1.
-    .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"], 
+    .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"],
                                    rep(0, M)) ## set all probabilities of markers to 1.
     .tagm.summary$tagm.probability.Outlier = .tagm.probability.Outlier
     .tagm.summary$tagm.probability.notOutlier = .tagm.probability.notOutlier
   }
-  
-  
+
+
   ## Check number of rows match and add feature names
   stopifnot(nrow(.tagm.summary) == nrow(object))
   rownames(.tagm.summary) <- c(rownames(MCMCParams@summary@posteriorEstimates),
                                rownames(markerSet))
-  
+
   ## Append data to fData of MSnSet
   fData(object) <- cbind(fData(object), .tagm.summary[rownames(fData(object)),])
-  
+
   if  (probJoint) {
     ## create allocation matrix for markers
     .probmat <- matrix(0, nrow = nrow(markerSet), ncol = K)
@@ -90,8 +90,8 @@ tagmPredict <- function(object,
     .joint <- rbind(MCMCParams@summary@tagm.joint, .probmat)
     fData(object)$tagm.map.joint <- .joint[rownames(fData(object)), ]
   }
-    
-  
+
+
   return(object)
 
 }
@@ -101,18 +101,12 @@ tagmPredict <- function(object,
 ##' @return `MCMCParams` returns an instance of class [MCMCParams()]
 ##'     with summary populated.
 ##' @md
-##' @references *A Bayesian Mixture Modelling Approach For Spatial
-##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
-##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
-##'     https://doi.org/10.1101/282269
-##' @author Oliver M. Crook
 ##' @seealso The [plotEllipse()] function can be used to visualise
 ##'     TAGM models on PCA plots with ellipses.
 ##' @rdname tagm-mcmc
 ##'
-tagmMcmcProcess <- function(MCMCParams
-){
-  
+tagmMcmcProcess <- function(MCMCParams) {
+
   ## get require slots
   myParams <- MCMCParams
   myChain <- chains(myParams)[[1]]
@@ -120,7 +114,7 @@ tagmMcmcProcess <- function(MCMCParams
   N <- myChain@N
   K <- myChain@K
   n <- myChain@n
-  
+
   ## storage
   meanComponentProb = vector("list", length = numChains)
   meanOutlierProb = vector("list", length = numChains)
@@ -131,10 +125,10 @@ tagmMcmcProcess <- function(MCMCParams
   pooled.ComponentProb <- array(0, c(N, n * numChains, K ))
   pooled.Outlier <- matrix(0, nrow = N, ncol = n * numChains)
   pooled.OutlierProb <- array(0, c(N, n * numChains, 2 ))
-  
+
   # Calculate basic quantities
   for (j in seq_len(numChains)) {
-    
+
     mc <- chains(myParams)[[j]]
     meanComponentProb[[j]] <- t(apply(mc@ComponentProb[, , ], 1, colMeans))
     meanOutlierProb[[j]] <- t(apply(mc@OutlierProb[, , ], 1, colMeans))
@@ -145,7 +139,7 @@ tagmMcmcProcess <- function(MCMCParams
     pooled.ComponentProb[, n * (j - 1) + seq.int(n), ] <- mc@ComponentProb
     pooled.Outlier[, n * (j - 1)+ seq.int(n)] <- mc@Outlier
     pooled.OutlierProb[, n * (j - 1) + seq.int(n), ] <- mc@OutlierProb
-    
+
   }
     ## take means across chains
     tagm.joint <- tagm.joint/numChains
@@ -243,11 +237,6 @@ tagmMcmcProcess <- function(MCMCParams
 ##' @return `tagmMcmcTrain` returns an instance of class
 ##'     [MCMCParams()].
 ##' @md
-##' @references *A Bayesian Mixture Modelling Approach For Spatial
-##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
-##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
-##'     https://doi.org/10.1101/282269
-##' @author Oliver M. Crook
 ##' @seealso The [plotEllipse()] function can be used to visualise
 ##'     TAGM models on PCA plots with ellipses.
 ##' @rdname tagm-mcmc
@@ -354,10 +343,9 @@ tagmMcmcTrain <- function(object,
 ##' @return `tagmMcmcChain` returns an instance of class
 ##'     [MCMCChain()].
 ##' @md
-##' @author Oliver M. Crook
 ##' @seealso The [plotEllipse()] function can be used to visualise
 ##'     TAGM models on PCA plots with ellipses.
-##' @rdname tagm-mcmc
+##' @noRd
 tagmMcmcChain <- function(object,
                           fcol = "markers",
                           method = "MCMC",
@@ -370,14 +358,8 @@ tagmMcmcChain <- function(object,
                           S0 = NULL,
                           beta0 = NULL,
                           u = 2,
-                          v = 10
-){
-  
-  suppressPackageStartupMessages({
-    require(pRoloc)
-    require(MSnbase)
-  })
-  
+                          v = 10){
+
     if (burnin >= numIter)
         stop("Burnin is larger than iterations you will not retain any samples")
 

@@ -1,11 +1,38 @@
-##' @slot method `character(1)` describing the method.
+##' The `MCMCParams` infrastructure aims at storing and process
+##' Marchov chain Monte Carlo results for the T-Augmented Gaussian
+##' Mixture model (TAGM) from Crook et al. (2018).
+##'
+##' Objects of the `MCMCParams` class are created with the
+##' `tagmMcmcTrain()` function. These objects store the *priors* of
+##' the generative TAGM model and the results of the MCMC chains,
+##' which themselves are stored as an instance of class `MCMCChains`
+##' and can be accessed with the `chains()` function. A summary of the
+##' MCMC chains (or class `MCMCSummary`) can be further computed with
+##' the `tagmMcmcProcess()` function.
+##'
+##'
+##'
+##'
+##' See the *pRoloc-bayesian* vignette for examples.
+##'
+##' @title Instrastructure to store and process MCMC results
+##' @slot method `character(1)` describing the method in the
+##'     `MCMCParams` object.
 ##' @slot chains Object of class `MCMCChains` containing the full MCMC
-##'     chain results.
+##'     chain results stored in the `MCMCParams` object.
 ##' @slot priors `list()`
 ##' @slot summary Object of class `MCMCSummary` the summarised MCMC
-##'     results.
+##'     results available in the `MCMCParams` instance.
 ##' @md
 ##' @rdname MCMCParams
+##' @aliases class:MCMCParams MCMCParams-class MCMCChains
+##'     class:MCMCChains MCMCChains-class chains MCMCChain
+##'     class:MCMCChain MCMCChain-class MCMCSummary class:MCMCSummary
+##'     MCMCSummary-class.
+##' @references *A Bayesian Mixture Modelling Approach For Spatial
+##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
+##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
+##'     https://doi.org/10.1101/282269
 .MCMCParams <- setClass("MCMCParams",
                         slots = c(method = "character",
                                   chains = "MCMCChains",
@@ -14,11 +41,10 @@
 
 
 ##' @param object An instance of appropriate class.
-##' @md
 ##' @rdname MCMCParams
 chains <- function(object) {
     stopifnot(inherits(object, "MCMCParams"))
-    x@chains
+    object@chains
 }
 
 
@@ -33,12 +59,15 @@ setMethod("show", "MCMCParams",
           })
 
 
-##' @slot posteriorEstimates A `data.frame` with N rows and columns
-##'     `tagm.allocation`, `tagm.probability`, `tagm.outlier`,
+##' @slot posteriorEstimates A `data.frame` documenting the prosterior
+##'     priors in an `MCMCSummary` instance. It contains N rows and
+##'     columns `tagm.allocation`, `tagm.probability`, `tagm.outlier`,
 ##'     `tagm.probability.lowerquantile`,
 ##'     `tagm.probability.upperquantile` and `tagm.mean.shannon`.
-##' @slot diagnostics A `matrix` of dimensions 1 by 2.
-##' @slot tagm.joint A `matrix` of dimensions N by K.
+##' @slot diagnostics A `matrix` of dimensions 1 by 2 containing the
+##'     `MCMCSummary` diagnostics.
+##' @slot tagm.joint A `matrix` of dimensions N by K storing the joint
+##'     probability in an `MCMCSummary` instance.
 ##' @md
 ##' @rdname MCMCParams
 .MCMCSummary <- setClass("MCMCSummary",
@@ -47,7 +76,7 @@ setMethod("show", "MCMCParams",
                                    tagm.joint = "matrix"))
 
 ##' @slot K `integer(1)` indicating the number of components.
-##' @slot D = "integer", ## number of samples.
+##' @slot D `integer(1)` indicating the number of samples.
 ##' @slot method `character(1)` defining the method used. Currently
 ##'     `"TAGM.MCMC"`, later also `"TAGM.GP"`.
 ##' @slot mk `matrix(K, D)`
@@ -55,7 +84,7 @@ setMethod("show", "MCMCParams",
 ##' @slot nuk `numeric(K)`
 ##' @slot sk `array(K, D, D)`
 ##' @md
-##' @rdname MCMCParams
+##' @noRd
 .ComponentParam <- setClass("ComponentParam",
                             slots = c(K = "integer",
                                       D = "integer",
@@ -96,8 +125,7 @@ setMethod("show", "MCMCParams",
                                 if (is.null(msg)) TRUE
                                 else msg
                             })
-##' @md
-##' @rdname MCMCParams
+
 setMethod("show", "ComponentParam",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
@@ -112,12 +140,18 @@ setMethod("show", "ComponentParam",
 ##'
 ##' @aliases class:MCMCChain MCMCChain-class MCMCChain
 ##' @slot n `integer(1)` indicating the number of MCMC interactions.
-##' @slot K `integer(1)` indicating the number of components.
-##' @slot N `integer(1)` indicating the number of proteins.
-##' @slot Component `matrix(N, n)` component allocation results.
-##' @slot ComponentProb `matrix(N, n, K)` component allocation probabilities.
+##'     Stored in an `MCMCChain` instance.
+##' @slot K `integer(1)` indicating the number of components. Stored
+##'     in an `MCMCChain` instance.
+##' @slot N `integer(1)` indicating the number of proteins. Stored in
+##'     an `MCMCChain` instance.
+##' @slot Component `matrix(N, n)` component allocation results of an
+##'     `MCMCChain` instance.
+##' @slot ComponentProb `matrix(N, n, K)` component allocation
+##'     probabilities of an `MCMCChain` instance.
 ##' @slot Outlier `matrix(N, n)` outlier allocation results.
-##' @slot OutlierProb `matrix(N, n, 2)` outlier allocation probabilities.
+##' @slot OutlierProb `matrix(N, n, 2)` outlier allocation
+##'     probabilities of an `MCMCChain` instance.
 ##' @md
 ##' @rdname MCMCParams
 .MCMCChain <- setClass("MCMCChain",
@@ -154,7 +188,6 @@ setMethod("show", "ComponentParam",
                            else msg
                        })
 
-##' @md
 ##' @rdname MCMCParams
 setMethod("show", "MCMCChain",
           function(object) {
@@ -167,7 +200,8 @@ setMethod("show", "MCMCChain",
 
 
 ##' @slot chains `list()` containing the individual full MCMC chain
-##'     results. Each element must be of class `MCMCChain`.
+##'     results in an `MCMCChains` instance. Each element must be a
+##'     valid `MCMCChain` instance.
 ##' @md
 ##' @rdname MCMCParams
 .MCMCChains <- setClass("MCMCChains",
@@ -183,19 +217,23 @@ setMethod("show", "MCMCChain",
                         })
 
 
-##' @md
 ##' @rdname MCMCParams
 setMethod("length", "MCMCChains",
           function(x) length(x@chains))
 
-##' @param x An object of class `MCMCChains`
+setMethod("length", "MCMCParams",
+          function(x) length(chains(x)))
+
 ##' @param i An `integer()`. Should be of length 1 for `[[`.
 ##' @md
 ##' @rdname MCMCParams
 setMethod("[[", "MCMCChains",
           function(x, i, j = "missing", drop = "missing") x@chains[[i]])
 
-##' @md
+##' @rdname MCMCParams
+setMethod("[[", "MCMCParams",
+          function(x, i, j = "missing", drop = "missing") chains(x)[[i]])
+
 ##' @rdname MCMCParams
 setMethod("[", "MCMCChains",
           function(x, i, j = "missing", drop = "missing") {
@@ -205,7 +243,15 @@ setMethod("[", "MCMCChains",
               x
           })
 
-##' @md
+##' @rdname MCMCParams
+setMethod("[", "MCMCParams",
+          function(x, i, j = "missing", drop = "missing") {
+              if (any(i > length(x)))
+                  stop("Index out of bounds. Only ", length(x), " chain(s) available.")
+              x@chains <- chains(x)[i]
+              x
+          })
+
 ##' @rdname MCMCParams
 setMethod("show", "MCMCChains",
           function(object) {

@@ -7,7 +7,7 @@
 ##' proteomics dataset (object of class [`MSnbase::MSnSet`]). Both are
 ##' then passed to the `tagmPredict` function to predict the
 ##' sub-cellular localisation of protein of unknown localisation. See
-##' the `pRoloc-bayesian` vignette for details and examples.
+##' the *pRoloc-bayesian* vignette for details and examples.
 ##'
 ##' @title Localisation of proteins using the TAGM MAP method
 ##'

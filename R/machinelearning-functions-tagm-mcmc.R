@@ -88,7 +88,7 @@ tagmMcmcPredict <- function(object,
     colnames(.probmat) <- markers
     rownames(.probmat) <- rownames(markerSet)
     .joint <- rbind(MCMCParams@summary@tagm.joint, .probmat)
-    fData(object)$tagm.map.joint <- .joint[rownames(fData(object)), ]
+    fData(object)$tagm.mcmc.joint <- .joint[rownames(fData(object)), ]
   }
 
 
@@ -187,11 +187,13 @@ tagmMcmcProcess <- function(MCMCParams) {
 
     ## Compute covergence diagnostics
     .diagnostics <- matrix(0, nrow = 1, ncol = 2)
+    if(numChains > 1){
     outlierTotal <- coda::as.mcmc.list(outlierTotal)
     gd <- coda::gelman.diag(x = outlierTotal, autoburnin = F)
     .diagnostics <- gd$psrf
     rownames(.diagnostics) <- c("outlierTotal")
-
+    }
+    
     ## Constructor for summary
     myParams@summary <- pRoloc:::.MCMCSummary(posteriorEstimates = tagm.summary,
                                               diagnostics = .diagnostics,

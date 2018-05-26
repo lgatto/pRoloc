@@ -158,6 +158,7 @@ export(## MSnSet manipulation
     rfRegularisation, rfOptimisation, rfOptimization,
     rfPrediction, rfClassification,
     tagmMapTrain, tagmPredict,
+    tagmMcmcTrain, tagmMcmcProcess, tagmMcmcPredict,
     phenoDisco,
     ## -- tl
     favourPrimary,

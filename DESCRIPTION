@@ -99,6 +99,7 @@ Collate:
     machinelearning-functions-svm.R
     machinelearning-functions-knntl.R
     machinelearning-functions-tagm-map.R
+    RcppExports.R
     machinelearning-functions-tagm-mcmc.R
     belief.R
     distances.R
@@ -131,5 +132,5 @@ Collate:
     clusterdist-functions.R
     clusterdist-framework.R
     qsep.R
-    RcppExports.R
+    
 RoxygenNote: 6.0.1

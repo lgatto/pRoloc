@@ -437,7 +437,7 @@ tagmMcmcChain <- function(object,
 
     ## initially assigned all unlabelled points to clusters greedily
     for(j in seq.int(K))
-        ComponentProb[, 1, j] <- pRoloc:::dmvtCpp(X,
+        ComponentProb[, 1, j] <- dmvtCpp(X,
                                                   mu = mk[j, ],
                                                   sigma = (1 + lambdak[j]) * sk[j, , ] / (lambdak[j] * (nuk[j] - D + 1)),
                                                   df = nuk[j] - D + 1, log = T, ncores_ = 1, isChol_ = F)

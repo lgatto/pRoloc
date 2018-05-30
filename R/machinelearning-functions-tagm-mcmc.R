@@ -177,7 +177,7 @@ tagmMcmcProcess <- function(MCMCParams) {
     outlierTotal <- vector("list", length = numChains)
     for(j in seq_len(numChains)) {
         mc <- chains(myParams)[[j]]
-        outlierTotal[[j]] <- mcmc(colSums(mc@Outlier))
+        outlierTotal[[j]] <- coda::mcmc(colSums(mc@Outlier))
     }
 
     ## Summary of posterior estimates

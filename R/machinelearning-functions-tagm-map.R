@@ -360,11 +360,12 @@ tagmPredict <- function(object,
                         params,
                         fcol = "markers",
                         probJoint = FALSE,
-                        probOutlier = TRUE) {
+                        probOutlier = TRUE,
+                        ...) {
     if (inherits(params, "MAPParams"))
-        tagmMapPredict(object, ...)
+        tagmMapPredict(object, params, fcol, probJoint, probOutlier)
     else if (inherits(params, "MCMCParams"))
-        tagmMcmcPredict(object, ...)
+        tagmMcmcPredict(object, params, fcol, probJoint, probOutlier)
     else
         stop("Parameters must either be 'MAPParams' or 'MCMCParams'.")
 }

@@ -23,13 +23,11 @@
 ##'     https://doi.org/10.1101/282269
 ##' @author Oliver M. Crook
 ##' @rdname tagm-mcmc
-
 tagmMcmcPredict <- function(object,
-                        MCMCParams,
-                        fcol = "markers",
-                        probJoint = FALSE,
-                        probOutlier = TRUE){
-
+                            MCMCParams,
+                            fcol = "markers",
+                            probJoint = FALSE,
+                            probOutlier = TRUE) {
   ## Checks for object and MCMCParams match
   stopifnot(featureNames(unknownMSnSet(object))
             == rownames(MCMCParams@summary@posteriorEstimates))
@@ -55,11 +53,11 @@ tagmMcmcPredict <- function(object,
 
   ## Create data frame to store new summaries
   .tagm.summary <- data.frame(tagm.allocation = .tagm.allocation ,
-                               tagm.probability = .tagm.probability,
-                               tagm.probability.lowerquantile = .tagm.probability.lowerquantile,
-                               tagm.probability.upperquantile = .tagm.probability.upperquantile,
-                               tagm.mean.shannon = .tagm.mean.shannon)
-  if(probOutlier){
+                              tagm.probability = .tagm.probability,
+                              tagm.probability.lowerquantile = .tagm.probability.lowerquantile,
+                              tagm.probability.upperquantile = .tagm.probability.upperquantile,
+                              tagm.mean.shannon = .tagm.mean.shannon)
+  if (probOutlier) {
     .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"],
                                       rep(1, M)) ## set all probabilities of markers to 1.
     .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"],
@@ -91,9 +89,7 @@ tagmMcmcPredict <- function(object,
     fData(object)$tagm.mcmc.joint <- .joint[rownames(fData(object)), ]
   }
 
-
   return(object)
-
 }
 
 ##'
@@ -193,7 +189,7 @@ tagmMcmcProcess <- function(MCMCParams) {
     .diagnostics <- gd$psrf
     rownames(.diagnostics) <- c("outlierTotal")
     }
-    
+
     ## Constructor for summary
     myParams@summary <- pRoloc:::.MCMCSummary(posteriorEstimates = tagm.summary,
                                               diagnostics = .diagnostics,

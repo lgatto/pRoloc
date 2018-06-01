@@ -8,7 +8,7 @@
 \alias{MAPParams}
 \alias{show,MAPParams-method}
 \alias{tagmMapTrain}
-\alias{tagmPredict}
+\alias{tagmMapPredict}
 \title{Localisation of proteins using the TAGM MAP method}
 \usage{
 \S4method{show}{MAPParams}(object)
@@ -17,7 +17,7 @@ tagmMapTrain(object, fcol = "markers", method = "MAP", numIter = 100,
   mu0 = NULL, lambda0 = 0.01, nu0 = NULL, S0 = NULL, beta0 = NULL,
   u = 2, v = 10, seed = NULL)
 
-tagmPredict(object, params, fcol = "markers", probJoint = FALSE,
+tagmMapPredict(object, params, fcol = "markers", probJoint = FALSE,
   probOutlier = TRUE)
 }
 \arguments{
@@ -58,12 +58,14 @@ concentration. Default is 1 for each class.}
 \code{\link[=tagmMapTrain]{tagmMapTrain()}}.}
 
 \item{probJoint}{A \code{logical(1)} indicating whether to return the
-joint probability, i.e. the probability for all classes as a
-new \code{tagm.map.joint} feature variable.}
+joint probability matrix, i.e. the probability for all classes
+as a new \code{tagm.map.joint} feature variable.}
 
 \item{probOutlier}{A \code{logical(1)} indicating whether to return the
 probability of being an outlier as a new \code{tagm.map.outlier}
-feature variable.}
+feature variable. A high value indicates that the protein is
+unlikely to belong to any annotated class (and is hence
+considered an outlier).}
 }
 \value{
 \code{tagmMapTrain} returns an instance of class \code{\link[=MAPParams]{MAPParams()}}.
@@ -83,7 +85,7 @@ or class \code{MAPParams}) based on an annotated quantitative spatial
 proteomics dataset (object of class \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}}). Both are
 then passed to the \code{tagmPredict} function to predict the
 sub-cellular localisation of protein of unknown localisation. See
-the \code{pRoloc-bayesian} vignette for details and examples.
+the \emph{pRoloc-bayesian} vignette for details and examples.
 }
 \section{Slots}{
 
@@ -108,7 +110,8 @@ https://doi.org/10.1101/282269
 }
 \seealso{
 The \code{\link[=plotEllipse]{plotEllipse()}} function can be used to visualise
-TAGM models on PCA plots with ellipses.
+TAGM models on PCA plots with ellipses. The \code{\link[=tagmMapTrain]{tagmMapTrain()}}
+function to use the TAGM MAP method.
 }
 \author{
 Oliver M. Crook

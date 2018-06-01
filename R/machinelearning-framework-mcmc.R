@@ -139,6 +139,7 @@ setMethod("show", "MCMCParams",
                                 else msg
                             })
 
+##' @rdname MCMCParams
 setMethod("show", "ComponentParam",
           function(object) {
             cat("Object of class \"", class(object), "\"\n", sep = "")
@@ -218,10 +219,14 @@ setMethod("show", "MCMCChain",
 setMethod("length", "MCMCChains",
           function(x) length(x@chains))
 
+##' @rdname MCMCParams
 setMethod("length", "MCMCParams",
           function(x) length(chains(x)))
 
+##' @param x Object to be subset.
 ##' @param i An `integer()`. Should be of length 1 for `[[`.
+##' @param j Missing.
+##' @param drop Missing.
 ##' @md
 ##' @rdname MCMCParams
 setMethod("[[", "MCMCChains",

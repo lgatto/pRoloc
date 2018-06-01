@@ -6,7 +6,7 @@ import(methods)
 import(Rcpp)
 
 importFrom(hexbin, hexbin)
-importFrom(BiocParallel, bplapply)
+importFrom(BiocParallel, bplapply, bpparam)
 
 importFrom("grDevices", "blues9", "colorRampPalette", "dev.new",
            "rgb", "chull")

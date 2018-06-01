@@ -21,12 +21,14 @@
 \alias{MCMCSummary-class.}
 \alias{chains}
 \alias{show,MCMCParams-method}
+\alias{show,ComponentParam-method}
 \alias{MCMCChain-class}
 \alias{.MCMCChain}
 \alias{class:MCMCChain}
 \alias{MCMCChain}
 \alias{show,MCMCChain-method}
 \alias{length,MCMCChains-method}
+\alias{length,MCMCParams-method}
 \alias{[[,MCMCChains,ANY,ANY-method}
 \alias{[[,MCMCParams,ANY,ANY-method}
 \alias{[,MCMCChains,ANY,ANY,ANY-method}
@@ -38,9 +40,13 @@ chains(object)
 
 \S4method{show}{MCMCParams}(object)
 
+\S4method{show}{ComponentParam}(object)
+
 \S4method{show}{MCMCChain}(object)
 
 \S4method{length}{MCMCChains}(x)
+
+\S4method{length}{MCMCParams}(x)
 
 \S4method{[[}{MCMCChains,ANY,ANY}(x, i, j = "missing", drop = "missing")
 
@@ -55,7 +61,13 @@ chains(object)
 \arguments{
 \item{object}{An instance of appropriate class.}
 
+\item{x}{Object to be subset.}
+
 \item{i}{An \code{integer()}. Should be of length 1 for \code{[[}.}
+
+\item{j}{Missing.}
+
+\item{drop}{Missing.}
 }
 \description{
 The \code{MCMCParams} infrastructure is used to store and process

@@ -52,18 +52,18 @@ tagmMcmcPredict <- function(object,
                                       rep(0, M)) ## set all probabilities of markers to 1.
 
   ## Create data frame to store new summaries
-  .tagm.summary <- data.frame(tagm.allocation = .tagm.allocation ,
-                              tagm.probability = .tagm.probability,
-                              tagm.probability.lowerquantile = .tagm.probability.lowerquantile,
-                              tagm.probability.upperquantile = .tagm.probability.upperquantile,
-                              tagm.mean.shannon = .tagm.mean.shannon)
+  .tagm.summary <- data.frame(tagm.mcmc.allocation = .tagm.allocation ,
+                              tagm.mcmc.probability = .tagm.probability,
+                              tagm.mcmc.probability.lowerquantile = .tagm.probability.lowerquantile,
+                              tagm.mcmc.probability.upperquantile = .tagm.probability.upperquantile,
+                              tagm.mcmc.mean.shannon = .tagm.mean.shannon)
   if (probOutlier) {
     .tagm.probability.notOutlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.notOutlier"],
                                       rep(1, M)) ## set all probabilities of markers to 1.
     .tagm.probability.Outlier <- c(MCMCParams@summary@posteriorEstimates[,"tagm.probability.Outlier"],
                                    rep(0, M)) ## set all probabilities of markers to 1.
-    .tagm.summary$tagm.probability.Outlier = .tagm.probability.Outlier
-    .tagm.summary$tagm.probability.notOutlier = .tagm.probability.notOutlier
+    .tagm.summary$tagm.mcmc.probability.Outlier <- .tagm.probability.Outlier
+    .tagm.summary$tagm.mcmc.probability.notOutlier <- .tagm.probability.notOutlier
   }
 
 

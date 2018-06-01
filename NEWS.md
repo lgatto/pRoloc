@@ -1,8 +1,12 @@
 # pRoloc 1.21
 
-## Changes in version 1.21.2
+## Changes in version 1.21.3
 - New TAGM-MCMC generative model, contributed by Oliver Crook
   <2018-05-18 Fri>
+
+## Changes in version 1.21.2
+- Version bump for BiocStyle update: Vignette needed to be rebuilt to
+  have bug fixed in BiocStyle footnote rendering.
 
 ## Changes in version 1.21.1
 - Fix bug in higlightOnPlot with missing fcol (see #105)

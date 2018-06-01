@@ -55,6 +55,8 @@ setMethod("show", "MCMCParams",
             cat("Object of class \"", class(object), "\"\n", sep = "")
             cat("Method:", object@method, "\n")
             cat("Number of chains:", length(object@chains), "\n")
+            if (nrow(object@summary@tagm.joint))
+                cat("Summary available\n")
             invisible(NULL)
           })
 

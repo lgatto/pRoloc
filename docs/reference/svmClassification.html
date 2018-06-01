@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.3</span>
       </span>
     </div>
 
@@ -198,16 +198,16 @@ package <code>e1071</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9783  0.9822  0.9862  0.9881  0.9931  1.0000 
+#&gt;  0.9783  0.9786  0.9788  0.9857  0.9894  1.0000 
 #&gt;  best sigma: 0.1   
-#&gt;  best cost: 1 4   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='svmClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;     1 4
+#&gt;  best cost: 4 1   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='svmClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;     1 4
 #&gt; 0.1 1 0</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='svmClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; sigma  cost 
 #&gt;   0.1   1.0 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>svmClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            17           176            99           102            52 
+#&gt;            17           177            99           102            52 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           137            54            17            35 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           135            54            18            35 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -226,13 +226,13 @@ package <code>e1071</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (sigma=0.1 cost=1) Fri Jun  1 18:06:08 2018 
-#&gt; Added svm predictions according to global threshold = 0 Fri Jun  1 18:06:08 2018 
+#&gt; Performed svm prediction (sigma=0.1 cost=1) Fri Jun  1 20:42:16 2018 
+#&gt; Added svm predictions according to global threshold = 0 Fri Jun  1 20:42:16 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14           145            71            93            43 
+#&gt;            14           145            70            93            44 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;           110            27            13           145            28 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           109            27            13           146            28 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -251,8 +251,8 @@ package <code>e1071</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (sigma=0.1 cost=1) Fri Jun  1 18:06:08 2018 
-#&gt; Added svm predictions according to global threshold = 0.75 Fri Jun  1 18:06:08 2018 
+#&gt; Performed svm prediction (sigma=0.1 cost=1) Fri Jun  1 20:42:16 2018 
+#&gt; Added svm predictions according to global threshold = 0.75 Fri Jun  1 20:42:16 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>)</div><div class='img'><img src='svmClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

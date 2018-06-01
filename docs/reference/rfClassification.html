@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.3</span>
       </span>
     </div>
 
@@ -192,16 +192,16 @@ Default is <code>markers</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9664  0.9763  0.9862  0.9796  0.9862  0.9862 
-#&gt;  best mtry: 2 5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='rfClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt;  0.9349  0.9472  0.9594  0.9648  0.9797  1.0000 
+#&gt;  best mtry: 10 2 5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='rfClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
 #&gt; 2 
-#&gt; 2 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='rfClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; mtry 
+#&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='rfClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; mtry 
 #&gt;    2 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>rfClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            19           181            95           104            51 
+#&gt;            19           180            96           103            53 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           134            52            21            32 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           133            52            20            33 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -220,13 +220,13 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed random forest prediction (mtry=2) Fri Jun  1 18:06:01 2018 
-#&gt; Added rf predictions according to global threshold = 0 Fri Jun  1 18:06:01 2018 
+#&gt; Performed random forest prediction (mtry=2) Fri Jun  1 20:42:09 2018 
+#&gt; Added rf predictions according to global threshold = 0 Fri Jun  1 20:42:09 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14           145            78            90            44 
+#&gt;            14           139            76            89            46 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            94            22            13           162            27 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            94            20            13           171            27 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -245,8 +245,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed random forest prediction (mtry=2) Fri Jun  1 18:06:01 2018 
-#&gt; Added rf predictions according to global threshold = 0.75 Fri Jun  1 18:06:01 2018 
+#&gt; Performed random forest prediction (mtry=2) Fri Jun  1 20:42:09 2018 
+#&gt; Added rf predictions according to global threshold = 0.75 Fri Jun  1 20:42:09 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>)</div><div class='img'><img src='rfClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -1,4 +1,37 @@
-##' The `MCMCParams` infrastructure aims at storing and process
+##' @slot chains `list()` containing the individual full MCMC chain
+##'     results in an `MCMCChains` instance. Each element must be a
+##'     valid `MCMCChain` instance.
+##' @md
+##' @rdname MCMCParams
+.MCMCChains <- setClass("MCMCChains",
+                        slots = c(chains = "list"),
+                        validity = function(object) {
+                            msg <- validMsg(NULL, NULL)
+                            cls <- sapply(object@chains,
+                                          function(x) inherits(x, "MCMCChain"))
+                            if (!all(cls))
+                                msg <- validMsg(msg, "Not all items are MCMCchains.")
+                            if (is.null(msg)) TRUE
+                            else msg
+                        })
+
+##' @slot posteriorEstimates A `data.frame` documenting the prosterior
+##'     priors in an `MCMCSummary` instance. It contains N rows and
+##'     columns `tagm.allocation`, `tagm.probability`, `tagm.outlier`,
+##'     `tagm.probability.lowerquantile`,
+##'     `tagm.probability.upperquantile` and `tagm.mean.shannon`.
+##' @slot diagnostics A `matrix` of dimensions 1 by 2 containing the
+##'     `MCMCSummary` diagnostics.
+##' @slot tagm.joint A `matrix` of dimensions N by K storing the joint
+##'     probability in an `MCMCSummary` instance.
+##' @md
+##' @rdname MCMCParams
+.MCMCSummary <- setClass("MCMCSummary",
+                         slots = c(posteriorEstimates = "data.frame",
+                                   diagnostics = "matrix",
+                                   tagm.joint = "matrix"))
+
+##' The `MCMCParams` infrastructure is used to store and process
 ##' Marchov chain Monte Carlo results for the T-Augmented Gaussian
 ##' Mixture model (TAGM) from Crook et al. (2018).
 ##'
@@ -9,9 +42,6 @@
 ##' and can be accessed with the `chains()` function. A summary of the
 ##' MCMC chains (or class `MCMCSummary`) can be further computed with
 ##' the `tagmMcmcProcess()` function.
-##'
-##'
-##'
 ##'
 ##' See the *pRoloc-bayesian* vignette for examples.
 ##'
@@ -29,10 +59,8 @@
 ##'     class:MCMCChains MCMCChains-class chains MCMCChain
 ##'     class:MCMCChain MCMCChain-class MCMCSummary class:MCMCSummary
 ##'     MCMCSummary-class.
-##' @references *A Bayesian Mixture Modelling Approach For Spatial
-##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
-##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
-##'     https://doi.org/10.1101/282269
+##' @seealso The function `tagmMcmcTrain()` to construct object of
+##'     this class.
 .MCMCParams <- setClass("MCMCParams",
                         slots = c(method = "character",
                                   chains = "MCMCChains",
@@ -59,23 +87,6 @@ setMethod("show", "MCMCParams",
                 cat("Summary available\n")
             invisible(NULL)
           })
-
-
-##' @slot posteriorEstimates A `data.frame` documenting the prosterior
-##'     priors in an `MCMCSummary` instance. It contains N rows and
-##'     columns `tagm.allocation`, `tagm.probability`, `tagm.outlier`,
-##'     `tagm.probability.lowerquantile`,
-##'     `tagm.probability.upperquantile` and `tagm.mean.shannon`.
-##' @slot diagnostics A `matrix` of dimensions 1 by 2 containing the
-##'     `MCMCSummary` diagnostics.
-##' @slot tagm.joint A `matrix` of dimensions N by K storing the joint
-##'     probability in an `MCMCSummary` instance.
-##' @md
-##' @rdname MCMCParams
-.MCMCSummary <- setClass("MCMCSummary",
-                         slots = c(posteriorEstimates = "data.frame",
-                                   diagnostics = "matrix",
-                                   tagm.joint = "matrix"))
 
 ##' @slot K `integer(1)` indicating the number of components.
 ##' @slot D `integer(1)` indicating the number of samples.
@@ -201,22 +212,6 @@ setMethod("show", "MCMCChain",
           })
 
 
-##' @slot chains `list()` containing the individual full MCMC chain
-##'     results in an `MCMCChains` instance. Each element must be a
-##'     valid `MCMCChain` instance.
-##' @md
-##' @rdname MCMCParams
-.MCMCChains <- setClass("MCMCChains",
-                        slots = c(chains = "list"),
-                        validity = function(object) {
-                            msg <- validMsg(NULL, NULL)
-                            cls <- sapply(object@chains,
-                                          function(x) inherits(x, "MCMCChain"))
-                            if (!all(cls))
-                                msg <- validMsg(msg, "Not all items are MCMCchains.")
-                            if (is.null(msg)) TRUE
-                            else msg
-                        })
 
 
 ##' @rdname MCMCParams

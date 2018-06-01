@@ -1,7 +1,8 @@
 # pRoloc 1.21
 
 ## Changes in version 1.21.2
-- Nothing yet
+- New TAGM-MCMC generative model, contributed by Oliver Crook
+  <2018-05-18 Fri>
 
 ## Changes in version 1.21.1
 - Fix bug in higlightOnPlot with missing fcol (see #105)

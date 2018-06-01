@@ -49,9 +49,8 @@ test_that("TAGM consistency", {
   map2 <- tagmMapTrain(object = d2, fcol = "xx",
                        numIter = .numIter, seed = .seed)
   expect_equal(map1, map2)
-  ans1 <- tagmPredict(object = d1, map1, fcol = "markers")
-  ans2 <- tagmPredict(object = d2, map2, fcol = "xx")
-
+  ans1 <- tagmPredict(object = d1, params = map1, fcol = "markers")
+  ans2 <- tagmPredict(object = d2, params = map2, fcol = "xx")
   expect_equal(ans1, ans2, check.attributes = FALSE)
 })
 

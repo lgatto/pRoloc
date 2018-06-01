@@ -6,7 +6,7 @@ import(methods)
 import(Rcpp)
 
 importFrom(hexbin, hexbin)
-importFrom(BiocParallel, bplapply)
+importFrom(BiocParallel, bplapply, bpparam)
 
 importFrom("grDevices", "blues9", "colorRampPalette", "dev.new",
            "rgb", "chull")
@@ -23,6 +23,7 @@ importFrom("utils", "combn", "head", "menu", "packageDescription",
 
 importFrom("dendextend", "set")
 importFrom("LaplacesDemon", "dinvwishart", "ddirichlet")
+importFrom("coda", "as.mcmc.list", "gelman.diag")
 importFrom("mixtools", "ellipse")
 
 ## importFrom("Rtsne", "Rtsne") ## moved to Suggests
@@ -157,6 +158,8 @@ export(## MSnSet manipulation
     rfRegularisation, rfOptimisation, rfOptimization,
     rfPrediction, rfClassification,
     tagmMapTrain, tagmPredict,
+    tagmMapPredict, tagmMcmcPredict,
+    tagmMcmcTrain, tagmMcmcProcess,
     phenoDisco,
     ## -- tl
     favourPrimary,

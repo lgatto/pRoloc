@@ -199,18 +199,18 @@ p</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.allocation)</code></pre></div>
 <pre><code>## 
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##            12            98            21            11            39 
+##            12            98            21            10            39 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            26             3           102            29            30 
+##            25             3           101            30            31 
 ##  Ribosome 60S 
-##            29</code></pre>
+##            30</code></pre>
 <ul>
 <li>
 <code>tagm.mcmc.probability</code>: the posterior probability for the protein sub-cellular allocations.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.probability)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.3461  0.8907  0.9901  0.9082  1.0000  1.0000</code></pre>
+##  0.3855  0.8960  0.9892  0.9089  1.0000  1.0000</code></pre>
 <p>As well as other useful summaries of the MCMC methods:</p>
 <ul>
 <li><p><code>tagm.mcmc.outlier</code> the posterior probability for the protein to belong to the outlier component.</p></li>

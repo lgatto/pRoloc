@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Localisation of proteins using the TAGM MAP method — MAPParams-class • pRoloc</title>
+<title>Localisation of proteins using the TAGM MCMC method — tagmMcmcTrain • pRoloc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,11 +28,11 @@
 
 
 
-<meta property="og:title" content="Localisation of proteins using the TAGM MAP method — MAPParams-class" />
+<meta property="og:title" content="Localisation of proteins using the TAGM MCMC method — tagmMcmcTrain" />
 
 <meta property="og:description" content="These functions implement the T augmented Gaussian mixture (TAGM)
 model for mass spectrometry-based spatial proteomics datasets
-using the maximum a posteriori (MAP) optimisation routine." />
+using Markov-chain Monte-Carlo (MCMC) for inference." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,28 +123,31 @@ using the maximum a posteriori (MAP) optimisation routine." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Localisation of proteins using the TAGM MAP method</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-framework.R'><code>R/machinelearning-framework.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a></small>
-    <div class="hidden name"><code>tagm-map.Rd</code></div>
+    <h1>Localisation of proteins using the TAGM MCMC method</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-mcmc.R'><code>R/machinelearning-functions-tagm-mcmc.R</code></a></small>
+    <div class="hidden name"><code>tagm-mcmc.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
     <p>These functions implement the T augmented Gaussian mixture (TAGM)
 model for mass spectrometry-based spatial proteomics datasets
-using the maximum a posteriori (MAP) optimisation routine.</p>
+using Markov-chain Monte-Carlo (MCMC) for inference.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for MAPParams</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
+    <pre class="usage"><span class='fu'>tagmMcmcTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MCMC"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
+  <span class='kw'>burnin</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>5L</span>, <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>numChains</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>BPPARAM</span> <span class='kw'>=</span> <span class='kw pkg'>BiocParallel</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/BiocParallel/topics/register'>bpparam</a></span>())
 
-<span class='fu'>tagmMapTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MAP"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>tagmMcmcPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>tagmMapPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>tagmPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>tagmMcmcProcess</span>(<span class='no'>params</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,7 +155,7 @@ using the maximum a posteriori (MAP) optimisation routine.</p>
     <tr>
       <th>object</th>
       <td><p>An <code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the spatial
-proteomics data to be passed to <code>tagmMapTrain</code> and
+proteomics data to be passed to <code>tagmMcmcTrain</code> and
 <code>tagmPredict</code>.</p></td>
     </tr>
     <tr>
@@ -163,12 +166,22 @@ Default is <code>markers</code>.</p></td>
     <tr>
       <th>method</th>
       <td><p>A <code>charachter()</code> describing the inference method for
-the TAGM algorithm. Default is <code>"MAP"</code>.</p></td>
+the TAGM algorithm. Default is <code>"MCMC"</code>.</p></td>
     </tr>
     <tr>
       <th>numIter</th>
-      <td><p>The number of iterations of the
-expectation-maximisation algorithm. Default is 100.</p></td>
+      <td><p>The number of iterations of the MCMC
+algorithm. Default is 1000.</p></td>
+    </tr>
+    <tr>
+      <th>burnin</th>
+      <td><p>The number of samples to be discarded from the
+begining of the chain. Default is 100.</p></td>
+    </tr>
+    <tr>
+      <th>thin</th>
+      <td><p>The thinning frequency to be applied to the MCMC
+chain.  Default is 5.</p></td>
     </tr>
     <tr>
       <th>mu0</th>
@@ -186,7 +199,7 @@ data.</p></td>
     </tr>
     <tr>
       <th>S0</th>
-      <td><p>The prior inverse-wishary scale matrix. Empirical prior
+      <td><p>The prior inverse-wishart scale matrix. Empirical prior
 used by default.</p></td>
     </tr>
     <tr>
@@ -203,24 +216,35 @@ concentration. Default is 1 for each class.</p></td>
       <td><p>The prior shape parameter for Beta(u, v). Default is 10.</p></td>
     </tr>
     <tr>
-      <th>seed</th>
-      <td><p>The optional random number generator seed.</p></td>
+      <th>numChains</th>
+      <td><p>The number of parrallel chains to be run. Default
+it 1</p></td>
+    </tr>
+    <tr>
+      <th>BPPARAM</th>
+      <td><p>Support for parallel processing using the
+<code>BiocParallel</code> infrastructure. When missing (default), the
+default registered <code>BiocParallelParam</code> parameters are
+used. Alternatively, one can pass a valid <code>BiocParallelParam</code>
+parameter instance: <code>SnowParam</code>, <code>MulticoreParam</code>,
+<code>DoparParam</code>, ... see the <code>BiocParallel</code> package for
+details.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An instance of class <code>MAPParams</code>, as generated by
-<code>tagmMapTrain()</code>.</p></td>
+      <td><p>An instance of class <code>MCMCParams</code>, as generated by
+<code>tagmMcmcTrain()</code>.</p></td>
     </tr>
     <tr>
       <th>probJoint</th>
       <td><p>A <code>logical(1)</code> indicating whether to return the
 joint probability matrix, i.e. the probability for all classes
-as a new <code>tagm.map.joint</code> feature variable.</p></td>
+as a new <code>tagm.mcmc.joint</code> feature variable.</p></td>
     </tr>
     <tr>
       <th>probOutlier</th>
       <td><p>A <code>logical(1)</code> indicating whether to return the
-probability of being an outlier as a new <code>tagm.map.outlier</code>
+probability of being an outlier as a new <code>tagm.mcmc.outlier</code>
 feature variable. A high value indicates that the protein is
 unlikely to belong to any annotated class (and is hence
 considered an outlier).</p></td>
@@ -229,31 +253,33 @@ considered an outlier).</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tagmMapTrain</code> returns an instance of class <code>MAPParams()</code>.</p>
-<p><code>tagmPredict</code> returns an instance of class
+    <p><code>tagmMcmcTrain</code> returns an instance of class
+<code>MCMCParams</code>.</p>
+<p><code>tagmMcmcPredict</code> returns an instance of class
 <code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the localisation predictions as
-a new <code>tagm.map.allocation</code> feature variable.</p>
+a new <code>tagm.mcmc.allocation</code> feature variable. The allocation
+probability is encoded as <code>tagm.mcmc.probability</code>
+(corresponding to the mean of the distribution
+probability). In additionm the upper and lower quantiles of
+the allocation probability distribution are available as
+<code>tagm.mcmc.probability.lowerquantile</code> and
+<code>tagm.mcmc.probability.upperquantile</code> feature variables. The
+Shannon entropy is available in the <code>tagm.mcmc.mean.shannon</code>
+feature variable, measuring the uncertainty in the allocations
+(a high value representing high uncertainty; the highest value
+is the natural logarithm of the number of classes).</p>
+<p><code>tagmMcmcProcess</code> returns an instance of class
+<code>MCMCParams</code> with its summary slot populated.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>tagmMapTrain</code> function generates the MAP parameters (object
-or class <code>MAPParams</code>) based on an annotated quantitative spatial
-proteomics dataset (object of class <code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are
-then passed to the <code>tagmPredict</code> function to predict the
-sub-cellular localisation of protein of unknown localisation. See
-the <em>pRoloc-bayesian</em> vignette for details and examples.</p>
-    
-    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
-
-    
-    <dl class='dl-horizontal'>
-<dt><code>method</code></dt><dd><p>A <code>character()</code> storing the TAGM method name.</p></dd>
-    <dt><code>priors</code></dt><dd><p>A <code>list()</code> with the priors for the parameters</p></dd>
-    <dt><code>seed</code></dt><dd><p>An <code>integer()</code> with the random number generation seed.</p></dd>
-    <dt><code>posteriors</code></dt><dd><p>A <code>list()</code> with the updated posterior parameters
-and log-posterior of the model.</p></dd>
-    <dt><code>datasize</code></dt><dd><p>A <code>list()</code> with details about size of data</p></dd>
-</dl>
+    <p>The <code>tagmMcmcTrain</code> function generates the samples from the
+posterior distributions (object or class <code>MCMCParams</code>) based on an
+annotated quantitative spatial proteomics dataset (object of class
+<code><a href='http://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are then passed to the <code>tagmPredict</code>
+function to predict the sub-cellular localisation of protein of
+unknown localisation. See the <em>pRoloc-bayesian</em> vignette for
+details and examples.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -265,8 +291,7 @@ https://doi.org/10.1101/282269</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The <code><a href='plotEllipse.html'>plotEllipse()</a></code> function can be used to visualise
-TAGM models on PCA plots with ellipses. The <code>tagmMapTrain()</code>
-function to use the TAGM MAP method.</p></div>
+TAGM models on PCA plots with ellipses.</p></div>
     
 
   </div>
@@ -279,16 +304,10 @@ function to use the TAGM MAP method.</p></div>
 
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#slots">Slots</a></li>
-
       <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Oliver M. Crook
 
   </div>
 </div>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.2</span>
       </span>
     </div>
 
@@ -166,7 +166,8 @@ hyperLOPIT2015 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## [19] "protein.complexes"         "signalling.cascades"      
 ## [21] "oct4.interactome"          "nanog.interactome"        
 ## [23] "sox2.interactome"          "cell.surface.proteins"    
-## [25] "markers2015"               "GOAnnotations"</code></pre>
+## [25] "markers2015"               "TAGM"                     
+## [27] "GOAnnotations"</code></pre>
 <p>The <code>addGoAnnotations</code> function by defualt does not do any filtering of the terms evidence codes unless specified in the <code>evidence</code> argument, see <code><a href="../reference/addGoAnnotations.html">?addGoAnnotations</a></code> for more details.</p>
 <p>With many well-annotated species and datasets containing typically thousands of proteins, we often find many CC terms, of which many may not be particularly meaningful. These such terms can be filtered out using the <code>filerMinMarkers</code> and <code>filterMaxMarkers</code> functions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Next we filter the GO term matrix removing any terms that have
@@ -209,12 +210,12 @@ dd[[<span class="dv">1</span>]]</code></pre></div>
 ## k's tested: 1 2 3 
 ##   Size:  27 
 ##   Size:  19 
-##   Size:  13 
+##   Size:  19 
 ## Clusters info:
 ##       ks.mean    mean ks.norm     norm
 ## k = 1       1  0.4288       1  0.14292
-## k = 2       1  0.1602       1  0.06003
-## k = 3       1 *0.1187       1 *0.05050</code></pre>
+## k = 2       1 *0.1602       1 *0.06003
+## k = 3       1  0.1602       1  0.06003</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plot normalised distances 
 <span class="kw">plot</span>(dd, <span class="dt">p =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre></div>

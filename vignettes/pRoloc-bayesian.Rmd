@@ -128,45 +128,52 @@ summary(fData(res)$tagm.map.outlier)
 # The *TAGM-MCMC* method
 
 We will use a subsest of the `tan2009r1` dataset from the
-`Biocexptpkg("pRolocdata")` to illustrate the TAGM-MCMC method
+`r Biocexptpkg("pRolocdata")` to illustrate the TAGM-MCMC method
 
-The first step is run two MCMC chains for a few iterations of the algorithm
-using the `tagmMcmcTrain` function.
-This function will generate a object of class `MCMCParams`. The summary
-slot of which is currently empty.
+The first step is run two MCMC chains for a few iterations of the
+algorithm using the `tagmMcmcTrain` function.  This function will
+generate a object of class `MCMCParams`. The summary slot of which is
+currently empty.
 
 ```{r tagmMcmcTrain}
 library("pRoloc")
 p <- tagmMcmcTrain(object = tan2009r1, numIter = 3,
-                   burnin = 1, thin = 1, numChains = 2)
+				   burnin = 1, thin = 1, numChains = 2)
 p
 ```
- Information for each MCMC chain is contained within the chains slot. This
- information can be accessed manually if need. The function `MCMCProcess`
- populates the summary slot of the `MCMCParams` object
-  
+
+Information for each MCMC chain is contained within the chains
+slot. This information can be accessed manually if need. The function
+`MCMCProcess` populates the summary slot of the `MCMCParams` object
+
 ```{r tagmMCMCProcess}
 p <- tagmMcmcProcess(p)
-head(p@summary@posteriorEstimates)
-
+p
 ```
-The summary slot has now been populated to include basic summaries of the `MCMCChains`,
-such as allocations and localisation probabilities. Protein information can be appended
-to the feature columns of the `MSnSet` by using the `tagmPredict` function, which extracts the required information
-from the summary slot of the `MCMCParams` object.
 
-```{r tagmPredict mcmc}
+The summary slot has now been populated to include basic summaries of
+the `MCMCChains`, such as allocations and localisation
+probabilities. Protein information can be appended to the feature
+columns of the `MSnSet` by using the `tagmPredict` function, which
+extracts the required information from the summary slot of the
+`MCMCParams` object.
+
+```{r tagmMcmcPredict}
 res <- tagmPredict(object = tan2009r1, params = p)
 ```
+
 One can access new features variables:
 
 - `tagm.mcmc.allocation`: the TAGM-MCMC prediction for the most likely
   protein sub-cellular annotation.
+
 ```{r}
 table(fData(res)$tagm.mcmc.allocation)
 ```
+
 - `tagm.mcmc.probability`: the posterior probability for the protein
   sub-cellular allocations.
+
 ```{r}
 summary(fData(res)$tagm.mcmc.probability)
 ```
@@ -174,13 +181,13 @@ As well as other useful summaries of the MCMC methods:
 
 - `tagm.mcmc.outlier` the posterior probability for the protein
   to belong to the outlier component.
-  
+
 - `tagm.mcmc.probability.lowerquantile` and  `tagm.mcmc.probability.upperquantile`
  are the lower and upper boundaries to the equi-tailed 95% credible interval
  of `tagm.mcmc.probability`.
- 
--  `tagm.mcmc.mean.shannon` a Monte-Carlo averaged shannon entropy, which is a measure 
-of uncertainty in the allocations.
+
+-  `tagm.mcmc.mean.shannon` a Monte-Carlo averaged shannon entropy,
+   which is a measure of uncertainty in the allocations.
 
 # Session information {-}
 

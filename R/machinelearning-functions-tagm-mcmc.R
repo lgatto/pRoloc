@@ -455,9 +455,12 @@ tagmMcmcChain <- function(object,
     ## initially assigned all unlabelled points to clusters greedily
     for(j in seq.int(K))
         ComponentProb[, 1, j] <- dmvtCpp(X,
-                                         mu = mk[j, ],
-                                         sigma = (1 + lambdak[j]) * sk[j, , ] / (lambdak[j] * (nuk[j] - D + 1)),
-                                         df = nuk[j] - D + 1, log = T, ncores_ = 1, isChol_ = F)
+                                         mu_ = mk[j, ],
+                                         sigma_ = (1 + lambdak[j]) * sk[j, , ] / (lambdak[j] * (nuk[j] - D + 1)),
+                                         df_ = nuk[j] - D + 1,
+                                         log_ = TRUE,
+                                         ncores_ = 1,
+                                         isChol_ = FALSE)
 
     Component[, 1] <- apply(X = ComponentProb[, 1, ], 1, FUN = which.max)
 
@@ -497,10 +500,10 @@ tagmMcmcChain <- function(object,
             degf <- nuk - D + 1 ## degrees freedom
             for (j in seq.int(K)) {
                 ComponentProb[i, t, j] <- log(weight[j]) + dmvtCpp(X[i, ,drop = FALSE],
-                                                                   mu = mk[j, ],
-                                                                   sigma = sigmak[j, , ],
-                                                                   df = degf[j],
-                                                                   log = TRUE,
+                                                                   mu_ = mk[j, ],
+                                                                   sigma_ = sigmak[j, , ],
+                                                                   df_ = degf[j],
+                                                                   log_ = TRUE,
                                                                    ncores_ = 1,
                                                                    isChol_ = FALSE)
             }
@@ -516,17 +519,17 @@ tagmMcmcChain <- function(object,
             n <- nrow(object)
             idk <- Component[i, t] ## temporary allocation variable
             OutlierProb[i, t, 1] <- log((tau1 + v)/(n + u + v - 1)) + dmvtCpp(X[i, ,drop=FALSE],
-                                                                              mu = mk[idk, ],
-                                                                              sigma = sigmak[idk,,],
-                                                                              df = degf[idk],
-                                                                              log = TRUE,
+                                                                              mu_ = mk[idk, ],
+                                                                              sigma_ = sigmak[idk,,],
+                                                                              df_ = degf[idk],
+                                                                              log_ = TRUE,
                                                                               ncores_ = 1,
                                                                               isChol_ = FALSE)
             OutlierProb[i, t, 2] <- log((tau2 + u)/(n + u + v - 1)) + dmvtCpp(X[i, ,drop = FALSE],
-                                                                              mu = M,
-                                                                              sigma = V,
-                                                                              df = 4,
-                                                                              log = TRUE,
+                                                                              mu_ = M,
+                                                                              sigma_ = V,
+                                                                              df_ = 4,
+                                                                              log_ = TRUE,
                                                                               ncores_ = 1,
                                                                               isChol_ = FALSE)
             ## normalise and sample

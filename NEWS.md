@@ -1,5 +1,8 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.5
+- Nothing yet
+
 ## Changes in version 1.21.4
 - Fix bugs in tagmMcmcPredict, where fcol was ignored <2018-06-05 Tue>
 - Order vignettes by prefixing the files with numbers <2018-06-05 Tue>

@@ -1,5 +1,8 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.4
+- Fix bugs in tagmMcmcPredict, where fcol was ignored <2018-06-05 Tue>
+
 ## Changes in version 1.21.3
 - New TAGM-MCMC generative model, contributed by Oliver Crook
   <2018-05-18 Fri>

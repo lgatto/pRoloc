@@ -163,12 +163,12 @@ tagmMcmcPredict <- function(object,
                             probOutlier = TRUE) {
     stopifnot(inherits(params, "MCMCParams"))
     ## Checks for object and MCMCParams match
-    stopifnot(featureNames(unknownMSnSet(object))
+    stopifnot(featureNames(unknownMSnSet(object, fcol = fcol))
               == rownames(params@summary@posteriorEstimates))
 
     ## Create marker set and size
-    markerSet <- markerMSnSet(object)
-    markers <- getMarkerClasses(object)
+    markerSet <- markerMSnSet(object, fcol = fcol)
+    markers <- getMarkerClasses(object, fcol = fcol)
     M <- nrow(markerSet)
     K <- chains(params)[[1]]@K
 

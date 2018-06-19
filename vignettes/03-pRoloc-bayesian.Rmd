@@ -1,5 +1,5 @@
 ---
-title: "Bayesian spatial proteomics with pRoloc"
+title: "Bayesian Analysis of Spatial Proteomics data using pRoloc"
 author:
 - name: Oliver Crook
 - name: Laurent Gatto

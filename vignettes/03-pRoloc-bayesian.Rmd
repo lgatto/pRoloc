@@ -17,11 +17,6 @@ vignette: >
 BiocStyle::markdown()
 ```
 
-```{r env, echo=FALSE, message=FALSE}
-library("pRoloc")
-library("pRolocdata")
-```
-
 # Introduction
 
 For an in-depth description of the infrastructure for Bayesian spatial
@@ -61,6 +56,18 @@ quantification using our approach provides biologically intriguing
 results.  To our knowledge this is the first Bayesian model of
 MS-based spatial proteomics data.
 
+Below, we start by loading packages that are needed to execute the
+code in this vignette and set the default colour to semi-transparent.
+
+```{r env, message=FALSE}
+library("pRoloc")
+library("pRolocdata")
+require("reshape")
+require("ggplot2")
+require("coda")
+
+setStockcol(paste0(getStockcol(), 90))
+```
 
 # The *TAGM-MAP* method
 
@@ -68,7 +75,6 @@ We will use a subsest of the `tan2009r1` dataset from the
 `Biocexptpkg("pRolocdata")` to illustrate the TAGM-MAP method
 
 ```{r tan}
-library("pRolocdata")
 data(tan2009r1)
 set.seed(1)
 tan2009r1 <- tan2009r1[sample(nrow(tan2009r1), 400), ]
@@ -79,7 +85,6 @@ The first step is to generate the model parameters using the
 `MAPParams`.
 
 ```{r tagmMapTrain}
-library("pRoloc")
 p <- tagmMapTrain(tan2009r1)
 p
 ```
@@ -188,6 +193,18 @@ As well as other useful summaries of the MCMC methods:
 
 -  `tagm.mcmc.mean.shannon` a Monte-Carlo averaged shannon entropy,
    which is a measure of uncertainty in the allocations.
+
+
+<!--
+
+	The following section is included statically, as it requires a
+	relatively large dataset (nearly 400MB), that we don't want to
+	include in a package for space requirements nor download for time
+	requirements.
+
+	-->
+
+
 
 # Session information {-}
 

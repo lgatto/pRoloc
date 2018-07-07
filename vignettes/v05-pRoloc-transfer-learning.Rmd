@@ -1,0 +1,615 @@
+---
+title: "A transfer learning algorithm for spatial proteomics"
+author:
+- name: Lisa M. Breckels
+  affiliation: Computational Proteomics Unit, Cambridge, UK
+- name: Laurent Gatto
+  affiliation: Computational Proteomics Unit, Cambridge, UK
+package: pRoloc
+abstract: >
+  This vignette illustrates the application of a *transfer learning*
+  algorithm to assign proteins to sub-cellular localisations. The
+  *knntlClassification* algorithm combines *primary* experimental
+  spatial proteomics data (LOPIT, PCP, etc.)  and an *auxiliary* data
+  set (for example binary data based on Gene Ontology terms) to
+  improve the sub-cellular assignment given an optimal combination of
+  these data sources.
+output:
+  BiocStyle::html_document:
+    toc_float: true
+bibliography: pRoloc.bib
+vignette: >
+  %\VignetteIndexEntry{A transfer learning algorithm for spatial proteomics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Spatial Proteomics}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+```{r env, include=FALSE, echo=FALSE, cache=FALSE}
+library("knitr")
+opts_chunk$set(stop_on_error = 1L)
+suppressPackageStartupMessages(library("MSnbase"))
+suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
+suppressPackageStartupMessages(library("pRolocdata"))
+suppressPackageStartupMessages(library("class"))
+set.seed(1)
+setStockcol(NULL)
+```
+
+# Introduction {#sec:intro}
+
+Our main data source to study protein sub-cellular localisation are
+high-throughput mass spectrometry-based experiments such as LOPIT, PCP
+and similar designs (see [@Gatto2010] for an general
+introduction). Recent optimised experiments result in high quality
+data enabling the identification of over 6000 proteins and
+discriminate numerous sub-cellular and sub-organellar niches
+[@Christoforou:2016]. Supervised and semi-supervised machine learning
+algorithms can be applied to assign thousands of proteins to annotated
+sub-cellular niches [@Breckels2013,Gatto:2014] (see also the
+*pRoloc-tutorial* vignette). These data constitute our main
+source for protein localisation and are termed thereafter
+*primary* data.
+
+There are other sources of data about sub-cellular localisation of
+proteins, such as the Gene Ontology [@Ashburner:2000] (in
+particular the cellular compartment name space), quantitative features
+derived from protein sequences (such as pseudo amino acid composition)
+or the Human Protein Atlas [@Uhlen:2010] to cite a few. These
+data, while not optimised to a specific system at hand and, in the
+case of annotation feature, not as reliable as our experimental data,
+constitute an invaluable, often plentiful source of *auxiliary*
+information.
+
+The aim of a *transfer learning* algorithm is to combine
+different sources of data to improve overall classification. In
+particular, the goal is to support/complement the primary target
+domain (experimental data) with auxiliary data (annotation) features
+without compromising the integrity of our primary data. In this
+vignette, we describe the application of transfer learning algorithms
+for the localisation of proteins from the `r Biocpkg("pRoloc")` package, as
+described in
+
+> Breckels LM, Holden S, Wonjar D, Mulvey CM, Christoforou A, Groen A,
+> Trotter MW, Kohlbacker O, Lilley KS and Gatto L (2016). *Learning
+> from heterogeneous data sources: an application in spatial
+> proteomics*. PLoS Comput Biol 13;12(5):e1004920. doi:
+> [10.1371/journal.pcbi.1004920](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004920).
+
+Two algorithms were developed: a transfer learning algorithm based on
+the $k$-nearest neighbour classifier, coined kNN-TL hereafter,
+described in section \@ref(sec:knntl), and one based on the support
+vector machine algorithm, termed SVM-TL, described in section
+\@ref(sec:svmtl).
+
+```{r loadpkg}
+library("pRoloc")
+```
+
+# Preparing the auxiliary data {#sec:aux}
+
+## The Gene Ontology {#sec:goaux}
+
+The auxiliary data is prepared from the primary data's features. All
+the GO terms associated to these features are retrieved and used to
+create a binary matrix where a one (zero) at position $(i,j)$
+indicates that term $j$ has (not) been used to annotate feature $i$.
+
+The GO terms are retrieved from an appropriate repository using the
+`r Biocpkg("biomaRt")` package. The specific Biomart repository and query
+will depend on the species under study and the type of features. The
+first step is to prepare annotation parameters that will enable to
+perform the query. The `r Biocpkg("pRoloc")` package provides a dedicated
+infrastructure to set up the query to the annotation resource and
+prepare the GO data for subsequent analyses. This infrastructure is
+composed of:
+
+
+1. define the annotation parameters based on the species and feature
+   types;
+2. query the resource defined in (1) to retrieve relevant terms and
+   use the terms to prepare the auxiliary data.
+
+
+We will demonstrate these steps using a LOPIT experiment on Human
+Embryonic Kidney (HEK293T) fibroblast cells [@Breckels2013],
+available and documented in the `r Biocexptpkg("pRolocdata")` experiment
+package as `andy2011`.
+
+```{r loaddata}
+library("pRolocdata")
+data(andy2011)
+```
+
+### Preparing the query parameters {#sec:ap}
+
+The query parameters are stored as *AnnotationParams* objects that are
+created with the *setAnnotationParams* function. The function will
+present a first menu with `r nrow(pRoloc:::getMartTab())`. Once the
+species has been selected, a set of possible identifier types is
+displayed.
+
+![Selecting species (left) and feature type (right) to create an `AnnotationParams` instance for the human `andy2011` data.](./Figures/ap12.png){#fig:apgui}
+
+It is also possible to pass patterns\footnote{These patterns must
+match uniquely or an error will be thrown.} to match against the
+species (`"Homo sapiens"`) and feature type (`"UniProtKB/Swiss-prot ID"`).
+
+```{r ap}
+ap <- setAnnotationParams(inputs =
+                              c("Homo sapiens",
+                                "UniProtKB/Swiss-Prot ID"))
+ap
+```
+
+The *setAnnotationParams* function automatically sets the annotation
+parameters globally so that the `ap` object does not need to be
+explicitly set later on. The default parameters can be retrieved with
+*getAnnotationParams*.
+
+### Preparing the auxiliary data from the GO ontology {#sec:auxgo}
+
+The feature names of the `andy2011` data are UniProt identifiers, as
+defined in the `ap` accession parameters.
+
+```{r pdata}
+data(andy2011)
+head(featureNames(andy2011))
+```
+
+The *makeGoSet* function takes an *MSnSet* class (from which the
+feature names will be extracted) or, directly a vector of characters
+containing the feature names of interest to retrieve the associated GO
+terms and construct an auxiliary `MSnSet`. By default, it downloads
+*cellular component* terms and does not do any filtering on the terms
+evidence codes (see the *makeGoSet* manual for details). Unless passed
+as argument, the default, globally set *AnnotationParams* are used to
+define the Biomart server and the query\footnote{The annotation
+parameters could also be passed explicitly through the `params`
+argument.}.
+
+```{r andgoset}
+andygoset <- makeGoSet(andy2011)
+andygoset
+exprs(andygoset)[1:7, 1:4]
+```
+
+```{r testandsamefeats, echo=FALSE}
+stopifnot(all.equal(featureNames(andy2011), featureNames(andygoset)))
+```
+
+We now have a primary data set, composed of `r nrow(andy2011)` protein
+quantitative profiles for `r ncol(andy2011)` fractions along the
+density gradient and an auxiliary data set for `r ncol(andygoset)`
+cellular compartment GO terms for the same `r nrow(andygoset)`
+features.
+
+### A note on reproducibility {#sec:annotrepro}
+
+The generation of the auxiliary data relies on specific Biomart server
+*Mart* instances in the *AnnotationParams* class and the actual query
+to the server to obtain the GO terms associated with the features. The
+utilisation of online servers, which undergo regular updates, does not
+guarantee reproducibility of feature/term association over time. It is
+recommended to save and store the *AnnotationParams* and auxiliary
+*MSnSet* instances. Alternatively, it is possible to use other
+Bioconductor infrastructure, such as specific organism annotations and
+the `r Biocannopkg("GO.db")` package to use specific versioned (and
+thus traceable) annotations.
+
+## The Human Protein Atlas {#sec:hpaaux}
+
+The feature names of our LOPIT experiment are UniProt identifiers,
+while the Human Protein Atlas uses Ensembl gene identifiers. This
+first code chunk matches both identifier types using the Ensembl
+Biomart server and `left_join` from the `r CRANpkg("dplyr")`
+package. In this section, we copy the experimental data to `andyhpa`.
+
+```{r hparprep, eval=TRUE}
+andyhpa <- andy2011
+fvarLabels(andyhpa)[1] <- "accession" ## for left_join matching
+## convert protein accession numbers to ensembl gene identifiers
+
+library("biomaRt")
+mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+filter <- "uniprotswissprot"
+attrib <- c("uniprot_gn", "uniprotswissprot", "ensembl_gene_id")
+bm <- getBM(attributes = attrib,
+            filters = filter,
+            values = fData(andyhpa)[, "accession"],
+            mart = mart)
+head(bm)
+
+## HPA data
+library("hpar")
+
+## using old version for traceability
+setHparOptions(hpadata = "hpaSubcellularLoc14")
+hpa <- getHpa(bm$ensembl_gene_id)
+hpa$Reliability <- droplevels(hpa$Reliability)
+colnames(hpa)[1] <- "ensembl_gene_id"
+
+hpa <- dplyr::left_join(hpa, bm)
+hpa <- hpa[!duplicated(hpa$uniprotswissprot), ]
+
+## match HPA/LOPIT
+colnames(hpa)[7] <- "accession"
+fd <- dplyr::left_join(fData(andyhpa), hpa)
+rownames(fd) <- featureNames(andyhpa)
+fData(andyhpa) <- fd
+stopifnot(validObject(andyhpa))
+
+## Let's get rid of features without any hpa data
+lopit <- andyhpa[!is.na(fData(andyhpa)$Main.location), ]
+```
+
+Below, we deparse the multiple ';'-delimited locations contained in
+the Human Protein sub-cellular Atlas, create the auxiliary binary data
+matrix (only localisations with reliability equal to *Supportive* are
+considered; *Uncertain* assignments are ignored - see
+http://www.proteinatlas.org/about/antibody+validation for details) and
+filter proteins without any localisation data.
+
+```{r hpadata, eval=TRUE}
+## HPA localisation
+hpalocs <- c(as.character(fData(lopit)$Main.location),
+             as.character(fData(lopit)$Other.location))
+hpalocs <- hpalocs[!is.na(hpalocs)]
+hpalocs <- unique(unlist(strsplit(hpalocs, ";")))
+
+makeHpaSet <- function(x, score2, locs = hpalocs) {
+    hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
+    colnames(hpamat) <- locs
+    rownames(hpamat) <- featureNames(x)
+    for  (i in 1:nrow(hpamat)) {
+        loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
+        loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
+        score <- score2[fData(x)[i, "Reliability"]]
+        hpamat[i, loc] <- score
+        hpamat[i, loc2] <- score
+    }
+    new("MSnSet", exprs = hpamat,
+        featureData = featureData(x))
+}
+
+hpaset <- makeHpaSet(lopit,
+                     score2 = c(Supportive = 1, Uncertain = 0))
+hpaset <- filterZeroRows(hpaset)
+dim(hpaset)
+exprs(hpaset)[c(1, 6, 200), 1:3]
+```
+
+## Protein-protein interactions {#sec:ppi}
+
+Protein-protein interaction data can also be used as auxiliary data
+input to the transfer learning algorithm. Several sources can be used
+to do so directly from R:
+
+* The `r Biocpkg("PSICQUIC")` package provides an R interfaces to the
+  HUPO Proteomics Standard Initiative (HUPO-PSI) project, which
+  standardises programmatic access to molecular interaction
+  databases. This approach enables to query great many resources in
+  one go but, as noted in the vignettes, for bulk interactions, it is
+  recommended to directly download databases from individual PSICQUIC
+  providers.
+
+* The `r Biocpkg("STRINGdb")` package provides a direct interface to
+  the STRING protein-protein interactions database. This package can
+  be used to generate a table as the one used below. The exact
+  procedure is described in the `STRINGdb` vignette and involves
+  mapping the protein identifiers with the *map* and retrieve the
+  interaction partners with the *get_neighbors* method.
+
+* Finally, it is possible to use any third-party PPI inference results
+  and adequately prepare these results for transfer learning. Below,
+  we will described this case with PPI data in a tab-delimited format,
+  as retrieved directly from the STRING database.
+
+
+Below, we access the PPI spreadsheet file for our test data, that is
+distributed with the `r Biocexptpkg("pRolocdata")` package.
+
+```{r tabdelim}
+ppif <- system.file("extdata/tabdelimited._gHentss2F9k.txt.gz", package = "pRolocdata")
+ppidf <- read.delim(ppif, header = TRUE, stringsAsFactors = FALSE)
+head(ppidf)
+```
+
+The file contains `r nrow(ppidf)` pairwise interactions and the STRING
+combined interaction score. Below, we create a contingency matrix that
+uses these scores to encode and weight interactions.
+
+```{r ppiset}
+uid <- unique(c(ppidf$X.node1, ppidf$node2))
+ppim <- diag(length(uid))
+colnames(ppim) <- rownames(ppim) <- uid
+
+for (k in 1:nrow(ppidf)) {
+    i <- ppidf[[k, "X.node1"]]
+    j <- ppidf[[k, "node2"]]
+    ppim[i, j] <- ppidf[[k, "combined_score"]]
+}
+
+ppim[1:5, 1:8]
+```
+
+We now have a contingency matrix reflecting a total of
+`r sum(ppim != 0)` interactions between `r nrow(ppim)`
+proteins. Below, we only keep proteins that are also available in our
+spatial proteomics data (renamed to `andyppi`), subset the PPI and
+LOPIT data, create the appropriate `MSnSet` object, and filter out
+proteins without any interaction scores.
+
+```{r ppiset2}
+andyppi <- andy2011
+featureNames(andyppi) <- sub("_HUMAN", "", fData(andyppi)$UniProtKB.entry.name)
+cmn <- intersect(featureNames(andyppi), rownames(ppim))
+ppim <- ppim[cmn, ]
+andyppi <- andyppi[cmn, ]
+
+ppi <- MSnSet(ppim, fData = fData(andyppi),
+              pData = data.frame(row.names = colnames(ppim)))
+ppi <- filterZeroCols(ppi)
+```
+
+We now have two `MSnSet` objects containing respectively
+`r nrow(andyppi)` primary experimental protein profiles along a
+sub-cellular density gradient (`andyppi`) and `r nrow(ppi)` auxiliary
+interaction profiles (`ppi`).
+
+# Support vector machine transfer learning {#sec:svmtl}
+
+The SVM-TL method descibed in [@Breckels:2016] has not yet been
+incorporated in the `r Biocpkg("pRoloc")` package. The code
+implementing the method is currently available in its own repository:
+
+https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code
+
+# Nearest neighbour transfer learning {#sec:knntl}
+
+## Optimal weights {#sec:theopt}
+
+```{r mclasses, echo=FALSE}
+data(andy2011) ## load clean LOPIT data
+## marker classes for andy2011
+m <- unique(fData(andy2011)$markers.tl)
+m <- m[m != "unknown"]
+```
+
+The weighted nearest neighbours transfer learning algorithm estimates
+optimal weights for the different data sources and the spatial niches
+described for the data at hand with the *knntlOptimisation*
+function. For instance, for the human data modelled by the `andy2011`
+and `andygoset`
+objects^[We will use the sub-cellular markers defined in the `markers.tl` feature variable, instead of the default `markers`.]
+and the `r length(m)` annotated sub-cellular localisations
+(`r paste(m[-1], collapse = ", ")` and `r m[1]`), we want to know how
+to optimally combine primary and auxiliary data. If we look at figure
+\@ref(fig:andypca), that illustrates the experimental separation of
+the `r length(m)` spatial classes on a principal component plot, we
+see that some organelles such as the mitochondrion or the cytosol and
+cytosol/nucleus are well resolved, while others such as the Golgi or
+the ER are less so. In this experiment, the former classes are not
+expected to benefit from another data source, while the latter should
+benefit from additional information.
+
+
+```{r andypca, echo=FALSE, fig.cap = "PCA plot of `andy2011`. The multivariate protein profiles are summarised along the two first principal components. Proteins of unknown localisation are represented by empty grey points. Protein markers, which are well-known residents of specific sub-cellular niches are colour-coded and form clusters on the figure."}
+setStockcol(paste0(getStockcol(), "80"))
+plot2D(andy2011, fcol = "markers.tl")
+setStockcol(NULL)
+addLegend(andy2011, fcol = "markers.tl",
+          where = "topright", bty = "n", cex = .7)
+```
+
+Let's define a set of three possible weights: 0, 0.5 and 1. A weight
+of 1 indicates that the final results rely exclusively on the
+experimental data and ignore completely the auxiliary data. A weight
+of 0 represents the opposite situation, where the primary data is
+ignored and only the auxiliary data is considered. A weight of 0.5
+indicates that each data source will contribute equally to the final
+results. It is the algorithm's optimisation step task to identify the
+optimal combination of class-specific weights for a given primary and
+auxiliary data pair. The optimisation process can be quite time
+consuming for many weights and many sub-cellular classes, as all
+combinations (there are $number~of~classes^{number~of~weights}$
+possibilities; see below). One would generally defined more weights
+(for example `r seq(0, 1, by = 0.25)` or `r round(seq(0, 1, length.out = 4), 2)`)
+to explore more fine-grained integration opportunities. The possible
+weight combinations can be calculated with the *thetas* function:
+
+* 3 classes, 3 weights
+
+```{r thetas0, echo=TRUE}
+head(thetas(3, by = 0.5))
+dim(thetas(3, by = 0.5))
+```
+
+* 5 classes, 4 weights
+
+```{r thetas1, echo=TRUE}
+dim(thetas(5, length.out = 4))
+```
+
+* for the human `andy2011` data, considering 4 weights, there are very
+  many combinations:
+
+```{r thetaandy}
+## marker classes for andy2011
+m <- unique(fData(andy2011)$markers.tl)
+m <- m[m != "unknown"]
+th <- thetas(length(m), length.out=4)
+dim(th)
+```
+
+
+The actual combination of weights to be tested can be defined in
+multiple ways: by passing a weights matrix explicitly (as those
+generated with *thetas* above) through the `th` argument; or by
+defining the increment between weights using `by`; or by specifying
+the number of weights to be used through the `length.out` argument.
+
+Considering the sub-cellular resolution for this experiment, we would
+anticipate that the mitochondrion, the cytosol and the cytosol/nucleus
+classes would get high weights, while the ER and Golgi would be
+assigned lower weights.
+
+As we use a nearest neighbour classifier, we also need to know how
+many neighbours to consider when classifying a protein of unknown
+localisation. The *knnOptimisation* function (see the
+*pRoloc-tutorial* vignette and the functions manual page) can be run
+on the primary and auxiliary data sources independently to estimate
+the best $k_P$ and $k_A$ values. Here, based on *knnOptimisation*, we
+use 3 and 3, for $k_P$ and $k_A$ respectively.
+
+Finally, to assess the validity of the weight selection, it should be
+repeated a certain number of times (default value is 50). As the
+weight optimisation can become very time consuming for a wide range of
+weights and many target classes, we would recommend to start with a
+lower number of iterations, pre-analyse the results, proceed with
+further iterations and eventually combine the optimisation results
+data with the *combineThetaRegRes* function before
+proceeding with the selection of best weights.
+
+```{r thetaopt0, eval=FALSE}
+topt <- knntlOptimisation(andy2011, andygoset,
+                          th = th,
+                          k = c(3, 3),
+                          fcol = "markers.tl",
+                          times = 50)
+```
+
+The above code chunk would take too much time to be executed in the
+frame of this vignette. Below, we pass a very small subset of theta
+matrix to minimise the computation time. The *knntlOptimisation*
+function supports parallelised execution using various backends thanks
+to the `r Biocpkg("BiocParallel")` package; an appropriate backend
+will be defined automatically according to the underlying architecture
+and user-defined backends can be defined through the `BPPARAM`
+argument^[Large scale applications of this algorithms were run on a cluster using an MPI backend defined with `SnowParams(256, type="MPI")`.]. Also,
+in the interest of time, the weights optimisation is repeated only 5
+times below.
+
+```{r thetaopt, eval=TRUE}
+set.seed(1)
+i <- sample(nrow(th), 12)
+topt <- knntlOptimisation(andy2011, andygoset,
+                          th = th[i, ],
+                          k = c(3, 3),
+                          fcol = "markers.tl",
+                          times = 5)
+topt
+```
+
+The optimisation is performed on the labelled marker examples
+only. When removing unlabelled non-marker proteins (the `unknowns`),
+some auxiliary GO columns end up containing only 0 (the GO-protein
+association was only observed in non-marker proteins), which are
+temporarily removed.
+
+The `topt` result stores all the result from the optimisation step,
+and in particular the observed theta weights, which can be directly
+plotted as shown on the [bubble plot](#fig:bubble) below. These bubble
+plots give the proportion of best weights for each marker class that
+was observed during the optimisation phase. We see that the
+mitochondrion, the cytosol and cytosol/nucleus classes predominantly
+are scored with height weights (2/3 and 1), consistent with high
+reliability of the primary data. The Golgi and the ribosomal clusters
+(and to a lesser extend the ER) favour smaller scores, indicating a
+substantial benefit of the auxiliary data.
+
+![Results obtained from an extensive optimisation on the primary `andy2011` and auxiliary `andygoset` data sets, as produced by `plot(topt)`. This figure is not the result for the previous code chunk, where only a random subset of 10 candidate weights have been tested.](./Figures/bubble-andy.png){#fig:bubble}
+
+## Choosing weights {#sec:choosep}
+
+A set of best weights must be chosen and applied to the classification
+of the unlabelled proteins (formally annotated as `unknown`). These
+can be defined manually, based on the pattern observed in the weights
+[bubble plot](#fig:bubble), or automatically extracted with the
+*getParams*
+method^[Note that the scores extracted here are based on the random subsest of weights.]. See
+*?getParams* for details and the *favourPrimary* function, if it is
+desirable to systematically favour the primary data (i.e. high
+weights) when different weight combinations perform equally well.
+
+
+```{r getParam}
+getParams(topt)
+```
+
+We provide the best parameters for the extensive parameter
+optimisation search, as provided by *getParams*:
+
+```{r besttheta}
+(bw <- experimentData(andy2011)@other$knntl$thetas)
+```
+
+## Applying best *theta* weights {#sec:thclass}
+
+To apply our best weights and learn from the auxiliary data
+accordingly when classifying the unlabelled proteins to one of the
+sub-cellular niches considered in `markers.tl` (as displayed on figure
+\@ref(fig:andypca)), we pass the primary and auxiliary data sets, best
+weights, best k's (and, on our case the marker's feature variable we
+want to use, default would be `markers`) to the *knntlClassification*
+function.
+
+```{r tlclass}
+andy2011 <- knntlClassification(andy2011, andygoset,
+                                bestTheta = bw,
+                                k = c(3, 3),
+                                fcol = "markers.tl")
+```
+
+This will generate a new instance of class *MSnSet*, identical to the
+primary data, including the classification results and classifications
+scores of the transfer learning classification algorithm (as `knntl`
+and `knntl.scores` feature variables respectively). Below, we extract
+the former with the *getPrediction* function and plot the results of
+the classification.
+
+```{r tlpreds}
+andy2011 <- getPredictions(andy2011, fcol = "knntl")
+```
+
+```{r andypca2, fig.width=6, fig.height=6, fig.cap = "PCA plot of `andy2011` after transfer learning classification. The size of the points is proportional to the classification scores."}
+setStockcol(paste0(getStockcol(), "80"))
+ptsze <- exp(fData(andy2011)$knntl.scores) - 1
+plot2D(andy2011, fcol = "knntl", cex = ptsze)
+setStockcol(NULL)
+addLegend(andy2011, where = "topright",
+          fcol = "markers.tl",
+          bty = "n", cex = .7)
+```
+
+
+Please read the *pRoloc-tutorial* vignette, and in particular the
+classification section, for more details on how to proceed with
+exploration the classification results and classification scores.
+
+# Conclusions {#sec:ccl}
+
+This vignette describes the application of a weighted $k$-nearest
+neighbour transfer learning algorithm and its application to the
+sub-cellular localisation prediction of proteins using quantitative
+proteomics data as primary data and Gene Ontology-derived binary data
+as auxiliary data source. The algorithm can be used with various data
+sources (we show how to compile binary data from the Human Protein
+Atlas in section \@ref(sec:hpaaux)) and have successfully applied the
+algorithm [@Breckels:2016] on third-party quantitative auxiliary data.
+
+# Session information {-}
+
+All software and respective versions used to produce this document are
+listed below.
+
+```{r sessioninfo, echo=FALSE}
+sessionInfo()
+```
+
+# References {-}

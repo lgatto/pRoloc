@@ -9,7 +9,7 @@
 \usage{
 tagmMcmcTrain(object, fcol = "markers", method = "MCMC", numIter = 1000L,
   burnin = 100L, thin = 5L, mu0 = NULL, lambda0 = 0.01, nu0 = NULL,
-  S0 = NULL, beta0 = NULL, u = 2, v = 10, numChains = 1,
+  S0 = NULL, beta0 = NULL, u = 2, v = 10, numChains = 4L,
   BPPARAM = BiocParallel::bpparam())
 
 tagmMcmcPredict(object, params, fcol = "markers", probJoint = FALSE,
@@ -59,7 +59,7 @@ concentration. Default is 1 for each class.}
 \item{v}{The prior shape parameter for Beta(u, v). Default is 10.}
 
 \item{numChains}{The number of parrallel chains to be run. Default
-it 1}
+it 4.}
 
 \item{BPPARAM}{Support for parallel processing using the
 \code{BiocParallel} infrastructure. When missing (default), the

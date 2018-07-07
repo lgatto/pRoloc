@@ -3,3 +3,4 @@
 Makefile
 .gitignore
 NEWS
+inst/extdoc/tanTagm.rda

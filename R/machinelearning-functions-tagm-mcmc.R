@@ -36,7 +36,7 @@
 ##' @param u The prior shape parameter for Beta(u, v). Default is 2
 ##' @param v The prior shape parameter for Beta(u, v). Default is 10.
 ##' @param numChains The number of parrallel chains to be run. Default
-##'     it 1
+##'     it 4.
 ##' @param BPPARAM Support for parallel processing using the
 ##'     `BiocParallel` infrastructure. When missing (default), the
 ##'     default registered `BiocParallelParam` parameters are
@@ -67,7 +67,7 @@ tagmMcmcTrain <- function(object,
                           beta0 = NULL,
                           u = 2,
                           v = 10,
-                          numChains = 1,
+                          numChains = 4L,
                           BPPARAM = BiocParallel::bpparam()) {
 
     ## get expression marker data

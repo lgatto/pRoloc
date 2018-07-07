@@ -1,5 +1,9 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.5
+- Added new section in Bayesian spatial proteomics vignette detailing
+  mcmc output processing <2018-07-07 Sat>
+
 ## Changes in version 1.21.4
 - Fix bugs in tagmMcmcPredict, where fcol was ignored <2018-06-05 Tue>
 - Order vignettes by prefixing the files with numbers <2018-06-05 Tue>

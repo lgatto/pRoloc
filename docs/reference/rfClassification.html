@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -32,6 +34,7 @@
 
 <meta property="og:description" content="Classification using the random forest algorithm." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.5</span>
       </span>
     </div>
 
@@ -81,19 +84,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
     </li>
     <li>
-      <a href="../articles/02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+      <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
     </li>
     <li>
-      <a href="../articles/03-pRoloc-bayesian.html">Bayesian spatial proteomics with pRoloc</a>
+      <a href="../articles/v03-pRoloc-bayesian.html">Bayesian Analysis of Spatial Proteomics data using pRoloc</a>
     </li>
     <li>
-      <a href="../articles/04-pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+      <a href="../articles/v04-pRoloc-goannotations.html">Annotating spatial proteomics data</a>
     </li>
     <li>
-      <a href="../articles/05-pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+      <a href="../articles/v05-pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
     </li>
   </ul>
 </li>
@@ -220,8 +223,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed random forest prediction (mtry=2) Tue Jun  5 16:40:03 2018 
-#&gt; Added rf predictions according to global threshold = 0 Tue Jun  5 16:40:03 2018 
+#&gt; Performed random forest prediction (mtry=2) Sat Jul  7 15:00:00 2018 
+#&gt; Added rf predictions according to global threshold = 0 Sat Jul  7 15:00:00 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14           139            76            89            46 
@@ -245,8 +248,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed random forest prediction (mtry=2) Tue Jun  5 16:40:03 2018 
-#&gt; Added rf predictions according to global threshold = 0.75 Tue Jun  5 16:40:03 2018 
+#&gt; Performed random forest prediction (mtry=2) Sat Jul  7 15:00:00 2018 
+#&gt; Added rf predictions according to global threshold = 0.75 Sat Jul  7 15:00:00 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"rf"</span>)</div><div class='img'><img src='rfClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

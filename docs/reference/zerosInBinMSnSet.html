@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -39,6 +41,7 @@ not be informative at all (and can be filtered out with
 filterBinMSnSet) while features/classes with many
 annotations (GO terms) are likely not be be informative either." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -65,7 +68,7 @@ annotations (GO terms) are likely not be be informative either." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.5</span>
       </span>
     </div>
 
@@ -88,19 +91,19 @@ annotations (GO terms) are likely not be be informative either." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
     </li>
     <li>
-      <a href="../articles/02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+      <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
     </li>
     <li>
-      <a href="../articles/03-pRoloc-bayesian.html">Bayesian spatial proteomics with pRoloc</a>
+      <a href="../articles/v03-pRoloc-bayesian.html">Bayesian Analysis of Spatial Proteomics data using pRoloc</a>
     </li>
     <li>
-      <a href="../articles/04-pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+      <a href="../articles/v04-pRoloc-goannotations.html">Annotating spatial proteomics data</a>
     </li>
     <li>
-      <a href="../articles/05-pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+      <a href="../articles/v05-pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
     </li>
   </ul>
 </li>
@@ -195,6 +198,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4   0.007633588  0.006361323        0.001272265 0.010178117
 #&gt; 5   0.005089059  0.008905852        0.003816794 0.003816794
 #&gt; 6   0.001272265  0.002544529        0.001272265 0.002544529
+#&gt; 7   0.002544529  0.006361323        0.001272265 0.005089059
+#&gt; 8   0.001272265  0.005089059        0.002544529 0.001272265
+#&gt; 9   0.001272265  0.003816794        0.001272265 0.001272265
+#&gt; 10  0.000000000  0.001272265        0.000000000 0.001272265
+#&gt; 11  0.000000000  0.001272265        0.000000000 0.001272265
+#&gt; 12  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 13  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 14  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 15  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 16  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 17  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 18  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 19  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 20  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 21  0.000000000  0.000000000        0.000000000 0.000000000
+#&gt; 22  0.000000000  0.000000000        0.000000000 0.000000000
 #&gt;    Endoplasmic reticulum/Golgi apparatus    Endosome Extracellular matrix
 #&gt; 0                            0.016539440 0.001272265          0.003816794
 #&gt; 1                            0.005089059 0.001272265          0.005089059
@@ -203,6 +222,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4                            0.020356234 0.001272265          0.002544529
 #&gt; 5                            0.005089059 0.002544529          0.000000000
 #&gt; 6                            0.013994911 0.001272265          0.000000000
+#&gt; 7                            0.008905852 0.001272265          0.000000000
+#&gt; 8                            0.011450382 0.001272265          0.000000000
+#&gt; 9                            0.003816794 0.001272265          0.000000000
+#&gt; 10                           0.001272265 0.000000000          0.000000000
+#&gt; 11                           0.001272265 0.000000000          0.000000000
+#&gt; 12                           0.001272265 0.000000000          0.000000000
+#&gt; 13                           0.001272265 0.000000000          0.000000000
+#&gt; 14                           0.002544529 0.000000000          0.000000000
+#&gt; 15                           0.001272265 0.000000000          0.000000000
+#&gt; 16                           0.000000000 0.000000000          0.000000000
+#&gt; 17                           0.000000000 0.000000000          0.000000000
+#&gt; 18                           0.000000000 0.000000000          0.000000000
+#&gt; 19                           0.000000000 0.000000000          0.000000000
+#&gt; 20                           0.000000000 0.000000000          0.000000000
+#&gt; 21                           0.000000000 0.000000000          0.000000000
+#&gt; 22                           0.000000000 0.000000000          0.000000000
 #&gt;       Lysosome Mitochondrion Nucleus - Chromatin Nucleus - Non-chromatin
 #&gt; 0  0.001272265   0.043256997         0.013994911             0.016539440
 #&gt; 1  0.005089059   0.043256997         0.003816794             0.003816794
@@ -211,6 +246,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4  0.002544529   0.068702290         0.006361323             0.015267176
 #&gt; 5  0.003816794   0.043256997         0.005089059             0.008905852
 #&gt; 6  0.003816794   0.025445293         0.008905852             0.006361323
+#&gt; 7  0.001272265   0.019083969         0.011450382             0.011450382
+#&gt; 8  0.001272265   0.007633588         0.007633588             0.002544529
+#&gt; 9  0.001272265   0.007633588         0.006361323             0.002544529
+#&gt; 10 0.001272265   0.001272265         0.001272265             0.001272265
+#&gt; 11 0.000000000   0.001272265         0.001272265             0.000000000
+#&gt; 12 0.000000000   0.002544529         0.002544529             0.000000000
+#&gt; 13 0.000000000   0.001272265         0.000000000             0.000000000
+#&gt; 14 0.000000000   0.001272265         0.000000000             0.000000000
+#&gt; 15 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 16 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 17 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 18 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 19 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 20 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 21 0.000000000   0.000000000         0.000000000             0.000000000
+#&gt; 22 0.000000000   0.000000000         0.000000000             0.000000000
 #&gt;     Peroxisome Plasma membrane  Proteasome
 #&gt; 0  0.003816794     0.012722646 0.001272265
 #&gt; 1  0.002544529     0.001272265 0.001272265
@@ -219,7 +270,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4  0.003816794     0.003816794 0.002544529
 #&gt; 5  0.002544529     0.001272265 0.006361323
 #&gt; 6  0.001272265     0.005089059 0.008905852
-#&gt;  [ reached getOption("max.print") -- omitted 16 rows ]</div><div class='input'><span class='fu'>zerosInBinMSnSet</span>(<span class='no'>hyperLOPIT2015goCC</span>, <span class='kw'>percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;    40S Ribosome 60S Ribosome Actin cytoskeleton Cytosol
+#&gt; 7  0.001272265     0.003816794 0.007633588
+#&gt; 8  0.001272265     0.002544529 0.005089059
+#&gt; 9  0.000000000     0.003816794 0.003816794
+#&gt; 10 0.000000000     0.001272265 0.001272265
+#&gt; 11 0.000000000     0.003816794 0.001272265
+#&gt; 12 0.000000000     0.001272265 0.000000000
+#&gt; 13 0.000000000     0.001272265 0.000000000
+#&gt; 14 0.000000000     0.001272265 0.000000000
+#&gt; 15 0.000000000     0.002544529 0.000000000
+#&gt; 16 0.000000000     0.001272265 0.000000000
+#&gt; 17 0.000000000     0.002544529 0.000000000
+#&gt; 18 0.000000000     0.003816794 0.000000000
+#&gt; 19 0.000000000     0.001272265 0.000000000
+#&gt; 20 0.000000000     0.001272265 0.000000000
+#&gt; 21 0.000000000     0.001272265 0.000000000
+#&gt; 22 0.000000000     0.001272265 0.000000000</div><div class='input'><span class='fu'>zerosInBinMSnSet</span>(<span class='no'>hyperLOPIT2015goCC</span>, <span class='kw'>percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;    40S Ribosome 60S Ribosome Actin cytoskeleton Cytosol
 #&gt; 0             4            4                  1       4
 #&gt; 1             2            1                  1       2
 #&gt; 2             4            4                  1       9
@@ -227,6 +293,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4             6            5                  1       8
 #&gt; 5             4            7                  3       3
 #&gt; 6             1            2                  1       2
+#&gt; 7             2            5                  1       4
+#&gt; 8             1            4                  2       1
+#&gt; 9             1            3                  1       1
+#&gt; 10            0            1                  0       1
+#&gt; 11            0            1                  0       1
+#&gt; 12            0            0                  0       0
+#&gt; 13            0            0                  0       0
+#&gt; 14            0            0                  0       0
+#&gt; 15            0            0                  0       0
+#&gt; 16            0            0                  0       0
+#&gt; 17            0            0                  0       0
+#&gt; 18            0            0                  0       0
+#&gt; 19            0            0                  0       0
+#&gt; 20            0            0                  0       0
+#&gt; 21            0            0                  0       0
+#&gt; 22            0            0                  0       0
 #&gt;    Endoplasmic reticulum/Golgi apparatus Endosome Extracellular matrix Lysosome
 #&gt; 0                                     13        1                    3        1
 #&gt; 1                                      4        1                    4        4
@@ -235,6 +317,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4                                     16        1                    2        2
 #&gt; 5                                      4        2                    0        3
 #&gt; 6                                     11        1                    0        3
+#&gt; 7                                      7        1                    0        1
+#&gt; 8                                      9        1                    0        1
+#&gt; 9                                      3        1                    0        1
+#&gt; 10                                     1        0                    0        1
+#&gt; 11                                     1        0                    0        0
+#&gt; 12                                     1        0                    0        0
+#&gt; 13                                     1        0                    0        0
+#&gt; 14                                     2        0                    0        0
+#&gt; 15                                     1        0                    0        0
+#&gt; 16                                     0        0                    0        0
+#&gt; 17                                     0        0                    0        0
+#&gt; 18                                     0        0                    0        0
+#&gt; 19                                     0        0                    0        0
+#&gt; 20                                     0        0                    0        0
+#&gt; 21                                     0        0                    0        0
+#&gt; 22                                     0        0                    0        0
 #&gt;    Mitochondrion Nucleus - Chromatin Nucleus - Non-chromatin Peroxisome
 #&gt; 0             34                  11                      13          3
 #&gt; 1             34                   3                       3          2
@@ -243,6 +341,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4             54                   5                      12          3
 #&gt; 5             34                   4                       7          2
 #&gt; 6             20                   7                       5          1
+#&gt; 7             15                   9                       9          1
+#&gt; 8              6                   6                       2          1
+#&gt; 9              6                   5                       2          0
+#&gt; 10             1                   1                       1          0
+#&gt; 11             1                   1                       0          0
+#&gt; 12             2                   2                       0          0
+#&gt; 13             1                   0                       0          0
+#&gt; 14             1                   0                       0          0
+#&gt; 15             0                   0                       0          0
+#&gt; 16             0                   0                       0          0
+#&gt; 17             0                   0                       0          0
+#&gt; 18             0                   0                       0          0
+#&gt; 19             0                   0                       0          0
+#&gt; 20             0                   0                       0          0
+#&gt; 21             0                   0                       0          0
+#&gt; 22             0                   0                       0          0
 #&gt;    Plasma membrane Proteasome
 #&gt; 0               10          1
 #&gt; 1                1          1
@@ -251,7 +365,22 @@ returned. Otherwise, absolute values.</p></td>
 #&gt; 4                3          2
 #&gt; 5                1          5
 #&gt; 6                4          7
-#&gt;  [ reached getOption("max.print") -- omitted 16 rows ]</div><div class='input'><span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'>colorRampPalette</span>(<span class='fu'>c</span>(<span class='st'>"white"</span>, <span class='st'>"blue"</span>))
+#&gt; 7                3          6
+#&gt; 8                2          4
+#&gt; 9                3          3
+#&gt; 10               1          1
+#&gt; 11               3          1
+#&gt; 12               1          0
+#&gt; 13               1          0
+#&gt; 14               1          0
+#&gt; 15               2          0
+#&gt; 16               1          0
+#&gt; 17               2          0
+#&gt; 18               3          0
+#&gt; 19               1          0
+#&gt; 20               1          0
+#&gt; 21               1          0
+#&gt; 22               1          0</div><div class='input'><span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'>colorRampPalette</span>(<span class='fu'>c</span>(<span class='st'>"white"</span>, <span class='st'>"blue"</span>))
 <span class='fu'>library</span>(<span class='no'>lattice</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/lattice/topics/levelplot'>levelplot</a></span>(<span class='fu'>zerosInBinMSnSet</span>(<span class='no'>hyperLOPIT2015goCC</span>),
           <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Number of non-0s"</span>,

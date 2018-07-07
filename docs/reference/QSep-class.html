@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -42,6 +44,7 @@ The QSep function calculates all between and within cluster
 
 \(c_1\)\(c_2\)
 \(c_1\)\(d_11\)\(d_12\)
+\(c_2\)\(d_21\)\(d_22\)
 " />
 
 <meta property="og:description" content="Normalised distance represent the ratio of between to within average
@@ -51,12 +54,14 @@ The QSep function calculates all between and within cluster
 
 \(c_1\)\(c_2\)
 \(c_1\)1\(\frac{d_12}{d_22}\)
+\(c_2\)\(\frac{d_21}{d_11}\)1
 " />
 
 <meta property="og:description" content="Note that the normalised distance matrix is not symmetric anymore
   and the normalised distance ratios are proportional to the tightness
   of the reference cluster (along the columns)." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -83,7 +88,7 @@ The QSep function calculates all between and within cluster
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.5</span>
       </span>
     </div>
 
@@ -106,19 +111,19 @@ The QSep function calculates all between and within cluster
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
     </li>
     <li>
-      <a href="../articles/02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
+      <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
     </li>
     <li>
-      <a href="../articles/03-pRoloc-bayesian.html">Bayesian spatial proteomics with pRoloc</a>
+      <a href="../articles/v03-pRoloc-bayesian.html">Bayesian Analysis of Spatial Proteomics data using pRoloc</a>
     </li>
     <li>
-      <a href="../articles/04-pRoloc-goannotations.html">Annotating spatial proteomics data</a>
+      <a href="../articles/v04-pRoloc-goannotations.html">Annotating spatial proteomics data</a>
     </li>
     <li>
-      <a href="../articles/05-pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
+      <a href="../articles/v05-pRoloc-transfer-learning.html">A transfer learning algorithm for spatial proteomics</a>
     </li>
   </ul>
 </li>
@@ -165,6 +170,7 @@ The QSep function calculates all between and within cluster
 <p></p><table class='table'>
 <tr><td></td><td>\(c_1\)</td><td>\(c_2\)</td></tr>
 <tr><td>\(c_1\)</td><td>\(d_11\)</td><td>\(d_12\)</td></tr>
+<tr><td>\(c_2\)</td><td>\(d_21\)</td><td>\(d_22\)</td></tr>
 </table>
 
     <p>Normalised distance represent the ratio of between to within average
@@ -174,6 +180,7 @@ The QSep function calculates all between and within cluster
 <p></p><table class='table'>
 <tr><td></td><td>\(c_1\)</td><td>\(c_2\)</td></tr>
 <tr><td>\(c_1\)</td><td>1</td><td>\(\frac{d_12}{d_22}\)</td></tr>
+<tr><td>\(c_2\)</td><td>\(\frac{d_21}{d_11}\)</td><td>1</td></tr>
 </table>
 
     <p>Note that the normalised distance matrix is not symmetric anymore
@@ -263,6 +270,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                            0.8050828
 #&gt; Cytosol                                        0.5661409
 #&gt; Plasma membrane                                0.2164849
+#&gt; Nucleus - Non-chromatin                        0.7485378
+#&gt; Endosome                                       0.3955070
+#&gt; 60S Ribosome                                   0.4991471
+#&gt; Lysosome                                       0.3924089
+#&gt; Peroxisome                                     0.6861757
+#&gt; 40S Ribosome                                   0.5657759
+#&gt; Proteasome                                     0.6686545
 #&gt;                                       Endoplasmic reticulum/Golgi apparatus
 #&gt; Actin cytoskeleton                                                0.4690770
 #&gt; Endoplasmic reticulum/Golgi apparatus                             0.1315295
@@ -271,6 +285,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                                               0.6674186
 #&gt; Cytosol                                                           0.8032906
 #&gt; Plasma membrane                                                   0.4314796
+#&gt; Nucleus - Non-chromatin                                           0.7266946
+#&gt; Endosome                                                          0.3298215
+#&gt; 60S Ribosome                                                      0.4405743
+#&gt; Lysosome                                                          0.3526493
+#&gt; Peroxisome                                                        0.4138766
+#&gt; 40S Ribosome                                                      0.6106558
+#&gt; Proteasome                                                        0.8685051
 #&gt;                                       Mitochondrion Extracellular matrix
 #&gt; Actin cytoskeleton                        0.7536736            0.4030989
 #&gt; Endoplasmic reticulum/Golgi apparatus     0.4961792            0.1676919
@@ -279,6 +300,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                       0.5424170            0.6929457
 #&gt; Cytosol                                   0.9585277            0.7755911
 #&gt; Plasma membrane                           0.7462545            0.3556568
+#&gt; Nucleus - Non-chromatin                   0.7106804            0.7267853
+#&gt; Endosome                                  0.7198622            0.2420721
+#&gt; 60S Ribosome                              0.5168101            0.4430401
+#&gt; Lysosome                                  0.7471831            0.2483814
+#&gt; Peroxisome                                0.2418018            0.4724549
+#&gt; 40S Ribosome                              0.6601247            0.6060881
+#&gt; Proteasome                                0.9917128            0.8497961
 #&gt;                                       Nucleus - Chromatin   Cytosol
 #&gt; Actin cytoskeleton                              0.8050828 0.5661409
 #&gt; Endoplasmic reticulum/Golgi apparatus           0.6674186 0.8032906
@@ -287,6 +315,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                             0.1463443 0.9484646
 #&gt; Cytosol                                         0.9484646 0.1414339
 #&gt; Plasma membrane                                 0.8341281 0.7443767
+#&gt; Nucleus - Non-chromatin                         0.4154339 0.7974210
+#&gt; Endosome                                        0.8226749 0.7826439
+#&gt; 60S Ribosome                                    0.5602938 0.6438972
+#&gt; Lysosome                                        0.8451732 0.7995801
+#&gt; Peroxisome                                      0.5094584 0.9068309
+#&gt; 40S Ribosome                                    0.6518274 0.5331764
+#&gt; Proteasome                                      0.9718751 0.1600117
 #&gt;                                       Plasma membrane Nucleus - Non-chromatin
 #&gt; Actin cytoskeleton                          0.2164849               0.7485378
 #&gt; Endoplasmic reticulum/Golgi apparatus       0.4314796               0.7266946
@@ -295,6 +330,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                         0.8341281               0.4154339
 #&gt; Cytosol                                     0.7443767               0.7974210
 #&gt; Plasma membrane                             0.1148277               0.8199944
+#&gt; Nucleus - Non-chromatin                     0.8199944               0.1783578
+#&gt; Endosome                                    0.3425939               0.8135370
+#&gt; 60S Ribosome                                0.5616175               0.4546378
+#&gt; Lysosome                                    0.3274954               0.8365127
+#&gt; Peroxisome                                  0.6788467               0.6518952
+#&gt; 40S Ribosome                                0.6760487               0.4643483
+#&gt; Proteasome                                  0.8444952               0.8064265
 #&gt;                                        Endosome 60S Ribosome  Lysosome
 #&gt; Actin cytoskeleton                    0.3955070   0.49914711 0.3924089
 #&gt; Endoplasmic reticulum/Golgi apparatus 0.3298215   0.44057429 0.3526493
@@ -303,6 +345,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                   0.8226749   0.56029383 0.8451732
 #&gt; Cytosol                               0.7826439   0.64389721 0.7995801
 #&gt; Plasma membrane                       0.3425939   0.56161748 0.3274954
+#&gt; Nucleus - Non-chromatin               0.8135370   0.45463783 0.8365127
+#&gt; Endosome                              0.1804409   0.54561425 0.1706577
+#&gt; 60S Ribosome                          0.5456143   0.08250087 0.5709784
+#&gt; Lysosome                              0.1706577   0.57097838 0.1023701
+#&gt; Peroxisome                            0.6442550   0.41710740 0.6716427
+#&gt; 40S Ribosome                          0.6762709   0.22048766 0.7022256
+#&gt; Proteasome                            0.8642925   0.67687443 0.8858795
 #&gt;                                       Peroxisome 40S Ribosome Proteasome
 #&gt; Actin cytoskeleton                     0.6861757   0.56577585 0.66865454
 #&gt; Endoplasmic reticulum/Golgi apparatus  0.4138766   0.61065583 0.86850511
@@ -311,7 +360,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                    0.5094584   0.65182738 0.97187508
 #&gt; Cytosol                                0.9068309   0.53317641 0.16001172
 #&gt; Plasma membrane                        0.6788467   0.67604868 0.84449520
-#&gt;  [ reached getOption("max.print") -- omitted 7 rows ]</div><div class='input'>
+#&gt; Nucleus - Non-chromatin                0.6518952   0.46434826 0.80642652
+#&gt; Endosome                               0.6442550   0.67627087 0.86429254
+#&gt; 60S Ribosome                           0.4171074   0.22048766 0.67687443
+#&gt; Lysosome                               0.6716427   0.70222557 0.88587953
+#&gt; Peroxisome                             0.1378630   0.57564364 0.94187426
+#&gt; 40S Ribosome                           0.5756436   0.08388726 0.53905744
+#&gt; Proteasome                             0.9418743   0.53905744 0.08625819</div><div class='input'>
 <span class='co'>## normalised average distance matrix</span>
 <span class='fu'>qsep</span>(<span class='no'>hlq</span>)</div><div class='output co'>#&gt;                                       Actin cytoskeleton
 #&gt; Actin cytoskeleton                              1.000000
@@ -321,6 +376,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                             5.501293
 #&gt; Cytosol                                         4.002866
 #&gt; Plasma membrane                                 1.885302
+#&gt; Nucleus - Non-chromatin                         4.196833
+#&gt; Endosome                                        2.191892
+#&gt; 60S Ribosome                                    6.050204
+#&gt; Lysosome                                        3.833237
+#&gt; Peroxisome                                      4.977229
+#&gt; 40S Ribosome                                    6.744479
+#&gt; Proteasome                                      7.751780
 #&gt;                                       Endoplasmic reticulum/Golgi apparatus
 #&gt; Actin cytoskeleton                                                 3.418152
 #&gt; Endoplasmic reticulum/Golgi apparatus                              1.000000
@@ -329,6 +391,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                                                4.560606
 #&gt; Cytosol                                                            5.679619
 #&gt; Plasma membrane                                                    3.757626
+#&gt; Nucleus - Non-chromatin                                            4.074365
+#&gt; Endosome                                                           1.827864
+#&gt; 60S Ribosome                                                       5.340238
+#&gt; Lysosome                                                           3.444845
+#&gt; Peroxisome                                                         3.002086
+#&gt; 40S Ribosome                                                       7.279483
+#&gt; Proteasome                                                        10.068668
 #&gt;                                       Mitochondrion Extracellular matrix
 #&gt; Actin cytoskeleton                         5.492000             2.937371
 #&gt; Endoplasmic reticulum/Golgi apparatus      3.772380             1.274937
@@ -337,6 +406,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                        3.706445             4.735038
 #&gt; Cytosol                                    6.777214             5.483772
 #&gt; Plasma membrane                            6.498905             3.097308
+#&gt; Nucleus - Non-chromatin                    3.984578             4.074873
+#&gt; Endosome                                   3.989463             1.341559
+#&gt; 60S Ribosome                               6.264298             5.370126
+#&gt; Lysosome                                   7.298839             2.426307
+#&gt; Peroxisome                                 1.753928             3.426989
+#&gt; 40S Ribosome                               7.869189             7.225032
+#&gt; Proteasome                                11.497028             9.851773
 #&gt;                                       Nucleus - Chromatin  Cytosol
 #&gt; Actin cytoskeleton                               5.866617 4.125454
 #&gt; Endoplasmic reticulum/Golgi apparatus            5.074288 6.107304
@@ -345,6 +421,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                              1.000000 6.481050
 #&gt; Cytosol                                          6.706063 1.000000
 #&gt; Plasma membrane                                  7.264170 6.482553
+#&gt; Nucleus - Non-chromatin                          2.329217 4.470907
+#&gt; Endosome                                         4.559249 4.337398
+#&gt; 60S Ribosome                                     6.791368 7.804732
+#&gt; Lysosome                                         8.256053 7.810677
+#&gt; Peroxisome                                       3.695397 6.577769
+#&gt; 40S Ribosome                                     7.770279 6.355869
+#&gt; Proteasome                                      11.267046 1.855032
 #&gt;                                       Plasma membrane Nucleus - Non-chromatin
 #&gt; Actin cytoskeleton                           1.577520                5.454575
 #&gt; Endoplasmic reticulum/Golgi apparatus        3.280478                5.524955
@@ -353,6 +436,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                          5.699765                2.838743
 #&gt; Cytosol                                      5.263072                5.638118
 #&gt; Plasma membrane                              1.000000                7.141084
+#&gt; Nucleus - Non-chromatin                      4.597470                1.000000
+#&gt; Endosome                                     1.898649                4.508607
+#&gt; 60S Ribosome                                 6.807412                5.510703
+#&gt; Lysosome                                     3.199131                8.171452
+#&gt; Peroxisome                                   4.924068                4.728573
+#&gt; 40S Ribosome                                 8.059015                5.535385
+#&gt; Proteasome                                   9.790319                9.348985
 #&gt;                                        Endosome 60S Ribosome  Lysosome
 #&gt; Actin cytoskeleton                     2.882049     3.637272  2.859474
 #&gt; Endoplasmic reticulum/Golgi apparatus  2.507586     3.349623  2.681142
@@ -361,6 +451,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                    5.621503     3.828601  5.775239
 #&gt; Cytosol                                5.533638     4.552637  5.653384
 #&gt; Plasma membrane                        2.983548     4.890957  2.852059
+#&gt; Nucleus - Non-chromatin                4.561265     2.549022  4.690083
+#&gt; Endosome                               1.000000     3.023784  0.945782
+#&gt; 60S Ribosome                           6.613436     1.000000  6.920877
+#&gt; Lysosome                               1.667066     5.577587  1.000000
+#&gt; Peroxisome                             4.673155     3.025521  4.871813
+#&gt; 40S Ribosome                           8.061664     2.628381  8.371064
+#&gt; Proteasome                            10.019831     7.847074 10.270091
 #&gt;                                       Peroxisome 40S Ribosome Proteasome
 #&gt; Actin cytoskeleton                      5.000144     4.122794   4.872468
 #&gt; Endoplasmic reticulum/Golgi apparatus   3.146645     4.642729   6.603120
@@ -369,7 +466,13 @@ The QSep function calculates all between and within cluster
 #&gt; Nucleus - Chromatin                     3.481232     4.454068   6.641018
 #&gt; Cytosol                                 6.411695     3.769793   1.131353
 #&gt; Plasma membrane                         5.911872     5.887504   7.354454
-#&gt;  [ reached getOption("max.print") -- omitted 7 rows ]</div><div class='input'>
+#&gt; Nucleus - Non-chromatin                 3.654986     2.603465   4.521399
+#&gt; Endosome                                3.570449     3.747880   4.789893
+#&gt; 60S Ribosome                            5.055794     2.672549   8.204452
+#&gt; Lysosome                                6.560924     6.859672   8.653691
+#&gt; Peroxisome                              1.000000     4.175476   6.831959
+#&gt; 40S Ribosome                            6.862111     1.000000   6.425975
+#&gt; Proteasome                             10.919244     6.249348   1.000000</div><div class='input'>
 <span class='co'>## Update the organelle cluster names for better</span>
 <span class='co'>## rendering on the plots</span>
 <span class='fu'>names</span>(<span class='no'>hlq</span>) <span class='kw'>&lt;-</span> <span class='fu'>sub</span>(<span class='st'>"/"</span>, <span class='st'>"\n"</span>, <span class='fu'>names</span>(<span class='no'>hlq</span>))

@@ -37,6 +37,7 @@ suppressWarnings(suppressPackageStartupMessages(library("pRoloc")))
 suppressPackageStartupMessages(library("pRolocdata"))
 suppressPackageStartupMessages(library("class"))
 set.seed(1)
+setStockcol(NULL)
 ```
 
 # Introduction {#sec:intro}
@@ -140,8 +141,8 @@ species (`"Homo sapiens"`) and feature type (`"UniProtKB/Swiss-prot ID"`).
 
 ```{r ap}
 ap <- setAnnotationParams(inputs =
-							  c("Homo sapiens",
-								"UniProtKB/Swiss-Prot ID"))
+                              c("Homo sapiens",
+                                "UniProtKB/Swiss-Prot ID"))
 ap
 ```
 
@@ -219,9 +220,9 @@ mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 filter <- "uniprotswissprot"
 attrib <- c("uniprot_gn", "uniprotswissprot", "ensembl_gene_id")
 bm <- getBM(attributes = attrib,
-			filters = filter,
-			values = fData(andyhpa)[, "accession"],
-			mart = mart)
+            filters = filter,
+            values = fData(andyhpa)[, "accession"],
+            mart = mart)
 head(bm)
 
 ## HPA data
@@ -257,27 +258,27 @@ filter proteins without any localisation data.
 ```{r hpadata, eval=TRUE}
 ## HPA localisation
 hpalocs <- c(as.character(fData(lopit)$Main.location),
-			 as.character(fData(lopit)$Other.location))
+             as.character(fData(lopit)$Other.location))
 hpalocs <- hpalocs[!is.na(hpalocs)]
 hpalocs <- unique(unlist(strsplit(hpalocs, ";")))
 
 makeHpaSet <- function(x, score2, locs = hpalocs) {
-	hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
-	colnames(hpamat) <- locs
-	rownames(hpamat) <- featureNames(x)
-	for  (i in 1:nrow(hpamat)) {
-		loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
-		loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
-		score <- score2[fData(x)[i, "Reliability"]]
-		hpamat[i, loc] <- score
-		hpamat[i, loc2] <- score
-	}
-	new("MSnSet", exprs = hpamat,
-		featureData = featureData(x))
+    hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
+    colnames(hpamat) <- locs
+    rownames(hpamat) <- featureNames(x)
+    for  (i in 1:nrow(hpamat)) {
+        loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
+        loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
+        score <- score2[fData(x)[i, "Reliability"]]
+        hpamat[i, loc] <- score
+        hpamat[i, loc2] <- score
+    }
+    new("MSnSet", exprs = hpamat,
+        featureData = featureData(x))
 }
 
 hpaset <- makeHpaSet(lopit,
-					 score2 = c(Supportive = 1, Uncertain = 0))
+                     score2 = c(Supportive = 1, Uncertain = 0))
 hpaset <- filterZeroRows(hpaset)
 dim(hpaset)
 exprs(hpaset)[c(1, 6, 200), 1:3]
@@ -329,9 +330,9 @@ ppim <- diag(length(uid))
 colnames(ppim) <- rownames(ppim) <- uid
 
 for (k in 1:nrow(ppidf)) {
-	i <- ppidf[[k, "X.node1"]]
-	j <- ppidf[[k, "node2"]]
-	ppim[i, j] <- ppidf[[k, "combined_score"]]
+    i <- ppidf[[k, "X.node1"]]
+    j <- ppidf[[k, "node2"]]
+    ppim[i, j] <- ppidf[[k, "combined_score"]]
 }
 
 ppim[1:5, 1:8]
@@ -352,7 +353,7 @@ ppim <- ppim[cmn, ]
 andyppi <- andyppi[cmn, ]
 
 ppi <- MSnSet(ppim, fData = fData(andyppi),
-			  pData = data.frame(row.names = colnames(ppim)))
+              pData = data.frame(row.names = colnames(ppim)))
 ppi <- filterZeroCols(ppi)
 ```
 
@@ -403,7 +404,7 @@ setStockcol(paste0(getStockcol(), "80"))
 plot2D(andy2011, fcol = "markers.tl")
 setStockcol(NULL)
 addLegend(andy2011, fcol = "markers.tl",
-		  where = "topright", bty = "n", cex = .7)
+          where = "topright", bty = "n", cex = .7)
 ```
 
 Let's define a set of three possible weights: 0, 0.5 and 1. A weight
@@ -477,10 +478,10 @@ proceeding with the selection of best weights.
 
 ```{r thetaopt0, eval=FALSE}
 topt <- knntlOptimisation(andy2011, andygoset,
-						  th = th,
-						  k = c(3, 3),
-						  fcol = "markers.tl",
-						  times = 50)
+                          th = th,
+                          k = c(3, 3),
+                          fcol = "markers.tl",
+                          times = 50)
 ```
 
 The above code chunk would take too much time to be executed in the
@@ -498,10 +499,10 @@ times below.
 set.seed(1)
 i <- sample(nrow(th), 12)
 topt <- knntlOptimisation(andy2011, andygoset,
-						  th = th[i, ],
-						  k = c(3, 3),
-						  fcol = "markers.tl",
-						  times = 5)
+                          th = th[i, ],
+                          k = c(3, 3),
+                          fcol = "markers.tl",
+                          times = 5)
 topt
 ```
 
@@ -560,9 +561,9 @@ function.
 
 ```{r tlclass}
 andy2011 <- knntlClassification(andy2011, andygoset,
-								bestTheta = bw,
-								k = c(3, 3),
-								fcol = "markers.tl")
+                                bestTheta = bw,
+                                k = c(3, 3),
+                                fcol = "markers.tl")
 ```
 
 This will generate a new instance of class *MSnSet*, identical to the
@@ -582,8 +583,8 @@ ptsze <- exp(fData(andy2011)$knntl.scores) - 1
 plot2D(andy2011, fcol = "knntl", cex = ptsze)
 setStockcol(NULL)
 addLegend(andy2011, where = "topright",
-		  fcol = "markers.tl",
-		  bty = "n", cex = .7)
+          fcol = "markers.tl",
+          bty = "n", cex = .7)
 ```
 
 

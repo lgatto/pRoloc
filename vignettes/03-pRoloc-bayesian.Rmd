@@ -59,13 +59,16 @@ MS-based spatial proteomics data.
 Below, we start by loading packages that are needed to execute the
 code in this vignette and set the default colour to semi-transparent.
 
+```{r env0, echo=FALSE}
+setStockcol(NULL)
+```
+
 ```{r env, message=FALSE}
 library("pRoloc")
 library("pRolocdata")
 require("reshape")
 require("ggplot2")
 require("coda")
-
 setStockcol(paste0(getStockcol(), 90))
 ```
 
@@ -310,25 +313,25 @@ for (j in seq_len(nChains)) {
 plot(outlierTotal[[1]], col = "blue", main = "Chain 1")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-1.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-1.png)
 
 ```r
 plot(outlierTotal[[2]], col = "red", main = "Chain 2")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-2.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-2.png)
 
 ```r
 plot(outlierTotal[[3]], col = "green", main = "Chain 3")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-3.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-3.png)
 
 ```r
 plot(outlierTotal[[4]], col = "orange", main = "Chain 4")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-4.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-4.png)
 
 We can use the *[coda](https://CRAN.R-project.org/package=coda)* package to produce
 summaries of our chains. Here is the `coda` summary for the first
@@ -711,7 +714,7 @@ plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze,
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
 ```
 
-![plot of chunk mcmc-vis](figure/mcmc-vis-1.png)
+![plot of chunk mcmc-vis](Figures/mcmc-vis-1.png)
 
 ### Visualising allocation uncertainty
 
@@ -729,7 +732,7 @@ plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze2,
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
 ```
 
-![plot of chunk mcmc-vis2](figure/mcmc-vis2-1.png)
+![plot of chunk mcmc-vis2](Figures/mcmc-vis2-1.png)
 
 ### Extracting proteins of interest
 
@@ -801,7 +804,7 @@ gg2 <- gg2 +
 print(gg2)
 ```
 
-![plot of chunk mcmc-gg2](figure/mcmc-gg2-1.png)
+![plot of chunk mcmc-gg2](Figures/mcmc-gg2-1.png)
 
 <!-- End inserted file -->
 

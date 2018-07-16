@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.6</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
-<p>The <code>pRoloc</code> software comes with ample documentation. The <a href="https://lgatto.github.io/pRoloc/articles/pRoloc-tutorial.html">main tutorial</a> provides a broad overview of the package and its functionality. See the <em>Articles</em> tab for additional manuals.</p>
+<p>The <code>pRoloc</code> software comes with ample documentation. The <a href="https://lgatto.github.io/pRoloc/articles/v01-pRoloc-tutorial.html">main tutorial</a> provides a broad overview of the package and its functionality. See the <em>Articles</em> tab for additional manuals.</p>
 <p>Two associated packages, <a href="http://www.bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html"><code>pRolocdata</code></a> and <a href="http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html"><code>pRolocGUI</code></a> offer spatial proteomics data and a graphical user interface to interactively explore the data.</p>
 <p>Here are a set of <a href="https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow">video tutorial</a> that illustrate the <code>pRoloc</code> framework.</p>
 </div>
@@ -116,18 +116,22 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The preferred installation procedure uses the Bioconductor infrastructure:</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">source(<span class="st">"http://bioconductor.org/biocLite.R"</span>)
-biocLite(<span class="st">"pRoloc"</span>)
-biocLite(<span class="st">"pRolocdata"</span>)
-biocLite(<span class="st">"pRolocGUI"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="er">## unless BiocManager is already installed</span>
+install.packages(<span class="st">"BiocManager"</span>)
+<span class="er">## then</span>
+BiocManager::install(<span class="st">"pRoloc"</span>)
+BiocManager::install(<span class="st">"pRolocdata"</span>)
+BiocManager::install(<span class="st">"pRolocGUI"</span>)</code></pre></div>
 <div id="pre-releasedevelopment-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pre-releasedevelopment-version" class="anchor"></a>Pre-release/development version</h3>
 <p>The pre-release/development code on github can be installed using <code>biocLite</code>. Note that this requires a working R build environment (i.e <code>Rtools</code> on Windows - see <a href="https://github.com/lgatto/teachingmaterial/wiki/R-package">here</a>). New pre-release features might not be documented not thoroughly tested and could substantially change prior to release. Use at your own risks.</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="er">## install from github</span>
-biocLite(<span class="st">"lgatto/pRoloc"</span>)
-biocLite(<span class="st">"lgatto/pRolocdata"</span>)
-biocLite(<span class="st">"ComputationalProteomicsUnit/pRolocGUI"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="er">## unless BiocManager is already installed</span>
+install.packages(<span class="st">"BiocManager"</span>)
+<span class="er">## then, install from github</span>
+BiocManager::install(<span class="st">"lgatto/pRoloc"</span>)
+BiocManager::install(<span class="st">"lgatto/pRolocdata"</span>)
+BiocManager::install(<span class="st">"ComputationalProteomicsUnit/pRolocGUI"</span>)</code></pre></div>
 </div>
 </div>
 <div id="references" class="section level2">

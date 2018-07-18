@@ -18,7 +18,7 @@ for the Bioc build status.
 
 The `pRoloc` software comes with ample
 documentation. The
-[main tutorial](https://lgatto.github.io/pRoloc/articles/pRoloc-tutorial.html) provides
+[main tutorial](https://lgatto.github.io/pRoloc/articles/v01-pRoloc-tutorial.html) provides
 a broad overview of the package and its functionality.  See the
 *Articles* tab for additional manuals.
 
@@ -49,10 +49,12 @@ The preferred installation procedure uses the Bioconductor
 infrastructure:
 
 ```c
-source("http://bioconductor.org/biocLite.R")
-biocLite("pRoloc")
-biocLite("pRolocdata")
-biocLite("pRolocGUI")
+## unless BiocManager is already installed
+install.packages("BiocManager")
+## then
+BiocManager::install("pRoloc")
+BiocManager::install("pRolocdata")
+BiocManager::install("pRolocGUI")
 ```
 
 ### Pre-release/development version
@@ -66,10 +68,12 @@ could substantially change prior to release. Use at your own risks.
 
 
 ```c
-## install from github
-biocLite("lgatto/pRoloc")
-biocLite("lgatto/pRolocdata")
-biocLite("ComputationalProteomicsUnit/pRolocGUI")
+## unless BiocManager is already installed
+install.packages("BiocManager")
+## then, install from github
+BiocManager::install("lgatto/pRoloc")
+BiocManager::install("lgatto/pRolocdata")
+BiocManager::install("ComputationalProteomicsUnit/pRolocGUI")
 ```
 
 ## References:

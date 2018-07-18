@@ -1,5 +1,8 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.67
+- Nothing yet
+
 ## Changes in version 1.21.6
 - Use BiocManager in installation instructions
 

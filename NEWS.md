@@ -1,7 +1,7 @@
 # pRoloc 1.21
 
 ## Changes in version 1.21.6
-- Nothing yet 
+- Use BiocManager in installation instructions
 
 ## Changes in version 1.21.5
 - Added new section in Bayesian spatial proteomics vignette detailing

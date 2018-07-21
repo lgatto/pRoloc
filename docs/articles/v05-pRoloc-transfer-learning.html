@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.21.7</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Thu Jul 19 00:02:39 2018</code></pre>
+##  Created on Sat Jul 21 13:17:12 2018</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -192,7 +192,7 @@ andygoset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Thu Jul 19 00:02:46 2018] 
+## Constructed GO set using cellular_component namespace [Sat Jul 21 13:17:23 2018] 
 ##  MSnbase version: 2.6.1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##        GO:0016020 GO:0016021 GO:0005783 GO:0005730
@@ -454,18 +454,18 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 ## Results
 ##  macro F1:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7863  0.8601  0.8793  0.8598  0.8809  0.8926 
+##  0.7863  0.8455  0.8601  0.8539  0.8809  0.8967 
 ##  best theta:
 ##             Cytosol Cytosol.Nucleus ER Golgi Lysosome Mitochondrion
-## weight:0          0               0  3     2        0             2
-## weight:0.33       0               0  0     3        0             3
-## weight:0.67       0               2  2     0        2             0
-## weight:1          5               3  0     0        3             0
+## weight:0          0               0  4     1        0             1
+## weight:0.33       0               1  0     3        0             3
+## weight:0.67       1               1  1     1        2             1
+## weight:1          4               3  0     0        3             0
 ##             Nucleus PM Ribosome.40S Ribosome.60S
-## weight:0          2  2            2            0
-## weight:0.33       3  3            0            0
-## weight:0.67       0  0            0            5
-## weight:1          0  0            3            0</code></pre>
+## weight:0          1  1            1            0
+## weight:0.33       4  3            1            0
+## weight:0.67       0  1            0            4
+## weight:1          0  0            3            1</code></pre>
 <p>The optimisation is performed on the labelled marker examples only. When removing unlabelled non-marker proteins (the <code>unknowns</code>), some auxiliary GO columns end up containing only 0 (the GO-protein association was only observed in non-marker proteins), which are temporarily removed.</p>
 <p>The <code>topt</code> result stores all the result from the optimisation step, and in particular the observed theta weights, which can be directly plotted as shown on the <a href="#fig:bubble">bubble plot</a> below. These bubble plots give the proportion of best weights for each marker class that was observed during the optimisation phase. We see that the mitochondrion, the cytosol and cytosol/nucleus classes predominantly are scored with height weights (2/3 and 1), consistent with high reliability of the primary data. The Golgi and the ribosomal clusters (and to a lesser extend the ER) favour smaller scores, indicating a substantial benefit of the auxiliary data.</p>
 <div class="figure">
@@ -504,11 +504,11 @@ topt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/knntlO
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">andy2011 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(andy2011, <span class="dt">fcol =</span> <span class="st">"knntl"</span>)</code></pre></div>
 <pre><code>## ans
 ## Chromatin associated              Cytosol      Cytosol/Nucleus 
-##                   11                  304                   41 
+##                   11                  300                   42 
 ##             Endosome                   ER                Golgi 
-##                   12                  185                   63 
+##                   12                  186                   63 
 ##             Lysosome        Mitochondrion              Nucleus 
-##                   62                  255                  119 
+##                   62                  255                  121 
 ##                   PM         Ribosome 40S         Ribosome 60S 
 ##                  245                   19                   55</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/getStockcol.html">setStockcol</a></span>(<span class="kw">paste0</span>(<span class="kw"><a href="../reference/getStockcol.html">getStockcol</a></span>(), <span class="st">"80"</span>))

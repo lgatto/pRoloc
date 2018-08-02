@@ -369,7 +369,7 @@ plot2D <- function(object,
                         methargs = methargs,
                         plot = FALSE)
         cramp <- colorRampPalette(c("grey90", "blue"))
-        plot(hexbin::hexbin(.data), colramp = cramp)
+        plot(hexbin::hexbin(.data), colramp = cramp, ...)
         return(invisible(.data))
     } else if (method == "scree") {
         if (missing(methargs))

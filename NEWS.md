@@ -1,5 +1,8 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.8
+- Nothing yet
+
 ## Changes in version 1.21.7
 - Use BiocManager in vignette
 - Fix bug in plot2D: pass ... to hexbin <2018-08-02 Thu>

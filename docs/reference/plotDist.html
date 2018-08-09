@@ -137,9 +137,10 @@ across the fractions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotDist</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>mcol</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>, <span class='kw'>pcol</span> <span class='kw'>=</span> <span class='fu'><a href='getStockcol.html'>getUnknowncol</a></span>(),
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>fractions</span> <span class='kw'>=</span> <span class='fu'>sampleNames</span>(<span class='no'>object</span>),
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Intensity"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Fractions"</span>, <span class='no'>ylim</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>plotDist</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mcol</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>,
+  <span class='kw'>pcol</span> <span class='kw'>=</span> <span class='fu'><a href='getStockcol.html'>getUnknowncol</a></span>(), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>fractions</span> <span class='kw'>=</span> <span class='fu'>sampleNames</span>(<span class='no'>object</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Intensity"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Fractions"</span>,
+  <span class='no'>ylim</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +154,13 @@ across the fractions.</p>
       <td><p>A <code>character</code>, <code>numeric</code> or
 <code>logical</code> of appropriate length and or content used to
 subset <code>object</code> and define the organelle markers.</p></td>
+    </tr>
+    <tr>
+      <th>fcol</th>
+      <td><p>Feature meta-data label (fData column name) defining
+the groups to be differentiated using different colours. If
+<code>NULL</code> (default) ignored and <code>mcol</code> and <code>pcol</code>
+are used.</p></td>
     </tr>
     <tr>
       <th>mcol</th>
@@ -215,12 +223,15 @@ range.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'>data</span>(<span class='no'>tan2009r1</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"pRolocdata"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘pRolocdata’ was built under R version 3.6.0</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>This is pRolocdata version 1.19.3.</span>
+#&gt; <span class='message'>Use 'pRolocdata()' to list available data sets.</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>tan2009r1</span>)
 <span class='no'>j</span> <span class='kw'>&lt;-</span> <span class='fu'>which</span>(<span class='fu'>fData</span>(<span class='no'>tan2009r1</span>)$<span class='no'>markers</span> <span class='kw'>==</span> <span class='st'>"mitochondrion"</span>)
 <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fu'>which</span>(<span class='fu'>fData</span>(<span class='no'>tan2009r1</span>)$<span class='no'>PLSDA</span> <span class='kw'>==</span> <span class='st'>"mitochondrion"</span>)
-<span class='fu'>plotDist</span>(<span class='no'>tan2009r1</span>[<span class='no'>i</span>, ],<span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>featureNames</span>(<span class='no'>tan2009r1</span>)[<span class='no'>j</span>])</div><div class='img'><img src='plotDist-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotDist</span>(<span class='no'>tan2009r1</span>[<span class='no'>i</span>, ],<span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>featureNames</span>(<span class='no'>tan2009r1</span>)[<span class='no'>j</span>],
-         <span class='kw'>fractions</span> <span class='kw'>=</span> <span class='st'>"Fractions"</span>)</div><div class='img'><img src='plotDist-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotDist</span>(<span class='no'>tan2009r1</span>[<span class='no'>i</span>, ], <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>featureNames</span>(<span class='no'>tan2009r1</span>)[<span class='no'>j</span>])</div><div class='img'><img src='plotDist-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotDist</span>(<span class='no'>tan2009r1</span>[<span class='no'>i</span>, ], <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>featureNames</span>(<span class='no'>tan2009r1</span>)[<span class='no'>j</span>],
+         <span class='kw'>fractions</span> <span class='kw'>=</span> <span class='st'>"Fractions"</span>)</div><div class='img'><img src='plotDist-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## plot and colour all marker profiles</span>
+<span class='no'>tanmrk</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='markerMSnSet.html'>markerMSnSet</a></span>(<span class='no'>tan2009r1</span>)
+<span class='fu'>plotDist</span>(<span class='no'>tanmrk</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='img'><img src='plotDist-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -4,9 +4,10 @@
 \alias{plotDist}
 \title{Plots the distribution of features across fractions}
 \usage{
-plotDist(object, markers, mcol = "steelblue", pcol = getUnknowncol(),
-  alpha = 0.3, type = "b", lty = 1, fractions = sampleNames(object),
-  ylab = "Intensity", xlab = "Fractions", ylim, ...)
+plotDist(object, markers, fcol = NULL, mcol = "steelblue",
+  pcol = getUnknowncol(), alpha = 0.3, type = "b", lty = 1,
+  fractions = sampleNames(object), ylab = "Intensity", xlab = "Fractions",
+  ylim, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -14,6 +15,11 @@ plotDist(object, markers, mcol = "steelblue", pcol = getUnknowncol(),
 \item{markers}{A \code{character}, \code{numeric} or
 \code{logical} of appropriate length and or content used to
 subset \code{object} and define the organelle markers.}
+
+\item{fcol}{Feature meta-data label (fData column name) defining
+the groups to be differentiated using different colours. If
+\code{NULL} (default) ignored and \code{mcol} and \code{pcol}
+are used.}
 
 \item{mcol}{A \code{character} define the colour of the marker
 features.  Default is \code{"steelblue"}.}
@@ -60,9 +66,12 @@ library("pRolocdata")
 data(tan2009r1)
 j <- which(fData(tan2009r1)$markers == "mitochondrion")
 i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j])
-plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j],
+plotDist(tan2009r1[i, ], markers = featureNames(tan2009r1)[j])
+plotDist(tan2009r1[i, ], markers = featureNames(tan2009r1)[j],
          fractions = "Fractions")
+## plot and colour all marker profiles
+tanmrk <- markerMSnSet(tan2009r1)
+plotDist(tanmrk, fcol = "markers")
 }
 \author{
 Laurent Gatto

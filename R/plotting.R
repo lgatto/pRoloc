@@ -1,3 +1,36 @@
+plotDist_fcol <- function(object,
+                          markers,
+                          fcol = "markers",
+                          type = "l",
+                          lty = 1,
+                          fractions = sampleNames(object),
+                          ylab = "Intensity",
+                          xlab = "Fractions",
+                          ylim,
+                          ...) {
+    .data <- exprs(object)
+    unkncol <- getUnknowncol()
+    stockcol <- getStockcol()
+    fData(object)[, fcol] <- factor(fData(object)[, fcol])
+    lvs <- levels(fData(object)[, fcol])
+    if ("unknown" %in% lvs) {
+        i <- which(lvs == "unknown")
+        lvs <- c(lvs[-i], lvs[i])
+        fData(object)[, fcol] <- factor(fData(object)[, fcol],
+                                        levels = lvs)
+    }
+    ukn <- fData(object)[, fcol] == "unknown"
+    .fcol <- fData(object)[, fcol]
+    col <- stockcol[as.numeric(.fcol)]
+    col[ukn] <- unkncol
+    matlines(t(.data),
+             col = col,
+             type = type,
+             lty = lty,
+             ...)
+}
+
+
 ##' Produces a line plot showing the feature abundances
 ##' across the fractions.
 ##'
@@ -6,6 +39,10 @@
 ##' @param markers A \code{character}, \code{numeric} or
 ##'     \code{logical} of appropriate length and or content used to
 ##'     subset \code{object} and define the organelle markers.
+##' @param fcol Feature meta-data label (fData column name) defining
+##'     the groups to be differentiated using different colours. If
+##'     \code{NULL} (default) ignored and \code{mcol} and \code{pcol}
+##'     are used.
 ##' @param mcol A \code{character} define the colour of the marker
 ##'     features.  Default is \code{"steelblue"}.
 ##' @param pcol A \code{character} define the colour of the
@@ -36,11 +73,15 @@
 ##' data(tan2009r1)
 ##' j <- which(fData(tan2009r1)$markers == "mitochondrion")
 ##' i <- which(fData(tan2009r1)$PLSDA == "mitochondrion")
-##' plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j])
-##' plotDist(tan2009r1[i, ],markers = featureNames(tan2009r1)[j],
+##' plotDist(tan2009r1[i, ], markers = featureNames(tan2009r1)[j])
+##' plotDist(tan2009r1[i, ], markers = featureNames(tan2009r1)[j],
 ##'          fractions = "Fractions")
+##' ## plot and colour all marker profiles
+##' tanmrk <- markerMSnSet(tan2009r1)
+##' plotDist(tanmrk, fcol = "markers")
 plotDist <- function(object,
                      markers,
+                     fcol = NULL,
                      mcol = "steelblue",
                      pcol = getUnknowncol(),
                      alpha = 0.3,
@@ -51,34 +92,39 @@ plotDist <- function(object,
                      xlab = "Fractions",
                      ylim,
                      ...) {
-  .data <- exprs(object)
-  if (missing(ylim))
-      ylim <- range(.data)
-  n <- nrow(.data)
-  m <- ncol(.data)
-  if (!missing(fractions)) {
-      if (sum(fractions %in% names(pData(object))) != 1)
-          stop("'fractions' must be a single pData name.")
-    fractions <- as.character(pData(object)[, fractions])
-  }
-  plot(0, ylim = ylim, xlim = c(1, m),
-       xlab = xlab, ylab = ylab,
-       type = "n", xaxt = "n")
-  axis(1, at = seq_len(m), labels = fractions)
-  pcol <- col2hcl(pcol, alpha = alpha)
-  matlines(t(.data),
-           lty = "solid",
-           col = pcol)
-  if (!missing(markers)) {
-      mcol <- col2hcl(mcol)
-      .mrk <- exprs(object[markers, ])
-      matlines(t(.mrk),
-               col = mcol,
-               type = type,
-               lty = lty,
-               ...)
+    .data <- exprs(object)
+    if (missing(ylim))
+        ylim <- range(.data)
+    n <- nrow(.data)
+    m <- ncol(.data)
+    if (is.character(fractions) & length(fractions) == 1) {
+        if (sum(fractions %in% names(pData(object))) != 1)
+            stop("'fractions' must be a single pData name.")
+        fractions <- as.character(pData(object)[, fractions])
     }
-  invisible(t(.data))
+    plot(0, ylim = ylim, xlim = c(1, m),
+         xlab = xlab, ylab = ylab,
+         type = "n", xaxt = "n")
+    axis(1, at = seq_len(m), labels = fractions)
+    if (!is.null(fcol)) {
+        ## plot and colour all profiles according to fcol
+        plotDist_fcol(object, fcol = fcol, ...)
+    } else {
+        pcol <- col2hcl(pcol, alpha = alpha)
+        matlines(t(.data),
+                 lty = "solid",
+                 col = pcol)
+        if (!missing(markers)) {
+            mcol <- col2hcl(mcol)
+            .mrk <- exprs(object[markers, ])
+            matlines(t(.mrk),
+                     col = mcol,
+                     type = type,
+                     lty = lty,
+                     ...)
+        }
+    }
+    invisible(t(.data))
 }
 
 
@@ -127,6 +173,7 @@ plotDist <- function(object,
                 ncol = ncol, npch = npch,
                 k = k, kk = kk, jj = jj))
 }
+
 
 ## Available pRoloc visualisation methods
 pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "nipals",

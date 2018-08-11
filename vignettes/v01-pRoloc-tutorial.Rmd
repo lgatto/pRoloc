@@ -1,4 +1,4 @@
----
+--
 title: "Using pRoloc for spatial proteomics data analysis"
 author:
 - name: Lisa M. Breckels
@@ -830,7 +830,33 @@ online
 
 # Assessing sub-cellular resolution {#sec:qsep}
 
-TODO
+The sub-cellular resolution of a spatial proteomics experiment,
+i.e. the quantitation of how well the respective sub-cellular niches
+are separated, can be computed with the `QSep` function. Briefly, this
+function compares, for each pairs of sub-cellular niches, the ratio
+between the the average Euclidean distance between niche *i* and *j* and
+the the average within distance of cluster *j*. A large ratio indicates
+that *i* and *j* are well separated with respect to the thighness of
+cluster *j*. The larger the distances, the better the spatial proteomics
+experiment.
+
+Below, we calulate and visualise the *QSep* distances for the
+`hyperLOPIT2015` data:
+
+```{r qsep}
+library("pRolocdata")
+data(hyperLOPIT2015)
+
+## Create the object and get a summary
+hlq <- QSep(hyperLOPIT2015)
+hlq
+levelPlot(hlq)
+plot(hlq)
+```
+
+See [Assessing sub-cellular resolution in spatial proteomics
+experiments](https://doi.org/10.1101/377630) [@Gatto:2018] for details, including a large meta-analysis
+on 29 different spatial proteomics experiments.
 
 # Data analysis {#sec:analysis}
 

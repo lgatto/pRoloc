@@ -855,8 +855,9 @@ plot(hlq)
 ```
 
 See [Assessing sub-cellular resolution in spatial proteomics
-experiments](https://doi.org/10.1101/377630) [@Gatto:2018] for details, including a large meta-analysis
-on 29 different spatial proteomics experiments.
+experiments](https://doi.org/10.1101/377630) [@Gatto:2018] for
+details, including a large meta-analysis on 29 different spatial
+proteomics experiments.
 
 # Data analysis {#sec:analysis}
 

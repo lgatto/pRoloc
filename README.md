@@ -4,15 +4,20 @@
 
 <img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRoloc.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocdata.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocGUI.png" height="200">
 
-The `pRoloc` suite set of software are distributed as part of the
-R/[Bioconductor](http://bioconductor.org/) project and are developed
-at the [Computational Proteomics Unit](http://cpu.sysbiol.cam.ac.uk/)
-at the University of Cambridge. See the Bioconductor landing pages
-([release](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html)
-and
-[devel](http://www.bioconductor.org/packages/devel/bioc/html/pRoloc.html))
-for the Bioc build status.
 
+The `pRoloc` suite set of software offer a complete software pipeline
+to analyse, visualise and interpret mass spectrometry-based spatial
+proteomics data such, for example, as LOPIT (Localization of Organelle
+Proteins by Isotope Tagging), PCP (Protein Correlation Profiling) or
+hyperLOPIT (hyperplexed LOPIT). The suite includes
+[`pRoloc`](http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html),
+the mail software that focuses on data analysis using state-of-the-art
+machine learning,
+[`pRolocdata`](http://bioconductor.org/packages/release/data/experiment/html/pRolocdata.html),
+that distributes numerous datasets, and [`pRolocGUI`], that offers
+interactive visualisations dedicated to spatial proteomics. The
+software are distributed as part of the
+R/[Bioconductor](http://bioconductor.org/) project.
 
 ## Getting started
 
@@ -22,12 +27,8 @@ documentation. The
 a broad overview of the package and its functionality.  See the
 *Articles* tab for additional manuals.
 
-Two associated
-packages,
-[`pRolocdata`](http://www.bioconductor.org/packages/devel/data/experiment/html/pRolocdata.html) and
-[`pRolocGUI`](http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html) offer
-spatial proteomics data and a graphical user interface to
-interactively explore the data.
+[`pRolocGUI`](http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html)
+also offer several documentation files.
 
 Here are a set of
 [video tutorial](https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow)

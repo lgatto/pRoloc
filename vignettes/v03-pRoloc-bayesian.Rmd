@@ -59,7 +59,7 @@ MS-based spatial proteomics data.
 Below, we start by loading packages that are needed to execute the
 code in this vignette and set the default colour to semi-transparent.
 
-```{r env, message=FALSE}
+```{r env, message=FALSE, warning=FALSE}
 library("pRoloc")
 library("pRolocdata")
 require("reshape")
@@ -72,7 +72,7 @@ setStockcol(paste0(getStockcol(), 90))
 # The *TAGM-MAP* method
 
 We will use a subsest of the `tan2009r1` dataset from the
-`Biocexptpkg("pRolocdata")` to illustrate the TAGM-MAP method
+`r Biocexptpkg("pRolocdata")` to illustrate the TAGM-MAP method
 
 ```{r tan}
 data(tan2009r1)

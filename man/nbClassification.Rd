@@ -5,8 +5,8 @@
 \alias{nbPrediction}
 \title{nb classification}
 \usage{
-nbClassification(object, assessRes, scores = c("prediction", "all", "none"),
-  laplace, fcol = "markers", ...)
+nbClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), laplace, fcol = "markers", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

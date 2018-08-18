@@ -5,8 +5,8 @@
 \alias{rfPrediction}
 \title{rf classification}
 \usage{
-rfClassification(object, assessRes, scores = c("prediction", "all", "none"),
-  mtry, fcol = "markers", ...)
+rfClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), mtry, fcol = "markers", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

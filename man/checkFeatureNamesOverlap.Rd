@@ -4,7 +4,8 @@
 \alias{checkFeatureNamesOverlap}
 \title{Check feature names overlap}
 \usage{
-checkFeatureNamesOverlap(x, y, fcolx = "markers", fcoly, verbose = TRUE)
+checkFeatureNamesOverlap(x, y, fcolx = "markers", fcoly,
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{An \code{MSnSet} instance.}

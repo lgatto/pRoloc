@@ -5,8 +5,8 @@
 \alias{knnPrediction}
 \title{knn classification}
 \usage{
-knnClassification(object, assessRes, scores = c("prediction", "all", "none"),
-  k, fcol = "markers", ...)
+knnClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), k, fcol = "markers", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

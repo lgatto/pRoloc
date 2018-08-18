@@ -4,7 +4,8 @@
 \alias{fDataToUnknown}
 \title{Update a feature variable}
 \usage{
-fDataToUnknown(object, fcol = "markers", from = "^$", to = "unknown", ...)
+fDataToUnknown(object, fcol = "markers", from = "^$", to = "unknown",
+  ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}

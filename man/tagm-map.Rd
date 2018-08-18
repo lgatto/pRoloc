@@ -14,8 +14,8 @@
 \S4method{show}{MAPParams}(object)
 
 tagmMapTrain(object, fcol = "markers", method = "MAP", numIter = 100,
-  mu0 = NULL, lambda0 = 0.01, nu0 = NULL, S0 = NULL, beta0 = NULL,
-  u = 2, v = 10, seed = NULL)
+  mu0 = NULL, lambda0 = 0.01, nu0 = NULL, S0 = NULL,
+  beta0 = NULL, u = 2, v = 10, seed = NULL)
 
 tagmMapPredict(object, params, fcol = "markers", probJoint = FALSE,
   probOutlier = TRUE)

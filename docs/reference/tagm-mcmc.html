@@ -86,7 +86,7 @@ using Markov-chain Monte-Carlo (MCMC) for inference." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">UNKNOWN TITLE</a>
     </li>
     <li>
       <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
@@ -139,10 +139,10 @@ using Markov-chain Monte-Carlo (MCMC) for inference.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>tagmMcmcTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MCMC"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
-  <span class='kw'>burnin</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>5L</span>, <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>numChains</span> <span class='kw'>=</span> <span class='fl'>4L</span>,
-  <span class='kw'>BPPARAM</span> <span class='kw'>=</span> <span class='kw pkg'>BiocParallel</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/BiocParallel/topics/register'>bpparam</a></span>())
+    <pre class="usage"><span class='fu'>tagmMcmcTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MCMC"</span>,
+  <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>1000L</span>, <span class='kw'>burnin</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>5L</span>, <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>numChains</span> <span class='kw'>=</span> <span class='fl'>4L</span>, <span class='kw'>BPPARAM</span> <span class='kw'>=</span> <span class='kw pkg'>BiocParallel</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/BiocParallel/topics/register'>bpparam</a></span>())
 
 <span class='fu'>tagmMcmcPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

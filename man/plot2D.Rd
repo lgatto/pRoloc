@@ -7,10 +7,11 @@
 \alias{plot3D,MSnSet-method}
 \title{Plot organelle assignment data and results.}
 \usage{
-plot2D(object, fcol = "markers", fpch, unknown = "unknown", dims = 1:2,
-  score = 1, method = "PCA", methargs, axsSwitch = FALSE,
-  mirrorX = FALSE, mirrorY = FALSE, col, pch, cex, index = FALSE,
-  idx.cex = 0.75, addLegend, identify = FALSE, plot = TRUE, ...)
+plot2D(object, fcol = "markers", fpch, unknown = "unknown",
+  dims = 1:2, score = 1, method = "PCA", methargs,
+  axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch, cex,
+  index = FALSE, idx.cex = 0.75, addLegend, identify = FALSE,
+  plot = TRUE, ...)
 
 \S4method{plot3D}{MSnSet}(object, fcol = "markers", dims = c(1, 2, 3),
   radius1 = 0.1, radius2 = radius1 * 2, plot = TRUE, ...)

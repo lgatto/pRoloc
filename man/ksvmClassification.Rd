@@ -5,8 +5,8 @@
 \alias{ksvmPrediction}
 \title{ksvm classification}
 \usage{
-ksvmClassification(object, assessRes, scores = c("prediction", "all", "none"),
-  cost, fcol = "markers", ...)
+ksvmClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), cost, fcol = "markers", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

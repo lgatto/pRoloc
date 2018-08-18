@@ -4,7 +4,8 @@
 \alias{testMarkers}
 \title{Tests marker class sizes}
 \usage{
-testMarkers(object, xval = 5, n = 2, fcol = "markers", error = FALSE)
+testMarkers(object, xval = 5, n = 2, fcol = "markers",
+  error = FALSE)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

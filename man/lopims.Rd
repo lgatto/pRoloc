@@ -9,8 +9,8 @@
 \alias{lopims5}
 \title{A complete LOPIMS pipeline}
 \usage{
-lopims(hdmsedir = "HDMSE", msedir = "MSE", pep3ddir = "pep3D", fastafile,
-  markerfile, mfdr = 0.025, ...)
+lopims(hdmsedir = "HDMSE", msedir = "MSE", pep3ddir = "pep3D",
+  fastafile, markerfile, mfdr = 0.025, ...)
 }
 \arguments{
 \item{hdmsedir}{A \code{character} identifying the directory

@@ -7,7 +7,8 @@
 \usage{
 highlightOnPlot(object, foi, labels, args = list(), ...)
 
-highlightOnPlot3D(object, foi, labels, args = list(), radius = 0.1 * 3, ...)
+highlightOnPlot3D(object, foi, labels, args = list(), radius = 0.1 * 3,
+  ...)
 }
 \arguments{
 \item{object}{The main dataset described as an \code{MSnSet} or a

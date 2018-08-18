@@ -11,7 +11,6 @@
 \alias{class:MCMCParams}
 \alias{MCMCChains}
 \alias{class:MCMCChains}
-\alias{MCMCChains-class}
 \alias{chains}
 \alias{MCMCChain}
 \alias{class:MCMCChain}
@@ -19,13 +18,9 @@
 \alias{MCMCSummary}
 \alias{class:MCMCSummary}
 \alias{MCMCSummary-class.}
-\alias{chains}
 \alias{show,MCMCParams-method}
 \alias{show,ComponentParam-method}
-\alias{MCMCChain-class}
 \alias{.MCMCChain}
-\alias{class:MCMCChain}
-\alias{MCMCChain}
 \alias{show,MCMCChain-method}
 \alias{length,MCMCChains-method}
 \alias{length,MCMCParams-method}
@@ -48,13 +43,17 @@ chains(object)
 
 \S4method{length}{MCMCParams}(x)
 
-\S4method{[[}{MCMCChains,ANY,ANY}(x, i, j = "missing", drop = "missing")
+\S4method{[[}{MCMCChains,ANY,ANY}(x, i, j = "missing",
+  drop = "missing")
 
-\S4method{[[}{MCMCParams,ANY,ANY}(x, i, j = "missing", drop = "missing")
+\S4method{[[}{MCMCParams,ANY,ANY}(x, i, j = "missing",
+  drop = "missing")
 
-\S4method{[}{MCMCChains,ANY,ANY,ANY}(x, i, j = "missing", drop = "missing")
+\S4method{[}{MCMCChains,ANY,ANY,ANY}(x, i, j = "missing",
+  drop = "missing")
 
-\S4method{[}{MCMCParams,ANY,ANY,ANY}(x, i, j = "missing", drop = "missing")
+\S4method{[}{MCMCParams,ANY,ANY,ANY}(x, i, j = "missing",
+  drop = "missing")
 
 \S4method{show}{MCMCChains}(object)
 }

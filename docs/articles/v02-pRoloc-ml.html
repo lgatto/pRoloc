@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">UNKNOWN TITLE</a>
     </li>
     <li>
       <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="data-sets" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-sets" class="anchor"></a>Data sets</h1>
-<p>We provide 78 test data sets in the <em><a href="http://bioconductor.org/packages/pRolocdata">pRolocdata</a></em> package that can be readily used with <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em>. The data set can be listed with <em>pRolocdata</em> and loaded with the <em>data</em> function. Each data set, including its origin, is individually documented.</p>
+<p>We provide 75 test data sets in the <em><a href="http://bioconductor.org/packages/pRolocdata">pRolocdata</a></em> package that can be readily used with <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em>. The data set can be listed with <em>pRolocdata</em> and loaded with the <em>data</em> function. Each data set, including its origin, is individually documented.</p>
 <p>The data sets are distributed as <em>MSnSet</em> instances. Briefly, these are dedicated containers for quantitation data as well as feature and sample meta-data. More details about <em>MSnSet</em>s are available in the <em><a href="http://bioconductor.org/packages/pRoloc">pRoloc</a></em> tutorial and in the <em><a href="http://bioconductor.org/packages/MSnbase">MSnbase</a></em> package, that defined the class.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"pRolocdata"</span>)
 <span class="kw">data</span>(tan2009r1)
@@ -252,7 +252,7 @@ tan2009r1</code></pre></div>
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=1 cost=16) Fri Aug  3 07:41:28 2018 
+## Performed svm prediction (sigma=1 cost=16) Fri Aug 17 14:04:26 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 </div>
 <div id="customising-model-parameters" class="section level2">
@@ -370,7 +370,7 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R version 3.5.0 Patched (2018-05-14 r74725)
+<pre><code>## R version 3.5.1 Patched (2018-08-16 r75161)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -391,64 +391,64 @@ wres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/svmCla
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] pRolocdata_1.19.3    pRoloc_1.21.7        MLInterfaces_1.60.1 
-##  [4] cluster_2.0.7-1      annotate_1.58.0      XML_3.98-1.12       
+##  [1] pRolocdata_1.18.0    pRoloc_1.21.8        MLInterfaces_1.60.1 
+##  [4] cluster_2.0.7-1      annotate_1.58.0      XML_3.98-1.15       
 ##  [7] AnnotationDbi_1.42.1 IRanges_2.14.10      S4Vectors_0.18.3    
-## [10] MSnbase_2.7.3        ProtGenerics_1.12.0  BiocParallel_1.14.2 
+## [10] MSnbase_2.7.4        ProtGenerics_1.12.0  BiocParallel_1.14.2 
 ## [13] mzR_2.15.2           Rcpp_0.12.18         Biobase_2.40.0      
 ## [16] BiocGenerics_0.26.0  knitr_1.20           BiocStyle_2.8.2     
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] tidyselect_0.2.4      RSQLite_2.1.1         htmlwidgets_1.2      
-##   [4] grid_3.5.0            trimcluster_0.1-2.1   lpSolve_5.6.13       
+##   [4] grid_3.5.1            trimcluster_0.1-2.1   lpSolve_5.6.13       
 ##   [7] rda_1.0.2-2.1         munsell_0.5.0         codetools_0.2-15     
 ##  [10] preprocessCore_1.42.0 withr_2.1.2           colorspace_1.3-2     
 ##  [13] BiocInstaller_1.30.0  highr_0.7             geometry_0.3-6       
-##  [16] robustbase_0.93-1.1   dimRed_0.1.0          mzID_1.18.0          
+##  [16] robustbase_0.93-2     dimRed_0.1.0          mzID_1.18.0          
 ##  [19] hwriter_1.3.2         bit64_0.9-7           ggvis_0.4.3          
-##  [22] rprojroot_1.3-2       coda_0.19-1           ipred_0.9-6          
+##  [22] rprojroot_1.3-2       coda_0.19-1           ipred_0.9-7          
 ##  [25] xfun_0.3              randomForest_4.6-14   diptest_0.75-7       
 ##  [28] R6_2.2.2              doParallel_1.0.11     flexmix_2.3-14       
 ##  [31] DRR_0.0.3             bitops_1.0-6          assertthat_0.2.0     
-##  [34] promises_1.0.1        scales_0.5.0          nnet_7.3-12          
+##  [34] promises_1.0.1        scales_1.0.0          nnet_7.3-12          
 ##  [37] gtable_0.2.0          affy_1.58.0           ddalpha_1.3.4        
-##  [40] timeDate_3043.102     rlang_0.2.1           CVST_0.2-2           
-##  [43] genefilter_1.62.0     RcppRoll_0.3.0        splines_3.5.0        
-##  [46] lazyeval_0.2.1        ModelMetrics_1.1.0    impute_1.54.0        
-##  [49] hexbin_1.27.2         broom_0.5.0           yaml_2.1.19          
+##  [40] timeDate_3043.102     rlang_0.2.2           CVST_0.2-2           
+##  [43] genefilter_1.62.0     RcppRoll_0.3.0        splines_3.5.1        
+##  [46] lazyeval_0.2.1        ModelMetrics_1.2.0    impute_1.54.0        
+##  [49] hexbin_1.27.2         broom_0.5.0           yaml_2.2.0           
 ##  [52] reshape2_1.4.3        abind_1.4-5           threejs_0.3.1        
 ##  [55] crosstalk_1.0.0       backports_1.1.2       httpuv_1.4.5         
-##  [58] caret_6.0-80          tools_3.5.0           lava_1.6.2           
+##  [58] caret_6.0-80          tools_3.5.1           lava_1.6.3           
 ##  [61] bookdown_0.7          ggplot2_3.0.0         affyio_1.50.0        
 ##  [64] RColorBrewer_1.1-2    proxy_0.4-22          plyr_1.8.4           
 ##  [67] base64enc_0.1-3       progress_1.2.0        zlibbioc_1.26.0      
 ##  [70] purrr_0.2.5           RCurl_1.95-4.11       prettyunits_1.0.2    
 ##  [73] rpart_4.1-13          viridis_0.5.1         sampling_2.8         
-##  [76] sfsmisc_1.1-2         LaplacesDemon_16.1.1  fs_1.2.3             
-##  [79] magrittr_1.5          pcaMethods_1.72.0     mvtnorm_1.0-8        
-##  [82] whisker_0.3-2         hms_0.4.2             mime_0.5             
-##  [85] evaluate_0.11         xtable_1.8-2          mclust_5.4.1         
-##  [88] gridExtra_2.3         compiler_3.5.0        biomaRt_2.36.1       
-##  [91] tibble_1.4.2          crayon_1.3.4          htmltools_0.3.6      
-##  [94] segmented_0.5-3.0     later_0.7.3           tidyr_0.8.1          
-##  [97] lubridate_1.7.4       DBI_1.0.0             magic_1.5-8          
-## [100] MASS_7.3-50           fpc_2.1-11.1          Matrix_1.2-14        
-## [103] vsn_3.48.1            gdata_2.18.0          mlbench_2.1-1        
-## [106] bindr_0.1.1           gower_0.1.2           igraph_1.2.1         
-## [109] pkgconfig_2.0.1       pkgdown_1.1.0         recipes_0.1.3        
-## [112] MALDIquant_1.18       xml2_1.2.0            roxygen2_6.0.1       
-## [115] foreach_1.4.4         prodlim_2018.04.18    stringr_1.3.1        
-## [118] digest_0.6.15         pls_2.6-0             rmarkdown_1.10       
-## [121] dendextend_1.8.0      kernlab_0.9-26        shiny_1.1.0          
-## [124] gtools_3.8.1          commonmark_1.5        modeltools_0.2-22    
-## [127] nlme_3.1-137          bindrcpp_0.2.2        desc_1.2.0           
-## [130] viridisLite_0.3.0     limma_3.36.2          pillar_1.3.0         
-## [133] lattice_0.20-35       httr_1.3.1            DEoptimR_1.0-8       
-## [136] survival_2.42-6       glue_1.3.0            FNN_1.1              
-## [139] gbm_2.1.3             prabclus_2.2-6        iterators_1.0.10     
-## [142] bit_1.1-14            class_7.3-14          stringi_1.2.4        
-## [145] mixtools_1.1.0        blob_1.1.1            memoise_1.1.0        
-## [148] dplyr_0.7.6           e1071_1.6-8</code></pre>
+##  [76] sfsmisc_1.1-2         LaplacesDemon_16.1.1  fs_1.2.5             
+##  [79] magrittr_1.5          data.table_1.11.4     pcaMethods_1.72.0    
+##  [82] mvtnorm_1.0-8         whisker_0.3-2         hms_0.4.2            
+##  [85] mime_0.5              evaluate_0.11         xtable_1.8-2         
+##  [88] mclust_5.4.1          gridExtra_2.3         compiler_3.5.1       
+##  [91] biomaRt_2.36.1        tibble_1.4.2          crayon_1.3.4         
+##  [94] htmltools_0.3.6       segmented_0.5-3.0     later_0.7.3          
+##  [97] tidyr_0.8.1           lubridate_1.7.4       DBI_1.0.0            
+## [100] magic_1.5-8           MASS_7.3-50           fpc_2.1-11.1         
+## [103] Matrix_1.2-14         vsn_3.48.1            gdata_2.18.0         
+## [106] mlbench_2.1-1         bindr_0.1.1           gower_0.1.2          
+## [109] igraph_1.2.2          pkgconfig_2.0.2       pkgdown_1.1.0        
+## [112] recipes_0.1.3         MALDIquant_1.18       xml2_1.2.0           
+## [115] roxygen2_6.1.0        foreach_1.4.4         prodlim_2018.04.18   
+## [118] stringr_1.3.1         digest_0.6.15         pls_2.6-0            
+## [121] rmarkdown_1.10        dendextend_1.8.0      kernlab_0.9-27       
+## [124] shiny_1.1.0           gtools_3.8.1          commonmark_1.5       
+## [127] modeltools_0.2-22     nlme_3.1-137          bindrcpp_0.2.2       
+## [130] desc_1.2.0            viridisLite_0.3.0     limma_3.36.2         
+## [133] pillar_1.3.0          lattice_0.20-35       httr_1.3.1           
+## [136] DEoptimR_1.0-8        survival_2.42-6       glue_1.3.0           
+## [139] FNN_1.1.2.1           gbm_2.1.3             prabclus_2.2-6       
+## [142] iterators_1.0.10      bit_1.1-14            class_7.3-14         
+## [145] stringi_1.2.4         mixtools_1.1.0        blob_1.1.1           
+## [148] memoise_1.1.0         dplyr_0.7.6           e1071_1.7-0</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

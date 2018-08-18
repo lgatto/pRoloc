@@ -6,8 +6,8 @@
 \usage{
 phenoDisco(object, fcol = "markers", times = 100, GS = 10,
   allIter = FALSE, p = 0.05, ndims = 2,
-  modelNames = mclust.options("emModelNames"), G = 1:9, BPPARAM, tmpfile,
-  seed, verbose = TRUE, dimred = c("PCA", "t-SNE"), ...)
+  modelNames = mclust.options("emModelNames"), G = 1:9, BPPARAM,
+  tmpfile, seed, verbose = TRUE, dimred = c("PCA", "t-SNE"), ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}

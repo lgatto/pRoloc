@@ -5,8 +5,8 @@
 \alias{svmPrediction}
 \title{svm classification}
 \usage{
-svmClassification(object, assessRes, scores = c("prediction", "all", "none"),
-  cost, sigma, fcol = "markers", ...)
+svmClassification(object, assessRes, scores = c("prediction", "all",
+  "none"), cost, sigma, fcol = "markers", ...)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

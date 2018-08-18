@@ -4,7 +4,8 @@
 \alias{makeGoSet}
 \title{Creates a GO feature \code{MSnSet}}
 \usage{
-makeGoSet(object, params, namespace = "cellular_component", evidence = NULL)
+makeGoSet(object, params, namespace = "cellular_component",
+  evidence = NULL)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}

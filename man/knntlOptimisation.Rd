@@ -6,8 +6,8 @@
 \usage{
 knntlOptimisation(primary, auxiliary, fcol = "markers", k, times = 50,
   test.size = 0.2, xval = 5, by = 0.5, length.out, th, xfolds,
-  BPPARAM = BiocParallel::bpparam(), method = "Breckels", log = FALSE,
-  seed)
+  BPPARAM = BiocParallel::bpparam(), method = "Breckels",
+  log = FALSE, seed)
 }
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}

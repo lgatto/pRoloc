@@ -60,9 +60,9 @@ BiocManager::install("pRolocGUI")
 
 ### Pre-release/development version
 
-The pre-release/development code on github can be installed using
-`biocLite`. Note that this requires a working R build environment (i.e
-`Rtools` on Windows - see
+The pre-release/development code on github can also be installed using
+`BiocManager::install`, as shown below. Note that this requires a
+working R build environment (i.e `Rtools` on Windows - see
 [here](https://github.com/lgatto/teachingmaterial/wiki/R-package)). New
 pre-release features might not be documented not thoroughly tested and
 could substantially change prior to release. Use at your own risks.

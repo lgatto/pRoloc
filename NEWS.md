@@ -1,5 +1,8 @@
 # pRoloc 1.21
 
+## Changes in version 1.21.9
+- Nothing yet.
+
 ## Changes in version 1.21.8
 - Add an `fcol` argument to `plotDist` to plot and colour all profiles
   <2018-08-09 Thu>

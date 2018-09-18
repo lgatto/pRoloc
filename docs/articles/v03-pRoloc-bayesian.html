@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/v01-pRoloc-tutorial.html">UNKNOWN TITLE</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
     </li>
     <li>
       <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
@@ -205,18 +205,18 @@ p</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.allocation)</code></pre></div>
 <pre><code>## 
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##            12            98            20            10            39 
+##            13            98            18            10            39 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            25             3           103            29            31 
+##            25             3           102            31            32 
 ##  Ribosome 60S 
-##            30</code></pre>
+##            29</code></pre>
 <ul>
 <li>
 <code>tagm.mcmc.probability</code>: the posterior probability for the protein sub-cellular allocations.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.probability)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.3259  0.8980  0.9895  0.9098  1.0000  1.0000</code></pre>
+##  0.3497  0.8896  0.9882  0.9085  1.0000  1.0000</code></pre>
 <p>As well as other useful summaries of the MCMC methods:</p>
 <ul>
 <li><p><code>tagm.mcmc.outlier</code> the posterior probability for the protein to belong to the outlier component.</p></li>

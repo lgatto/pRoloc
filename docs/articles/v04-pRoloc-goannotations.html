@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/v01-pRoloc-tutorial.html">UNKNOWN TITLE</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
     </li>
     <li>
       <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
@@ -209,13 +209,13 @@ dd[[<span class="dv">1</span>]]</code></pre></div>
 ##  nrow =  114 
 ## k's tested: 1 2 3 
 ##   Size:  114 
-##   Size:  34, 80 
-##   Size:  26, 33, 55 
+##   Size:  14, 100 
+##   Size:  80, 12, 22 
 ## Clusters info:
-##       ks.mean    mean ks.norm     norm
-## k = 1       1  0.5153       1  0.10627
-## k = 2       2  0.3771       2  0.10299
-## k = 3       3 *0.3067       3 *0.09294</code></pre>
+##       ks.mean    mean ks.norm    norm
+## k = 1       1  0.5153       1 *0.1063
+## k = 2       2  0.4524       2  0.1435
+## k = 3       3 *0.3178       3  0.1104</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plot normalised distances 
 <span class="kw">plot</span>(dd, <span class="dt">p =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre></div>

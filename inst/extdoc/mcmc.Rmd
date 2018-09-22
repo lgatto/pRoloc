@@ -190,7 +190,7 @@ pRoloc:::chains(tanTagm2)[[2]]
 pRoloc:::chains(tanTagm2)[[3]]
 ```
 
-## Procesing and summarising MCMC results
+## Processing and summarising MCMC results
 
 ### Populating the summary slot
 
@@ -250,7 +250,9 @@ probabilitic allocations of proteins to sub-cellular niches.
 ptsze <- exp(fData(tan2009r1)$tagm.mcmc.probability) - 1
 
 ## Create plot2D with pointer scaled with probability
-plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze,
+plot2D(tan2009r1,
+       fcol = "tagm.mcmc.allocation",
+       cex = ptsze,
        main = "protein pointer scaled with posterior localisation probability")
 
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)

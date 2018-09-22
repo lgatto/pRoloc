@@ -278,7 +278,7 @@ chains used in this analysis was 4.
 
 ```r
 ## Get number of chains
-nChains <- length(tanTagm@chains)
+nChains <- length(tanTagm)
 nChains
 ```
 

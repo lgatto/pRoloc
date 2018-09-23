@@ -36,10 +36,16 @@ mcmc_thin_chains <- function(x, n) {
                          summary = pRoloc:::.MCMCSummary())
 }
 
-mcmc_plot_probs <- function(x, fname, n = 1) {
-    stopifnot(inherits(x, "MCMCParams"))
-    stopifnot(require("ggplot2"))
-    chain <- pRoloc:::chains(x)[[n]]
+setMethod("plot", c("MCMCParams", "character"),
+          function(x, y, ...) {
+              mcmc_plot_probs(x, y, n = 1)
+          })
+
+mcmc_plot_probs <- function(param, fname, n = 1) {
+    stopifnot(inherits(param, "MCMCParams"))
+    stopifnot(length(fname) == 1)
+    stopifnot(fname %in% rownames(chain@ComponentProb))
+    chain <- pRoloc:::chains(param)[[n]]
     dfr <- as.data.frame(chain@ComponentProb[fname, , ])
     colnames(dfr) <- rownames(chain@ComponentParam@mk)
     dfr_long <- data.frame(Organelle = rep(names(dfr), each = nrow(dfr)),

@@ -39,13 +39,14 @@ mcmc_thin_chains <- function(x, n) {
 mcmc_plot_probs <- function(x, fname, n = 1) {
     stopifnot(inherits(x, "MCMCParams"))
     stopifnot(require("ggplot2"))
-    stopifnot(require("reshape2"))
     chain <- pRoloc:::chains(x)[[n]]
     dfr <- as.data.frame(chain@ComponentProb[fname, , ])
     colnames(dfr) <- rownames(chain@ComponentParam@mk)
-    dfr_melt <- melt(dfr)
-    colnames(dfr_melt) <- c("Organelle","Probability")
-    gg2 <- ggplot(dfr_melt,
+    dfr_long <- data.frame(Organelle = rep(names(dfr), each = nrow(dfr)),
+                           Probability = unlist(dfr, use.names = FALSE),
+                           row.names = NULL,
+                           stringsAsFactors = FALSE)
+    gg2 <- ggplot(dfr_long,
                   aes(Organelle, Probability,
                       width = (Probability))) +
         geom_violin(aes(fill = Organelle), scale = "width")

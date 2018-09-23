@@ -1,5 +1,3 @@
-
-
 # *TAGM-MCMC*, in details
 
 This section explains how to manually manipulate the MCMC output of
@@ -33,7 +31,7 @@ tanTagm
 
 ```
 ## Object of class "MCMCParams"
-## Method: TAGM.MCMC 
+## Method: TAGM.MCMC
 ## Number of chains: 4
 ```
 
@@ -70,7 +68,7 @@ chains used in this analysis was 4.
 
 ```r
 ## Get number of chains
-nChains <- length(tanTagm@chains)
+nChains <- length(tanTagm)
 nChains
 ```
 
@@ -89,38 +87,47 @@ producing trace plots for each MCMC chain.
 
 ```r
 ## Convergence diagnostic to see if more we need to discard any
-## iterations or entire chains.
-outlierTotal <- vector("list", length = nChains)
-
-## Compute the number of outliers for each iteration for each chain
-for (j in seq_len(nChains)) {
-  mc <- pRoloc:::chains(tanTagm)[[j]]
-  outlierTotal[[j]] <- coda::mcmc(colSums(mc@Outlier))
-}
-
-## Carefully using coda S3 objects to produce trace plots and histograms
-plot(outlierTotal[[1]], col = "blue", main = "Chain 1")
+## iterations or entire chains: compute the number of outliers for
+## each iteration for each chain
+out <- mcmc_get_outliers(p_unst)
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-1.png)
+```
+## Error in inherits(x, "MCMCParams"): object 'p_unst' not found
+```
 
 ```r
-plot(outlierTotal[[2]], col = "red", main = "Chain 2")
+## Using coda S3 objects to produce trace plots and histograms
+plot(out[[1]], col = "blue", main = "Chain 1")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-2.png)
+```
+## Error in plot(out[[1]], col = "blue", main = "Chain 1"): object 'out' not found
+```
 
 ```r
-plot(outlierTotal[[3]], col = "green", main = "Chain 3")
+plot(out[[2]], col = "red", main = "Chain 2")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-3.png)
+```
+## Error in plot(out[[2]], col = "red", main = "Chain 2"): object 'out' not found
+```
 
 ```r
-plot(outlierTotal[[4]], col = "orange", main = "Chain 4")
+plot(out[[3]], col = "green", main = "Chain 3")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-4.png)
+```
+## Error in plot(out[[3]], col = "green", main = "Chain 3"): object 'out' not found
+```
+
+```r
+plot(out[[4]], col = "orange", main = "Chain 4")
+```
+
+```
+## Error in plot(out[[4]], col = "orange", main = "Chain 4"): object 'out' not found
+```
 
 We can use the *[coda](https://CRAN.R-project.org/package=coda)* package to produce
 summaries of our chains. Here is the `coda` summary for the first
@@ -129,26 +136,11 @@ chain.
 
 ```r
 ## all chains average around 360 outliers
-summary(outlierTotal[[1]])
+summary(out[[1]])
 ```
 
 ```
-## 
-## Iterations = 1:1500
-## Thinning interval = 1 
-## Number of chains = 1 
-## Sample size per chain = 1500 
-## 
-## 1. Empirical mean and standard deviation for each variable,
-##    plus standard error of the mean:
-## 
-##           Mean             SD       Naive SE Time-series SE 
-##        357.301         13.864          0.358          0.358 
-## 
-## 2. Quantiles for each variable:
-## 
-##  2.5%   25%   50%   75% 97.5% 
-##   329   348   357   367   384
+## Error in summary(out[[1]]): object 'out' not found
 ```
 
 In this case our chains looks very good. They all oscillate around an
@@ -170,14 +162,11 @@ statistic.
 ```r
 ## Can check gelman diagnostic for convergence (values less than <1.05
 ## are good for convergence)
-gelman.diag(outlierTotal) # the Upper C.I. is 1 so mcmc has clearly converged
+gelman.diag(out) ## the Upper C.I. is 1 so mcmc has clearly converged
 ```
 
 ```
-## Potential scale reduction factors:
-## 
-##      Point est. Upper C.I.
-## [1,]          1          1
+## Error in as.mcmc.list(x): object 'out' not found
 ```
 
 We can also look at the Gelman diagnostics statistics for pairs of chains.
@@ -185,36 +174,27 @@ We can also look at the Gelman diagnostics statistics for pairs of chains.
 
 ```r
 ## We can also check individual pairs of chains for convergence
-gelman.diag(outlierTotal[1:2]) # the upper C.I is 1.01
+gelman.diag(out[1:2]) # the upper C.I is 1.01
 ```
 
 ```
-## Potential scale reduction factors:
-## 
-##      Point est. Upper C.I.
-## [1,]          1       1.01
+## Error in as.mcmc.list(x): object 'out' not found
 ```
 
 ```r
-gelman.diag(outlierTotal[c(1,3)]) # the upper C.I is 1
+gelman.diag(out[c(1,3)]) # the upper C.I is 1
 ```
 
 ```
-## Potential scale reduction factors:
-## 
-##      Point est. Upper C.I.
-## [1,]          1          1
+## Error in as.mcmc.list(x): object 'out' not found
 ```
 
 ```r
-gelman.diag(outlierTotal[3:4]) # the upper C.I is 1
+gelman.diag(out[3:4]) # the upper C.I is 1
 ```
 
 ```
-## Potential scale reduction factors:
-## 
-##      Point est. Upper C.I.
-## [1,]          1          1
+## Error in as.mcmc.list(x): object 'out' not found
 ```
 
 ## Manually manipulating MCMC chains
@@ -234,8 +214,7 @@ how to remove the second chain from our domwnstream analysis.
 ## example in case we didn't believe it had converged.  It would be
 ## possible to remove more than one chain e.g. to remove 2 and 4 using
 ## c(2, 4).
-removeChain <- 2
-newTanMcmc <- tanTagm[seq_len(nChains)[-removeChain]]
+newTanMcmc <- tanTagm[-2]
 
 ## Let check that it looks good
 newTanMcmc
@@ -243,12 +222,12 @@ newTanMcmc
 
 ```
 ## Object of class "MCMCParams"
-## Method: TAGM.MCMC 
+## Method: TAGM.MCMC
 ## Number of chains: 3
 ```
 
 ```r
-length(newTanMcmc) == (nChains - length(removeChain))
+length(newTanMcmc) == (nChains - 1)
 ```
 
 ```
@@ -283,135 +262,92 @@ downstream analysis leads to stable results.
 
 
 ```r
-## We need to clear this section up with a new function
-
 n <- (tanChain1@n)/2 # Number of iterations to keep 750
-K <- tanChain1@K # Number of components
-N <- tanChain1@N # Number of Proteins
-
-## Create storage for .MCMCChain
-.MCMCChainlist <- vector("list", length = length(newTanMcmc))
-
-for(j in seq_len(length(newTanMcmc))) {
-
-  tanChain <- pRoloc:::chains(newTanMcmc)[[j]]
-  .ComponentParam <- tanChain@ComponentParam # This won't change
-
-  ## Subset MCMC iterations
-  retain <- seq.int(n + 1, tanChain@n) # retain 750 samples
-
-  ## Check correct number of iterations
-  stopifnot(ncol(tanChain@Component[, retain]) == n) # Second entry is 750
-
-  ## Subset functions
-  .Component <- tanChain@Component[, retain]
-  .ComponentProb <- tanChain@ComponentProb[, retain, ]
-  .Outlier <- tanChain@Outlier[, retain]
-  .OutlierProb <- tanChain@OutlierProb[, retain, ]
-
-  ## We can now create a new object of class MCMCChains
-  ## make MCMCChain object
-  .MCMCChainlist[[j]] <- pRoloc:::.MCMCChain(n = as.integer(n),
-                                             K = K,
-                                             N = N,
-                                             Component = .Component,
-                                             ComponentProb = .ComponentProb,
-                                             Outlier = .Outlier,
-                                             OutlierProb = .OutlierProb,
-                                             ComponentParam = .ComponentParam)
-
-}
-
-## Construct class MCMCChains
-.ans <- pRoloc:::.MCMCChains(chains = .MCMCChainlist)
-tanTagmparams <- pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                                      chains = .ans,
-                                      priors = tanTagm@priors,
-                                      summary = pRoloc:::.MCMCSummary())
+tanTagm2 <- mcmc_thin_chains(newTanMcmc, n)
 ```
 
-tanTagmParams is now an object of class `MCMCParams` with 3 chains
-each with 750 iterations.
+`tanTagm2` is now an object of class `MCMCParams` with 3 chains each
+with each 750 iterations.
 
 
 
 ```r
 ## Check tanTagmParams object
-pRoloc:::chains(tanTagmparams)[[1]]
+pRoloc:::chains(tanTagm2)[[1]]
 ```
 
 ```
 ## Object of class "MCMCChain"
-##  Number of components: 11 
-##  Number of proteins: 677 
+##  Number of components: 11
+##  Number of proteins: 677
 ##  Number of iterations: 750
 ```
 
 ```r
-pRoloc:::chains(tanTagmparams)[[2]]
+pRoloc:::chains(tanTagm2)[[2]]
 ```
 
 ```
 ## Object of class "MCMCChain"
-##  Number of components: 11 
-##  Number of proteins: 677 
+##  Number of components: 11
+##  Number of proteins: 677
 ##  Number of iterations: 750
 ```
 
 ```r
-pRoloc:::chains(tanTagmparams)[[3]]
+pRoloc:::chains(tanTagm2)[[3]]
 ```
 
 ```
 ## Object of class "MCMCChain"
-##  Number of components: 11 
-##  Number of proteins: 677 
+##  Number of components: 11
+##  Number of proteins: 677
 ##  Number of iterations: 750
 ```
 
-## Procesing and summarising MCMC results
+## Processing and summarising MCMC results
 
 ### Populating the summary slot
 
-The summary slot of the `tanTagmparams` is currently empty, we can now
-populate the summary slot of `tanTagmparams` using the
-`tagmMcmcProcess` function.
+The summary slot of the `tanTagm2` is currently empty, we can now
+populate the summary slot of `tanTagm2` using the `tagmMcmcProcess`
+function.
 
 
 ```r
 ## This will automatically pool chains to produce summary (easy to
 ## create single summaries by subsetting)
-tanTagmparams <- tagmMcmcProcess(tanTagmparams)
+tanTagm2 <- tagmMcmcProcess(tanTagm2)
 
 ## Let look at this object
-summary(tanTagmparams@summary@posteriorEstimates)
+summary(tanTagm2@summary@posteriorEstimates)
 ```
 
 ```
 ##       tagm.allocation tagm.probability tagm.probability.notOutlier
-##  ER           :196    Min.   :0.3055   Min.   :0.0002031          
-##  PM           :192    1st Qu.:0.8439   1st Qu.:0.1712611          
-##  Ribosome 40S : 75    Median :0.9810   Median :0.6001312          
-##  mitochondrion: 61    Mean   :0.8927   Mean   :0.5278532          
-##  Proteasome   : 49    3rd Qu.:0.9980   3rd Qu.:0.8603698          
-##  Ribosome 60S : 32    Max.   :1.0000   Max.   :0.9982244          
-##  (Other)      : 72                                                
+##  ER           :196    Min.   :0.3055   Min.   :0.0002031
+##  PM           :192    1st Qu.:0.8439   1st Qu.:0.1712611
+##  Ribosome 40S : 75    Median :0.9810   Median :0.6001312
+##  mitochondrion: 61    Mean   :0.8927   Mean   :0.5278532
+##  Proteasome   : 49    3rd Qu.:0.9980   3rd Qu.:0.8603698
+##  Ribosome 60S : 32    Max.   :1.0000   Max.   :0.9982244
+##  (Other)      : 72
 ##  tagm.probability.Outlier tagm.probability.lowerquantile
-##  Min.   :0.001776         Min.   :0.001053              
-##  1st Qu.:0.139630         1st Qu.:0.591425              
-##  Median :0.399869         Median :0.942714              
-##  Mean   :0.472147         Mean   :0.769211              
-##  3rd Qu.:0.828739         3rd Qu.:0.995483              
-##  Max.   :0.999797         Max.   :0.999988              
-##                                                         
-##  tagm.probability.upperquantile tagm.mean.shannon  
-##  Min.   :0.4961                 Min.   :0.0000254  
-##  1st Qu.:0.9698                 1st Qu.:0.0141329  
-##  Median :0.9959                 Median :0.0911157  
-##  Mean   :0.9655                 Mean   :0.2386502  
-##  3rd Qu.:0.9994                 3rd Qu.:0.4050057  
-##  Max.   :1.0000                 Max.   :1.3051988  
-## 
+##  Min.   :0.001776         Min.   :0.001053
+##  1st Qu.:0.139630         1st Qu.:0.591425
+##  Median :0.399869         Median :0.942714
+##  Mean   :0.472147         Mean   :0.769211
+##  3rd Qu.:0.828739         3rd Qu.:0.995483
+##  Max.   :0.999797         Max.   :0.999988
+##
+##  tagm.probability.upperquantile tagm.mean.shannon
+##  Min.   :0.4961                 Min.   :0.0000254
+##  1st Qu.:0.9698                 1st Qu.:0.0141329
+##  Median :0.9959                 Median :0.0911157
+##  Mean   :0.9655                 Mean   :0.2386502
+##  3rd Qu.:0.9994                 3rd Qu.:0.4050057
+##  Max.   :1.0000                 Max.   :1.3051988
+##
 ```
 
 For a sanity check, let us re-check the diagnostics.  This is
@@ -422,7 +358,7 @@ in a `diagnostics` slot.
 
 ```r
 ## Recomputed diagnostics
-tanTagmparams@summary@diagnostics
+tanTagm2@summary@diagnostics
 ```
 
 ```
@@ -435,41 +371,41 @@ Let us look at a summary of the analysis.
 
 
 ```r
-summary(tanTagmparams@summary@tagm.joint)
+summary(tanTagm2@summary@tagm.joint)
 ```
 
 ```
-##   Cytoskeleton             ER             Golgi          
-##  Min.   :0.0000000   Min.   :0.0000   Min.   :0.0000000  
-##  1st Qu.:0.0000000   1st Qu.:0.0000   1st Qu.:0.0000000  
-##  Median :0.0000040   Median :0.0000   Median :0.0000002  
-##  Mean   :0.0227762   Mean   :0.2826   Mean   :0.0503043  
-##  3rd Qu.:0.0004646   3rd Qu.:0.9232   3rd Qu.:0.0046922  
-##  Max.   :0.7798512   Max.   :0.9993   Max.   :0.9993792  
-##     Lysosome         mitochondrion          Nucleus         
-##  Min.   :0.0000000   Min.   :0.0000000   Min.   :0.0000000  
-##  1st Qu.:0.0000001   1st Qu.:0.0000000   1st Qu.:0.0000000  
-##  Median :0.0000016   Median :0.0000000   Median :0.0000000  
-##  Mean   :0.0167424   Mean   :0.0916050   Mean   :0.0365126  
-##  3rd Qu.:0.0000793   3rd Qu.:0.0000158   3rd Qu.:0.0000059  
-##  Max.   :0.9795195   Max.   :0.9998841   Max.   :0.9999886  
-##    Peroxisome              PM             Proteasome       
-##  Min.   :0.0000000   Min.   :0.000000   Min.   :0.0000000  
-##  1st Qu.:0.0000000   1st Qu.:0.000000   1st Qu.:0.0000000  
-##  Median :0.0000002   Median :0.000003   Median :0.0000002  
-##  Mean   :0.0055262   Mean   :0.278256   Mean   :0.0726235  
-##  3rd Qu.:0.0000232   3rd Qu.:0.764944   3rd Qu.:0.0005521  
-##  Max.   :0.8831085   Max.   :0.999998   Max.   :0.9979738  
-##   Ribosome 40S       Ribosome 60S      
-##  Min.   :0.000000   Min.   :0.0000000  
-##  1st Qu.:0.000000   1st Qu.:0.0000000  
-##  Median :0.000000   Median :0.0000001  
-##  Mean   :0.096071   Mean   :0.0470258  
-##  3rd Qu.:0.001051   3rd Qu.:0.0001129  
+##   Cytoskeleton             ER             Golgi
+##  Min.   :0.0000000   Min.   :0.0000   Min.   :0.0000000
+##  1st Qu.:0.0000000   1st Qu.:0.0000   1st Qu.:0.0000000
+##  Median :0.0000040   Median :0.0000   Median :0.0000002
+##  Mean   :0.0227762   Mean   :0.2826   Mean   :0.0503043
+##  3rd Qu.:0.0004646   3rd Qu.:0.9232   3rd Qu.:0.0046922
+##  Max.   :0.7798512   Max.   :0.9993   Max.   :0.9993792
+##     Lysosome         mitochondrion          Nucleus
+##  Min.   :0.0000000   Min.   :0.0000000   Min.   :0.0000000
+##  1st Qu.:0.0000001   1st Qu.:0.0000000   1st Qu.:0.0000000
+##  Median :0.0000016   Median :0.0000000   Median :0.0000000
+##  Mean   :0.0167424   Mean   :0.0916050   Mean   :0.0365126
+##  3rd Qu.:0.0000793   3rd Qu.:0.0000158   3rd Qu.:0.0000059
+##  Max.   :0.9795195   Max.   :0.9998841   Max.   :0.9999886
+##    Peroxisome              PM             Proteasome
+##  Min.   :0.0000000   Min.   :0.000000   Min.   :0.0000000
+##  1st Qu.:0.0000000   1st Qu.:0.000000   1st Qu.:0.0000000
+##  Median :0.0000002   Median :0.000003   Median :0.0000002
+##  Mean   :0.0055262   Mean   :0.278256   Mean   :0.0726235
+##  3rd Qu.:0.0000232   3rd Qu.:0.764944   3rd Qu.:0.0005521
+##  Max.   :0.8831085   Max.   :0.999998   Max.   :0.9979738
+##   Ribosome 40S       Ribosome 60S
+##  Min.   :0.000000   Min.   :0.0000000
+##  1st Qu.:0.000000   1st Qu.:0.0000000
+##  Median :0.000000   Median :0.0000001
+##  Mean   :0.096071   Mean   :0.0470258
+##  3rd Qu.:0.001051   3rd Qu.:0.0001129
 ##  Max.   :0.996639   Max.   :0.9885391
 ```
 
-### Appending results to MSnSet
+### Appending results to an MSnSet
 
 The `pRoloc` function `tagmPredict` can be used to append protein MCMC
 results to the feature data of our object of class `MSnSet`. This
@@ -479,7 +415,7 @@ used for final analysis of our data.
 
 ```r
 ## We can now use tagmPredict
-tan2009r1 <- tagmPredict(tan2009r1, params = tanTagmparams)
+tan2009r1 <- tagmPredict(tan2009r1, params = tanTagm2)
 ```
 
 ## Visualising MCMC results
@@ -497,7 +433,9 @@ probabilitic allocations of proteins to sub-cellular niches.
 ptsze <- exp(fData(tan2009r1)$tagm.mcmc.probability) - 1
 
 ## Create plot2D with pointer scaled with probability
-plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze,
+plot2D(tan2009r1,
+       fcol = "tagm.mcmc.allocation",
+       cex = ptsze,
        main = "protein pointer scaled with posterior localisation probability")
 
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
@@ -538,21 +476,21 @@ outliers
 ```
 
 ```
-##  [1] "P04412"   "Q7KJ73"   "Q00174"   "Q9Y105"   "Q9VTZ5"   "B7Z0C1"  
-##  [7] "P46150"   "Q9VN14"   "Q9VU58"   "Q9V498"   "Q9V496"   "P06607"  
-## [13] "Q7K0F7"   "Q9V8R9"   "Q9VT75"   "A8JNJ6"   "Q8SZ38"   "Q960V7"  
-## [19] "Q7KA66"   "P98163"   "Q9VE24"   "Q9VE79"   "A8JV22"   "O96824"  
-## [25] "P23226"   "Q9VKF0"   "Q9VZL6"   "P11584"   "Q9VDK9"   "Q9V4A7"  
-## [31] "Q9W303"   "Q8MLV1"   "Q07152"   "Q9VEE9"   "Q9VXE5"   "P13395"  
-## [37] "Q7JYX2"   "P91938"   "Q9U969"   "Q7JZY1"   "O18388"   "P02844"  
-## [43] "NO_ID_7"  "P27716"   "Q9W478"   "Q8IN49"   "O18337"   "A1Z6L9"  
-## [49] "Q86P66"   "Q9VK04"   "Q9GU68"   "Q8INH5"   "O18333"   "P54351"  
-## [55] "P15215"   "P33450"   "Q24298"   "Q9W404"   "Q9VPQ2"   "Q9VF20"  
-## [61] "Q8IPU3"   "Q7JVX3"   "Q9VV60"   "Q9V427"   "Q7JQR3"   "P52295"  
-## [67] "A8JRB8"   "Q9VTU4"   "Q24007"   "B8A403"   "Q00963"   "Q94887"  
-## [73] "Q4AB31"   "Q95SY7"   "O15943"   "Q9VDV3"   "B7Z0D3"   "Q9VLT3"  
+##  [1] "P04412"   "Q7KJ73"   "Q00174"   "Q9Y105"   "Q9VTZ5"   "B7Z0C1"
+##  [7] "P46150"   "Q9VN14"   "Q9VU58"   "Q9V498"   "Q9V496"   "P06607"
+## [13] "Q7K0F7"   "Q9V8R9"   "Q9VT75"   "A8JNJ6"   "Q8SZ38"   "Q960V7"
+## [19] "Q7KA66"   "P98163"   "Q9VE24"   "Q9VE79"   "A8JV22"   "O96824"
+## [25] "P23226"   "Q9VKF0"   "Q9VZL6"   "P11584"   "Q9VDK9"   "Q9V4A7"
+## [31] "Q9W303"   "Q8MLV1"   "Q07152"   "Q9VEE9"   "Q9VXE5"   "P13395"
+## [37] "Q7JYX2"   "P91938"   "Q9U969"   "Q7JZY1"   "O18388"   "P02844"
+## [43] "NO_ID_7"  "P27716"   "Q9W478"   "Q8IN49"   "O18337"   "A1Z6L9"
+## [49] "Q86P66"   "Q9VK04"   "Q9GU68"   "Q8INH5"   "O18333"   "P54351"
+## [55] "P15215"   "P33450"   "Q24298"   "Q9W404"   "Q9VPQ2"   "Q9VF20"
+## [61] "Q8IPU3"   "Q7JVX3"   "Q9VV60"   "Q9V427"   "Q7JQR3"   "P52295"
+## [67] "A8JRB8"   "Q9VTU4"   "Q24007"   "B8A403"   "Q00963"   "Q94887"
+## [73] "Q4AB31"   "Q95SY7"   "O15943"   "Q9VDV3"   "B7Z0D3"   "Q9VLT3"
 ## [79] "Q9VUQ7"   "Q9VAG2"   "A1Z6H7"   "Q27415"   "Q9VHL2"   "NO_ID_16"
-## [85] "Q94518"   "Q7KN94"   "P29742"   "Q9VXB0"   "B7Z036"   "Q8IRH6"  
+## [85] "Q94518"   "Q7KN94"   "P29742"   "Q9VXB0"   "B7Z036"   "Q8IRH6"
 ## [91] "P17917"   "M9PDB2"   "Q9VVA0"   "Q9VHP0"
 ```
 
@@ -566,31 +504,26 @@ quantifies the uncertainty in the allocation of this protein.
 
 
 ```r
-## We can make this into a function
-Q9VCK0 <- as.data.frame(tanChain@ComponentProb["Q9VCK0",,])
-colnames(Q9VCK0) <- getMarkerClasses(tan2009r1)
-Q9VCK0melt <- melt(Q9VCK0)
+mcmc_plot_probs(tanTagm, "Q9VCK0", tan2009r1)
 ```
 
 ```
-## Using  as id variables
+## Loading required package: reshape2
 ```
 
-```r
-colnames(Q9VCK0melt) <- c("Organelle","Probability")
-gg2 <- ggplot(Q9VCK0melt,
-              aes(Organelle, Probability, width = (Probability))) +
-    geom_violin(aes(fill = Organelle), scale = "width")
-gg2 <- gg2 + theme_bw() +
-    scale_fill_manual(values = getStockcol()[1:14]) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),
-          axis.title.x = element_blank())
-gg2 <- gg2 +
-    ylab("Membership Probability") +
-    ggtitle(paste0("Distribution of Subcellular Membership for Protein Q9VCK0" ))
-gg2 <- gg2 +
-    theme(legend.position="none")
-print(gg2)
+```
+##
+## Attaching package: 'reshape2'
+```
+
+```
+## The following objects are masked from 'package:reshape':
+##
+##     colsplit, melt, recast
+```
+
+```
+## No id variables; using all as measure variables
 ```
 
 ![plot of chunk mcmc-gg2](figure/mcmc-gg2-1.png)

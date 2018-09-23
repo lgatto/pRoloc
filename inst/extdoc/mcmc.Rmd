@@ -296,5 +296,5 @@ the following protein Q9VCK0 is visualised. This demonstrates and
 quantifies the uncertainty in the allocation of this protein.
 
 ```{r mcmc-gg2, warning=FALSE}
-mcmc_plot_probs(tanTagm, "Q9VCK0", tan2009r1)
+mcmc_plot_probs(tanTagm, "Q9VCK0")
 ```

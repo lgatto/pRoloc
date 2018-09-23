@@ -296,22 +296,5 @@ the following protein Q9VCK0 is visualised. This demonstrates and
 quantifies the uncertainty in the allocation of this protein.
 
 ```{r mcmc-gg2, warning=FALSE}
-## We can make this into a function
-Q9VCK0 <- as.data.frame(tanChain@ComponentProb["Q9VCK0",,])
-colnames(Q9VCK0) <- getMarkerClasses(tan2009r1)
-Q9VCK0melt <- melt(Q9VCK0)
-colnames(Q9VCK0melt) <- c("Organelle","Probability")
-gg2 <- ggplot(Q9VCK0melt,
-              aes(Organelle, Probability, width = (Probability))) +
-    geom_violin(aes(fill = Organelle), scale = "width")
-gg2 <- gg2 + theme_bw() +
-    scale_fill_manual(values = getStockcol()[1:14]) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),
-          axis.title.x = element_blank())
-gg2 <- gg2 +
-    ylab("Membership Probability") +
-    ggtitle(paste0("Distribution of Subcellular Membership for Protein Q9VCK0" ))
-gg2 <- gg2 +
-    theme(legend.position="none")
-print(gg2)
+mcmc_plot_probs(tanTagm, "Q9VCK0", tan2009r1)
 ```

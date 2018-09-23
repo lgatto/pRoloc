@@ -35,3 +35,29 @@ mcmc_thin_chains <- function(x, n) {
                          priors = x@priors,
                          summary = pRoloc:::.MCMCSummary())
 }
+
+mcmc_plot_probs <- function(x, fname, obj, n = 1) {
+    stopifnot(inherits(obj, "MSnSet"))
+    stopifnot(inherits(x, "MCMCParams"))
+    stopifnot(require("ggplot2"))
+    stopifnot(require("reshape2"))
+    chain <- pRoloc:::chains(x)[[n]]
+    dfr <- as.data.frame(chain@ComponentProb[fname, , ])
+    colnames(dfr) <- getMarkerClasses(obj)
+    dfr_melt <- melt(dfr)
+    colnames(dfr_melt) <- c("Organelle","Probability")
+    gg2 <- ggplot(dfr_melt,
+                  aes(Organelle, Probability,
+                      width = (Probability))) +
+        geom_violin(aes(fill = Organelle), scale = "width")
+    gg2 <- gg2 +
+        scale_fill_manual(values = pRoloc::getStockcol()[seq_len(nrow(dfr))]) +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1),
+              axis.title.x = element_blank())
+    gg2 <- gg2 +
+        ylab("Membership Probability") +
+        ggtitle(paste0("Distribution of Subcellular Membership for Protein ", fname ))
+    gg2 <- gg2 +
+        theme(legend.position = "none")
+    return(gg2)
+}

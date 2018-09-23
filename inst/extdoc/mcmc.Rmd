@@ -224,7 +224,7 @@ Let us look at a summary of the analysis.
 summary(tanTagm2@summary@tagm.joint)
 ```
 
-### Appending results to MSnSet
+### Appending results to an MSnSet
 
 The `pRoloc` function `tagmPredict` can be used to append protein MCMC
 results to the feature data of our object of class `MSnSet`. This

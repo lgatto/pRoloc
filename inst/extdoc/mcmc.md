@@ -263,7 +263,7 @@ downstream analysis leads to stable results.
 
 ```r
 n <- (tanChain1@n)/2 # Number of iterations to keep 750
-tanTagm2 <- mcmc_thin_chains(newTanMcmc, n)
+tanTagm2 <- mcmc_burn_chains(newTanMcmc, n)
 ```
 
 `tanTagm2` is now an object of class `MCMCParams` with 3 chains each

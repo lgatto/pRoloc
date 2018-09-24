@@ -3,7 +3,7 @@ mcmc_get_outliers <- function(x) {
     lapply(x@chains@chains, function(mc) coda::mcmc(colSums(mc@Outlier)))
 }
 
-mcmc_thin_chains <- function(x, n) {
+mcmc_burn_chains <- function(x, n) {
     stopifnot(inherits(x, "MCMCParams"))
     .chain <- pRoloc:::chains(newTanMcmc)[[1]]
     K <- .chain@K # Number of components

@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Tue Sep 18 09:35:09 2018</code></pre>
+##  Created on Mon Sep 24 20:01:23 2018</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -192,7 +192,7 @@ andygoset</code></pre></div>
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Tue Sep 18 09:35:18 2018] 
+## Constructed GO set using cellular_component namespace [Mon Sep 24 20:01:31 2018] 
 ##  MSnbase version: 2.7.4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##        GO:0016020 GO:0016021 GO:0005783 GO:0005730
@@ -250,7 +250,7 @@ hpa &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocument
 hpa<span class="op">$</span>Reliability &lt;-<span class="st"> </span><span class="kw">droplevels</span>(hpa<span class="op">$</span>Reliability)
 <span class="kw">colnames</span>(hpa)[<span class="dv">1</span>] &lt;-<span class="st"> "ensembl_gene_id"</span>
 
-hpa &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(hpa, bm)</code></pre></div>
+hpa &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">left_join</a></span>(hpa, bm)</code></pre></div>
 <pre><code>## Joining, by = "ensembl_gene_id"</code></pre>
 <pre><code>## Warning: Column `ensembl_gene_id` joining factor and character vector,
 ## coercing into character vector</code></pre>
@@ -258,7 +258,7 @@ hpa &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw
 
 ## match HPA/LOPIT
 <span class="kw">colnames</span>(hpa)[<span class="dv">7</span>] &lt;-<span class="st"> "accession"</span>
-fd &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw">fData</span>(andyhpa), hpa)</code></pre></div>
+fd &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">left_join</a></span>(<span class="kw">fData</span>(andyhpa), hpa)</code></pre></div>
 <pre><code>## Joining, by = "accession"</code></pre>
 <pre><code>## Warning: Column `accession` joining factor and character vector, coercing
 ## into character vector</code></pre>
@@ -557,7 +557,7 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 ## 
 ## other attached packages:
 ##  [1] hpar_1.22.2          biomaRt_2.36.1       class_7.3-14        
-##  [4] pRolocdata_1.19.5    pRoloc_1.21.8        MLInterfaces_1.60.1 
+##  [4] pRolocdata_1.19.5    pRoloc_1.21.9        MLInterfaces_1.60.1 
 ##  [7] cluster_2.0.7-1      annotate_1.58.0      XML_3.98-1.16       
 ## [10] AnnotationDbi_1.42.1 IRanges_2.14.11      S4Vectors_0.18.3    
 ## [13] MSnbase_2.7.4        ProtGenerics_1.12.0  BiocParallel_1.14.2 

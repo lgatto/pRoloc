@@ -85,7 +85,7 @@ machine algorithm." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/v01-pRoloc-tutorial.html">UNKNOWN TITLE</a>
+      <a href="../articles/v01-pRoloc-tutorial.html">Using pRoloc for spatial proteomics data analysis</a>
     </li>
     <li>
       <a href="../articles/v02-pRoloc-ml.html">Machine learning techniques available in pRoloc</a>
@@ -197,16 +197,16 @@ package <code>kernlab</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9783  0.9786  0.9788  0.9811  0.9825  0.9862 
-#&gt;  best cost: 0.5 16   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='ksvmClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
+#&gt;  0.9475  0.9632  0.9788  0.9708  0.9825  0.9862 
+#&gt;  best cost: 16 0.5   </div><div class='input'><span class='fu'>plot</span>(<span class='no'>params</span>)</div><div class='img'><img src='ksvmClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
 #&gt; 0.5 
 #&gt;   1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='ksvmClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; cost 
 #&gt;  0.5 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>ksvmClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"ksvm"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            23           191           128           138            54 
+#&gt;            21           189           125           136            54 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;            47            19            68            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            49            19            75            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -225,13 +225,13 @@ package <code>kernlab</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed ksvm prediction (cost=0.5) Tue Sep 18 09:16:35 2018 
-#&gt; Added ksvm predictions according to global threshold = 0 Tue Sep 18 09:16:35 2018 
+#&gt; Performed ksvm prediction (cost=0.5) Mon Sep 24 19:55:47 2018 
+#&gt; Added ksvm predictions according to global threshold = 0 Mon Sep 24 19:55:47 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"ksvm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14           157            66            55            20 
+#&gt;            14           157            63            55            20 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           278            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            46            19            13           281            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -250,8 +250,8 @@ package <code>kernlab</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed ksvm prediction (cost=0.5) Tue Sep 18 09:16:35 2018 
-#&gt; Added ksvm predictions according to global threshold = 0.75 Tue Sep 18 09:16:35 2018 
+#&gt; Performed ksvm prediction (cost=0.5) Mon Sep 24 19:55:47 2018 
+#&gt; Added ksvm predictions according to global threshold = 0.75 Mon Sep 24 19:55:47 2018 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"ksvm"</span>)</div><div class='img'><img src='ksvmClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

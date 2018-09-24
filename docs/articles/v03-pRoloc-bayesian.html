@@ -205,18 +205,18 @@ p</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.allocation)</code></pre></div>
 <pre><code>## 
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##            13            98            18            10            39 
+##            12            98            20            10            40 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            25             3           102            31            32 
+##            25             3           103            28            31 
 ##  Ribosome 60S 
-##            29</code></pre>
+##            30</code></pre>
 <ul>
 <li>
 <code>tagm.mcmc.probability</code>: the posterior probability for the protein sub-cellular allocations.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.probability)</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.3497  0.8896  0.9882  0.9085  1.0000  1.0000</code></pre>
+##  0.3206  0.8779  0.9879  0.9049  1.0000  1.0000</code></pre>
 <p>As well as other useful summaries of the MCMC methods:</p>
 <ul>
 <li><p><code>tagm.mcmc.outlier</code> the posterior probability for the protein to belong to the outlier component.</p></li>
@@ -225,13 +225,13 @@ p</code></pre></div>
 </ul>
 <!--
 
- The following section is included statically, as it requires a
- relatively large dataset (nearly 400MB), that we don't want to
- include in a package for space requirements nor download for time
- requirements.
+ The following section is included statically from
+ inst/extdocs/mcmc.md, as it requires a relatively large dataset
+ (nearly 400MB), that we don't want to include in a package for space
+ requirements nor download for time requirements.
 
  Also needs to copy the images from inst/extdocs/figure into
- vignettes/Figures.
+ vignettes/Figures and update figures links accordingly.
 
 -->
 </div>
@@ -265,40 +265,35 @@ tanTagm</code></pre></div>
 <a href="#data-exploration-and-convergence-diagnostics" class="anchor"></a>Data exploration and convergence diagnostics</h2>
 <p>Using parallel chains for analysis allows us to diagnose whether our MCMC algorithm has converged (or not). The number of parallel MCMC chains used in this analysis was 4.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Get number of chains
-nChains &lt;-<span class="st"> </span><span class="kw">length</span>(tanTagm<span class="op">@</span>chains)
+nChains &lt;-<span class="st"> </span><span class="kw">length</span>(tanTagm)
 nChains</code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>The following code chunks sets up a manual convegence diagnostic check. We make use of objects and methods in the package <em><a href="https://CRAN.R-project.org/package=coda">coda</a></em> to peform this analysis <span class="citation">[@coda]</span>. We calculate the total number of outliers at each iteration of each chain and if the algorithm has converged this number should be the same (or very similar) across all 4 chains. We can observe this by sight by producing trace plots for each MCMC chain.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Convergence diagnostic to see if more we need to discard any
-## iterations or entire chains.
-outlierTotal &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>, <span class="dt">length =</span> nChains)
+## iterations or entire chains: compute the number of outliers for
+## each iteration for each chain
+out &lt;-<span class="st"> </span><span class="kw">mcmc_get_outliers</span>(tanTagm)
 
-## Compute the number of outliers for each iteration for each chain
-<span class="cf">for</span> (j <span class="cf">in</span> <span class="kw">seq_len</span>(nChains)) {
-  mc &lt;-<span class="st"> </span>pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagm)[[j]]
-  outlierTotal[[j]] &lt;-<span class="st"> </span>coda<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/mcmc">mcmc</a></span>(<span class="kw">colSums</span>(mc<span class="op">@</span>Outlier))
-}
-
-## Carefully using coda S3 objects to produce trace plots and histograms
-<span class="kw">plot</span>(outlierTotal[[<span class="dv">1</span>]], <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Chain 1"</span>)</code></pre></div>
+## Using coda S3 objects to produce trace plots and histograms
+<span class="kw">plot</span>(out[[<span class="dv">1</span>]], <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Chain 1"</span>)</code></pre></div>
 <div class="figure">
 <img src="Figures/mcmc-outlier-1.png" alt="plot of chunk mcmc-outlier"><p class="caption">plot of chunk mcmc-outlier</p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(outlierTotal[[<span class="dv">2</span>]], <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">main =</span> <span class="st">"Chain 2"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(out[[<span class="dv">2</span>]], <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">main =</span> <span class="st">"Chain 2"</span>)</code></pre></div>
 <div class="figure">
 <img src="Figures/mcmc-outlier-2.png" alt="plot of chunk mcmc-outlier"><p class="caption">plot of chunk mcmc-outlier</p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(outlierTotal[[<span class="dv">3</span>]], <span class="dt">col =</span> <span class="st">"green"</span>, <span class="dt">main =</span> <span class="st">"Chain 3"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(out[[<span class="dv">3</span>]], <span class="dt">col =</span> <span class="st">"green"</span>, <span class="dt">main =</span> <span class="st">"Chain 3"</span>)</code></pre></div>
 <div class="figure">
 <img src="Figures/mcmc-outlier-3.png" alt="plot of chunk mcmc-outlier"><p class="caption">plot of chunk mcmc-outlier</p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(outlierTotal[[<span class="dv">4</span>]], <span class="dt">col =</span> <span class="st">"orange"</span>, <span class="dt">main =</span> <span class="st">"Chain 4"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(out[[<span class="dv">4</span>]], <span class="dt">col =</span> <span class="st">"orange"</span>, <span class="dt">main =</span> <span class="st">"Chain 4"</span>)</code></pre></div>
 <div class="figure">
 <img src="Figures/mcmc-outlier-4.png" alt="plot of chunk mcmc-outlier"><p class="caption">plot of chunk mcmc-outlier</p>
 </div>
 <p>We can use the <em><a href="https://CRAN.R-project.org/package=coda">coda</a></em> package to produce summaries of our chains. Here is the <code>coda</code> summary for the first chain.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## all chains average around 360 outliers
-<span class="kw">summary</span>(outlierTotal[[<span class="dv">1</span>]])</code></pre></div>
+<span class="kw">summary</span>(out[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>##
 ## Iterations = 1:1500
 ## Thinning interval = 1
@@ -318,24 +313,24 @@ outlierTotal &lt;-<span class="st"> </span><span class="kw">vector</span>(<span 
 <p>In this case our chains looks very good. They all oscillate around an average of 360 outliers. There is no observed monotonicity in our output. However, for a more rigorous and unbiased analysis of convergence we can calculate the Gelman diagnostics using the <em><a href="https://CRAN.R-project.org/package=coda">coda</a></em> package <span class="citation">[@Gelman:1992,@Brools:1998]</span>. This statistics is often refered to as <span class="math inline">\(\hat{R}\)</span> or the potential scale reduction factor. The idea of the Gelman diagnostics is to so compare the inter and intra chain variance. The ratio of these quantities should be close to one. The actual statistics computed is more complicated, but we do not go deeper here and a more detailed and in depth discussion can be found in the references. The <em><a href="https://CRAN.R-project.org/package=coda">coda</a></em> package also reports the <span class="math inline">\(95\%\)</span> upper confidence interval of the <span class="math inline">\(\hat{R}\)</span> statistic.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Can check gelman diagnostic for convergence (values less than &lt;1.05
 ## are good for convergence)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(outlierTotal) <span class="co"># the Upper C.I. is 1 so mcmc has clearly converged</span></code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(out) ## the Upper C.I. is 1 so mcmc has clearly converged</code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ##
 ##      Point est. Upper C.I.
 ## [1,]          1          1</code></pre>
 <p>We can also look at the Gelman diagnostics statistics for pairs of chains.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## We can also check individual pairs of chains for convergence
-<span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(outlierTotal[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]) <span class="co"># the upper C.I is 1.01</span></code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(out[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]) <span class="co"># the upper C.I is 1.01</span></code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ##
 ##      Point est. Upper C.I.
 ## [1,]          1       1.01</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(outlierTotal[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]) <span class="co"># the upper C.I is 1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(out[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]) <span class="co"># the upper C.I is 1</span></code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ##
 ##      Point est. Upper C.I.
 ## [1,]          1          1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(outlierTotal[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]) <span class="co"># the upper C.I is 1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/coda/topics/gelman.diag">gelman.diag</a></span>(out[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]) <span class="co"># the upper C.I is 1</span></code></pre></div>
 <pre><code>## Potential scale reduction factors:
 ##
 ##      Point est. Upper C.I.
@@ -353,15 +348,14 @@ outlierTotal &lt;-<span class="st"> </span><span class="kw">vector</span>(<span 
 ## example in case we didn't believe it had converged.  It would be
 ## possible to remove more than one chain e.g. to remove 2 and 4 using
 ## c(2, 4).
-removeChain &lt;-<span class="st"> </span><span class="dv">2</span>
-newTanMcmc &lt;-<span class="st"> </span>tanTagm[<span class="kw">seq_len</span>(nChains)[<span class="op">-</span>removeChain]]
+newTanMcmc &lt;-<span class="st"> </span>tanTagm[<span class="op">-</span><span class="dv">2</span>]
 
 ## Let check that it looks good
 newTanMcmc</code></pre></div>
 <pre><code>## Object of class "MCMCParams"
 ## Method: TAGM.MCMC
 ## Number of chains: 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(newTanMcmc) <span class="op">==</span><span class="st"> </span>(nChains <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(removeChain))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(newTanMcmc) <span class="op">==</span><span class="st"> </span>(nChains <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Let have a look at our first chain
 tanChain1 &lt;-<span class="st"> </span>pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(newTanMcmc)[[<span class="dv">1</span>]]
@@ -374,82 +368,39 @@ tanChain1<span class="op">@</span>n ## Chain has 1500 iterations.</code></pre></
 <h2 class="hasAnchor">
 <a href="#discarding-iterations-from-each-chain" class="anchor"></a>Discarding iterations from each chain</h2>
 <p>We are happy that our chains have conveged. Let us recap where our analysis up until this point. We have 3 chains each with 1500 iterations. We now demonstrate how to discard iterations from individual chains, since they may have converged some number of iteration into the analysis. Let us use only the iterations of last half of the remaining three chains. This also speeds up computations, however too few iterations in the further analysis is likely to lead to poor results. We find that using at least <span class="math inline">\(1000\)</span> iterations for downstream analysis leads to stable results.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## We need to clear this section up with a new function
-
-n &lt;-<span class="st"> </span>(tanChain1<span class="op">@</span>n)<span class="op">/</span><span class="dv">2</span> <span class="co"># Number of iterations to keep 750</span>
-K &lt;-<span class="st"> </span>tanChain1<span class="op">@</span>K <span class="co"># Number of components</span>
-N &lt;-<span class="st"> </span>tanChain1<span class="op">@</span>N <span class="co"># Number of Proteins</span>
-
-## Create storage for .MCMCChain
-.MCMCChainlist &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>, <span class="dt">length =</span> <span class="kw">length</span>(newTanMcmc))
-
-<span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">length</span>(newTanMcmc))) {
-
-  tanChain &lt;-<span class="st"> </span>pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(newTanMcmc)[[j]]
-  .ComponentParam &lt;-<span class="st"> </span>tanChain<span class="op">@</span>ComponentParam <span class="co"># This won't change</span>
-
-  ## Subset MCMC iterations
-  retain &lt;-<span class="st"> </span><span class="kw">seq.int</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, tanChain<span class="op">@</span>n) <span class="co"># retain 750 samples</span>
-
-  ## Check correct number of iterations
-  <span class="kw">stopifnot</span>(<span class="kw">ncol</span>(tanChain<span class="op">@</span>Component[, retain]) <span class="op">==</span><span class="st"> </span>n) <span class="co"># Second entry is 750</span>
-
-  ## Subset functions
-  .Component &lt;-<span class="st"> </span>tanChain<span class="op">@</span>Component[, retain]
-  .ComponentProb &lt;-<span class="st"> </span>tanChain<span class="op">@</span>ComponentProb[, retain, ]
-  .Outlier &lt;-<span class="st"> </span>tanChain<span class="op">@</span>Outlier[, retain]
-  .OutlierProb &lt;-<span class="st"> </span>tanChain<span class="op">@</span>OutlierProb[, retain, ]
-
-  ## We can now create a new object of class MCMCChains
-  ## make MCMCChain object
-  .MCMCChainlist[[j]] &lt;-<span class="st"> </span>pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">.MCMCChain</a></span>(<span class="dt">n =</span> <span class="kw">as.integer</span>(n),
-                                             <span class="dt">K =</span> K,
-                                             <span class="dt">N =</span> N,
-                                             <span class="dt">Component =</span> .Component,
-                                             <span class="dt">ComponentProb =</span> .ComponentProb,
-                                             <span class="dt">Outlier =</span> .Outlier,
-                                             <span class="dt">OutlierProb =</span> .OutlierProb,
-                                             <span class="dt">ComponentParam =</span> .ComponentParam)
-
-}
-
-## Construct class MCMCChains
-.ans &lt;-<span class="st"> </span>pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">.MCMCChains</a></span>(<span class="dt">chains =</span> .MCMCChainlist)
-tanTagmparams &lt;-<span class="st"> </span>pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">.MCMCParams</a></span>(<span class="dt">method =</span> <span class="st">"TAGM.MCMC"</span>,
-                                      <span class="dt">chains =</span> .ans,
-                                      <span class="dt">priors =</span> tanTagm<span class="op">@</span>priors,
-                                      <span class="dt">summary =</span> pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">.MCMCSummary</a></span>())</code></pre></div>
-<p>tanTagmParams is now an object of class <code>MCMCParams</code> with 3 chains each with 750 iterations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span>(tanChain1<span class="op">@</span>n)<span class="op">/</span><span class="dv">2</span> <span class="co"># Number of iterations to keep 750</span>
+tanTagm2 &lt;-<span class="st"> </span><span class="kw">mcmc_burn_chains</span>(newTanMcmc, n)</code></pre></div>
+<p><code>tanTagm2</code> is now an object of class <code>MCMCParams</code> with 3 chains each with each 750 iterations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Check tanTagmParams object
-pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagmparams)[[<span class="dv">1</span>]]</code></pre></div>
+pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagm2)[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>## Object of class "MCMCChain"
 ##  Number of components: 11
 ##  Number of proteins: 677
 ##  Number of iterations: 750</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagmparams)[[<span class="dv">2</span>]]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagm2)[[<span class="dv">2</span>]]</code></pre></div>
 <pre><code>## Object of class "MCMCChain"
 ##  Number of components: 11
 ##  Number of proteins: 677
 ##  Number of iterations: 750</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagmparams)[[<span class="dv">3</span>]]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagm2)[[<span class="dv">3</span>]]</code></pre></div>
 <pre><code>## Object of class "MCMCChain"
 ##  Number of components: 11
 ##  Number of proteins: 677
 ##  Number of iterations: 750</code></pre>
 </div>
-<div id="procesing-and-summarising-mcmc-results" class="section level2">
+<div id="processing-and-summarising-mcmc-results" class="section level2">
 <h2 class="hasAnchor">
-<a href="#procesing-and-summarising-mcmc-results" class="anchor"></a>Procesing and summarising MCMC results</h2>
+<a href="#processing-and-summarising-mcmc-results" class="anchor"></a>Processing and summarising MCMC results</h2>
 <div id="populating-the-summary-slot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#populating-the-summary-slot" class="anchor"></a>Populating the summary slot</h3>
-<p>The summary slot of the <code>tanTagmparams</code> is currently empty, we can now populate the summary slot of <code>tanTagmparams</code> using the <code>tagmMcmcProcess</code> function.</p>
+<p>The summary slot of the <code>tanTagm2</code> is currently empty, we can now populate the summary slot of <code>tanTagm2</code> using the <code>tagmMcmcProcess</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## This will automatically pool chains to produce summary (easy to
 ## create single summaries by subsetting)
-tanTagmparams &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tagm-mcmc.html">tagmMcmcProcess</a></span>(tanTagmparams)
+tanTagm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tagm-mcmc.html">tagmMcmcProcess</a></span>(tanTagm2)
 
 ## Let look at this object
-<span class="kw">summary</span>(tanTagmparams<span class="op">@</span>summary<span class="op">@</span>posteriorEstimates)</code></pre></div>
+<span class="kw">summary</span>(tanTagm2<span class="op">@</span>summary<span class="op">@</span>posteriorEstimates)</code></pre></div>
 <pre><code>##       tagm.allocation tagm.probability tagm.probability.notOutlier
 ##  ER           :196    Min.   :0.3055   Min.   :0.0002031
 ##  PM           :192    1st Qu.:0.8439   1st Qu.:0.1712611
@@ -476,11 +427,11 @@ tanTagmparams &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ##</code></pre>
 <p>For a sanity check, let us re-check the diagnostics. This is re-computed when we excute the <code>tagmMcmcProcess</code> function and located in a <code>diagnostics</code> slot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Recomputed diagnostics
-tanTagmparams<span class="op">@</span>summary<span class="op">@</span>diagnostics</code></pre></div>
+tanTagm2<span class="op">@</span>summary<span class="op">@</span>diagnostics</code></pre></div>
 <pre><code>##              Point est. Upper C.I.
 ## outlierTotal    1.00021   1.000274</code></pre>
 <p>Let us look at a summary of the analysis.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(tanTagmparams<span class="op">@</span>summary<span class="op">@</span>tagm.joint)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(tanTagm2<span class="op">@</span>summary<span class="op">@</span>tagm.joint)</code></pre></div>
 <pre><code>##   Cytoskeleton             ER             Golgi
 ##  Min.   :0.0000000   Min.   :0.0000   Min.   :0.0000000
 ##  1st Qu.:0.0000000   1st Qu.:0.0000   1st Qu.:0.0000000
@@ -510,12 +461,12 @@ tanTagmparams<span class="op">@</span>summary<span class="op">@</span>diagnostic
 ##  3rd Qu.:0.001051   3rd Qu.:0.0001129
 ##  Max.   :0.996639   Max.   :0.9885391</code></pre>
 </div>
-<div id="appending-results-to-msnset" class="section level3">
+<div id="appending-results-to-an-msnset" class="section level3">
 <h3 class="hasAnchor">
-<a href="#appending-results-to-msnset" class="anchor"></a>Appending results to MSnSet</h3>
+<a href="#appending-results-to-an-msnset" class="anchor"></a>Appending results to an MSnSet</h3>
 <p>The <code>pRoloc</code> function <code>tagmPredict</code> can be used to append protein MCMC results to the feature data of our object of class <code>MSnSet</code>. This creates new columns in the feature data of the <code>MSnSet</code>, which can be used for final analysis of our data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## We can now use tagmPredict
-tan2009r1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tagm-mcmc.html">tagmPredict</a></span>(tan2009r1, <span class="dt">params =</span> tanTagmparams)</code></pre></div>
+tan2009r1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tagm-mcmc.html">tagmPredict</a></span>(tan2009r1, <span class="dt">params =</span> tanTagm2)</code></pre></div>
 </div>
 </div>
 <div id="visualising-mcmc-results" class="section level2">
@@ -529,7 +480,9 @@ tan2009r1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/t
 ptsze &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fData</span>(tan2009r1)<span class="op">$</span>tagm.mcmc.probability) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
 
 ## Create plot2D with pointer scaled with probability
-<span class="kw"><a href="../reference/plot2D.html">plot2D</a></span>(tan2009r1, <span class="dt">fcol =</span> <span class="st">"tagm.mcmc.allocation"</span>, <span class="dt">cex =</span> ptsze,
+<span class="kw"><a href="../reference/plot2D.html">plot2D</a></span>(tan2009r1,
+       <span class="dt">fcol =</span> <span class="st">"tagm.mcmc.allocation"</span>,
+       <span class="dt">cex =</span> ptsze,
        <span class="dt">main =</span> <span class="st">"protein pointer scaled with posterior localisation probability"</span>)
 
 <span class="kw"><a href="../reference/addLegend.html">addLegend</a></span>(<span class="dt">object =</span> tan2009r1, <span class="dt">where =</span> <span class="st">"topleft"</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
@@ -579,25 +532,7 @@ outliers</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#extracting-information-for-individual-proteins" class="anchor"></a>Extracting information for individual proteins</h3>
 <p>We might be interested in analysing the localisation of individual proteins and interrogating which other potential localisations these proteins might have. A violin plot of the probabilistic allocation of the following protein Q9VCK0 is visualised. This demonstrates and quantifies the uncertainty in the allocation of this protein.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## We can make this into a function
-Q9VCK0 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(tanChain<span class="op">@</span>ComponentProb[<span class="st">"Q9VCK0"</span>,,])
-<span class="kw">colnames</span>(Q9VCK0) &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getMarkerClasses.html">getMarkerClasses</a></span>(tan2009r1)
-Q9VCK0melt &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/reshape/topics/melt-24">melt</a></span>(Q9VCK0)</code></pre></div>
-<pre><code>## Using  as id variables</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(Q9VCK0melt) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"Organelle"</span>,<span class="st">"Probability"</span>)
-gg2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(Q9VCK0melt,
-              <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(Organelle, Probability, <span class="dt">width =</span> (Probability))) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_violin">geom_violin</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">fill =</span> Organelle), <span class="dt">scale =</span> <span class="st">"width"</span>)
-gg2 &lt;-<span class="st"> </span>gg2 <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual">scale_fill_manual</a></span>(<span class="dt">values =</span> <span class="kw"><a href="../reference/getStockcol.html">getStockcol</a></span>()[<span class="dv">1</span><span class="op">:</span><span class="dv">14</span>]) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">axis.text.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>),
-          <span class="dt">axis.title.x =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_blank</a></span>())
-gg2 &lt;-<span class="st"> </span>gg2 <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Membership Probability"</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="kw">paste0</span>(<span class="st">"Distribution of Subcellular Membership for Protein Q9VCK0"</span> ))
-gg2 &lt;-<span class="st"> </span>gg2 <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>)
-<span class="kw">print</span>(gg2)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tanTagm, <span class="st">"Q9VCK0"</span>)</code></pre></div>
 <div class="figure">
 <img src="Figures/mcmc-gg2-1.png" alt="plot of chunk mcmc-gg2"><p class="caption">plot of chunk mcmc-gg2</p>
 </div>
@@ -631,7 +566,7 @@ gg2 &lt;-<span class="st"> </span>gg2 <span class="op">+</span>
 ## 
 ## other attached packages:
 ##  [1] coda_0.19-1          ggplot2_3.0.0        reshape_0.8.7       
-##  [4] pRolocdata_1.19.5    pRoloc_1.21.8        MLInterfaces_1.60.1 
+##  [4] pRolocdata_1.19.5    pRoloc_1.21.9        MLInterfaces_1.60.1 
 ##  [7] cluster_2.0.7-1      annotate_1.58.0      XML_3.98-1.16       
 ## [10] AnnotationDbi_1.42.1 IRanges_2.14.11      S4Vectors_0.18.3    
 ## [13] MSnbase_2.7.4        ProtGenerics_1.12.0  BiocParallel_1.14.2 
@@ -705,7 +640,7 @@ gg2 &lt;-<span class="st"> </span>gg2 <span class="op">+</span>
 <li><a href="#data-exploration-and-convergence-diagnostics">Data exploration and convergence diagnostics</a></li>
       <li><a href="#manually-manipulating-mcmc-chains">Manually manipulating MCMC chains</a></li>
       <li><a href="#discarding-iterations-from-each-chain">Discarding iterations from each chain</a></li>
-      <li><a href="#procesing-and-summarising-mcmc-results">Procesing and summarising MCMC results</a></li>
+      <li><a href="#processing-and-summarising-mcmc-results">Processing and summarising MCMC results</a></li>
       <li><a href="#visualising-mcmc-results">Visualising MCMC results</a></li>
       </ul>
 </li>

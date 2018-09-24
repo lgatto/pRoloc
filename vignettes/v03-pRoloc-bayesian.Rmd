@@ -203,7 +203,7 @@ As well as other useful summaries of the MCMC methods:
  requirements nor download for time requirements.
 
  Also needs to copy the images from inst/extdocs/figure into
- vignettes/Figures.
+ vignettes/Figures and update figures links accordingly.
 
 -->
 
@@ -304,25 +304,25 @@ out <- mcmc_get_outliers(tanTagm)
 plot(out[[1]], col = "blue", main = "Chain 1")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-1.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-1.png)
 
 ```r
 plot(out[[2]], col = "red", main = "Chain 2")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-2.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-2.png)
 
 ```r
 plot(out[[3]], col = "green", main = "Chain 3")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-3.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-3.png)
 
 ```r
 plot(out[[4]], col = "orange", main = "Chain 4")
 ```
 
-![plot of chunk mcmc-outlier](figure/mcmc-outlier-4.png)
+![plot of chunk mcmc-outlier](Figures/mcmc-outlier-4.png)
 
 We can use the *[coda](https://CRAN.R-project.org/package=coda)* package to produce
 summaries of our chains. Here is the `coda` summary for the first
@@ -663,7 +663,7 @@ plot2D(tan2009r1,
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
 ```
 
-![plot of chunk mcmc-vis](figure/mcmc-vis-1.png)
+![plot of chunk mcmc-vis](Figures/mcmc-vis-1.png)
 
 ### Visualising allocation uncertainty
 
@@ -681,7 +681,7 @@ plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze2,
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
 ```
 
-![plot of chunk mcmc-vis2](figure/mcmc-vis2-1.png)
+![plot of chunk mcmc-vis2](Figures/mcmc-vis2-1.png)
 
 ### Extracting proteins of interest
 
@@ -729,7 +729,7 @@ quantifies the uncertainty in the allocation of this protein.
 plot(tanTagm, "Q9VCK0")
 ```
 
-![plot of chunk mcmc-gg2](figure/mcmc-gg2-1.png)
+![plot of chunk mcmc-gg2](Figures/mcmc-gg2-1.png)
 
 
 <!-- End inserted file -->

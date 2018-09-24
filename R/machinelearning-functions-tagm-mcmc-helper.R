@@ -44,8 +44,8 @@ setMethod("plot", c("MCMCParams", "character"),
 mcmc_plot_probs <- function(param, fname, n = 1) {
     stopifnot(inherits(param, "MCMCParams"))
     stopifnot(length(fname) == 1)
-    stopifnot(fname %in% rownames(chain@ComponentProb))
     chain <- pRoloc:::chains(param)[[n]]
+    stopifnot(fname %in% rownames(chain@ComponentProb))
     dfr <- as.data.frame(chain@ComponentProb[fname, , ])
     colnames(dfr) <- rownames(chain@ComponentParam@mk)
     dfr_long <- data.frame(Organelle = rep(names(dfr), each = nrow(dfr)),

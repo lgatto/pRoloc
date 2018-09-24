@@ -298,45 +298,31 @@ producing trace plots for each MCMC chain.
 ## Convergence diagnostic to see if more we need to discard any
 ## iterations or entire chains: compute the number of outliers for
 ## each iteration for each chain
-out <- mcmc_get_outliers(p_unst)
-```
+out <- mcmc_get_outliers(tanTagm)
 
-```
-## Error in inherits(x, "MCMCParams"): object 'p_unst' not found
-```
-
-```r
 ## Using coda S3 objects to produce trace plots and histograms
 plot(out[[1]], col = "blue", main = "Chain 1")
 ```
 
-```
-## Error in plot(out[[1]], col = "blue", main = "Chain 1"): object 'out' not found
-```
+![plot of chunk mcmc-outlier](figure/mcmc-outlier-1.png)
 
 ```r
 plot(out[[2]], col = "red", main = "Chain 2")
 ```
 
-```
-## Error in plot(out[[2]], col = "red", main = "Chain 2"): object 'out' not found
-```
+![plot of chunk mcmc-outlier](figure/mcmc-outlier-2.png)
 
 ```r
 plot(out[[3]], col = "green", main = "Chain 3")
 ```
 
-```
-## Error in plot(out[[3]], col = "green", main = "Chain 3"): object 'out' not found
-```
+![plot of chunk mcmc-outlier](figure/mcmc-outlier-3.png)
 
 ```r
 plot(out[[4]], col = "orange", main = "Chain 4")
 ```
 
-```
-## Error in plot(out[[4]], col = "orange", main = "Chain 4"): object 'out' not found
-```
+![plot of chunk mcmc-outlier](figure/mcmc-outlier-4.png)
 
 We can use the *[coda](https://CRAN.R-project.org/package=coda)* package to produce
 summaries of our chains. Here is the `coda` summary for the first
@@ -349,7 +335,22 @@ summary(out[[1]])
 ```
 
 ```
-## Error in summary(out[[1]]): object 'out' not found
+##
+## Iterations = 1:1500
+## Thinning interval = 1
+## Number of chains = 1
+## Sample size per chain = 1500
+##
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+##
+##           Mean             SD       Naive SE Time-series SE
+##        357.301         13.864          0.358          0.358
+##
+## 2. Quantiles for each variable:
+##
+##  2.5%   25%   50%   75% 97.5%
+##   329   348   357   367   384
 ```
 
 In this case our chains looks very good. They all oscillate around an
@@ -375,7 +376,10 @@ gelman.diag(out) ## the Upper C.I. is 1 so mcmc has clearly converged
 ```
 
 ```
-## Error in as.mcmc.list(x): object 'out' not found
+## Potential scale reduction factors:
+##
+##      Point est. Upper C.I.
+## [1,]          1          1
 ```
 
 We can also look at the Gelman diagnostics statistics for pairs of chains.
@@ -387,7 +391,10 @@ gelman.diag(out[1:2]) # the upper C.I is 1.01
 ```
 
 ```
-## Error in as.mcmc.list(x): object 'out' not found
+## Potential scale reduction factors:
+##
+##      Point est. Upper C.I.
+## [1,]          1       1.01
 ```
 
 ```r
@@ -395,7 +402,10 @@ gelman.diag(out[c(1,3)]) # the upper C.I is 1
 ```
 
 ```
-## Error in as.mcmc.list(x): object 'out' not found
+## Potential scale reduction factors:
+##
+##      Point est. Upper C.I.
+## [1,]          1          1
 ```
 
 ```r
@@ -403,7 +413,10 @@ gelman.diag(out[3:4]) # the upper C.I is 1
 ```
 
 ```
-## Error in as.mcmc.list(x): object 'out' not found
+## Potential scale reduction factors:
+##
+##      Point est. Upper C.I.
+## [1,]          1          1
 ```
 
 ## Manually manipulating MCMC chains
@@ -713,7 +726,7 @@ quantifies the uncertainty in the allocation of this protein.
 
 
 ```r
-mcmc_plot_probs(tanTagm, "Q9VCK0")
+plot(tanTagm, "Q9VCK0")
 ```
 
 ![plot of chunk mcmc-gg2](figure/mcmc-gg2-1.png)

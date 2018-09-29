@@ -101,20 +101,45 @@ chain.
 summary(out[[1]])
 ```
 
-In this case our chains looks very good. They all oscillate around an
-average of 360 outliers. There is no observed monotonicity in our
-output. However, for a more rigorous and unbiased analysis of
+In this case our chains looks very good. We can
+see that MCMC algorithm allocated, on average, 360 proteins to the
+outlier component. The iteration are rapidly oscillating around this value
+and there is no observed monotonicity in our output. 
+This suggest that our chains have probably converged. The value 360 is 
+not important, different datasets will allocate different numbers of proteins
+to the outlier component. Do not be surprised if large proportion of your
+proteins are allocated to the outlier component. Furthermore, as the chain 
+is further processed in downstream analysis, this value might change. Should 
+you find that all proteins are allocated to the outlier component, then check
+that there are no processing errors and the data is of good quality. If there
+are still issues consider change the default priors, however changing prior is 
+unlikely to save low resolution data.
+
+However, for a more rigorous and unbiased analysis of
 convergence we can calculate the Gelman diagnostics using the
-`r BiocStyle::CRANpkg("coda")` package
+*[coda](https://CRAN.R-project.org/package=coda)* package
 [@Gelman:1992,@Brools:1998]. This statistics is often refered to as
 $\hat{R}$ or the potential scale reduction factor. The idea of the
 Gelman diagnostics is to so compare the inter and intra chain
-variance. The ratio of these quantities should be close to one.  The
-actual statistics computed is more complicated, but we do not go
+variance. The ratio of these quantities should be close to one. $\hat{R}$
+values less than $1.1$ are likely to suggest convergence, though stable results
+are found if $\hat(R)$ is less than $1.2$. See the link for an extended discussion
+and justification http://www.stat.columbia.edu/~gelman/research/published/brooksgelman2.pdf.
+The actual statistics computed is more complicated, but we do not go
 deeper here and a more detailed and in depth discussion can be found
-in the references. The `r BiocStyle::CRANpkg("coda")` package also
+in the references. The *[coda](https://CRAN.R-project.org/package=coda)* package also
 reports the $95\%$ upper confidence interval of the $\hat{R}$
-statistic.
+statistic. If that statistic is to0 high, carefully inspect your chains. If it appears
+that a single chain is behaving poorly then you should discard it from downstream analysis
+and reassess convergence - how to do this is explain below.
+Examples of poor behaviour include (1) not oscillating around
+the same value, (2) monotonicity in the chain, (3) catapillar or wave like behaviour.
+Including, poor quality MCMC chains in downstream analysis will give poor results.
+If a chain stabilises after a particular value, then consider discarding iteration
+up to that point - this can be done using \code{mcmc_burn_chains} function, which is detailed below.
+Some chains cannot be rescued and the MCMC algorithm must be run for more iterations. 
+In this case, restart your analysis and increase the value of \code{numIter}.
+If your chains look high quality at this point you can skip to processing your results section.
 
 ```{r mcmc-gelman}
 ## Can check gelman diagnostic for convergence (values less than <1.05

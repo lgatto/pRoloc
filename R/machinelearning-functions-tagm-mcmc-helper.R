@@ -190,7 +190,6 @@ setMethod("plot", c("MCMCParams", "character"),
           })
 
 mcmc_plot_probs <- function(param, fname, n = 1) {
-<<<<<<< HEAD
     stopifnot(inherits(param, "MCMCParams"))
     stopifnot(length(fname) == 1)
     chain <- pRoloc:::chains(param)[[n]]
@@ -215,30 +214,4 @@ mcmc_plot_probs <- function(param, fname, n = 1) {
     gg2 <- gg2 +
         theme(legend.position = "none")
     return(gg2)
-=======
-  stopifnot(inherits(param, "MCMCParams"))
-  stopifnot(length(fname) == 1)
-  chain <- pRoloc:::chains(param)[[n]]
-  stopifnot(fname %in% rownames(chain@ComponentProb))
-  dfr <- as.data.frame(chain@ComponentProb[fname, , ])
-  colnames(dfr) <- rownames(chain@ComponentParam@mk)
-  dfr_long <- data.frame(Organelle = rep(names(dfr), each = nrow(dfr)),
-                         Probability = unlist(dfr, use.names = FALSE),
-                         row.names = NULL,
-                         stringsAsFactors = FALSE)
-  gg2 <- ggplot(dfr_long,
-                aes(Organelle, Probability,
-                    width = (Probability))) +
-    geom_violin(aes(fill = Organelle), scale = "width")
-  gg2 <- gg2 + theme_bw() + 
-    scale_fill_manual(values = pRoloc::getStockcol()[seq_len(nrow(dfr))]) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),
-          axis.title.x = element_blank()) 
-  gg2 <- gg2 +
-    ylab("Membership Probability") +
-    ggtitle(paste0("Distribution of Subcellular Membership for Protein ", fname ))
-  gg2 <- gg2 +
-    theme(legend.position = "none")
-  return(gg2)
->>>>>>> 0bc47a89509fd3ad8f76538b8e28fd1e32516fbe
 }

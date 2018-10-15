@@ -2,7 +2,7 @@
 # Helper function to get number of outlier at each iteration of MCMC
 mcmc_get_outliers <- function(x) {
     stopifnot(inherits(x, "MCMCParams"))
-    lapply(x@chains@chains, function(mc) coda::mcmc(colSums(mc@Outlier)))
+    lapply(x@chains@chains, function(mc) coda::mcmc(colSums(1 - mc@Outlier)))
 }
 
 # Helper function to get mean component allocation at each iteration of MCMC

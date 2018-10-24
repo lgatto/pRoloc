@@ -160,6 +160,8 @@ export(## MSnSet manipulation
     tagmMapTrain, tagmPredict,
     tagmMapPredict, tagmMcmcPredict,
     tagmMcmcTrain, tagmMcmcProcess,
+    mcmc_get_outliers,
+    mcmc_burn_chains,
     phenoDisco,
     ## -- tl
     favourPrimary,

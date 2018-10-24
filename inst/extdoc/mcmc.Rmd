@@ -1,4 +1,4 @@
-```{r mcmc-env, message=FALSE, echo=FALSE}
+```{r mcmc-env, message=FALSE, echo=FALSE, warning=FALSE}
 library("pRoloc")
 library("pRolocdata")
 require("reshape")
@@ -67,7 +67,7 @@ chains used in this analysis was 4.
 
 ```{r nchains}
 ## Get number of chains
-nChains <- length(tanTagm@chains)
+nChains <- length(tanTagm)
 nChains
 ```
 
@@ -81,20 +81,15 @@ producing trace plots for each MCMC chain.
 
 ```{r mcmc-outlier}
 ## Convergence diagnostic to see if more we need to discard any
-## iterations or entire chains.
-outlierTotal <- vector("list", length = nChains)
+## iterations or entire chains: compute the number of outliers for
+## each iteration for each chain
+out <- mcmc_get_outliers(tanTagm)
 
-## Compute the number of outliers for each iteration for each chain
-for (j in seq_len(nChains)) {
-  mc <- pRoloc:::chains(tanTagm)[[j]]
-  outlierTotal[[j]] <- coda::mcmc(colSums(mc@Outlier))
-}
-
-## Carefully using coda S3 objects to produce trace plots and histograms
-plot(outlierTotal[[1]], col = "blue", main = "Chain 1")
-plot(outlierTotal[[2]], col = "red", main = "Chain 2")
-plot(outlierTotal[[3]], col = "green", main = "Chain 3")
-plot(outlierTotal[[4]], col = "orange", main = "Chain 4")
+## Using coda S3 objects to produce trace plots and histograms
+plot(out[[1]], col = "blue", main = "Chain 1")
+plot(out[[2]], col = "red", main = "Chain 2")
+plot(out[[3]], col = "green", main = "Chain 3")
+plot(out[[4]], col = "orange", main = "Chain 4")
 ```
 
 We can use the `r BiocStyle::CRANpkg("coda")` package to produce
@@ -103,37 +98,62 @@ chain.
 
 ```{r mcmc-outlier2}
 ## all chains average around 360 outliers
-summary(outlierTotal[[1]])
+summary(out[[1]])
 ```
 
-In this case our chains looks very good. They all oscillate around an
-average of 360 outliers. There is no observed monotonicity in our
-output. However, for a more rigorous and unbiased analysis of
+In this case our chains looks very good. We can
+see that MCMC algorithm allocated, on average, 360 proteins to the
+outlier component. The iteration are rapidly oscillating around this value
+and there is no observed monotonicity in our output. 
+This suggest that our chains have probably converged. The value 360 is 
+not important, different datasets will allocate different numbers of proteins
+to the outlier component. Do not be surprised if large proportion of your
+proteins are allocated to the outlier component. Furthermore, as the chain 
+is further processed in downstream analysis, this value might change. Should 
+you find that all proteins are allocated to the outlier component, then check
+that there are no processing errors and the data is of good quality. If there
+are still issues consider change the default priors, however changing prior is 
+unlikely to save low resolution data.
+
+However, for a more rigorous and unbiased analysis of
 convergence we can calculate the Gelman diagnostics using the
-`r BiocStyle::CRANpkg("coda")` package
+*[coda](https://CRAN.R-project.org/package=coda)* package
 [@Gelman:1992,@Brools:1998]. This statistics is often refered to as
 $\hat{R}$ or the potential scale reduction factor. The idea of the
 Gelman diagnostics is to so compare the inter and intra chain
-variance. The ratio of these quantities should be close to one.  The
-actual statistics computed is more complicated, but we do not go
+variance. The ratio of these quantities should be close to one. $\hat{R}$
+values less than $1.1$ are likely to suggest convergence, though stable results
+are found if $\hat(R)$ is less than $1.2$. See the link for an extended discussion
+and justification http://www.stat.columbia.edu/~gelman/research/published/brooksgelman2.pdf.
+The actual statistics computed is more complicated, but we do not go
 deeper here and a more detailed and in depth discussion can be found
-in the references. The `r BiocStyle::CRANpkg("coda")` package also
+in the references. The *[coda](https://CRAN.R-project.org/package=coda)* package also
 reports the $95\%$ upper confidence interval of the $\hat{R}$
-statistic.
+statistic. If that statistic is to0 high, carefully inspect your chains. If it appears
+that a single chain is behaving poorly then you should discard it from downstream analysis
+and reassess convergence - how to do this is explain below.
+Examples of poor behaviour include (1) not oscillating around
+the same value, (2) monotonicity in the chain, (3) catapillar or wave like behaviour.
+Including, poor quality MCMC chains in downstream analysis will give poor results.
+If a chain stabilises after a particular value, then consider discarding iteration
+up to that point - this can be done using \code{mcmc_burn_chains} function, which is detailed below.
+Some chains cannot be rescued and the MCMC algorithm must be run for more iterations. 
+In this case, restart your analysis and increase the value of \code{numIter}.
+If your chains look high quality at this point you can skip to processing your results section.
 
 ```{r mcmc-gelman}
 ## Can check gelman diagnostic for convergence (values less than <1.05
 ## are good for convergence)
-gelman.diag(outlierTotal) # the Upper C.I. is 1 so mcmc has clearly converged
+gelman.diag(out) ## the Upper C.I. is 1 so mcmc has clearly converged
 ```
 
 We can also look at the Gelman diagnostics statistics for pairs of chains.
 
 ```{r mcmc-gelman2}
 ## We can also check individual pairs of chains for convergence
-gelman.diag(outlierTotal[1:2]) # the upper C.I is 1.01
-gelman.diag(outlierTotal[c(1,3)]) # the upper C.I is 1
-gelman.diag(outlierTotal[3:4]) # the upper C.I is 1
+gelman.diag(out[1:2]) # the upper C.I is 1.01
+gelman.diag(out[c(1,3)]) # the upper C.I is 1
+gelman.diag(out[3:4]) # the upper C.I is 1
 ```
 
 ## Manually manipulating MCMC chains
@@ -152,12 +172,11 @@ how to remove the second chain from our domwnstream analysis.
 ## example in case we didn't believe it had converged.  It would be
 ## possible to remove more than one chain e.g. to remove 2 and 4 using
 ## c(2, 4).
-removeChain <- 2
-newTanMcmc <- tanTagm[seq_len(nChains)[-removeChain]]
+newTanMcmc <- tanTagm[-2]
 
 ## Let check that it looks good
 newTanMcmc
-length(newTanMcmc) == (nChains - length(removeChain))
+length(newTanMcmc) == (nChains - 1)
 
 ## Let have a look at our first chain
 tanChain1 <- pRoloc:::chains(newTanMcmc)[[1]]
@@ -181,80 +200,36 @@ downstream analysis leads to stable results.
 
 
 ```{r mcmc-rmiter}
-## We need to clear this section up with a new function
-
 n <- (tanChain1@n)/2 # Number of iterations to keep 750
-K <- tanChain1@K # Number of components
-N <- tanChain1@N # Number of Proteins
-
-## Create storage for .MCMCChain
-.MCMCChainlist <- vector("list", length = length(newTanMcmc))
-
-for(j in seq_len(length(newTanMcmc))) {
-
-  tanChain <- pRoloc:::chains(newTanMcmc)[[j]]
-  .ComponentParam <- tanChain@ComponentParam # This won't change
-
-  ## Subset MCMC iterations
-  retain <- seq.int(n + 1, tanChain@n) # retain 750 samples
-
-  ## Check correct number of iterations
-  stopifnot(ncol(tanChain@Component[, retain]) == n) # Second entry is 750
-
-  ## Subset functions
-  .Component <- tanChain@Component[, retain]
-  .ComponentProb <- tanChain@ComponentProb[, retain, ]
-  .Outlier <- tanChain@Outlier[, retain]
-  .OutlierProb <- tanChain@OutlierProb[, retain, ]
-
-  ## We can now create a new object of class MCMCChains
-  ## make MCMCChain object
-  .MCMCChainlist[[j]] <- pRoloc:::.MCMCChain(n = as.integer(n),
-                                             K = K,
-                                             N = N,
-                                             Component = .Component,
-                                             ComponentProb = .ComponentProb,
-                                             Outlier = .Outlier,
-                                             OutlierProb = .OutlierProb,
-                                             ComponentParam = .ComponentParam)
-
-}
-
-## Construct class MCMCChains
-.ans <- pRoloc:::.MCMCChains(chains = .MCMCChainlist)
-tanTagmparams <- pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                                      chains = .ans,
-                                      priors = tanTagm@priors,
-                                      summary = pRoloc:::.MCMCSummary())
-
+tanTagm2 <- mcmc_burn_chains(newTanMcmc, n)
 ```
 
-tanTagmParams is now an object of class `MCMCParams` with 3 chains
-each with 750 iterations.
+`tanTagm2` is now an object of class `MCMCParams` with 3 chains each
+with each 750 iterations.
 
 
 ```{r mcmc-chains}
 ## Check tanTagmParams object
-pRoloc:::chains(tanTagmparams)[[1]]
-pRoloc:::chains(tanTagmparams)[[2]]
-pRoloc:::chains(tanTagmparams)[[3]]
+pRoloc:::chains(tanTagm2)[[1]]
+pRoloc:::chains(tanTagm2)[[2]]
+pRoloc:::chains(tanTagm2)[[3]]
 ```
 
-## Procesing and summarising MCMC results
+## Processing and summarising MCMC results
 
 ### Populating the summary slot
 
-The summary slot of the `tanTagmparams` is currently empty, we can now
-populate the summary slot of `tanTagmparams` using the
-`tagmMcmcProcess` function.
+The summary slot of the `tanTagm2` is currently empty, we can now
+populate the summary slot of `tanTagm2` using the `tagmMcmcProcess`
+function.
 
 ```{r mcmc-tagm-process}
 ## This will automatically pool chains to produce summary (easy to
 ## create single summaries by subsetting)
-tanTagmparams <- tagmMcmcProcess(tanTagmparams)
+tanTagm2 <- tagmMcmcProcess(tanTagm2)
 
 ## Let look at this object
-summary(tanTagmparams@summary@posteriorEstimates)
+summary(tanTagm2@summary@posteriorEstimates)
 ```
 
 For a sanity check, let us re-check the diagnostics.  This is
@@ -264,17 +239,17 @@ in a `diagnostics` slot.
 
 ```{r mcmc-diag}
 ## Recomputed diagnostics
-tanTagmparams@summary@diagnostics
+tanTagm2@summary@diagnostics
 ```
 
 Let us look at a summary of the analysis.
 
 
 ```{r mcmc-joint}
-summary(tanTagmparams@summary@tagm.joint)
+summary(tanTagm2@summary@tagm.joint)
 ```
 
-### Appending results to MSnSet
+### Appending results to an MSnSet
 
 The `pRoloc` function `tagmPredict` can be used to append protein MCMC
 results to the feature data of our object of class `MSnSet`. This
@@ -283,7 +258,7 @@ used for final analysis of our data.
 
 ```{r mcmc-tagm-predict}
 ## We can now use tagmPredict
-tan2009r1 <- tagmPredict(tan2009r1, params = tanTagmparams)
+tan2009r1 <- tagmPredict(tan2009r1, params = tanTagm2)
 ```
 
 ## Visualising MCMC results
@@ -300,7 +275,9 @@ probabilitic allocations of proteins to sub-cellular niches.
 ptsze <- exp(fData(tan2009r1)$tagm.mcmc.probability) - 1
 
 ## Create plot2D with pointer scaled with probability
-plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze,
+plot2D(tan2009r1,
+       fcol = "tagm.mcmc.allocation",
+       cex = ptsze,
        main = "protein pointer scaled with posterior localisation probability")
 
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
@@ -344,22 +321,5 @@ the following protein Q9VCK0 is visualised. This demonstrates and
 quantifies the uncertainty in the allocation of this protein.
 
 ```{r mcmc-gg2, warning=FALSE}
-## We can make this into a function
-Q9VCK0 <- as.data.frame(tanChain@ComponentProb["Q9VCK0",,])
-colnames(Q9VCK0) <- getMarkerClasses(tan2009r1)
-Q9VCK0melt <- melt(Q9VCK0)
-colnames(Q9VCK0melt) <- c("Organelle","Probability")
-gg2 <- ggplot(Q9VCK0melt,
-              aes(Organelle, Probability, width = (Probability))) +
-    geom_violin(aes(fill = Organelle), scale = "width")
-gg2 <- gg2 + theme_bw() +
-    scale_fill_manual(values = getStockcol()[1:14]) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),
-          axis.title.x = element_blank())
-gg2 <- gg2 +
-    ylab("Membership Probability") +
-    ggtitle(paste0("Distribution of Subcellular Membership for Protein Q9VCK0" ))
-gg2 <- gg2 +
-    theme(legend.position="none")
-print(gg2)
+plot(tanTagm, "Q9VCK0")
 ```

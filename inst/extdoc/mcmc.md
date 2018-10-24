@@ -70,7 +70,7 @@ chains used in this analysis was 4.
 
 ```r
 ## Get number of chains
-nChains <- length(tanTagm@chains)
+nChains <- length(tanTagm)
 nChains
 ```
 
@@ -89,35 +89,30 @@ producing trace plots for each MCMC chain.
 
 ```r
 ## Convergence diagnostic to see if more we need to discard any
-## iterations or entire chains.
-outlierTotal <- vector("list", length = nChains)
+## iterations or entire chains: compute the number of outliers for
+## each iteration for each chain
+out <- mcmc_get_outliers(tanTagm)
 
-## Compute the number of outliers for each iteration for each chain
-for (j in seq_len(nChains)) {
-  mc <- pRoloc:::chains(tanTagm)[[j]]
-  outlierTotal[[j]] <- coda::mcmc(colSums(mc@Outlier))
-}
-
-## Carefully using coda S3 objects to produce trace plots and histograms
-plot(outlierTotal[[1]], col = "blue", main = "Chain 1")
+## Using coda S3 objects to produce trace plots and histograms
+plot(out[[1]], col = "blue", main = "Chain 1")
 ```
 
 ![plot of chunk mcmc-outlier](figure/mcmc-outlier-1.png)
 
 ```r
-plot(outlierTotal[[2]], col = "red", main = "Chain 2")
+plot(out[[2]], col = "red", main = "Chain 2")
 ```
 
 ![plot of chunk mcmc-outlier](figure/mcmc-outlier-2.png)
 
 ```r
-plot(outlierTotal[[3]], col = "green", main = "Chain 3")
+plot(out[[3]], col = "green", main = "Chain 3")
 ```
 
 ![plot of chunk mcmc-outlier](figure/mcmc-outlier-3.png)
 
 ```r
-plot(outlierTotal[[4]], col = "orange", main = "Chain 4")
+plot(out[[4]], col = "orange", main = "Chain 4")
 ```
 
 ![plot of chunk mcmc-outlier](figure/mcmc-outlier-4.png)
@@ -129,7 +124,7 @@ chain.
 
 ```r
 ## all chains average around 360 outliers
-summary(outlierTotal[[1]])
+summary(out[[1]])
 ```
 
 ```
@@ -170,7 +165,7 @@ statistic.
 ```r
 ## Can check gelman diagnostic for convergence (values less than <1.05
 ## are good for convergence)
-gelman.diag(outlierTotal) # the Upper C.I. is 1 so mcmc has clearly converged
+gelman.diag(out) ## the Upper C.I. is 1 so mcmc has clearly converged
 ```
 
 ```
@@ -185,7 +180,7 @@ We can also look at the Gelman diagnostics statistics for pairs of chains.
 
 ```r
 ## We can also check individual pairs of chains for convergence
-gelman.diag(outlierTotal[1:2]) # the upper C.I is 1.01
+gelman.diag(out[1:2]) # the upper C.I is 1.01
 ```
 
 ```
@@ -196,7 +191,7 @@ gelman.diag(outlierTotal[1:2]) # the upper C.I is 1.01
 ```
 
 ```r
-gelman.diag(outlierTotal[c(1,3)]) # the upper C.I is 1
+gelman.diag(out[c(1,3)]) # the upper C.I is 1
 ```
 
 ```
@@ -207,7 +202,7 @@ gelman.diag(outlierTotal[c(1,3)]) # the upper C.I is 1
 ```
 
 ```r
-gelman.diag(outlierTotal[3:4]) # the upper C.I is 1
+gelman.diag(out[3:4]) # the upper C.I is 1
 ```
 
 ```
@@ -234,8 +229,7 @@ how to remove the second chain from our domwnstream analysis.
 ## example in case we didn't believe it had converged.  It would be
 ## possible to remove more than one chain e.g. to remove 2 and 4 using
 ## c(2, 4).
-removeChain <- 2
-newTanMcmc <- tanTagm[seq_len(nChains)[-removeChain]]
+newTanMcmc <- tanTagm[-2]
 
 ## Let check that it looks good
 newTanMcmc
@@ -248,7 +242,7 @@ newTanMcmc
 ```
 
 ```r
-length(newTanMcmc) == (nChains - length(removeChain))
+length(newTanMcmc) == (nChains - 1)
 ```
 
 ```
@@ -283,61 +277,18 @@ downstream analysis leads to stable results.
 
 
 ```r
-## We need to clear this section up with a new function
-
 n <- (tanChain1@n)/2 # Number of iterations to keep 750
-K <- tanChain1@K # Number of components
-N <- tanChain1@N # Number of Proteins
-
-## Create storage for .MCMCChain
-.MCMCChainlist <- vector("list", length = length(newTanMcmc))
-
-for(j in seq_len(length(newTanMcmc))) {
-
-  tanChain <- pRoloc:::chains(newTanMcmc)[[j]]
-  .ComponentParam <- tanChain@ComponentParam # This won't change
-
-  ## Subset MCMC iterations
-  retain <- seq.int(n + 1, tanChain@n) # retain 750 samples
-
-  ## Check correct number of iterations
-  stopifnot(ncol(tanChain@Component[, retain]) == n) # Second entry is 750
-
-  ## Subset functions
-  .Component <- tanChain@Component[, retain]
-  .ComponentProb <- tanChain@ComponentProb[, retain, ]
-  .Outlier <- tanChain@Outlier[, retain]
-  .OutlierProb <- tanChain@OutlierProb[, retain, ]
-
-  ## We can now create a new object of class MCMCChains
-  ## make MCMCChain object
-  .MCMCChainlist[[j]] <- pRoloc:::.MCMCChain(n = as.integer(n),
-                                             K = K,
-                                             N = N,
-                                             Component = .Component,
-                                             ComponentProb = .ComponentProb,
-                                             Outlier = .Outlier,
-                                             OutlierProb = .OutlierProb,
-                                             ComponentParam = .ComponentParam)
-
-}
-
-## Construct class MCMCChains
-.ans <- pRoloc:::.MCMCChains(chains = .MCMCChainlist)
-tanTagmparams <- pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                                      chains = .ans,
-                                      priors = tanTagm@priors,
-                                      summary = pRoloc:::.MCMCSummary())
+tanTagm2 <- mcmc_burn_chains(newTanMcmc, n)
 ```
 
-tanTagmParams is now an object of class `MCMCParams` with 3 chains
-each with 750 iterations.
+`tanTagm2` is now an object of class `MCMCParams` with 3 chains each
+with each 750 iterations.
 
 
 
 ```r
 ## Check tanTagmParams object
-pRoloc:::chains(tanTagmparams)[[1]]
+pRoloc:::chains(tanTagm2)[[1]]
 ```
 
 ```
@@ -348,7 +299,7 @@ pRoloc:::chains(tanTagmparams)[[1]]
 ```
 
 ```r
-pRoloc:::chains(tanTagmparams)[[2]]
+pRoloc:::chains(tanTagm2)[[2]]
 ```
 
 ```
@@ -359,7 +310,7 @@ pRoloc:::chains(tanTagmparams)[[2]]
 ```
 
 ```r
-pRoloc:::chains(tanTagmparams)[[3]]
+pRoloc:::chains(tanTagm2)[[3]]
 ```
 
 ```
@@ -369,22 +320,22 @@ pRoloc:::chains(tanTagmparams)[[3]]
 ##  Number of iterations: 750
 ```
 
-## Procesing and summarising MCMC results
+## Processing and summarising MCMC results
 
 ### Populating the summary slot
 
-The summary slot of the `tanTagmparams` is currently empty, we can now
-populate the summary slot of `tanTagmparams` using the
-`tagmMcmcProcess` function.
+The summary slot of the `tanTagm2` is currently empty, we can now
+populate the summary slot of `tanTagm2` using the `tagmMcmcProcess`
+function.
 
 
 ```r
 ## This will automatically pool chains to produce summary (easy to
 ## create single summaries by subsetting)
-tanTagmparams <- tagmMcmcProcess(tanTagmparams)
+tanTagm2 <- tagmMcmcProcess(tanTagm2)
 
 ## Let look at this object
-summary(tanTagmparams@summary@posteriorEstimates)
+summary(tanTagm2@summary@posteriorEstimates)
 ```
 
 ```
@@ -422,7 +373,7 @@ in a `diagnostics` slot.
 
 ```r
 ## Recomputed diagnostics
-tanTagmparams@summary@diagnostics
+tanTagm2@summary@diagnostics
 ```
 
 ```
@@ -435,7 +386,7 @@ Let us look at a summary of the analysis.
 
 
 ```r
-summary(tanTagmparams@summary@tagm.joint)
+summary(tanTagm2@summary@tagm.joint)
 ```
 
 ```
@@ -469,7 +420,7 @@ summary(tanTagmparams@summary@tagm.joint)
 ##  Max.   :0.996639   Max.   :0.9885391
 ```
 
-### Appending results to MSnSet
+### Appending results to an MSnSet
 
 The `pRoloc` function `tagmPredict` can be used to append protein MCMC
 results to the feature data of our object of class `MSnSet`. This
@@ -479,7 +430,7 @@ used for final analysis of our data.
 
 ```r
 ## We can now use tagmPredict
-tan2009r1 <- tagmPredict(tan2009r1, params = tanTagmparams)
+tan2009r1 <- tagmPredict(tan2009r1, params = tanTagm2)
 ```
 
 ## Visualising MCMC results
@@ -497,7 +448,9 @@ probabilitic allocations of proteins to sub-cellular niches.
 ptsze <- exp(fData(tan2009r1)$tagm.mcmc.probability) - 1
 
 ## Create plot2D with pointer scaled with probability
-plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze,
+plot2D(tan2009r1,
+       fcol = "tagm.mcmc.allocation",
+       cex = ptsze,
        main = "protein pointer scaled with posterior localisation probability")
 
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
@@ -566,31 +519,7 @@ quantifies the uncertainty in the allocation of this protein.
 
 
 ```r
-## We can make this into a function
-Q9VCK0 <- as.data.frame(tanChain@ComponentProb["Q9VCK0",,])
-colnames(Q9VCK0) <- getMarkerClasses(tan2009r1)
-Q9VCK0melt <- melt(Q9VCK0)
-```
-
-```
-## Using  as id variables
-```
-
-```r
-colnames(Q9VCK0melt) <- c("Organelle","Probability")
-gg2 <- ggplot(Q9VCK0melt,
-              aes(Organelle, Probability, width = (Probability))) +
-    geom_violin(aes(fill = Organelle), scale = "width")
-gg2 <- gg2 + theme_bw() +
-    scale_fill_manual(values = getStockcol()[1:14]) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),
-          axis.title.x = element_blank())
-gg2 <- gg2 +
-    ylab("Membership Probability") +
-    ggtitle(paste0("Distribution of Subcellular Membership for Protein Q9VCK0" ))
-gg2 <- gg2 +
-    theme(legend.position="none")
-print(gg2)
+plot(tanTagm, "Q9VCK0")
 ```
 
 ![plot of chunk mcmc-gg2](figure/mcmc-gg2-1.png)

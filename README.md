@@ -5,7 +5,7 @@
 <img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRoloc.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocdata.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocGUI.png" height="200">
 
 
-The `pRoloc` suite set of software offer a complete software pipeline
+The `pRoloc` suite set of software offers a complete software pipeline
 to analyse, visualise and interpret mass spectrometry-based spatial
 proteomics data such, for example, as LOPIT (Localization of Organelle
 Proteins by Isotope Tagging), PCP (Protein Correlation Profiling) or

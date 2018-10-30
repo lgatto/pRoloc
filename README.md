@@ -14,7 +14,7 @@ hyperLOPIT (hyperplexed LOPIT). The suite includes
 the mail software that focuses on data analysis using state-of-the-art
 machine learning,
 [`pRolocdata`](http://bioconductor.org/packages/release/data/experiment/html/pRolocdata.html),
-that distributes numerous datasets, and [`pRolocGUI`], that offers
+that distributes numerous datasets, and [`pRolocGUI`](https://computationalproteomicsunit.github.io/pRolocGUI/), that offers
 interactive visualisations dedicated to spatial proteomics. The
 software are distributed as part of the
 R/[Bioconductor](http://bioconductor.org/) project.

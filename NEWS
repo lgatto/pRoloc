@@ -1,3 +1,13 @@
+Changes in version 1.23.0
+-------------------------
+- New version for Bioc 3.9 devel
+
+
+Changes in version 1.22.0
+-------------------------
+- New version for Bioc 3.8 release
+
+
 Changes in version 1.21.9
 -------------------------
 - Fix type in vignette header <2018-09-18 Tue>

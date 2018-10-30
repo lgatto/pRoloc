@@ -1,3 +1,13 @@
+# pRoloc 1.23
+
+## Changes in version 1.23.0
+- New version for Bioc 3.9 devel
+
+# pRoloc 1.22
+
+## Changes in version 1.22.0
+- New version for Bioc 3.8 release
+
 # pRoloc 1.21
 
 ## Changes in version 1.21.9

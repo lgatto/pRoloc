@@ -45,9 +45,11 @@ setMethod("plot3D", "MSnSet",
 ##' @examples
 ##'
 ##' ## in 3 dimensions
-##' plot3D(tan2009r1, radius1 = 0.05)
-##' highlightOnPlot3D(tan2009r1, x, labels = TRUE)
-##' highlightOnPlot3D(tan2009r1, x)
+##' if (interactive()) {
+##'   plot3D(tan2009r1, radius1 = 0.05)
+##'   highlightOnPlot3D(tan2009r1, x, labels = TRUE)
+##'   highlightOnPlot3D(tan2009r1, x)
+##' }
 highlightOnPlot3D <- function(object, foi, labels,
                               args = list(),
                               radius = 0.1 * 3,

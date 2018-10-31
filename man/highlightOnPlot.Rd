@@ -88,9 +88,11 @@ highlightOnPlot(tan2009r1, x, labels = TRUE, pos = 3)
 highlightOnPlot(tan2009r1, x, labels = "Flybase.Symbol", pos = 1)
 
 ## in 3 dimensions
-plot3D(tan2009r1, radius1 = 0.05)
-highlightOnPlot3D(tan2009r1, x, labels = TRUE)
-highlightOnPlot3D(tan2009r1, x)
+if (interactive()) {
+  plot3D(tan2009r1, radius1 = 0.05)
+  highlightOnPlot3D(tan2009r1, x, labels = TRUE)
+  highlightOnPlot3D(tan2009r1, x)
+}
 }
 \author{
 Laurent Gatto

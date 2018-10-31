@@ -1,3 +1,5 @@
+##' @export
+##' noRd
 lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
   HDMSeFinalPeptideFiles <- dir(hdmsedir, full.names = TRUE)
   message("[LOPIMS 1] Estimate master FDR")
@@ -14,6 +16,8 @@ lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
               cmb = cmb))
 }
 
+##' @export
+##' noRd
 lopims2 <- function(msedir, pep3ddir, fasta,
                      master, outdir,
                      ...) {
@@ -47,6 +51,9 @@ lopims2 <- function(msedir, pep3ddir, fasta,
   return(res)
 }
 
+
+##' @export
+##' noRd
 lopims3 <- function(synlist) {
   message("[LOPIMS 3] Combine synapter results")
   ll <- lapply(synlist, as, "MSnSet")
@@ -60,23 +67,24 @@ lopims3 <- function(synlist) {
 }
 
 
-## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., DAnTE: a
-## statistical tool for quantitative analysis of -omics data.
-## Bioinformatics 2008, 24, 1556–1558.
-##
-## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269 Ratio
-## all peptides to the peptide with the least amount of missing
-## values; Protein abundance is the median of the scaled peptide
-## abundances
+
 refNormMedOfPepRatio <- function(x) {
-  ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
-  x <- as.matrix(x)
-  .res <- apply(x, 1, function(.x) {
-    .xref <- .x[ref]
-    .x/.xref
-  })
-  res <- t(.res)
-  apply(res, 2, median, na.rm = TRUE)
+    ## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., DAnTE: a
+    ## statistical tool for quantitative analysis of -omics data.
+    ## Bioinformatics 2008, 24, 1556 - 1558.
+    ##
+    ## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269 Ratio
+    ## all peptides to the peptide with the least amount of missing
+    ## values; Protein abundance is the median of the scaled peptide
+    ## abundances
+    ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
+    x <- as.matrix(x)
+    .res <- apply(x, 1, function(.x) {
+        .xref <- .x[ref]
+        .x/.xref
+    })
+    res <- t(.res)
+    apply(res, 2, median, na.rm = TRUE)
 }
 
 refNormMeanOfNonNAPepSum <- function(x) {
@@ -106,6 +114,9 @@ refNormMeanOfNonNAPepSum <- function(x) {
   .res
 }
 
+
+##' @export
+##' noRd
 lopims4 <- function(xx) {
   ## remove rows with only NAs
   xx <- xx[!apply(exprs(xx), 1, function(x) all(is.na(x))), ]
@@ -130,6 +141,8 @@ lopims4 <- function(xx) {
 
 
 
+##' @export
+##' noRd
 lopims5 <- function(x, markerfile) {
   message("[LOPIMS 5] Adding markers")
   addMarkers(x, markerfile, verbose = TRUE)
@@ -217,7 +230,8 @@ lopims5 <- function(x, markerfile) {
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with protein
 ##' level quantitation and respective organelle markers.
 ##' @author Laurent Gatto
-##' @aliases lopims1 lopims2 lopims3 lopims4 lopims5
+##' @aliases lopims lopims1 lopims2 lopims3 lopims4 lopims5
+##' @export
 lopims <- function(hdmsedir = "HDMSE",
                    msedir = "MSE",
                    pep3ddir = "pep3D",

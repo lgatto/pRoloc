@@ -1,5 +1,8 @@
 # pRoloc 1.23
 
+## Changes in version 1.23.1
+- Add note about missing data in QSep man <2018-10-31 Wed>
+
 ## Changes in version 1.23.0
 - New version for Bioc 3.9 devel
 
@@ -156,7 +159,7 @@
 ## Changes in version 1.15.3
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-        <2016-11-04 Fri>
+	<2016-11-04 Fri>
 
 ## Changes in version 1.15.2
 

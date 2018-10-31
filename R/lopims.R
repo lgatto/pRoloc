@@ -59,13 +59,16 @@ lopims3 <- function(synlist) {
   Reduce(combine, ll)
 }
 
+
+## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., DAnTE: a
+## statistical tool for quantitative analysis of -omics data.
+## Bioinformatics 2008, 24, 1556–1558.
+##
+## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269 Ratio
+## all peptides to the peptide with the least amount of missing
+## values; Protein abundance is the median of the scaled peptide
+## abundances
 refNormMedOfPepRatio <- function(x) {
-  ## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., DAnTE: a
-  ## statistical tool for quantitative analysis of -omics data.
-  ## Bioinformatics 2008, 24, 1556–1558.
-  ## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269
-  ## Ratio all peptides to the peptide with the least amount of missing values;
-  ## Protein abundance is the median of the scaled peptide abundances
   ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
   x <- as.matrix(x)
   .res <- apply(x, 1, function(.x) {

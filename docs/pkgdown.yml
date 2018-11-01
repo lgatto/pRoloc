@@ -1,0 +1,10 @@
+pandoc: 2.3.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  v01-pRoloc-tutorial: v01-pRoloc-tutorial.html
+  v02-pRoloc-ml: v02-pRoloc-ml.html
+  v03-pRoloc-bayesian: v03-pRoloc-bayesian.html
+  v04-pRoloc-goannotations: v04-pRoloc-goannotations.html
+  v05-pRoloc-transfer-learning: v05-pRoloc-transfer-learning.html
+

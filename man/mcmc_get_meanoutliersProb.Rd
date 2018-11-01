@@ -7,15 +7,12 @@
 mcmc_get_meanoutliersProb(x)
 }
 \arguments{
-\item{x}{Object of class `MCMCParams`}
+\item{x}{Object of class \code{MCMCParams}}
 }
 \value{
-A `list` of length `length(x)`.
+A \code{list} of length \code{length(x)}.
 }
 \description{
 Helper function to get mean probability of belonging to outlier at
 each iteration.
-}
-\author{
-Laurent Gatto
 }

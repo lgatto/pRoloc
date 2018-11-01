@@ -7,16 +7,13 @@
 mcmc_burn_chains(x, n)
 }
 \arguments{
-\item{x}{A object of class `MCMCParams`}
+\item{x}{A object of class \code{MCMCParams}}
 
-\item{n}{`integer(1)` defining number of iterations to burn.}
+\item{n}{\code{integer(1)} defining number of iterations to burn.}
 }
 \value{
-An updated `MCMCParams` object.
+An updated \code{MCMCParams} object.
 }
 \description{
 Helper function to burn n iterations from the front of the chains
-}
-\author{
-Laurent Gatto
 }

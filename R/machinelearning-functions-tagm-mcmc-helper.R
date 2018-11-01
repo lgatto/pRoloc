@@ -16,6 +16,7 @@ mcmc_get_outliers <- function(x) {
 ##' @title Mean component allocation at each MCMC iteration
 ##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @md
 mcmc_get_meanComponent <- function(x) {
   stopifnot(inherits(x, "MCMCParams"))
   lapply(x@chains@chains, function(mc) coda::mcmc(colMeans(mc@Component)))
@@ -27,7 +28,7 @@ mcmc_get_meanComponent <- function(x) {
 ##' @title Mean outlier probability
 ##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
-##' @author Laurent Gatto
+##' @md
 mcmc_get_meanoutliersProb <- function(x) {
   stopifnot(inherits(x, "MCMCParams"))
   lapply(x@chains@chains, function(mc) coda::mcmc(colMeans(mc@OutlierProb[, ,2])))
@@ -119,9 +120,19 @@ mcmc_pool_chains <- function(param) {
 
 }
 
-## Helper function to burn n iterations from the front of the chains
+
+
+##' Helper function to burn n iterations from the front of the chains
+##'
+##' @title MCMC chain burning
+##' @param x A object of class `MCMCParams`
+##' @param n `integer(1)` defining number of iterations to burn.
+##' @return An updated `MCMCParams` object.
+##' @md
 mcmc_burn_chains <- function(x, n) {
     stopifnot(inherits(x, "MCMCParams"))
+    n <- as.integer(n[1])
+    stopifnot(is.numeric(n))
     .chain <- pRoloc:::chains(x)[[1]]
     K <- .chain@K # Number of components
     N <- .chain@N # Number of Proteins
@@ -197,6 +208,7 @@ setMethod("plot", c("MCMCParams", "character"),
 
 ## Plotting function for violins using ggplot2.
 mcmc_plot_probs <- function(param, fname, n = 1) {
+    Organelle <- Probability <- NULL
     stopifnot(inherits(param, "MCMCParams"))
     stopifnot(length(fname) == 1)
     chain <- pRoloc:::chains(param)[[n]]

@@ -196,7 +196,7 @@ mcmc_thin_chains <- function(x, freq) {
   mcmc_chainlist <- pRoloc:::.MCMCChains(chains = chainlist)
   pRoloc:::.MCMCParams(method = "TAGM.MCMC",
                        chains = mcmc_chainlist,
-                       priors = param@priors,
+                       priors = x@priors,
                        summary = pRoloc:::.MCMCSummary())
 }
 

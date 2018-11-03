@@ -1,5 +1,5 @@
 ##' @export
-##' noRd
+##' @noRd
 lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
   HDMSeFinalPeptideFiles <- dir(hdmsedir, full.names = TRUE)
   message("[LOPIMS 1] Estimate master FDR")
@@ -17,7 +17,7 @@ lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
 }
 
 ##' @export
-##' noRd
+##' @noRd
 lopims2 <- function(msedir, pep3ddir, fasta,
                      master, outdir,
                      ...) {
@@ -53,7 +53,7 @@ lopims2 <- function(msedir, pep3ddir, fasta,
 
 
 ##' @export
-##' noRd
+##' @noRd
 lopims3 <- function(synlist) {
   message("[LOPIMS 3] Combine synapter results")
   ll <- lapply(synlist, as, "MSnSet")
@@ -116,7 +116,7 @@ refNormMeanOfNonNAPepSum <- function(x) {
 
 
 ##' @export
-##' noRd
+##' @noRd
 lopims4 <- function(xx) {
   ## remove rows with only NAs
   xx <- xx[!apply(exprs(xx), 1, function(x) all(is.na(x))), ]
@@ -142,7 +142,7 @@ lopims4 <- function(xx) {
 
 
 ##' @export
-##' noRd
+##' @noRd
 lopims5 <- function(x, markerfile) {
   message("[LOPIMS 5] Adding markers")
   addMarkers(x, markerfile, verbose = TRUE)

@@ -74,7 +74,8 @@ Suggests:
     GO.db,
     AnnotationDbi,
     Rtsne (>= 0.13),
-    nipals
+    nipals,
+    reshape
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr

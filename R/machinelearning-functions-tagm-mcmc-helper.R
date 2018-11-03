@@ -46,7 +46,13 @@ geweke_test <- function(x) {
   return(res)
 }
 
-## Helper function to pool chains together after processing
+
+##' Helper function to pool chains together after processing
+##'
+##' @title Pool MCMC chains
+##' @param param An object of class `MCMCParams`.
+##' @return A pooled `MCMCParams` object.
+##' @md
 mcmc_pool_chains <- function(param) {
   stopifnot(inherits(param, "MCMCParams"))
 
@@ -55,7 +61,7 @@ mcmc_pool_chains <- function(param) {
   n <- param1@n
   nPool <- param1@n * length(param) # total number of iteration increase
   KPool <- param1@K  # number of components unchanged
-  NPool <- param1@N # number of proteins doesn't change
+  NPool <- param1@N  # number of proteins doesn't change
   numChains <- length(param)
 
   pooled.Component <- matrix(0, nrow = NPool, ncol = nPool)
@@ -70,7 +76,7 @@ mcmc_pool_chains <- function(param) {
   dimnames(pooled.ComponentProb)[[3]] <- dimnames(param1@ComponentProb)[[3]]
 
 
-  # Calculate basic quantities
+  ## Calculate basic quantities
   for (j in seq_len(numChains)) {
 
     mc <- pRoloc:::chains(param)[[j]]
@@ -164,8 +170,15 @@ mcmc_burn_chains <- function(x, n) {
                          summary = pRoloc:::.MCMCSummary())
 }
 
-## Helper function to subsample the chains, known informally as
-## thinning.
+
+##' Helper function to subsample the chains, known informally as
+##' thinning.
+##'
+##' @title MCMC chain thinning
+##' @param x An object of class `MCMCParams`.
+##' @param freq Thinning frequency.
+##' @return
+##' @author Laurent Gatto
 mcmc_thin_chains <- function(x, freq) {
   stopifnot(inherits(x, "MCMCParams"))
   .chain <- pRoloc:::chains(x)[[1]]

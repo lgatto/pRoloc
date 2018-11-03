@@ -25,15 +25,15 @@ jobs:
   include:
     - stage: "Build"
       r_packages:
-	- covr
-	- pkgdown
-	- testthat
-	- knitr
-	- roxygen2
+        - covr
+        - pkgdown
+        - testthat
+        - knitr
+        - roxygen2
       before_install:
-	- mkdir -p ~/.R
-	- echo -e 'MAKEFLAGS = -j2' > ~/.R/Makevars
-	- echo 'options(Ncpus = 2)' > ~/.Rprofile
+        - mkdir -p ~/.R
+        - echo -e 'MAKEFLAGS = -j2' > ~/.R/Makevars
+        - echo 'options(Ncpus = 2)' > ~/.Rprofile
       script: true
       name: "Build dependencies and cache"
     - stage: "Check"

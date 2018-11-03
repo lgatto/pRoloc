@@ -6,7 +6,7 @@ cache:
   directories:
     - ~/.AnnotationHub
 sudo: required
-warnings_are_errors: false 
+warnings_are_errors: false
 dist: trusty
 
 # unfortunately apt packages are not cached
@@ -25,15 +25,15 @@ jobs:
   include:
     - stage: "Build"
       r_packages:
-        - covr
-        - pkgdown
-        - testthat
-        - knitr
-        - roxygen2
+	- covr
+	- pkgdown
+	- testthat
+	- knitr
+	- roxygen2
       before_install:
-        - mkdir -p ~/.R
-        - echo -e 'MAKEFLAGS = -j2' > ~/.R/Makevars
-        - echo 'options(Ncpus = 2)' > ~/.Rprofile
+	- mkdir -p ~/.R
+	- echo -e 'MAKEFLAGS = -j2' > ~/.R/Makevars
+	- echo 'options(Ncpus = 2)' > ~/.Rprofile
       script: true
       name: "Build dependencies and cache"
     - stage: "Check"
@@ -51,20 +51,20 @@ jobs:
       r_check_args: --as-cran --no-build-vignettes --no-codoc --no-examples --no-tests
       install: skip
       name: "vignettes"
-    - stage: "Deploy"
-      install: skip
-      script:
-        - travis_wait 20 Rscript -e 'covr::codecov()'
-        - if [ ${TRAVIS_BRANCH} = "master" ] && [ -z "${TRAVIS_PULL_REQUEST_BRANCH}" ] ; then travis_wait 20 Rscript -e 'pkgdown::build_site()' ; fi
-      name: "codecov and pkgdown (on master)"
-      deploy:
-        provider: pages
-        skip-cleanup: true
-        github-token: $GITHUB_PAT
-        keep-history: true
-        local-dir: docs
-        on:
-          branch: master
+    # - stage: "Deploy"
+    #   install: skip
+    #   script:
+    #     - travis_wait 20 Rscript -e 'covr::codecov()'
+    #     - if [ ${TRAVIS_BRANCH} = "master" ] && [ -z "${TRAVIS_PULL_REQUEST_BRANCH}" ] ; then travis_wait 20 Rscript -e 'pkgdown::build_site()' ; fi
+    #   name: "codecov and pkgdown (on master)"
+    #   deploy:
+    #     provider: pages
+    #     skip-cleanup: true
+    #     github-token: $GITHUB_PAT
+    #     keep-history: true
+    #     local-dir: docs
+    #     on:
+    #       branch: master
 
 # In general the r-travis script automatically dump the logs after failure but
 # because of a bug in travis the output is often truncated. See

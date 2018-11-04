@@ -2,6 +2,7 @@
 
 ## Changes in version 1.23.1
 - Add note about missing data in QSep man <2018-10-31 Wed>
+- Add mcmc-helper documentation <2018-11-04 Sun>
 
 ## Changes in version 1.23.0
 - New version for Bioc 3.9 devel

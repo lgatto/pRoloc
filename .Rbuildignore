@@ -1,9 +1,0 @@
-vignettes/cache
-vignettes/figure/
-README.md
-vignettes/pRoloc-tutorial.pdf
-sandbox
-.travis.yml
-.gitignores
-docs
-^docs$

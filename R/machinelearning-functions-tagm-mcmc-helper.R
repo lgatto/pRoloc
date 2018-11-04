@@ -213,7 +213,17 @@ mcmc_thin_chains <- function(x, freq) {
                        summary = pRoloc:::.MCMCSummary())
 }
 
-## Plotting method for violins
+
+
+##' Produces a violin plot with the protein posterior probabilities
+##' distributions for all organelles.
+##'
+##' @title Plot posterior probabilities
+##' @param x An object of class `MCMCParams`.
+##' @param y A `character(1)` with a protein name.
+##' @param ... Currently ignored.
+##' @return A ggplot2 object.
+##' @rdname mcmc-plot
 setMethod("plot", c("MCMCParams", "character"),
           function(x, y, ...) {
               mcmc_plot_probs(x, y, n = 1)

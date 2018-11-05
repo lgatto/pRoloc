@@ -132,10 +132,11 @@ mcmc_pool_chains <- function(param) {
 ##'
 ##' @title MCMC chain burning
 ##' @param x A object of class `MCMCParams`
-##' @param n `integer(1)` defining number of iterations to burn.
+##' @param n `integer(1)` defining number of iterations to burn. The default is 
+##' `50`
 ##' @return An updated `MCMCParams` object.
 ##' @md
-mcmc_burn_chains <- function(x, n) {
+mcmc_burn_chains <- function(x, n = 50) {
     stopifnot(inherits(x, "MCMCParams"))
     n <- as.integer(n[1])
     stopifnot(is.numeric(n))
@@ -176,10 +177,11 @@ mcmc_burn_chains <- function(x, n) {
 ##'
 ##' @title MCMC chain thinning
 ##' @param x An object of class `MCMCParams`.
-##' @param freq Thinning frequency.
+##' @param freq Thinning frequency. The function retains every `freq`th iteration
+##' and is an `integer(1)`. The default thinning frequency is `5`.
 ##' @return
 ##' @author Laurent Gatto
-mcmc_thin_chains <- function(x, freq) {
+mcmc_thin_chains <- function(x, freq = 5) {
   stopifnot(inherits(x, "MCMCParams"))
   .chain <- pRoloc:::chains(x)[[1]]
   K <- .chain@K # Number of components

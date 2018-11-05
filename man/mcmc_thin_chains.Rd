@@ -4,12 +4,16 @@
 \alias{mcmc_thin_chains}
 \title{MCMC chain thinning}
 \usage{
-mcmc_thin_chains(x, freq)
+mcmc_thin_chains(x, freq = 5)
 }
 \arguments{
 \item{x}{An object of class `MCMCParams`.}
 
-\item{freq}{Thinning frequency.}
+\item{freq}{Thinning frequency. The function retains every `freq`th iteration
+and is an `integer(1)`. The default thinning frequency is `5`.}
+}
+\value{
+A thinned `MCMCParams` object.
 }
 \description{
 Helper function to subsample the chains, known informally as

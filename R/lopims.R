@@ -1,4 +1,3 @@
-##' @export
 ##' @noRd
 lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
   HDMSeFinalPeptideFiles <- dir(hdmsedir, full.names = TRUE)
@@ -16,7 +15,6 @@ lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
               cmb = cmb))
 }
 
-##' @export
 ##' @noRd
 lopims2 <- function(msedir, pep3ddir, fasta,
                      master, outdir,
@@ -52,7 +50,6 @@ lopims2 <- function(msedir, pep3ddir, fasta,
 }
 
 
-##' @export
 ##' @noRd
 lopims3 <- function(synlist) {
   message("[LOPIMS 3] Combine synapter results")
@@ -115,7 +112,6 @@ refNormMeanOfNonNAPepSum <- function(x) {
 }
 
 
-##' @export
 ##' @noRd
 lopims4 <- function(xx) {
   ## remove rows with only NAs
@@ -141,7 +137,6 @@ lopims4 <- function(xx) {
 
 
 
-##' @export
 ##' @noRd
 lopims5 <- function(x, markerfile) {
   message("[LOPIMS 5] Adding markers")
@@ -230,8 +225,7 @@ lopims5 <- function(x, markerfile) {
 ##' @return An instance of class \code{"\linkS4class{MSnSet}"} with protein
 ##' level quantitation and respective organelle markers.
 ##' @author Laurent Gatto
-##' @aliases lopims lopims1 lopims2 lopims3 lopims4 lopims5
-##' @export
+##' @aliases lopims1 lopims2 lopims3 lopims4 lopims5
 lopims <- function(hdmsedir = "HDMSE",
                    msedir = "MSE",
                    pep3ddir = "pep3D",

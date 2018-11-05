@@ -4,12 +4,13 @@
 \alias{mcmc_burn_chains}
 \title{MCMC chain burning}
 \usage{
-mcmc_burn_chains(x, n)
+mcmc_burn_chains(x, n = 50)
 }
 \arguments{
 \item{x}{A object of class \code{MCMCParams}}
 
-\item{n}{\code{integer(1)} defining number of iterations to burn.}
+\item{n}{\code{integer(1)} defining number of iterations to burn. The default is
+\code{50}}
 }
 \value{
 An updated \code{MCMCParams} object.

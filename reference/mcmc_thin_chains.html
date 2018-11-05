@@ -137,7 +137,7 @@ thinning.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mcmc_thin_chains</span>(<span class='no'>x</span>, <span class='no'>freq</span>)</pre>
+    <pre class="usage"><span class='fu'>mcmc_thin_chains</span>(<span class='no'>x</span>, <span class='kw'>freq</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,9 +148,14 @@ thinning.</p>
     </tr>
     <tr>
       <th>freq</th>
-      <td><p>Thinning frequency.</p></td>
+      <td><p>Thinning frequency. The function retains every `freq`th iteration
+and is an `integer(1)`. The default thinning frequency is `5`.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A thinned `MCMCParams` object.</p>
     
 
   </div>
@@ -158,7 +163,9 @@ thinning.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
     <h2>Author</h2>
     

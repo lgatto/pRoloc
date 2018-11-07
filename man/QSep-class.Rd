@@ -30,16 +30,16 @@
   \tabular{ccc}{
     \tab  \eqn{c_1} \tab \eqn{c_2} \cr
     \eqn{c_1} \tab \eqn{d_11} \tab \eqn{d_12} \cr
-    \eqn{c_2} \tab \eqn{d_21} \tab \eqn{d_22} 
+    \eqn{c_2} \tab \eqn{d_21} \tab \eqn{d_22}
   }
-  
+
   Normalised distance represent the ratio of between to within average
   distances, i.e. how much bigger the average distance between cluster
   \eqn{c_i} and \eqn{c_j} is compared to the average distance within
   cluster \eqn{c_i}.
 
     \tabular{ccc}{
-        \tab \eqn{c_1} \tab \eqn{c_2} \cr
+	\tab \eqn{c_1} \tab \eqn{c_2} \cr
     \eqn{c_1} \tab 1    \tab \eqn{\frac{d_12}{d_22}} \cr
     \eqn{c_2} \tab \eqn{\frac{d_21}{d_11}} \tab 1
   }
@@ -47,6 +47,15 @@
   Note that the normalised distance matrix is not symmetric anymore
   and the normalised distance ratios are proportional to the tightness
   of the reference cluster (along the columns).
+
+  Missing values only affect the fractions containing the \code{NA} when
+  the distance is computed (see the example below) and further used when
+  calculating mean distances. Few missing values are expected to have
+  negligible effect, but data with a high proportion of missing data
+  will will produce skewed distances.  In \code{QSep}, we take a
+  conservative approach, using the data as provided by the user, and
+  expect that the data missingness is handled before proceeding with this
+  or any other analysis.
 
 }
 
@@ -66,7 +75,7 @@
     \item{\code{xnorm}:}{Object of class \code{"matrix"} containing the
       normalised pairwise distance matrix, accessible with \code{qsep(.,
 	norm = TRUE)} or \code{qsep(.)}. }
-  
+
     \item{\code{object}:}{Object of class \code{"character"} with the
       variable name of \code{\linkS4class{MSnSet}} object that was used
       to generate the \code{QSep} object.}
@@ -101,7 +110,7 @@
       \code{QSep}'s \code{fcol} argument.  A replacement method
       \code{names(.) <- } is also available. }
 
-    
+
     \item{summary}{\code{signature(object = "QSep", ..., verbose =
 	"logical")}: Invisible return all between cluster average
       distances and prints (when \code{verbose} is \code{TRUE},
@@ -121,12 +130,14 @@
       defines whether normalised distances should be plotted.}
 
   }
-  
+
 }
 
-%% \references{
-%%   %%  TODO: add pre-print reference once posted on bioRXiv.
-%% }
+\references{
+  Assessing sub-cellular resolution in spatial proteomics experiments
+  Laurent Gatto, Lisa M Breckels, Kathryn S Lilley bioRxiv 377630; doi:
+  https://doi.org/10.1101/377630
+}
 
 \author{
   Laurent Gatto <lg390@cam.ac.uk>
@@ -164,6 +175,21 @@ plot(hlq)
 ## Boxplot of all between cluster average distances
 x <- summary(hlq, verbose = FALSE)
 boxplot(x)
+
+## Missing data example, for 4 proteins and 3 fractions
+x <- rbind(c(1.1, 1.2, 1.3), rep(1, 3), c(NA, 1, 1), c(1, 1, NA))
+rownames(x) <- paste0("P", 1:4)
+colnames(x) <- paste0("F", 1:3)
+
+## P1 is the reference, against which we will calculate distances. P2
+## has a complete profile, producing the *real* distance. P3 and P4 have
+## missing values in the first and last fraction respectively.
+x
+
+## If we drop F1 in P3, which represents a small difference of 0.1, the
+## distance only considers F2 and F3, and increases. If we drop F3 in
+## P4, which represents a large distance of 0.3, the distance only
+## considers F1 and F2, and decreases.  dist(x)
 
 }
 

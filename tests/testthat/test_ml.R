@@ -41,38 +41,6 @@ test_that("svm consistency", {
     expect_equal(ans1, ans2, check.attributes=FALSE)
 })
 
-
-test_that("TAGM consistency", {
-  .numIter <- 2
-  map1 <- tagmMapTrain(object = d1, fcol = "markers",
-                       numIter = .numIter, seed = .seed)
-  map2 <- tagmMapTrain(object = d2, fcol = "xx",
-                       numIter = .numIter, seed = .seed)
-  expect_equal(map1, map2)
-  ans1 <- tagmPredict(object = d1, params = map1, fcol = "markers")
-  ans2 <- tagmPredict(object = d2, params = map2, fcol = "xx")
-  expect_equal(ans1, ans2, check.attributes = FALSE)
-})
-
-test_that("TAGM MCMC consistency", {
-  .numIter <- 5
-  set.seed(1)
-  mcmc1 <- tagmMcmcTrain(object = d1, fcol = "markers",
-                         numIter = .numIter,burnin = 0, thin = 1, numChains = 2,
-                         BPPARAM = SerialParam())
-  set.seed(1)
-  mcmc2 <- tagmMcmcTrain(object = d2, fcol = "xx",
-                           numIter = .numIter, burnin = 0, thin = 1, numChains = 2,
-                         BPPARAM = SerialParam())
-  expect_equal(mcmc1, mcmc2)
-  mcmc1 <- tagmMcmcProcess(mcmc1)
-  mcmc2 <- tagmMcmcProcess(mcmc2)
-  expect_equal(mcmc1, mcmc2)
-  ans1 <- tagmPredict(object = d1, params = mcmc1, fcol = "markers")
-  ans2 <- tagmPredict(object = d2, params = mcmc2, fcol = "xx")
-  expect_equal(ans1, ans2, check.attributes = FALSE)
-})
-
 test_that("nb consistency", {
     .laplace <- c(0, 5)
     reg1 <- nbOptimisation(d1, fcol = "markers",

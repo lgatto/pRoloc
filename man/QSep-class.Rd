@@ -187,10 +187,9 @@ colnames(x) <- paste0("F", 1:3)
 x
 
 ## If we drop F1 in P3, which represents a small difference of 0.1, the
-## distance only consider F2 and F3, and increases. If we drop F3 in P4,
-## which represents a large distance of 0.3, the distance only consider
-## F1 and F2, and decreases.
-dist(x)
+## distance only considers F2 and F3, and increases. If we drop F3 in
+## P4, which represents a large distance of 0.3, the distance only
+## considers F1 and F2, and decreases.  dist(x)
 
 }
 

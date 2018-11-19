@@ -534,14 +534,11 @@ Missing values only affect the fractions containing the NA when
 #&gt; P2 1.0 1.0 1.0
 #&gt; P3  NA 1.0 1.0
 #&gt; P4 1.0 1.0  NA</div><div class='input'>
-<span class='co'>## If we drop F1 in P3, which represents a small difference of 0.1, the</span>
-<span class='co'>## distance only consider F2 and F3, and increases. If we drop F3 in P4,</span>
-<span class='co'>## which represents a large distance of 0.3, the distance only consider</span>
-<span class='co'>## F1 and F2, and decreases.</span>
-<span class='fu'>dist</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;           P1        P2        P3
-#&gt; P2 0.3741657                    
-#&gt; P3 0.4415880 0.0000000          
-#&gt; P4 0.2738613 0.0000000 0.0000000</div><div class='input'>
+## If we drop F1 in P3, which represents a small difference of 0.1, the
+## distance only considers F2 and F3, and increases. If we drop F3 in
+## P4, which represents a large distance of 0.3, the distance only
+## considers F1 and F2, and decreases.  dist(x)
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

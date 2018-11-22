@@ -3,6 +3,7 @@ title: "Bayesian Analysis of Spatial Proteomics data using pRoloc"
 author:
 - name: Oliver Crook
 - name: Laurent Gatto
+  affiliation: de Duve Institute, UCLouvain, Belgium
 package: pRoloc
 output:
   BiocStyle::html_document:
@@ -143,7 +144,7 @@ currently empty.
 ```{r tagmMcmcTrain}
 library("pRoloc")
 p <- tagmMcmcTrain(object = tan2009r1, numIter = 3,
-                   burnin = 1, thin = 1, numChains = 2)
+				   burnin = 1, thin = 1, numChains = 2)
 p
 ```
 
@@ -226,7 +227,7 @@ alternative server:
 destdir <- tempdir()
 destfile <- file.path(destdir, "tanTagm.rda")
 download.file("http://proteome.sysbiol.cam.ac.uk/lgatto/files/tanTagm.rda",
-              destfile)
+			  destfile)
 load(destfile)
 ```
 
@@ -262,10 +263,10 @@ each with $1500$ MCMC iterations.
 
 ```r
 tanTagm <- tagmMcmcTrain(object = tan2009r1,
-                         numIter = 20000,
-                         burnin = 5000,
-                         thin = 10,
-                         numChains = 4)
+						 numIter = 20000,
+						 burnin = 5000,
+						 thin = 10,
+						 numChains = 4)
 ```
 
 ## Data exploration and convergence diagnostics
@@ -656,9 +657,9 @@ ptsze <- exp(fData(tan2009r1)$tagm.mcmc.probability) - 1
 
 ## Create plot2D with pointer scaled with probability
 plot2D(tan2009r1,
-       fcol = "tagm.mcmc.allocation",
-       cex = ptsze,
-       main = "protein pointer scaled with posterior localisation probability")
+	   fcol = "tagm.mcmc.allocation",
+	   cex = ptsze,
+	   main = "protein pointer scaled with posterior localisation probability")
 
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
 ```
@@ -677,7 +678,7 @@ note that proteins with high Shannon entropy have high uncertainty.
 ## Create prediction point size
 ptsze2 <- 3 * fData(tan2009r1)$tagm.mcmc.mean.shannon
 plot2D(tan2009r1, fcol = "tagm.mcmc.allocation", cex = ptsze2,
-       main = "protein pointer scaled with Shannon entropy")
+	   main = "protein pointer scaled with Shannon entropy")
 addLegend(object = tan2009r1, where = "topleft", cex = 0.5)
 ```
 

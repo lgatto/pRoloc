@@ -4,7 +4,7 @@ author:
 - name: Lisa M. Breckels
   affiliation: Computational Proteomics Unit, Cambridge, UK
 - name: Laurent Gatto
-  affiliation: Computational Proteomics Unit, Cambridge, UK
+  affiliation: de Duve Institute, UCLouvain, Belgium
 package: pRoloc
 abstract: >
  This tutorial illustrates the usage of the `pRoloc` R
@@ -497,7 +497,7 @@ and illustrate the effect of `normalise(..., method = "sum")`.
 ## create a small illustrative test data
 data(itraqdata)
 itraqdata <- quantify(itraqdata, method = "trap",
-		      reporters = iTRAQ4)
+			  reporters = iTRAQ4)
 ## the quantification data
 head(exprs(itraqdata), n = 3)
 summary(rowSums(exprs(itraqdata)))
@@ -738,11 +738,11 @@ data(HEK293T2011)
 par(mfrow = c(2, 3))
 plot2D(HEK293T2011, main = "PCA")
 sapply(perps,
-       function(perp) {
+	   function(perp) {
 	   plot2D(HEK293T2011, method = "t-SNE",
 		  methargs = list(perplexity = perp))
 	   title(main = paste("t-SNE, perplexity", perp))
-       })
+	   })
 ```
 
 ![Effect of t-SNE's perplexity parameter on the human `HEK293T2011` data.](./Figures/tsne.png){#fig:tsne}
@@ -797,8 +797,8 @@ highlightOnPlot(tan2009r1, foi1,
 highlightOnPlot(tan2009r1, foi2,
 		col = "purple", lwd = 2)
 legend("topright", c("FoI 1", "FoI 2"),
-       bty = "n", col = c("black", "purple"),
-       pch = 1)
+	   bty = "n", col = c("black", "purple"),
+	   pch = 1)
 ```
 
 
@@ -914,8 +914,8 @@ plot(kcl, exprs(tan2009r1))
 
 ```{r plotHclust, echo=TRUE, tidy = FALSE, fig.asp=1, fig.cap="Hierarchical clustering on the `tan2009r1` data."}
 hcl <- MLearn( ~ ., tan2009r1,
-	      hclustI(distFun = dist,
-		      cutParm = list(k = 5)))
+		  hclustI(distFun = dist,
+			  cutParm = list(k = 5)))
 plot(hcl, labels = FALSE)
 ```
 
@@ -1070,13 +1070,13 @@ rather an algorithm-specific classification confidence score.}
 ```{r svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE}
 ## manual setting of parameters
 svmres <- svmClassification(tan2009r1, fcol = "markers.orig",
-			    sigma = 1, cost = 1)
+				sigma = 1, cost = 1)
 ```
 
 ```{r svmRes, warning=FALSE, tidy = FALSE}
 ## using default best parameters
 svmres <- svmClassification(tan2009r1, fcol = "markers.orig",
-			    assessRes = params)
+				assessRes = params)
 processingData(svmres)
 tail(fvarLabels(svmres), 4)
 ```
@@ -1143,7 +1143,7 @@ proteins have substantially lower prediction scores.
 ```{r svmres, fig.asp=1, fig.cap="Representation of the svm prediction on the `tan2009r1` data set. The svm scores have been used to set the point size (`cex` argument; the scores have been transformed to emphasise the extremes). Different symbols (`fpch`) are used to differentiate markers and new assignments."}
 ptsze <- exp(fData(svmres)$svm.scores) - 1
 plot2D(svmres, fcol = "svm", fpch = "markers.orig",
-       cex = ptsze)
+	   cex = ptsze)
 addLegend(svmres, fcol = "svm",
 	  where = "bottomright",
 	  cex = .5)
@@ -1181,7 +1181,7 @@ though the `phenoDisco` function.
 
 ```{r runPhenoDisco, eval=FALSE, warning=FALSE}
 pdres <- phenoDisco(tan2009r1, GS = 10,
-		    times = 100, fcol = "PLSDA")
+			times = 100, fcol = "PLSDA")
 ```
 
 Again, in the interest of time, *phenoDisco* is not executed when the
@@ -1259,8 +1259,8 @@ load(fn)
 
 ```{r pdsvm, cache = TRUE, message = FALSE, warning = FALSE, tidy = FALSE}
 tan2009r1 <- svmClassification(tan2009r1, params2,
-			       class.weights = w,
-			       fcol = "pd.markers")
+				   class.weights = w,
+				   fcol = "pd.markers")
 ```
 
 The data is visualised as described previously, were we use the svm

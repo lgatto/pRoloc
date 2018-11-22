@@ -2,6 +2,7 @@
 title: "Machine learning techniques available in pRoloc"
 author:
 - name: Laurent Gatto
+  affiliation: de Duve Institute, UCLouvain, Belgium
 package: pRoloc
 abstract: >
   This vignette provides a general background about machine learning

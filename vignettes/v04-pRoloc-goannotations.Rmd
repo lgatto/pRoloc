@@ -8,7 +8,7 @@ author:
 package: pRoloc
 output:
   BiocStyle::html_document:
-	toc_float: true
+    toc_float: true
 vignette: >
   %\VignetteIndexEntry{Annotating spatial proteomics data}
   %\VignetteEngine{knitr::rmarkdown}

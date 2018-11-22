@@ -230,12 +230,18 @@ tagmPredict <- function(object,
                         fcol = "markers",
                         probJoint = FALSE,
                         probOutlier = TRUE) {
-    if (inherits(params, "MAPParams"))
-        tagmMapPredict(object, params, fcol, probJoint, probOutlier)
-    else if (inherits(params, "MCMCParams"))
-        tagmMcmcPredict(object, params, fcol, probJoint, probOutlier)
-    else
+    if (inherits(params, "MAPParams")) {
+        ans <- tagmMapPredict(object, params, fcol, probJoint, probOutlier)
+        ans@processingData@processing <- c(processingData(ans)@processing,
+                                           paste0("Performed TAGM-MAP prediction", date()))
+    }
+    else if (inherits(params, "MCMCParams")) {
+        ans  <- tagmMcmcPredict(object, params, fcol, probJoint, probOutlier)
+        ans@processingData@processing <- c(processingData(ans)@processing,
+                                           paste0("Performed TAGM-MCMC prediction", date()))
+    } else
         stop("Parameters must either be 'MAPParams' or 'MCMCParams'.")
+    return(ans)
 }
 
 ##' @return `tagmMcmcProcess` returns an instance of class

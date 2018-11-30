@@ -452,8 +452,8 @@ tagmMcmcChain <- function(object,
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
     eigsV <- eigen(V)
-    if (min(eigsV$values) < 0) {
-      V <- V + diag(abs(min(eigsV$values)), D)
+    if (min(eigsV$values) < .Machine$double.eps) {
+      V <- cov(exprs(object))/2 + diag(10^{-15}, D)
       warning("co-linearity detected; a small multiple of
               the identity was added to the covariance")
     }

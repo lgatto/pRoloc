@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.map.allocation)</a></code></pre></div>
 <pre><code>## 
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##            17            95            24             8            34 
+##            17            96            23             8            34 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
 ##            25             3           114            19            30 
 ##  Ribosome 60S 
@@ -168,14 +168,14 @@ document.addEventListener("DOMContentLoaded", function() {
 </ul>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.map.probability)</a></code></pre></div>
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.0000000 0.0003256 0.0049051 0.2731639 1.0000000 1.0000000</code></pre>
+## 0.0000000 0.0003193 0.0049270 0.2730974 1.0000000 1.0000000</code></pre>
 <ul>
 <li>
 <code>tagm.map.outlier</code>: the probability for that protein to belong to the outlier component rather than any annotated component.</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.map.outlier)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.0000  0.0000  0.9948  0.7266  0.9996  1.0000</code></pre>
+##  0.0000  0.0000  0.9948  0.7267  0.9996  1.0000</code></pre>
 </div>
 <div id="the-tagm-mcmc-method" class="section level1">
 <h1 class="hasAnchor">
@@ -206,9 +206,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.allocation)</a></code></pre></div>
 <pre><code>## 
 ##  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-##            11            97            23             9            39 
+##            11            97            22             9            40 
 ##       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-##            26             3           105            28            30 
+##            25             3           106            27            31 
 ##  Ribosome 60S 
 ##            29</code></pre>
 <ul>
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </ul>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(<span class="kw">fData</span>(res)<span class="op">$</span>tagm.mcmc.probability)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.3566  0.8939  0.9906  0.9075  1.0000  1.0000</code></pre>
+##  0.3404  0.8953  0.9901  0.9076  1.0000  1.0000</code></pre>
 <p>As well as other useful summaries of the MCMC methods:</p>
 <ul>
 <li><p><code>tagm.mcmc.outlier</code> the posterior probability for the protein to belong to the outlier component.</p></li>
@@ -545,7 +545,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/sessionInfo">sessionInfo</a></span>()</a></code></pre></div>
-<pre><code>## R Under development (unstable) (2018-11-23 r75650)
+<pre><code>## R Under development (unstable) (2018-11-30 r75724)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -570,7 +570,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  [4] pRolocdata_1.21.0    pRoloc_1.23.1        BiocParallel_1.17.1 
 ##  [7] MLInterfaces_1.63.0  cluster_2.0.7-1      annotate_1.61.0     
 ## [10] XML_3.98-1.16        AnnotationDbi_1.45.0 IRanges_2.17.1      
-## [13] MSnbase_2.9.1        ProtGenerics_1.15.0  S4Vectors_0.21.5    
+## [13] MSnbase_2.9.1        ProtGenerics_1.15.0  S4Vectors_0.21.6    
 ## [16] mzR_2.17.0           Rcpp_1.0.0           Biobase_2.43.0      
 ## [19] BiocGenerics_0.29.1  BiocStyle_2.11.0    
 ## 
@@ -580,27 +580,27 @@ document.addEventListener("DOMContentLoaded", function() {
 ##   [7] crosstalk_1.0.0       digest_0.6.18         foreach_1.4.4        
 ##  [10] htmltools_0.3.6       viridis_0.5.1         gdata_2.18.0         
 ##  [13] magrittr_1.5          memoise_1.1.0         doParallel_1.0.14    
-##  [16] mixtools_1.1.0        sfsmisc_1.1-2         limma_3.39.1         
+##  [16] mixtools_1.1.0        sfsmisc_1.1-3         limma_3.39.1         
 ##  [19] recipes_0.1.4         gower_0.1.2           rda_1.0.2-2.1        
 ##  [22] pkgdown_1.2.0         lpSolve_5.6.13        prettyunits_1.0.2    
 ##  [25] colorspace_1.3-2      blob_1.1.1            xfun_0.4             
 ##  [28] dplyr_0.7.8           crayon_1.3.4          RCurl_1.95-4.11      
 ##  [31] hexbin_1.27.2         roxygen2_6.1.1        genefilter_1.65.0    
-##  [34] bindr_0.1.1           impute_1.57.0         survival_2.43-1      
+##  [34] bindr_0.1.1           impute_1.57.0         survival_2.43-3      
 ##  [37] iterators_1.0.10      glue_1.3.0            gtable_0.2.0         
 ##  [40] ipred_0.9-8           zlibbioc_1.29.0       kernlab_0.9-27       
 ##  [43] prabclus_2.2-6        DEoptimR_1.0-8        scales_1.0.0         
 ##  [46] vsn_3.51.0            mvtnorm_1.0-8         DBI_1.0.0            
 ##  [49] viridisLite_0.3.0     xtable_1.8-3          progress_1.2.0       
 ##  [52] proxy_0.4-22          bit_1.1-14            mclust_5.4.2         
-##  [55] preprocessCore_1.45.0 lava_1.6.3            prodlim_2018.04.18   
+##  [55] preprocessCore_1.45.0 lava_1.6.4            prodlim_2018.04.18   
 ##  [58] sampling_2.8          htmlwidgets_1.3       httr_1.3.1           
 ##  [61] threejs_0.3.1         FNN_1.1.2.1           RColorBrewer_1.1-2   
 ##  [64] fpc_2.1-11.1          modeltools_0.2-22     pkgconfig_2.0.2      
 ##  [67] flexmix_2.3-14        nnet_7.3-12           caret_6.0-81         
 ##  [70] reshape2_1.4.3        tidyselect_0.2.5      rlang_0.3.0.1        
 ##  [73] later_0.7.5           munsell_0.5.0         mlbench_2.1-1        
-##  [76] tools_3.6.0           LaplacesDemon_16.1.1  generics_0.0.1       
+##  [76] tools_3.6.0           LaplacesDemon_16.1.1  generics_0.0.2       
 ##  [79] RSQLite_2.1.1         pls_2.7-0             evaluate_0.12        
 ##  [82] stringr_1.3.1         mzID_1.21.0           yaml_2.2.0           
 ##  [85] ModelMetrics_1.2.2    knitr_1.20            bit64_0.9-7          
@@ -614,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [109] commonmark_1.6        gbm_2.1.4             pillar_1.3.0         
 ## [112] BiocManager_1.30.4    MALDIquant_1.18       data.table_1.11.8    
 ## [115] bitops_1.0-6          httpuv_1.4.5          R6_2.3.0             
-## [118] pcaMethods_1.75.0     affy_1.61.0           hwriter_1.3.2        
+## [118] pcaMethods_1.75.1     affy_1.61.0           hwriter_1.3.2        
 ## [121] bookdown_0.7          promises_1.0.1        gridExtra_2.3        
 ## [124] codetools_0.2-15      MASS_7.3-51.1         gtools_3.8.1         
 ## [127] assertthat_0.2.0      rprojroot_1.3-2       withr_2.1.2          

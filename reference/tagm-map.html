@@ -246,7 +246,10 @@ or class <code>MAPParams</code>) based on an annotated quantitative spatial
 proteomics dataset (object of class <code><a href='https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are
 then passed to the <code>tagmPredict</code> function to predict the
 sub-cellular localisation of protein of unknown localisation. See
-the <em>pRoloc-bayesian</em> vignette for details and examples.</p>
+the <em>pRoloc-bayesian</em> vignette for details and examples. In this implementation,
+if numerical instability is detected in the covariance matrix of the
+data a small multiple of the identity is added. A message is printed if this conditioning step
+is performed.</p>
     
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 

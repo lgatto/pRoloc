@@ -451,6 +451,7 @@ tagmMcmcChain <- function(object,
     ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    eigsV <- eigen(V)
     if (min(eigsV$value) < 0) {
       V <- V + diag(abs(min(eigs$values)), D)
       warning("co-linearity detected; a small multiple of

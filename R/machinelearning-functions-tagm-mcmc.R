@@ -8,7 +8,10 @@
 ##' [`MSnbase::MSnSet`]). Both are then passed to the `tagmPredict`
 ##' function to predict the sub-cellular localisation of protein of
 ##' unknown localisation. See the *pRoloc-bayesian* vignette for
-##' details and examples.
+##' details and examples. In this implementation, if numerical instability
+##' is detected in the covariance matrix of the data a small multiple of
+##' the identity is added. A message is printed if this conditioning step
+##' is performed.
 ##'
 ##' @title Localisation of proteins using the TAGM MCMC method
 ##' @param object An [`MSnbase::MSnSet`] containing the spatial
@@ -453,8 +456,8 @@ tagmMcmcChain <- function(object,
     V <- cov(exprs(object))/2
     eigsV <- eigen(V)
     if (min(eigsV$values) < .Machine$double.eps) {
-      V <- cov(exprs(object))/2 + diag(10^{-15}, D)
-      warning("co-linearity detected; a small multiple of
+      V <- cov(exprs(object))/2 + diag(10^{-6}, D)
+      message("co-linearity detected; a small multiple of
               the identity was added to the covariance")
     }
 

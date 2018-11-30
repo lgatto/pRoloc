@@ -439,7 +439,7 @@ tagmMcmcChain <- function(object,
 
     lambdak <- lambda0 + nk
     nuk <- nu0 + nk
-    mk <- (nk * xk + lambda0 * mu0) / lambdak
+    mk <- t((t(nk * xk) + lambda0 * mu0)) / lambdak
     betak <- beta0 + nk
 
     for(j in seq.int(K))
@@ -451,6 +451,11 @@ tagmMcmcChain <- function(object,
     ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    if (min(eigsV$value) < 0) {
+      V <- V + diag(abs(min(eigs$values)), D)
+      warning("co-linearity detected; a small multiple of
+              the identity was added to the covariance")
+    }
 
     ## storage
     Component <- matrix(0, nrow = nrow(X), ncol = numIter)
@@ -504,6 +509,7 @@ tagmMcmcChain <- function(object,
             weight <- (nk + betak)/(sum(nk) + sum(betak) - 1) ## Component weights
             sigmak <- ((1 + lambdak) * sk)/(lambdak * (nuk - D + 1)) ## scale matrix
             degf <- nuk - D + 1 ## degrees freedom
+            
             for (j in seq.int(K)) {
                 ComponentProb[i, t, j] <- log(weight[j]) + dmvtCpp(X[i, ,drop = FALSE],
                                                                    mu_ = mk[j, ],

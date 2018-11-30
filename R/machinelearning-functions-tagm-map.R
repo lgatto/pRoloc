@@ -112,7 +112,7 @@ tagmMapTrain <- function(object,
 
     lambdak <- lambda0 + nk
     nuk <- nu0 + nk
-    mk <- (nk * xk + lambda0 * mu0) / lambdak
+    mk <- t((t(nk * xk) + lambda0 * mu0)) / lambdak
 
     for(j in seq.int(K))
         sk[j, , ] <- S0 + t(mydata[fData(markersubset)[, fcol] == markers[j], ]) %*%
@@ -132,6 +132,12 @@ tagmMapTrain <- function(object,
     ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    eigsV <- eigen(V)
+    if (min(eigsV$value) < 0) {
+      V <- V + diag(abs(min(eigs$values)), D)
+      warning("co-linearity detected; a small multiple of
+               the identity was added to the covariance")
+    }
     eps <- (u - 1) / (u + v - 2)
 
     ## storage for Estep

@@ -133,8 +133,8 @@ tagmMapTrain <- function(object,
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
     eigsV <- eigen(V)
-    if (min(eigsV$value) < 0) {
-      V <- V + diag(abs(min(eigs$values)), D)
+    if (min(eigsV$values) < 0) {
+      V <- V + diag(abs(min(eigsV$values)), D)
       warning("co-linearity detected; a small multiple of
                the identity was added to the covariance")
     }

@@ -16,7 +16,7 @@ abstract: >
   these data sources.
 output:
   BiocStyle::html_document:
-	toc_float: true
+   toc_float: true
 bibliography: pRoloc.bib
 vignette: >
   %\VignetteIndexEntry{A transfer learning algorithm for spatial proteomics}

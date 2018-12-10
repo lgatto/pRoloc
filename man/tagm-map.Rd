@@ -85,7 +85,10 @@ or class \code{MAPParams}) based on an annotated quantitative spatial
 proteomics dataset (object of class \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}}). Both are
 then passed to the \code{tagmPredict} function to predict the
 sub-cellular localisation of protein of unknown localisation. See
-the \emph{pRoloc-bayesian} vignette for details and examples.
+the \emph{pRoloc-bayesian} vignette for details and examples. In this implementation,
+if numerical instability is detected in the covariance matrix of the
+data a small multiple of the identity is added. A message is printed if this conditioning step
+is performed.
 }
 \section{Slots}{
 

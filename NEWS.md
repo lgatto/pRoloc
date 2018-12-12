@@ -5,6 +5,7 @@
 - Add mcmc-helper documentation <2018-11-04 Sun>
 - Fixing numerical instability in Cholesky decomposition (see #124)
   <2018-11-30 Fri>
+- Add option to display or not display grid in plot2D <2018-12-12 Wed>
 
 ## Changes in version 1.23.0
 - New version for Bioc 3.9 devel

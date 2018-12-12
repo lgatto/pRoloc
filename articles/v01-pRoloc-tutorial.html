@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Fri Nov 30 18:25:26 2018  using readMSnSet. 
+## Quantitation data loaded: Wed Dec 12 19:52:51 2018  using readMSnSet. 
 ##  MSnbase version: 2.9.1</code></pre>
 </div>
 </div>
@@ -466,8 +466,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Fri Nov 30 18:25:28 2018 
-## Normalised (sum): Fri Nov 30 18:25:28 2018 
+## iTRAQ4 quantification by trapezoidation: Wed Dec 12 19:52:54 2018 
+## Normalised (sum): Wed Dec 12 19:52:54 2018 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -749,7 +749,7 @@ Assessing parameter optimisation. On the left, we see the respective distributio
 <a class="sourceLine" id="cb86-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(svmres)</a></code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri Nov 30 18:25:34 2018 
+## Performed svm prediction (sigma=0.1 cost=0.5) Wed Dec 12 19:53:00 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -851,8 +851,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri Nov 30 18:25:34 2018 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Fri Nov 30 18:25:35 2018 
+## Performed svm prediction (sigma=0.1 cost=0.5) Wed Dec 12 19:53:00 2018 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Wed Dec 12 19:53:01 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">ptsze &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
@@ -965,7 +965,7 @@ Classification results. The results of the second round of classification, using
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2018-11-30 r75724)
+<pre><code>## R Under development (unstable) (2018-12-12 r75842)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -987,11 +987,11 @@ Classification results. The results of the second round of classification, using
 ## 
 ## other attached packages:
 ##  [1] class_7.3-14         pRolocdata_1.21.0    pRoloc_1.23.1       
-##  [4] BiocParallel_1.17.1  MLInterfaces_1.63.0  cluster_2.0.7-1     
+##  [4] BiocParallel_1.17.3  MLInterfaces_1.63.0  cluster_2.0.7-1     
 ##  [7] annotate_1.61.0      XML_3.98-1.16        AnnotationDbi_1.45.0
 ## [10] IRanges_2.17.1       MSnbase_2.9.1        ProtGenerics_1.15.0 
 ## [13] S4Vectors_0.21.6     mzR_2.17.0           Rcpp_1.0.0          
-## [16] Biobase_2.43.0       BiocGenerics_0.29.1  knitr_1.20          
+## [16] Biobase_2.43.0       BiocGenerics_0.29.1  knitr_1.21          
 ## [19] BiocStyle_2.11.0    
 ## 
 ## loaded via a namespace (and not attached):
@@ -1001,8 +1001,8 @@ Classification results. The results of the second round of classification, using
 ##  [10] foreach_1.4.4         htmltools_0.3.6       viridis_0.5.1        
 ##  [13] gdata_2.18.0          magrittr_1.5          memoise_1.1.0        
 ##  [16] doParallel_1.0.14     mixtools_1.1.0        sfsmisc_1.1-3        
-##  [19] limma_3.39.1          recipes_0.1.4         gower_0.1.2          
-##  [22] rda_1.0.2-2.1         pkgdown_1.2.0         lpSolve_5.6.13       
+##  [19] limma_3.39.3          recipes_0.1.4         gower_0.1.2          
+##  [22] rda_1.0.2-2.1         pkgdown_1.3.0         lpSolve_5.6.13       
 ##  [25] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.1           
 ##  [28] xfun_0.4              dplyr_0.7.8           crayon_1.3.4         
 ##  [31] RCurl_1.95-4.11       hexbin_1.27.2         roxygen2_6.1.1       
@@ -1015,7 +1015,7 @@ Classification results. The results of the second round of classification, using
 ##  [52] progress_1.2.0        proxy_0.4-22          bit_1.1-14           
 ##  [55] mclust_5.4.2          preprocessCore_1.45.0 lava_1.6.4           
 ##  [58] prodlim_2018.04.18    sampling_2.8          htmlwidgets_1.3      
-##  [61] httr_1.3.1            threejs_0.3.1         FNN_1.1.2.1          
+##  [61] httr_1.4.0            threejs_0.3.1         FNN_1.1.2.2          
 ##  [64] RColorBrewer_1.1-2    fpc_2.1-11.1          modeltools_0.2-22    
 ##  [67] pkgconfig_2.0.2       flexmix_2.3-14        nnet_7.3-12          
 ##  [70] caret_6.0-81          reshape2_1.4.3        tidyselect_0.2.5     
@@ -1031,16 +1031,16 @@ Classification results. The results of the second round of classification, using
 ## [100] compiler_3.6.0        e1071_1.7-0           affyio_1.53.0        
 ## [103] tibble_1.4.2          stringi_1.2.4         highr_0.7            
 ## [106] desc_1.2.0            lattice_0.20-38       trimcluster_0.1-2.1  
-## [109] Matrix_1.2-15         commonmark_1.6        gbm_2.1.4            
+## [109] Matrix_1.2-15         commonmark_1.7        gbm_2.1.4            
 ## [112] pillar_1.3.0          BiocManager_1.30.4    MALDIquant_1.18      
 ## [115] data.table_1.11.8     bitops_1.0-6          httpuv_1.4.5         
 ## [118] R6_2.3.0              pcaMethods_1.75.1     affy_1.61.0          
-## [121] hwriter_1.3.2         bookdown_0.7          promises_1.0.1       
+## [121] hwriter_1.3.2         bookdown_0.8          promises_1.0.1       
 ## [124] gridExtra_2.3         codetools_0.2-15      MASS_7.3-51.1        
 ## [127] gtools_3.8.1          assertthat_0.2.0      rprojroot_1.3-2      
 ## [130] withr_2.1.2           diptest_0.75-7        hms_0.4.2            
 ## [133] timeDate_3043.102     grid_3.6.0            rpart_4.1-13         
-## [136] coda_0.19-2           rmarkdown_1.10        segmented_0.5-3.0    
+## [136] coda_0.19-2           rmarkdown_1.11        segmented_0.5-3.0    
 ## [139] lubridate_1.7.4       shiny_1.2.0           base64enc_0.1-3</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -1159,7 +1159,7 @@ Classification results. The results of the second round of classification, using
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

@@ -303,6 +303,8 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param plot A \code{logical} defining if the figure should be
 ##'     plotted.  Useful when retrieving data only. Default is
 ##'     \code{TRUE}.
+##' @param grid A \code{logical} indicating whether a grid should
+##'     be plotted. Default is \code{TRUE}.
 ##' @param ... Additional parameters passed to \code{plot} and
 ##'     \code{points}.
 ##' @return Used for its side effects of generating a plot.  Invisibly
@@ -369,6 +371,7 @@ plot2D <- function(object,
                    addLegend,
                    identify = FALSE,
                    plot = TRUE,
+                   grid = TRUE,
                    ...) {
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
@@ -637,7 +640,7 @@ plot2D <- function(object,
                                  "top", "topright", "right", "center"))
             addLegend(object, fcol = fcol, where = where)
         }
-        grid()
+        if (grid) grid()
         if (index) {
             text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
         }

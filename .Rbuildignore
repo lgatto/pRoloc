@@ -8,3 +8,4 @@ sandbox
 docs
 ^docs$
 CONDUCT.md
+.editorconfig

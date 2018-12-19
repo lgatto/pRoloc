@@ -30,7 +30,8 @@ should be plotted. Default is \code{TRUE}.}
 \code{\link[stats]{dendrogram}}.}
 }
 \value{
-Invisibly returns the `hclust` object.
+Invisibly returns a dendrogram object, containing the
+    hierarchical cluster as computed by `hclust`.
 }
 \description{
 This functions calculates an average protein profile for each

@@ -21,7 +21,8 @@
 ##'     should be plotted. Default is \code{TRUE}.
 ##' @param ... Additional parameters passed when plotting the
 ##'     \code{\link[stats]{dendrogram}}.
-##' @return Invisibly returns the `hclust` object.
+##' @return Invisibly returns a dendrogram object, containing the
+##'     hierarchical cluster as computed by `hclust`.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")

@@ -6,6 +6,8 @@
 - Fixing numerical instability in Cholesky decomposition (see #124)
   <2018-11-30 Fri>
 - Add option to display or not display grid in plot2D <2018-12-12 Wed>
+- `mrkHClust` now uses `mrkConsProfiles` and returns the `hclust`
+  object - see issue #130 for details and background <2018-12-19 Wed>
 
 ## Changes in version 1.23.0
 - New version for Bioc 3.9 devel
@@ -163,7 +165,7 @@
 ## Changes in version 1.15.3
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-	<2016-11-04 Fri>
+        <2016-11-04 Fri>
 
 ## Changes in version 1.15.2
 

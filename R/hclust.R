@@ -22,7 +22,7 @@
 ##' @param ... Additional parameters passed when plotting the
 ##'     \code{\link[stats]{dendrogram}}.
 ##' @return Invisibly returns a dendrogram object, containing the
-##'     hierarchical cluster as computed by `hclust`.
+##'     hierarchical cluster as computed by \code{hclust}.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")

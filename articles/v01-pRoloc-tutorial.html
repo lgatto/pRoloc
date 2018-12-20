@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Thu Dec 20 06:10:10 2018  using readMSnSet. 
+## Quantitation data loaded: Thu Dec 20 06:39:19 2018  using readMSnSet. 
 ##  MSnbase version: 2.9.1</code></pre>
 </div>
 </div>
@@ -466,8 +466,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Thu Dec 20 06:10:12 2018 
-## Normalised (sum): Thu Dec 20 06:10:12 2018 
+## iTRAQ4 quantification by trapezoidation: Thu Dec 20 06:39:21 2018 
+## Normalised (sum): Thu Dec 20 06:39:21 2018 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -749,7 +749,7 @@ Assessing parameter optimisation. On the left, we see the respective distributio
 <a class="sourceLine" id="cb86-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(svmres)</a></code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Thu Dec 20 06:10:18 2018 
+## Performed svm prediction (sigma=0.1 cost=0.5) Thu Dec 20 06:39:27 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -851,8 +851,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Thu Dec 20 06:10:18 2018 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Thu Dec 20 06:10:19 2018 
+## Performed svm prediction (sigma=0.1 cost=0.5) Thu Dec 20 06:39:27 2018 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Thu Dec 20 06:39:27 2018 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">ptsze &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>

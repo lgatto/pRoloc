@@ -908,3 +908,55 @@ getMarkerCols <- function(object, fcol = "markers") {
     col[ukn] <- getUnknowncol()
     col
 }
+
+
+##' The function plots marker consensus profiles obtained from mrkConsProfile
+##'
+##' @title Plot marker consenses profiles.
+##' @param object A \code{matrix} containing marker consensus profiles as output
+##'   from \code{\link{mrkConsProfiles}}.
+##' @param order Order for markers (Optional).
+##' @param plot A \code{logical} defining whether the heatmap should be plotted.
+##'   Default is \code{TRUE}.
+##' @return Invisibly returns \code{\link[ggplot2]{ggplot}} object.
+##' @author Tom Smith
+##' @examples
+##' library("pRolocdata")
+##' data(E14TG2aS1)
+##' hc <- mrkHClust(E14TG2aS1, plot=FALSE)
+##' mm <- getMarkerClasses(E14TG2aS1)
+##' m_order <- levels(factor(mm))[order.dendrogram(hc)]
+##' fmat <- mrkConsProfiles(E14TG2aS1)
+##' plotConsProfiles(fmat, order=m_order)
+plotConsProfiles <- function(object, order=NULL, plot=TRUE){
+
+  fmatlong <- cbind(expand.grid("feature" = rownames(object),
+                                "sample" = colnames(object),
+                                stringsAsFactors=FALSE),
+                    "intensity" = as.vector(object))
+  
+  if (!is.null(order))
+    fmatlong$feature <- factor(fmatlong$feature, order)
+  
+  fmatlong$sample <- factor(fmatlong$sample, colnames(object))
+  
+  p <- ggplot(fmatlong, aes(sample, feature, fill = intensity)) +
+    geom_tile() +
+    scale_fill_continuous(low="white", high="#56B4E9", limits=c(0,NA), name="Intensity") +
+    theme_bw() +
+    xlab("Sample") +
+    ylab("") +
+    theme(panel.grid=element_blank(),
+          panel.border=element_blank(),
+          axis.line = element_line(),
+          axis.ticks=element_blank(),
+          axis.text.x=element_text(angle=45, vjust=1, hjust=1),
+          aspect.ratio=1) +
+    scale_x_discrete(expand=c(0,0)) +
+    scale_y_discrete(expand=c(0,0))
+  
+  if (plot)
+    print(p)
+  
+  invisible(p)
+}

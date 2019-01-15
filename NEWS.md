@@ -1,5 +1,8 @@
 # pRoloc 1.23
 
+## Changes in version 1.23.2
+- Add mcmc helper functions
+
 ## Changes in version 1.23.1
 - Add note about missing data in QSep man <2018-10-31 Wed>
 - Add mcmc-helper documentation <2018-11-04 Sun>
@@ -165,7 +168,7 @@
 ## Changes in version 1.15.3
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-        <2016-11-04 Fri>
+		<2016-11-04 Fri>
 
 ## Changes in version 1.15.2
 

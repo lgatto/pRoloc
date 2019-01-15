@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.23.1
+Version: 1.23.2
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 		    email = "laurent.gatto@uclouvain.be",
 		    role = c("aut","cre")),

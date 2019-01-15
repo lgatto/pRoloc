@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.2</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
 ##  Using the 'hsapiens_gene_ensembl' dataset
 ##  Using 'uniprotswissprot' as filter
-##  Created on Thu Dec 20 06:42:42 2018</code></pre>
+##  Created on Tue Jan 15 12:22:03 2019</code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the annotation parameters globally so that the <code>ap</code> object does not need to be explicitly set later on. The default parameters can be retrieved with <em>getAnnotationParams</em>.</p>
 </div>
 <div id="sec:auxgo" class="section level3">
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">andygoset &lt;-<span class="st"> </span><span class="kw"><a href="../reference/makeGoSet.html">makeGoSet</a></span>(andy2011)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">andygoset</a></code></pre></div>
 <pre><code>## MSnSet (storageMode: lockedEnvironment)
-## assayData: 1371 features, 868 samples 
+## assayData: 1371 features, 854 samples 
 ##   element names: exprs 
 ## protocolData: none
 ## phenoData: none
@@ -193,8 +193,8 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Constructed GO set using cellular_component namespace [Thu Dec 20 06:42:55 2018] 
-##  MSnbase version: 2.9.1</code></pre>
+## Constructed GO set using cellular_component namespace [Tue Jan 15 12:22:11 2019] 
+##  MSnbase version: 2.9.2</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">exprs</span>(andygoset)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
 <pre><code>##        GO:0016020 GO:0016021 GO:0005783 GO:0005730
 ## O00767          1          1          1          1
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## Q12797          1          1          1          0
 ## P16615          1          1          1          0
 ## Q96SQ9          1          0          1          0</code></pre>
-<p>We now have a primary data set, composed of 1371 protein quantitative profiles for 8 fractions along the density gradient and an auxiliary data set for 868 cellular compartment GO terms for the same 1371 features.</p>
+<p>We now have a primary data set, composed of 1371 protein quantitative profiles for 8 fractions along the density gradient and an auxiliary data set for 854 cellular compartment GO terms for the same 1371 features.</p>
 </div>
 <div id="sec:annotrepro" class="section level3">
 <h3 class="hasAnchor">
@@ -231,12 +231,12 @@ document.addEventListener("DOMContentLoaded", function() {
 <a class="sourceLine" id="cb15-13" data-line-number="13">            <span class="dt">mart =</span> mart)</a>
 <a class="sourceLine" id="cb15-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(bm)</a></code></pre></div>
 <pre><code>##   uniprot_gn uniprotswissprot ensembl_gene_id
-## 1 A0A087WXU3           A0FGR8 ENSG00000117868
-## 2     H7BXI1           A0FGR8 ENSG00000117868
+## 1     H7BXI1           A0FGR8 ENSG00000117868
+## 2 A0A087WXU3           A0FGR8 ENSG00000117868
 ## 3     A6NCS6           A6NCS6 ENSG00000204128
-## 4     O00116           O00116 ENSG00000018510
-## 5     B8ZZ81           O00116 ENSG00000018510
-## 6 A0A087X208           O00468 ENSG00000188157</code></pre>
+## 4     B8ZZ81           O00116 ENSG00000018510
+## 5     O00116           O00116 ENSG00000018510
+## 6 A0A1W2PRQ9           O00468 ENSG00000188157</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">## HPA data</a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"hpar"</span>)</a></code></pre></div>
 <pre><code>## This is hpar version 1.25.0,
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a class="sourceLine" id="cb19-4" data-line-number="4">hpa<span class="op">$</span>Reliability &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/droplevels">droplevels</a></span>(hpa<span class="op">$</span>Reliability)</a>
 <a class="sourceLine" id="cb19-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(hpa)[<span class="dv">1</span>] &lt;-<span class="st"> "ensembl_gene_id"</span></a>
 <a class="sourceLine" id="cb19-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">hpa &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(hpa, bm)</a></code></pre></div>
+<a class="sourceLine" id="cb19-7" data-line-number="7">hpa &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(hpa, bm)</a></code></pre></div>
 <pre><code>## Joining, by = "ensembl_gene_id"</code></pre>
 <pre><code>## Warning: Column `ensembl_gene_id` joining factor and character vector,
 ## coercing into character vector</code></pre>
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a class="sourceLine" id="cb22-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">## match HPA/LOPIT</a>
 <a class="sourceLine" id="cb22-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(hpa)[<span class="dv">7</span>] &lt;-<span class="st"> "accession"</span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">fd &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw">fData</span>(andyhpa), hpa)</a></code></pre></div>
+<a class="sourceLine" id="cb22-5" data-line-number="5">fd &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw">fData</span>(andyhpa), hpa)</a></code></pre></div>
 <pre><code>## Joining, by = "accession"</code></pre>
 <pre><code>## Warning: Column `accession` joining factor and character vector, coercing
 ## into character vector</code></pre>
@@ -440,7 +440,7 @@ PCA plot of <code>andy2011</code>. The multivariate protein profiles are summari
 <a class="sourceLine" id="cb52-5" data-line-number="5">                          <span class="dt">k =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3</span>, <span class="dv">3</span>),</a>
 <a class="sourceLine" id="cb52-6" data-line-number="6">                          <span class="dt">fcol =</span> <span class="st">"markers.tl"</span>,</a>
 <a class="sourceLine" id="cb52-7" data-line-number="7">                          <span class="dt">times =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## Removing 465 columns with only 0s.</code></pre>
+<pre><code>## Removing 453 columns with only 0s.</code></pre>
 <pre><code>## Note: vector will be ordered according to classes: Cytosol Cytosol/Nucleus ER Golgi Lysosome Mitochondrion Nucleus PM Ribosome 40S Ribosome 60S (as names are not explicitly defined)</code></pre>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">topt</a></code></pre></div>
 <pre><code>## Object of class "ThetaRegRes"
@@ -455,18 +455,18 @@ PCA plot of <code>andy2011</code>. The multivariate protein profiles are summari
 ## Results
 ##  macro F1:
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7947  0.8196  0.8288  0.8367  0.8318  0.9083 
+##  0.7965  0.8113  0.8525  0.8491  0.8767  0.9083 
 ##  best theta:
 ##             Cytosol Cytosol.Nucleus ER Golgi Lysosome Mitochondrion
-## weight:0          2               0  1     3        2             2
-## weight:0.33       0               0  2     2        0             0
-## weight:0.67       2               3  2     0        3             1
-## weight:1          1               2  0     0        0             2
+## weight:0          1               0  2     2        2             2
+## weight:0.33       0               1  1     2        0             0
+## weight:0.67       3               3  2     1        3             2
+## weight:1          1               1  0     0        0             1
 ##             Nucleus PM Ribosome.40S Ribosome.60S
 ## weight:0          1  1            1            2
-## weight:0.33       0  2            1            2
-## weight:0.67       3  2            2            1
-## weight:1          1  0            1            0</code></pre>
+## weight:0.33       1  2            2            1
+## weight:0.67       2  2            1            1
+## weight:1          1  0            1            1</code></pre>
 <p>The optimisation is performed on the labelled marker examples only. When removing unlabelled non-marker proteins (the <code>unknowns</code>), some auxiliary GO columns end up containing only 0 (the GO-protein association was only observed in non-marker proteins), which are temporarily removed.</p>
 <p>The <code>topt</code> result stores all the result from the optimisation step, and in particular the observed theta weights, which can be directly plotted as shown on the <a href="#fig:bubble">bubble plot</a> below. These bubble plots give the proportion of best weights for each marker class that was observed during the optimisation phase. We see that the mitochondrion, the cytosol and cytosol/nucleus classes predominantly are scored with height weights (2/3 and 1), consistent with high reliability of the primary data. The Golgi and the ribosomal clusters (and to a lesser extend the ER) favour smaller scores, indicating a substantial benefit of the auxiliary data.</p>
 <div class="figure">
@@ -479,11 +479,11 @@ PCA plot of <code>andy2011</code>. The multivariate protein profiles are summari
 <p>A set of best weights must be chosen and applied to the classification of the unlabelled proteins (formally annotated as <code>unknown</code>). These can be defined manually, based on the pattern observed in the weights <a href="#fig:bubble">bubble plot</a>, or automatically extracted with the <em>getParams</em> method<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. See <em>?getParams</em> for details and the <em>favourPrimary</em> function, if it is desirable to systematically favour the primary data (i.e. high weights) when different weight combinations perform equally well.</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw"><a href="../reference/GenRegRes-class.html">getParams</a></span>(topt)</a></code></pre></div>
 <pre><code>##         Cytosol Cytosol/Nucleus              ER           Golgi 
-##       0.6666667       0.6666667       0.3333333       0.0000000 
+##       0.6666667       0.6666667       0.3333333       0.3333333 
 ##        Lysosome   Mitochondrion         Nucleus              PM 
 ##       0.6666667       0.6666667       0.6666667       0.3333333 
 ##    Ribosome 40S    Ribosome 60S 
-##       0.6666667       0.3333333</code></pre>
+##       0.3333333       0.3333333</code></pre>
 <p>We provide the best parameters for the extensive parameter optimisation search, as provided by <em>getParams</em>:</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">(bw &lt;-<span class="st"> </span><span class="kw">experimentData</span>(andy2011)<span class="op">@</span>other<span class="op">$</span>knntl<span class="op">$</span>thetas)</a></code></pre></div>
 <pre><code>##         Cytosol Cytosol/Nucleus              ER           Golgi 
@@ -505,13 +505,13 @@ PCA plot of <code>andy2011</code>. The multivariate protein profiles are summari
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">andy2011 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getPredictions.html">getPredictions</a></span>(andy2011, <span class="dt">fcol =</span> <span class="st">"knntl"</span>)</a></code></pre></div>
 <pre><code>## ans
 ## Chromatin associated              Cytosol      Cytosol/Nucleus 
-##                   11                  299                   41 
+##                   11                  289                   41 
 ##             Endosome                   ER                Golgi 
-##                   12                  189                   65 
+##                   12                  189                   68 
 ##             Lysosome        Mitochondrion              Nucleus 
-##                   61                  258                  116 
+##                   60                  256                  118 
 ##                   PM         Ribosome 40S         Ribosome 60S 
-##                  240                   19                   60</code></pre>
+##                  250                   19                   58</code></pre>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw"><a href="../reference/getStockcol.html">setStockcol</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="kw"><a href="../reference/getStockcol.html">getStockcol</a></span>(), <span class="st">"80"</span>))</a>
 <a class="sourceLine" id="cb64-2" data-line-number="2">ptsze &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw">fData</span>(andy2011)<span class="op">$</span>knntl.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
 <a class="sourceLine" id="cb64-3" data-line-number="3"><span class="kw"><a href="../reference/plot2D.html">plot2D</a></span>(andy2011, <span class="dt">fcol =</span> <span class="st">"knntl"</span>, <span class="dt">cex =</span> ptsze)</a>
@@ -536,7 +536,7 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2018-12-20 r75868)
+<pre><code>## R Under development (unstable) (2019-01-14 r75992)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -557,12 +557,12 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] hpar_1.25.0          biomaRt_2.39.2       class_7.3-14        
-##  [4] pRolocdata_1.21.0    pRoloc_1.23.1        BiocParallel_1.17.3 
+##  [1] hpar_1.25.0          biomaRt_2.39.2       class_7.3-15        
+##  [4] pRolocdata_1.21.0    pRoloc_1.23.2        BiocParallel_1.17.6 
 ##  [7] MLInterfaces_1.63.0  cluster_2.0.7-1      annotate_1.61.0     
-## [10] XML_3.98-1.16        AnnotationDbi_1.45.0 IRanges_2.17.2      
-## [13] MSnbase_2.9.1        ProtGenerics_1.15.0  S4Vectors_0.21.8    
-## [16] mzR_2.17.0           Rcpp_1.0.0           Biobase_2.43.0      
+## [10] XML_3.98-1.16        AnnotationDbi_1.45.0 IRanges_2.17.4      
+## [13] MSnbase_2.9.2        ProtGenerics_1.15.0  S4Vectors_0.21.9    
+## [16] mzR_2.17.1           Rcpp_1.0.0           Biobase_2.43.1      
 ## [19] BiocGenerics_0.29.1  knitr_1.21           BiocStyle_2.11.0    
 ## 
 ## loaded via a namespace (and not attached):
@@ -574,7 +574,7 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 ##  [16] doParallel_1.0.14     mixtools_1.1.0        sfsmisc_1.1-3        
 ##  [19] limma_3.39.3          recipes_0.1.4         gower_0.1.2          
 ##  [22] rda_1.0.2-2.1         pkgdown_1.3.0         lpSolve_5.6.13       
-##  [25] prettyunits_1.0.2     colorspace_1.3-2      blob_1.1.1           
+##  [25] prettyunits_1.0.2     colorspace_1.4-0      blob_1.1.1           
 ##  [28] xfun_0.4              dplyr_0.7.8           crayon_1.3.4         
 ##  [31] RCurl_1.95-4.11       hexbin_1.27.2         roxygen2_6.1.1       
 ##  [34] genefilter_1.65.0     bindr_0.1.1           impute_1.57.0        
@@ -590,24 +590,24 @@ PCA plot of <code>andy2011</code> after transfer learning classification. The si
 ##  [64] RColorBrewer_1.1-2    fpc_2.1-11.1          modeltools_0.2-22    
 ##  [67] pkgconfig_2.0.2       flexmix_2.3-14        nnet_7.3-12          
 ##  [70] caret_6.0-81          reshape2_1.4.3        tidyselect_0.2.5     
-##  [73] rlang_0.3.0.1         later_0.7.5           munsell_0.5.0        
+##  [73] rlang_0.3.1           later_0.7.5           munsell_0.5.0        
 ##  [76] mlbench_2.1-1         tools_3.6.0           LaplacesDemon_16.1.1 
 ##  [79] generics_0.0.2        RSQLite_2.1.1         pls_2.7-0            
-##  [82] evaluate_0.12         stringr_1.3.1         mzID_1.21.0          
+##  [82] evaluate_0.12         stringr_1.3.1         mzID_1.21.1          
 ##  [85] yaml_2.2.0            ModelMetrics_1.2.2    bit64_0.9-7          
 ##  [88] fs_1.2.6              robustbase_0.93-3     randomForest_4.6-14  
 ##  [91] purrr_0.2.5           dendextend_1.9.0      bindrcpp_0.2.2       
 ##  [94] ncdf4_1.16            nlme_3.1-137          whisker_0.3-2        
 ##  [97] mime_0.6              xml2_1.2.0            compiler_3.6.0       
-## [100] curl_3.2              e1071_1.7-0           affyio_1.53.0        
-## [103] tibble_1.4.2          stringi_1.2.4         highr_0.7            
+## [100] curl_3.3              e1071_1.7-0           affyio_1.53.0        
+## [103] tibble_2.0.1          stringi_1.2.4         highr_0.7            
 ## [106] desc_1.2.0            lattice_0.20-38       trimcluster_0.1-2.1  
-## [109] Matrix_1.2-15         commonmark_1.7        gbm_2.1.4            
+## [109] Matrix_1.2-15         commonmark_1.7        gbm_2.1.5            
 ## [112] pillar_1.3.1          BiocManager_1.30.4    MALDIquant_1.18      
-## [115] data.table_1.11.8     bitops_1.0-6          httpuv_1.4.5.1       
+## [115] data.table_1.12.0     bitops_1.0-6          httpuv_1.4.5.1       
 ## [118] R6_2.3.0              pcaMethods_1.75.1     affy_1.61.0          
-## [121] hwriter_1.3.2         bookdown_0.8          promises_1.0.1       
-## [124] gridExtra_2.3         codetools_0.2-15      MASS_7.3-51.1        
+## [121] hwriter_1.3.2         bookdown_0.9          promises_1.0.1       
+## [124] gridExtra_2.3         codetools_0.2-16      MASS_7.3-51.1        
 ## [127] gtools_3.8.1          assertthat_0.2.0      rprojroot_1.3-2      
 ## [130] withr_2.1.2           diptest_0.75-7        hms_0.4.2            
 ## [133] timeDate_3043.102     grid_3.6.0            rpart_4.1-13         

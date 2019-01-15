@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.2</span>
       </span>
     </div>
 
@@ -207,16 +207,16 @@ document.addEventListener("DOMContentLoaded", function() {
 ## fcol =  GOAnnotations 
 ##  term =  GO:0005886 
 ##  id =  plasma membrane 
-##  nrow =  114 
+##  nrow =  111 
 ## k's tested: 1 2 3 
-##   Size:  114 
-##   Size:  35, 79 
-##   Size:  11, 33, 70 
+##   Size:  111 
+##   Size:  78, 33 
+##   Size:  22, 78, 11 
 ## Clusters info:
-##       ks.mean    mean ks.norm     norm
-## k = 1       1  0.5175       1  0.10674
-## k = 2       2  0.3733       2  0.10149
-## k = 3       3 *0.2959       3 *0.09873</code></pre>
+##       ks.mean    mean ks.norm    norm
+## k = 1       1  0.5167       1  0.1075
+## k = 2       2  0.3728       2 *0.1028
+## k = 3       3 *0.3131       3  0.1106</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">## Plot normalised distances</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(dd, <span class="dt">p =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</a></code></pre></div>

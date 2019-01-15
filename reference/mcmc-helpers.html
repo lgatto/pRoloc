@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot posterior probabilities — plot,MCMCParams,character-method • pRoloc</title>
+<title>Number of outlier at each iteration of MCMC — mcmc_get_outliers • pRoloc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,20 @@
 
 
 
-<meta property="og:title" content="Plot posterior probabilities — plot,MCMCParams,character-method" />
+<meta property="og:title" content="Number of outlier at each iteration of MCMC — mcmc_get_outliers" />
 
-<meta property="og:description" content="Produces a violin plot with the protein posterior probabilities
+<meta property="og:description" content="Helper function to get the number of outlier at each MCMC
+iteration.
+Helper function to get mean component allocation at each MCMC
+iteration.
+Helper function to get mean probability of belonging to outlier at
+each iteration.
+Wrapper for the geweke diagnostics from coda package also return p-values.
+Helper function to pool chains together after processing
+Helper function to burn n iterations from the front of the chains
+Helper function to subsample the chains, known informally as
+thinning.
+Produces a violin plot with the protein posterior probabilities
 distributions for all organelles." />
 <meta name="twitter:card" content="summary" />
 
@@ -127,19 +138,44 @@ distributions for all organelles." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot posterior probabilities</h1>
+    <h1>Number of outlier at each iteration of MCMC</h1>
     <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-mcmc-helper.R'><code>R/machinelearning-functions-tagm-mcmc-helper.R</code></a></small>
-    <div class="hidden name"><code>mcmc-plot.Rd</code></div>
+    <div class="hidden name"><code>mcmc-helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Produces a violin plot with the protein posterior probabilities
+    <p>Helper function to get the number of outlier at each MCMC
+iteration.</p>
+<p>Helper function to get mean component allocation at each MCMC
+iteration.</p>
+<p>Helper function to get mean probability of belonging to outlier at
+each iteration.</p>
+<p>Wrapper for the geweke diagnostics from coda package also return p-values.</p>
+<p>Helper function to pool chains together after processing</p>
+<p>Helper function to burn n iterations from the front of the chains</p>
+<p>Helper function to subsample the chains, known informally as
+thinning.</p>
+<p>Produces a violin plot with the protein posterior probabilities
 distributions for all organelles.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for MCMCParams,character</span>
+    <pre class="usage"><span class='fu'>mcmc_get_outliers</span>(<span class='no'>x</span>)
+
+<span class='fu'>mcmc_get_meanComponent</span>(<span class='no'>x</span>)
+
+<span class='fu'>mcmc_get_meanoutliersProb</span>(<span class='no'>x</span>)
+
+<span class='fu'>geweke_test</span>(<span class='no'>x</span>)
+
+<span class='fu'>mcmc_pool_chains</span>(<span class='no'>param</span>)
+
+<span class='fu'>mcmc_burn_chains</span>(<span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+
+<span class='fu'>mcmc_thin_chains</span>(<span class='no'>x</span>, <span class='kw'>freq</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+<span class='co'># S4 method for MCMCParams,character</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -147,7 +183,21 @@ distributions for all organelles.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object of class `MCMCParams`.</p></td>
+      <td><p>Object of class <code>MCMCParams</code></p></td>
+    </tr>
+    <tr>
+      <th>param</th>
+      <td><p>An object of class <code>MCMCParams</code>.</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code> defining number of iterations to burn. The default is
+<code>50</code></p></td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td><p>Thinning frequency. The function retains every `freq`th iteration
+and is an `integer(1)`. The default thinning frequency is `5`.</p></td>
     </tr>
     <tr>
       <th>y</th>
@@ -157,11 +207,42 @@ distributions for all organelles.</p>
       <th>...</th>
       <td><p>Currently ignored.</p></td>
     </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Object of class <code>MCMCParams</code></p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Object of class <code>MCMCParams</code></p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Object of class <code>MCMCParams</code></p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>A object of class <code>MCMCParams</code></p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An object of class `MCMCParams`.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An object of class `MCMCParams`.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 object.</p>
+    <p>A <code>list</code> of length <code><a href='https://www.rdocumentation.org/packages/base/topics/length'>length(x)</a></code>.</p>
+<p>A <code>list</code> of length <code><a href='https://www.rdocumentation.org/packages/base/topics/length'>length(x)</a></code>.</p>
+<p>A <code>list</code> of length <code><a href='https://www.rdocumentation.org/packages/base/topics/length'>length(x)</a></code>.</p>
+<p>A <code>matrix</code> with the test z- and p-values for each chain.</p>
+<p>A pooled <code>MCMCParams</code> object.</p>
+<p>An updated <code>MCMCParams</code> object.</p>
+<p>A thinned `MCMCParams` object.</p>
+<p>A ggplot2 object.</p>
     
 
   </div>
@@ -173,6 +254,8 @@ distributions for all organelles.</p>
       <li><a href="#value">Value</a></li>
           </ul>
 
+    <h2>Author</h2>
+    <p>Laurent Gatto</p>
   </div>
 </div>
 

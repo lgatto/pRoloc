@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">## Convergence diagnostic to see if more we need to discard any</a>
 <a class="sourceLine" id="cb29-2" data-line-number="2">## iterations or entire chains: compute the number of outliers for</a>
 <a class="sourceLine" id="cb29-3" data-line-number="3">## each iteration for each chain</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmc_get_outliers.html">mcmc_get_outliers</a></span>(tanTagm)</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmc-helpers.html">mcmc_get_outliers</a></span>(tanTagm)</a>
 <a class="sourceLine" id="cb29-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb29-6" data-line-number="6">## Using coda S3 objects to produce trace plots and histograms</a>
 <a class="sourceLine" id="cb29-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(out[[<span class="dv">1</span>]], <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Chain 1"</span>)</a></code></pre></div>
@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#discarding-iterations-from-each-chain" class="anchor"></a>Discarding iterations from each chain</h2>
 <p>We are happy that our chains have conveged. Let us recap where our analysis up until this point. We have 3 chains each with 1500 iterations. We now demonstrate how to discard iterations from individual chains, since they may have converged some number of iteration into the analysis. Let us use only the iterations of last half of the remaining three chains. This also speeds up computations, however too few iterations in the further analysis is likely to lead to poor results. We find that using at least <span class="math inline">\(1000\)</span> iterations for downstream analysis leads to stable results.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">n &lt;-<span class="st"> </span>(tanChain1<span class="op">@</span>n)<span class="op">/</span><span class="dv">2</span> <span class="co"># Number of iterations to keep 750</span></a>
-<a class="sourceLine" id="cb49-2" data-line-number="2">tanTagm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmc_burn_chains.html">mcmc_burn_chains</a></span>(newTanMcmc, n)</a></code></pre></div>
+<a class="sourceLine" id="cb49-2" data-line-number="2">tanTagm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmc-helpers.html">mcmc_burn_chains</a></span>(newTanMcmc, n)</a></code></pre></div>
 <p><code>tanTagm2</code> is now an object of class <code>MCMCParams</code> with 3 chains each with each 750 iterations.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">## Check tanTagmParams object</a>
 <a class="sourceLine" id="cb50-2" data-line-number="2">pRoloc<span class="op">:::</span><span class="kw"><a href="../reference/MCMCParams.html">chains</a></span>(tanTagm2)[[<span class="dv">1</span>]]</a></code></pre></div>

@@ -4,6 +4,7 @@
 ##' @title Number of outlier at each iteration of MCMC
 ##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_get_outliers <- function(x) {
     stopifnot(inherits(x, "MCMCParams"))
@@ -16,6 +17,7 @@ mcmc_get_outliers <- function(x) {
 ##' @title Mean component allocation at each MCMC iteration
 ##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_get_meanComponent <- function(x) {
   stopifnot(inherits(x, "MCMCParams"))
@@ -28,22 +30,29 @@ mcmc_get_meanComponent <- function(x) {
 ##' @title Mean outlier probability
 ##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_get_meanoutliersProb <- function(x) {
   stopifnot(inherits(x, "MCMCParams"))
   lapply(x@chains@chains, function(mc) coda::mcmc(colMeans(mc@OutlierProb[, ,2])))
 }
 
-## Wrapper for the geweke diagnostics from coda package also return
-## p-values
+
+##' Wrapper for the geweke diagnostics from coda package also return p-values.
+##' @title Geweke diagnostics
+##' @param x Object of class `MCMCParams`
+##' @return A `matrix` with the test z- and p-values for each chain.
+##' @rdname mcmc-helpers
+##' @md
 geweke_test <- function(x) {
-  res <- matrix(NA, nrow = 2, ncol = length(x))
-  gwk <- sapply(x, coda::geweke.diag, simplify = TRUE)
-  res[1, ] <- unlist(gwk[1, ])
-  res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail=FALSE) * 2
-  colnames(res) <- paste0("chain ", seq.int(x))
-  rownames(res) <- c("z.value", "p.value")
-  return(res)
+    stopifnot(inherits(x, "MCMCParams"))
+    res <- matrix(NA, nrow = 2, ncol = length(x))
+    gwk <- sapply(x, coda::geweke.diag, simplify = TRUE)
+    res[1, ] <- unlist(gwk[1, ])
+    res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail=FALSE) * 2
+    colnames(res) <- paste0("chain ", seq.int(x))
+    rownames(res) <- c("z.value", "p.value")
+    return(res)
 }
 
 
@@ -52,6 +61,7 @@ geweke_test <- function(x) {
 ##' @title Pool MCMC chains
 ##' @param param An object of class `MCMCParams`.
 ##' @return A pooled `MCMCParams` object.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_pool_chains <- function(param) {
   stopifnot(inherits(param, "MCMCParams"))
@@ -135,6 +145,7 @@ mcmc_pool_chains <- function(param) {
 ##' @param n `integer(1)` defining number of iterations to burn. The default is
 ##' `50`
 ##' @return An updated `MCMCParams` object.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_burn_chains <- function(x, n = 50) {
     stopifnot(inherits(x, "MCMCParams"))
@@ -180,6 +191,7 @@ mcmc_burn_chains <- function(x, n = 50) {
 ##' @param freq Thinning frequency. The function retains every `freq`th iteration
 ##' and is an `integer(1)`. The default thinning frequency is `5`.
 ##' @return A thinned `MCMCParams` object.
+##' @rdname mcmc-helpers
 ##' @author Laurent Gatto
 mcmc_thin_chains <- function(x, freq = 5) {
   stopifnot(inherits(x, "MCMCParams"))
@@ -225,6 +237,7 @@ mcmc_thin_chains <- function(x, freq = 5) {
 ##' @param y A `character(1)` with a protein name.
 ##' @param ... Currently ignored.
 ##' @return A ggplot2 object.
+##' @rdname mcmc-helpers
 ##' @rdname mcmc-plot
 setMethod("plot", c("MCMCParams", "character"),
           function(x, y, ...) {

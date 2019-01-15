@@ -169,6 +169,7 @@ export(## MSnSet manipulation
     mcmc_get_meanoutliersProb,
     mcmc_thin_chains,
     mcmc_pool_chains,
+    geweke_test,
     ## -- tl
     favourPrimary,
     ## plotThetas,

@@ -18,7 +18,7 @@ mcmc_get_meanComponent(x)
 
 mcmc_get_meanoutliersProb(x)
 
-geweke_test(x)
+geweke_test(k)
 
 mcmc_pool_chains(param)
 
@@ -31,6 +31,10 @@ mcmc_thin_chains(x, freq = 5)
 \arguments{
 \item{x}{Object of class \code{MCMCParams}}
 
+\item{k}{A \code{list} of \link[coda:mcmc]{coda::mcmc} objects, as returned by
+\code{mcmc_get_outliers}, \code{mcmc_get_meanComponent} and
+\code{mcmc_get_meanoutliersProb}.}
+
 \item{param}{An object of class \code{MCMCParams}.}
 
 \item{n}{\code{integer(1)} defining number of iterations to burn. The default is
@@ -42,12 +46,6 @@ and is an `integer(1)`. The default thinning frequency is `5`.}
 \item{y}{A `character(1)` with a protein name.}
 
 \item{...}{Currently ignored.}
-
-\item{x}{Object of class \code{MCMCParams}}
-
-\item{x}{Object of class \code{MCMCParams}}
-
-\item{x}{Object of class \code{MCMCParams}}
 
 \item{x}{A object of class \code{MCMCParams}}
 

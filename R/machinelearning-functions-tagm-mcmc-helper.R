@@ -15,7 +15,6 @@ mcmc_get_outliers <- function(x) {
 ##' Helper function to get mean component allocation at each MCMC
 ##' iteration.
 ##' @title Mean component allocation at each MCMC iteration
-##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
 ##' @rdname mcmc-helpers
 ##' @md
@@ -28,7 +27,6 @@ mcmc_get_meanComponent <- function(x) {
 ##' Helper function to get mean probability of belonging to outlier at
 ##' each iteration.
 ##' @title Mean outlier probability
-##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
 ##' @rdname mcmc-helpers
 ##' @md
@@ -40,17 +38,18 @@ mcmc_get_meanoutliersProb <- function(x) {
 
 ##' Wrapper for the geweke diagnostics from coda package also return p-values.
 ##' @title Geweke diagnostics
-##' @param x Object of class `MCMCParams`
+##' @param k A `list` of [coda::mcmc] objects, as returned by
+##'     `mcmc_get_outliers`, `mcmc_get_meanComponent` and
+##'     `mcmc_get_meanoutliersProb`.
 ##' @return A `matrix` with the test z- and p-values for each chain.
 ##' @rdname mcmc-helpers
 ##' @md
-geweke_test <- function(x) {
-    stopifnot(inherits(x, "MCMCParams"))
+geweke_test <- function(k) {
     res <- matrix(NA, nrow = 2, ncol = length(x))
-    gwk <- sapply(x, coda::geweke.diag, simplify = TRUE)
+    gwk <- sapply(k, coda::geweke.diag, simplify = TRUE)
     res[1, ] <- unlist(gwk[1, ])
-    res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail=FALSE) * 2
-    colnames(res) <- paste0("chain ", seq.int(x))
+    res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail = FALSE) * 2
+    colnames(res) <- paste0("chain ", seq.int(k))
     rownames(res) <- c("z.value", "p.value")
     return(res)
 }

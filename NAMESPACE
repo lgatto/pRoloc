@@ -47,7 +47,7 @@ importFrom(ggplot2, ggplot, geom_point, theme, scale_size_continuous,
            xlab, ylab, scale_y_discrete, geom_text, aes,
            scale_color_manual, element_text, scale_x_discrete,
            geom_violin, theme_bw, scale_fill_manual, element_blank,
-           ggtitle)
+           ggtitle, geom_tile, scale_fill_continuous, element_line)
 
 ## Importing to avoid 'no visible global function definition for' NOTES
 import(Biobase)
@@ -204,4 +204,5 @@ export(## MSnSet manipulation
     getNormDist,
     ## -- QSep
     QSep,
-    qsep)
+    qsep,
+    plotConsProfiles)

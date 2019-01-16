@@ -46,12 +46,6 @@ and is an `integer(1)`. The default thinning frequency is `5`.}
 \item{y}{A `character(1)` with a protein name.}
 
 \item{...}{Currently ignored.}
-
-\item{x}{A object of class \code{MCMCParams}}
-
-\item{x}{An object of class `MCMCParams`.}
-
-\item{x}{An object of class `MCMCParams`.}
 }
 \value{
 A \code{list} of length \code{length(x)}.

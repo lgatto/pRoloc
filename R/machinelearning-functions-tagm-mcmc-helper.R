@@ -140,7 +140,6 @@ mcmc_pool_chains <- function(param) {
 ##' Helper function to burn n iterations from the front of the chains
 ##'
 ##' @title MCMC chain burning
-##' @param x A object of class `MCMCParams`
 ##' @param n `integer(1)` defining number of iterations to burn. The default is
 ##' `50`
 ##' @return An updated `MCMCParams` object.
@@ -186,7 +185,6 @@ mcmc_burn_chains <- function(x, n = 50) {
 ##' thinning.
 ##'
 ##' @title MCMC chain thinning
-##' @param x An object of class `MCMCParams`.
 ##' @param freq Thinning frequency. The function retains every `freq`th iteration
 ##' and is an `integer(1)`. The default thinning frequency is `5`.
 ##' @return A thinned `MCMCParams` object.
@@ -232,7 +230,6 @@ mcmc_thin_chains <- function(x, freq = 5) {
 ##' distributions for all organelles.
 ##'
 ##' @title Plot posterior probabilities
-##' @param x An object of class `MCMCParams`.
 ##' @param y A `character(1)` with a protein name.
 ##' @param ... Currently ignored.
 ##' @return A ggplot2 object.

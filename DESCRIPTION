@@ -91,6 +91,7 @@ Collate:
     AllGenerics.R
     machinelearning-framework.R
     machinelearning-framework-theta.R
+    machinelearning-framework-map.R
     machinelearning-framework-mcmc.R
     machinelearning-utils.R
     machinelearning-functions-knn.R

@@ -1,7 +1,8 @@
 # pRoloc 1.23
 
 ## Changes in version 1.23.2
-- Add mcmc helper functions
+- Add mcmc helper functions.
+- New logPosteriors accessor for MAPParams object.
 - New plotConsProfiles function, contributed by Tom Smith (see PR
   #131).
 

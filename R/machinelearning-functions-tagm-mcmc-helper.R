@@ -45,7 +45,7 @@ mcmc_get_meanoutliersProb <- function(x) {
 ##' @rdname mcmc-helpers
 ##' @md
 geweke_test <- function(k) {
-    res <- matrix(NA, nrow = 2, ncol = length(x))
+    res <- matrix(NA, nrow = 2, ncol = length(k))
     gwk <- sapply(k, coda::geweke.diag, simplify = TRUE)
     res[1, ] <- unlist(gwk[1, ])
     res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail = FALSE) * 2

@@ -167,7 +167,7 @@ distributions for all organelles.</p>
 
 <span class='fu'>mcmc_get_meanoutliersProb</span>(<span class='no'>x</span>)
 
-<span class='fu'>geweke_test</span>(<span class='no'>x</span>)
+<span class='fu'>geweke_test</span>(<span class='no'>k</span>)
 
 <span class='fu'>mcmc_pool_chains</span>(<span class='no'>param</span>)
 
@@ -184,6 +184,12 @@ distributions for all organelles.</p>
     <tr>
       <th>x</th>
       <td><p>Object of class <code>MCMCParams</code></p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>A <code>list</code> of <a href='https://www.rdocumentation.org/packages/coda/topics/mcmc'>coda::mcmc</a> objects, as returned by
+<code>mcmc_get_outliers</code>, <code>mcmc_get_meanComponent</code> and
+<code>mcmc_get_meanoutliersProb</code>.</p></td>
     </tr>
     <tr>
       <th>param</th>
@@ -206,18 +212,6 @@ and is an `integer(1)`. The default thinning frequency is `5`.</p></td>
     <tr>
       <th>...</th>
       <td><p>Currently ignored.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>Object of class <code>MCMCParams</code></p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>Object of class <code>MCMCParams</code></p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>Object of class <code>MCMCParams</code></p></td>
     </tr>
     <tr>
       <th>x</th>

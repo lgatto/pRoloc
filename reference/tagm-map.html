@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Localisation of proteins using the TAGM MAP method — MAPParams-class • pRoloc</title>
+<title>Localisation of proteins using the TAGM MAP method — tagmMapTrain • pRoloc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Localisation of proteins using the TAGM MAP method — MAPParams-class" />
+<meta property="og:title" content="Localisation of proteins using the TAGM MAP method — tagmMapTrain" />
 
 <meta property="og:description" content="These functions implement the T augmented Gaussian mixture (TAGM)
 model for mass spectrometry-based spatial proteomics datasets
@@ -129,7 +129,7 @@ using the maximum a posteriori (MAP) optimisation routine." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Localisation of proteins using the TAGM MAP method</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-framework.R'><code>R/machinelearning-framework.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-framework-map.R'><code>R/machinelearning-framework-map.R</code></a></small>
     <div class="hidden name"><code>tagm-map.Rd</code></div>
     </div>
 
@@ -141,15 +141,17 @@ using the maximum a posteriori (MAP) optimisation routine.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for MAPParams</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='fu'>tagmMapTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MAP"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+    <pre class="usage"><span class='fu'>tagmMapTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MAP"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>tagmMapPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S4 method for MAPParams</span>
+<span class='fu'>show</span>(<span class='no'>object</span>)
+
+<span class='fu'>logPosteriors</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,6 +232,10 @@ feature variable. A high value indicates that the protein is
 unlikely to belong to any annotated class (and is hence
 considered an outlier).</p></td>
     </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An object of class `MAPParams`.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -241,15 +247,14 @@ a new <code>tagm.map.allocation</code> feature variable.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>tagmMapTrain</code> function generates the MAP parameters (object
-or class <code>MAPParams</code>) based on an annotated quantitative spatial
-proteomics dataset (object of class <code><a href='https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are
-then passed to the <code>tagmPredict</code> function to predict the
-sub-cellular localisation of protein of unknown localisation. See
-the <em>pRoloc-bayesian</em> vignette for details and examples. In this implementation,
-if numerical instability is detected in the covariance matrix of the
-data a small multiple of the identity is added. A message is printed if this conditioning step
-is performed.</p>
+    <p>The <code>tagmMapTrain</code> function generates the MAP parameters (object or class
+<code>MAPParams</code>) based on an annotated quantitative spatial proteomics dataset
+(object of class <code><a href='https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are then passed to the
+<code>tagmPredict</code> function to predict the sub-cellular localisation of protein
+of unknown localisation. See the <em>pRoloc-bayesian</em> vignette for details and
+examples. In this implementation, if numerical instability is detected in
+the covariance matrix of the data a small multiple of the identity is
+added. A message is printed if this conditioning step is performed.</p>
     
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
@@ -296,6 +301,7 @@ function to use the TAGM MAP method.</p></div>
 
     <h2>Author</h2>
     <p>Oliver M. Crook</p>
+<p>Laurent Gatto</p>
   </div>
 </div>
 

@@ -2,6 +2,8 @@
 
 ## Changes in version 1.23.2
 - Add mcmc helper functions
+- New plotConsProfiles function, contributed by Tom Smith (see PR
+  #131).
 
 ## Changes in version 1.23.1
 - Add note about missing data in QSep man <2018-10-31 Wed>

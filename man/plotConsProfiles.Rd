@@ -7,16 +7,16 @@
 plotConsProfiles(object, order = NULL, plot = TRUE)
 }
 \arguments{
-\item{object}{A \code{matrix} containing marker consensus profiles as output
-from \code{\link{mrkConsProfiles}}.}
+\item{object}{A \code{matrix} containing marker consensus profiles as output from
+\code{\link[=mrkConsProfiles]{mrkConsProfiles()}}.}
 
-\item{order}{Order for markers (Optional).}
+\item{order}{Order for markers (optional).}
 
-\item{plot}{A \code{logical} defining whether the heatmap should be plotted.
+\item{plot}{A \code{logical(1)} defining whether the heatmap should be plotted.
 Default is \code{TRUE}.}
 }
 \value{
-Invisibly returns \code{\link[ggplot2]{ggplot}} object.
+Invisibly returns \code{ggplot2} object.
 }
 \description{
 The function plots marker consensus profiles obtained from mrkConsProfile
@@ -24,11 +24,11 @@ The function plots marker consensus profiles obtained from mrkConsProfile
 \examples{
 library("pRolocdata")
 data(E14TG2aS1)
-hc <- mrkHClust(E14TG2aS1, plot=FALSE)
+hc <- mrkHClust(E14TG2aS1, plot = FALSE)
 mm <- getMarkerClasses(E14TG2aS1)
-m_order <- levels(factor(mm))[order.dendrogram(hc)]
+ord <- levels(factor(mm))[order.dendrogram(hc)]
 fmat <- mrkConsProfiles(E14TG2aS1)
-plotConsProfiles(fmat, order=m_order)
+plotConsProfiles(fmat, order = ord)
 }
 \author{
 Tom Smith

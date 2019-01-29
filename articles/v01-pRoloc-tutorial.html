@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Wed Jan 16 09:04:53 2019  using readMSnSet. 
+## Quantitation data loaded: Tue Jan 29 10:07:08 2019  using readMSnSet. 
 ##  MSnbase version: 2.9.2</code></pre>
 </div>
 </div>
@@ -466,8 +466,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Wed Jan 16 09:04:55 2019 
-## Normalised (sum): Wed Jan 16 09:04:55 2019 
+## iTRAQ4 quantification by trapezoidation: Tue Jan 29 10:07:10 2019 
+## Normalised (sum): Tue Jan 29 10:07:10 2019 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -771,7 +771,7 @@ Assessing parameter optimisation. On the left, we see the respective distributio
 <a class="sourceLine" id="cb87-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(svmres)</a></code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Wed Jan 16 09:05:02 2019 
+## Performed svm prediction (sigma=0.1 cost=0.5) Tue Jan 29 10:07:17 2019 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -873,8 +873,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Wed Jan 16 09:05:02 2019 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Wed Jan 16 09:05:02 2019 
+## Performed svm prediction (sigma=0.1 cost=0.5) Tue Jan 29 10:07:17 2019 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.76 Tue Jan 29 10:07:17 2019 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">ptsze &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
@@ -987,7 +987,7 @@ Classification results. The results of the second round of classification, using
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2019-01-14 r75992)
+<pre><code>## R Under development (unstable) (2019-01-26 r76018)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -1009,10 +1009,10 @@ Classification results. The results of the second round of classification, using
 ## 
 ## other attached packages:
 ##  [1] class_7.3-15         pRolocdata_1.21.0    pRoloc_1.23.2       
-##  [4] BiocParallel_1.17.6  MLInterfaces_1.63.0  cluster_2.0.7-1     
+##  [4] BiocParallel_1.17.9  MLInterfaces_1.63.0  cluster_2.0.7-1     
 ##  [7] annotate_1.61.0      XML_3.98-1.16        AnnotationDbi_1.45.0
 ## [10] IRanges_2.17.4       MSnbase_2.9.2        ProtGenerics_1.15.0 
-## [13] S4Vectors_0.21.9     mzR_2.17.1           Rcpp_1.0.0          
+## [13] S4Vectors_0.21.10    mzR_2.17.1           Rcpp_1.0.0          
 ## [16] Biobase_2.43.1       BiocGenerics_0.29.1  knitr_1.21          
 ## [19] BiocStyle_2.11.0    
 ## 
@@ -1023,7 +1023,7 @@ Classification results. The results of the second round of classification, using
 ##  [10] foreach_1.4.4         htmltools_0.3.6       viridis_0.5.1        
 ##  [13] gdata_2.18.0          magrittr_1.5          memoise_1.1.0        
 ##  [16] doParallel_1.0.14     mixtools_1.1.0        sfsmisc_1.1-3        
-##  [19] limma_3.39.3          recipes_0.1.4         gower_0.1.2          
+##  [19] limma_3.39.4          recipes_0.1.4         gower_0.1.2          
 ##  [22] rda_1.0.2-2.1         pkgdown_1.3.0         lpSolve_5.6.13       
 ##  [25] prettyunits_1.0.2     colorspace_1.4-0      blob_1.1.1           
 ##  [28] xfun_0.4              dplyr_0.7.8           crayon_1.3.4         
@@ -1031,7 +1031,7 @@ Classification results. The results of the second round of classification, using
 ##  [34] genefilter_1.65.0     bindr_0.1.1           impute_1.57.0        
 ##  [37] survival_2.43-3       iterators_1.0.10      glue_1.3.0           
 ##  [40] gtable_0.2.0          ipred_0.9-8           zlibbioc_1.29.0      
-##  [43] kernlab_0.9-27        prabclus_2.2-6        DEoptimR_1.0-8       
+##  [43] kernlab_0.9-27        prabclus_2.2-7        DEoptimR_1.0-8       
 ##  [46] scales_1.0.0          vsn_3.51.0            mvtnorm_1.0-8        
 ##  [49] DBI_1.0.0             viridisLite_0.3.0     xtable_1.8-3         
 ##  [52] progress_1.2.0        proxy_0.4-22          bit_1.1-14           
@@ -1047,10 +1047,10 @@ Classification results. The results of the second round of classification, using
 ##  [82] pls_2.7-0             evaluate_0.12         stringr_1.3.1        
 ##  [85] mzID_1.21.1           yaml_2.2.0            ModelMetrics_1.2.2   
 ##  [88] bit64_0.9-7           fs_1.2.6              robustbase_0.93-3    
-##  [91] randomForest_4.6-14   purrr_0.2.5           dendextend_1.9.0     
+##  [91] randomForest_4.6-14   purrr_0.3.0           dendextend_1.9.0     
 ##  [94] bindrcpp_0.2.2        ncdf4_1.16            nlme_3.1-137         
 ##  [97] whisker_0.3-2         mime_0.6              xml2_1.2.0           
-## [100] biomaRt_2.39.2        compiler_3.6.0        e1071_1.7-0          
+## [100] biomaRt_2.39.2        compiler_3.6.0        e1071_1.7-0.1        
 ## [103] affyio_1.53.0         tibble_2.0.1          stringi_1.2.4        
 ## [106] highr_0.7             desc_1.2.0            lattice_0.20-38      
 ## [109] trimcluster_0.1-2.1   Matrix_1.2-15         commonmark_1.7       

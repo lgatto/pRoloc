@@ -46,7 +46,7 @@ metropolisHastings <- function (n, rho) {
 plotMetropolisHastings <- function(r, met, rho) {
     mycolb <- rgb(0, 0, 255, max = 255, alpha = 125, names = "blue50")
     mycolr <- rgb(255, 0, 0, max = 255, alpha = 175, names = "red50")
-    a <- x[1:35,1:2]
+    a <- met[1:35,1:2]
     plot(a, ylim = c(-5,5), xlim = c(-5,5),
          xlab = "Channel 1", ylab = "Channel 2",
          col = mycolb, cex = 2, pch = 19)

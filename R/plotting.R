@@ -49,8 +49,8 @@ plotMetropolisHastings <- function(r, met, rho) {
     a <- x[1:35,1:2]
     plot(a, ylim = c(-5,5), xlim = c(-5,5),
          xlab = "Channel 1", ylab = "Channel 2",
-         col = mycolb, cex = 2, pch = 19,
-         main = paste0("Iteration ", r))
+         col = mycolb, cex = 2, pch = 19)
+    legend("topleft", legend = paste0("Iteration ", r), bty = "n")
     mixtools::ellipse(mu = c(0, 0),
                       sigma = matrix(c(1, sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2),
                       alpha = .05, npoints = 1000, newplot = FALSE, draw = TRUE)

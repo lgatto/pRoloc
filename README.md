@@ -115,7 +115,9 @@ Specific algorithms available in the software:
 
 * Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley,
  Laurent Gatto *A Bayesian Mixture Modelling Approach For Spatial
- Proteomics* bioRxiv 282269; doi: https://doi.org/10.1101/282269
+ Proteomics* PLOS Computational Biology
+ doi:[10.1371/journal.pcbi.1006516](https://doi.org/10.1371/journal.pcbi.1006516)
+
 
 
 #### More resource

@@ -291,8 +291,13 @@ tagmMapPredict <- function(object,
     organelleAlloc <- data.frame(pred = rep(NA_character_, nrow(X)),
                                  prob = rep(NA_real_, nrow(X)))
 
+    ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    eigsV <- eigen(V)
+    if (min(eigsV$values) < .Machine$double.eps) {
+      V <- cov(exprs(object))/2 + diag(10^{-6}, D)
+    }
 
     for (j in seq.int(K)) {
         a[, j] <- log( weights[j] ) +

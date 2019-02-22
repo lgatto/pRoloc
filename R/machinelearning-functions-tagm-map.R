@@ -284,6 +284,7 @@ tagmMapPredict <- function(object,
     ## get data to predict
     X <- exprs(unknownsubset)
     K <- length(markers)
+    D <- ncol(X)
 
     a <- matrix(0, nrow = nrow(X), ncol = K)
     b <- matrix(0, nrow = nrow(X), ncol = K)

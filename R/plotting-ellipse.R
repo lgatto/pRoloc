@@ -53,9 +53,10 @@ plotEllipse <- function(object,
     }
 
     for (j in 1:K) {
-        mixtools::ellipse(meanROT[j, dims], sigmaROT[j, dims, dims], alpha = .1,  npoints = 250, newplot = FALSE)
-        mixtools::ellipse(meanROT[j, dims], sigmaROT[j, dims, dims], alpha = .01, npoints = 250, newplot = FALSE)
-        mixtools::ellipse(meanROT[j, dims], sigmaROT[j, dims, dims], alpha = .05, npoints = 250, newplot = FALSE)
+        myCol <-  getStockcol()[j]
+        mixtools::ellipse(meanROT[j, dims], sigmaROT[j, dims, dims], alpha = .1,  npoints = 250, newplot = FALSE, col = myCol)
+        mixtools::ellipse(meanROT[j, dims], sigmaROT[j, dims, dims], alpha = .01, npoints = 250, newplot = FALSE, col = myCol)
+        mixtools::ellipse(meanROT[j, dims], sigmaROT[j, dims, dims], alpha = .05, npoints = 250, newplot = FALSE, col = myCol)
     }
 
 }

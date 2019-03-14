@@ -284,6 +284,7 @@ tagmMapPredict <- function(object,
     ## get data to predict
     X <- exprs(unknownsubset)
     K <- length(markers)
+    D <- ncol(X)
 
     a <- matrix(0, nrow = nrow(X), ncol = K)
     b <- matrix(0, nrow = nrow(X), ncol = K)
@@ -291,8 +292,13 @@ tagmMapPredict <- function(object,
     organelleAlloc <- data.frame(pred = rep(NA_character_, nrow(X)),
                                  prob = rep(NA_real_, nrow(X)))
 
+    ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    eigsV <- eigen(V)
+    if (min(eigsV$values) < .Machine$double.eps) {
+      V <- cov(exprs(object))/2 + diag(10^{-6}, D)
+    }
 
     for (j in seq.int(K)) {
         a[, j] <- log( weights[j] ) +

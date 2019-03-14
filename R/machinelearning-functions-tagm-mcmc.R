@@ -435,7 +435,7 @@ tagmMcmcChain <- function(object,
     xk <- matrix(0, nrow = K, ncol = D)
 
     ## update prior with training data
-    nk <- tabulate(fData(markersubset)[, fcol])
+    nk <- c(table(fData(markersubset)[, fcol])[markers])
 
     for (j in seq.int(K))
         xk[j, ] <- colSums(mydata[fData(markersubset)[, fcol] == markers[j], ])/nk[j]

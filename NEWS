@@ -1,3 +1,11 @@
+Changes in version 1.23.2
+-------------------------
+- Add mcmc helper functions.
+- New logPosteriors accessor for MAPParams object.
+- New plotConsProfiles function, contributed by Tom Smith (see PR
+  #131).
+- Update TAGM vignette, refering to workflow <2019-03-14 Thu>
+
 Changes in version 1.23.1
 -------------------------
 - Add note about missing data in QSep man <2018-10-31 Wed>
@@ -188,7 +196,7 @@ Changes in version 1.15.3
 -------------------------
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-        <2016-11-04 Fri>
+		<2016-11-04 Fri>
 
 Changes in version 1.15.2
 -------------------------

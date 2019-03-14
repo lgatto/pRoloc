@@ -18,10 +18,10 @@ metropolisHastings <- function (n, rho) {
     mat <- matrix(ncol = 2, nrow = n)   ## matrix for storing the random samples
     x <- y <- 4   ## initial values for all parameters
     cov <- matrix(c(1,sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2)
-    prev <- dmvnorm(c(x, y), mu = c(0,0), sigma = cov)
+    prev <- dmvnorm(c(x, y), mean = c(0, 0), sigma = cov)
     mat[1, ] <- c(x, y)  ## initialize the markov chain
     counter <- 1
-    while(counter<=n) {
+    while (counter <= n) {
         propx <- x + rnorm(1, 0, 0.1)
         propy <- y + rnorm(1, 0, 0.1)
 
@@ -34,7 +34,7 @@ metropolisHastings <- function (n, rho) {
             x <- propx
             y <- propy
             mat[counter, ] <- c(x, y) ## store this in the storage array
-            counter <- counter+1
+            counter <- counter + 1
             prev <- newprob ## get ready for the next iteration
         }
 
@@ -44,10 +44,12 @@ metropolisHastings <- function (n, rho) {
 
 
 plotMetropolisHastings <- function(r, met, rho) {
-    mycolb <- rgb(0, 0, 255, max = 255, alpha = 125, names = "blue50")
-    mycolr <- rgb(255, 0, 0, max = 255, alpha = 175, names = "red50")
-    x <- mixtools::rmvnorm(10000, sigma = matrix(c(1,sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2))
-    a <- x[1:35,1:2]
+    mycolb <- rgb(0, 0, 255, maxColorValue = 255, alpha = 125, names = "blue50")
+    mycolr <- rgb(255, 0, 0, maxColorValue = 255, alpha = 175, names = "red50")
+    x <- mixtools::rmvnorm(10000,
+                           sigma = matrix(c(1, sqrt(1 - rho^2), sqrt(1 - rho^2), 1),
+                                          ncol = 2))
+    a <- x[1:35, 1:2]
     plot(a, ylim = c(-5,5), xlim = c(-5,5),
          xlab = "Channel 1", ylab = "Channel 2",
          col = mycolb, cex = 2, pch = 19)

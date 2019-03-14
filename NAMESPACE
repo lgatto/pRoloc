@@ -16,7 +16,7 @@ importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
            "update", "rmultinom", "na.omit", "hclust", "dbeta",
-           "as.dendrogram", "pnorm")
+           "as.dendrogram", "pnorm", "rnorm", "runif")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",
            "txtProgressBar")
@@ -63,7 +63,8 @@ importFrom(class, knn)
 importFrom(FNN, get.knn, get.knnx)
 importFrom(RColorBrewer, brewer.pal)
 ## importFrom(stats4, plot)
-importFrom(mvtnorm, rmvnorm)
+importFrom("mvtnorm", "rmvnorm", "dmvnorm")
+
 importFrom(proxy, simil)
 importFrom(scales, col2hcl) ##, alpha)
 importFrom(caret, createFolds, confusionMatrix, plsda)

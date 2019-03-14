@@ -5,6 +5,7 @@
 - New logPosteriors accessor for MAPParams object.
 - New plotConsProfiles function, contributed by Tom Smith (see PR
   #131).
+- Update TAGM vignette, refering to workflow <2019-03-14 Thu>
 
 ## Changes in version 1.23.1
 - Add note about missing data in QSep man <2018-10-31 Wed>

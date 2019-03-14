@@ -2,12 +2,14 @@
 ##' model for mass spectrometry-based spatial proteomics datasets
 ##' using the maximum a posteriori (MAP) optimisation routine.
 ##'
-##' The `tagmMapTrain` function generates the MAP parameters (object
-##' or class `MAPParams`) based on an annotated quantitative spatial
-##' proteomics dataset (object of class [`MSnbase::MSnSet`]). Both are
-##' then passed to the `tagmPredict` function to predict the
-##' sub-cellular localisation of protein of unknown localisation. See
-##' the *pRoloc-bayesian* vignette for details and examples.
+##' The `tagmMapTrain` function generates the MAP parameters (object or class
+##' `MAPParams`) based on an annotated quantitative spatial proteomics dataset
+##' (object of class [`MSnbase::MSnSet`]). Both are then passed to the
+##' `tagmPredict` function to predict the sub-cellular localisation of protein
+##' of unknown localisation. See the *pRoloc-bayesian* vignette for details and
+##' examples. In this implementation, if numerical instability is detected in
+##' the covariance matrix of the data a small multiple of the identity is
+##' added. A message is printed if this conditioning step is performed.
 ##'
 ##' @title Localisation of proteins using the TAGM MAP method
 ##'
@@ -112,7 +114,7 @@ tagmMapTrain <- function(object,
 
     lambdak <- lambda0 + nk
     nuk <- nu0 + nk
-    mk <- (nk * xk + lambda0 * mu0) / lambdak
+    mk <- t((t(nk * xk) + lambda0 * mu0)) / lambdak
 
     for(j in seq.int(K))
         sk[j, , ] <- S0 + t(mydata[fData(markersubset)[, fcol] == markers[j], ]) %*%
@@ -132,6 +134,12 @@ tagmMapTrain <- function(object,
     ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    eigsV <- eigen(V)
+    if (min(eigsV$values) < .Machine$double.eps) {
+      V <- cov(exprs(object))/2 + diag(10^{-6}, D)
+      message("co-linearity detected; a small multiple of
+              the identity was added to the covariance")
+    }
     eps <- (u - 1) / (u + v - 2)
 
     ## storage for Estep
@@ -276,6 +284,7 @@ tagmMapPredict <- function(object,
     ## get data to predict
     X <- exprs(unknownsubset)
     K <- length(markers)
+    D <- ncol(X)
 
     a <- matrix(0, nrow = nrow(X), ncol = K)
     b <- matrix(0, nrow = nrow(X), ncol = K)
@@ -283,8 +292,13 @@ tagmMapPredict <- function(object,
     organelleAlloc <- data.frame(pred = rep(NA_character_, nrow(X)),
                                  prob = rep(NA_real_, nrow(X)))
 
+    ## global parameters
     M <- colMeans(exprs(object))
     V <- cov(exprs(object))/2
+    eigsV <- eigen(V)
+    if (min(eigsV$values) < .Machine$double.eps) {
+      V <- cov(exprs(object))/2 + diag(10^{-6}, D)
+    }
 
     for (j in seq.int(K)) {
         a[, j] <- log( weights[j] ) +

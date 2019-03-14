@@ -7,3 +7,5 @@ sandbox
 .gitignores
 docs
 ^docs$
+CONDUCT.md
+.editorconfig

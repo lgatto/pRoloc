@@ -11,7 +11,7 @@ plot2D(object, fcol = "markers", fpch, unknown = "unknown",
   dims = 1:2, score = 1, method = "PCA", methargs,
   axsSwitch = FALSE, mirrorX = FALSE, mirrorY = FALSE, col, pch, cex,
   index = FALSE, idx.cex = 0.75, addLegend, identify = FALSE,
-  plot = TRUE, ...)
+  plot = TRUE, grid = TRUE, ...)
 
 \S4method{plot3D}{MSnSet}(object, fcol = "markers", dims = c(1, 2, 3),
   radius1 = 0.1, radius2 = radius1 * 2, plot = TRUE, ...)
@@ -121,6 +121,9 @@ points on the plot. See also \code{\link{identify}}.}
 \item{plot}{A \code{logical} defining if the figure should be
 plotted.  Useful when retrieving data only. Default is
 \code{TRUE}.}
+
+\item{grid}{A \code{logical} indicating whether a grid should
+be plotted. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to \code{plot} and
 \code{points}.}

@@ -1,3 +1,75 @@
+## metropolisHastings and plotMetropolisHastings are private functions used to
+## generate illustrative MCMC cartoons (see the TAGM workflow as an example).
+##
+## Usage:
+##
+## set.seed(2)
+## met <- metropolisHastings(10000, 0.9)
+##
+## par(mfrow = c(2, 2),
+##     mar = c(4, 4, 2, 1))
+##
+## plotMetropolisHastings(2, met)
+## plotMetropolisHastings(3, met)
+## plotMetropolisHastings(5, met)
+## plotMetropolisHastings(30, met)
+
+metropolisHastings <- function (n, rho) {
+    mat <- matrix(ncol = 2, nrow = n)   ## matrix for storing the random samples
+    x <- y <- 4   ## initial values for all parameters
+    cov <- matrix(c(1,sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2)
+    prev <- dmvnorm(c(x, y), mean = c(0, 0), sigma = cov)
+    mat[1, ] <- c(x, y)  ## initialize the markov chain
+    counter <- 1
+    while (counter <= n) {
+        propx <- x + rnorm(1, 0, 0.1)
+        propy <- y + rnorm(1, 0, 0.1)
+
+        newprob <- mixtools::dmvnorm(c(propx, propy), sigma = cov)
+        ratio <- newprob/prev
+
+        prob.accept <- min(1, ratio) ## ap
+        rand <- runif(1)
+        if (rand <= prob.accept) {
+            x <- propx
+            y <- propy
+            mat[counter, ] <- c(x, y) ## store this in the storage array
+            counter <- counter + 1
+            prev <- newprob ## get ready for the next iteration
+        }
+
+    }
+    return(mat)
+}
+
+
+plotMetropolisHastings <- function(r, met, rho) {
+    mycolb <- rgb(0, 0, 255, maxColorValue = 255, alpha = 125, names = "blue50")
+    mycolr <- rgb(255, 0, 0, maxColorValue = 255, alpha = 175, names = "red50")
+    x <- mixtools::rmvnorm(10000,
+                           sigma = matrix(c(1, sqrt(1 - rho^2), sqrt(1 - rho^2), 1),
+                                          ncol = 2))
+    a <- x[1:35, 1:2]
+    plot(a, ylim = c(-5,5), xlim = c(-5,5),
+         xlab = "Channel 1", ylab = "Channel 2",
+         col = mycolb, cex = 2, pch = 19)
+    legend("topleft", legend = paste0("Iteration ", r), bty = "n")
+    mixtools::ellipse(mu = c(0, 0),
+                      sigma = matrix(c(1, sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2),
+                      alpha = .05, npoints = 1000, newplot = FALSE, draw = TRUE)
+    mixtools::ellipse(mu = c(0, 0),
+                      sigma = matrix(c(1, sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2),
+                      alpha = .01, npoints = 1000, newplot = FALSE, draw = TRUE)
+    mixtools::ellipse(mu = c(0, 0),
+                      sigma = matrix(c(1, sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2),
+                      alpha = .10, npoints = 1000, newplot = FALSE, draw = TRUE)
+
+    points(met[100 * c(1:r) - 99,],
+           type = "b", col = mycolr,
+           cex = 2, lwd = 3, pch = 19)
+}
+
+
 plotDist_fcol <- function(object,
                           markers,
                           fcol = "markers",
@@ -303,6 +375,8 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param plot A \code{logical} defining if the figure should be
 ##'     plotted.  Useful when retrieving data only. Default is
 ##'     \code{TRUE}.
+##' @param grid A \code{logical} indicating whether a grid should
+##'     be plotted. Default is \code{TRUE}.
 ##' @param ... Additional parameters passed to \code{plot} and
 ##'     \code{points}.
 ##' @return Used for its side effects of generating a plot.  Invisibly
@@ -369,6 +443,7 @@ plot2D <- function(object,
                    addLegend,
                    identify = FALSE,
                    plot = TRUE,
+                   grid = TRUE,
                    ...) {
     ## handling deprecated outliers argument
     a <- as.list(match.call()[-1])
@@ -637,7 +712,7 @@ plot2D <- function(object,
                                  "top", "topright", "right", "center"))
             addLegend(object, fcol = fcol, where = where)
         }
-        grid()
+        if (grid) grid()
         if (index) {
             text(.data[, 1], .data[, 2], 1:nrow(.data), cex = idx.cex)
         }
@@ -904,4 +979,58 @@ getMarkerCols <- function(object, fcol = "markers") {
     col <- getStockcol()[as.numeric(.fcol)]
     col[ukn] <- getUnknowncol()
     col
+}
+
+
+##' The function plots marker consensus profiles obtained from mrkConsProfile
+##'
+##' @title Plot marker consenses profiles.
+##' @param object A `matrix` containing marker consensus profiles as output from
+##'     [mrkConsProfiles()].
+##' @param order Order for markers (optional).
+##' @param plot A `logical(1)` defining whether the heatmap should be plotted.
+##'     Default is `TRUE`.
+##' @return Invisibly returns `ggplot2` object.
+##' @author Tom Smith
+##' @md
+##' @examples
+##' library("pRolocdata")
+##' data(E14TG2aS1)
+##' hc <- mrkHClust(E14TG2aS1, plot = FALSE)
+##' mm <- getMarkerClasses(E14TG2aS1)
+##' ord <- levels(factor(mm))[order.dendrogram(hc)]
+##' fmat <- mrkConsProfiles(E14TG2aS1)
+##' plotConsProfiles(fmat, order = ord)
+plotConsProfiles <- function(object, order = NULL, plot = TRUE) {
+    feature <- NULL
+    fmatlong <- cbind(expand.grid("feature" = rownames(object),
+                                  "sample" = colnames(object),
+                                  stringsAsFactors = FALSE),
+                      "intensity" = as.vector(object))
+    if (!is.null(order))
+        fmatlong$feature <- factor(fmatlong$feature, order)
+
+    fmatlong$sample <- factor(fmatlong$sample, colnames(object))
+
+    p <- ggplot(fmatlong, aes(sample, feature, fill = intensity)) +
+        geom_tile() +
+        scale_fill_continuous(low = "white", high = "#56B4E9",
+                              limits = c(0, NA),
+                              name = "Intensity") +
+        theme_bw() +
+        xlab("Sample") +
+        ylab("") +
+        theme(panel.grid = element_blank(),
+              panel.border = element_blank(),
+              axis.line = element_line(),
+              axis.ticks = element_blank(),
+              axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+              aspect.ratio = 1) +
+        scale_x_discrete(expand = c(0,0)) +
+        scale_y_discrete(expand = c(0,0))
+
+    if (plot)
+        print(p)
+
+    invisible(p)
 }

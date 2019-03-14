@@ -1,3 +1,31 @@
+Changes in version 1.23.2
+-------------------------
+- Add mcmc helper functions.
+- New logPosteriors accessor for MAPParams object.
+- New plotConsProfiles function, contributed by Tom Smith (see PR
+  #131).
+- Update TAGM vignette, refering to workflow <2019-03-14 Thu>
+
+Changes in version 1.23.1
+-------------------------
+- Add note about missing data in QSep man <2018-10-31 Wed>
+- Add mcmc-helper documentation <2018-11-04 Sun>
+- Fixing numerical instability in Cholesky decomposition (see #124)
+  <2018-11-30 Fri>
+- Add option to display or not display grid in plot2D <2018-12-12 Wed>
+- `mrkHClust` now uses `mrkConsProfiles` and returns the `hclust`
+  object - see issue #130 for details and background <2018-12-19 Wed>
+
+Changes in version 1.23.0
+-------------------------
+- New version for Bioc 3.9 devel
+
+
+Changes in version 1.22.0
+-------------------------
+- New version for Bioc 3.8 release
+
+
 Changes in version 1.21.9
 -------------------------
 - Fix type in vignette header <2018-09-18 Tue>
@@ -168,7 +196,7 @@ Changes in version 1.15.3
 -------------------------
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-        <2016-11-04 Fri>
+		<2016-11-04 Fri>
 
 Changes in version 1.15.2
 -------------------------

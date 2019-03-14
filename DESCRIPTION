@@ -1,26 +1,29 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.23.1
+Version: 1.23.2
 Authors@R: c(person(given = "Laurent", family = "Gatto",
-                    email = "lg390@cam.ac.uk",
-                    role = c("aut","cre")),
-             person(given = "Lisa", family ="Breckels",
-                    email = "lms79@cam.ac.uk",
-                    role = "aut"),
-             person(given = "Samuel", family ="Wieczorek",
-                    email = "samuel.wieczorek@cea.fr",
-                    role = "ctb"),
-             person(given = "Oliver", family ="Crook",
-                    email = "omc25@cam.ac.uk",
-                    role = "aut"))
+		    email = "laurent.gatto@uclouvain.be",
+		    role = c("aut","cre")),
+	     person(given = "Lisa", family ="Breckels",
+		    email = "lms79@cam.ac.uk",
+		    role = "aut"),
+	     person(given = "Thomas", family ="Burger",
+		    email = "Thomas.BURGER@cea.fr",
+		    role = "ctb"),
+	     person(given = "Samuel", family ="Wieczorek",
+		    email = "samuel.wieczorek@cea.fr",
+		    role = "ctb"),
+	     person(given = "Oliver", family ="Crook",
+		    email = "omc25@cam.ac.uk",
+		    role = "aut"))
 Author: Laurent Gatto, Oliver Crook and Lisa M. Breckels with
     contributions from Thomas Burger and Samuel Wieczorek
-Maintainer: Laurent Gatto <lg390@cam.ac.uk>
+Maintainer: Laurent Gatto <laurent.gatto@uclouvain.be>
 Description: The pRoloc package implements machine learning and
-             visualisation methods for the analysis and interogation
-             of quantitiative mass spectrometry data to reliably infer
-             protein sub-cellular localisation.
+	     visualisation methods for the analysis and interogation
+	     of quantitiative mass spectrometry data to reliably infer
+	     protein sub-cellular localisation.
 Depends:
     R (>= 2.15),
     MSnbase (>= 1.19.20),
@@ -74,7 +77,8 @@ Suggests:
     GO.db,
     AnnotationDbi,
     Rtsne (>= 0.13),
-    nipals
+    nipals,
+    reshape
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
@@ -87,6 +91,7 @@ Collate:
     AllGenerics.R
     machinelearning-framework.R
     machinelearning-framework-theta.R
+    machinelearning-framework-map.R
     machinelearning-framework-mcmc.R
     machinelearning-utils.R
     machinelearning-functions-knn.R
@@ -133,4 +138,4 @@ Collate:
     clusterdist-functions.R
     clusterdist-framework.R
     qsep.R
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

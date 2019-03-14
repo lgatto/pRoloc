@@ -5,7 +5,7 @@
 <img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRoloc.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocdata.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocGUI.png" height="200">
 
 
-The `pRoloc` suite set of software offer a complete software pipeline
+The `pRoloc` suite set of software offers a complete software pipeline
 to analyse, visualise and interpret mass spectrometry-based spatial
 proteomics data such, for example, as LOPIT (Localization of Organelle
 Proteins by Isotope Tagging), PCP (Protein Correlation Profiling) or
@@ -14,7 +14,7 @@ hyperLOPIT (hyperplexed LOPIT). The suite includes
 the mail software that focuses on data analysis using state-of-the-art
 machine learning,
 [`pRolocdata`](http://bioconductor.org/packages/release/data/experiment/html/pRolocdata.html),
-that distributes numerous datasets, and [`pRolocGUI`], that offers
+that distributes numerous datasets, and [`pRolocGUI`](https://computationalproteomicsunit.github.io/pRolocGUI/), that offers
 interactive visualisations dedicated to spatial proteomics. The
 software are distributed as part of the
 R/[Bioconductor](http://bioconductor.org/) project.
@@ -115,7 +115,9 @@ Specific algorithms available in the software:
 
 * Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley,
  Laurent Gatto *A Bayesian Mixture Modelling Approach For Spatial
- Proteomics* bioRxiv 282269; doi: https://doi.org/10.1101/282269
+ Proteomics* PLOS Computational Biology
+ doi:[10.1371/journal.pcbi.1006516](https://doi.org/10.1371/journal.pcbi.1006516)
+
 
 
 #### More resource

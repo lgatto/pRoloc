@@ -1,3 +1,4 @@
+##' @noRd
 lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
   HDMSeFinalPeptideFiles <- dir(hdmsedir, full.names = TRUE)
   message("[LOPIMS 1] Estimate master FDR")
@@ -14,6 +15,7 @@ lopims1 <- function(hdmsedir, fastafile, mfdr = 0.025) {
               cmb = cmb))
 }
 
+##' @noRd
 lopims2 <- function(msedir, pep3ddir, fasta,
                      master, outdir,
                      ...) {
@@ -47,6 +49,8 @@ lopims2 <- function(msedir, pep3ddir, fasta,
   return(res)
 }
 
+
+##' @noRd
 lopims3 <- function(synlist) {
   message("[LOPIMS 3] Combine synapter results")
   ll <- lapply(synlist, as, "MSnSet")
@@ -55,27 +59,30 @@ lopims3 <- function(synlist) {
     sampleNames(ll[[i]]) <- nms[i]
     ll[[i]] <- updateFvarLabels(ll[[i]], nms[i])
     ll[[i]]
-  })      
+  })
   Reduce(combine, ll)
 }
 
+
+
 refNormMedOfPepRatio <- function(x) {
-  ## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., 
-  ## DAnTE: a statistical tool for quantitative analysis of -omics data. 
-  ## Bioinformatics 2008, 24, 1556–1558.
-  ##
-  ## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269
-  ## Ratio all peptides to the peptide with the least amount of missing values;
-  ## Protein abundance is the median of the scaled peptide abundances
-  ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
-  x <- as.matrix(x)
-  .res <- apply(x, 1, function(.x) {
-    .xref <- .x[ref]
-    .x/.xref
-  })
-  res <- t(.res)
-  apply(res, 2, median, na.rm = TRUE)
-}  
+    ## Polpitiya, A., Qian, W., Jaitly, N., Petyuk, V. et al., DAnTE: a
+    ## statistical tool for quantitative analysis of -omics data.
+    ## Bioinformatics 2008, 24, 1556 - 1558.
+    ##
+    ## See also Matzke et al. Proteomics DOI 10.1002/pmic.201200269 Ratio
+    ## all peptides to the peptide with the least amount of missing
+    ## values; Protein abundance is the median of the scaled peptide
+    ## abundances
+    ref <- which.min(apply(x, 2, function(.x) sum(is.na(.x))))
+    x <- as.matrix(x)
+    .res <- apply(x, 1, function(.x) {
+        .xref <- .x[ref]
+        .x/.xref
+    })
+    res <- t(.res)
+    apply(res, 2, median, na.rm = TRUE)
+}
 
 refNormMeanOfNonNAPepSum <- function(x) {
   ## For each protein:
@@ -84,11 +91,11 @@ refNormMeanOfNonNAPepSum <- function(x) {
   ##     without missing values, break ties using max(sum(int))
   ## (3) Calculate mean(sum(frac_i), sum(frac_ref))
   ref <- apply(x, 2, function(.x) sum(is.na(.x)))
-  idx <- which(ref == min(ref)) ## indices if min na columns 
+  idx <- which(ref == min(ref)) ## indices if min na columns
   if (length(idx) > 1) {
     sms <- colSums(x, na.rm = TRUE)
     ## index of max sum from the min na columns
-    jdx <- which.max(sms[idx]) 
+    jdx <- which.max(sms[idx])
     ref <- idx[jdx]
   } else {
     ref <- which.min(ref)
@@ -102,20 +109,22 @@ refNormMeanOfNonNAPepSum <- function(x) {
     .res[i] <- sum(x[sel, i])/sum(x[sel, ref])
   }
   .res
-}  
+}
 
+
+##' @noRd
 lopims4 <- function(xx) {
   ## remove rows with only NAs
   xx <- xx[!apply(exprs(xx), 1, function(x) all(is.na(x))), ]
   message("[LOPIMS 4] Calculate ratios to reference peptide")
   res <- by(exprs(xx),
             fData(xx)$protein.Accession.LOPIMS1,
-            refNormMeanOfNonNAPepSum)  
+            refNormMeanOfNonNAPepSum)
   res2 <- Reduce(rbind, res)
   rownames(res2) <- names(res)
   xx2 <- combineFeatures(xx, fData(xx)$protein.Accession.LOPIMS1,
                          fun = median, na.rm=TRUE)
-  ## xx2 <- MSnbase:::nologging(xx2) 
+  ## xx2 <- MSnbase:::nologging(xx2)
   exprs(xx2) <- res2
   xx2@processingData@processing <-
     c(xx2@processingData@processing,
@@ -128,6 +137,7 @@ lopims4 <- function(xx) {
 
 
 
+##' @noRd
 lopims5 <- function(x, markerfile) {
   message("[LOPIMS 5] Adding markers")
   addMarkers(x, markerfile, verbose = TRUE)
@@ -137,11 +147,11 @@ lopims5 <- function(x, markerfile) {
 ##' function of the \code{\link[synapter]{synapter}} package and combines resulting
 ##' \code{\link[synapter]{Synapter}} instances into one \code{"\linkS4class{MSnSet}"}
 ##' and organelle marker data is added as a feature-level annotation variable.
-##' 
+##'
 ##' The \code{LOPIMS} pipeline is composed of 5 steps:
-##' 
+##'
 ##' \enumerate{
-##' 
+##'
 ##' \item The HDMSe final peptide files are used to compute false
 ##' discovery rates uppon all possible combinations of HDMSe final
 ##' peptides files and the best combination smaller or equal to
@@ -149,7 +159,7 @@ lopims5 <- function(x, markerfile) {
 ##' \code{\link[synapter]{estimateMasterFdr}} for details.  The
 ##' corresponding master run is then created as descibed in
 ##' \code{\link[synapter]{makeMaster}}. (function \code{lopims1})
-##' 
+##'
 ##' \item Each MSe/pep3D pair is processed using the HDMSe master file
 ##' using \code{\link[synapter]{synergise}}. (function \code{lopims2})
 ##'
@@ -169,7 +179,7 @@ lopims5 <- function(x, markerfile) {
 ##' \item The markers defined in the \code{markerfile} are collated as
 ##' feature meta-data in the \code{markers} variable.  See
 ##' \code{\link{addMarkers}} for details. (function \code{lopims5})
-##' 
+##'
 ##' }
 ##'
 ##' Intermediate \code{synergise} reports as well as resulting objects
@@ -188,13 +198,13 @@ lopims5 <- function(x, markerfile) {
 ##'     Independent Acquisition in Proteomics Studies P.V. Shliaha,
 ##'     N.J. Bond, L. Gatto and K.S. Lilley Journal of Proteome
 ##'     Research, 2013;12(6):2323-39. PMID: 23514362.
-##' 
+##'
 ##'     MSnbase-an R/Bioconductor package for isobaric tagged mass
 ##'     spectrometry data visualization, processing and
 ##'     quantitation. L. Gatto and KS. Lilley. Bioinformatics. 2012
 ##'     Jan 15;28(2):288-9.  doi: 10.1093/bioinformatics/btr645. Epub
 ##'     2011 Nov 22. PubMed PMID: 22113085.
-##' 
+##'
 ##' @title A complete LOPIMS pipeline
 ##' @param hdmsedir A \code{character} identifying the directory
 ##' containing the HDMSe final peptide files. Default is \code{HDMSe}.
@@ -222,13 +232,13 @@ lopims <- function(hdmsedir = "HDMSE",
                    fastafile,
                    markerfile,
                    mfdr = 0.025,
-                   ...) {  
+                   ...) {
   requireNamespace("synapter")
-  
+
   msg0 <-
     paste("\n ------------------------------------------------------------\n",
           "This free open-source software implements academic research. \n",
-          "If you use it, please cite:\n\n",          
+          "If you use it, please cite:\n\n",
           "L. Gatto and KS. Lilley. MSnbase - an R/Bioconductor\n",
           "package for isobaric tagged mass spectrometry data visualization,\n",
           "processing and quantitation. Bioinformatics 28, 288-289 (2012).\n\n",
@@ -246,15 +256,15 @@ lopims <- function(hdmsedir = "HDMSE",
           "24413670; PubMed Central PMCID: PMC3998135.\n",
           "------------------------------------------------------------\n")
   message(msg0)
-  
+
   version <- "0.1.1"
-  released <- "2013/03/29"  
+  released <- "2013/03/29"
   msg1 <- paste0("LOPIMS pipline version ", version, " (", released, "), using\n",
                  "synapter ", packageVersion("synapter"),
-                 ", MSnbase ", packageVersion("MSnbase"), 
-                 " and pRoloc ", packageVersion("pRoloc"), ".\n\n") 
+                 ", MSnbase ", packageVersion("MSnbase"),
+                 " and pRoloc ", packageVersion("pRoloc"), ".\n\n")
   message(msg1)
-  
+
   if (missing(fastafile)) {
     fastafile <- dir(pattern = "\\.fasta$")
     if (length(fastafile) != 1)
@@ -271,8 +281,8 @@ lopims <- function(hdmsedir = "HDMSE",
   mainoutputdir <- paste0("LOPIMS_pipeline_",
                           format(Sys.time(), "%a_%b_%d_%H.%M.%S_%Y"))
   dir.create(mainoutputdir)
-  message("[LOPIMS  ] Results will be saved to ", mainoutputdir)  
-  
+  message("[LOPIMS  ] Results will be saved to ", mainoutputdir)
+
   master <- lopims1(hdmsedir, fastafile, mfdr)
   res <- lopims2(msedir, pep3ddir, fastafile,
                   master,

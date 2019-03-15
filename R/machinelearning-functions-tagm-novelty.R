@@ -1,3 +1,15 @@
+## Summary:
+##
+##     +------> .trainMcmcTrain <-----+
+##     |                              |
+##  tagmMcmcTrain                tagmNoveltyTrain
+##     |                              |
+##  tagmMcmcProcess <------------tagMNoveltyProcess
+##     |                              |
+##  tagmMcmcPredict              tagmNoveltyPredict
+
+
+
 ##' @rdname tagm-mcmc
 tagmNoveltyTrain <- function(object,
                              fcol = "markers",

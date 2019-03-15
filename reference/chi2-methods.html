@@ -202,23 +202,23 @@ The chi2 methods implement this idea and compute such Chi^2
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mrk</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>6</span>)
 <span class='no'>prot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 2.1299623 0.7937039 1.7010339 1.1377624 0.6292939 0.6639843 2.1496029
-#&gt;  [8] 3.9046051 0.9917031 3.1618848</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1] 14.6543228  3.4801980 -4.2756919 -2.0614175  0.3742208 -2.3285601
-#&gt;  [7]  3.9735613 12.8193304  2.4246617  4.2294876</div><div class='input'>
+<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 0.8308994 2.1386626 1.7560452 1.6235334 2.0518050 0.6134798 2.3807745
+#&gt;  [8] 3.2107485 3.5350844 0.8785330</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1]  -9.483519  -1.362931  -1.765216   3.685685  11.456126  -2.328587
+#&gt;  [7] -17.470374  -9.224267  -1.070448  -8.062769</div><div class='input'>
 <span class='no'>pepmark</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>18</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
 <span class='no'>pepprot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;            [,1]      [,2]      [,3]
-#&gt;  [1,] 0.6679420 2.1045989 1.1605537
-#&gt;  [2,] 3.1380627 3.0980545 3.1625716
-#&gt;  [3,] 2.1577276 3.3401388 2.1971596
-#&gt;  [4,] 1.5717384 2.2462790 2.0639384
-#&gt;  [5,] 1.5524689 1.8407759 1.1656825
-#&gt;  [6,] 1.1029080 2.1919204 1.1280035
-#&gt;  [7,] 1.4978413 2.8187029 1.3009294
-#&gt;  [8,] 1.3544892 1.0737937 0.9714045
-#&gt;  [9,] 1.2698819 2.4089040 1.3382354
-#&gt; [10,] 0.4208826 0.6813714 0.4568825</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1] 3.933095 9.398689 7.695026 5.881956 4.558927 4.422832 5.617474 3.399687
-#&gt;  [9] 5.017021 1.559136</div></pre>
+<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;            [,1]      [,2]     [,3]
+#&gt;  [1,] 1.6822372 2.0720200 3.450227
+#&gt;  [2,] 0.3098070 2.1545389 2.053091
+#&gt;  [3,] 4.6383784 5.4566670 5.374530
+#&gt;  [4,] 2.6123939 2.2649024 3.764361
+#&gt;  [5,] 1.7759110 7.2470995 5.537637
+#&gt;  [6,] 2.2643252 0.8027534 2.678482
+#&gt;  [7,] 4.2497842 4.2792660 6.738832
+#&gt;  [8,] 0.7532644 1.4097223 1.254014
+#&gt;  [9,] 1.0133082 2.4166324 2.739522
+#&gt; [10,] 2.3419266 0.4731417 1.750818</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1]  7.204484  4.517437 15.469575  8.641658 14.560648  5.745560 15.267882
+#&gt;  [8]  3.417001  6.169463  4.565887</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

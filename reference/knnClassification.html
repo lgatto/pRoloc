@@ -197,14 +197,14 @@ package <code>class</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9506  0.9641  0.9776  0.9709  0.9811  0.9846 
+#&gt;  0.9818  0.9840  0.9862  0.9893  0.9931  1.0000 
 #&gt;  best k: 3   </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='knnClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; 
 #&gt; 3 
 #&gt; 1 </div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='knnClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; k 
 #&gt; 3 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knnClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"knn"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            20           181            94           106            49 
+#&gt;            21           180            94           106            49 
 #&gt;            PM      Ribosome           TGN       vacuole 
 #&gt;           138            50            21            30 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
@@ -225,8 +225,8 @@ package <code>class</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed knn prediction (k=3) Mon Feb 25 12:05:21 2019 
-#&gt; Added knn predictions according to global threshold = 0 Mon Feb 25 12:05:21 2019 
+#&gt; Performed knn prediction (k=3) Fri Mar 15 10:06:32 2019 
+#&gt; Added knn predictions according to global threshold = 0 Fri Mar 15 10:06:33 2019 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"knn"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            15           173            83           103            49 
@@ -250,8 +250,8 @@ package <code>class</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed knn prediction (k=3) Mon Feb 25 12:05:21 2019 
-#&gt; Added knn predictions according to global threshold = 0.75 Mon Feb 25 12:05:21 2019 
+#&gt; Performed knn prediction (k=3) Fri Mar 15 10:06:32 2019 
+#&gt; Added knn predictions according to global threshold = 0.75 Fri Mar 15 10:06:33 2019 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"knn"</span>)</div><div class='img'><img src='knnClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

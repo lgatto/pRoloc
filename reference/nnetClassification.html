@@ -205,29 +205,29 @@ package <code>nnet</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.8937  0.9328  0.9719  0.9482  0.9754  0.9788 
+#&gt;  0.9452  0.9543  0.9633  0.9606  0.9684  0.9734 
 #&gt;  best decay: 1e-05 0.1   
 #&gt;  best size: 10   </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='nnetClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;       10
-#&gt; 1e-05  1
-#&gt; 0.1    0</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='nnetClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; decay  size 
-#&gt; 1e-05 1e+01 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)</div><div class='output co'>#&gt; # weights:  269
-#&gt; initial  value 631.584855 
-#&gt; iter  10 value 250.983083
-#&gt; iter  20 value 37.036832
-#&gt; iter  30 value 2.374637
-#&gt; iter  40 value 0.753681
-#&gt; iter  50 value 0.581079
-#&gt; iter  60 value 0.513334
-#&gt; iter  70 value 0.466126
-#&gt; iter  80 value 0.403528
-#&gt; iter  90 value 0.365791
-#&gt; iter 100 value 0.339174
-#&gt; final  value 0.339174 
+#&gt; 1e-05  0
+#&gt; 0.1    1</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='nnetClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; decay  size 
+#&gt;   0.1  10.0 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)</div><div class='output co'>#&gt; # weights:  269
+#&gt; initial  value 644.602057 
+#&gt; iter  10 value 366.355071
+#&gt; iter  20 value 219.667108
+#&gt; iter  30 value 170.535447
+#&gt; iter  40 value 161.831511
+#&gt; iter  50 value 159.393237
+#&gt; iter  60 value 158.224767
+#&gt; iter  70 value 157.394282
+#&gt; iter  80 value 156.672541
+#&gt; iter  90 value 156.413649
+#&gt; iter 100 value 156.386264
+#&gt; final  value 156.386264 
 #&gt; stopped after 100 iterations</div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            28           169            94           107            50 
+#&gt;            18           184            95           105            49 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           121            61            27            32 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           136            49            19            34 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -246,13 +246,13 @@ package <code>nnet</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed nnet prediction (decay=1e-05 size=10) Mon Feb 25 12:05:53 2019 
-#&gt; Added nnet predictions according to global threshold = 0 Mon Feb 25 12:05:53 2019 
+#&gt; Performed nnet prediction (decay=0.1 size=10) Fri Mar 15 10:07:04 2019 
+#&gt; Added nnet predictions according to global threshold = 0 Fri Mar 15 10:07:04 2019 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            27           168            94           107            50 
+#&gt;            14           151            70            93            41 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;           120            58            27             6            32 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            96            29            13           154            28 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -271,8 +271,8 @@ package <code>nnet</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed nnet prediction (decay=1e-05 size=10) Mon Feb 25 12:05:53 2019 
-#&gt; Added nnet predictions according to global threshold = 0.75 Mon Feb 25 12:05:53 2019 
+#&gt; Performed nnet prediction (decay=0.1 size=10) Fri Mar 15 10:07:04 2019 
+#&gt; Added nnet predictions according to global threshold = 0.75 Fri Mar 15 10:07:04 2019 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"nnet"</span>)</div><div class='img'><img src='nnetClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

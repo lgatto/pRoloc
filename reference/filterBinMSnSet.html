@@ -190,28 +190,28 @@ printed. Default is <code>TRUE</code>.</p></td>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>MSnSet</span>(<span class='kw'>exprs</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>fData</span> <span class='kw'>=</span> <span class='no'>fd</span>, <span class='kw'>pData</span> <span class='kw'>=</span> <span class='no'>fd</span>)
 <span class='fu'>exprs</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   a b c d e
 #&gt; a 0 0 0 0 0
-#&gt; b 0 1 0 1 0
-#&gt; c 0 1 1 1 1
-#&gt; d 0 1 0 0 0
-#&gt; e 0 0 1 1 0</div><div class='input'><span class='co'>## Remove columns with no 1s</span>
-<span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 1 column(s)</span></div><div class='output co'>#&gt;   b c d e
-#&gt; a 0 0 0 0
-#&gt; b 1 0 1 0
-#&gt; c 1 1 1 1
-#&gt; d 1 0 0 0
-#&gt; e 0 1 1 0</div><div class='input'><span class='co'>## Remove columns with one 1 or less</span>
-<span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 2 column(s)</span></div><div class='output co'>#&gt;   b c d
-#&gt; a 0 0 0
-#&gt; b 1 0 1
-#&gt; c 1 1 1
-#&gt; d 1 0 0
-#&gt; e 0 1 1</div><div class='input'><span class='co'>## Remove columns with two 1s or less</span>
-<span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 3 column(s)</span></div><div class='output co'>#&gt;   b d
+#&gt; b 0 0 0 1 0
+#&gt; c 0 0 0 1 0
+#&gt; d 0 1 0 1 0
+#&gt; e 0 1 0 0 0</div><div class='input'><span class='co'>## Remove columns with no 1s</span>
+<span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 3 column(s)</span></div><div class='output co'>#&gt;   b d
 #&gt; a 0 0
-#&gt; b 1 1
-#&gt; c 1 1
-#&gt; d 1 0
-#&gt; e 0 1</div><div class='input'><span class='co'>## Remove columns with three 1s </span>
+#&gt; b 0 1
+#&gt; c 0 1
+#&gt; d 1 1
+#&gt; e 1 0</div><div class='input'><span class='co'>## Remove columns with one 1 or less</span>
+<span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 3 column(s)</span></div><div class='output co'>#&gt;   b d
+#&gt; a 0 0
+#&gt; b 0 1
+#&gt; c 0 1
+#&gt; d 1 1
+#&gt; e 1 0</div><div class='input'><span class='co'>## Remove columns with two 1s or less</span>
+<span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 4 column(s)</span></div><div class='output co'>#&gt;   d
+#&gt; a 0
+#&gt; b 1
+#&gt; c 1
+#&gt; d 1
+#&gt; e 0</div><div class='input'><span class='co'>## Remove columns with three 1s </span>
 <span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 5 column(s)</span></div><div class='output co'>#&gt;  
 #&gt; a
 #&gt; b
@@ -220,10 +220,10 @@ printed. Default is <code>TRUE</code>.</p></td>
 #&gt; e</div><div class='input'><span class='co'>## Remove columns that have half or less of 1s</span>
 <span class='fu'>exprs</span>(<span class='fu'>filterBinMSnSet</span>(<span class='no'>x</span>, <span class='kw'>MARGIN</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>0.5</span>))</div><div class='output co'>#&gt; <span class='message'>Removing 3 column(s)</span></div><div class='output co'>#&gt;   b d
 #&gt; a 0 0
-#&gt; b 1 1
-#&gt; c 1 1
-#&gt; d 1 0
-#&gt; e 0 1</div></pre>
+#&gt; b 0 1
+#&gt; c 0 1
+#&gt; d 1 1
+#&gt; e 1 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

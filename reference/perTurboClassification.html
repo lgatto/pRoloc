@@ -229,11 +229,10 @@ Default is <code>markers</code>.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.6667  0.7222  0.7778  0.8148  0.8889  1.0000 
-#&gt;  best sigma: 0.1 1   
-#&gt;  best pRegul: 4 0.25   </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='perTurboClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;     0.25  4
-#&gt; 0.1   NA  1
-#&gt; 1      0 NA</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='perTurboClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;  sigma pRegul 
+#&gt;  0.7778  0.7778  0.7778  0.8519  0.8889  1.0000 
+#&gt;  best sigma: 0.1   
+#&gt;  best pRegul: 4 1   </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='perTurboClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;     1 4
+#&gt; 0.1 0 1</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='img'><img src='perTurboClassification-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt;  sigma pRegul 
 #&gt;    0.1    4.0 </div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>perTurboClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)
 <span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"perTurbo"</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
@@ -258,8 +257,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed perTurbo prediction (sigma=0.1 pRegul=4) Mon Feb 25 12:06:06 2019 
-#&gt; Added perTurbo predictions according to global threshold = 0 Mon Feb 25 12:06:06 2019 
+#&gt; Performed perTurbo prediction (sigma=0.1 pRegul=4) Fri Mar 15 10:07:16 2019 
+#&gt; Added perTurbo predictions according to global threshold = 0 Fri Mar 15 10:07:16 2019 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"perTurbo"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            45            28            55            20 
@@ -283,8 +282,8 @@ Default is <code>markers</code>.</p></td>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed perTurbo prediction (sigma=0.1 pRegul=4) Mon Feb 25 12:06:06 2019 
-#&gt; Added perTurbo predictions according to global threshold = 0.75 Mon Feb 25 12:06:06 2019 
+#&gt; Performed perTurbo prediction (sigma=0.1 pRegul=4) Fri Mar 15 10:07:16 2019 
+#&gt; Added perTurbo predictions according to global threshold = 0.75 Fri Mar 15 10:07:16 2019 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"perTurbo"</span>)</div><div class='img'><img src='perTurboClassification-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

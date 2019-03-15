@@ -201,9 +201,10 @@ only, for all classes or none.</p></td>
 <span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>x</span>, <span class='kw'>function</span>(<span class='no'>z</span>)
             <span class='fu'><a href='knnOptimisation.html'>knnOptimisation</a></span>(<span class='no'>z</span>, <span class='kw'>times</span><span class='kw'>=</span><span class='fl'>5</span>,
                             <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>,
-                            <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: NaNs found in 'precision' with hyperparameters k:11.</span></div><div class='input'><span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='no'>k</span>, <span class='kw'>function</span>(<span class='no'>z</span>) <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>z</span>))
+                            <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
+<span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='no'>k</span>, <span class='kw'>function</span>(<span class='no'>z</span>) <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>z</span>))
 <span class='no'>k</span></div><div class='output co'>#&gt; k k 
-#&gt; 7 3 </div><div class='input'><span class='co'>## reducing parameter search with theta = 1,</span>
+#&gt; 3 7 </div><div class='input'><span class='co'>## reducing parameter search with theta = 1,</span>
 <span class='co'>## weights of only 1 or 0 will be considered</span>
 <span class='no'>opt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='knntlOptimisation.html'>knntlOptimisation</a></span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                          <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>,
@@ -213,7 +214,7 @@ only, for all classes or none.</p></td>
 #&gt; Algorithm: theta 
 #&gt; Theta hyper-parameters:
 #&gt;  weights: 0 1 
-#&gt;  k: 7 3 
+#&gt;  k: 3 7 
 #&gt;  nrow: 16 
 #&gt; Design:
 #&gt;  Replication: 2 x 5-fold X-validation
@@ -221,11 +222,11 @@ only, for all classes or none.</p></td>
 #&gt; Results
 #&gt;  macro F1:
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.8810  0.8882  0.8955  0.8955  0.9027  0.9100 
+#&gt;  0.9225  0.9244  0.9263  0.9263  0.9281  0.9300 
 #&gt;  best theta:
 #&gt;          ER Golgi Mitochondrion PM
-#&gt; weight:0  1     2             0  2
-#&gt; weight:1  1     0             2  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
+#&gt; weight:0  2     2             0  2
+#&gt; weight:1  0     0             2  0</div><div class='input'><span class='no'>th</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>opt</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>opt</span>)</div><div class='img'><img src='knntlClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>knntlClassification</span>(<span class='no'>andy2011</span>, <span class='no'>andy2011goCC</span>,
                            <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers.orig"</span>, <span class='no'>th</span>, <span class='no'>k</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)

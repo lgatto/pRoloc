@@ -17,7 +17,6 @@ vignette: >
 BiocStyle::markdown()
 ```
 
-
 For an in-depth description of the infrastructure for Bayesian spatial
 proteomics, please see
 

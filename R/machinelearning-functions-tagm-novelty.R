@@ -69,6 +69,7 @@ tagmNoveltyProcess <- function(object,
 ##'     `markers`.
 ##' @return `tagmNoveltyChainProcess` returns an instance of class
 ##'     [NoveltyChain()].`
+##' @noRd
 tagmNoveltyChainProcess <- function(object,
                                     params,
                                     fcol = "markers") {
@@ -406,6 +407,21 @@ tagmNoveltyChain <- function(object,
 ##'     attributions and discovery probabilities.
 ##' @rdname tagm-mcmc
 ##' @examples
+##' library(pRolocdata)
+##' data(tan2009r1)
+##'
+##' param <- tagmNoveltyTrain(tan2009r1, numIter = 10, burnin = 2)
+##' nov <- tagmNoveltyProcess(tan2009r1, param)
+##' tan2009r1 <- tagmNoveltyPredict(tan2009r1, nov)
+##'
+##' getMarkers(tan2009r1, fcol = "tagm.phenotype")
+##'
+##' plot2D(tan2009r1, fcol = "tagm.phenotype",
+##'        cex = fData(tan2009r1)$tagm.discovery.prob)
+##' addLegend(tan2009r1, fcol = "tagm.phenotype")
+##'
+##' pRoloc:::plotPostSimMat(tan2009r1, nov)
+##' pRoloc:::plotPostSimMat(tan2009r1, nov, subset = TRUE)
 tagmNoveltyPredict <- function(object,
                                params) {
     if (any(c('tagm.phenotype', 'tagm.discovery.prob') %in% fvarLabels(object)))

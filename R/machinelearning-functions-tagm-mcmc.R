@@ -141,7 +141,6 @@
 ##'     The default it 5. Only relevant for `tagmMcmcNoveltyTrain`.
 ##' @return `tagmMcmcTrain` returns an instance of class `MCMCParams`.
 ##' @md
-##' @references
 ##' @rdname tagm-mcmc
 tagmMcmcTrain <- function(object,
                           fcol = "markers",

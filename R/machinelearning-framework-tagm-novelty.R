@@ -1,3 +1,30 @@
+##' @title Contained for results of maximising the posterior expected adjusted
+##'     rand index This class wraps the `list` ouput of `mcclust::maxpear` into
+##'     an object.
+##'
+##' @slot cl A factor containing the organelle/phenotype to which the protein
+##'     has been assigned.
+##' @slot value numeric(1) containing the value of PEAR.
+##' @slot method character(1) describing the approach used to maximise PEAR. See
+##'     `mcclust::maxpear` for details.
+##' @rdname NoveltyChains
+.MaxPear <- setClass("MaxPear",
+                     slots = c(cl = "factor",
+                               value = "numeric",
+                               method = "character"))
+
+##' @title Container for a single Novelty TAGM mcmc chain results
+##'
+##' @slot psm A matrix where each entry is the posterior probability that
+##'     protein i localises with protein j
+##' @slot maxPear An instance of class `MaxPear` containing results from
+##'     maximising the Posterior Expected Adjusted Rand index.
+##' @md
+##' @rdname NoveltyChains
+.NoveltyChain <- setClass("NoveltyChain",
+                       slots = c(psm = "matrix",
+                                 mp = "MaxPear"))
+
 ##' @title Contained for full Novelty TAGM results.
 ##'
 ##' @slot pooledNoveltyChain An instance of class `NoveltyChain` after pooling
@@ -22,34 +49,6 @@
                                if (is.null(msg)) TRUE
                                else msg
                            })
-
-
-##' @title Container for a single Novelty TAGM mcmc chain results
-##'
-##' @slot psm A matrix where each entry is the posterior probability that
-##'     protein i localises with protein j
-##' @slot maxPear An instance of class `MaxPear` containing results from
-##'     maximising the Posterior Expected Adjusted Rand index.
-##' @md
-##' @rdname NoveltyChains
-.NoveltyChain <- setClass("NoveltyChain",
-                       slots = c(psm = "matrix",
-                                 mp = "MaxPear"))
-
-##' @title Contained for results of maximising the posterior expected adjusted
-##'     rand index This class wraps the `list` ouput of `mcclust::maxpear` into
-##'     an object.
-##'
-##' @slot cl A factor containing the organelle/phenotype to which the protein
-##'     has been assigned.
-##' @slot value numeric(1) containing the value of PEAR.
-##' @slot method character(1) describing the approach used to maximise PEAR. See
-##'     `mcclust::maxpear` for details.
-##' @rdname NoveltyChains
-.MaxPear <- setClass("MaxPear",
-                     slots = c(cl = "factor",
-                               value = "numeric",
-                               method = "character"))
 
 setMethod("show", "NoveltyChains",
           function(object) {

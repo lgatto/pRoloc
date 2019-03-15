@@ -25,6 +25,7 @@ importFrom("dendextend", "set")
 importFrom("LaplacesDemon", "dinvwishart", "ddirichlet")
 importFrom("coda", "as.mcmc.list", "gelman.diag", "geweke.diag")
 importFrom("mixtools", "ellipse")
+importFrom("mcclust", "maxpear")
 
 ## importFrom("Rtsne", "Rtsne") ## moved to Suggests
 

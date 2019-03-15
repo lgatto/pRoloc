@@ -65,7 +65,7 @@ geweke_test <- function(k) {
 mcmc_pool_chains <- function(param) {
   stopifnot(inherits(param, "MCMCParams"))
 
-  param1 <- pRoloc:::chains(param)[[1]]
+  param1 <- chains(param)[[1]]
 
   n <- param1@n
   nPool <- param1@n * length(param) # total number of iteration increase
@@ -88,7 +88,7 @@ mcmc_pool_chains <- function(param) {
   ## Calculate basic quantities
   for (j in seq_len(numChains)) {
 
-    mc <- pRoloc:::chains(param)[[j]]
+    mc <- chains(param)[[j]]
     ## Pool chains
     pooled.Component[, n * (j - 1) + seq.int(n)] <- mc@Component
     pooled.ComponentProb[, n * (j - 1) + seq.int(n), ] <- mc@ComponentProb
@@ -103,7 +103,7 @@ mcmc_pool_chains <- function(param) {
   sk.list <- lapply(param@chains@chains,function(x) x@ComponentParam@sk)
 
   ## save Component parameters
-  .ComponentParam <- pRoloc:::.ComponentParam(K = KPool, D = param1@ComponentParam@D,
+  .ComponentParam <- .ComponentParam(K = KPool, D = param1@ComponentParam@D,
                                      mk = Reduce("+", mk.list) / length(mk.list),
                                      lambdak = Reduce("+", lambdak.list) / length(lambdak.list),
                                      nuk = Reduce("+", nuk.list) / length(nuk.list),
@@ -115,7 +115,7 @@ mcmc_pool_chains <- function(param) {
   .OutlierProb <- pooled.OutlierProb
 
   ## make MCMCChain object
-  .MCMCChain <- pRoloc:::.MCMCChain(n = nPool,
+  .MCMCChain <- .MCMCChain(n = nPool,
                            K = KPool,
                            N = NPool,
                            Component = .Component,
@@ -125,13 +125,13 @@ mcmc_pool_chains <- function(param) {
                            ComponentParam = .ComponentParam)
 
   ## Make MCMCChains with single object
-  .MCMCChains <- pRoloc:::.MCMCChains(chains = list(.MCMCChain))
+  .MCMCChains <- .MCMCChains(chains = list(.MCMCChain))
 
   ## Make MCMCParams object
-  pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                       chains = .MCMCChains,
-                       priors = param@priors,
-                       summary = pRoloc:::.MCMCSummary())
+  .MCMCParams(method = "TAGM.MCMC",
+              chains = .MCMCChains,
+              priors = param@priors,
+              summary = .MCMCSummary())
 
 }
 
@@ -149,7 +149,7 @@ mcmc_burn_chains <- function(x, n = 50) {
     stopifnot(inherits(x, "MCMCParams"))
     n <- as.integer(n[1])
     stopifnot(is.numeric(n))
-    .chain <- pRoloc:::chains(x)[[1]]
+    .chain <- chains(x)[[1]]
     K <- .chain@K # Number of components
     N <- .chain@N # Number of Proteins
     chainlist <-
@@ -163,21 +163,21 @@ mcmc_burn_chains <- function(x, n = 50) {
             .ComponentProb <- chain@ComponentProb[, retain, ]
             .Outlier <- chain@Outlier[, retain]
             .OutlierProb <- chain@OutlierProb[, retain, ]
-            pRoloc:::.MCMCChain(n = as.integer(chain@n - n),
-                                K = K,
-                                N = N,
-                                Component = .Component,
-                                ComponentProb = .ComponentProb,
-                                Outlier = .Outlier,
-                                OutlierProb = .OutlierProb,
-                                ComponentParam = .ComponentParam)
+            .MCMCChain(n = as.integer(chain@n - n),
+                       K = K,
+                       N = N,
+                       Component = .Component,
+                       ComponentProb = .ComponentProb,
+                       Outlier = .Outlier,
+                       OutlierProb = .OutlierProb,
+                       ComponentParam = .ComponentParam)
         })
 
-    mcmc_chainlist <- pRoloc:::.MCMCChains(chains = chainlist)
-    pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                         chains = mcmc_chainlist,
-                         priors = x@priors,
-                         summary = pRoloc:::.MCMCSummary())
+    mcmc_chainlist <- .MCMCChains(chains = chainlist)
+    .MCMCParams(method = "TAGM.MCMC",
+                chains = mcmc_chainlist,
+                priors = x@priors,
+                summary = .MCMCSummary())
 }
 
 
@@ -192,7 +192,7 @@ mcmc_burn_chains <- function(x, n = 50) {
 ##' @author Laurent Gatto
 mcmc_thin_chains <- function(x, freq = 5) {
   stopifnot(inherits(x, "MCMCParams"))
-  .chain <- pRoloc:::chains(x)[[1]]
+  .chain <- chains(x)[[1]]
   K <- .chain@K # Number of components
   N <- .chain@N # Number of Proteins
   nThin <- floor(.chain@n/freq) # Number of iterations after thinning
@@ -207,21 +207,21 @@ mcmc_thin_chains <- function(x, freq = 5) {
       .ComponentProb <- chain@ComponentProb[, retain, ]
       .Outlier <- chain@Outlier[, retain]
       .OutlierProb <- chain@OutlierProb[, retain, ]
-      pRoloc:::.MCMCChain(n = as.integer(nThin),
-                          K = K,
-                          N = N,
-                          Component = .Component,
-                          ComponentProb = .ComponentProb,
-                          Outlier = .Outlier,
-                          OutlierProb = .OutlierProb,
-                          ComponentParam = .ComponentParam)
+      .MCMCChain(n = as.integer(nThin),
+                 K = K,
+                 N = N,
+                 Component = .Component,
+                 ComponentProb = .ComponentProb,
+                 Outlier = .Outlier,
+                 OutlierProb = .OutlierProb,
+                 ComponentParam = .ComponentParam)
     })
 
-  mcmc_chainlist <- pRoloc:::.MCMCChains(chains = chainlist)
-  pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                       chains = mcmc_chainlist,
-                       priors = x@priors,
-                       summary = pRoloc:::.MCMCSummary())
+  mcmc_chainlist <- .MCMCChains(chains = chainlist)
+  .MCMCParams(method = "TAGM.MCMC",
+              chains = mcmc_chainlist,
+              priors = x@priors,
+              summary = .MCMCSummary())
 }
 
 
@@ -245,7 +245,7 @@ mcmc_plot_probs <- function(param, fname, n = 1) {
     Organelle <- Probability <- NULL
     stopifnot(inherits(param, "MCMCParams"))
     stopifnot(length(fname) == 1)
-    chain <- pRoloc:::chains(param)[[n]]
+    chain <- chains(param)[[n]]
     stopifnot(fname %in% rownames(chain@ComponentProb))
     dfr <- as.data.frame(chain@ComponentProb[fname, , ])
     colnames(dfr) <- rownames(chain@ComponentParam@mk)

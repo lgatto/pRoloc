@@ -1,61 +1,148 @@
+.tagmMcmcTrain <- function(object,
+                           fcol = "markers",
+                           method = "MCMC",
+                           numIter = 1000L,
+                           burnin = 100L,
+                           thin = 5L,
+                           mu0 = NULL,
+                           lambda0 = 0.01,
+                           nu0 = NULL,
+                           S0 = NULL,
+                           beta0 = NULL,
+                           u = 2,
+                           v = 10,
+                           numChains = 4L,
+                           K_bar = 5,
+                           BPPARAM = BiocParallel::bpparam()) {
+  ## get expression marker data
+  markersubset <- markerMSnSet(object, fcol = fcol)
+  markers <- getMarkerClasses(markersubset, fcol = fcol)
+  mydata <- exprs(markersubset)
+  X <- exprs(unknownMSnSet(object, fcol = fcol))
+
+  ## get data dize
+  N <- nrow(mydata)
+  D <- ncol(mydata)
+  K <- as.integer(length(markers) + K_bar)
+
+  ## set priors
+  if (is.null(nu0))
+    nu0 <- D + 2
+
+  if (is.null(S0))
+    S0 <- diag( colSums(( mydata - mean( mydata)) ^ 2) / N)/( K ^ (1/D))
+
+  if (is.null(mu0))
+    mu0 <- colMeans( mydata)
+
+  if (is.null(beta0))
+    beta0 <- rep(1, K)
+
+  ## Store Priors
+  .priors <- list(mu0 = mu0,
+                  lambda0 = lambda0,
+                  nu0 = nu0,
+                  S0 = S0,
+                  beta0 = beta0)
+
+    ## chains run in parallel, repeating number of iterations
+    if (K_bar == 0) ## no noveltry detection
+        .res <- bplapply(rep(numIter, numChains),
+                         FUN = tagmMcmcChain,
+                         object = object,
+                         fcol = fcol,
+                         method = "MCMC",
+                         burnin = burnin,
+                         thin = thin,
+                         mu0 = mu0,
+                         lambda0 = lambda0,
+                         nu0 = nu0,
+                         S0 = S0,
+                         beta0 = beta0,
+                         u = u,
+                         v = v,
+                         BPPARAM = BPPARAM)
+
+    else
+        .res <- bplapply(rep(numIter, numChains),
+                         FUN = tagmMcmcChain_Nov,
+                         object = object,
+                         fcol = fcol,
+                         method = "MCMC",
+                         burnin = burnin,
+                         thin = thin,
+                         mu0 = mu0,
+                         lambda0 = lambda0,
+                         nu0 = nu0,
+                         S0 = S0,
+                         beta0 = beta0,
+                         u = u,
+                         v = v,
+                         K_bar = K_bar,
+                         BPPARAM = BPPARAM)
+
+  ## Construct class MCMCChains
+  .ans <- .MCMCChains(chains = .res)
+
+  ## Construct class MCMCParams
+  out <- .MCMCParams(method = "TAGM.MCMC",
+                     chains = .ans,
+                     priors = .priors,
+                     summary = .MCMCSummary())
+
+  return(out)
+}
+
 ##' These functions implement the T augmented Gaussian mixture (TAGM)
-##' model for mass spectrometry-based spatial proteomics datasets
-##' using Markov-chain Monte-Carlo (MCMC) for inference.
+##' model with Novelty detection for mass spectrometry-based spatial proteomics datasets.
+##' Markov-chain Monte-Carlo (MCMC) is used for inference.
 ##'
-##' The `tagmMcmcTrain` function generates the samples from the
-##' posterior distributions (object or class `MCMCParams`) based on an
+##' The `tagmMcmcTrain_Nov` function generates the samples from the
+##' posterior distributions (object of class `MCMCParams`) based on an
 ##' annotated quantitative spatial proteomics dataset (object of class
-##' [`MSnbase::MSnSet`]). Both are then passed to the `tagmPredict`
-##' function to predict the sub-cellular localisation of protein of
-##' unknown localisation. See the *pRoloc-bayesian* vignette for
+##' [`MSnbase::MSnSet`]). Both are then passed to the `tagmNoveltyProcess`
+##' function to predict detect new sub-cellular structures.
+##' See the *pRoloc-bayesian-Novelty* vignette for
 ##' details and examples. In this implementation, if numerical instability
 ##' is detected in the covariance matrix of the data a small multiple of
 ##' the identity is added. A message is printed if this conditioning step
 ##' is performed.
 ##'
-##' @title Localisation of proteins using the TAGM MCMC method
-##' @param object An [`MSnbase::MSnSet`] containing the spatial
-##'     proteomics data to be passed to `tagmMcmcTrain` and
-##'     `tagmPredict`.
-##' @param fcol The feature meta-data containing marker definitions.
-##'     Default is `markers`.
-##' @param method A `charachter()` describing the inference method for
-##'     the TAGM algorithm. Default is `"MCMC"`.
-##' @param numIter The number of iterations of the MCMC
-##'     algorithm. Default is 1000.
-##' @param burnin The number of samples to be discarded from the
-##'     begining of the chain. Default is 100.
-##' @param thin The thinning frequency to be applied to the MCMC
-##'     chain.  Default is 5.
-##' @param mu0 The prior mean. Default is `colMeans` of the expression
-##'     data.
+##' @title Localisation of protiens and Novelty detection TAGM MCMC method
+##' @param object An [`MSnbase::MSnSet`] containing the spatial proteomics data
+##'     to be passed to `tagmNoveltyTrain` and `tagmNoveltyProcess`.
+##' @param fcol The feature meta-data containing marker definitions.  Default is
+##'     `markers`.
+##' @param method A `charachter()` describing the inference method for the TAGM
+##'     algorithm. Default is `"MCMC"`.
+##' @param numIter The number of iterations of the MCMC algorithm. Default is
+##'     1000.
+##' @param burnin The number of samples to be discarded from the begining of the
+##'     chain. Default is 100.
+##' @param thin The thinning frequency to be applied to the MCMC chain.  Default
+##'     is 5.
+##' @param mu0 The prior mean. Default is `colMeans` of the expression data.
 ##' @param lambda0 The prior shrinkage. Default is 0.01.
-##' @param nu0 The prior degreed of freedom. Default is
-##'     `ncol(exprs(object)) + 2`
-##' @param S0 The prior inverse-wishart scale matrix. Empirical prior
-##'     used by default.
-##' @param beta0 The prior Dirichlet distribution
-##'     concentration. Default is 1 for each class.
+##' @param nu0 The prior degreed of freedom. Default is `ncol(exprs(object)) +
+##'     2`
+##' @param S0 The prior inverse-wishart scale matrix. Empirical prior used by
+##'     default.
+##' @param beta0 The prior Dirichlet distribution concentration. Default is 1
+##'     for each class.
 ##' @param u The prior shape parameter for Beta(u, v). Default is 2
 ##' @param v The prior shape parameter for Beta(u, v). Default is 10.
-##' @param numChains The number of parrallel chains to be run. Default
-##'     it 4.
-##' @param BPPARAM Support for parallel processing using the
-##'     `BiocParallel` infrastructure. When missing (default), the
-##'     default registered `BiocParallelParam` parameters are
-##'     used. Alternatively, one can pass a valid `BiocParallelParam`
-##'     parameter instance: `SnowParam`, `MulticoreParam`,
-##'     `DoparParam`, ... see the `BiocParallel` package for
+##' @param numChains The number of parrallel chains to be run. Default it 4.
+##' @param BPPARAM Support for parallel processing using the `BiocParallel`
+##'     infrastructure. When missing (default), the default registered
+##'     `BiocParallelParam` parameters are used. Alternatively, one can pass a
+##'     valid `BiocParallelParam` parameter instance: `SnowParam`,
+##'     `MulticoreParam`, `DoparParam`, ... see the `BiocParallel` package for
 ##'     details.
-##' @return `tagmMcmcTrain` returns an instance of class
-##'     `MCMCParams`.
+##' @param K_bar The maximum number of new phenotypes allowed to be detected.
+##'     The default it 5. Only relevant for `tagmMcmcNoveltyTrain`.
+##' @return `tagmMcmcTrain` returns an instance of class `MCMCParams`.
 ##' @md
-##' @references *A Bayesian Mixture Modelling Approach For Spatial
-##'     Proteomics* Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
-##'     Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
-##'     https://doi.org/10.1101/282269
-##' @seealso The [plotEllipse()] function can be used to visualise
-##'     TAGM models on PCA plots with ellipses.
+##' @references
 ##' @rdname tagm-mcmc
 tagmMcmcTrain <- function(object,
                           fcol = "markers",
@@ -71,71 +158,12 @@ tagmMcmcTrain <- function(object,
                           u = 2,
                           v = 10,
                           numChains = 4L,
-                          BPPARAM = BiocParallel::bpparam()) {
-
-    ## get expression marker data
-    markersubset <- markerMSnSet(object, fcol = fcol)
-    markers <- getMarkerClasses(markersubset, fcol = fcol)
-    mydata <- exprs(markersubset)
-    X <- exprs(unknownMSnSet(object, fcol = fcol))
-
-    ## get data dize
-    N <- nrow(mydata)
-    D <- ncol(mydata)
-    K <- length(markers)
-
-    ## set priors
-    if (is.null(nu0))
-        nu0 <- D + 2
-
-    if (is.null(S0))
-        S0 <- diag( colSums(( mydata - mean( mydata)) ^ 2) / N)/( K ^ (1/D))
-
-    if (is.null(mu0))
-        mu0 <- colMeans( mydata)
-
-    if (is.null(beta0))
-        beta0 <- rep(1, K)
-
-    ## Store Priors
-    .priors <- list(mu0 = mu0,
-                    lambda0 = lambda0,
-                    nu0 = nu0,
-                    S0 = S0,
-                    beta0 = beta0)
-
-    ## chains run in parallel, repeating number of iterations
-    .res <- bplapply(rep(numIter, numChains),
-                     FUN = tagmMcmcChain,
-                     object = object,
-                     fcol = fcol,
-                     method = "MCMC",
-                     burnin = burnin,
-                     thin = thin,
-                     mu0 = mu0,
-                     lambda0 = lambda0,
-                     nu0 = nu0,
-                     S0 = S0,
-                     beta0 = beta0,
-                     u = u,
-                     v = v,
-                     BPPARAM = BPPARAM)
-
-    ## Construct class MCMCChains
-    .ans <- .MCMCChains(chains = .res)
-
-    ## Construct class MCMCParams
-    out <- .MCMCParams(method = "TAGM.MCMC",
-                       chains = .ans,
-                       priors = .priors,
-                       summary = .MCMCSummary())
-
-    return(out)
-}
-
+                          BPPARAM = BiocParallel::bpparam())
+    .tagmMcmcTrain(object, fcol, method, numIter, burnin, thin, mu0, lambda0,
+                   nu0, S0, beta0, u, v, numChains, K_bar = 0, BPPARAM)
 
 ##' @param params An instance of class `MCMCParams`, as generated by
-##'     [tagmMcmcTrain()].
+##'     [tagmMcmcTrain()] and [tagmNoveltyTrain()].
 ##' @param probJoint A `logical(1)` indicating whether to return the
 ##'     joint probability matrix, i.e. the probability for all classes
 ##'     as a new `tagm.mcmc.joint` feature variable.
@@ -513,7 +541,7 @@ tagmMcmcChain <- function(object,
             weight <- (nk + betak)/(sum(nk) + sum(betak) - 1) ## Component weights
             sigmak <- ((1 + lambdak) * sk)/(lambdak * (nuk - D + 1)) ## scale matrix
             degf <- nuk - D + 1 ## degrees freedom
-            
+
             for (j in seq.int(K)) {
                 ComponentProb[i, t, j] <- log(weight[j]) + dmvtCpp(X[i, ,drop = FALSE],
                                                                    mu_ = mk[j, ],

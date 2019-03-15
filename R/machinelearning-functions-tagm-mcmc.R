@@ -65,7 +65,7 @@
 
     else
         .res <- bplapply(rep(numIter, numChains),
-                         FUN = tagmMcmcChain_Nov,
+                         FUN = tagmNoveltyChain,
                          object = object,
                          fcol = fcol,
                          method = "MCMC",
@@ -93,20 +93,19 @@
   return(out)
 }
 
-##' These functions implement the T augmented Gaussian mixture (TAGM)
-##' model with Novelty detection for mass spectrometry-based spatial proteomics datasets.
+##' These functions implement the T augmented Gaussian mixture (TAGM) model with
+##' Novelty detection for mass spectrometry-based spatial proteomics datasets.
 ##' Markov-chain Monte-Carlo (MCMC) is used for inference.
 ##'
-##' The `tagmMcmcTrain_Nov` function generates the samples from the
-##' posterior distributions (object of class `MCMCParams`) based on an
-##' annotated quantitative spatial proteomics dataset (object of class
+##' The `tagmNoveltyTrain` function generates the samples from the posterior
+##' distributions (object of class `MCMCParams`) based on an annotated
+##' quantitative spatial proteomics dataset (object of class
 ##' [`MSnbase::MSnSet`]). Both are then passed to the `tagmNoveltyProcess`
-##' function to predict detect new sub-cellular structures.
-##' See the *pRoloc-bayesian-Novelty* vignette for
-##' details and examples. In this implementation, if numerical instability
-##' is detected in the covariance matrix of the data a small multiple of
-##' the identity is added. A message is printed if this conditioning step
-##' is performed.
+##' function to predict detect new sub-cellular structures.  See the
+##' *pRoloc-bayesian-Novelty* vignette for details and examples. In this
+##' implementation, if numerical instability is detected in the covariance
+##' matrix of the data a small multiple of the identity is added. A message is
+##' printed if this conditioning step is performed.
 ##'
 ##' @title Localisation of protiens and Novelty detection TAGM MCMC method
 ##' @param object An [`MSnbase::MSnSet`] containing the spatial proteomics data

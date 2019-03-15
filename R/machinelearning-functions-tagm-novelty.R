@@ -121,7 +121,7 @@ tagmNoveltyChainProcess <- function(object,
   mp$cl <- factor(mp$cl)
 
   ## Create maxPear class
-  maxPear <- .maxPear(cl = mp$cl,
+  maxPear <- .MaxPear(cl = mp$cl,
                       value = mp$value,
                       method = mp$method)
 
@@ -405,6 +405,7 @@ tagmNoveltyChain <- function(object,
 ##' @return An object of class `MSnSet` containing the new phenotype
 ##'     attributions and discovery probabilities.
 ##' @rdname tagm-mcmc
+##' @examples
 tagmNoveltyPredict <- function(object,
                                params) {
     if (any(c('tagm.phenotype', 'tagm.discovery.prob') %in% fvarLabels(object)))
@@ -413,7 +414,33 @@ tagmNoveltyPredict <- function(object,
     fData(object)$tagm.phenotype <- params@pooledNoveltyChain@mp@cl[rownames(object)]
     ## initialise before setting all non-marker values
     fData(object)$tagm.discovery.prob <- 0
-    fData(object)$tagm.discovery.prob <-
-                    params@tagmNewClusterProb[rownames(unknownMSnSet(object))]
-    return(objet)
+    rn <- rownames(unknownMSnSet(object))
+    fData(object)[rn, "tagm.discovery.prob"] <- params@tagmNewclusterProb[rn]
+    return(object)
+}
+
+
+
+plotPostSimMat <- function(object, params, fcol = "markers", subset. = NULL, ...) {
+    if (!is.null(subset.))
+        object <- unknownMSnSet(object, fcol = fcol)
+    rn <- rownames(object)
+
+    annot <- fData(object)[, "tagm.phenotype", drop = FALSE]
+    names(annot) <- "organelle"
+    ann_colors  <-  list(
+        organelle = c(getStockcol()[1:nlevels(params@pooledNoveltyChain@mp@cl[rn])])
+    )
+    names(ann_colors$organelle) <- levels(annot$organelle)
+    blues <- colorRampPalette(brewer.pal(9, "Blues"))(100)
+    pheatmap::pheatmap(params@pooledNoveltyChain@psm[rn, rn],
+                       useRaster = TRUE,
+                       annotation_row = annot,
+                       show_rownames = FALSE,
+                       show_colnames = FALSE,
+                       annotation_colors = ann_colors,
+                       treeheight_row = 0,
+                       treeheight_col = 0,
+                       col = blues,
+                       ...)
 }

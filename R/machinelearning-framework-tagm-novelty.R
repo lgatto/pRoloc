@@ -12,7 +12,7 @@
 .NoveltyChains <- setClass("NoveltyChains",
                            slots = c(pooledNoveltyChain = "NoveltyChain",
                                      noveltyChains = "list",
-                                     tagmNewclustedProb = "numeric"),
+                                     tagmNewclusterProb = "numeric"),
                            validity = function(object) {
                                msg <- validMsg(NULL, NULL)
                                cls <- sapply(object@noveltyChains,
@@ -28,13 +28,13 @@
 ##'
 ##' @slot psm A matrix where each entry is the posterior probability that
 ##'     protein i localises with protein j
-##' @slot maxPear An instance of class `maxPear` containing results from
+##' @slot maxPear An instance of class `MaxPear` containing results from
 ##'     maximising the Posterior Expected Adjusted Rand index.
 ##' @md
 ##' @rdname NoveltyChains
 .NoveltyChain <- setClass("NoveltyChain",
                        slots = c(psm = "matrix",
-                                 mp = "maxPear"))
+                                 mp = "MaxPear"))
 
 ##' @title Contained for results of maximising the posterior expected adjusted
 ##'     rand index This class wraps the `list` ouput of `mcclust::maxpear` into
@@ -46,7 +46,17 @@
 ##' @slot method character(1) describing the approach used to maximise PEAR. See
 ##'     `mcclust::maxpear` for details.
 ##' @rdname NoveltyChains
-.maxPear <- setClass("maxPear",
+.MaxPear <- setClass("MaxPear",
                      slots = c(cl = "factor",
                                value = "numeric",
                                method = "character"))
+
+setMethod("show", "NoveltyChains",
+          function(object) {
+              cat("Object of class \"", class(object), "\"\n", sep = "")
+              cat("Number of chains:", length(object@noveltyChains), "\n")
+              cat("PEAR: ",  object@pooledNoveltyChain@mp@value, "\n")
+              cat("New phenotypes:",
+                  length(unique(grep("Phenotype", object@pooledNoveltyChain@mp@cl, value = TRUE))),
+                  "\n")
+          })

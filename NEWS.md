@@ -1,5 +1,8 @@
 # pRoloc 1.23
 
+## Changes in version 1.23.3
+- Novelty detection code
+
 ## Changes in version 1.23.2
 - Add mcmc helper functions.
 - New logPosteriors accessor for MAPParams object.

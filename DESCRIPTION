@@ -78,7 +78,8 @@ Suggests:
     AnnotationDbi,
     Rtsne (>= 0.13),
     nipals,
-    reshape
+    reshape,
+    pheatmap
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr
@@ -93,6 +94,7 @@ Collate:
     machinelearning-framework-theta.R
     machinelearning-framework-map.R
     machinelearning-framework-mcmc.R
+    machinelearning-framework-tagm-novelty.R
     machinelearning-utils.R
     machinelearning-functions-knn.R
     machinelearning-functions-ksvm.R
@@ -105,6 +107,7 @@ Collate:
     machinelearning-functions-knntl.R
     machinelearning-functions-tagm-map.R
     machinelearning-functions-tagm-mcmc.R
+    machinelearning-functions-tagm-novelty.R
     machinelearning-functions-tagm-mcmc-helper.R
     RcppExports.R
     belief.R

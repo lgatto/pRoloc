@@ -78,6 +78,9 @@ importFrom(plyr, colwise, catcolwise, ddply)
 exportClasses(GenRegRes,
               ThetaRegRes,
               MAPParams,
+              MCMCParams,
+              NoveltyChains,
+              MaxPear,
               AnnotationParams,
               SpatProtVis,
               ClustDist,
@@ -173,6 +176,10 @@ export(## MSnSet manipulation
     logPosteriors,
     chains,
     geweke_test,
+    ## novelty
+    tagmNoveltyTrain,
+    tagmNoveltyProcess,
+    tagmNoveltyPredict,
     ## -- tl
     favourPrimary,
     ## plotThetas,

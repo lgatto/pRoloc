@@ -94,7 +94,7 @@
 }
 
 ##' These functions implement the T augmented Gaussian mixture (TAGM) model with
-##' Novelty detection for mass spectrometry-based spatial proteomics datasets.
+##' novelty detection for mass spectrometry-based spatial proteomics datasets.
 ##' Markov-chain Monte-Carlo (MCMC) is used for inference.
 ##'
 ##' The `tagmNoveltyTrain` function generates the samples from the posterior
@@ -107,7 +107,7 @@
 ##' matrix of the data a small multiple of the identity is added. A message is
 ##' printed if this conditioning step is performed.
 ##'
-##' @title Localisation of protiens and Novelty detection TAGM MCMC method
+##' @title Localisation of proteins and novelty detection using TAGM MCMC
 ##' @param object An [`MSnbase::MSnSet`] containing the spatial proteomics data
 ##'     to be passed to `tagmNoveltyTrain` and `tagmNoveltyProcess`.
 ##' @param fcol The feature meta-data containing marker definitions.  Default is

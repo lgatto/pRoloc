@@ -9,7 +9,7 @@
 \alias{tagmNoveltyTrain}
 \alias{tagmNoveltyProcess}
 \alias{tagmNoveltyPredict}
-\title{Localisation of protiens and Novelty detection TAGM MCMC method}
+\title{Localisation of proteins and novelty detection using TAGM MCMC}
 \usage{
 tagmMcmcTrain(object, fcol = "markers", method = "MCMC",
   numIter = 1000L, burnin = 100L, thin = 5L, mu0 = NULL,
@@ -125,7 +125,7 @@ An object of class `MSnSet` containing the new phenotype
 }
 \description{
 These functions implement the T augmented Gaussian mixture (TAGM) model with
-Novelty detection for mass spectrometry-based spatial proteomics datasets.
+novelty detection for mass spectrometry-based spatial proteomics datasets.
 Markov-chain Monte-Carlo (MCMC) is used for inference.
 }
 \details{

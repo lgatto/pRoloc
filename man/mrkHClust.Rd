@@ -4,8 +4,8 @@
 \alias{mrkHClust}
 \title{Draw a dendrogram of subcellular clusters}
 \usage{
-mrkHClust(object, fcol = "markers", distargs, hclustargs, plot = TRUE,
-  ...)
+mrkHClust(object, fcol = "markers", distargs, hclustargs,
+  method = mean, plot = TRUE, ...)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}
@@ -20,6 +20,9 @@ colours. Default is \code{markers}.}
 \item{hclustargs}{A \code{list} of arguments to be passed to the
 \code{\link[stats]{hclust}} function.}
 
+\item{method}{A \code{function} to average marker
+profiles. Default is \code{mean}.}
+
 \item{plot}{A \code{logical} defining whether the dendrogram
 should be plotted. Default is \code{TRUE}.}
 
@@ -27,8 +30,8 @@ should be plotted. Default is \code{TRUE}.}
 \code{\link[stats]{dendrogram}}.}
 }
 \value{
-Invisibly returns a matrix of average occupancy profiles
-    for all marker classes defined in \code{fcol}.
+Invisibly returns a dendrogram object, containing the
+    hierarchical cluster as computed by \code{hclust}.
 }
 \description{
 This functions calculates an average protein profile for each

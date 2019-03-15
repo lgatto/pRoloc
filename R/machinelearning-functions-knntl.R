@@ -697,7 +697,7 @@ knntlOptimisation  <- function(primary,
         }
     }
 
-    .workers <- BPPARAM$workers
+    .workers <- as.numeric(BPPARAM$workers)
     if (.numTh < .workers) {
         .workers <- .numTh # Is there enough rows in the matrix to split amongst cores
     }

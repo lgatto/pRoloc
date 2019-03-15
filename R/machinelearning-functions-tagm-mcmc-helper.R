@@ -4,6 +4,7 @@
 ##' @title Number of outlier at each iteration of MCMC
 ##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_get_outliers <- function(x) {
     stopifnot(inherits(x, "MCMCParams"))
@@ -14,8 +15,8 @@ mcmc_get_outliers <- function(x) {
 ##' Helper function to get mean component allocation at each MCMC
 ##' iteration.
 ##' @title Mean component allocation at each MCMC iteration
-##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_get_meanComponent <- function(x) {
   stopifnot(inherits(x, "MCMCParams"))
@@ -26,24 +27,31 @@ mcmc_get_meanComponent <- function(x) {
 ##' Helper function to get mean probability of belonging to outlier at
 ##' each iteration.
 ##' @title Mean outlier probability
-##' @param x Object of class `MCMCParams`
 ##' @return A `list` of length `length(x)`.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_get_meanoutliersProb <- function(x) {
   stopifnot(inherits(x, "MCMCParams"))
   lapply(x@chains@chains, function(mc) coda::mcmc(colMeans(mc@OutlierProb[, ,2])))
 }
 
-## Wrapper for the geweke diagnostics from coda package also return
-## p-values
-geweke_test <- function(x) {
-  res <- matrix(NA, nrow = 2, ncol = length(x))
-  gwk <- sapply(x, coda::geweke.diag, simplify = TRUE)
-  res[1, ] <- unlist(gwk[1, ])
-  res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail=FALSE) * 2
-  colnames(res) <- paste0("chain ", seq.int(x))
-  rownames(res) <- c("z.value", "p.value")
-  return(res)
+
+##' Wrapper for the geweke diagnostics from coda package also return p-values.
+##' @title Geweke diagnostics
+##' @param k A `list` of [coda::mcmc] objects, as returned by
+##'     `mcmc_get_outliers`, `mcmc_get_meanComponent` and
+##'     `mcmc_get_meanoutliersProb`.
+##' @return A `matrix` with the test z- and p-values for each chain.
+##' @rdname mcmc-helpers
+##' @md
+geweke_test <- function(k) {
+    res <- matrix(NA, nrow = 2, ncol = length(k))
+    gwk <- sapply(k, coda::geweke.diag, simplify = TRUE)
+    res[1, ] <- unlist(gwk[1, ])
+    res[2, ] <- pnorm(abs(unlist(gwk[1, ])), lower.tail = FALSE) * 2
+    colnames(res) <- paste0("chain ", seq.int(k))
+    rownames(res) <- c("z.value", "p.value")
+    return(res)
 }
 
 
@@ -52,11 +60,12 @@ geweke_test <- function(x) {
 ##' @title Pool MCMC chains
 ##' @param param An object of class `MCMCParams`.
 ##' @return A pooled `MCMCParams` object.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_pool_chains <- function(param) {
   stopifnot(inherits(param, "MCMCParams"))
 
-  param1 <- pRoloc:::chains(param)[[1]]
+  param1 <- chains(param)[[1]]
 
   n <- param1@n
   nPool <- param1@n * length(param) # total number of iteration increase
@@ -79,7 +88,7 @@ mcmc_pool_chains <- function(param) {
   ## Calculate basic quantities
   for (j in seq_len(numChains)) {
 
-    mc <- pRoloc:::chains(param)[[j]]
+    mc <- chains(param)[[j]]
     ## Pool chains
     pooled.Component[, n * (j - 1) + seq.int(n)] <- mc@Component
     pooled.ComponentProb[, n * (j - 1) + seq.int(n), ] <- mc@ComponentProb
@@ -94,7 +103,7 @@ mcmc_pool_chains <- function(param) {
   sk.list <- lapply(param@chains@chains,function(x) x@ComponentParam@sk)
 
   ## save Component parameters
-  .ComponentParam <- pRoloc:::.ComponentParam(K = KPool, D = param1@ComponentParam@D,
+  .ComponentParam <- .ComponentParam(K = KPool, D = param1@ComponentParam@D,
                                      mk = Reduce("+", mk.list) / length(mk.list),
                                      lambdak = Reduce("+", lambdak.list) / length(lambdak.list),
                                      nuk = Reduce("+", nuk.list) / length(nuk.list),
@@ -106,7 +115,7 @@ mcmc_pool_chains <- function(param) {
   .OutlierProb <- pooled.OutlierProb
 
   ## make MCMCChain object
-  .MCMCChain <- pRoloc:::.MCMCChain(n = nPool,
+  .MCMCChain <- .MCMCChain(n = nPool,
                            K = KPool,
                            N = NPool,
                            Component = .Component,
@@ -116,13 +125,13 @@ mcmc_pool_chains <- function(param) {
                            ComponentParam = .ComponentParam)
 
   ## Make MCMCChains with single object
-  .MCMCChains <- pRoloc:::.MCMCChains(chains = list(.MCMCChain))
+  .MCMCChains <- .MCMCChains(chains = list(.MCMCChain))
 
   ## Make MCMCParams object
-  pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                       chains = .MCMCChains,
-                       priors = param@priors,
-                       summary = pRoloc:::.MCMCSummary())
+  .MCMCParams(method = "TAGM.MCMC",
+              chains = .MCMCChains,
+              priors = param@priors,
+              summary = .MCMCSummary())
 
 }
 
@@ -131,16 +140,16 @@ mcmc_pool_chains <- function(param) {
 ##' Helper function to burn n iterations from the front of the chains
 ##'
 ##' @title MCMC chain burning
-##' @param x A object of class `MCMCParams`
 ##' @param n `integer(1)` defining number of iterations to burn. The default is
 ##' `50`
 ##' @return An updated `MCMCParams` object.
+##' @rdname mcmc-helpers
 ##' @md
 mcmc_burn_chains <- function(x, n = 50) {
     stopifnot(inherits(x, "MCMCParams"))
     n <- as.integer(n[1])
     stopifnot(is.numeric(n))
-    .chain <- pRoloc:::chains(x)[[1]]
+    .chain <- chains(x)[[1]]
     K <- .chain@K # Number of components
     N <- .chain@N # Number of Proteins
     chainlist <-
@@ -154,21 +163,21 @@ mcmc_burn_chains <- function(x, n = 50) {
             .ComponentProb <- chain@ComponentProb[, retain, ]
             .Outlier <- chain@Outlier[, retain]
             .OutlierProb <- chain@OutlierProb[, retain, ]
-            pRoloc:::.MCMCChain(n = as.integer(chain@n - n),
-                                K = K,
-                                N = N,
-                                Component = .Component,
-                                ComponentProb = .ComponentProb,
-                                Outlier = .Outlier,
-                                OutlierProb = .OutlierProb,
-                                ComponentParam = .ComponentParam)
+            .MCMCChain(n = as.integer(chain@n - n),
+                       K = K,
+                       N = N,
+                       Component = .Component,
+                       ComponentProb = .ComponentProb,
+                       Outlier = .Outlier,
+                       OutlierProb = .OutlierProb,
+                       ComponentParam = .ComponentParam)
         })
 
-    mcmc_chainlist <- pRoloc:::.MCMCChains(chains = chainlist)
-    pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                         chains = mcmc_chainlist,
-                         priors = x@priors,
-                         summary = pRoloc:::.MCMCSummary())
+    mcmc_chainlist <- .MCMCChains(chains = chainlist)
+    .MCMCParams(method = "TAGM.MCMC",
+                chains = mcmc_chainlist,
+                priors = x@priors,
+                summary = .MCMCSummary())
 }
 
 
@@ -176,14 +185,14 @@ mcmc_burn_chains <- function(x, n = 50) {
 ##' thinning.
 ##'
 ##' @title MCMC chain thinning
-##' @param x An object of class `MCMCParams`.
 ##' @param freq Thinning frequency. The function retains every `freq`th iteration
 ##' and is an `integer(1)`. The default thinning frequency is `5`.
 ##' @return A thinned `MCMCParams` object.
+##' @rdname mcmc-helpers
 ##' @author Laurent Gatto
 mcmc_thin_chains <- function(x, freq = 5) {
   stopifnot(inherits(x, "MCMCParams"))
-  .chain <- pRoloc:::chains(x)[[1]]
+  .chain <- chains(x)[[1]]
   K <- .chain@K # Number of components
   N <- .chain@N # Number of Proteins
   nThin <- floor(.chain@n/freq) # Number of iterations after thinning
@@ -198,21 +207,21 @@ mcmc_thin_chains <- function(x, freq = 5) {
       .ComponentProb <- chain@ComponentProb[, retain, ]
       .Outlier <- chain@Outlier[, retain]
       .OutlierProb <- chain@OutlierProb[, retain, ]
-      pRoloc:::.MCMCChain(n = as.integer(nThin),
-                          K = K,
-                          N = N,
-                          Component = .Component,
-                          ComponentProb = .ComponentProb,
-                          Outlier = .Outlier,
-                          OutlierProb = .OutlierProb,
-                          ComponentParam = .ComponentParam)
+      .MCMCChain(n = as.integer(nThin),
+                 K = K,
+                 N = N,
+                 Component = .Component,
+                 ComponentProb = .ComponentProb,
+                 Outlier = .Outlier,
+                 OutlierProb = .OutlierProb,
+                 ComponentParam = .ComponentParam)
     })
 
-  mcmc_chainlist <- pRoloc:::.MCMCChains(chains = chainlist)
-  pRoloc:::.MCMCParams(method = "TAGM.MCMC",
-                       chains = mcmc_chainlist,
-                       priors = x@priors,
-                       summary = pRoloc:::.MCMCSummary())
+  mcmc_chainlist <- .MCMCChains(chains = chainlist)
+  .MCMCParams(method = "TAGM.MCMC",
+              chains = mcmc_chainlist,
+              priors = x@priors,
+              summary = .MCMCSummary())
 }
 
 
@@ -221,10 +230,10 @@ mcmc_thin_chains <- function(x, freq = 5) {
 ##' distributions for all organelles.
 ##'
 ##' @title Plot posterior probabilities
-##' @param x An object of class `MCMCParams`.
 ##' @param y A `character(1)` with a protein name.
 ##' @param ... Currently ignored.
 ##' @return A ggplot2 object.
+##' @rdname mcmc-helpers
 ##' @rdname mcmc-plot
 setMethod("plot", c("MCMCParams", "character"),
           function(x, y, ...) {
@@ -236,7 +245,7 @@ mcmc_plot_probs <- function(param, fname, n = 1) {
     Organelle <- Probability <- NULL
     stopifnot(inherits(param, "MCMCParams"))
     stopifnot(length(fname) == 1)
-    chain <- pRoloc:::chains(param)[[n]]
+    chain <- chains(param)[[n]]
     stopifnot(fname %in% rownames(chain@ComponentProb))
     dfr <- as.data.frame(chain@ComponentProb[fname, , ])
     colnames(dfr) <- rownames(chain@ComponentParam@mk)

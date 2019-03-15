@@ -15,12 +15,14 @@
 ##'     \code{\link[stats]{dist}} function.
 ##' @param hclustargs A \code{list} of arguments to be passed to the
 ##'     \code{\link[stats]{hclust}} function.
+##' @param method A \code{function} to average marker
+##'     profiles. Default is \code{mean}.
 ##' @param plot A \code{logical} defining whether the dendrogram
 ##'     should be plotted. Default is \code{TRUE}.
 ##' @param ... Additional parameters passed when plotting the
 ##'     \code{\link[stats]{dendrogram}}.
-##' @return Invisibly returns a matrix of average occupancy profiles
-##'     for all marker classes defined in \code{fcol}.
+##' @return Invisibly returns a dendrogram object, containing the
+##'     hierarchical cluster as computed by \code{hclust}.
 ##' @author Laurent Gatto
 ##' @examples
 ##' library("pRolocdata")
@@ -28,16 +30,11 @@
 ##' mrkHClust(dunkley2006)
 mrkHClust <- function(object, fcol = "markers",
                       distargs, hclustargs,
+                      method = mean,
                       plot = TRUE,
                       ...) {
-    object <- markerMSnSet(object)
-    mm <- getMarkers(object, fcol = fcol, verbose = FALSE)
-    umm <- levels(factor(mm))
-    fmat <- matrix(NA, nrow = length(umm), ncol = ncol(object))
-    rownames(fmat) <- umm
-    colnames(fmat) <- sampleNames(object)
-    for (m in umm)
-        fmat[m, ] <- colMeans(exprs(object[mm == m, ]), na.rm = TRUE)
+    fmat <- mrkConsProfiles(object, fcol = fcol, method = method)
+    umm <- levels(factor(rownames(fmat)))
     ## handling additional dist args
     if (missing(distargs)) distargs <- list(x = fmat)
     else distargs <- c(list(x = fmat), distargs)
@@ -50,5 +47,5 @@ mrkHClust <- function(object, fcol = "markers",
     i <- match(labels(hc), umm)
     hc <- set(hc, "labels_colors", getStockcol()[i])
     if (plot) plot(hc, ...)
-    invisible(fmat)
+    invisible(hc)
 }

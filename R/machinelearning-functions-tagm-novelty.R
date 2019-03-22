@@ -114,7 +114,7 @@ tagmNoveltyChainProcess <- function(object,
 
   # Match rownames
   names(mp$cl) <- rownames(combinedComponent)
-  rownames(psm) <- colnames(psm) <- c(rownames(unknownMSnSet(object)), rownames(markersubset))
+  rownames(psm) <- colnames(psm) <- c(rownames(unknownMSnSet(object, fcol = fcol)), rownames(markersubset))
 
   # Finding mapping from cluster to organelle because of label switching
   mapping <- matrix(NA, ncol = K_markers, nrow = 1)

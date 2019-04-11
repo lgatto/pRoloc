@@ -11,8 +11,8 @@ citEntry(entry = "article",
          journal = "Bioinformatics",
          year = "2014",
          textVersion =
-             paste("Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley KS.", 
-                   "Mass-spectrometry-based spatial proteomics data analysis using pRoloc", 
+             paste("Gatto L, Breckels LM, Wieczorek S, Burger T, Lilley KS.",
+                   "Mass-spectrometry-based spatial proteomics data analysis using pRoloc",
                    "and pRolocdata. Bioinformatics. 2014 May 1;30(9):1322-4.",
                    "doi:10.1093/bioinformatics/btu013. Epub 2014 Jan 11.",
                    "PubMed PMID: 24413670; PubMed Central PMCID: PMC3998135.")
@@ -82,7 +82,7 @@ citEntry(entry = "article",
                    "13;12(5):e1004920. doi: 10.1371/journal.pcbi.1004920. "))
 
 citEntry(entry = "article",
-         title = "A Bioconductor workflow for processing and analysing spatial proteomics data", 
+         title = "A Bioconductor workflow for processing and analysing spatial proteomics data",
          author = personList(
              as.person("Lisa M. Breckels"),
              as.person("Claire M. Mulvey"),
@@ -92,8 +92,23 @@ citEntry(entry = "article",
          journal = "F1000Research",
          year = "2016",
          textVersion =
-             paste("Breckels LM, Mulvey CM, Lilley KS and Gatto L. A Bioconductor workflow", 
-	           "for processing and analysing spatial proteomics data. F1000Research",
-                   "2016, 5:2926 (doi: 10.12688/f1000research.10411.1"))
+             paste("Breckels LM, Mulvey CM, Lilley KS and Gatto L. A Bioconductor workflow",
+                   "for processing and analysing spatial proteomics data.  [version 2; peer review: 2 approved].",
+                   "F1000Research 2018, 5:2926 (https://doi.org/10.12688/f1000research.10411.2)"))
 
-
+citEntry(entry = "article",
+         title = "A Bioconductor workflow for the Bayesian analysis of spatial proteomics",
+         author = personList(
+             as.person("Oliver M. Crook"),
+             as.person("Lisa M. Breckels"),
+             as.person("Kathryn S. Lilley"),
+             as.person("Paul D.W. Kirk"),
+             as.person("Laurent Gatto")
+             ),
+         journal = "F1000Research",
+         year = "2019",
+         textVersion =
+             paste("Crook OM, Breckels LM, Lilley KS, Kirk PWD, Gatto L.",
+                   "A Bioconductor workflow for the Bayesian analysis of spatial proteomics",
+                   "[version 1; peer review: awaiting peer review].",
+                   "F1000Research 2019, 8:446 (https://doi.org/10.12688/f1000research.18636.1) "))

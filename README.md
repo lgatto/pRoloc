@@ -82,10 +82,15 @@ BiocManager::install("ComputationalProteomicsUnit/pRolocGUI")
 For refences about the software, how to use it and spatial proteomics
 data analysis:
 
-* Breckels LM, Mulvey CM, Lilley KS and Gatto L. *A Bioconductor
-  workflow for processing and analysing spatial proteomics data*
-  F1000Research 2016, 5:2926
-  [doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/).
+* Crook OM, Breckels LM, Lilley KS, Kirk PWD, Gatto L. A Bioconductor
+  workflow for the Bayesian analysis of spatial proteomics [version 1;
+  peer review: awaiting peer review]. F1000Research 2019, 8:446
+  (https://doi.org/10.12688/f1000research.18636.1)
+
+* Breckels LM, Mulvey CM, Lilley KS and Gatto L. A Bioconductor
+  workflow for processing and analysing spatial proteomics data
+  [version 2; peer review: 2 approved]. F1000Research 2018, 5:2926
+  (https://doi.org/10.12688/f1000research.10411.2)
 
 * Gatto L, Breckels LM, Burger T, Nightingale DJ, Groen AJ, Campbell
   C, Nikolovski N, Mulvey CM, Christoforou A, Ferro M, Lilley KS. *A

@@ -27,6 +27,8 @@ proteomics, please see
 
 For a detailed application of the method, please see
 
-> Crook OM, Breckels LM, Lilley KS, Kirk PDW, Gatto L (2019) A
-> Bioconductor workflow for the Bayesian analysis of spatial
-> proteomics https://github.com/ococrook/TAGMworkflow
+> Oliver M. Crook, Lisa M. Breckels, Kathryn S. Lilley, Paul
+> D.W. Kirk, Laurent Gatto. *A Bioconductor workflow for the Bayesian
+> analysis of spatial proteomics* [version 1; peer review: awaiting
+> peer review]. F1000Research 2019, 8:446
+> [https://doi.org/10.12688/f1000research.18636.1](https://doi.org/10.12688/f1000research.18636.1).

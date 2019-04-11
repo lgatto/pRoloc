@@ -9,3 +9,6 @@ docs
 ^docs$
 CONDUCT.md
 .editorconfig
+vignettes/v01-pRoloc-tutorial_cache
+vignettes/v02-pRoloc-ml_cache
+inst/extdoc/tanTagm.rda

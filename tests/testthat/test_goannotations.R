@@ -1,21 +1,23 @@
-test_that("Can prepare biomart annotation data", {
-  library("pRolocdata")
-  data("hyperLOPIT2015")
-  hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
-  par <- setAnnotationParams(inputs = c("Mus musculus",
-                                        "UniProtKB/Swiss-Prot ID"))
-  cc <- addGoAnnotations(hyperLOPIT2015, par,
-                         namespace = "cellular_component")
+context("Annotations parameters")
+
+## Object cc will be used in units below. Querying error-prone biomart only
+## once.
+
+library("pRolocdata")
+data("hyperLOPIT2015")
+hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
+par <- setAnnotationParams(inputs = c("Mus musculus",
+                                      "UniProtKB/Swiss-Prot ID"))
+cc <- addGoAnnotations(hyperLOPIT2015, par,
+                       namespace = "cellular_component")
+
+test_that("Used annotation params successfully", {
   expect_true(validObject(cc))
 })
 
-
-
-context("go annotations framework")
+context("GO annotations framework")
 
 test_that("filtering by min or max matrix annotations gives expected results", {
-    ## Re-using cc from above
-
     ## Check that min markers specified matches output
     m1 <- 20
     cc1 <- filterMinMarkers(cc, n = m1)
@@ -29,10 +31,9 @@ test_that("filtering by min or max matrix annotations gives expected results", {
     expect_true(m1 >= m2)
 })
 
-context("clustDist")
+context("clustDist function")
 
 test_that("output from orderGoAnnotations and manually ordering clusters", {
-    ## Re-using cc from above
     seed <- sample(.Machine$integer.max, 1)
 
     cc <- filterMinMarkers(cc, n = 20)

@@ -1,24 +1,52 @@
-context("go annotations framework")
-
-test_that("filtering by min or max matrix annotations gives expected results", {
+test_that("Can prepare biomart annotation data", {
   library("pRolocdata")
   data("hyperLOPIT2015")
   hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
-  par <- setAnnotationParams(inputs = c("Mus musculus", 
+  par <- setAnnotationParams(inputs = c("Mus musculus",
                                         "UniProtKB/Swiss-Prot ID"))
-  cc <- addGoAnnotations(hyperLOPIT2015, par, 
-                     namespace = "cellular_component")
-  
-  ## Check that min markers specified matches output
-  m1 <- 20
-  cc1 <- filterMinMarkers(cc, n = m1)
-  m2 <- min(colSums(fData(cc1)$GOAnnotations))
-  expect_true(m1 <= m2)
-  
-  ## Check that max markers specified matches output
-  m1 <- 50
-  cc2 <- filterMaxMarkers(cc, n = m1)
-  m2 <- max(colSums(fData(cc2)$GOAnnotations))
-  expect_true(m1 >= m2)
-  
+  cc <- addGoAnnotations(hyperLOPIT2015, par,
+                         namespace = "cellular_component")
+  expect_true(validObject(cc))
+})
+
+
+
+context("go annotations framework")
+
+test_that("filtering by min or max matrix annotations gives expected results", {
+    ## Re-using cc from above
+
+    ## Check that min markers specified matches output
+    m1 <- 20
+    cc1 <- filterMinMarkers(cc, n = m1)
+    m2 <- min(colSums(fData(cc1)$GOAnnotations))
+    expect_true(m1 <= m2)
+
+    ## Check that max markers specified matches output
+    m1 <- 50
+    cc2 <- filterMaxMarkers(cc, n = m1)
+    m2 <- max(colSums(fData(cc2)$GOAnnotations))
+    expect_true(m1 >= m2)
+})
+
+context("clustDist")
+
+test_that("output from orderGoAnnotations and manually ordering clusters", {
+    ## Re-using cc from above
+    seed <- sample(.Machine$integer.max, 1)
+
+    cc <- filterMinMarkers(cc, n = 20)
+    cc <- filterMaxMarkers(cc, p = .5)
+    res <- orderGoAnnotations(cc, k = 1:3, p = 1/3,
+                              verbose = FALSE, seed = seed)
+    orgs1 <- colnames(fData(res)$GOAnnotations)
+
+    ## Manually calculate distance and re-order by min
+    dd <- clustDist(cc, fcol = "GOAnnotations", k = 1:3,
+                    verbose = FALSE, seed = seed)
+    minDist <- getNormDist(dd, p = 1/3)
+    o <- order(minDist)
+    orgs2 <- names(dd)[o]
+
+    expect_equal(orgs1, orgs2)
 })

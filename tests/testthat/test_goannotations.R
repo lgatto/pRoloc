@@ -6,7 +6,7 @@ context("Annotations parameters")
 library("pRolocdata")
 data("hyperLOPIT2015")
 hyperLOPIT2015 <- markerMSnSet(hyperLOPIT2015)
-par <- setAnnotationParams(inputs = c("Mus musculus",
+par <- setAnnotationParams(inputs = c("Mouse genes",
                                       "UniProtKB/Swiss-Prot ID"))
 cc <- addGoAnnotations(hyperLOPIT2015, par,
                        namespace = "cellular_component")

@@ -137,11 +137,11 @@ displayed.
 
 It is also possible to pass patterns\footnote{These patterns must
 match uniquely or an error will be thrown.} to match against the
-species (`"Homo sapiens"`) and feature type (`"UniProtKB/Swiss-prot ID"`).
+species (`"Human genes"`) and feature type (`"UniProtKB/Swiss-prot ID"`).
 
 ```{r ap}
 ap <- setAnnotationParams(inputs =
-                              c("Homo sapiens",
+                              c("Human genes",
                                 "UniProtKB/Swiss-Prot ID"))
 ap
 ```

@@ -116,8 +116,8 @@ data(dunkley2006params)
 dunkley2006params
 
 try(setAnnotationParams(inputs = c("nomatch1", "nomatch2")))
- setAnnotationParams(inputs = c("Human genes",
-				"UniProtKB/Swiss-Prot ID"))
+setAnnotationParams(inputs = c("Human genes",
+			       "UniProtKB/Swiss-Prot ID"))
 getAnnotationParams()
 }
 

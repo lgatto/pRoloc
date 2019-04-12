@@ -114,7 +114,7 @@ musculus", "UniProtKB/Swiss-Prot ID")`. See `?setAnnotationParams` for
 details.
 
 ```{r queryparams}
-params <- setAnnotationParams(inputs = c("Mus musculus",
+params <- setAnnotationParams(inputs = c("Mouse genes",
 										 "UniProtKB/Swiss-Prot ID"))
 ```
 

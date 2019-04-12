@@ -1,11 +1,11 @@
-checkAttr0 <- function(x, attr0 = pRoloc:::getAttributesOfInterest0()) 
+checkAttr0 <- function(x, attr0 = pRoloc:::getAttributesOfInterest0())
     attr0 %in% x$name
 
 
-checkAttrX <- function(x, attrX = pRoloc:::getAttributesOfInterestX()) 
+checkAttrX <- function(x, attrX = pRoloc:::getAttributesOfInterestX())
     sapply(attrX,
            function(.attrX) {
-               stopifnot(length(.attrX) == 2)
+               ## stopifnot(length(.attrX) == 2)
                .attrX[1] %in% x$name | .attrX[2] %in% x$name
            })
 
@@ -65,7 +65,7 @@ setMethod("lapply", "MartInstanceList",
           })
 
 setMethod("sapply", "MartInstanceList",
-          function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) 
+          function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
               sapply(X@xData, FUN, ..., simplify = TRUE, USE.NAMES = TRUE))
 
 
@@ -88,7 +88,7 @@ setMethod("show", "MartInstance",
 
 
 ## filter out datasets that don't have all required attributes
-filterAttrs <- 
+filterAttrs <-
     function(x) {
         ds <- x@datasets
         n0 <- nrow(ds)
@@ -117,7 +117,7 @@ getMartInstanceList <- function() {
     readRDS(file = f)
 }
 
-getMartTab <- function()     
+getMartTab <- function()
     as.data.frame(getMartInstanceList())
 
 

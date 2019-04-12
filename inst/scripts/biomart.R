@@ -12,7 +12,7 @@ mil <- MartInstanceList(list(ensembl = MartInstance(name = "ENSEMBL_MART_ENSEMBL
                              plants = MartInstance(name = "plants_mart",
                                                    host="plants.ensembl.org",
                                                    path="/biomart/martservice"),
-                             fungi = MartInstance(name = "fungal_mart",
+                             fungi = MartInstance(name = "fungi_mart",
                                                   host="fungi.ensembl.org",
                                                   path="/biomart/martservice"),
                              metazoa = MartInstance("metazoa_mart",

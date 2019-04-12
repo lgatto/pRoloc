@@ -5,13 +5,13 @@ test_that("AnnotationParams", {
                  "'inputs' must contain a species and a feature type.")
     expect_error(setAnnotationParams(inputs = LETTERS[1:2]),
                  "Couldn't find a unique species match for 'A'.")
-    expect_error(setAnnotationParams(inputs = c("Homo sapiens", "foo")),
+    expect_error(setAnnotationParams(inputs = c("Human genes", "foo")),
                  "Couldn't find a unique feature type match for 'foo'.")
 
-    ap <- setAnnotationParams(inputs = c("Homo sapiens",
+    ap <- setAnnotationParams(inputs = c("Human genes",
                                          "UniProtKB/Swiss-Prot ID"))
-    expect_null(show(ap))    
-    
+    expect_null(show(ap))
+
     expect_is(ap, "AnnotationParams")
     expect_identical(ap@martname, "ENSEMBL_MART_ENSEMBL")
     expect_identical(ap@dataset, "hsapiens_gene_ensembl")
@@ -22,5 +22,5 @@ test_that("AnnotationParams", {
     expect_identical(ap, ap2)
     setAnnotationParams(ap)
     ap2 <- getAnnotationParams()
-    expect_identical(ap, ap2)    
+    expect_identical(ap, ap2)
 })

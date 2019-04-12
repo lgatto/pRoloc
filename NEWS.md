@@ -1,5 +1,8 @@
 # pRoloc 1.23
 
+## Changes in version 1.23.4
+- Nothing yet
+
 ## Changes in version 1.23.3
 - Link to TAGM F1000 workflow <2019-04-11 Thu>
 - Add ref to TAGM F1000 in CITATION and README <2019-04-11 Thu>

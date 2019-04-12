@@ -146,9 +146,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#adding-sub-cellular-localisation-information" class="anchor"></a>Adding sub-cellular localisation information</h1>
 <p>All GO terms associated to proteins that appear in the dataset are retrieved and used to create a binary matrix where a 1 (0) at position <span class="math inline">\((i,j)\)</span> indicates that term <span class="math inline">\(j\)</span> has (not) been used to annotate feature <span class="math inline">\(i\)</span>. This matrix is appended and stored in the feature data slot of the <code>MSnSet</code> dataset using the <code>addGoAnnotations</code> function. We first however need to prepare annotation parameters that will enable us to query the Biomart repository using the  package, from where we are able to retrieve GO terms. The specific Biomart repository and query will depend on the species under study and the type of features. This can be set using the <code>setAnnotationParams</code> function.</p>
 <p>In the code chunk below we set the annotation parameters for the <code>hyperLOPIT2015</code> dataset. As this species used was mouse and the <code>featureNames</code> of the <code>hyperLOPIT2015</code> dataset are Uniprot accession numbers the input to the function is defined as <code>inputs = c("Mus musculus", "UniProtKB/Swiss-Prot ID")</code>. See <code><a href="../reference/AnnotationParams-class.html">?setAnnotationParams</a></code> for details.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/AnnotationParams-class.html">setAnnotationParams</a></span>(<span class="dt">inputs =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Mus musculus"</span>,</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/AnnotationParams-class.html">setAnnotationParams</a></span>(<span class="dt">inputs =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Mouse genes"</span>,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">                                         <span class="st">"UniProtKB/Swiss-Prot ID"</span>))</a></code></pre></div>
-<pre><code>## Using species Mus musculus genes (GRCm38.p4)</code></pre>
+<pre><code>## Using species Mouse genes (GRCm38.p6)</code></pre>
 <pre><code>## Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A087WPF7]</code></pre>
 <pre><code>## Connecting to Biomart...</code></pre>
 <p>Now the parameters for the search have been defined we can use the <code>addGoAnnotations</code> function to add a GO information matrix to the <code>featureData</code> slot of the dataset. The <code>addGoAnnotations</code> function takes a <code>MSnSet</code> instance as input (from which the <code>featureNames</code> will be extracted) and it downloads the CC terms (the default, biological process and the molecular function namespaces are also supported) found for each protein in the dataset. The output <code>MSnSet</code> has the CC term binary matrix appended to the <code>fData</code>, by default this is called <code>GOAnnotations</code> (and changed using the <code>fcol</code> argument).</p>
@@ -205,18 +205,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <a class="sourceLine" id="cb12-3" data-line-number="3">dd[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## Object of class "ClustDist"
 ## fcol =  GOAnnotations 
-##  term =  GO:0005886 
-##  id =  plasma membrane 
-##  nrow =  111 
+##  term =  GO:0005856 
+##  id =  cytoskeleton 
+##  nrow =  29 
 ## k's tested: 1 2 3 
-##   Size:  111 
-##   Size:  78, 33 
-##   Size:  24, 32, 55 
+##   Size:  29 
+##   Size:  21 
+##   Size:  21 
 ## Clusters info:
 ##       ks.mean    mean ks.norm     norm
-## k = 1       1  0.5167       1  0.10751
-## k = 2       2  0.3728       2  0.10277
-## k = 3       3 *0.3055       3 *0.09371</code></pre>
+## k = 1       1  0.4233       1  0.13779
+## k = 2       1 *0.1778       1 *0.06443
+## k = 3       1  0.1778       1  0.06443</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">## Plot normalised distances</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(dd, <span class="dt">p =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</a></code></pre></div>

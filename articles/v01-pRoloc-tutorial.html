@@ -306,8 +306,8 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Fri Apr 12 12:17:24 2019  using readMSnSet. 
-##  MSnbase version: 2.9.3</code></pre>
+## Quantitation data loaded: Tue Apr 30 09:17:07 2019  using readMSnSet. 
+##  MSnbase version: 2.9.5</code></pre>
 </div>
 </div>
 <div id="a-shorter-input-work-flow" class="section level2">
@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-##  MSnbase version: 2.9.3</code></pre>
+##  MSnbase version: 2.9.5</code></pre>
 <p>The <code>ecol</code> columns can also be queried interactively from R using the <code>getEcols</code> and <code>grepEcols</code> function. The former return a character with all column names, given a splitting character, i.e. the separation value of the spreadsheet (typically <code>","</code> for <code>csv</code>, <code>"\t"</code> for <code>tsv</code>, …). The latter can be used to grep a pattern of interest to obtain the relevant column indices.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/grepEcols">getEcols</a></span>(f0, <span class="st">","</span>)</a></code></pre></div>
 <pre><code>##  [1] "\"Protein ID\""              "\"FBgn\""                   
@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-##  MSnbase version: 2.9.3</code></pre>
+##  MSnbase version: 2.9.5</code></pre>
 <p>The <code>phenoData</code> slot can now be updated accordingly using the replacement functions <code>phenoData&lt;-</code> or <code>pData&lt;-</code> (see <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class">?MSnSet</a></code> for details).</p>
 <div id="the-msnset-class" class="section level3">
 <h3 class="hasAnchor">
@@ -466,8 +466,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Fri Apr 12 12:17:26 2019 
-## Normalised (sum): Fri Apr 12 12:17:26 2019 
+## iTRAQ4 quantification by trapezoidation: Tue Apr 30 09:17:10 2019 
+## Normalised (sum): Tue Apr 30 09:17:10 2019 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -771,7 +771,7 @@ Assessing parameter optimisation. Visualisation of the averaged macro F1 scores,
 <a class="sourceLine" id="cb87-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(svmres)</a></code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri Apr 12 12:17:33 2019 
+## Performed svm prediction (sigma=0.1 cost=0.5) Tue Apr 30 09:17:16 2019 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -873,8 +873,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Fri Apr 12 12:17:33 2019 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Fri Apr 12 12:17:33 2019 
+## Performed svm prediction (sigma=0.1 cost=0.5) Tue Apr 30 09:17:16 2019 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Tue Apr 30 09:17:17 2019 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">ptsze &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
@@ -987,7 +987,7 @@ Classification results. The results of the second round of classification, using
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2019-04-12 r76382)
+<pre><code>## R Under development (unstable) (2019-04-29 r76439)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -1009,47 +1009,47 @@ Classification results. The results of the second round of classification, using
 ## 
 ## other attached packages:
 ##  [1] class_7.3-15         pRolocdata_1.21.0    pRoloc_1.23.4       
-##  [4] BiocParallel_1.17.18 MLInterfaces_1.63.2  cluster_2.0.8       
+##  [4] BiocParallel_1.17.19 MLInterfaces_1.63.2  cluster_2.0.8       
 ##  [7] annotate_1.61.1      XML_3.98-1.19        AnnotationDbi_1.45.1
-## [10] IRanges_2.17.4       MSnbase_2.9.3        ProtGenerics_1.15.0 
-## [13] S4Vectors_0.21.23    mzR_2.17.2           Rcpp_1.0.1          
+## [10] IRanges_2.17.5       MSnbase_2.9.5        ProtGenerics_1.15.0 
+## [13] S4Vectors_0.21.24    mzR_2.17.4           Rcpp_1.0.1          
 ## [16] Biobase_2.43.1       BiocGenerics_0.29.2  knitr_1.22          
 ## [19] BiocStyle_2.11.0    
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] backports_1.1.4       plyr_1.8.4            igraph_1.2.4         
+##   [1] backports_1.1.4       plyr_1.8.4            igraph_1.2.4.1       
 ##   [4] lazyeval_0.2.2        splines_3.7.0         ggvis_0.4.4          
 ##   [7] crosstalk_1.0.0       ggplot2_3.1.1         digest_0.6.18        
 ##  [10] foreach_1.4.4         htmltools_0.3.6       viridis_0.5.1        
 ##  [13] gdata_2.18.0          magrittr_1.5          memoise_1.1.0        
 ##  [16] doParallel_1.0.14     mixtools_1.1.0        sfsmisc_1.1-3        
-##  [19] limma_3.39.14         recipes_0.1.5         gower_0.2.0          
+##  [19] limma_3.39.19         recipes_0.1.5         gower_0.2.0          
 ##  [22] rda_1.0.2-2.1         pkgdown_1.3.0         lpSolve_5.6.13       
 ##  [25] prettyunits_1.0.2     colorspace_1.4-1      blob_1.1.1           
 ##  [28] xfun_0.6              dplyr_0.8.0.1         crayon_1.3.4         
 ##  [31] RCurl_1.95-4.12       hexbin_1.27.2         roxygen2_6.1.1       
 ##  [34] genefilter_1.65.0     impute_1.57.0         survival_2.44-1.1    
 ##  [37] iterators_1.0.10      glue_1.3.1            gtable_0.3.0         
-##  [40] ipred_0.9-8           zlibbioc_1.29.0       kernlab_0.9-27       
+##  [40] ipred_0.9-9           zlibbioc_1.29.0       kernlab_0.9-27       
 ##  [43] prabclus_2.2-7        DEoptimR_1.0-8        scales_1.0.0         
 ##  [46] vsn_3.51.0            mvtnorm_1.0-10        DBI_1.0.0            
-##  [49] viridisLite_0.3.0     xtable_1.8-3          progress_1.2.0       
+##  [49] viridisLite_0.3.0     xtable_1.8-4          progress_1.2.0       
 ##  [52] bit_1.1-14            proxy_0.4-23          mclust_5.4.3         
 ##  [55] preprocessCore_1.45.0 lava_1.6.5            prodlim_2018.04.18   
 ##  [58] sampling_2.8          htmlwidgets_1.3       httr_1.4.0           
 ##  [61] threejs_0.3.1         FNN_1.1.3             RColorBrewer_1.1-2   
-##  [64] fpc_2.1-11.1          modeltools_0.2-22     pkgconfig_2.0.2      
-##  [67] flexmix_2.3-15        nnet_7.3-12           caret_6.0-82         
+##  [64] fpc_2.1-11.2          modeltools_0.2-22     pkgconfig_2.0.2      
+##  [67] flexmix_2.3-15        nnet_7.3-12           caret_6.0-84         
 ##  [70] labeling_0.3          reshape2_1.4.3        tidyselect_0.2.5     
 ##  [73] rlang_0.3.4           later_0.8.0           munsell_0.5.0        
 ##  [76] mlbench_2.1-1         tools_3.7.0           LaplacesDemon_16.1.1 
 ##  [79] generics_0.0.2        RSQLite_2.1.1         pls_2.7-1            
-##  [82] evaluate_0.13         stringr_1.4.0         mzID_1.21.1          
+##  [82] evaluate_0.13         stringr_1.4.0         mzID_1.21.2          
 ##  [85] yaml_2.2.0            ModelMetrics_1.2.2    bit64_0.9-7          
 ##  [88] fs_1.2.6              robustbase_0.93-4     randomForest_4.6-14  
 ##  [91] purrr_0.3.2           dendextend_1.10.0     ncdf4_1.16.1         
 ##  [94] nlme_3.1-139          whisker_0.3-2         mime_0.6             
-##  [97] xml2_1.2.0            biomaRt_2.39.2        compiler_3.7.0       
+##  [97] xml2_1.2.0            biomaRt_2.39.4        compiler_3.7.0       
 ## [100] e1071_1.7-1           affyio_1.53.0         tibble_2.1.1         
 ## [103] stringi_1.4.3         highr_0.8             desc_1.2.0           
 ## [106] lattice_0.20-38       trimcluster_0.1-2.1   Matrix_1.2-17        
@@ -1061,9 +1061,9 @@ Classification results. The results of the second round of classification, using
 ## [124] codetools_0.2-16      MASS_7.3-51.4         gtools_3.8.1         
 ## [127] assertthat_0.2.1      rprojroot_1.3-2       withr_2.1.2          
 ## [130] diptest_0.75-7        hms_0.4.2             timeDate_3043.102    
-## [133] grid_3.7.0            rpart_4.1-13          coda_0.19-2          
+## [133] grid_3.7.0            rpart_4.1-15          coda_0.19-2          
 ## [136] rmarkdown_1.12        segmented_0.5-3.0     lubridate_1.7.4      
-## [139] shiny_1.3.1           base64enc_0.1-3</code></pre>
+## [139] shiny_1.3.2           base64enc_0.1-3</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

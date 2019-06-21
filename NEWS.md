@@ -1,5 +1,8 @@
 # pRoloc 1.25
 
+## Changes in version 1.25.1
+- Always use `mvtnorm::dmvnorm` <2019-06-21 Fri>
+
 ## Changes in version 1.25.0
 - Version bump for Bioc 3.10 (devel)
 

@@ -18,14 +18,14 @@ metropolisHastings <- function (n, rho) {
     mat <- matrix(ncol = 2, nrow = n)   ## matrix for storing the random samples
     x <- y <- 4   ## initial values for all parameters
     cov <- matrix(c(1,sqrt(1 - rho^2),sqrt(1 - rho^2),1), ncol = 2)
-    prev <- dmvnorm(c(x, y), mean = c(0, 0), sigma = cov)
+    prev <- mvtnorm::dmvnorm(c(x, y), mean = c(0, 0), sigma = cov)
     mat[1, ] <- c(x, y)  ## initialize the markov chain
     counter <- 1
     while (counter <= n) {
         propx <- x + rnorm(1, 0, 0.1)
         propy <- y + rnorm(1, 0, 0.1)
 
-        newprob <- mixtools::dmvnorm(c(propx, propy), sigma = cov)
+        newprob <- mvtnorm::dmvnorm(c(propx, propy), sigma = cov)
         ratio <- newprob/prev
 
         prob.accept <- min(1, ratio) ## ap

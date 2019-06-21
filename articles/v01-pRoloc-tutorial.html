@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.1</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="questions-and-bugs" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#questions-and-bugs" class="anchor"></a>Questions and bugs</h1>
-<p>You are welcome to contact me directly about <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em>. For bugs, typos, suggestions or other questions, please file an issue in our issue tracking system (<a href="https://github.com/lgatto/pRoloc/issues" class="uri">https://github.com/lgatto/pRoloc/issues</a>) providing as much information as possible, a reproducible example and the output of <code><a href="https://www.rdocumentation.org/packages/utils/topics/sessionInfo">sessionInfo()</a></code>.</p>
+<p>You are welcome to contact me directly about <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em>. For bugs, typos, suggestions or other questions, please file an issue in our issue tracking system (<a href="https://github.com/lgatto/pRoloc/issues" class="uri">https://github.com/lgatto/pRoloc/issues</a>) providing as much information as possible, a reproducible example and the output of <code><a href="https://www.rdocumentation.org/packages/utils/topics/sessionInfo">sessionInfo()</a></code>.</p>
 <p>If you wish to reach a broader audience for general questions about proteomics analysis using <code>R</code>, you may want to use the Bioconductor support site: <a href="https://support.bioconductor.org/" class="uri">https://support.bioconductor.org/</a>.</p>
 </div>
 <div id="sec:intro" class="section level1">
@@ -176,20 +176,20 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="spatial-proteomics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#spatial-proteomics" class="anchor"></a>Spatial proteomics</h2>
-<p>Spatial (or organelle) proteomics is the study of the localisation of proteins inside cells. The sub-cellular compartment can be organelles, i.e. structures defined by lipid bi-layers,macro-molecular assemblies of proteins and nucleic acids or large protein complexes. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em>, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT <span class="citation">(Dunkley et al. 2006)</span> or PCP <span class="citation">(Foster et al. 2006)</span> approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example <span class="citation">(Gatto et al. 2010)</span> and references therein for a detailed review on organelle proteomics.</p>
+<p>Spatial (or organelle) proteomics is the study of the localisation of proteins inside cells. The sub-cellular compartment can be organelles, i.e. structures defined by lipid bi-layers,macro-molecular assemblies of proteins and nucleic acids or large protein complexes. In this document, we will focus on mass-spectrometry based approaches that assay a population of cells, as opposed as microscopy based techniques that monitor single cells, as the former is the primary concern of <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em>, although the techniques described below and the infrastructure in place could also be applied the processed image data. The typical experimental use-case for using <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> is a set of fractions, originating from a total cell lysate. These fractions can originate from a continuous gradient, like in the LOPIT <span class="citation">(Dunkley et al. 2006)</span> or PCP <span class="citation">(Foster et al. 2006)</span> approaches, or can be discrete fractions. The content of the fractions is then identified and quantified (using labelled or un-labelled quantitation techniques). Using relative quantitation of known organelle residents, termed organelle markers, organelle-specific profiles along the gradient are determined and new residents are identified based on matching of these distribution profiles. See for example <span class="citation">(Gatto et al. 2010)</span> and references therein for a detailed review on organelle proteomics.</p>
 <p>It should be noted that large protein complexes, that are not necessarily separately enclosed within their own lipid bi-layer, can be detected by such techniques, as long as a distinct profile can be defined across the fractions.</p>
 </div>
 <div id="about-r-and-proloc" class="section level2">
 <h2 class="hasAnchor">
 <a href="#about-r-and-proloc" class="anchor"></a>About R and <em>pRoloc</em>
 </h2>
-<p>R <span class="citation">(R Development Core Team 2011)</span> is a statistical programming language and interactive working environment. It can be expanded by so-called packages to confer new functionality to users. Many such packages have been developed for the analysis of high-throughput biology, notably through the Bioconductor project <span class="citation">(Gentleman et al. 2004)</span>. Two packages are of particular interest here, namely <em><a href="https://bioconductor.org/packages/3.9/MSnbase">MSnbase</a></em> <span class="citation">(Gatto and Lilley 2012)</span> and <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em>. The former provides flexible infrastructure to store and manipulate quantitative proteomics data and the associated meta-data and the latter implements specific algorithmic technologies to analyse organelle proteomics data.</p>
+<p>R <span class="citation">(R Development Core Team 2011)</span> is a statistical programming language and interactive working environment. It can be expanded by so-called packages to confer new functionality to users. Many such packages have been developed for the analysis of high-throughput biology, notably through the Bioconductor project <span class="citation">(Gentleman et al. 2004)</span>. Two packages are of particular interest here, namely <em><a href="https://bioconductor.org/packages/3.10/MSnbase">MSnbase</a></em> <span class="citation">(Gatto and Lilley 2012)</span> and <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em>. The former provides flexible infrastructure to store and manipulate quantitative proteomics data and the associated meta-data and the latter implements specific algorithmic technologies to analyse organelle proteomics data.</p>
 <p>Among the advantages of R are robust statistical procedures, good visualisation capabilities, excellent documentation, reproducible research<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, power and flexibility of the R language and environment itself and a rich environment for specialised functionality in many domains of bioinformatics: tools for many omics technologies, including proteomics, bio-statistics, gene ontology and biological pathway analysis, … Although there exists some specific graphical user interfaces (GUI), interaction with R is executed through a command line interface. While this mode of interaction might look alien to new users, experience has proven that after a first steep learning curve, great results can be achieved by non-programmers. Furthermore, specific and general documentation is plenty and beginners and advanced course material are also widely available.</p>
 <p>Once R is started, the first step to enable functionality of a specific packages is to load them using the <code>library</code> function, as shown in the code chunk below:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"MSnbase"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"pRoloc"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"pRolocdata"</span>)</a></code></pre></div>
-<p><em><a href="https://bioconductor.org/packages/3.9/MSnbase">MSnbase</a></em> implements the data containers that are used by <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em>. <em><a href="https://bioconductor.org/packages/3.9/pRolocdata">pRolocdata</a></em> is a data package that supplies several published organelle proteomics data sets.</p>
+<p><em><a href="https://bioconductor.org/packages/3.10/MSnbase">MSnbase</a></em> implements the data containers that are used by <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em>. <em><a href="https://bioconductor.org/packages/3.10/pRolocdata">pRolocdata</a></em> is a data package that supplies several published organelle proteomics data sets.</p>
 <p>As a final setup step, we set the default colour palette for some of our custom plotting functionality to use semi-transparent colours in the code chunk below (see <em>?setStockcol</em> for details). This facilitates visualisation of overlapping points.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/getStockcol.html">setStockcol</a></span>(<span class="ot">NULL</span>) ## reset first</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/getStockcol.html">setStockcol</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="kw"><a href="../reference/getStockcol.html">getStockcol</a></span>(), <span class="dv">70</span>))</a></code></pre></div>
@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## 2        X115     12/13
 ## 3        X116        19
 ## 4        X117        21</code></pre>
-<p>A self-contained data structure, called <em>MSnSet</em> (defined in the <em><a href="https://bioconductor.org/packages/3.9/MSnbase">MSnbase</a></em> package) can now easily be generated using the <em>readMSnSet</em> constructor, providing the respective <code>csv</code> file names shown above and specifying that the data is comma-separated (with <code>sep = ","</code>). Below, we call that object <code>tan2009r1</code> and display its content.</p>
+<p>A self-contained data structure, called <em>MSnSet</em> (defined in the <em><a href="https://bioconductor.org/packages/3.10/MSnbase">MSnbase</a></em> package) can now easily be generated using the <em>readMSnSet</em> constructor, providing the respective <code>csv</code> file names shown above and specifying that the data is comma-separated (with <code>sep = ","</code>). Below, we call that object <code>tan2009r1</code> and display its content.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">tan2009r1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/readMSnSet">readMSnSet</a></span>(<span class="dt">exprsFile =</span> f1,</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">            <span class="dt">featureDataFile =</span> f2,</a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">            <span class="dt">phenoDataFile =</span> f3,</a>
@@ -306,8 +306,8 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Tue Apr 30 09:17:07 2019  using readMSnSet. 
-##  MSnbase version: 2.9.5</code></pre>
+## Quantitation data loaded: Fri Jun 21 16:55:21 2019  using readMSnSet. 
+##  MSnbase version: 2.11.2</code></pre>
 </div>
 </div>
 <div id="a-shorter-input-work-flow" class="section level2">
@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-##  MSnbase version: 2.9.5</code></pre>
+##  MSnbase version: 2.11.2</code></pre>
 <p>The <code>ecol</code> columns can also be queried interactively from R using the <code>getEcols</code> and <code>grepEcols</code> function. The former return a character with all column names, given a splitting character, i.e. the separation value of the spreadsheet (typically <code>","</code> for <code>csv</code>, <code>"\t"</code> for <code>tsv</code>, …). The latter can be used to grep a pattern of interest to obtain the relevant column indices.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/grepEcols">getEcols</a></span>(f0, <span class="st">","</span>)</a></code></pre></div>
 <pre><code>##  [1] "\"Protein ID\""              "\"FBgn\""                   
@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-##  MSnbase version: 2.9.5</code></pre>
+##  MSnbase version: 2.11.2</code></pre>
 <p>The <code>phenoData</code> slot can now be updated accordingly using the replacement functions <code>phenoData&lt;-</code> or <code>pData&lt;-</code> (see <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class">?MSnSet</a></code> for details).</p>
 <div id="the-msnset-class" class="section level3">
 <h3 class="hasAnchor">
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <li><p>the number of row in the expression/quantitation data and feature data must be equal and the row names must match exactly, and</p></li>
 <li><p>the number of columns in the expression/quantitation data and number of row in the sample meta-data must be equal and the column/row names must match exactly.</p></li>
 </ul>
-<p>It is common, in the context of <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> to update the feature meta-data (described in section @ref(sec:analysis)) by adding new columns, without breaking the objects validity. Similarly, the sample meta-data can also be updated by adding new sample variables. A detailed description of the <code>MSnSet</code> class is available by typing <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class">?MSnSet</a></code> in the R console.</p>
+<p>It is common, in the context of <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> to update the feature meta-data (described in section @ref(sec:analysis)) by adding new columns, without breaking the objects validity. Similarly, the sample meta-data can also be updated by adding new sample variables. A detailed description of the <code>MSnSet</code> class is available by typing <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class">?MSnSet</a></code> in the R console.</p>
 <div class="figure">
 <img src="Figures/msnset.png" alt="Dimension requirements for the respective expression, feature and sample meta-data slots." id="fig:msnset"><p class="caption">Dimension requirements for the respective expression, feature and sample meta-data slots.</p>
 </div>
@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## FBgn0035720 0.187333 0.167333
 ## FBgn0003731 0.247500 0.253000
 ## FBgn0029506 0.216000 0.183000</code></pre>
-<p>Several data sets, including the 3 replicates from <span class="citation">(Tan et al. 2009)</span>, are distributed as <em>MSnSet</em> instances in the <em><a href="https://bioconductor.org/packages/3.9/pRolocdata">pRolocdata</a></em> package. Others include, among others, the <em>Arabidopsis thaliana</em> LOPIT data from <span class="citation">(Dunkley et al. 2006)</span> (<code>dunkley2006</code>) and the mouse PCP data from <span class="citation">(Foster et al. 2006)</span> (<code>foster2006</code>). Each data set can be loaded with the <code>data</code> function, as show below for the first replicate from <span class="citation">(Tan et al. 2009)</span>.</p>
+<p>Several data sets, including the 3 replicates from <span class="citation">(Tan et al. 2009)</span>, are distributed as <em>MSnSet</em> instances in the <em><a href="https://bioconductor.org/packages/3.10/pRolocdata">pRolocdata</a></em> package. Others include, among others, the <em>Arabidopsis thaliana</em> LOPIT data from <span class="citation">(Dunkley et al. 2006)</span> (<code>dunkley2006</code>) and the mouse PCP data from <span class="citation">(Foster et al. 2006)</span> (<code>foster2006</code>). Each data set can be loaded with the <code>data</code> function, as show below for the first replicate from <span class="citation">(Tan et al. 2009)</span>.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(tan2009r1)</a></code></pre></div>
 <p>The original marker proteins are available as a feature meta-data variables called <code>markers.orig</code> and the output of the partial least square discriminant analysis, applied in the original publication, in the <code>PLSDA</code> feature variable. The most up-to-date marker list for the experiment can be found in <code>markers</code>. This feature meta-data column can be added from a simple <code>csv</code> markers files using the <code>addMarkers</code> function - see <code><a href="../reference/addMarkers.html">?addMarkers</a></code> for details.</p>
 <p>The organelle markers are illustrated below using the convenience function <em>getMarkers</em>, but could also be done manually by accessing feature variables directly using <em>fData()</em>.</p>
@@ -400,13 +400,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## organelleMarkers
 ##      ER/Golgi mitochondrion            PM       unknown 
 ##           235            74           180           399</code></pre>
-<p><strong>Important</strong> As can be seen above, some proteins are labelled <code>"unknown"</code>, defining non marker proteins. This is a convention in many <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> functions. Missing annotations (empty string) will not be considered as of unknown localisation; we prefer to avoid empty strings and make the absence of known localisation explicit by using the <code>"unknown"</code> tag. This information will be used to separate marker and non-marker (unlabelled) proteins when proceeding with data visualisation and clustering (sections @ref(sec:viz) and @ref(sec:usml)) and classification analysis (section @ref(sec:sml)).</p>
+<p><strong>Important</strong> As can be seen above, some proteins are labelled <code>"unknown"</code>, defining non marker proteins. This is a convention in many <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> functions. Missing annotations (empty string) will not be considered as of unknown localisation; we prefer to avoid empty strings and make the absence of known localisation explicit by using the <code>"unknown"</code> tag. This information will be used to separate marker and non-marker (unlabelled) proteins when proceeding with data visualisation and clustering (sections @ref(sec:viz) and @ref(sec:usml)) and classification analysis (section @ref(sec:sml)).</p>
 </div>
 </div>
 <div id="prolocs-organelle-markers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prolocs-organelle-markers" class="anchor"></a><em>pRoloc</em>’s organelle markers</h2>
-<p>The <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> package distributes a set of markers that have been obtained by mining the <em><a href="https://bioconductor.org/packages/3.9/pRolocdata">pRolocdata</a></em> datasets and curation by various members of the <a href="http://proteomics.bio.cam.ac.uk/">Cambridge Centre for Proteomics</a>. The available marker sets can be obtained and loaded using the <code>pRolocmarkers</code> function:</p>
+<p>The <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> package distributes a set of markers that have been obtained by mining the <em><a href="https://bioconductor.org/packages/3.10/pRolocdata">pRolocdata</a></em> datasets and curation by various members of the <a href="http://proteomics.bio.cam.ac.uk/">Cambridge Centre for Proteomics</a>. The available marker sets can be obtained and loaded using the <code>pRolocmarkers</code> function:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw"><a href="../reference/pRolocmarkers.html">pRolocmarkers</a></span>()</a></code></pre></div>
 <pre><code>## 7 marker lists available:
 ## Arabidopsis thaliana [atha]:
@@ -445,7 +445,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colSums">rowSums</a></span>(<span class="kw">exprs</span>(tan2009r1)))</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.9990  0.9999  1.0000  1.0000  1.0001  1.0010</code></pre>
-<p>The <code>normalise</code> method (also available as <code>normalize</code>) from the <em><a href="https://bioconductor.org/packages/3.9/MSnbase">MSnbase</a></em> package can be used to obtain relative quantitation data, as illustrated below on another iTRAQ test data set, available from <em><a href="https://bioconductor.org/packages/3.9/MSnbase">MSnbase</a></em>. Several normalisation <code>methods</code> are available and described in <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/normalise-methods">?normalise</a></code>. For many algorithms, including classifiers in general and support vector machines in particular, it is important to properly per-process the data. Centering and scaling of the data is also available with the <code>scale</code> method.</p>
+<p>The <code>normalise</code> method (also available as <code>normalize</code>) from the <em><a href="https://bioconductor.org/packages/3.10/MSnbase">MSnbase</a></em> package can be used to obtain relative quantitation data, as illustrated below on another iTRAQ test data set, available from <em><a href="https://bioconductor.org/packages/3.10/MSnbase">MSnbase</a></em>. Several normalisation <code>methods</code> are available and described in <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/normalise-methods">?normalise</a></code>. For many algorithms, including classifiers in general and support vector machines in particular, it is important to properly per-process the data. Centering and scaling of the data is also available with the <code>scale</code> method.</p>
 <p>In the code chunk below, we first create a test <em>MSnSet</em> instance<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and illustrate the effect of <code><a href="https://www.rdocumentation.org/packages/MSnbase/topics/normalise-methods">normalise(..., method = "sum")</a></code>.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">## create a small illustrative test data</a>
 <a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(itraqdata)</a>
@@ -466,8 +466,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Tue Apr 30 09:17:10 2019 
-## Normalised (sum): Tue Apr 30 09:17:10 2019 
+## iTRAQ4 quantification by trapezoidation: Fri Jun 21 16:55:24 2019 
+## Normalised (sum): Fri Jun 21 16:55:24 2019 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw">exprs</span>(itraqnorm), <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##     iTRAQ4.114 iTRAQ4.115 iTRAQ4.116 iTRAQ4.117
@@ -515,7 +515,7 @@ Hierarchical clustering. Average distance between organelle classes.
 </p>
 </div>
 <p>On figure @ref(fig:dendro), we see that the lysosome and the ribosome 60S are separated by the smallest distance. The advantage of this representation is that it provides a quick snapshot of the average similarity between organelles using the complete profiles (as opposed to a PCA plot, discussed in the next section). The main drawback is that it ignores any variability in individual markers (cluster thighness). It is however a good guide for a more thorough exploration of the data, as described in the next sections.</p>
-<p>Note the colours of the labels on the dendrogram (figure @ref(fig:dendro)), which match the colours used to annotate PCA plots, described in the next section (figure @ref(fig:plot2d). These colours are defined at the session level (see <code>getStockcol</code> and <code>setStockcol</code>) and re-used throughout <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> for consistent annotation.</p>
+<p>Note the colours of the labels on the dendrogram (figure @ref(fig:dendro)), which match the colours used to annotate PCA plots, described in the next section (figure @ref(fig:plot2d). These colours are defined at the session level (see <code>getStockcol</code> and <code>setStockcol</code>) and re-used throughout <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> for consistent annotation.</p>
 </div>
 <div id="sec:avrprofplot" class="section level2">
 <h2 class="hasAnchor">
@@ -631,13 +631,13 @@ Adding features of interest on a PCA plot.
 <div id="sec:gui" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sec:gui" class="anchor"></a>Interactive visualisation</h2>
-<p>The <em><a href="https://bioconductor.org/packages/3.9/pRolocGUI">pRolocGUI</a></em> application allows one to explore the spatial proteomics data using an interactive, web-based  interface <span class="citation">(RStudio and Inc. 2014)</span>. The package is available from Bioconductor and can be installed and started as follows:</p>
+<p>The <em><a href="https://bioconductor.org/packages/3.10/pRolocGUI">pRolocGUI</a></em> application allows one to explore the spatial proteomics data using an interactive, web-based  interface <span class="citation">(RStudio and Inc. 2014)</span>. The package is available from Bioconductor and can be installed and started as follows:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"BiocManager"</span>)</a>
 <a class="sourceLine" id="cb67-2" data-line-number="2">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"pRolocGUI"</span>)</a>
 <a class="sourceLine" id="cb67-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"pRolocGUI"</span>)</a>
 <a class="sourceLine" id="cb67-4" data-line-number="4"><span class="kw">pRolocVis</span>(tan2009r1)</a></code></pre></div>
 <div class="figure">
-<img src="Figures/Screenshot_PCA2.png" alt="Screenshot of the pRolocGUI interface. The GUI is also available as an online app for the hyperLOPIT experiment from (Christoforou et al. 2016) at https://lgatto.shinyapps.io/christoforou2015/." id="fig:gui"><p class="caption">Screenshot of the <em><a href="https://bioconductor.org/packages/3.9/pRolocGUI">pRolocGUI</a></em> interface. The GUI is also available as an online app for the hyperLOPIT experiment from <span class="citation">(Christoforou et al. 2016)</span> at <a href="https://lgatto.shinyapps.io/christoforou2015/" class="uri">https://lgatto.shinyapps.io/christoforou2015/</a>.</p>
+<img src="Figures/Screenshot_PCA2.png" alt="Screenshot of the pRolocGUI interface. The GUI is also available as an online app for the hyperLOPIT experiment from (Christoforou et al. 2016) at https://lgatto.shinyapps.io/christoforou2015/." id="fig:gui"><p class="caption">Screenshot of the <em><a href="https://bioconductor.org/packages/3.10/pRolocGUI">pRolocGUI</a></em> interface. The GUI is also available as an online app for the hyperLOPIT experiment from <span class="citation">(Christoforou et al. 2016)</span> at <a href="https://lgatto.shinyapps.io/christoforou2015/" class="uri">https://lgatto.shinyapps.io/christoforou2015/</a>.</p>
 </div>
 <p>More details are available in the vignette that can be started from the application by clicking on any of the question marks, by starting the vignette from R with <code>vignette("pRolocGUI")</code> or can be accessed online (<a href="http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html" class="uri">http://bioconductor.org/packages/devel/bioc/vignettes/pRolocGUI/inst/doc/pRolocGUI.html</a>).</p>
 </div>
@@ -677,7 +677,7 @@ Adding features of interest on a PCA plot.
 Plain PCA representation of the <code>tan2009r1</code> data.
 </p>
 </div>
-<p>Alternatively, <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> also gives access to <em><a href="https://bioconductor.org/packages/3.9/MLInterfaces">MLInterfaces</a></em>’s <code>MLean</code> unified interface for, among others, unsupervised approaches using k-means (figure @ref(fig:plotKmeans)), hierarchical (figure @ref(fig:plotHclust)) or partitioning around medoids (figure @ref(fig:plotPam)), clustering.</p>
+<p>Alternatively, <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> also gives access to <em><a href="https://bioconductor.org/packages/3.10/MLInterfaces">MLInterfaces</a></em>’s <code>MLean</code> unified interface for, among others, unsupervised approaches using k-means (figure @ref(fig:plotKmeans)), hierarchical (figure @ref(fig:plotHclust)) or partitioning around medoids (figure @ref(fig:plotPam)), clustering.</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">kcl &lt;-<span class="st"> </span><span class="kw">MLearn</span>( <span class="op">~</span><span class="st"> </span>., tan2009r1,  kmeansI, <span class="dt">centers=</span><span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb73-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/plot-methods">plot</a></span>(kcl, <span class="kw">exprs</span>(tan2009r1))</a></code></pre></div>
 <div class="figure">
@@ -705,7 +705,7 @@ Partitioning around medoids on the <code>tan2009r1</code> data.
 <div id="sec:sml" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sec:sml" class="anchor"></a>Supervised ML</h2>
-<p>In this section, we show how to use <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> to run a typical supervised ML analysis. Several ML methods are available, including k-nearest neighbour (knn), partial least square discriminant analysis (plsda), random forest (rf), support vector machines (svm), The detailed description of each method is outside of the scope of this document. We will use support vector machines to illustrate a typical pipeline and the important points that should be paid attention to. These points are equally valid and work, from a <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> user perspective, exactly the same for the other approaches.</p>
+<p>In this section, we show how to use <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> to run a typical supervised ML analysis. Several ML methods are available, including k-nearest neighbour (knn), partial least square discriminant analysis (plsda), random forest (rf), support vector machines (svm), The detailed description of each method is outside of the scope of this document. We will use support vector machines to illustrate a typical pipeline and the important points that should be paid attention to. These points are equally valid and work, from a <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> user perspective, exactly the same for the other approaches.</p>
 <div id="classification-algorithm-parameters-optimisation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#classification-algorithm-parameters-optimisation" class="anchor"></a>Classification algorithm parameters optimisation</h3>
@@ -771,7 +771,7 @@ Assessing parameter optimisation. Visualisation of the averaged macro F1 scores,
 <a class="sourceLine" id="cb87-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/MSnbase/topics/pSet-class">processingData</a></span>(svmres)</a></code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Tue Apr 30 09:17:16 2019 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri Jun 21 16:55:30 2019 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(<span class="kw">fvarLabels</span>(svmres), <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## [1] "markers"    "markers.tl" "svm"        "svm.scores"</code></pre>
@@ -873,8 +873,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Tue Apr 30 09:17:16 2019 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Tue Apr 30 09:17:17 2019 
+## Performed svm prediction (sigma=0.1 cost=0.5) Fri Jun 21 16:55:30 2019 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Fri Jun 21 16:55:31 2019 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">ptsze &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw">fData</span>(svmres)<span class="op">$</span>svm.scores) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
@@ -899,7 +899,7 @@ Representation of the svm prediction on the <code>tan2009r1</code> data set. The
 <h2 class="hasAnchor">
 <a href="#sec:ssml" class="anchor"></a>Semi-supervised ML</h2>
 <p>It is obvious that the original set of markers initially used (ER, Golgi, mitochondrion, PM) is not a biologically realistic representation or the organelle diversity. Manually finding markers is however time consuming, as it requires careful verification of the annotation, and possibly critical for the subsequent analysis, as markers are directly used in the training phase of the supervised ML approach.</p>
-<p>As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The <code>phenoDisco</code> algorithm <span class="citation">(Breckels et al. 2013)</span> is an iterative method, that combines classification of proteins to known groups and detection of new clusters. It is available in <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em> though the <code>phenoDisco</code> function.</p>
+<p>As can be seen in the PCA plots above, there is inherent structure in the data that can be made use of to automate the detection of new clusters. The <code>phenoDisco</code> algorithm <span class="citation">(Breckels et al. 2013)</span> is an iterative method, that combines classification of proteins to known groups and detection of new clusters. It is available in <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em> though the <code>phenoDisco</code> function.</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">pdres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phenoDisco.html">phenoDisco</a></span>(tan2009r1, <span class="dt">GS =</span> <span class="dv">10</span>,</a>
 <a class="sourceLine" id="cb104-2" data-line-number="2">            <span class="dt">times =</span> <span class="dv">100</span>, <span class="dt">fcol =</span> <span class="st">"PLSDA"</span>)</a></code></pre></div>
 <p>Again, in the interest of time, <em>phenoDisco</em> is not executed when the vignette is dynamically built. The data object can be located in the <code>extdata</code> direcoty and loaded with:</p>
@@ -975,7 +975,7 @@ Classification results. The results of the second round of classification, using
 <div id="sec:ccl" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sec:ccl" class="anchor"></a>Conclusions</h1>
-<p>This tutorial focuses on practical aspects of organelles proteomics data analysis using <em><a href="https://bioconductor.org/packages/3.9/pRoloc">pRoloc</a></em>. Two important aspects have been illustrates: (1) data generation, manipulation and visualisation and (2) application of contemporary and novel machine learning techniques. Other crucial parts of a full analysis pipeline that were not covered here are raw mass-spectrometry quality control, quantitation, post-analysis and data validation.</p>
+<p>This tutorial focuses on practical aspects of organelles proteomics data analysis using <em><a href="https://bioconductor.org/packages/3.10/pRoloc">pRoloc</a></em>. Two important aspects have been illustrates: (1) data generation, manipulation and visualisation and (2) application of contemporary and novel machine learning techniques. Other crucial parts of a full analysis pipeline that were not covered here are raw mass-spectrometry quality control, quantitation, post-analysis and data validation.</p>
 <p>Data analysis is not a trivial task, and in general, one can not assume that any off-the-shelf algorithm will perform well. As such, one of the emphasis of the software presented in this document is allowing users to track data processing and critically evaluate the results.</p>
 </div>
 <div id="acknowledgement" class="section level1 unnumbered">
@@ -987,7 +987,7 @@ Classification results. The results of the second round of classification, using
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R Under development (unstable) (2019-04-29 r76439)
+<pre><code>## R version 3.6.0 (2017-01-27)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.5 LTS
 ## 
@@ -1008,62 +1008,61 @@ Classification results. The results of the second round of classification, using
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] class_7.3-15         pRolocdata_1.21.0    pRoloc_1.23.4       
-##  [4] BiocParallel_1.17.19 MLInterfaces_1.63.2  cluster_2.0.8       
-##  [7] annotate_1.61.1      XML_3.98-1.19        AnnotationDbi_1.45.1
-## [10] IRanges_2.17.5       MSnbase_2.9.5        ProtGenerics_1.15.0 
-## [13] S4Vectors_0.21.24    mzR_2.17.4           Rcpp_1.0.1          
-## [16] Biobase_2.43.1       BiocGenerics_0.29.2  knitr_1.22          
-## [19] BiocStyle_2.11.0    
+##  [1] class_7.3-15         pRolocdata_1.23.0    pRoloc_1.25.1       
+##  [4] BiocParallel_1.19.0  MLInterfaces_1.65.0  cluster_2.0.8       
+##  [7] annotate_1.63.0      XML_3.98-1.20        AnnotationDbi_1.47.0
+## [10] IRanges_2.19.10      MSnbase_2.11.2       ProtGenerics_1.17.2 
+## [13] S4Vectors_0.23.13    mzR_2.19.2           Rcpp_1.0.1          
+## [16] Biobase_2.45.0       BiocGenerics_0.31.4  knitr_1.23          
+## [19] BiocStyle_2.13.2    
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] backports_1.1.4       plyr_1.8.4            igraph_1.2.4.1       
-##   [4] lazyeval_0.2.2        splines_3.7.0         ggvis_0.4.4          
-##   [7] crosstalk_1.0.0       ggplot2_3.1.1         digest_0.6.18        
+##   [4] lazyeval_0.2.2        splines_3.6.0         ggvis_0.4.4          
+##   [7] crosstalk_1.0.0       ggplot2_3.2.0         digest_0.6.19        
 ##  [10] foreach_1.4.4         htmltools_0.3.6       viridis_0.5.1        
 ##  [13] gdata_2.18.0          magrittr_1.5          memoise_1.1.0        
-##  [16] doParallel_1.0.14     mixtools_1.1.0        sfsmisc_1.1-3        
-##  [19] limma_3.39.19         recipes_0.1.5         gower_0.2.0          
-##  [22] rda_1.0.2-2.1         pkgdown_1.3.0         lpSolve_5.6.13       
+##  [16] doParallel_1.0.14     mixtools_1.1.0        sfsmisc_1.1-4        
+##  [19] limma_3.41.5          recipes_0.1.5         gower_0.2.1          
+##  [22] rda_1.0.2-2.1         pkgdown_1.3.0         lpSolve_5.6.13.1     
 ##  [25] prettyunits_1.0.2     colorspace_1.4-1      blob_1.1.1           
-##  [28] xfun_0.6              dplyr_0.8.0.1         crayon_1.3.4         
-##  [31] RCurl_1.95-4.12       hexbin_1.27.2         roxygen2_6.1.1       
-##  [34] genefilter_1.65.0     impute_1.57.0         survival_2.44-1.1    
+##  [28] xfun_0.7              dplyr_0.8.1           crayon_1.3.4         
+##  [31] RCurl_1.95-4.12       hexbin_1.27.3         roxygen2_6.1.1       
+##  [34] genefilter_1.67.1     impute_1.59.0         survival_2.44-1.1    
 ##  [37] iterators_1.0.10      glue_1.3.1            gtable_0.3.0         
-##  [40] ipred_0.9-9           zlibbioc_1.29.0       kernlab_0.9-27       
-##  [43] prabclus_2.2-7        DEoptimR_1.0-8        scales_1.0.0         
-##  [46] vsn_3.51.0            mvtnorm_1.0-10        DBI_1.0.0            
-##  [49] viridisLite_0.3.0     xtable_1.8-4          progress_1.2.0       
+##  [40] ipred_0.9-9           zlibbioc_1.31.0       kernlab_0.9-27       
+##  [43] prabclus_2.3-1        DEoptimR_1.0-8        scales_1.0.0         
+##  [46] vsn_3.53.0            mvtnorm_1.0-11        DBI_1.0.0            
+##  [49] viridisLite_0.3.0     xtable_1.8-4          progress_1.2.2       
 ##  [52] bit_1.1-14            proxy_0.4-23          mclust_5.4.3         
-##  [55] preprocessCore_1.45.0 lava_1.6.5            prodlim_2018.04.18   
+##  [55] preprocessCore_1.47.1 lava_1.6.5            prodlim_2018.04.18   
 ##  [58] sampling_2.8          htmlwidgets_1.3       httr_1.4.0           
 ##  [61] threejs_0.3.1         FNN_1.1.3             RColorBrewer_1.1-2   
-##  [64] fpc_2.1-11.2          modeltools_0.2-22     pkgconfig_2.0.2      
+##  [64] fpc_2.2-2             modeltools_0.2-22     pkgconfig_2.0.2      
 ##  [67] flexmix_2.3-15        nnet_7.3-12           caret_6.0-84         
 ##  [70] labeling_0.3          reshape2_1.4.3        tidyselect_0.2.5     
 ##  [73] rlang_0.3.4           later_0.8.0           munsell_0.5.0        
-##  [76] mlbench_2.1-1         tools_3.7.0           LaplacesDemon_16.1.1 
+##  [76] mlbench_2.1-1         tools_3.6.0           LaplacesDemon_16.1.1 
 ##  [79] generics_0.0.2        RSQLite_2.1.1         pls_2.7-1            
-##  [82] evaluate_0.13         stringr_1.4.0         mzID_1.21.2          
+##  [82] evaluate_0.14         stringr_1.4.0         mzID_1.23.0          
 ##  [85] yaml_2.2.0            ModelMetrics_1.2.2    bit64_0.9-7          
-##  [88] fs_1.2.6              robustbase_0.93-4     randomForest_4.6-14  
-##  [91] purrr_0.3.2           dendextend_1.10.0     ncdf4_1.16.1         
-##  [94] nlme_3.1-139          whisker_0.3-2         mime_0.6             
-##  [97] xml2_1.2.0            biomaRt_2.39.4        compiler_3.7.0       
-## [100] e1071_1.7-1           affyio_1.53.0         tibble_2.1.1         
-## [103] stringi_1.4.3         highr_0.8             desc_1.2.0           
-## [106] lattice_0.20-38       trimcluster_0.1-2.1   Matrix_1.2-17        
-## [109] commonmark_1.7        gbm_2.1.5             pillar_1.3.1         
-## [112] BiocManager_1.30.4    MALDIquant_1.19.2     data.table_1.12.2    
-## [115] bitops_1.0-6          httpuv_1.5.1          R6_2.4.0             
-## [118] pcaMethods_1.75.1     affy_1.61.0           hwriter_1.3.2        
-## [121] bookdown_0.9          promises_1.0.1        gridExtra_2.3        
-## [124] codetools_0.2-16      MASS_7.3-51.4         gtools_3.8.1         
-## [127] assertthat_0.2.1      rprojroot_1.3-2       withr_2.1.2          
-## [130] diptest_0.75-7        hms_0.4.2             timeDate_3043.102    
-## [133] grid_3.7.0            rpart_4.1-15          coda_0.19-2          
-## [136] rmarkdown_1.12        segmented_0.5-3.0     lubridate_1.7.4      
-## [139] shiny_1.3.2           base64enc_0.1-3</code></pre>
+##  [88] fs_1.3.1              robustbase_0.93-5     randomForest_4.6-14  
+##  [91] purrr_0.3.2           dendextend_1.12.0     ncdf4_1.16.1         
+##  [94] nlme_3.1-139          mime_0.7              xml2_1.2.0           
+##  [97] biomaRt_2.41.3        compiler_3.6.0        e1071_1.7-2          
+## [100] affyio_1.55.0         tibble_2.1.3          stringi_1.4.3        
+## [103] highr_0.8             desc_1.2.0            lattice_0.20-38      
+## [106] Matrix_1.2-17         commonmark_1.7        gbm_2.1.5            
+## [109] pillar_1.4.1          BiocManager_1.30.4    MALDIquant_1.19.3    
+## [112] data.table_1.12.2     bitops_1.0-6          httpuv_1.5.1         
+## [115] R6_2.4.0              pcaMethods_1.77.0     affy_1.63.0          
+## [118] hwriter_1.3.2         bookdown_0.11         promises_1.0.1       
+## [121] gridExtra_2.3         codetools_0.2-16      MASS_7.3-51.4        
+## [124] gtools_3.8.1          assertthat_0.2.1      rprojroot_1.3-2      
+## [127] withr_2.1.2           diptest_0.75-7        hms_0.4.2            
+## [130] timeDate_3043.102     grid_3.6.0            rpart_4.1-15         
+## [133] coda_0.19-2           rmarkdown_1.13        segmented_1.0-0      
+## [136] lubridate_1.7.4       shiny_1.3.2           base64enc_0.1-3</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -1117,7 +1116,7 @@ Classification results. The results of the second round of classification, using
 <hr>
 <ol>
 <li id="fn1"><p>The content of this document is compiled (the code is executed and its output, text and figures, is displayed dynamically) to generate the pdf file.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Briefly, the <code>itraqdata</code> raw iTRAQ4-plex data is quantified by trapezoidation using <em><a href="https://bioconductor.org/packages/3.9/MSnbase">MSnbase</a></em> functionality. See the <code>MSnbase-demo</code> vignette for details.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Briefly, the <code>itraqdata</code> raw iTRAQ4-plex data is quantified by trapezoidation using <em><a href="https://bioconductor.org/packages/3.10/MSnbase">MSnbase</a></em> functionality. See the <code>MSnbase-demo</code> vignette for details.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 <li id="fn3"><p><a href="https://lvdmaaten.github.io/tsne/" class="uri">https://lvdmaaten.github.io/tsne/</a><a href="#fnref3" class="footnote-back">↩</a></p></li>
 <li id="fn4"><p><a href="http://distill.pub/2016/misread-tsne/" class="uri">http://distill.pub/2016/misread-tsne/</a><a href="#fnref4" class="footnote-back">↩</a></p></li>
 </ol>

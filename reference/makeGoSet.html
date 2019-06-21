@@ -64,7 +64,7 @@ with a GO term binary matrix based on an original object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.1</span>
       </span>
     </div>
 
@@ -180,7 +180,7 @@ for the respective features in the original <code>object</code>.</p>
 <span class='no'>goset</span> <span class='kw'>&lt;-</span> <span class='fu'>makeGoSet</span>(<span class='no'>dunkley2006</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ],
                    <span class='no'>dunkley2006params</span>)
 <span class='no'>goset</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
-#&gt; assayData: 10 features, 17 samples 
+#&gt; assayData: 10 features, 22 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
 #&gt; phenoData: none
@@ -191,17 +191,17 @@ for the respective features in the original <code>object</code>.</p>
 #&gt; experimentData: use 'experimentData(object)'
 #&gt; Annotation:  
 #&gt; - - - Processing information - - -
-#&gt; Constructed GO set using cellular_component namespace [Tue Apr 30 09:16:07 2019] 
-#&gt;  MSnbase version: 2.9.5 </div><div class='input'><span class='fu'>exprs</span>(<span class='no'>goset</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt;           GO:0005788 GO:0005773 GO:0005783 GO:0048046 GO:0000327
-#&gt; AT1G09210          1          1          1          1          0
-#&gt; AT1G21750          1          1          1          0          1
+#&gt; Constructed GO set using cellular_component namespace [Fri Jun 21 16:54:19 2019] 
+#&gt;  MSnbase version: 2.11.2 </div><div class='input'><span class='fu'>exprs</span>(<span class='no'>goset</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt;           GO:0005788 GO:0005773 GO:0005783 GO:0005739 GO:0048046
+#&gt; AT1G09210          1          1          1          1          1
+#&gt; AT1G21750          1          1          1          0          0
 #&gt; AT1G51760          1          0          1          0          0
-#&gt; AT1G56340          1          0          1          1          0
+#&gt; AT1G56340          1          0          1          1          1
 #&gt; AT2G32920          1          1          1          0          0
 #&gt; AT2G47470          0          0          1          0          0
 #&gt; AT3G54960          1          0          1          0          0
-#&gt; AT4G24190          1          1          1          1          0
-#&gt; AT5G60640          1          1          1          0          0
+#&gt; AT4G24190          1          1          1          1          1
+#&gt; AT5G60640          1          1          1          1          0
 #&gt; AT1G07810          0          0          1          0          0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span>(<span class='no'>goset</span>)</div><div class='img'><img src='makeGoSet-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

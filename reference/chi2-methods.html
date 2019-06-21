@@ -74,7 +74,7 @@ The chi2 methods implement this idea and compute such Chi^2
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.1</span>
       </span>
     </div>
 
@@ -202,23 +202,23 @@ The chi2 methods implement this idea and compute such Chi^2
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mrk</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>6</span>)
 <span class='no'>prot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 2.522687 3.152335 7.483528 2.933242 2.943707 2.479464 1.820202 1.879193
-#&gt;  [9] 2.465993 5.040086</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1]  4.0329487  0.4088289  0.2942406  3.2228017  2.1009555 -2.1217461
-#&gt;  [7]  2.4901725  2.6529579 -2.9148834  9.8793904</div><div class='input'>
+<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 0.8273709 3.1087875 5.5778705 1.7912414 2.3689727 1.2054473 3.1255211
+#&gt;  [8] 2.1956672 1.1091573 1.0906512</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1]  -1.95492161   7.44838603 -22.65149062  -3.26448185   8.07362689
+#&gt;  [6]   0.21285907  -2.62754729   0.01100889  -1.13983915  -3.03204715</div><div class='input'>
 <span class='no'>pepmark</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>18</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
 <span class='no'>pepprot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;            [,1]     [,2]      [,3]
-#&gt;  [1,] 0.9337001 2.060172 2.3849457
-#&gt;  [2,] 0.5448644 3.188633 0.9384112
-#&gt;  [3,] 1.4277769 4.436066 0.9607267
-#&gt;  [4,] 0.5086446 3.116592 1.0071918
-#&gt;  [5,] 1.6446056 5.088984 2.0694082
-#&gt;  [6,] 0.7985958 1.964816 1.1654830
-#&gt;  [7,] 1.1861109 2.568350 0.3169416
-#&gt;  [8,] 0.7694388 4.774804 3.5510633
-#&gt;  [9,] 0.9663459 2.481436 2.7628586
-#&gt; [10,] 1.3969488 2.865921 0.5625439</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1] 5.378817 4.671909 6.824570 4.632428 8.802998 3.928895 4.071403 9.095306
-#&gt;  [9] 6.210640 4.825413</div></pre>
+<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;           [,1]      [,2]      [,3]
+#&gt;  [1,] 3.219279 1.8723381 3.2001474
+#&gt;  [2,] 2.018228 1.5389482 0.6526429
+#&gt;  [3,] 2.437583 0.8648512 0.3189045
+#&gt;  [4,] 1.201750 1.7409293 2.1203398
+#&gt;  [5,] 1.893721 1.8302472 1.3016147
+#&gt;  [6,] 2.977179 0.4526999 1.4100113
+#&gt;  [7,] 3.427079 0.9107354 0.8836743
+#&gt;  [8,] 5.172952 1.4605580 3.0104372
+#&gt;  [9,] 1.211181 0.3596442 0.6760983
+#&gt; [10,] 4.879994 1.4057631 1.7272651</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1] 8.291764 4.209819 3.621339 5.063019 5.025583 4.839890 5.221488 9.643947
+#&gt;  [9] 2.246923 8.013022</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

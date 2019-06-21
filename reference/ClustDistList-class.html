@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.23.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.1</span>
       </span>
     </div>
 
@@ -187,16 +187,18 @@
   <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='addGoAnnotations.html'>addGoAnnotations</a></span>(<span class='no'>dunkley2006</span>, <span class='no'>par</span>)
 
   <span class='co'>## filter</span>
-  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 11 out of 179 in GOAnnotations</span></div><div class='input'>  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>.25</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 9 out of 11 in GOAnnotations</span></div><div class='input'>
+  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 18 out of 186 in GOAnnotations</span></div><div class='input'>  <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span>(<span class='no'>xx</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>.25</span>)</div><div class='output co'>#&gt; <span class='message'>Retaining 13 out of 18 in GOAnnotations</span></div><div class='input'>
   <span class='co'>## get distances for protein sets</span>
-  <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span>(<span class='no'>xx</span>)</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |========                                                              |  11%  |                                                                              |================                                                      |  22%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================                                       |  44%  |                                                                              |=======================================                               |  56%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================                |  78%  |                                                                              |==============================================================        |  89%  |                                                                              |======================================================================| 100%</div><div class='input'>
+  <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span>(<span class='no'>xx</span>)</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=====                                                                 |   8%  |                                                                              |===========                                                           |  15%  |                                                                              |================                                                      |  23%  |                                                                              |======================                                                |  31%  |                                                                              |===========================                                           |  38%  |                                                                              |================================                                      |  46%  |                                                                              |======================================                                |  54%  |                                                                              |===========================================                           |  62%  |                                                                              |================================================                      |  69%  |                                                                              |======================================================                |  77%  |                                                                              |===========================================================           |  85%  |                                                                              |=================================================================     |  92%  |                                                                              |======================================================================| 100%</div><div class='input'>
   <span class='co'>## plot distances for all protein sets </span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>dd</span>)</div><div class='img'><img src='ClustDistList-class-1.png' alt='' width='700' height='433' /></div><div class='input'>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>dd</span>)</div><div class='output co'>#&gt; [1] "vacuole"                        "plasmodesma"                   
-#&gt; [3] "vacuolar membrane"              "endoplasmic reticulum membrane"
-#&gt; [5] "plastid"                        "Golgi membrane"                
-#&gt; [7] "endosome"                       "trans-Golgi network"           
-#&gt; [9] "chloroplast envelope"          </div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>dd</span>)</div><div class='output co'>#&gt;  [1] "vacuole"                        "mitochondrion"                 
+#&gt;  [3] "chloroplast"                    "plasmodesma"                   
+#&gt;  [5] "vacuolar membrane"              "endoplasmic reticulum membrane"
+#&gt;  [7] "cytoplasm"                      "cytosol"                       
+#&gt;  [9] "plastid"                        "Golgi membrane"                
+#&gt; [11] "endosome"                       "trans-Golgi network"           
+#&gt; [13] "chloroplast envelope"          </div><div class='input'>
   <span class='co'>## Extract first 4 ClustDist objects of the ClustDistList</span>
   <span class='no'>dd</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt; Instance of class 'ClustDistList' containig 4 objects.</div><div class='input'>
   <span class='co'>## Extract 1st ClustDist object</span>
@@ -207,15 +209,15 @@
 #&gt;  nrow =  112 
 #&gt; k's tested: 1 2 3 4 5 
 #&gt;   Size:  112 
-#&gt;   Size:  73 
-#&gt;   Size:  NA 
+#&gt;   Size:  63 
+#&gt;   Size:  65 
 #&gt;   Size:  NA 
 #&gt;   Size:  NA 
 #&gt; Clusters info:
 #&gt;       ks.mean    mean ks.norm     norm
 #&gt; k = 1       1  0.4576       1  0.09494
-#&gt; k = 2       1 *0.3531       1 *0.08448
-#&gt; k = 3      NA      NA      NA       NA
+#&gt; k = 2       1  0.3278       1  0.08238
+#&gt; k = 3       1 *0.2640       1 *0.06566
 #&gt; k = 4      NA      NA      NA       NA
 #&gt; k = 5      NA      NA      NA       NA</div></pre>
   </div>

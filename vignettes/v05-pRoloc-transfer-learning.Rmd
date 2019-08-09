@@ -218,7 +218,7 @@ library("biomaRt")
 mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 filter <- "uniprotswissprot"
-attrib <- c("uniprot_gn", "uniprotswissprot", "ensembl_gene_id")
+attrib <- c("uniprot_gn_symbol", "uniprotswissprot", "ensembl_gene_id")
 bm <- getBM(attributes = attrib,
             filters = filter,
             values = fData(andyhpa)[, "accession"],

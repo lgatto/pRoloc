@@ -74,6 +74,8 @@ Suggests:
     BiocStyle (>= 2.5.19),
     hpar (>= 1.15.3),
     dplyr,
+    akima,
+    fields,
     GO.db,
     AnnotationDbi,
     Rtsne (>= 0.13),
@@ -121,6 +123,7 @@ Collate:
     plotting.R
     plotting2.R
     plotting3.R
+    plttingBayes,R
     plotting-ellipse.R
     hclust.R
     environment.R

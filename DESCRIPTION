@@ -76,6 +76,7 @@ Suggests:
     dplyr,
     akima,
     fields,
+    vegan,
     GO.db,
     AnnotationDbi,
     Rtsne (>= 0.13),

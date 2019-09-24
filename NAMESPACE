@@ -16,7 +16,7 @@ importFrom("graphics", "abline", "axis", "grid", "legend", "matlines",
 importFrom("stats", "as.formula", "cmdscale", "cov", "dist", "kmeans",
            "mahalanobis", "median", "prcomp", "qchisq", "quantile",
            "update", "rmultinom", "na.omit", "hclust", "dbeta",
-           "as.dendrogram", "pnorm", "rnorm", "runif")
+           "as.dendrogram", "pnorm", "rnorm", "runif", "predict")
 importFrom("utils", "combn", "head", "menu", "packageDescription",
            "packageVersion", "read.csv", "setTxtProgressBar",
            "txtProgressBar")
@@ -49,7 +49,7 @@ importFrom(ggplot2, ggplot, geom_point, theme, scale_size_continuous,
            geom_violin, theme_bw, scale_fill_manual, element_blank,
            ggtitle, geom_tile, scale_fill_continuous, element_line,
            coord_fixed, geom_contour, scale_alpha, theme_minimal,
-           element_rect)
+           element_rect, geom_density2d, xlim, stat)
 
 importFrom("mclust", "Mclust", "mclust.options")
 
@@ -59,8 +59,10 @@ import(Biobase)
 import(lattice)
 import(BiocGenerics)
 import(MASS)
-import(kernlab) ## previously only imported ksvm
 import(knitr)
+
+## also calling kernlab::predict
+importFrom(kernlab, ksvm, kpca, rotated, rbfdot, kernelMatrix, eig)
 
 importFrom(class, knn)
 importFrom(FNN, get.knn, get.knnx)

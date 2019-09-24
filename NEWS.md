@@ -1,5 +1,8 @@
 # pRoloc 1.25
 
+## Changes in version 1.25.3
+- New spatial2D function <2019-09-24 Tue>
+
 ## Changes in version 1.25.2
 - Fix new biomart attribute <2019-08-09 Fri>
 - Bug fix: pass fcol to helper function (see

@@ -31,7 +31,9 @@ nicheMeans2D <- function(object,
                          priors,
                          dims = c(1, 2),
                          fcol = "markers",
-                         aspect = 0.5){
+                         aspect = 0.5) {
+    ## Undefined global variables
+    X1 <- X2 <- organelle <- NULL
     ## Make coordinates
     .pca <- plot2D(object, dims = dims, plot = FALSE)
     d <- 2
@@ -152,6 +154,9 @@ spatial2D <- function(object,
                       k = 1,
                       breaks = c(0.99, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7),
                       aspect = 0.5) {
+    ## Undefined global variables
+
+    x <- y <- z <- level <- organelle <- NULL
     ## This function requieres three suggested packages. Testing if they are
     ## available.
     missing_packages <- character()
@@ -212,7 +217,7 @@ spatial2D <- function(object,
         data = df.lst,
         aes(x = x, y = y, z = z, color = organelle)) +
         coord_fixed() +
-        geom_contour(breaks = breaks, size = 1.2, aes(alpha = stat(level))) +
+        geom_contour(breaks = breaks, size = 1.2, aes(alpha = ggplot2::stat(level))) +
         geom_point(alpha = 0) +
         xlab(paste0(eigs[1])) +
         ylab(paste0(eigs[2])) +
@@ -262,6 +267,8 @@ mixing_posterior_check <- function(object,
                                    params,
                                    priors,
                                    fcol = "markers") {
+    ## Undefined global variables
+    posteriorShrinkage <- posteriorZscore <- organelle <- NULL
 
     K <- length(priors$beta0)
     N <- nrow(object)

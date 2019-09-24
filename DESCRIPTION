@@ -124,7 +124,7 @@ Collate:
     plotting.R
     plotting2.R
     plotting3.R
-    plttingBayes,R
+    plottingBayes.R
     plotting-ellipse.R
     hclust.R
     environment.R

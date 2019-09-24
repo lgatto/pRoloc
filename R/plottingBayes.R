@@ -14,7 +14,9 @@
 ##'     object that can be further manipulated
 ##' @author Oliver M. Crook <omc25@cam.ac.uk>
 ##' @examples
-##' # data("tan2009r1")
+##' \dontrun{
+##' library("pRolocdata")
+##' data("tan2009r1")
 ##'
 ##' tanres <- tagmMcmcTrain(object = tan2009r1)
 ##' tanres <- tagmMcmcProcess(tanres)
@@ -22,7 +24,8 @@
 ##' myparams <- chains(e14Tagm_converged_pooled)[[1]]
 ##' myparams2 <- chains(mcmc_pool_chains(tanres))[[1]]
 ##' priors <- tanres@priors
-##' nicheMeans2D(object = tan2009r1, params = myparams2, priors = priors)
+##' pRoloc:::nicheMeans2D(object = tan2009r1, params = myparams2, priors = priors)
+##' }
 nicheMeans2D <- function(object,
                          params,
                          priors,
@@ -132,13 +135,15 @@ nicheMeans2D <- function(object,
 ##'     object that can be further manipulated
 ##' @author Oliver M. Crook <omc25@cam.ac.uk>
 ##' @examples
+##' \dontrun{
 ##' library("pRolocdata")
 ##' data("tan2009r1")
 ##'
 ##' tanres <- tagmMcmcTrain(object = tan2009r1)
 ##' tanres <- tagmMcmcProcess(tanres)
 ##' tan2009r1 <- tagmMcmcPredict(object = tan2009r1, params = tanres, probJoint = TRUE)
-##' pRoloc:::spatial2D(object = tan2009r1)
+##' spatial2D(object = tan2009r1)
+##' }
 spatial2D <- function(object,
                       dims = c(1, 2),
                       cov.function = fields::wendland.cov,
@@ -241,6 +246,8 @@ spatial2D <- function(object,
 ##' that can be further manipulated
 ##' @author Oliver M. Crook <omc25@cam.ac.uk>
 ##' @examples
+##' \dontrun{
+##' library("pRoloc")
 ##' data("tan2009r1")
 ##'
 ##' tanres <- tagmMcmcTrain(object = tan2009r1)
@@ -249,7 +256,8 @@ spatial2D <- function(object,
 ##' myparams <- chains(e14Tagm_converged_pooled)[[1]]
 ##' myparams2 <- chains(mcmc_pool_chains(tanres))[[1]]
 ##' priors <- tanres@priors
-##' mixing_posterior_check(object = tan2009r1, params = myparams2, priors = priors)
+##' pRoloc:::mixing_posterior_check(object = tan2009r1, params = myparams2, priors = priors)
+##' }
 mixing_posterior_check <- function(object,
                                    params,
                                    priors,

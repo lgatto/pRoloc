@@ -141,6 +141,7 @@ export(## MSnSet manipulation
     highlightOnPlot3D,
     SpatProtVis,
     orgQuants,
+    spatial2D,
     ## -- data checks
     checkFvarOverlap,
     checkFeatureNamesOverlap,

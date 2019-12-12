@@ -1,3 +1,12 @@
+# pRoloc 1.27
+
+## Changes in version 1.27.1
+- Merged plotting payes PR
+
+## Changes in version 1.27.0
+- Version bump for Bioc 3.11 (devel)
+
+
 # pRoloc 1.25
 
 ## Changes in version 1.25.3

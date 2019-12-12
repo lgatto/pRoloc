@@ -336,7 +336,7 @@ updateobject  <- function(MSnSetToUpdate,
 ##'     the disocvery analysis. Default is 2. Added in version 1.3.9.
 ##' @param modelNames A vector of characters indicating the models to
 ##'     be fitted in the EM phase of clustering using
-##'     \code{Mclust}. The help file for \code{mclustModelNames}
+##'     \code{Mclust}. The help file for \code{mclust::mclustModelNames}
 ##'     describes the available models. Default model names are
 ##'     \code{c("EII", "VII", "EEI", "VEI", "EVI", "VVI", "EEE",
 ##'     "EEV", "VEV", "VVV")}, as returned by

@@ -1,4 +1,16 @@
+# pRoloc 1.27
+
+## Changes in version 1.27.1
+- Merged plotting payes PR
+
+## Changes in version 1.27.0
+- Version bump for Bioc 3.11 (devel)
+
+
 # pRoloc 1.25
+
+## Changes in version 1.25.3
+- New spatial2D function <2019-09-24 Tue>
 
 ## Changes in version 1.25.2
 - Fix new biomart attribute <2019-08-09 Fri>

@@ -309,7 +309,7 @@ tlopt <- function(primary,   # matrix
                   xfolds) {
     ## set warnings
     .warnings <- NULL
-    if (class(theta) == "numeric")
+    if (inherits(theta, "numeric"))
         theta <- t(as.matrix(theta))
 
     ## get markers, classes and initialise objects
@@ -550,7 +550,7 @@ knntlOptimisation  <- function(primary,
     ## Set seed (Originally removed for Darwin HPC, and added
     ## back 22/02/16 to use with SerialParam, unit testing and for
     ## reproducibility)
-    if (class(BPPARAM) == "SerialParam") {
+    if (inherits(BPPARAM, "SerialParam")) {
         if (missing(seed)) {
             seed <- sample(.Machine$integer.max, 1)
         }
@@ -690,8 +690,8 @@ knntlOptimisation  <- function(primary,
     if (missing(xfolds)) {
         xfolds <- createPartitions(markers, xval, times, test.size)
     } else {
-        if(class(xfolds) != "list" | length(xfolds) != 3 |
-           length(xfolds[[1]]) != times | class(xfolds[[1]][[1]])!="character") {
+        if(!inherits(xfolds, "list") | length(xfolds) != 3 |
+           length(xfolds[[1]]) != times | !inherits(xfolds[[1]][[1]], "character")) {
             stop("If 'xfolds' is specified it must be generated using ",
                  "the function pRoloc::createPartitons")
         }

@@ -1,5 +1,8 @@
 # pRoloc 1.27
 
+## Changes in version 1.27.2
+- Fix errors related to R-devel
+
 ## Changes in version 1.27.1
 - Merged plotting payes PR
 

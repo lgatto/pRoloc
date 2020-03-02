@@ -1,7 +1,7 @@
 # pRoloc 1.27
 
 ## Changes in version 1.27.3
-- Nothing yet
+- Remove exprsToRatio man page (function in MSnbase and is deprecated)
 
 ## Changes in version 1.27.2
 - Fix errors related to R-devel

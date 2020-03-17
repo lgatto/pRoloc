@@ -797,7 +797,7 @@ foi(foi1)
 
 Several such features of interest can be combined into collections:
 
-```{r }
+```{r}
 foi2 <- FeaturesOfInterest(description = "Feats of interest 2",
                fnames = featureNames(tan2009r1[880:888]))
 foic <- FoICollection(list(foi1, foi2))
@@ -1209,7 +1209,7 @@ though the `phenoDisco` function.
 
 ```{r runPhenoDisco, eval=FALSE, warning=FALSE}
 pdres <- phenoDisco(tan2009r1, GS = 10,
-            times = 100, fcol = "PLSDA")
+                    times = 100, fcol = "PLSDA")
 ```
 
 Again, in the interest of time, *phenoDisco* is not executed when the
@@ -1287,8 +1287,8 @@ load(fn)
 
 ```{r pdsvm, cache = TRUE, message = FALSE, warning = FALSE, tidy = FALSE}
 tan2009r1 <- svmClassification(tan2009r1, params2,
-                   class.weights = w,
-                   fcol = "pd.markers")
+                               class.weights = w,
+                               fcol = "pd.markers")
 ```
 
 The data is visualised as described previously, were we use the svm

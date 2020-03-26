@@ -67,7 +67,7 @@ importFrom(kernlab, ksvm, kpca, rotated, rbfdot, kernelMatrix, eig)
 importFrom(class, knn)
 importFrom(FNN, get.knn, get.knnx)
 importFrom(RColorBrewer, brewer.pal)
-## importFrom(stats4, plot)
+importFrom(stats4, plot)
 importFrom("mvtnorm", "rmvnorm", "dmvnorm")
 
 importFrom(proxy, simil)

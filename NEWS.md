@@ -1,5 +1,8 @@
 # pRoloc 1.27
 
+## Changes in version 1.27.5
+- import stats4::plot <2020-03-26 Thu>
+
 ## Changes in version 1.27.4
 - Import missing `mclust::mclustBIC`
 

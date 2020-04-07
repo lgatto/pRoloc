@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.27.5
+Version: 1.27.6
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 		    email = "laurent.gatto@uclouvain.be",
 		    role = c("aut","cre")),
@@ -27,7 +27,7 @@ Description: The pRoloc package implements machine learning and
 Depends:
     R (>= 2.15),
     MSnbase (>= 1.19.20),
-    MLInterfaces (>= 1.37.1),
+    MLInterfaces (>= 1.67.10),
     methods,
     Rcpp (>= 0.10.3),
     BiocParallel

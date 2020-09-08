@@ -2,8 +2,8 @@
 
 stockcol <- c("#E41A1C", "#377EB8", "#309C17", "#FF7F00", "#FFD700", "#00CED1",
               "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#B0C4DE", "#00008A",
-              "#FDAE6B", "#EBB7BE", "#0E7575", "#CF9802", "#6A51A3", "#66C2A5",
-              "#0000FF", "#2F6B44", "#BF2A6B", "#CD5B45", "#808000", "#F21D56",
+              "#FDAE6B", "#EBB7BE", "#3F8F8F", "#CF9802", "#6A51A3", "#21E8AC",
+              "#0000FF", "#1D7A3E", "#BF2A6B", "#CD5B45", "#808000", "#F21D56",
               "#67000D", "#7A0C79", "#93EDF5", "#A66A6A", "#0E438A", "#DBBCF7")
 
 assign("stockcol", stockcol, envir = .pRolocEnv)

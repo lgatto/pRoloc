@@ -3,6 +3,10 @@
 ## Changes in version 1.29.0
 - New devel version (Bioc 3.12)
 
+## Changes in version 1.29.1
+- Removed duplicate colour in getStockCol and updated the colour 
+  palette <Tue 2020-09-08>
+
 # pRoloc 1.28
 
 ## Changes in version 1.28.0

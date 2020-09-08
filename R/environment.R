@@ -1,10 +1,10 @@
 .pRolocEnv <- new.env(parent=emptyenv(), hash=TRUE)
 
-stockcol <- c("#E41A1C", "#377EB8", "#238B45", "#FF7F00", "#FFD700", "#333333",
-              "#00CED1", "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#B0C4DE",
-              "#00008A", "#8B795E", "#FDAE6B", "#66C2A5", "#276419", "#CD8C95",
-              "#6A51A3", "#EEAD0E", "#0000FF", "#9ACD32", "#CD6090", "#CD5B45",
-              "#8E0152", "#808000", "#67000D", "#3F007D", "#6BAED6", "#FC9272")
+stockcol <- c("#E41A1C", "#377EB8", "#309C17", "#FF7F00", "#FFD700", "#00CED1",
+              "#A65628", "#F781BF", "#984EA3", "#9ACD32", "#B0C4DE", "#00008A",
+              "#FDAE6B", "#EBB7BE", "#0E7575", "#CF9802", "#6A51A3", "#66C2A5",
+              "#0000FF", "#2F6B44", "#BF2A6B", "#CD5B45", "#808000", "#F21D56",
+              "#67000D", "#7A0C79", "#93EDF5", "#A66A6A", "#0E438A", "#DBBCF7")
 
 assign("stockcol", stockcol, envir = .pRolocEnv)
 

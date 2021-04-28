@@ -1,10 +1,15 @@
+# pRoloc 1.31
+
+## Changes in version 1.31.0
+- New devel version (Bioc 3.13)
+
 # pRoloc 1.29
 
 ## Changes in version 1.29.0
 - New devel version (Bioc 3.12)
 
 ## Changes in version 1.29.1
-- Removed duplicate colour in getStockCol and updated the colour 
+- Removed duplicate colour in getStockCol and updated the colour
   palette <Tue 2020-09-08>
 
 # pRoloc 1.28
@@ -240,7 +245,7 @@
 ## Changes in version 1.15.3
 
  - Fix bug in plot2D to ignore fcol when using hexbin method
-		<2016-11-04 Fri>
+        <2016-11-04 Fri>
 
 ## Changes in version 1.15.2
 

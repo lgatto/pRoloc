@@ -1,29 +1,29 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.29.1
+Version: 1.31.0
 Authors@R: c(person(given = "Laurent", family = "Gatto",
-		    email = "laurent.gatto@uclouvain.be",
-		    role = c("aut","cre")),
-	     person(given = "Lisa", family ="Breckels",
-		    email = "lms79@cam.ac.uk",
-		    role = "aut"),
-	     person(given = "Thomas", family ="Burger",
-		    email = "Thomas.BURGER@cea.fr",
-		    role = "ctb"),
-	     person(given = "Samuel", family ="Wieczorek",
-		    email = "samuel.wieczorek@cea.fr",
-		    role = "ctb"),
-	     person(given = "Oliver", family ="Crook",
-		    email = "omc25@cam.ac.uk",
-		    role = "aut"))
+                    email = "laurent.gatto@uclouvain.be",
+                    role = c("aut","cre")),
+             person(given = "Lisa", family ="Breckels",
+                    email = "lms79@cam.ac.uk",
+                    role = "aut"),
+             person(given = "Thomas", family ="Burger",
+                    email = "Thomas.BURGER@cea.fr",
+                    role = "ctb"),
+             person(given = "Samuel", family ="Wieczorek",
+                    email = "samuel.wieczorek@cea.fr",
+                    role = "ctb"),
+             person(given = "Oliver", family ="Crook",
+                    email = "omc25@cam.ac.uk",
+                    role = "aut"))
 Author: Laurent Gatto, Oliver Crook and Lisa M. Breckels with
     contributions from Thomas Burger and Samuel Wieczorek
 Maintainer: Laurent Gatto <laurent.gatto@uclouvain.be>
 Description: The pRoloc package implements machine learning and
-	     visualisation methods for the analysis and interogation
-	     of quantitiative mass spectrometry data to reliably infer
-	     protein sub-cellular localisation.
+             visualisation methods for the analysis and interogation
+             of quantitiative mass spectrometry data to reliably infer
+             protein sub-cellular localisation.
 Depends:
     R (>= 2.15),
     MSnbase (>= 1.19.20),

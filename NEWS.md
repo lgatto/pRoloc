@@ -1,5 +1,8 @@
 # pRoloc 1.31
 
+## Changes in version 1.31.1
+- Suggest magick (needed to build vignette)
+
 ## Changes in version 1.31.0
 - New devel version (Bioc 3.13)
 

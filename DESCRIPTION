@@ -82,7 +82,8 @@ Suggests:
     AnnotationDbi,
     Rtsne (>= 0.13),
     nipals,
-    reshape
+    reshape,
+    magick
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr

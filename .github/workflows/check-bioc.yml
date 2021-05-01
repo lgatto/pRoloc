@@ -208,10 +208,6 @@ jobs:
           BiocManager::install("BiocCheck")
         shell: Rscript {0}
 
-      - name: Manually install synapter
-        run: BiocManager::install("lgatto/synapter")
-        shell: Rscript {0}
-
       - name: Session info
         run: |
           options(width = 100)

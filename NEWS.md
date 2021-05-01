@@ -1,5 +1,8 @@
 # pRoloc 1.31
 
+## Changes in version 1.31.3
+- lopims() function moved to lgatto/lopims package on GitHub
+
 ## Changes in version 1.31.2
 - Update dunkley2006params, andy2011params and MartInterfaces objects
 

@@ -186,8 +186,6 @@ export(## MSnSet manipulation
     knntlOptimisation,
     knntlClassification,
     thetas,
-    ## -- pipelines
-    lopims, lopims1, lopims2, lopims3, lopims4, lopims5,
     ## -- annotation
     goIdToTerm, goTermToId,
     flipGoTermId, prettyGoTermId,

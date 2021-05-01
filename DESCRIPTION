@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.31.2
+Version: 1.31.3
 Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "laurent.gatto@uclouvain.be",
                     role = c("aut","cre")),
@@ -69,7 +69,6 @@ Suggests:
     rmarkdown,
     pRolocdata (>= 1.9.4),
     roxygen2,
-    synapter,
     xtable,
     rgl,
     BiocStyle (>= 2.5.19),
@@ -131,7 +130,6 @@ Collate:
     hclust.R
     environment.R
     utils.R
-    lopims.R
     annotation.R
     goenv.R
     go.R

@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.31.1
+Version: 1.31.2
 Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "laurent.gatto@uclouvain.be",
                     role = c("aut","cre")),
@@ -25,7 +25,7 @@ Description: The pRoloc package implements machine learning and
              of quantitiative mass spectrometry data to reliably infer
              protein sub-cellular localisation.
 Depends:
-    R (>= 2.15),
+    R (>= 3.5),
     MSnbase (>= 1.19.20),
     MLInterfaces (>= 1.67.10),
     methods,

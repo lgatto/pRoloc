@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
       </span>
     </div>
 
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## experimentData: use 'experimentData(object)'
 ## Annotation:  
 ## - - - Processing information - - -
-## Quantitation data loaded: Sat May  1 09:28:30 2021  using readMSnSet. 
+## Quantitation data loaded: Sat May  1 12:00:10 2021  using readMSnSet. 
 ##  MSnbase version: 2.17.7</code></pre>
 </div>
 </div>
@@ -486,8 +486,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## - - - Processing information - - -
 ## Data loaded: Wed May 11 18:54:39 2011 
 ## Updated from version 0.3.0 to 0.3.1 [Fri Jul  8 20:23:25 2016] 
-## iTRAQ4 quantification by trapezoidation: Sat May  1 09:28:33 2021 
-## Normalised (sum): Sat May  1 09:28:33 2021 
+## iTRAQ4 quantification by trapezoidation: Sat May  1 12:00:13 2021 
+## Normalised (sum): Sat May  1 12:00:13 2021 
 ##  MSnbase version: 1.1.22</code></pre>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/exprs.html" class="external-link">exprs</a></span><span class="op">(</span><span class="va">itraqnorm</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
@@ -823,7 +823,7 @@ Assessing parameter optimisation. Visualisation of the averaged macro F1 scores,
 <span class="fu"><a href="https://lgatto.github.io/MSnbase/reference/pSet-class.html" class="external-link">processingData</a></span><span class="op">(</span><span class="va">svmres</span><span class="op">)</span></code></pre></div>
 <pre><code>## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Sat May  1 09:28:41 2021 
+## Performed svm prediction (sigma=0.1 cost=0.5) Sat May  1 12:00:21 2021 
 ##  MSnbase version: 1.17.12</code></pre>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fvarLabels</a></span><span class="op">(</span><span class="va">svmres</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span></code></pre></div>
@@ -919,8 +919,8 @@ Organelle-specific SVM score distributions.
 ## Annotation:  
 ## - - - Processing information - - -
 ## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=0.1 cost=0.5) Sat May  1 09:28:41 2021 
-## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Sat May  1 09:28:42 2021 
+## Performed svm prediction (sigma=0.1 cost=0.5) Sat May  1 12:00:21 2021 
+## Added svm predictions according to thresholds: ER = 0.84, Golgi = 0.63, mitochondrion = 0.75, PM = 0.77 Sat May  1 12:00:21 2021 
 ##  MSnbase version: 1.17.12</code></pre>
 <p>We can now visualise these results using the plotting functions presented in section @ref(sec:usml), as shown on figure @ref(fig:svmres). We clearly see that besides the organelle marker clusters that have been assigned high confidence members, many other proteins have substantially lower prediction scores.</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
@@ -1065,7 +1065,7 @@ Classification results. The results of the second round of classification, using
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] class_7.3-18         pRolocdata_1.29.0    pRoloc_1.31.2       
+##  [1] class_7.3-18         pRolocdata_1.29.0    pRoloc_1.31.3       
 ##  [4] BiocParallel_1.25.5  MLInterfaces_1.71.2  cluster_2.1.1       
 ##  [7] annotate_1.69.2      XML_3.99-0.6         AnnotationDbi_1.53.1
 ## [10] IRanges_2.25.10      MSnbase_2.17.7       ProtGenerics_1.23.9 

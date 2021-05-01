@@ -8,21 +8,29 @@
 
 <title>plsda classification — plsdaClassification • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +38,13 @@
 
 
 
-<meta property="og:title" content="plsda classification — plsdaClassification" />
 
+<meta property="og:title" content="plsda classification — plsdaClassification" />
 <meta property="og:description" content="Classification using the partial least square
 distcriminant analysis algorithm." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -48,9 +58,19 @@ distcriminant analysis algorithm." />
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -64,19 +84,13 @@ distcriminant analysis algorithm." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -107,11 +121,10 @@ distcriminant analysis algorithm." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,6 +135,7 @@ distcriminant analysis algorithm." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -133,21 +147,19 @@ distcriminant analysis algorithm." />
     </div>
 
     <div class="ref-description">
-    
     <p>Classification using the partial least square
 distcriminant analysis algorithm.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>plsdaClassification</span>(<span class='no'>object</span>, <span class='no'>assessRes</span>, <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"prediction"</span>, <span class='st'>"all"</span>,
-  <span class='st'>"none"</span>), <span class='no'>ncomp</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>plsdaClassification</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>assessRes</span>, scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"prediction"</span>, <span class='st'>"all"</span>,
+  <span class='st'>"none"</span><span class='op'>)</span>, <span class='va'>ncomp</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An instance of class <code>"MSnSet"</code>.</p></td>
+      <td><p>An instance of class <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code>.</p></td>
     </tr>
     <tr>
       <th>assessRes</th>
@@ -177,56 +189,68 @@ Default is <code>markers</code>.</p></td>
 from package <code>caret</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An instance of class <code>"MSnSet"</code> with
+    <p>An instance of class <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code> with
     <code>plsda</code> and <code>plsda.scores</code> feature variables storing
     the classification results and scores respectively.</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## not running this one for time considerations</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>pRolocdata</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'>## not running this one for time considerations</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
 <span class='co'>## reducing parameter search space and iterations </span>
-<span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='plsdaOptimisation.html'>plsdaOptimisation</a></span>(<span class='no'>dunkley2006</span>, <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>10</span>),  <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%</div><div class='output co'>#&gt; <span class='error'>Error: package klaR is required</span></div><div class='input'><span class='no'>params</span></div><div class='output co'>#&gt; standardGeneric for "params" defined from package "S4Vectors"
+<span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plsdaOptimisation.html'>plsdaOptimisation</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, ncomp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>10</span><span class='op'>)</span>,  times <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='co'>#&gt;   |                                                                              |                                                                      |   0%</div><div class='co'>#&gt; <span class='error'>Error: </span>package klaR is required</div><div class='input'><span class='va'>params</span>
+</div><div class='co'>#&gt; standardGeneric for "params" defined from package "S4Vectors"
 #&gt; 
 #&gt; function (x, ...) 
 #&gt; standardGeneric("params")
-#&gt; &lt;bytecode: 0x81be110&gt;
-#&gt; &lt;environment: 0x81b79d8&gt;
+#&gt; &lt;bytecode: 0x55aeaa86e1b8&gt;
+#&gt; &lt;environment: 0x55aeaa867578&gt;
 #&gt; Methods may be defined for arguments: x
-#&gt; Use  showMethods("params")  for currently available ones.</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list("numeric"), new("standardGeneric", .Data = function (x,     ...) standardGeneric("params"), generic = structure("params", package = "S4Vectors"),     package = "S4Vectors", group = list(), valueClass = character(0),     signature = "x", default = NULL, skeleton = (function (x,         ...)     stop("invalid call in method dispatch to 'params' (no default method)",         domain = NA))(x, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘params’ for signature ‘"numeric"’</span></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("f1Count"), generic = structure("f1Count", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'f1Count' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘f1Count’ for signature ‘"standardGeneric"’</span></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("levelPlot"), generic = structure("levelPlot", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'levelPlot' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘levelPlot’ for signature ‘"standardGeneric"’</span></div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("getParams"), generic = structure("getParams", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'getParams' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘getParams’ for signature ‘"standardGeneric"’</span></div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>plsdaClassification</span>(<span class='no'>dunkley2006</span>, <span class='no'>params</span>)</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("getParams"), generic = structure("getParams", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'getParams' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘getParams’ for signature ‘"standardGeneric"’</span></div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in fData(object): object 'res' not found</span></div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)</div><div class='output co'>#&gt; <span class='error'>Error in fData(object): object 'res' not found</span></div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"plsda"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot2D(res, fcol = "plsda"): object 'res' not found</span></div></pre>
+#&gt; Use  showMethods(params)  for currently available ones.</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>params</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list("numeric"), new("standardGeneric", .Data = function (x,     ...) standardGeneric("params"), generic = structure("params", package = "S4Vectors"),     package = "S4Vectors", group = list(), valueClass = character(0),     signature = "x", default = NULL, skeleton = (function (x,         ...)     stop("invalid call in method dispatch to 'params' (no default method)",         domain = NA))(x, ...)), &lt;environment&gt;): </span>unable to find an inherited method for function ‘params’ for signature ‘"numeric"’</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>f1Count</a></span><span class='op'>(</span><span class='va'>params</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("f1Count"), generic = structure("f1Count", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'f1Count' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): </span>unable to find an inherited method for function ‘f1Count’ for signature ‘"standardGeneric"’</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span><span class='op'>(</span><span class='va'>params</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("levelPlot"), generic = structure("levelPlot", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'levelPlot' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): </span>unable to find an inherited method for function ‘levelPlot’ for signature ‘"standardGeneric"’</div><div class='input'><span class='fu'><a href='GenRegRes-class.html'>getParams</a></span><span class='op'>(</span><span class='va'>params</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("getParams"), generic = structure("getParams", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'getParams' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): </span>unable to find an inherited method for function ‘getParams’ for signature ‘"standardGeneric"’</div><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>plsdaClassification</span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>params</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("standardGeneric", package = "methods")), new("standardGeneric",     .Data = function (object, ...)     standardGeneric("getParams"), generic = structure("getParams", package = "pRoloc"),     package = "pRoloc", group = list(), valueClass = character(0),     signature = "object", default = NULL, skeleton = (function (object,         ...)     stop("invalid call in method dispatch to 'getParams' (no default method)",         domain = NA))(object, ...)), &lt;environment&gt;): </span>unable to find an inherited method for function ‘getParams’ for signature ‘"standardGeneric"’</div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"plsda"</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): </span>error in evaluating the argument 'object' in selecting a method for function 'fData': object 'res' not found</div><div class='input'><span class='fu'><a href='getPredictions.html'>getPredictions</a></span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"plsda"</span>, t <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): </span>error in evaluating the argument 'object' in selecting a method for function 'fData': object 'res' not found</div><div class='input'><span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"plsda"</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='error'>Error in plot2D(res, fcol = "plsda"): </span>object 'res' not found</div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

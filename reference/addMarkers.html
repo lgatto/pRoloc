@@ -8,21 +8,29 @@
 
 <title>Adds markers to the data — addMarkers • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,15 +38,17 @@
 
 
 
-<meta property="og:title" content="Adds markers to the data — addMarkers" />
 
+<meta property="og:title" content="Adds markers to the data — addMarkers" />
 <meta property="og:description" content="The function adds a 'markers' feature variable. These markers are
 read from a comma separated values (csv) spreadsheet file. This
 markers file is expected to have 2 columns (others are ignored)
 where the first is the name of the marker features and the second
 the group label. Alternatively, a markers named vector as provided
 by the pRolocmarkers function can also be used." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -52,9 +62,19 @@ by the pRolocmarkers function can also be used." />
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -68,19 +88,13 @@ by the pRolocmarkers function can also be used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -111,11 +125,10 @@ by the pRolocmarkers function can also be used." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,6 +139,7 @@ by the pRolocmarkers function can also be used." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -137,18 +151,16 @@ by the pRolocmarkers function can also be used." />
     </div>
 
     <div class="ref-description">
-    
     <p>The function adds a 'markers' feature variable. These markers are
 read from a comma separated values (csv) spreadsheet file. This
 markers file is expected to have 2 columns (others are ignored)
 where the first is the name of the marker features and the second
 the group label. Alternatively, a markers named vector as provided
 by the <code><a href='pRolocmarkers.html'>pRolocmarkers</a></code> function can also be used.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>addMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>mcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fcol</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>addMarkers</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>markers</span>, mcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fcol</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -179,82 +191,83 @@ against the markers. If missing, the feature names are used.</p></td>
 and marker table should be printed to the console.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A new instance of class <code>MSnSet</code> with an additional
 <code>markers</code> feature variable.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>It is essential to assure that <code>featureNames(object)</code> (or
 <code>fcol</code>, see below) and marker names (first column) match,
 i.e. the same feature identifiers and case fold are used.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>See <code><a href='pRolocmarkers.html'>pRolocmarkers</a></code> for a list of spatial
 markers and <code><a href='markers.html'>markers</a></code> for details about markers
 encoding.</p></div>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
-<span class='no'>atha</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pRolocmarkers.html'>pRolocmarkers</a></span>(<span class='st'>"atha"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>addMarkers</span>(<span class='no'>dunkley2006</span>, <span class='no'>atha</span>)) <span class='co'>## markers already exists</span></div><div class='output co'>#&gt; Error in addMarkers(dunkley2006, atha) : 
-#&gt;   Detected an existing 'markers' feature column.</div><div class='input'><span class='fu'>fData</span>(<span class='no'>dunkley2006</span>)$<span class='no'>markers.org</span> <span class='kw'>&lt;-</span> <span class='fu'>fData</span>(<span class='no'>dunkley2006</span>)$<span class='no'>markers</span>
-<span class='fu'>fData</span>(<span class='no'>dunkley2006</span>)$<span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='no'>marked</span> <span class='kw'>&lt;-</span> <span class='fu'>addMarkers</span>(<span class='no'>dunkley2006</span>, <span class='no'>atha</span>)</div><div class='output co'>#&gt; <span class='message'>Markers in data: 255 out of 689</span></div><div class='output co'>#&gt; organelleMarkers
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+<span class='va'>atha</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pRolocmarkers.html'>pRolocmarkers</a></span><span class='op'>(</span><span class='st'>"atha"</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>addMarkers</span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>atha</span><span class='op'>)</span><span class='op'>)</span> <span class='co'>## markers already exists</span>
+</div><div class='co'>#&gt; Error in addMarkers(dunkley2006, atha) : 
+#&gt;   Detected an existing 'markers' feature column.</div><div class='input'><span class='fu'>fData</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>$</span><span class='va'>markers.org</span> <span class='op'>&lt;-</span> <span class='fu'>fData</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>$</span><span class='va'>markers</span>
+<span class='fu'>fData</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>$</span><span class='va'>markers</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='va'>marked</span> <span class='op'>&lt;-</span> <span class='fu'>addMarkers</span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>atha</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Markers in data: 255 out of 689</div><div class='co'>#&gt; organelleMarkers
 #&gt;           ENV            ER      ER lumen   ER membrane         Golgi 
 #&gt;             3            21             9            42            27 
 #&gt; Mitochondrion       Plastid            PM      Ribosome           STR 
 #&gt;            50            22            42             8             2 
 #&gt;           TGN       unknown       Vacuole 
-#&gt;            13           434            16 </div><div class='input'><span class='fu'>fvarLabels</span>(<span class='no'>marked</span>)</div><div class='output co'>#&gt; [1] "assigned"     "evidence"     "method"       "new"          "pd.2013"     
+#&gt;            13           434            16 </div><div class='input'><span class='fu'>fvarLabels</span><span class='op'>(</span><span class='va'>marked</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] "assigned"     "evidence"     "method"       "new"          "pd.2013"     
 #&gt; [6] "pd.markers"   "markers.orig" "markers.org"  "markers"     </div><div class='input'><span class='co'>## if 'makers' already exists</span>
-<span class='no'>marked</span> <span class='kw'>&lt;-</span> <span class='fu'>addMarkers</span>(<span class='no'>marked</span>, <span class='no'>atha</span>, <span class='kw'>mcol</span> <span class='kw'>=</span> <span class='st'>"markers2"</span>)</div><div class='output co'>#&gt; <span class='message'>Markers in data: 255 out of 689</span></div><div class='output co'>#&gt; organelleMarkers
+<span class='va'>marked</span> <span class='op'>&lt;-</span> <span class='fu'>addMarkers</span><span class='op'>(</span><span class='va'>marked</span>, <span class='va'>atha</span>, mcol <span class='op'>=</span> <span class='st'>"markers2"</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Markers in data: 255 out of 689</div><div class='co'>#&gt; organelleMarkers
 #&gt;           ENV            ER      ER lumen   ER membrane         Golgi 
 #&gt;             3            21             9            42            27 
 #&gt; Mitochondrion       Plastid            PM      Ribosome           STR 
 #&gt;            50            22            42             8             2 
 #&gt;           TGN       unknown       Vacuole 
-#&gt;            13           434            16 </div><div class='input'><span class='fu'>fvarLabels</span>(<span class='no'>marked</span>)</div><div class='output co'>#&gt;  [1] "assigned"     "evidence"     "method"       "new"          "pd.2013"     
-#&gt;  [6] "pd.markers"   "markers.orig" "markers.org"  "markers"      "markers2"    </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stopifnot'>stopifnot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span>(<span class='fu'>fData</span>(<span class='no'>marked</span>)$<span class='no'>markers</span>, <span class='fu'>fData</span>(<span class='no'>marked</span>)$<span class='no'>markers2</span>))
-<span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>marked</span>)</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span>(<span class='no'>marked</span>, <span class='kw'>where</span> <span class='kw'>=</span> <span class='st'>"topleft"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>.7</span>)</div><div class='img'><img src='addMarkers-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt;            13           434            16 </div><div class='input'><span class='fu'>fvarLabels</span><span class='op'>(</span><span class='va'>marked</span><span class='op'>)</span>
+</div><div class='co'>#&gt;  [1] "assigned"     "evidence"     "method"       "new"          "pd.2013"     
+#&gt;  [6] "pd.markers"   "markers.orig" "markers.org"  "markers"      "markers2"    </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='fu'>fData</span><span class='op'>(</span><span class='va'>marked</span><span class='op'>)</span><span class='op'>$</span><span class='va'>markers</span>, <span class='fu'>fData</span><span class='op'>(</span><span class='va'>marked</span><span class='op'>)</span><span class='op'>$</span><span class='va'>markers2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>marked</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span><span class='op'>(</span><span class='va'>marked</span>, where <span class='op'>=</span> <span class='st'>"topleft"</span>, cex <span class='op'>=</span> <span class='fl'>.7</span><span class='op'>)</span>
+</div><div class='img'><img src='addMarkers-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

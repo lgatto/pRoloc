@@ -8,21 +8,29 @@
 
 <title>A complete LOPIMS pipeline — lopims • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,13 +38,15 @@
 
 
 
-<meta property="og:title" content="A complete LOPIMS pipeline — lopims" />
 
+<meta property="og:title" content="A complete LOPIMS pipeline — lopims" />
 <meta property="og:description" content="The function processes MSe data using the synergise
 function of the synapter package and combines resulting
 Synapter instances into one &quot;MSnSet&quot;
 and organelle marker data is added as a feature-level annotation variable." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -50,9 +60,17 @@ and organelle marker data is added as a feature-level annotation variable." />
 <![endif]-->
 
 
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -66,19 +84,13 @@ and organelle marker data is added as a feature-level annotation variable." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -109,11 +121,10 @@ and organelle marker data is added as a feature-level annotation variable." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -124,6 +135,7 @@ and organelle marker data is added as a feature-level annotation variable." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -135,17 +147,15 @@ and organelle marker data is added as a feature-level annotation variable." />
     </div>
 
     <div class="ref-description">
-    
-    <p>The function processes MSe data using the <code><a href='https://www.rdocumentation.org/packages/synapter/topics/synergise'>synergise</a></code>
-function of the <code><a href='https://www.rdocumentation.org/packages/synapter/topics/synapter-package'>synapter</a></code> package and combines resulting
-<code><a href='https://www.rdocumentation.org/packages/synapter/topics/Synapter'>Synapter</a></code> instances into one <code>"MSnSet"</code>
+    <p>The function processes MSe data using the <code><a href='https://lgatto.github.io/synapter/reference/synergise.html'>synergise</a></code>
+function of the <code><a href='https://lgatto.github.io/synapter/reference/synapter-package.html'>synapter</a></code> package and combines resulting
+<code><a href='https://lgatto.github.io/synapter/reference/Synapter.html'>Synapter</a></code> instances into one <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code>
 and organelle marker data is added as a feature-level annotation variable.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>lopims</span>(<span class='kw'>hdmsedir</span> <span class='kw'>=</span> <span class='st'>"HDMSE"</span>, <span class='kw'>msedir</span> <span class='kw'>=</span> <span class='st'>"MSE"</span>, <span class='kw'>pep3ddir</span> <span class='kw'>=</span> <span class='st'>"pep3D"</span>,
-  <span class='no'>fastafile</span>, <span class='no'>markerfile</span>, <span class='kw'>mfdr</span> <span class='kw'>=</span> <span class='fl'>0.025</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>lopims</span><span class='op'>(</span>hdmsedir <span class='op'>=</span> <span class='st'>"HDMSE"</span>, msedir <span class='op'>=</span> <span class='st'>"MSE"</span>, pep3ddir <span class='op'>=</span> <span class='st'>"pep3D"</span>,
+  <span class='va'>fastafile</span>, <span class='va'>markerfile</span>, mfdr <span class='op'>=</span> <span class='fl'>0.025</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -184,15 +194,14 @@ If several such files exist, the function reports an error.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional paramters passed to <code><a href='https://www.rdocumentation.org/packages/synapter/topics/synergise'>synergise</a></code>.</p></td>
+      <td><p>Additional paramters passed to <code><a href='https://lgatto.github.io/synapter/reference/synergise.html'>synergise</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An instance of class <code>"MSnSet"</code> with protein
+    <p>An instance of class <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code> with protein
 level quantitation and respective organelle markers.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>LOPIMS</code> pipeline is composed of 5 steps:</p>
@@ -201,14 +210,14 @@ level quantitation and respective organelle markers.</p>
 discovery rates uppon all possible combinations of HDMSe final
 peptides files and the best combination smaller or equal to
 <code>mfdr</code> is chosen.  See
-<code><a href='https://www.rdocumentation.org/packages/synapter/topics/estimateMasterFdr'>estimateMasterFdr</a></code> for details.  The
+<code><a href='https://lgatto.github.io/synapter/reference/estimateMasterFdr.html'>estimateMasterFdr</a></code> for details.  The
 corresponding master run is then created as descibed in
-<code><a href='https://www.rdocumentation.org/packages/synapter/topics/makeMaster'>makeMaster</a></code>. (function <code>lopims1</code>)</p></li>
+<code><a href='https://lgatto.github.io/synapter/reference/makeMaster.html'>makeMaster</a></code>. (function <code>lopims1</code>)</p></li>
 <li><p>Each MSe/pep3D pair is processed using the HDMSe master file
-using <code><a href='https://www.rdocumentation.org/packages/synapter/topics/synergise'>synergise</a></code>. (function <code>lopims2</code>)</p></li>
+using <code><a href='https://lgatto.github.io/synapter/reference/synergise.html'>synergise</a></code>. (function <code>lopims2</code>)</p></li>
 <li><p>The respective peptide-level <code>synergise</code> output objects
 are converted and combined into an single
-<code>"MSnSet"</code> instance. (function <code>lopims3</code>)</p></li>
+<code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code> instance. (function <code>lopims3</code>)</p></li>
 <li><p>Protein-level quantitation is inferred as follows.  For each
 protein, a reference sample/fraction is chosen based on the number
 of missing values (<code>NA</code>). If several samples have a same
@@ -221,18 +230,19 @@ details). (function <code>lopims4</code>)</p></li>
 feature meta-data in the <code>markers</code> variable.  See
 <code><a href='addMarkers.html'>addMarkers</a></code> for details. (function <code>lopims5</code>)</p></li>
 </ol>
-    <p>Intermediate <code>synergise</code> reports as well as resulting objects
+
+<p>Intermediate <code>synergise</code> reports as well as resulting objects
 are stored in a <code>LOPIMS_pipeline</code> directory.
 For details, please refer to the <code>synapter</code> vignette and
 reference papers.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Improving qualitative and quantitative performance for
     MSE-based label free proteomics N.J. Bond, P.V. Shliaha,
     K.S. Lilley and L. Gatto Journal of Proteome Research,
     2013;12(6):2340-53. PMID: 23510225.</p>
-    <p>The Effects of Travelling Wave Ion Mobility Separation on Data
+
+<p>The Effects of Travelling Wave Ion Mobility Separation on Data
     Independent Acquisition in Proteomics Studies P.V. Shliaha,
     N.J. Bond, L. Gatto and K.S. Lilley Journal of Proteome
     Research, 2013;12(6):2323-39. PMID: 23514362.</p>
@@ -241,39 +251,37 @@ reference papers.</p>
     quantitation. L. Gatto and KS. Lilley. Bioinformatics. 2012
     Jan 15;28(2):288-9.  doi: 10.1093/bioinformatics/btr645. Epub
     2011 Nov 22. PubMed PMID: 22113085.</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#references">References</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

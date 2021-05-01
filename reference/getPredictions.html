@@ -8,21 +8,29 @@
 
 <title>Returns the predictions in an 'MSnSet' — getPredictions • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +38,14 @@
 
 
 
-<meta property="og:title" content="Returns the predictions in an 'MSnSet' — getPredictions" />
 
+<meta property="og:title" content="Returns the predictions in an 'MSnSet' — getPredictions" />
 <meta property="og:description" content="Convenience accessor to the predicted feature localisation in an 'MSnSet'.
 This function returns the predictions of an
 MSnSet instance. As a side effect, it prints out a prediction table." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -49,9 +59,19 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,19 +85,13 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -108,11 +122,10 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -123,6 +136,7 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -134,22 +148,20 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
     </div>
 
     <div class="ref-description">
-    
     <p>Convenience accessor to the predicted feature localisation in an 'MSnSet'.
 This function returns the predictions of an
 <code>MSnSet</code> instance. As a side effect, it prints out a prediction table.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>getPredictions</span>(<span class='no'>object</span>, <span class='no'>fcol</span>, <span class='no'>scol</span>, <span class='kw'>mcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>fcol</span>, <span class='va'>scol</span>, mcol <span class='op'>=</span> <span class='st'>"markers"</span>, t <span class='op'>=</span> <span class='fl'>0</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An instance of class <code>"MSnSet"</code>.</p></td>
+      <td><p>An instance of class <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code>.</p></td>
     </tr>
     <tr>
       <th>fcol</th>
@@ -182,31 +194,35 @@ predictions are returned invisibly. If <code>FALSE</code>, the predictions
 are returned.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An instance of class "MSnSet" with <code>fcol.pred</code> feature
+    <p>An instance of class "<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>" with <code>fcol.pred</code> feature
 variable storing the prediction results according to the chosen threshold.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='orgQuants.html'>orgQuants</a></code> for calculating organelle-specific
 thresholds.</p></div>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto and Lisa Breckels</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='svmClassification.html'>svmClassification</a></span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"pd.markers"</span>,
-                         <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cost</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='fu'>fData</span>(<span class='no'>res</span>)$<span class='no'>svm</span>[<span class='fl'>500</span>:<span class='fl'>510</span>]</div><div class='output co'>#&gt;  [1] Plastid     Plastid     ER membrane Ribosome    Ribosome    Ribosome   
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='svmClassification.html'>svmClassification</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"pd.markers"</span>,
+                         sigma <span class='op'>=</span> <span class='fl'>0.1</span>, cost <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='fu'>fData</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>svm</span><span class='op'>[</span><span class='fl'>500</span><span class='op'>:</span><span class='fl'>510</span><span class='op'>]</span>
+</div><div class='co'>#&gt;  [1] Plastid     Plastid     ER membrane Ribosome    Ribosome    Ribosome   
 #&gt;  [7] Ribosome    Ribosome    Ribosome    Ribosome    Ribosome   
-#&gt; 9 Levels: ER lumen ER membrane Golgi Mitochondrion Plastid PM Ribosome ... vacuole</div><div class='input'><span class='fu'>fData</span>(<span class='no'>res</span>)$<span class='no'>svm.scores</span>[<span class='fl'>500</span>:<span class='fl'>510</span>]</div><div class='output co'>#&gt;  [1] 0.6593303 0.7701427 0.6752305 0.4882591 0.5751725 0.5766412 0.6376513
-#&gt;  [8] 0.6215169 0.5313678 0.6123313 0.6602089</div><div class='input'><span class='fu'>getPredictions</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>0</span>) <span class='co'>## all predictions</span></div><div class='output co'>#&gt; ans
+#&gt; 9 Levels: ER lumen ER membrane Golgi Mitochondrion Plastid PM Ribosome ... vacuole</div><div class='input'><span class='fu'>fData</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>svm.scores</span><span class='op'>[</span><span class='fl'>500</span><span class='op'>:</span><span class='fl'>510</span><span class='op'>]</span>
+</div><div class='co'>#&gt;  [1] 0.6593303 0.7701427 0.6752305 0.4882591 0.5751725 0.5766412 0.6376513
+#&gt;  [8] 0.6215169 0.5313678 0.6123313 0.6602089</div><div class='input'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='co'>## all predictions</span>
+</div><div class='co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            16           188           101           101            52 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           125            59            17            30 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;           125            59            17            30 </div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -225,13 +241,14 @@ thresholds.</p></div>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Fri Aug  9 09:35:45 2019 
-#&gt; Added svm predictions according to global threshold = 0 Fri Aug  9 09:35:45 2019 
-#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'>getPredictions</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.9</span>) <span class='co'>## single threshold </span></div><div class='output co'>#&gt; ans
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Sat May  1 09:26:49 2021 
+#&gt; Added svm predictions according to global threshold = 0 Sat May  1 09:26:49 2021 
+#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>.9</span><span class='op'>)</span> <span class='co'>## single threshold </span>
+</div><div class='co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            56            28            55            20 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           417            21 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            46            19            13           417            21 </div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -250,17 +267,19 @@ thresholds.</p></div>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Fri Aug  9 09:35:45 2019 
-#&gt; Added svm predictions according to global threshold = 0.9 Fri Aug  9 09:35:45 2019 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Sat May  1 09:26:49 2021 
+#&gt; Added svm predictions according to global threshold = 0.9 Sat May  1 09:26:49 2021 
 #&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='co'>## 50% top predictions per class</span>
-<span class='no'>ts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='orgQuants.html'>orgQuants</a></span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
+<span class='va'>ts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='orgQuants.html'>orgQuants</a></span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
+</div><div class='co'>#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;     0.2995766     0.8368847     0.7805362     0.7484314     0.7746137 
 #&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;     0.7302249     0.5428105     0.5276547     0.5704931 </div><div class='input'><span class='fu'>getPredictions</span>(<span class='no'>res</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"svm"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='no'>ts</span>)</div><div class='output co'>#&gt; ans
+#&gt;     0.7302249     0.5428105     0.5276547     0.5704931 </div><div class='input'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='va'>ts</span><span class='op'>)</span>
+</div><div class='co'>#&gt; ans
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            15           117            65            78            36 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            86            39            15           212            26 </div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+#&gt;            86            39            15           212            26 </div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 689 features, 16 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -279,40 +298,36 @@ thresholds.</p></div>
 #&gt; Loaded on Thu Jul 16 22:53:08 2015. 
 #&gt; Normalised to sum of intensities. 
 #&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Fri Aug  9 09:35:45 2019 
-#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Fri Aug  9 09:35:45 2019 
+#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Sat May  1 09:26:49 2021 
+#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Sat May  1 09:26:49 2021 
 #&gt;  MSnbase version: 1.17.12 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto and Lisa Breckels</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

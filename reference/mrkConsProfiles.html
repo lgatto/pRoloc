@@ -8,21 +8,29 @@
 
 <title>Marker consensus profiles — mrkConsProfiles • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +38,12 @@
 
 
 
-<meta property="og:title" content="Marker consensus profiles — mrkConsProfiles" />
 
+<meta property="og:title" content="Marker consensus profiles — mrkConsProfiles" />
 <meta property="og:description" content="A function to calculate average marker profiles." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -47,9 +57,19 @@
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,19 +83,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -106,11 +120,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -121,6 +134,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -132,13 +146,11 @@
     </div>
 
     <div class="ref-description">
-    
     <p>A function to calculate average marker profiles.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>mrkConsProfiles</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>mean</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>mrkConsProfiles</span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, method <span class='op'>=</span> <span class='va'>mean</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -158,22 +170,24 @@ colours. Default is <code>markers</code>.</p></td>
 profiles. Default is <code>mean</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>matrix</code> of dimensions <em>number of clusters</em>
     (exluding unknowns) by <em>number of fractions</em>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The <code><a href='mrkHClust.html'>mrkHClust</a></code> function to produce a
     hierarchical cluster.</p></div>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto and Lisa M. Breckels</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
-<span class='fu'>mrkConsProfiles</span>(<span class='no'>dunkley2006</span>)</div><div class='output co'>#&gt;                    M1F1A     M1F4A     M1F7A    M1F11A      M1F2B     M1F5B
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+<span class='fu'>mrkConsProfiles</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+</div><div class='co'>#&gt;                    M1F1A     M1F4A     M1F7A    M1F11A      M1F2B     M1F5B
 #&gt; ER lumen      0.34790193 0.2778745 0.2000145 0.1743091 0.49310871 0.2030229
 #&gt; ER membrane   0.26954542 0.3094276 0.2201106 0.2010234 0.37832533 0.2433542
 #&gt; Golgi         0.10673314 0.2228814 0.3508332 0.3196275 0.12041797 0.2295954
@@ -202,7 +216,8 @@ profiles. Default is <code>mean</code>.</p></td>
 #&gt; PM            0.17748167 0.22124237 0.2801925 0.3210563
 #&gt; Ribosome      0.21993053 0.20215705 0.2179611 0.3598775
 #&gt; TGN           0.13232952 0.33208846 0.3140628 0.2215500
-#&gt; vacuole       0.48365443 0.14997229 0.1787520 0.1876555</div><div class='input'><span class='fu'>mrkConsProfiles</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>median</span>)</div><div class='output co'>#&gt;                    M1F1A     M1F4A     M1F7A    M1F11A      M1F2B    M1F5B
+#&gt; vacuole       0.48365443 0.14997229 0.1787520 0.1876555</div><div class='input'><span class='fu'>mrkConsProfiles</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='va'>median</span><span class='op'>)</span>
+</div><div class='co'>#&gt;                    M1F1A     M1F4A     M1F7A    M1F11A      M1F2B    M1F5B
 #&gt; ER lumen      0.34319050 0.2788335 0.1992085 0.1686665 0.49232500 0.202000
 #&gt; ER membrane   0.26882600 0.3099780 0.2194130 0.2012500 0.37556200 0.242143
 #&gt; Golgi         0.10333350 0.2147500 0.3562500 0.3187180 0.11191650 0.229143
@@ -231,47 +246,45 @@ profiles. Default is <code>mean</code>.</p></td>
 #&gt; PM            0.1698125 0.218000 0.2798335 0.3248750
 #&gt; Ribosome      0.2450000 0.215000 0.2196670 0.3135000
 #&gt; TGN           0.1370000 0.326750 0.2977000 0.2162000
-#&gt; vacuole       0.4816670 0.146000 0.1807500 0.1907500</div><div class='input'><span class='no'>mm</span> <span class='kw'>&lt;-</span> <span class='fu'>mrkConsProfiles</span>(<span class='no'>dunkley2006</span>)
+#&gt; vacuole       0.4816670 0.146000 0.1807500 0.1907500</div><div class='input'><span class='va'>mm</span> <span class='op'>&lt;-</span> <span class='fu'>mrkConsProfiles</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
 <span class='co'>## Reorder fractions</span>
-<span class='no'>o</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/order'>order</a></span>(<span class='no'>dunkley2006</span>$<span class='no'>fraction</span>)
+<span class='va'>o</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>$</span><span class='va'>fraction</span><span class='op'>)</span>
 <span class='co'>## Plot mean organelle profiles using the</span>
 <span class='co'>## default pRoloc colour palette.</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/matplot'>matplot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/t'>t</a></span>(<span class='no'>mm</span>[, <span class='no'>o</span>]), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>,
-        <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Fractions"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Relative intensity"</span>,
-        <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Mean organelle profiles"</span>,
-        <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='getStockcol.html'>getStockcol</a></span>(), <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='input'><span class='co'>## Add a legend</span>
-<span class='fu'><a href='addLegend.html'>addLegend</a></span>(<span class='fu'><a href='markerMSnSet.html'>markerMSnSet</a></span>(<span class='no'>dunkley2006</span>), <span class='kw'>where</span> <span class='kw'>=</span> <span class='st'>"topleft"</span>)</div><div class='img'><img src='mrkConsProfiles-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/matplot.html'>matplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>mm</span><span class='op'>[</span>, <span class='va'>o</span><span class='op'>]</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"l"</span>,
+        xlab <span class='op'>=</span> <span class='st'>"Fractions"</span>, ylab <span class='op'>=</span> <span class='st'>"Relative intensity"</span>,
+        main <span class='op'>=</span> <span class='st'>"Mean organelle profiles"</span>,
+        col <span class='op'>=</span> <span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, lty <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='input'><span class='co'>## Add a legend</span>
+<span class='fu'><a href='addLegend.html'>addLegend</a></span><span class='op'>(</span><span class='fu'><a href='markerMSnSet.html'>markerMSnSet</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>, where <span class='op'>=</span> <span class='st'>"topleft"</span><span class='op'>)</span>
+</div><div class='img'><img src='mrkConsProfiles-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto and Lisa M. Breckels</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

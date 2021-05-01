@@ -8,21 +8,29 @@
 
 <title>The PCP 'chi square' method — chi2-methods • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,8 +38,8 @@
 
 
 
-<meta property="og:title" content="The PCP 'chi square' method — chi2-methods" />
 
+<meta property="og:title" content="The PCP 'chi square' method — chi2-methods" />
 <meta property="og:description" content="In the original protein correlation profiling (PCP), Andersen et
   al. use the peptide normalised profiles along gradient fractions and
   compared them with the reference profiles (or set of profiles) by
@@ -44,7 +52,9 @@
   markers will have small \(Chi^2\) values.
 The chi2 methods implement this idea and compute such Chi^2
   values for sets of proteins." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -58,9 +68,19 @@ The chi2 methods implement this idea and compute such Chi^2
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,19 +94,13 @@ The chi2 methods implement this idea and compute such Chi^2
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -117,11 +131,10 @@ The chi2 methods implement this idea and compute such Chi^2
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,6 +145,7 @@ The chi2 methods implement this idea and compute such Chi^2
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -143,7 +157,6 @@ The chi2 methods implement this idea and compute such Chi^2
     </div>
 
     <div class="ref-description">
-    
     <p>In the original protein correlation profiling (PCP), Andersen et
   al. use the peptide normalised profiles along gradient fractions and
   compared them with the reference profiles (or set of profiles) by
@@ -156,34 +169,38 @@ The chi2 methods implement this idea and compute such Chi^2
   markers will have small \(Chi^2\) values.</p>
 <p>The <code>chi2</code> methods implement this idea and compute such Chi^2
   values for sets of proteins.</p>
-    
     </div>
 
-        
+
+
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
-    <p></p><dl class='dl-horizontal'>
+    <p></p><dl>
     <dt><code>signature(x = "matrix", y = "matrix", method =
-	"character", fun = "NULL", na.rm = "logical")</code></dt><dd><p>Compute <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(x)</a></code> times <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(y)</a></code> \(Chi^2\) values,
+	"character", fun = "NULL", na.rm = "logical")</code></dt><dd><p>Compute <code>nrow(x)</code> times <code>nrow(y)</code> \(Chi^2\) values,
       for each <code>x</code>, <code>y</code> feature pair. Method is one of
       <code>"Andersen2003"</code> or <code>"Wiese2007"</code>; the former (default)
       computed the \(Chi^2\) as <code>sum(y-x)^2/length(x)</code>, while the
-      latter uses <code><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum((y-x)^2/x)</a></code>. <code>na.rm</code> defines if missing
+      latter uses <code>sum((y-x)^2/x)</code>. <code>na.rm</code> defines if missing
       values (<code>NA</code> and <code>NaN</code>) should be removed prior to
       summation. <code>fun</code> defines how to summarise the \(Chi^2\)
       values; default, <code>NULL</code>, does not combine the \(Chi^2\)
       values.</p></dd>
+    
     <dt><code>signature(x = "matrix", y = "numeric", method =
-	"character", na.rm = "logical")</code></dt><dd><p>Computes <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(x)</a></code> \(Chi^2\) values, for all the \((x_i,
+	"character", na.rm = "logical")</code></dt><dd><p>Computes <code>nrow(x)</code> \(Chi^2\) values, for all the \((x_i,
 	y)\) pairs. See above for the other arguments.</p></dd>
+    
     <dt><code>signature(x = "numeric", y = "matrix", method =
-	"character", na.rm = "logical")</code></dt><dd><p>Computes <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(y)</a></code> \(Chi^2\) values, for all the \((x,
+	"character", na.rm = "logical")</code></dt><dd><p>Computes <code>nrow(y)</code> \(Chi^2\) values, for all the \((x,
 	y_i)\) pairs.  See above for the other arguments.</p></dd>
+    
     <dt><code>signature(x = "numeric", y = "numeric", method =
 	"character", na.rm = "logical")</code></dt><dd><p>Computes the \(Chi^2\) value for the \((x, y)\) pairs.  See
       above for the other arguments.</p></dd>
-  </dl>
-    
+  
+</dl>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Andersen, J. S., Wilkinson, C. J., Mayor, T., Mortensen, P. et al., 
@@ -193,64 +210,64 @@ The chi2 methods implement this idea and compute such Chi^2
   characterization of mouse kidney peroxisomes by tandem mass
   spectrometry and protein correlation profiling. Mol. Cell. Proteomics
   2007, 6, 2045 - 2057.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='empPvalues.html'>empPvalues</a></code></p></div>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mrk</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>6</span>)
-<span class='no'>prot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Andersen2003"</span>)</div><div class='output co'>#&gt;  [1] 0.8273709 3.1087875 5.5778705 1.7912414 2.3689727 1.2054473 3.1255211
-#&gt;  [8] 2.1956672 1.1091573 1.0906512</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>mrk</span>, <span class='no'>prot</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"Wiese2007"</span>)</div><div class='output co'>#&gt;  [1]  -1.95492161   7.44838603 -22.65149062  -3.26448185   8.07362689
-#&gt;  [6]   0.21285907  -2.62754729   0.01100889  -1.13983915  -3.03204715</div><div class='input'>
-<span class='no'>pepmark</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>18</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='no'>pepprot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>60</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>6</span>)
-<span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>)</div><div class='output co'>#&gt;           [,1]      [,2]      [,3]
-#&gt;  [1,] 3.219279 1.8723381 3.2001474
-#&gt;  [2,] 2.018228 1.5389482 0.6526429
-#&gt;  [3,] 2.437583 0.8648512 0.3189045
-#&gt;  [4,] 1.201750 1.7409293 2.1203398
-#&gt;  [5,] 1.893721 1.8302472 1.3016147
-#&gt;  [6,] 2.977179 0.4526999 1.4100113
-#&gt;  [7,] 3.427079 0.9107354 0.8836743
-#&gt;  [8,] 5.172952 1.4605580 3.0104372
-#&gt;  [9,] 1.211181 0.3596442 0.6760983
-#&gt; [10,] 4.879994 1.4057631 1.7272651</div><div class='input'><span class='fu'>chi2</span>(<span class='no'>pepmark</span>, <span class='no'>pepprot</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>sum</span>)</div><div class='output co'>#&gt;  [1] 8.291764 4.209819 3.621339 5.063019 5.025583 4.839890 5.221488 9.643947
-#&gt;  [9] 2.246923 8.013022</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>mrk</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>prot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>60</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='fu'>chi2</span><span class='op'>(</span><span class='va'>mrk</span>, <span class='va'>prot</span>, method <span class='op'>=</span> <span class='st'>"Andersen2003"</span><span class='op'>)</span>
+</div><div class='co'>#&gt;  [1] 1.3760081 2.4326864 1.9856474 1.4982205 0.5497891 2.0474916 3.7002012
+#&gt;  [8] 2.4403588 1.0868599 2.7960752</div><div class='input'><span class='fu'>chi2</span><span class='op'>(</span><span class='va'>mrk</span>, <span class='va'>prot</span>, method <span class='op'>=</span> <span class='st'>"Wiese2007"</span><span class='op'>)</span>
+</div><div class='co'>#&gt;  [1]  -33.85465 -128.01213  -25.30350 -228.26482   -7.72783  -33.61030
+#&gt;  [7] -384.25197  -13.71658  -32.73220 -130.05883</div><div class='input'>
+<span class='va'>pepmark</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>18</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>pepprot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>60</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='fu'>chi2</span><span class='op'>(</span><span class='va'>pepmark</span>, <span class='va'>pepprot</span><span class='op'>)</span>
+</div><div class='co'>#&gt;           [,1]      [,2]      [,3]
+#&gt;  [1,] 3.270236 1.2196307 2.2947038
+#&gt;  [2,] 3.099734 0.3452694 1.1239700
+#&gt;  [3,] 2.307710 0.6216046 0.3290182
+#&gt;  [4,] 1.441984 0.7796937 0.7036452
+#&gt;  [5,] 3.337934 0.7757890 0.8645646
+#&gt;  [6,] 5.456964 1.7062999 1.1726182
+#&gt;  [7,] 4.916766 2.0781873 2.6271117
+#&gt;  [8,] 3.039999 1.2612897 1.1876739
+#&gt;  [9,] 5.803226 1.9190679 2.5535504
+#&gt; [10,] 2.061942 1.4331763 1.9004659</div><div class='input'><span class='fu'>chi2</span><span class='op'>(</span><span class='va'>pepmark</span>, <span class='va'>pepprot</span>, fun <span class='op'>=</span> <span class='va'>sum</span><span class='op'>)</span>
+</div><div class='co'>#&gt;  [1]  6.784571  4.568973  3.258333  2.925323  4.978288  8.335882  9.622065
+#&gt;  [8]  5.488962 10.275845  5.395584</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#methods">Methods</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

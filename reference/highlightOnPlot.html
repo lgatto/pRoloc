@@ -8,21 +8,29 @@
 
 <title>Highlight features of interest on a spatial proteomics plot — highlightOnPlot • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,14 +38,16 @@
 
 
 
-<meta property="og:title" content="Highlight features of interest on a spatial proteomics plot — highlightOnPlot" />
 
+<meta property="og:title" content="Highlight features of interest on a spatial proteomics plot — highlightOnPlot" />
 <meta property="og:description" content="Highlights a set of features of interest given as a
 FeaturesOfInterest instance on a PCA plot produced by
 codeplot2D or plot3D. If none of the features of interest
 are found in the MSnset's featureNames, an warning
 is thrown." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -51,9 +61,19 @@ is thrown." />
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,19 +87,13 @@ is thrown." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -110,11 +124,10 @@ is thrown." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -125,6 +138,7 @@ is thrown." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -136,20 +150,18 @@ is thrown." />
     </div>
 
     <div class="ref-description">
-    
     <p>Highlights a set of features of interest given as a
 <code>FeaturesOfInterest</code> instance on a PCA plot produced by
 codeplot2D or <code>plot3D</code>. If none of the features of interest
 are found in the <code>MSnset</code>'s <code>featureNames</code>, an warning
 is thrown.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>highlightOnPlot</span>(<span class='no'>object</span>, <span class='no'>foi</span>, <span class='no'>labels</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>foi</span>, <span class='va'>labels</span>, args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>highlightOnPlot3D</span>(<span class='no'>object</span>, <span class='no'>foi</span>, <span class='no'>labels</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>0.1</span> * <span class='fl'>3</span>,
-  <span class='no'>...</span>)</pre>
-    
+<span class='fu'>highlightOnPlot3D</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>foi</span>, <span class='va'>labels</span>, args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, radius <span class='op'>=</span> <span class='fl'>0.1</span> <span class='op'>*</span> <span class='fl'>3</span>,
+  <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -161,7 +173,7 @@ plot produced (and invisibly returned) by <code>plot2D</code>.</p></td>
     </tr>
     <tr>
       <th>foi</th>
-      <td><p>An instance of <code>FeaturesOfInterest</code>,
+      <td><p>An instance of <code><a href='https://lgatto.github.io/MSnbase/reference/FeaturesOfInterest-class.html'>FeaturesOfInterest</a></code>,
 or, alternatively, a <code>character</code> of feautre names.</p></td>
     </tr>
     <tr>
@@ -197,78 +209,89 @@ with regard to uknown (<code>radius1 = 0.1</code>) and marker
 (<code>radius1</code> * 2) features.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>NULL; used for its side effects.</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"tan2009r1"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>FeaturesOfInterest</span>(<span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"A test set of features of interest"</span>,
-                        <span class='kw'>fnames</span> <span class='kw'>=</span> <span class='fu'>featureNames</span>(<span class='no'>tan2009r1</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>],
-                        <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>tan2009r1</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"tan2009r1"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/FeaturesOfInterest-class.html'>FeaturesOfInterest</a></span><span class='op'>(</span>description <span class='op'>=</span> <span class='st'>"A test set of features of interest"</span>,
+                        fnames <span class='op'>=</span> <span class='fu'>featureNames</span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>,
+                        object <span class='op'>=</span> <span class='va'>tan2009r1</span><span class='op'>)</span>
 
 <span class='co'>## using FeaturesOfInterest or feature names</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>tan2009r1</span>)
-<span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>)
-<span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>tan2009r1</span>)</div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='fu'>featureNames</span>(<span class='no'>tan2009r1</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>])</div><div class='img'><img src='highlightOnPlot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>.pca</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>tan2009r1</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>.pca</span>)</div><div class='output co'>#&gt;        PC1 (58.53%) PC2 (29.96%)
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
+<span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span><span class='op'>)</span>
+<span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='fu'>featureNames</span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='img'><img src='highlightOnPlot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>.pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>.pca</span><span class='op'>)</span>
+</div><div class='co'>#&gt;        PC1 (58.53%) PC2 (29.96%)
 #&gt; P20353    0.2103374    1.6959266
 #&gt; P53501   -0.4940607    1.6207386
 #&gt; Q7KU78   -1.1794311   -0.7242185
 #&gt; P04412    0.6128549    0.3944441
 #&gt; Q7KJ73    0.1866756   -0.3007028
-#&gt; Q7JZN0    2.0228016   -1.3087061</div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>.pca</span>, <span class='no'>x</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
-<span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1.5</span>)
-<span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+#&gt; Q7JZN0    2.0228016   -1.3087061</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>.pca</span>, <span class='va'>x</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+<span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span>, col <span class='op'>=</span> <span class='st'>"red"</span>, cex <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span>
+<span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span>, labels <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='no'>.pca</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>tan2009r1</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))</div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>.pca</span>, <span class='no'>x</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: "dims" is not a graphical parameter</span></div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>)))</div><div class='img'><img src='highlightOnPlot-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>.pca2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>tan2009r1</span>, <span class='kw'>mirrorX</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))
+<span class='va'>.pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>.pca</span>, <span class='va'>x</span>, pch <span class='op'>=</span> <span class='st'>"+"</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; <span class='warning'>Warning: </span>"dims" is not a graphical parameter</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span>, args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='highlightOnPlot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>.pca2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span>, mirrorX <span class='op'>=</span> <span class='cn'>TRUE</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>## previous pca matrix, need to mirror X axis</span>
-<span class='fu'>highlightOnPlot</span>(<span class='no'>.pca</span>, <span class='no'>x</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>mirrorX</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+<span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>.pca</span>, <span class='va'>x</span>, pch <span class='op'>=</span> <span class='st'>"+"</span>, args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mirrorX <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>## new pca matrix, with X mirrors (and 1st and 3rd PCs)</span>
-<span class='fu'>highlightOnPlot</span>(<span class='no'>.pca2</span>, <span class='no'>x</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>.pca2</span>, <span class='va'>x</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
 
-<span class='fu'><a href='plot2D.html'>plot2D</a></span>(<span class='no'>tan2009r1</span>)</div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>)</div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'>highlightOnPlot</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='st'>"Flybase.Symbol"</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='highlightOnPlot-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span>, labels <span class='op'>=</span> <span class='cn'>TRUE</span>, pos <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>highlightOnPlot</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span>, labels <span class='op'>=</span> <span class='st'>"Flybase.Symbol"</span>, pos <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='img'><img src='highlightOnPlot-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## in 3 dimensions</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
-  <span class='fu'>plot3D</span>(<span class='no'>tan2009r1</span>, <span class='kw'>radius1</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
-  <span class='fu'>highlightOnPlot3D</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-  <span class='fu'>highlightOnPlot3D</span>(<span class='no'>tan2009r1</span>, <span class='no'>x</span>)
-}</div></pre>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>tan2009r1</span>, radius1 <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>
+  <span class='fu'>highlightOnPlot3D</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span>, labels <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'>highlightOnPlot3D</span><span class='op'>(</span><span class='va'>tan2009r1</span>, <span class='va'>x</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

@@ -6,23 +6,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Class <code>SpatProtVis</code> — SpatProtVis-class • pRoloc</title>
+<title>Class SpatProtVis — SpatProtVis-class • pRoloc</title>
+
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,18 +38,20 @@
 
 
 
-<meta property="og:title" content="Class <code>SpatProtVis</code> — SpatProtVis-class" />
 
-<meta property="og:description" content="" />
+<meta property="og:title" content="Class SpatProtVis — SpatProtVis-class" />
+<meta property="og:description" content="
 
-<meta property="og:description" content="A class for spatial proteomics visualisation, that upon instantiation,
+A class for spatial proteomics visualisation, that upon instantiation,
   pre-computes all defined visualisations. Objects can be created with
   the SpatProtVis constructor and visualised with the plot
   method.
 The class is essentially a wrapper around several calls to
   plot2D that stores the dimensionality reduction
   outputs, and is likely to be updated in the future." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -55,9 +65,19 @@ The class is essentially a wrapper around several calls to
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,19 +91,13 @@ The class is essentially a wrapper around several calls to
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -114,11 +128,10 @@ The class is essentially a wrapper around several calls to
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,6 +142,7 @@ The class is essentially a wrapper around several calls to
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -141,26 +155,24 @@ The class is essentially a wrapper around several calls to
 
     <div class="ref-description">
     
-    
 
-    <p>A class for spatial proteomics visualisation, that upon instantiation,
+<p>A class for spatial proteomics visualisation, that upon instantiation,
   pre-computes all defined visualisations. Objects can be created with
   the <code>SpatProtVis</code> constructor and visualised with the <code>plot</code>
   method.</p>
 <p>The class is essentially a wrapper around several calls to
   <code><a href='plot2D.html'>plot2D</a></code> that stores the dimensionality reduction
   outputs, and is likely to be updated in the future.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>SpatProtVis</span>(<span class='no'>x</span>, <span class='no'>methods</span>, <span class='no'>dims</span>, <span class='no'>methargs</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>methods</span>, <span class='va'>dims</span>, <span class='va'>methargs</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An instance of class <code>MSnSet</code> to visualise.</p></td>
+      <td><p>An instance of class <code><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a></code> to visualise.</p></td>
     </tr>
     <tr>
       <th>methods</th>
@@ -181,95 +193,109 @@ The class is essentially a wrapper around several calls to
     identical to the length of <code>methods</code>.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>Additional arguments. Currently ignored.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
-    <p></p><dl class='dl-horizontal'>
+    <p></p><dl>
+   
     <dt><code>vismats</code>:</dt><dd><p>A <code>"list"</code> of matrices containing the
       feature projections in 2 dimensions.</p></dd>
+    
     <dt><code>data</code>:</dt><dd><p>The original spatial proteomics data stored as
       an <code>"MSnSet"</code>.</p></dd>
+
     <dt><code>methargs</code>:</dt><dd><p>A <code>"list"</code> of additional plotting
     arguments.</p></dd>
+
     <dt><code>objname</code>:</dt><dd><p>A <code>"character"</code> defining how to name the
       dataset. By default, this is set using the variable name used at
       object creation.</p></dd>
-    </dl>
     
+  
+</dl>
+
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
-    <p></p><dl class='dl-horizontal'>
+    <p></p><dl>
+    
     <dt><code>plot</code>:</dt><dd><p>Generates the figures for the respective
       <code>methods</code> and additional arguments defined in the
       constructor. If used in an interactive session, the user is
       prompted to press 'Return' before new figures are displayed.</p></dd>
+
     <dt><code>show</code>:</dt><dd><p>A simple textual summary of the object.</p></dd>
-    </dl>
-    
+  
+  
+</dl>
+
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The data for the individual visualisations is created by
   <code><a href='plot2D.html'>plot2D</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
 <span class='co'>## Default parameters for a set of methods</span>
 <span class='co'>## (in the interest of time, don't use t-SNE)</span>
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PCA"</span>, <span class='st'>"MDS"</span>, <span class='st'>"kpca"</span>)
-<span class='no'>vis</span> <span class='kw'>&lt;-</span> <span class='fu'>SpatProtVis</span>(<span class='no'>dunkley2006</span>, <span class='kw'>methods</span> <span class='kw'>=</span> <span class='no'>m</span>)</div><div class='output co'>#&gt; <span class='message'>Producting PCA visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting MDS visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='input'><span class='no'>vis</span></div><div class='output co'>#&gt; Object of class "SpatProtVis"
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PCA"</span>, <span class='st'>"MDS"</span>, <span class='st'>"kpca"</span><span class='op'>)</span>
+<span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>, methods <span class='op'>=</span> <span class='va'>m</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Producting PCA visualisation...</div><div class='co'>#&gt; Producting MDS visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='input'><span class='va'>vis</span>
+</div><div class='co'>#&gt; Object of class "SpatProtVis"
 #&gt;  Data: dunkley2006 
-#&gt;  Visualisation methods: PCA, MDS, kpca</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vis</span>)</div><div class='img'><img src='SpatProtVis-class-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Done.</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vis</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='st'>"topleft"</span>)</div><div class='img'><img src='SpatProtVis-class-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Done.</div><div class='input'>
+#&gt;  Visualisation methods: PCA, MDS, kpca</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span>
+</div><div class='img'><img src='SpatProtVis-class-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-3.png' alt='' width='700' height='433' /></div><div class='co'>#&gt; Done.</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span>, legend <span class='op'>=</span> <span class='st'>"topleft"</span><span class='op'>)</span>
+</div><div class='img'><img src='SpatProtVis-class-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-6.png' alt='' width='700' height='433' /></div><div class='co'>#&gt; Done.</div><div class='input'>
 <span class='co'>## Setting method arguments</span>
-<span class='no'>margs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)),
-           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1.0</span>)),
-           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>10</span>)),
-           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>100</span>)))
-<span class='no'>vis</span> <span class='kw'>&lt;-</span> <span class='fu'>SpatProtVis</span>(<span class='no'>dunkley2006</span>,
-                   <span class='kw'>methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"kpca"</span>, <span class='fl'>4</span>),
-                   <span class='kw'>methargs</span> <span class='kw'>=</span> <span class='no'>margs</span>)</div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting kpca visualisation...</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vis</span>)</div><div class='img'><img src='SpatProtVis-class-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Done.</div><div class='input'>
+<span class='va'>margs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>,
+           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>1.0</span><span class='op'>)</span><span class='op'>)</span>,
+           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,
+           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>,
+                   methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"kpca"</span>, <span class='fl'>4</span><span class='op'>)</span>,
+                   methargs <span class='op'>=</span> <span class='va'>margs</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span>
+</div><div class='img'><img src='SpatProtVis-class-7.png' alt='' width='700' height='433' /></div><div class='co'>#&gt; Done.</div><div class='input'>
 <span class='co'>## Multiple PCA plots but different PCs</span>
-<span class='no'>dims</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>4</span>))
-<span class='no'>vis</span> <span class='kw'>&lt;-</span> <span class='fu'>SpatProtVis</span>(<span class='no'>dunkley2006</span>, <span class='kw'>methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PCA"</span>, <span class='st'>"PCA"</span>), <span class='kw'>dims</span> <span class='kw'>=</span> <span class='no'>dims</span>)</div><div class='output co'>#&gt; <span class='message'>Producting PCA visualisation...</span></div><div class='output co'>#&gt; <span class='message'>Producting PCA visualisation...</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vis</span>)</div><div class='output co'>#&gt; Done.</div><div class='img'><img src='SpatProtVis-class-8.png' alt='' width='700' height='433' /></div></pre>
+<span class='va'>dims</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>, methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PCA"</span>, <span class='st'>"PCA"</span><span class='op'>)</span>, dims <span class='op'>=</span> <span class='va'>dims</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Producting PCA visualisation...</div><div class='co'>#&gt; Producting PCA visualisation...</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Done.</div><div class='img'><img src='SpatProtVis-class-8.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#slots">Slots</a></li>
-
-      <li><a href="#methods">Methods</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

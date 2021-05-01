@@ -6,23 +6,32 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Localisation of proteins using the TAGM MAP method — tagmMapTrain • pRoloc</title>
+<title>The `logPosteriors` function can be used to extract the log-posteriors at
+each iteration of the EM algorithm to check for convergence. — MAPParams-class • pRoloc</title>
+
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +39,15 @@
 
 
 
-<meta property="og:title" content="Localisation of proteins using the TAGM MAP method — tagmMapTrain" />
 
+<meta property="og:title" content="The `logPosteriors` function can be used to extract the log-posteriors at
+each iteration of the EM algorithm to check for convergence. — MAPParams-class" />
 <meta property="og:description" content="These functions implement the T augmented Gaussian mixture (TAGM)
 model for mass spectrometry-based spatial proteomics datasets
 using the maximum a posteriori (MAP) optimisation routine." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -49,9 +61,17 @@ using the maximum a posteriori (MAP) optimisation routine." />
 <![endif]-->
 
 
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,19 +85,13 @@ using the maximum a posteriori (MAP) optimisation routine." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -108,11 +122,10 @@ using the maximum a posteriori (MAP) optimisation routine." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -123,44 +136,48 @@ using the maximum a posteriori (MAP) optimisation routine." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Localisation of proteins using the TAGM MAP method</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-framework-map.R'><code>R/machinelearning-framework-map.R</code></a></small>
+    <h1>The `logPosteriors` function can be used to extract the log-posteriors at
+each iteration of the EM algorithm to check for convergence.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-framework-map.R'><code>R/machinelearning-framework-map.R</code></a>, <a href='https://github.com/lgatto/pRoloc/blob/master/R/machinelearning-functions-tagm-map.R'><code>R/machinelearning-functions-tagm-map.R</code></a></small>
     <div class="hidden name"><code>tagm-map.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>These functions implement the T augmented Gaussian mixture (TAGM)
 model for mass spectrometry-based spatial proteomics datasets
 using the maximum a posteriori (MAP) optimisation routine.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>tagmMapTrain</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"MAP"</span>, <span class='kw'>numIter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>mu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda0</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nu0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>S0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>beta0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='co'># S4 method for MAPParams</span>
+<span class='fu'><a href='https://rdrr.io/r/methods/show.html'>show</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
-<span class='fu'>tagmMapPredict</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>probJoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>probOutlier</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='tagm-map.html'>logPosteriors</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='co'># S4 method for MAPParams</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
+<span class='fu'><a href='tagm-map.html'>tagmMapTrain</a></span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, method <span class='op'>=</span> <span class='st'>"MAP"</span>, numIter <span class='op'>=</span> <span class='fl'>100</span>,
+  mu0 <span class='op'>=</span> <span class='cn'>NULL</span>, lambda0 <span class='op'>=</span> <span class='fl'>0.01</span>, nu0 <span class='op'>=</span> <span class='cn'>NULL</span>, S0 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  beta0 <span class='op'>=</span> <span class='cn'>NULL</span>, u <span class='op'>=</span> <span class='fl'>2</span>, v <span class='op'>=</span> <span class='fl'>10</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>logPosteriors</span>(<span class='no'>x</span>)</pre>
-    
+<span class='fu'><a href='tagm-map.html'>tagmMapPredict</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>params</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, probJoint <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  probOutlier <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An <code><a href='https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the spatial
+      <td><p>An <code><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnbase::MSnSet</a></code> containing the spatial
 proteomics data to be passed to <code>tagmMapTrain</code> and
 <code>tagmPredict</code>.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An object of class `MAPParams`.</p></td>
     </tr>
     <tr>
       <th>fcol</th>
@@ -215,109 +232,101 @@ concentration. Default is 1 for each class.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An instance of class <code>MAPParams</code>, as generated by
-<code>tagmMapTrain()</code>.</p></td>
+      <td><p>An instance of class <code><a href='tagm-map.html'>MAPParams</a></code>, as generated by
+<code><a href='tagm-map.html'>tagmMapTrain()</a></code>.</p></td>
     </tr>
     <tr>
       <th>probJoint</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code> indicating whether to return the
+      <td><p>A <code>logical(1)</code> indicating whether to return the
 joint probability matrix, i.e. the probability for all classes
 as a new <code>tagm.map.joint</code> feature variable.</p></td>
     </tr>
     <tr>
       <th>probOutlier</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code> indicating whether to return the
+      <td><p>A <code>logical(1)</code> indicating whether to return the
 probability of being an outlier as a new <code>tagm.map.outlier</code>
 feature variable. A high value indicates that the protein is
 unlikely to belong to any annotated class (and is hence
 considered an outlier).</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>An object of class `MAPParams`.</p></td>
-    </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tagmMapTrain</code> returns an instance of class <code>MAPParams()</code>.</p>
+    <p><code>tagmMapTrain</code> returns an instance of class <code><a href='tagm-map.html'>MAPParams()</a></code>.</p>
 <p><code>tagmPredict</code> returns an instance of class
-<code><a href='https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code> containing the localisation predictions as
+<code><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnbase::MSnSet</a></code> containing the localisation predictions as
 a new <code>tagm.map.allocation</code> feature variable.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>tagmMapTrain</code> function generates the MAP parameters (object or class
 <code>MAPParams</code>) based on an annotated quantitative spatial proteomics dataset
-(object of class <code><a href='https://www.rdocumentation.org/packages/MSnbase/topics/MSnSet-class'>MSnbase::MSnSet</a></code>). Both are then passed to the
+(object of class <code><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnbase::MSnSet</a></code>). Both are then passed to the
 <code>tagmPredict</code> function to predict the sub-cellular localisation of protein
 of unknown localisation. See the <em>pRoloc-bayesian</em> vignette for details and
 examples. In this implementation, if numerical instability is detected in
 the covariance matrix of the data a small multiple of the identity is
 added. A message is printed if this conditioning step is performed.</p>
-    
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
     
-    <dl class='dl-horizontal'>
-<dt><code>method</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character()</a></code> storing the TAGM method name.</p></dd>
-    <dt><code>priors</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> with the priors for the parameters</p></dd>
-    <dt><code>seed</code></dt><dd><p>An <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer()</a></code> with the random number generation seed.</p></dd>
-    <dt><code>posteriors</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> with the updated posterior parameters
+
+<dl>
+<dt><code>method</code></dt><dd><p>A <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> storing the TAGM method name.</p></dd>
+
+<dt><code>priors</code></dt><dd><p>A <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> with the priors for the parameters</p></dd>
+
+<dt><code>seed</code></dt><dd><p>An <code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code> with the random number generation seed.</p></dd>
+
+<dt><code>posteriors</code></dt><dd><p>A <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> with the updated posterior parameters
 and log-posterior of the model.</p></dd>
-    <dt><code>datasize</code></dt><dd><p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> with details about size of data</p></dd>
+
+<dt><code>datasize</code></dt><dd><p>A <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> with details about size of data</p></dd>
+
 </dl>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p><em>A Bayesian Mixture Modelling Approach For Spatial
 Proteomics</em> Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,
 Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi:
 https://doi.org/10.1101/282269</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The <code><a href='plotEllipse.html'>plotEllipse()</a></code> function can be used to visualise
-TAGM models on PCA plots with ellipses. The <code>tagmMapTrain()</code>
+TAGM models on PCA plots with ellipses. The <code><a href='tagm-map.html'>tagmMapTrain()</a></code>
 function to use the TAGM MAP method.</p></div>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
+<p>Oliver M. Crook</p>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#slots">Slots</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    <p>Oliver M. Crook</p>
-<p>Laurent Gatto</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

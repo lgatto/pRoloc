@@ -8,21 +8,29 @@
 
 <title>Plot organelle assignment data and results. — plot2D • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,15 +38,17 @@
 
 
 
-<meta property="og:title" content="Plot organelle assignment data and results. — plot2D" />
 
+<meta property="og:title" content="Plot organelle assignment data and results. — plot2D" />
 <meta property="og:description" content="Generate 2 or 3 dimensional feature distribution plots to
 illustrate localistation clusters. Rows/features containing
 NA values are removed prior to dimension reduction except
 for the &quot;nipals&quot; method. For this method, it is advised to
 set the method argument `ncomp` to a low number of dimensions to
 avoid computing all components when analysing large datasets." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -52,9 +62,19 @@ avoid computing all components when analysing large datasets." />
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -68,19 +88,13 @@ avoid computing all components when analysing large datasets." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -111,11 +125,10 @@ avoid computing all components when analysing large datasets." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,6 +139,7 @@ avoid computing all components when analysing large datasets." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -137,26 +151,24 @@ avoid computing all components when analysing large datasets." />
     </div>
 
     <div class="ref-description">
-    
     <p>Generate 2 or 3 dimensional feature distribution plots to
 illustrate localistation clusters. Rows/features containing
 <code>NA</code> values are removed prior to dimension reduction except
 for the <code>"nipals"</code> method. For this method, it is advised to
 set the method argument `ncomp` to a low number of dimensions to
 avoid computing all components when analysing large datasets.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>plot2D</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='no'>fpch</span>, <span class='kw'>unknown</span> <span class='kw'>=</span> <span class='st'>"unknown"</span>,
-  <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"PCA"</span>, <span class='no'>methargs</span>,
-  <span class='kw'>axsSwitch</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mirrorX</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mirrorY</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>col</span>, <span class='no'>pch</span>, <span class='no'>cex</span>,
-  <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>idx.cex</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='no'>addLegend</span>, <span class='kw'>identify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fpch</span>, unknown <span class='op'>=</span> <span class='st'>"unknown"</span>,
+  dims <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, score <span class='op'>=</span> <span class='fl'>1</span>, method <span class='op'>=</span> <span class='st'>"PCA"</span>, <span class='va'>methargs</span>,
+  axsSwitch <span class='op'>=</span> <span class='cn'>FALSE</span>, mirrorX <span class='op'>=</span> <span class='cn'>FALSE</span>, mirrorY <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>col</span>, <span class='va'>pch</span>, <span class='va'>cex</span>,
+  index <span class='op'>=</span> <span class='cn'>FALSE</span>, idx.cex <span class='op'>=</span> <span class='fl'>0.75</span>, <span class='va'>addLegend</span>, identify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>, grid <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for MSnSet</span>
-<span class='fu'>plot3D</span>(<span class='no'>object</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
-  <span class='kw'>radius1</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>radius2</span> <span class='kw'>=</span> <span class='no'>radius1</span> * <span class='fl'>2</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
+<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
+  radius1 <span class='op'>=</span> <span class='fl'>0.1</span>, radius2 <span class='op'>=</span> <span class='va'>radius1</span> <span class='op'>*</span> <span class='fl'>2</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -185,8 +197,8 @@ labelled.</p></td>
     <tr>
       <th>dims</th>
       <td><p>A <code>numeric</code> of length 2 (or 3 for <code>plot3D</code>)
-defining the dimensions to be plotted. Defaults are <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(1,
-2)</a></code> and <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(1, 2, 3)</a></code>.  Always <code>1:2</code> for MDS.</p></td>
+defining the dimensions to be plotted. Defaults are <code>c(1,
+2)</code> and <code>c(1, 2, 3)</code>.  Always <code>1:2</code> for MDS.</p></td>
     </tr>
     <tr>
       <th>score</th>
@@ -201,14 +213,14 @@ yet implemented).</p></td>
     <code>"MDS"</code>, <code>"kpca"</code>, <code>"nipals"</code>, <code>"t-SNE"</code>
     or <code>"lda"</code>, defining what dimensionality reduction is
     applied: principal component analysis (see
-    <code><a href='https://www.rdocumentation.org/packages/stats/topics/prcomp'>prcomp</a></code>), classical multidimensional scaling (see
-    <code><a href='https://www.rdocumentation.org/packages/stats/topics/cmdscale'>cmdscale</a></code>), kernel PCA (see
-    <code><a href='https://www.rdocumentation.org/packages/kernlab/topics/kpca'>kpca</a></code>), nipals (principal component
+    <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></code>), classical multidimensional scaling (see
+    <code><a href='https://rdrr.io/r/stats/cmdscale.html'>cmdscale</a></code>), kernel PCA (see
+    <code><a href='https://rdrr.io/pkg/kernlab/man/kpca.html'>kpca</a></code>), nipals (principal component
     analysis by NIPALS, non-linear iterative partial least squares
     which support missing values; see
-    <code><a href='https://www.rdocumentation.org/packages/nipals/topics/nipals'>nipals</a></code>) t-SNE (see
-    <code><a href='https://www.rdocumentation.org/packages/Rtsne/topics/Rtsne'>Rtsne</a></code>) or linear discriminant analysis
-    (see <code><a href='https://www.rdocumentation.org/packages/MASS/topics/lda'>lda</a></code>). The last method uses
+    <code><a href='http://kwstat.github.io/nipals/reference/nipals.html'>nipals</a></code>) t-SNE (see
+    <code><a href='https://rdrr.io/pkg/Rtsne/man/Rtsne.html'>Rtsne</a></code>) or linear discriminant analysis
+    (see <code><a href='https://rdrr.io/pkg/MASS/man/lda.html'>lda</a></code>). The last method uses
     <code>fcol</code> to defined the sub-cellular clusters so that the
     ration between within ad between cluster variance is
     maximised. All the other methods are unsupervised and make use
@@ -218,7 +230,7 @@ yet implemented).</p></td>
 <p><code>"scree"</code> can also be used to produce a scree
     plot. <code>"hexbin"</code> applies PCA to the data and uses
     bivariate binning into hexagonal cells from
-    <code><a href='https://www.rdocumentation.org/packages/hexbin/topics/hexbin'>hexbin</a></code> to emphasise cluster density.</p>
+    <code><a href='https://rdrr.io/pkg/hexbin/man/hexbin.html'>hexbin</a></code> to emphasise cluster density.</p>
 <p>If none is used, the data is plotted as is, i.e. without any
     transformation. In this case, <code>object</code> can either be an
     <code>MSnSet</code> or a <code>matrix</code> (as invisibly returned by
@@ -292,7 +304,7 @@ legend. See <code><a href='addLegend.html'>addLegend</a></code>for details. If m
       <th>identify</th>
       <td><p>A logical (default is <code>TRUE</code>) defining if
 user interaction will be expected to identify individual data
-points on the plot. See also <code><a href='https://www.rdocumentation.org/packages/graphics/topics/identify'>identify</a></code>.</p></td>
+points on the plot. See also <code><a href='https://rdrr.io/r/graphics/identify.html'>identify</a></code>.</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -314,7 +326,7 @@ be plotted. Default is <code>TRUE</code>.</p></td>
       <th>radius1</th>
       <td><p>A <code>numeric</code> specifying the radius of feature
 of unknown localisation. Default is 0.1, which is specidied on
-the data scale. See <code><a href='https://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code> for details.</p></td>
+the data scale. See <code><a href='https://dmurdoch.github.io/rgl/dev/reference/plot3d.html'>plot3d</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>radius2</th>
@@ -322,12 +334,11 @@ the data scale. See <code><a href='https://www.rdocumentation.org/packages/rgl/t
 feature. Default is <code>radius</code> * 2.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Used for its side effects of generating a plot.  Invisibly
     returns the 2 or 3 dimensions that are plotted.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>plot3D</code> relies on the ##' <code>rgl</code> package, that will be
@@ -350,7 +361,7 @@ loaded automatically.</p>
       coordinates, then a matching <code>MSnSet</code> must be passed to
       <code>methargs</code>.</p></li>
 </ul>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='addLegend.html'>addLegend</a></code> to add a legend to <code>plot2D</code>
@@ -360,73 +371,88 @@ loaded automatically.</p>
     data. <code><a href='plot2Ds.html'>plot2Ds</a></code> to overlay 2 data sets on the same
     PCA plot. The <code><a href='plotEllipse.html'>plotEllipse</a></code> function can be used
     to visualise TAGM models on PCA plots with ellipses.</p></div>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
-<span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='img'><img src='plot2D-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><div class='img'><img src='plot2D-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span>(<span class='no'>dunkley2006</span>,
-          <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>,
-          <span class='kw'>where</span> <span class='kw'>=</span> <span class='st'>"topright"</span>,
-          <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>bty</span> <span class='kw'>=</span> <span class='st'>"n"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/title'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"plot2D example"</span>)</div><div class='img'><img src='plot2D-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## available methods</span>
-<span class='no'>plot2Dmethods</span></div><div class='output co'>#&gt; [1] "PCA"    "MDS"    "kpca"   "lda"    "t-SNE"  "nipals" "hexbin" "none"  
-#&gt; [9] "scree" </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>)</div><div class='img'><img src='plot2D-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kpca"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-       <span class='kw'>methargs</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>kpar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>sigma</span> <span class='kw'>=</span> <span class='fl'>1</span>)))</div><div class='img'><img src='plot2D-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lda"</span>)</div><div class='img'><img src='plot2D-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"hexbin"</span>)</div><div class='img'><img src='plot2D-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## Using transparent colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='getStockcol.html'>getStockcol</a></span>(), <span class='st'>"80"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", cols, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"markers"</span>)</div><div class='input'><span class='co'>## New behavious in 1.3.6 when not enough colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", cols, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'><a href='getStockcol.html'>getStockcol</a></span>() <span class='co'>## only 3 colours to be recycled</span></div><div class='output co'>#&gt;  [1] "#E41A1C" "#377EB8" "#238B45" "#FF7F00" "#FFD700" "#333333" "#00CED1"
-#&gt;  [8] "#A65628" "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#8B795E"
-#&gt; [15] "#FDAE6B" "#66C2A5" "#276419" "#CD8C95" "#6A51A3" "#EEAD0E" "#0000FF"
-#&gt; [22] "#9ACD32" "#CD6090" "#CD5B45" "#8E0152" "#808000" "#67000D" "#3F007D"
-#&gt; [29] "#6BAED6" "#FC9272"</div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span>(<span class='no'>dunkley2006</span>)</div><div class='output co'>#&gt; organelleMarkers
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+<span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>,
+          fcol <span class='op'>=</span> <span class='st'>"markers"</span>,
+          where <span class='op'>=</span> <span class='st'>"topright"</span>,
+          cex <span class='op'>=</span> <span class='fl'>0.5</span>, bty <span class='op'>=</span> <span class='st'>"n"</span>, ncol <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span><span class='op'>(</span>main <span class='op'>=</span> <span class='st'>"plot2D example"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## available methods</span>
+<span class='va'>plot2Dmethods</span>
+</div><div class='co'>#&gt; [1] "PCA"    "MDS"    "kpca"   "lda"    "t-SNE"  "nipals" "hexbin" "none"  
+#&gt; [9] "scree" </div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, method <span class='op'>=</span> <span class='st'>"kpca"</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, method <span class='op'>=</span> <span class='st'>"kpca"</span>, col <span class='op'>=</span> <span class='st'>"black"</span>,
+       methargs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"lda"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"hexbin"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## Using transparent colours</span>
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"80"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## New behavious in 1.3.6 when not enough colours</span>
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'>## only 3 colours to be recycled</span>
+</div><div class='co'>#&gt; [1] "blue"  "red"   "green"</div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+</div><div class='co'>#&gt; organelleMarkers
 #&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
 #&gt;            14            45            28            55            20 
 #&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           428            21 </div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>)</div><div class='img'><img src='plot2D-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## reset colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='error'>Error in assign("stockcol", stockcol, envir = .pRolocEnv): cannot change value of locked binding for 'stockcol'</span></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along 2 first fractions</span></div><div class='img'><img src='plot2D-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>5</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>) <span class='co'>## plotting along fractions 3 and 5</span></div><div class='img'><img src='plot2D-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
-<span class='no'>pca</span> <span class='kw'>&lt;-</span> <span class='fu'>plot2D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pca</span>)</div><div class='output co'>#&gt;           PC1 (64.36%) PC2 (22.34%)
+#&gt;            46            19            13           428            21 </div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Not enough colours: using colours and pch.</div><div class='img'><img src='plot2D-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## reset colours</span>
+<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='co'>## plotting along 2 first fractions</span>
+</div><div class='img'><img src='plot2D-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='co'>## plotting along fractions 3 and 5</span>
+</div><div class='img'><img src='plot2D-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
+<span class='va'>pca</span> <span class='op'>&lt;-</span> <span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, plot<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span>
+</div><div class='co'>#&gt;           PC1 (64.36%) PC2 (22.34%)
 #&gt; AT1G09210    -4.734261   -0.8204175
 #&gt; AT1G21750    -4.615276   -1.1891468
 #&gt; AT1G51760    -4.770573   -1.6292717
 #&gt; AT1G56340    -5.318056   -0.9972462
 #&gt; AT2G32920    -5.135122   -1.5283630
-#&gt; AT2G47470    -4.899410   -0.8145343</div><div class='input'><span class='fu'>plot2D</span>(<span class='no'>pca</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>methargs</span>  <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>dunkley2006</span>))</div><div class='img'><img src='plot2D-11.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; AT2G47470    -4.899410   -0.8145343</div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>pca</span>, method <span class='op'>=</span> <span class='st'>"none"</span>, methargs  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='plot2D-12.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## plotting in 3 dimenstions</span>
-<span class='fu'>plot3D</span>(<span class='no'>dunkley2006</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: rgl</span></div><div class='output co'>#&gt; <span class='warning'>Warning: RGL: unable to open X11 display</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE</span></div><div class='input'><span class='fu'>plot3D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>radius2</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='fu'>plot3D</span>(<span class='no'>dunkley2006</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>))</div></pre>
+<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Loading required package: rgl</div><div class='co'>#&gt; <span class='warning'>Warning: </span>RGL: unable to open X11 display</div><div class='co'>#&gt; <span class='warning'>Warning: </span>'rgl.init' failed, running with 'rgl.useNULL = TRUE'.</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, radius2 <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
+<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

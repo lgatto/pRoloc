@@ -6,23 +6,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates a GO feature <code>MSnSet</code> — makeGoSet • pRoloc</title>
+<title>Creates a GO feature MSnSet — makeGoSet • pRoloc</title>
+
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +38,13 @@
 
 
 
-<meta property="og:title" content="Creates a GO feature <code>MSnSet</code> — makeGoSet" />
 
+<meta property="og:title" content="Creates a GO feature MSnSet — makeGoSet" />
 <meta property="og:description" content="Creates a new &quot;MSnSet&quot; instance populated
 with a GO term binary matrix based on an original object." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -48,9 +58,19 @@ with a GO term binary matrix based on an original object." />
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -64,19 +84,13 @@ with a GO term binary matrix based on an original object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -107,11 +121,10 @@ with a GO term binary matrix based on an original object." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,6 +135,7 @@ with a GO term binary matrix based on an original object." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -133,21 +147,19 @@ with a GO term binary matrix based on an original object." />
     </div>
 
     <div class="ref-description">
-    
-    <p>Creates a new <code>"MSnSet"</code> instance populated
+    <p>Creates a new <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code> instance populated
 with a GO term binary matrix based on an original <code>object</code>.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>makeGoSet</span>(<span class='no'>object</span>, <span class='no'>params</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"cellular_component"</span>,
-  <span class='kw'>evidence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>makeGoSet</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>params</span>, namespace <span class='op'>=</span> <span class='st'>"cellular_component"</span>,
+  evidence <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An instance of class <code>"MSnSet"</code>
+      <td><p>An instance of class <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code>
 or a character of feature names.</p></td>
     </tr>
     <tr>
@@ -166,20 +178,23 @@ compatible with <code>featureNames(object)</code>'s format.</p></td>
       <td><p>GO evidence filtering.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new <code>"MSnSet"</code> with the GO terms
+    <p>A new <code>"<a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a>"</code> with the GO terms
 for the respective features in the original <code>object</code>.</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>dunkley2006params</span>)
-<span class='no'>goset</span> <span class='kw'>&lt;-</span> <span class='fu'>makeGoSet</span>(<span class='no'>dunkley2006</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ],
-                   <span class='no'>dunkley2006params</span>)
-<span class='no'>goset</span></div><div class='output co'>#&gt; MSnSet (storageMode: lockedEnvironment)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span>
+<span class='va'>goset</span> <span class='op'>&lt;-</span> <span class='fu'>makeGoSet</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>,
+                   <span class='va'>dunkley2006params</span><span class='op'>)</span>
+<span class='va'>goset</span>
+</div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
 #&gt; assayData: 10 features, 22 samples 
 #&gt;   element names: exprs 
 #&gt; protocolData: none
@@ -191,8 +206,9 @@ for the respective features in the original <code>object</code>.</p>
 #&gt; experimentData: use 'experimentData(object)'
 #&gt; Annotation:  
 #&gt; - - - Processing information - - -
-#&gt; Constructed GO set using cellular_component namespace [Fri Aug  9 09:36:08 2019] 
-#&gt;  MSnbase version: 2.11.2 </div><div class='input'><span class='fu'>exprs</span>(<span class='no'>goset</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt;           GO:0005788 GO:0005773 GO:0005783 GO:0005739 GO:0048046
+#&gt; Constructed GO set using cellular_component namespace [Sat May  1 09:27:14 2021] 
+#&gt;  MSnbase version: 2.17.7 </div><div class='input'><span class='fu'>exprs</span><span class='op'>(</span><span class='va'>goset</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+</div><div class='co'>#&gt;           GO:0005788 GO:0005773 GO:0005783 GO:0005739 GO:0048046
 #&gt; AT1G09210          1          1          1          1          1
 #&gt; AT1G21750          1          1          1          0          0
 #&gt; AT1G51760          1          0          1          0          0
@@ -201,37 +217,36 @@ for the respective features in the original <code>object</code>.</p>
 #&gt; AT2G47470          0          0          1          0          0
 #&gt; AT3G54960          1          0          1          0          0
 #&gt; AT4G24190          1          1          1          1          1
-#&gt; AT5G60640          1          1          1          1          0
-#&gt; AT1G07810          0          0          1          0          0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span>(<span class='no'>goset</span>)</div><div class='img'><img src='makeGoSet-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; AT5G60640          1          0          1          1          0
+#&gt; AT1G07810          0          0          1          0          0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span><span class='op'>(</span><span class='va'>goset</span><span class='op'>)</span>
+</div><div class='img'><img src='makeGoSet-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

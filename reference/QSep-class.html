@@ -8,21 +8,29 @@
 
 <title>Quantify resolution of a spatial proteomics experiment — QSep-class • pRoloc</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +38,11 @@
 
 
 
+
 <meta property="og:title" content="Quantify resolution of a spatial proteomics experiment — QSep-class" />
+<meta property="og:description" content="
 
-<meta property="og:description" content="" />
-
-<meta property="og:description" content="The QSep infrastructure provide a way to quantify the
+The QSep infrastructure provide a way to quantify the
   resolution of a spatial proteomics experiment, i.e. to quantify how
   well annotated sub-cellular clusters are separated from each other.
 The QSep function calculates all between and within cluster
@@ -42,35 +50,24 @@ The QSep function calculates all between and within cluster
   respective within cluster average distance. For example, for a dataset
   with only 2 spatial clusters, we would obtain
 
+\(c_1\)\(c_2\)
+\(c_1\)\(d_11\)\(d_12\)
+\(c_2\)\(d_21\)\(d_22\)
 
-\(c_1\)
-\(c_2\)
-\(c_1\)
-\(d_11\)
-\(d_12\)
-\(c_2\)
-\(d_21\)
-\(d_22\)
 
-" />
 
-<meta property="og:description" content="Normalised distance represent the ratio of between to within average
+Normalised distance represent the ratio of between to within average
   distances, i.e. how much bigger the average distance between cluster
   \(c_i\) and \(c_j\) is compared to the average distance within
   cluster \(c_i\).
 
+\(c_1\)\(c_2\)
+\(c_1\)1\(\frac{d_12}{d_22}\)
+\(c_2\)\(\frac{d_21}{d_11}\)1
 
-\(c_1\)
-\(c_2\)
-\(c_1\)
-1\(\frac{d_12}{d_22}\)
 
-\(c_2\)
-\(\frac{d_21}{d_11}\)1
 
-" />
-
-<meta property="og:description" content="Note that the normalised distance matrix is not symmetric anymore
+Note that the normalised distance matrix is not symmetric anymore
   and the normalised distance ratios are proportional to the tightness
   of the reference cluster (along the columns).
 Missing values only affect the fractions containing the NA when
@@ -81,7 +78,9 @@ Missing values only affect the fractions containing the NA when
   conservative approach, using the data as provided by the user, and
   expect that the data missingness is handled before proceeding with this
   or any other analysis." />
-<meta name="twitter:card" content="summary" />
+
+
+
 
 
 
@@ -95,9 +94,19 @@ Missing values only affect the fractions containing the NA when
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,19 +120,13 @@ Missing values only affect the fractions containing the NA when
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -154,11 +157,10 @@ Missing values only affect the fractions containing the NA when
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/lgatto/pRoloc">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/lgatto/pRoloc/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -169,6 +171,7 @@ Missing values only affect the fractions containing the NA when
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -181,9 +184,8 @@ Missing values only affect the fractions containing the NA when
 
     <div class="ref-description">
     
-    
 
-    <p>The <code>QSep</code> infrastructure provide a way to quantify the
+<p>The <code>QSep</code> infrastructure provide a way to quantify the
   resolution of a spatial proteomics experiment, i.e. to quantify how
   well annotated sub-cellular clusters are separated from each other.</p>
 <p>The <code>QSep</code> function calculates all between and within cluster
@@ -191,35 +193,24 @@ Missing values only affect the fractions containing the NA when
   respective within cluster average distance. For example, for a dataset
   with only 2 spatial clusters, we would obtain</p>
 <p></p><table class='table'>
-<tr><td></td><td></td><td></td></tr>
-<tr><td>\(c_1\)</td><td></td><td></td></tr>
-<tr><td>\(c_2\)</td><td></td><td></td></tr>
-<tr><td></td><td>\(c_1\)</td><td></td></tr>
-<tr><td></td><td>\(d_11\)</td><td></td></tr>
-<tr><td></td><td>\(d_12\)</td><td></td></tr>
-<tr><td></td><td></td><td>\(c_2\)</td></tr>
-<tr><td></td><td></td><td>\(d_21\)</td></tr>
-<tr><td></td><td></td><td>\(d_22\)</td></tr>
-<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td>\(c_1\)</td><td>\(c_2\)</td></tr>
+<tr><td>\(c_1\)</td><td>\(d_11\)</td><td>\(d_12\)</td></tr>
+<tr><td>\(c_2\)</td><td>\(d_21\)</td><td>\(d_22\)</td></tr>
 </table>
 
-    <p>Normalised distance represent the ratio of between to within average
+
+<p>Normalised distance represent the ratio of between to within average
   distances, i.e. how much bigger the average distance between cluster
   \(c_i\) and \(c_j\) is compared to the average distance within
   cluster \(c_i\).</p>
 <p></p><table class='table'>
-<tr><td></td><td></td><td></td></tr>
-<tr><td>\(c_1\)</td><td></td><td></td></tr>
-<tr><td>\(c_2\)</td><td></td><td></td></tr>
-<tr><td></td><td>\(c_1\)</td><td></td></tr>
-<tr><td>1</td><td></td><td>\(\frac{d_12}{d_22}\)</td></tr>
-<tr><td></td><td></td><td></td></tr>
-<tr><td>\(c_2\)</td><td></td><td></td></tr>
-<tr><td>\(\frac{d_21}{d_11}\)</td><td></td><td>1</td></tr>
-<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td>\(c_1\)</td><td>\(c_2\)</td></tr>
+<tr><td>\(c_1\)</td><td>1</td><td>\(\frac{d_12}{d_22}\)</td></tr>
+<tr><td>\(c_2\)</td><td>\(\frac{d_21}{d_11}\)</td><td>1</td></tr>
 </table>
 
-    <p>Note that the normalised distance matrix is not symmetric anymore
+
+<p>Note that the normalised distance matrix is not symmetric anymore
   and the normalised distance ratios are proportional to the tightness
   of the reference cluster (along the columns).</p>
 <p>Missing values only affect the fractions containing the <code>NA</code> when
@@ -230,89 +221,109 @@ Missing values only affect the fractions containing the NA when
   conservative approach, using the data as provided by the user, and
   expect that the data missingness is handled before proceeding with this
   or any other analysis.</p>
-    
     </div>
 
-        
+
+
     <h2 class="hasAnchor" id="objects-from-the-class"><a class="anchor" href="#objects-from-the-class"></a>Objects from the Class</h2>
 
     
-    <p>Objects can be created by calls using the constructor
+
+<p>Objects can be created by calls using the constructor
   <code>QSep</code> (see below).</p>
-    
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
-    <p></p><dl class='dl-horizontal'>
+    <p></p><dl>
+
     <dt><code>x</code>:</dt><dd><p>Object of class <code>"matrix"</code> containing the
       pairwise distance matrix, accessible with <code>qseq(., norm =
       FALSE)</code>.</p></dd>
+
     <dt><code>xnorm</code>:</dt><dd><p>Object of class <code>"matrix"</code> containing the
       normalised pairwise distance matrix, accessible with <code>qsep(.,
 	norm = TRUE)</code> or <code>qsep(.)</code>.</p></dd>
+
     <dt><code>object</code>:</dt><dd><p>Object of class <code>"character"</code> with the
-      variable name of <code>MSnSet</code> object that was used
+      variable name of <code><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a></code> object that was used
       to generate the <code>QSep</code> object.</p></dd>
+
     <dt><code>.__classVersion__</code>:</dt><dd><p>Object of class <code>"Versions"</code>
       storing the class version of the object.</p></dd>
-    </dl>
-    
+
+  
+</dl>
+
     <h2 class="hasAnchor" id="extends"><a class="anchor" href="#extends"></a>Extends</h2>
 
     <p>Class <code>"Versioned"</code>, directly.</p>
-    
     <h2 class="hasAnchor" id="methods-and-functions"><a class="anchor" href="#methods-and-functions"></a>Methods and functions</h2>
 
-    <p></p><dl class='dl-horizontal'>
+    <p></p><dl>
+
     <dt>QSeq</dt><dd><p><code>signature(object = "MSnSet", fcol = "character")</code>:
       constructor for <code>QSep</code> objects. The <code>fcol</code> argument
       defines the name of the feature variable that annotates the
       sub-cellular clusters. Non-marker proteins, that are marked as
       <code>"unknown"</code> are automatically removed prior to distance
       calculation.</p></dd>
+
     <dt>qsep</dt><dd><p><code>signature{object = "QSep", norm = "logical"}</code>:
       accessor for the normalised (when <code>norm</code> is <code>TRUE</code>,
       which is default) and raw (when <code>norm</code> is <code>FALSE</code>)
       pairwise distance matrices.</p></dd>
+
     <dt>names</dt><dd><p><code>signature{object = "QSep"}</code>: method to retrieve
       the names of the sub-celluar clusters originally defined in
       <code>QSep</code>'s <code>fcol</code> argument.  A replacement method
       <code>names(.) &lt;- </code> is also available.</p></dd>
+
+
     <dt>summary</dt><dd><p><code>signature(object = "QSep", ..., verbose =
 	"logical")</code>: Invisible return all between cluster average
       distances and prints (when <code>verbose</code> is <code>TRUE</code>,
       default) a summary of those.</p></dd>
+
     <dt>levelPlot</dt><dd><p><code>signature(object = "QSep", norm = "logical",
 	...)</code>: plots an annotated heatmap of all normalised pairwise
 	distances. <code>norm</code> (default is <code>TRUE</code>) defines whether
 	normalised distances should be plotted. Additional arguments
-	<code>...</code> are passed to the <code><a href='https://www.rdocumentation.org/packages/lattice/topics/levelplot'>levelplot</a></code>.</p></dd>
+	<code>...</code> are passed to the <code><a href='https://rdrr.io/pkg/lattice/man/levelplot.html'>levelplot</a></code>.</p></dd>
+
     <dt>plot</dt><dd><p><code>signature(object = "QSep", norm = "logical"...)</code>:
       produces a boxplot of all normalised pairwise distances. The red
       points represent the within average distance and black points
       between average distances. <code>norm</code> (default is <code>TRUE</code>)
       defines whether normalised distances should be plotted.</p></dd>
-    </dl>
-    
+
+  
+</dl>
+
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Assessing sub-cellular resolution in spatial proteomics experiments
   Laurent Gatto, Lisa M Breckels, Kathryn S Lilley bioRxiv 377630; doi:
   https://doi.org/10.1101/377630</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Test data from Christoforou et al. 2016</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"pRolocdata"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>hyperLOPIT2015</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>hyperLOPIT2015</span><span class='op'>)</span>
 
 <span class='co'>## Create the object and get a summary</span>
-<span class='no'>hlq</span> <span class='kw'>&lt;-</span> <span class='fu'>QSep</span>(<span class='no'>hyperLOPIT2015</span>)
-<span class='no'>hlq</span></div><div class='output co'>#&gt; Object of class 'QSep'.
+<span class='va'>hlq</span> <span class='op'>&lt;-</span> <span class='fu'>QSep</span><span class='op'>(</span><span class='va'>hyperLOPIT2015</span><span class='op'>)</span>
+<span class='va'>hlq</span>
+</div><div class='co'>#&gt; Object of class 'QSep'.
 #&gt;  Data: hyperLOPIT2015 
-#&gt;  With 14 sub-cellular clusters.</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>hlq</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;  With 14 sub-cellular clusters.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
+</div><div class='co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;  0.9458  3.6189  4.9075  5.1172  6.5779 11.4970 </div><div class='input'>
 <span class='co'>## mean distance matrix</span>
-<span class='fu'>qsep</span>(<span class='no'>hlq</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;                                       Actin cytoskeleton
+<span class='fu'>qsep</span><span class='op'>(</span><span class='va'>hlq</span>, norm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='co'>#&gt;                                       Actin cytoskeleton
 #&gt; Actin cytoskeleton                             0.1372312
 #&gt; Endoplasmic reticulum/Golgi apparatus          0.4690770
 #&gt; Mitochondrion                                  0.7536736
@@ -418,7 +429,8 @@ Missing values only affect the fractions containing the NA when
 #&gt; 40S Ribosome                           0.5756436   0.08388726 0.53905744
 #&gt; Proteasome                             0.9418743   0.53905744 0.08625819</div><div class='input'>
 <span class='co'>## normalised average distance matrix</span>
-<span class='fu'>qsep</span>(<span class='no'>hlq</span>)</div><div class='output co'>#&gt;                                       Actin cytoskeleton
+<span class='fu'>qsep</span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
+</div><div class='co'>#&gt;                                       Actin cytoskeleton
 #&gt; Actin cytoskeleton                              1.000000
 #&gt; Endoplasmic reticulum/Golgi apparatus           3.566325
 #&gt; Mitochondrion                                   5.487565
@@ -525,9 +537,10 @@ Missing values only affect the fractions containing the NA when
 #&gt; Proteasome                             10.919244     6.249348   1.000000</div><div class='input'>
 <span class='co'>## Update the organelle cluster names for better</span>
 <span class='co'>## rendering on the plots</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>hlq</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/grep'>sub</a></span>(<span class='st'>"/"</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>hlq</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>hlq</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/grep'>sub</a></span>(<span class='st'>" - "</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>hlq</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>hlq</span>)</div><div class='output co'>#&gt;  [1] "Actin cytoskeleton"                    
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"/"</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>" - "</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
+</div><div class='co'>#&gt;  [1] "Actin cytoskeleton"                    
 #&gt;  [2] "Endoplasmic reticulum\nGolgi apparatus"
 #&gt;  [3] "Mitochondrion"                         
 #&gt;  [4] "Extracellular matrix"                  
@@ -542,68 +555,63 @@ Missing values only affect the fractions containing the NA when
 #&gt; [13] "40S Ribosome"                          
 #&gt; [14] "Proteasome"                            </div><div class='input'>
 <span class='co'>## Heatmap of the normalised intensities</span>
-<span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span>(<span class='no'>hlq</span>)</div><div class='img'><img src='QSep-class-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
+</div><div class='img'><img src='QSep-class-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Boxplot of the normalised intensities</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>hlq</span>)</div><div class='img'><img src='QSep-class-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
+</div><div class='img'><img src='QSep-class-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Boxplot of all between cluster average distances</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>hlq</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='QSep-class-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>hlq</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='img'><img src='QSep-class-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Missing data example, for 4 proteins and 3 fractions</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1.1</span>, <span class='fl'>1.2</span>, <span class='fl'>1.3</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>NA</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>rownames</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"P"</span>, <span class='fl'>1</span>:<span class='fl'>4</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"F"</span>, <span class='fl'>1</span>:<span class='fl'>3</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.1</span>, <span class='fl'>1.2</span>, <span class='fl'>1.3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"P"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"F"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
 
 <span class='co'>## P1 is the reference, against which we will calculate distances. P2</span>
 <span class='co'>## has a complete profile, producing the *real* distance. P3 and P4 have</span>
 <span class='co'>## missing values in the first and last fraction respectively.</span>
-<span class='no'>x</span></div><div class='output co'>#&gt;     F1  F2  F3
+<span class='va'>x</span>
+</div><div class='co'>#&gt;     F1  F2  F3
 #&gt; P1 1.1 1.2 1.3
 #&gt; P2 1.0 1.0 1.0
 #&gt; P3  NA 1.0 1.0
 #&gt; P4 1.0 1.0  NA</div><div class='input'>
-## If we drop F1 in P3, which represents a small difference of 0.1, the
-## distance only considers F2 and F3, and increases. If we drop F3 in
-## P4, which represents a large distance of 0.3, the distance only
-## considers F1 and F2, and decreases.  dist(x)
+<span class='co'>## If we drop F1 in P3, which represents a small difference of 0.1, the</span>
+<span class='co'>## distance only considers F2 and F3, and increases. If we drop F3 in</span>
+<span class='co'>## P4, which represents a large distance of 0.3, the distance only</span>
+<span class='co'>## considers F1 and F2, and decreases.  dist(x)</span>
 
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#objects-from-the-class">Objects from the Class</a></li>
-
-      <li><a href="#slots">Slots</a></li>
-
-      <li><a href="#extends">Extends</a></li>
-
-      <li><a href="#methods-and-functions">Methods and functions</a></li>
-
-      <li><a href="#references">References</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
-  <p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p>
+  <p><p>Developed by Laurent Gatto, Lisa Breckels, Oliver Crook.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
+
       </footer>
    </div>
 
   
 
+
+  
+
   </body>
 </html>
+
 

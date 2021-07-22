@@ -59,9 +59,6 @@
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -186,91 +183,97 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-
-<span class='co'>## Using a matrix as input</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>exprs</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-</div><div class='co'>#&gt;              M1F1A    M1F4A    M1F7A
-#&gt; AT1G09210 0.323250 0.275500 0.216000
-#&gt; AT1G21750 0.332000 0.279667 0.222000
-#&gt; AT1G51760 0.397250 0.246500 0.168250
-#&gt; AT1G56340 0.336733 0.303267 0.201133</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>nndist</span><span class='op'>(</span><span class='va'>m</span>, k <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           index1euc   dist1euc index2euc   dist2euc index3euc   dist3euc
-#&gt; AT1G09210         4 0.07704563       151 0.07958198         2 0.08142734
-#&gt; AT1G21750         1 0.08142734         4 0.08262245       151 0.08645587
-#&gt; AT1G51760       150 0.09921614       156 0.10449514       151 0.10922063
-#&gt; AT1G56340         8 0.07268495         1 0.07704563         9 0.07958917
-#&gt; AT2G32920         9 0.08767137         4 0.10248944       155 0.10307756
-#&gt; AT2G47470       151 0.05067260       153 0.07809223         4 0.08231921
-#&gt;           index4euc   dist4euc index5euc   dist5euc
-#&gt; AT1G09210         6 0.08738381       150 0.11859295
-#&gt; AT1G21750       150 0.09657314         6 0.10902502
-#&gt; AT1G51760       155 0.11456182         2 0.11749637
-#&gt; AT1G56340         6 0.08231921         2 0.08262245
-#&gt; AT2G32920         8 0.10670010         6 0.10806363
-#&gt; AT2G47470         1 0.08738381       378 0.09215796</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fu'>nndist</span><span class='op'>(</span><span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>, k <span class='op'>=</span> <span class='fl'>2</span>, dist <span class='op'>=</span> <span class='st'>"mahalanobis"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           index1mah dist1mah index2mah dist2mah
-#&gt; AT3G26830        37 26.26210        33 25.95250
-#&gt; AT3G28580        60 25.95250        35 21.88428
-#&gt; AT3G28720        70 31.50309        57 28.63844
-#&gt; AT3G44330        72 26.74359        64 26.74359
-#&gt; AT3G48890        17 33.69198        36 32.85008
-#&gt; AT3G51430        56 26.83278        75 22.23005</div><div class='input'>
-<span class='co'>## Same as above for MSnSet</span>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'>nndist</span><span class='op'>(</span><span class='va'>dunkley2006</span>, k <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>fData</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           assigned  evidence method   new pd.2013 pd.markers markers.orig
-#&gt; AT1G09210       ER predicted  PLSDA known      ER   ER lumen           ER
-#&gt; AT1G21750       ER predicted  PLSDA known      ER   ER lumen           ER
-#&gt; AT1G51760       ER   unknown  PLSDA   new      ER   ER lumen      unknown
-#&gt; AT1G56340       ER predicted  PLSDA known      ER   ER lumen           ER
-#&gt; AT2G32920       ER predicted  PLSDA known      ER   ER lumen           ER
-#&gt; AT2G47470       ER predicted  PLSDA known      ER   ER lumen           ER
-#&gt;            markers index1euc   dist1euc index2euc   dist2euc index3euc
-#&gt; AT1G09210 ER lumen         4 0.07704563       151 0.07958198         2
-#&gt; AT1G21750 ER lumen         1 0.08142734         4 0.08262245       151
-#&gt; AT1G51760 ER lumen       150 0.09921614       156 0.10449514       151
-#&gt; AT1G56340 ER lumen         8 0.07268495         1 0.07704563         9
-#&gt; AT2G32920 ER lumen         9 0.08767137         4 0.10248944       155
-#&gt; AT2G47470 ER lumen       151 0.05067260       153 0.07809223         4
-#&gt;             dist3euc index4euc   dist4euc index5euc   dist5euc
-#&gt; AT1G09210 0.08142734         6 0.08738381       150 0.11859295
-#&gt; AT1G21750 0.08645587       150 0.09657314         6 0.10902502
-#&gt; AT1G51760 0.10922063       155 0.11456182         2 0.11749637
-#&gt; AT1G56340 0.07958917         6 0.08231921         2 0.08262245
-#&gt; AT2G32920 0.10307756         8 0.10670010         6 0.10806363
-#&gt; AT2G47470 0.08231921         1 0.08738381       378 0.09215796</div><div class='input'>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'>nndist</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>, k <span class='op'>=</span> <span class='fl'>2</span>, dist <span class='op'>=</span> <span class='st'>"mahalanobis"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fu'>fData</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           assigned evidence method     new pd.2013 pd.markers markers.orig
-#&gt; AT3G26830       ER  unknown  PLSDA     new      ER    unknown      unknown
-#&gt; AT3G28580       ER  unknown  PLSDA     new      ER    unknown      unknown
-#&gt; AT3G28720  unknown  unknown  PLSDA unknown      ER    unknown      unknown
-#&gt; AT3G44330       ER  unknown  PLSDA     new      ER    unknown      unknown
-#&gt; AT3G48890  unknown  unknown  PLSDA unknown      ER    unknown      unknown
-#&gt; AT3G51430       ER  unknown  PLSDA     new      ER    unknown      unknown
-#&gt;           markers index1mah dist1mah index2mah dist2mah
-#&gt; AT3G26830 unknown        37 26.26210        33 25.95250
-#&gt; AT3G28580 unknown        60 25.95250        35 21.88428
-#&gt; AT3G28720 unknown        70 31.50309        57 28.63844
-#&gt; AT3G44330 unknown        72 26.74359        64 26.74359
-#&gt; AT3G48890 unknown        17 33.69198        36 32.85008
-#&gt; AT3G51430 unknown        56 26.83278        75 22.23005</div><div class='input'>
-<span class='co'>## Using a query</span>
-<span class='fu'>nndist</span><span class='op'>(</span><span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>, <span class='va'>m</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span>, <span class='op'>]</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           index1euc   dist1euc index2euc   dist2euc
-#&gt; AT3G51440        40 0.08584173        78 0.08761483
-#&gt; AT3G51460        59 0.07788915        86 0.07970032
-#&gt; AT3G57010        86 0.05580589        61 0.05615363
-#&gt; AT3G57030        34 0.07262401        14 0.07373216
-#&gt; AT3G57880        34 0.05350903        46 0.05471768
-#&gt; AT3G59500        91 0.10986265        24 0.11019115
-#&gt; AT3G60600        64 0.07059527        20 0.07176627
-#&gt; AT3G62360        48 0.04383448        17 0.05428251
-#&gt; AT3G66658        73 0.06079091        34 0.06115031
-#&gt; AT4G00175        75 0.07679760        92 0.07719277</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Using a matrix as input</span></span>
+<span class='r-in'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>exprs</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              M1F1A    M1F4A    M1F7A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210 0.323250 0.275500 0.216000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750 0.332000 0.279667 0.222000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760 0.397250 0.246500 0.168250</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340 0.336733 0.303267 0.201133</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>nndist</span><span class='op'>(</span><span class='va'>m</span>, k <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           index1euc   dist1euc index2euc   dist2euc index3euc   dist3euc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210         4 0.07704563       151 0.07958198         2 0.08142734</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750         1 0.08142734         4 0.08262245       151 0.08645587</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760       150 0.09921614       156 0.10449514       151 0.10922063</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340         8 0.07268495         1 0.07704563         9 0.07958917</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920         9 0.08767137         4 0.10248944       155 0.10307756</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470       151 0.05067260       153 0.07809223         4 0.08231921</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           index4euc   dist4euc index5euc   dist5euc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210         6 0.08738381       150 0.11859295</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750       150 0.09657314         6 0.10902502</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760       155 0.11456182         2 0.11749637</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340         6 0.08231921         2 0.08262245</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920         8 0.10670010         6 0.10806363</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470         1 0.08738381       378 0.09215796</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fu'>nndist</span><span class='op'>(</span><span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>, k <span class='op'>=</span> <span class='fl'>2</span>, dist <span class='op'>=</span> <span class='st'>"mahalanobis"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           index1mah dist1mah index2mah dist2mah</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G26830        37 26.26210        33 25.95250</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G28580        60 25.95250        35 21.88428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G28720        70 31.50309        57 28.63844</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G44330        72 26.74359        64 26.74359</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G48890        17 33.69198        36 32.85008</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G51430        56 26.83278        75 22.23005</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Same as above for MSnSet</span></span>
+<span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'>nndist</span><span class='op'>(</span><span class='va'>dunkley2006</span>, k <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>fData</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           assigned  evidence method   new pd.2013 pd.markers markers.orig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210       ER predicted  PLSDA known      ER   ER lumen           ER</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750       ER predicted  PLSDA known      ER   ER lumen           ER</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760       ER   unknown  PLSDA   new      ER   ER lumen      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340       ER predicted  PLSDA known      ER   ER lumen           ER</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920       ER predicted  PLSDA known      ER   ER lumen           ER</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470       ER predicted  PLSDA known      ER   ER lumen           ER</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            markers index1euc   dist1euc index2euc   dist2euc index3euc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210 ER lumen         4 0.07704563       151 0.07958198         2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750 ER lumen         1 0.08142734         4 0.08262245       151</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760 ER lumen       150 0.09921614       156 0.10449514       151</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340 ER lumen         8 0.07268495         1 0.07704563         9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920 ER lumen         9 0.08767137         4 0.10248944       155</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470 ER lumen       151 0.05067260       153 0.07809223         4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             dist3euc index4euc   dist4euc index5euc   dist5euc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210 0.08142734         6 0.08738381       150 0.11859295</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750 0.08645587       150 0.09657314         6 0.10902502</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760 0.10922063       155 0.11456182         2 0.11749637</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340 0.07958917         6 0.08231921         2 0.08262245</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920 0.10307756         8 0.10670010         6 0.10806363</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470 0.08231921         1 0.08738381       378 0.09215796</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'>nndist</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>, k <span class='op'>=</span> <span class='fl'>2</span>, dist <span class='op'>=</span> <span class='st'>"mahalanobis"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fu'>fData</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           assigned evidence method     new pd.2013 pd.markers markers.orig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G26830       ER  unknown  PLSDA     new      ER    unknown      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G28580       ER  unknown  PLSDA     new      ER    unknown      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G28720  unknown  unknown  PLSDA unknown      ER    unknown      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G44330       ER  unknown  PLSDA     new      ER    unknown      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G48890  unknown  unknown  PLSDA unknown      ER    unknown      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G51430       ER  unknown  PLSDA     new      ER    unknown      unknown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           markers index1mah dist1mah index2mah dist2mah</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G26830 unknown        37 26.26210        33 25.95250</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G28580 unknown        60 25.95250        35 21.88428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G28720 unknown        70 31.50309        57 28.63844</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G44330 unknown        72 26.74359        64 26.74359</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G48890 unknown        17 33.69198        36 32.85008</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G51430 unknown        56 26.83278        75 22.23005</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Using a query</span></span>
+<span class='r-in'><span class='fu'>nndist</span><span class='op'>(</span><span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>, <span class='va'>m</span><span class='op'>[</span><span class='fl'>101</span><span class='op'>:</span><span class='fl'>110</span>, <span class='op'>]</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           index1euc   dist1euc index2euc   dist2euc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G51440        40 0.08584173        78 0.08761483</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G51460        59 0.07788915        86 0.07970032</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G57010        86 0.05580589        61 0.05615363</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G57030        34 0.07262401        14 0.07373216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G57880        34 0.05350903        46 0.05471768</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G59500        91 0.10986265        24 0.11019115</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G60600        64 0.07059527        20 0.07176627</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G62360        48 0.04383448        17 0.05428251</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G66658        73 0.06079091        34 0.06115031</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT4G00175        75 0.07679760        92 0.07719277</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

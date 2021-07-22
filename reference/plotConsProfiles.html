@@ -58,9 +58,6 @@
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -83,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -149,7 +146,7 @@
     <p>The function plots marker consensus profiles obtained from mrkConsProfile</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotConsProfiles</span><span class='op'>(</span><span class='va'>object</span>, order <span class='op'>=</span> <span class='cn'>NULL</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>plotConsProfiles</span><span class='op'>(</span><span class='va'>object</span>, order <span class='op'>=</span> <span class='cn'>NULL</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,14 +175,15 @@ Default is <code>TRUE</code>.</p></td>
     <p>Tom Smith</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span><span class='op'>)</span>
-<span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mrkHClust.html'>mrkHClust</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getMarkerClasses.html'>getMarkerClasses</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span><span class='op'>)</span>
-<span class='va'>ord</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>mm</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/stats/order.dendrogram.html'>order.dendrogram</a></span><span class='op'>(</span><span class='va'>hc</span><span class='op'>)</span><span class='op'>]</span>
-<span class='va'>fmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mrkConsProfiles.html'>mrkConsProfiles</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span><span class='op'>)</span>
-<span class='fu'>plotConsProfiles</span><span class='op'>(</span><span class='va'>fmat</span>, order <span class='op'>=</span> <span class='va'>ord</span><span class='op'>)</span>
-</div><div class='img'><img src='plotConsProfiles-1.png' alt='' width='700' height='433' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mrkHClust.html'>mrkHClust</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getMarkerClasses.html'>getMarkerClasses</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ord</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>mm</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/stats/order.dendrogram.html'>order.dendrogram</a></span><span class='op'>(</span><span class='va'>hc</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>fmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mrkConsProfiles.html'>mrkConsProfiles</a></span><span class='op'>(</span><span class='va'>E14TG2aS1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plotConsProfiles</span><span class='op'>(</span><span class='va'>fmat</span>, order <span class='op'>=</span> <span class='va'>ord</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plotConsProfiles-1.png' alt='' width='700' height='433' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -59,9 +59,6 @@ instances and compares with a contingency table." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ instances and compares with a contingency table." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,7 +148,7 @@ instances and compares with a contingency table." />
 instances and compares with a contingency table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>checkFvarOverlap</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, fcolx <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fcoly</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>checkFvarOverlap</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, fcolx <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fcoly</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,26 +188,28 @@ diagonal, upper and lower triangles of the contingency table.</p>
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>checkFvarOverlap</span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>dunkley2006</span>,
-                        <span class='st'>"markers"</span>, <span class='st'>"markers.orig"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                my
-#&gt; mx               ER Golgi mit/plastid  PM unknown vacuole
-#&gt;   ER lumen       11     0           0   0       3       0
-#&gt;   ER membrane    21     0           0   0      24       0
-#&gt;   Golgi           0    27           0   0       1       0
-#&gt;   Mitochondrion   0     0          13   0      42       0
-#&gt;   Plastid         0     0           7   0      13       0
-#&gt;   PM              0     0           0  28      18       0
-#&gt;   Ribosome        0     0           0   0      19       0
-#&gt;   TGN             0     0           0   0      13       0
-#&gt;   unknown        17     0           6   0     405       0
-#&gt;   vacuole         0     0           0   0       9      12</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='co'>#&gt; List of 3
-#&gt;  $ matches         : int [1:6] 11 0 0 0 13 0
-#&gt;  $ lower.mismatches: int [1:39] 21 0 0 0 0 0 0 17 0 27 ...
-#&gt;  $ upper.mismatches: int [1:39] 21 0 0 0 0 0 0 17 0 27 ...</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>checkFvarOverlap</span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>dunkley2006</span>,</span>
+<span class='r-in'>                        <span class='st'>"markers"</span>, <span class='st'>"markers.orig"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                my</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mx               ER Golgi  PM mit/plastid unknown vacuole</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ER lumen       11     0   0           0       3       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ER membrane    21     0   0           0      24       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Golgi           0    27   0           0       1       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Mitochondrion   0     0   0          13      42       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   PM              0     0  28           0      18       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Plastid         0     0   0           7      13       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Ribosome        0     0   0           0      19       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   TGN             0     0   0           0      13       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   unknown        17     0   0           6     405       0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   vacuole         0     0   0           0       9      12</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> List of 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ matches         : int [1:6] 11 0 0 13 18 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ lower.mismatches: int [1:39] 21 0 0 0 0 0 0 17 0 27 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ upper.mismatches: int [1:39] 21 0 0 0 0 0 0 17 0 27 ...</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -58,9 +58,6 @@
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -83,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -260,35 +257,37 @@
     <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>showClass</span><span class='op'>(</span><span class='st'>"GenRegRes"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Class "GenRegRes" [package "pRoloc"]
-#&gt; 
-#&gt; Slots:
-#&gt;                                                                       
-#&gt; Name:        algorithm hyperparameters          design             log
-#&gt; Class:       character            list         numeric            list
-#&gt;                                                                       
-#&gt; Name:             seed         results      f1Matrices      cmMatrices
-#&gt; Class:         integer          matrix            list            list
-#&gt;                                       
-#&gt; Name:   testPartitions        datasize
-#&gt; Class:            list            list
-#&gt; 
-#&gt; Known Subclasses: "ThetaRegRes"</div><div class='input'><span class='fu'>showClass</span><span class='op'>(</span><span class='st'>"ThetaRegRes"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Class "ThetaRegRes" [package "pRoloc"]
-#&gt; 
-#&gt; Slots:
-#&gt;                                                                       
-#&gt; Name:      predictions    otherWeights       algorithm hyperparameters
-#&gt; Class:            list            list       character            list
-#&gt;                                                                       
-#&gt; Name:           design             log            seed         results
-#&gt; Class:         numeric            list         integer          matrix
-#&gt;                                                                       
-#&gt; Name:       f1Matrices      cmMatrices  testPartitions        datasize
-#&gt; Class:            list            list            list            list
-#&gt; 
-#&gt; Extends: "GenRegRes"</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>showClass</span><span class='op'>(</span><span class='st'>"GenRegRes"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class "GenRegRes" [package "pRoloc"]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slots:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:        algorithm hyperparameters          design             log</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:       character            list         numeric            list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:             seed         results      f1Matrices      cmMatrices</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:         integer          matrix            list            list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:   testPartitions        datasize</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:            list            list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Known Subclasses: "ThetaRegRes"</span>
+<span class='r-in'><span class='fu'>showClass</span><span class='op'>(</span><span class='st'>"ThetaRegRes"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class "ThetaRegRes" [package "pRoloc"]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slots:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:      predictions    otherWeights       algorithm hyperparameters</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:            list            list       character            list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:           design             log            seed         results</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:         numeric            list         integer          matrix</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:       f1Matrices      cmMatrices  testPartitions        datasize</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:            list            list            list            list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extends: "GenRegRes"</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

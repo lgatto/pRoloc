@@ -63,9 +63,6 @@ avoid computing all components when analysing large datasets." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -88,7 +85,7 @@ avoid computing all components when analysing large datasets." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -159,7 +156,7 @@ set the method argument `ncomp` to a low number of dimensions to
 avoid computing all components when analysing large datasets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fpch</span>, unknown <span class='op'>=</span> <span class='st'>"unknown"</span>,
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fpch</span>, unknown <span class='op'>=</span> <span class='st'>"unknown"</span>,
   dims <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, score <span class='op'>=</span> <span class='fl'>1</span>, method <span class='op'>=</span> <span class='st'>"PCA"</span>, <span class='va'>methargs</span>,
   axsSwitch <span class='op'>=</span> <span class='cn'>FALSE</span>, mirrorX <span class='op'>=</span> <span class='cn'>FALSE</span>, mirrorY <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>col</span>, <span class='va'>pch</span>, <span class='va'>cex</span>,
   index <span class='op'>=</span> <span class='cn'>FALSE</span>, idx.cex <span class='op'>=</span> <span class='fl'>0.75</span>, <span class='va'>addLegend</span>, identify <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -167,7 +164,7 @@ avoid computing all components when analysing large datasets.</p>
 
 <span class='co'># S4 method for MSnSet</span>
 <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
-  radius1 <span class='op'>=</span> <span class='fl'>0.1</span>, radius2 <span class='op'>=</span> <span class='va'>radius1</span> <span class='op'>*</span> <span class='fl'>2</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+  radius1 <span class='op'>=</span> <span class='fl'>0.1</span>, radius2 <span class='op'>=</span> <span class='va'>radius1</span> <span class='op'>*</span> <span class='fl'>2</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -376,56 +373,76 @@ loaded automatically.</p>
     <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='addLegend.html'>addLegend</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>,
-          fcol <span class='op'>=</span> <span class='st'>"markers"</span>,
-          where <span class='op'>=</span> <span class='st'>"topright"</span>,
-          cex <span class='op'>=</span> <span class='fl'>0.5</span>, bty <span class='op'>=</span> <span class='st'>"n"</span>, ncol <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span><span class='op'>(</span>main <span class='op'>=</span> <span class='st'>"plot2D example"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## available methods</span>
-<span class='va'>plot2Dmethods</span>
-</div><div class='co'>#&gt; [1] "PCA"    "MDS"    "kpca"   "lda"    "t-SNE"  "nipals" "hexbin" "none"  
-#&gt; [9] "scree" </div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, method <span class='op'>=</span> <span class='st'>"kpca"</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, method <span class='op'>=</span> <span class='st'>"kpca"</span>, col <span class='op'>=</span> <span class='st'>"black"</span>,
-       methargs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"lda"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"hexbin"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## Using transparent colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"80"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## New behavious in 1.3.6 when not enough colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'>## only 3 colours to be recycled</span>
-</div><div class='co'>#&gt; [1] "blue"  "red"   "green"</div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-</div><div class='co'>#&gt; organelleMarkers
-#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14            45            28            55            20 
-#&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           428            21 </div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Not enough colours: using colours and pch.</div><div class='img'><img src='plot2D-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## reset colours</span>
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
-<span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='co'>## plotting along 2 first fractions</span>
-</div><div class='img'><img src='plot2D-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='co'>## plotting along fractions 3 and 5</span>
-</div><div class='img'><img src='plot2D-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span>
-<span class='va'>pca</span> <span class='op'>&lt;-</span> <span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, plot<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           PC1 (64.36%) PC2 (22.34%)
-#&gt; AT1G09210    -4.734261   -0.8204175
-#&gt; AT1G21750    -4.615276   -1.1891468
-#&gt; AT1G51760    -4.770573   -1.6292717
-#&gt; AT1G56340    -5.318056   -0.9972462
-#&gt; AT2G32920    -5.135122   -1.5283630
-#&gt; AT2G47470    -4.899410   -0.8145343</div><div class='input'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>pca</span>, method <span class='op'>=</span> <span class='st'>"none"</span>, methargs  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='plot2D-12.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## plotting in 3 dimenstions</span>
-<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Loading required package: rgl</div><div class='co'>#&gt; <span class='warning'>Warning: </span>RGL: unable to open X11 display</div><div class='co'>#&gt; <span class='warning'>Warning: </span>'rgl.init' failed, running with 'rgl.useNULL = TRUE'.</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, radius2 <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
-<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='addLegend.html'>addLegend</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>,</span>
+<span class='r-in'>          fcol <span class='op'>=</span> <span class='st'>"markers"</span>,</span>
+<span class='r-in'>          where <span class='op'>=</span> <span class='st'>"topright"</span>,</span>
+<span class='r-in'>          cex <span class='op'>=</span> <span class='fl'>0.5</span>, bty <span class='op'>=</span> <span class='st'>"n"</span>, ncol <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span><span class='op'>(</span>main <span class='op'>=</span> <span class='st'>"plot2D example"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'>## available methods</span></span>
+<span class='r-in'><span class='va'>plot2Dmethods</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "PCA"    "MDS"    "kpca"   "lda"    "t-SNE"  "nipals" "hexbin" "none"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [9] "scree" </span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, method <span class='op'>=</span> <span class='st'>"kpca"</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='cn'>NULL</span>, method <span class='op'>=</span> <span class='st'>"kpca"</span>, col <span class='op'>=</span> <span class='st'>"black"</span>,</span>
+<span class='r-in'>       methargs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-5.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"lda"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-6.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"hexbin"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-7.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'>## Using transparent colours</span></span>
+<span class='r-in'><span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"80"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-8.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'>## New behavious in 1.3.6 when not enough colours</span></span>
+<span class='r-in'><span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"green"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'>## only 3 colours to be recycled</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "blue"  "red"   "green"</span>
+<span class='r-in'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> organelleMarkers</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            14            45            28            55            46 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Plastid      Ribosome           TGN       unknown       vacuole </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            20            19            13           428            21 </span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Not enough colours: using colours and pch.</span>
+<span class='r-plt'><img src='plot2D-9.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'>## reset colours</span></span>
+<span class='r-in'><span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='co'>## plotting along 2 first fractions</span></span>
+<span class='r-plt'><img src='plot2D-10.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='co'>## plotting along fractions 3 and 5</span></span>
+<span class='r-plt'><img src='plot2D-11.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'>## pre-calculate PC1 and PC2 coordinates</span></span>
+<span class='r-in'><span class='va'>pca</span> <span class='op'>&lt;-</span> <span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>dunkley2006</span>, plot<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           PC1 (64.36%) PC2 (22.34%)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210    -4.734261   -0.8204175</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750    -4.615276   -1.1891468</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760    -4.770573   -1.6292717</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340    -5.318056   -0.9972462</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920    -5.135122   -1.5283630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470    -4.899410   -0.8145343</span>
+<span class='r-in'><span class='fu'>plot2D</span><span class='op'>(</span><span class='va'>pca</span>, method <span class='op'>=</span> <span class='st'>"none"</span>, methargs  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='plot2D-12.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## plotting in 3 dimenstions</span></span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: rgl</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>RGL: unable to open X11 display</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'rgl.init' failed, running with 'rgl.useNULL = TRUE'.</span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, radius2 <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSmap-class.html'>plot3D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, dims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

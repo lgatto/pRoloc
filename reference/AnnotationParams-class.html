@@ -61,9 +61,6 @@
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -86,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -238,29 +235,39 @@
   <code>pRoloc-theta</code> vignette.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011params</span><span class='op'>)</span>
-<span class='va'>andy2011params</span>
-</div><div class='co'>#&gt; Object of class "AnnotationParams"
-#&gt;  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
-#&gt;  Using the 'hsapiens_gene_ensembl' dataset
-#&gt;  Using 'uniprotswissprot' as filter
-#&gt;  Created on Sat May  1 08:58:27 2021</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span>
-<span class='va'>dunkley2006params</span>
-</div><div class='co'>#&gt; Object of class "AnnotationParams"
-#&gt;  Using the 'plants_mart' BioMart database
-#&gt;  Using the 'athaliana_eg_gene' dataset
-#&gt;  Using 'tair_locus' as filter
-#&gt;  Created on Sat May  1 00:06:25 2021</div><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>setAnnotationParams</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nomatch1"</span>, <span class='st'>"nomatch2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Error in setAnnotationParams(inputs = c("nomatch1", "nomatch2")) : 
-#&gt;   Couldn't find a unique species match for 'nomatch1'.</div><div class='input'><span class='fu'>setAnnotationParams</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Human genes"</span>,
-             <span class='st'>"UniProtKB/Swiss-Prot ID"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Using species Human genes (GRCh38.p13)</div><div class='co'>#&gt; Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A024RBG1]</div><div class='co'>#&gt; Connecting to Biomart...</div><div class='input'><span class='fu'>getAnnotationParams</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Object of class "AnnotationParams"
-#&gt;  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database
-#&gt;  Using the 'hsapiens_gene_ensembl' dataset
-#&gt;  Using 'uniprotswissprot' as filter
-#&gt;  Created on Sat May  1 11:57:34 2021</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011params</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>andy2011params</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class "AnnotationParams"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'hsapiens_gene_ensembl' dataset</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using 'uniprotswissprot' as filter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Created on Sat May  1 08:58:27 2021</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dunkley2006params</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class "AnnotationParams"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'plants_mart' BioMart database</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'athaliana_eg_gene' dataset</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using 'tair_locus' as filter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Created on Sat May  1 00:06:25 2021</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>setAnnotationParams</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nomatch1"</span>, <span class='st'>"nomatch2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error in setAnnotationParams(inputs = c("nomatch1", "nomatch2")) : </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Couldn't find a unique species match for 'nomatch1'.</span>
+<span class='r-in'><span class='fu'>setAnnotationParams</span><span class='op'>(</span>inputs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Human genes"</span>,</span>
+<span class='r-in'>             <span class='st'>"UniProtKB/Swiss-Prot ID"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Using species Human genes (GRCh38.p13)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Ensembl site unresponsive, trying uswest mirror</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Ensembl site unresponsive, trying asia mirror</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Ensembl site unresponsive, trying asia mirror</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A024RBG1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Connecting to Biomart...</span>
+<span class='r-in'><span class='fu'>getAnnotationParams</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class "AnnotationParams"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'hsapiens_gene_ensembl' dataset</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using 'uniprotswissprot' as filter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Created on Thu Jul 22 14:50:00 2021</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -59,9 +59,6 @@ instances." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ instances." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,8 +148,8 @@ instances." />
 instances.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>checkFeatureNamesOverlap</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, fcolx <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fcoly</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>checkFeatureNamesOverlap</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, fcolx <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>fcoly</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,25 +190,29 @@ unique <code>x</code> unknowns and unique <code>y</code> unknowns.</p>
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011goCC</span><span class='op'>)</span>
-<span class='fu'>checkFeatureNamesOverlap</span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Common markers:  404 
-#&gt; Unique x markers:  0 
-#&gt; Unique y markers:  0 
-#&gt; Common unkowns:  967 
-#&gt; Unique x unknowns:  0 
-#&gt; Unique y unknowns:  0 </div><div class='input'><span class='fu'>featureNames</span><span class='op'>(</span><span class='va'>andy2011goCC</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"ABC"</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>checkFeatureNamesOverlap</span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Common markers:  403 
-#&gt; Unique x markers:  1 
-#&gt; Unique y markers:  1 
-#&gt; Common unkowns:  967 
-#&gt; Unique x unknowns:  0 
-#&gt; Unique y unknowns:  0 </div><div class='input'><span class='va'>res</span><span class='op'>$</span><span class='va'>markersX</span>
-</div><div class='co'>#&gt; [1] "O00767"</div><div class='input'><span class='va'>res</span><span class='op'>$</span><span class='va'>markersY</span>
-</div><div class='co'>#&gt; [1] "ABC"</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011goCC</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>checkFeatureNamesOverlap</span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Common markers:  404 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique x markers:  0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique y markers:  0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Common unkowns:  967 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique x unknowns:  0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique y unknowns:  0 </span>
+<span class='r-in'><span class='fu'>featureNames</span><span class='op'>(</span><span class='va'>andy2011goCC</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"ABC"</span></span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>checkFeatureNamesOverlap</span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Common markers:  403 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique x markers:  1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique y markers:  1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Common unkowns:  967 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique x unknowns:  0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unique y unknowns:  0 </span>
+<span class='r-in'><span class='va'>res</span><span class='op'>$</span><span class='va'>markersX</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "O00767"</span>
+<span class='r-in'><span class='va'>res</span><span class='op'>$</span><span class='va'>markersY</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "ABC"</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

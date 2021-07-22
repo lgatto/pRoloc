@@ -59,9 +59,6 @@ of Wu and Dietterich's transfer learning schema" />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ of Wu and Dietterich's transfer learning schema" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,8 +148,8 @@ of Wu and Dietterich's transfer learning schema" />
 of Wu and Dietterich's transfer learning schema</p>
     </div>
 
-    <pre class="usage"><span class='fu'>knntlClassification</span><span class='op'>(</span><span class='va'>primary</span>, <span class='va'>auxiliary</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>bestTheta</span>, <span class='va'>k</span>,
-  scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"prediction"</span>, <span class='st'>"all"</span>, <span class='st'>"none"</span><span class='op'>)</span>, <span class='va'>seed</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>knntlClassification</span><span class='op'>(</span><span class='va'>primary</span>, <span class='va'>auxiliary</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, <span class='va'>bestTheta</span>, <span class='va'>k</span>,
+  scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"prediction"</span>, <span class='st'>"all"</span>, <span class='st'>"none"</span><span class='op'>)</span>, <span class='va'>seed</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,68 +203,74 @@ only, for all classes or none.</p></td>
     <p>Lisa Breckels</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011goCC</span><span class='op'>)</span>
-<span class='co'>## reducing calculation time of k by pre-running knnOptimisation</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span><span class='op'>)</span>
-<span class='va'>k</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span>
-            <span class='fu'><a href='knnOptimisation.html'>knnOptimisation</a></span><span class='op'>(</span><span class='va'>z</span>, times<span class='op'>=</span><span class='fl'>5</span>,
-                            fcol <span class='op'>=</span> <span class='st'>"markers.orig"</span>,
-                            verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>k</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>k</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>k</span>
-</div><div class='co'>#&gt; k k 
-#&gt; 3 7 </div><div class='input'><span class='co'>## reducing parameter search with theta = 1,</span>
-<span class='co'>## weights of only 1 or 0 will be considered</span>
-<span class='va'>opt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='knntlOptimisation.html'>knntlOptimisation</a></span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span>,
-                         fcol <span class='op'>=</span> <span class='st'>"markers.orig"</span>,
-                         times <span class='op'>=</span> <span class='fl'>2</span>,
-                         by <span class='op'>=</span> <span class='fl'>1</span>, k <span class='op'>=</span> <span class='va'>k</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Removing 389 columns with only 0s.</div><div class='co'>#&gt; Weigths:
-#&gt;   (0, 1)</div><div class='input'><span class='va'>opt</span>
-</div><div class='co'>#&gt; Object of class "ThetaRegRes"
-#&gt; Algorithm: theta 
-#&gt; Theta hyper-parameters:
-#&gt;  weights: 0 1 
-#&gt;  k: 3 7 
-#&gt;  nrow: 16 
-#&gt; Design:
-#&gt;  Replication: 2 x 5-fold X-validation
-#&gt;  Partitioning: 0.2/0.8 (test/train)
-#&gt; Results
-#&gt;  macro F1:
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9225  0.9244  0.9263  0.9263  0.9281  0.9300 
-#&gt;  best theta:
-#&gt;          ER Golgi Mitochondrion PM
-#&gt; weight:0  2     2             0  2
-#&gt; weight:1  0     0             2  0</div><div class='input'><span class='va'>th</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span><span class='op'>(</span><span class='va'>opt</span><span class='op'>)</span>
-<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>opt</span><span class='op'>)</span>
-</div><div class='img'><img src='knntlClassification-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>knntlClassification</span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span>,
-                           fcol <span class='op'>=</span> <span class='st'>"markers.orig"</span>, <span class='va'>th</span>, <span class='va'>k</span><span class='op'>)</span>
-<span class='va'>res</span>
-</div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
-#&gt; assayData: 1371 features, 8 samples 
-#&gt;   element names: exprs 
-#&gt; protocolData: none
-#&gt; phenoData
-#&gt;   sampleNames: X113 X114 ... X121 (8 total)
-#&gt;   varLabels: Fraction.information
-#&gt;   varMetadata: labelDescription
-#&gt; featureData
-#&gt;   featureNames: O00767 P51648 ... O75312 (1371 total)
-#&gt;   fvarLabels: Accession.No. Protein.Description ... knntl (12 total)
-#&gt;   fvarMetadata: labelDescription
-#&gt; experimentData: use 'experimentData(object)'
-#&gt; Annotation:  
-#&gt; - - - Processing information - - -
-#&gt; Loaded on Fri Sep 23 15:43:47 2016. 
-#&gt; Normalised to sum of intensities. 
-#&gt; Added markers from  'mrk' marker vector. Fri Sep 23 15:43:47 2016 
-#&gt;  MSnbase version: 1.99.2 </div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>andy2011goCC</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'>## reducing calculation time of k by pre-running knnOptimisation</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>k</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span></span>
+<span class='r-in'>            <span class='fu'><a href='knnOptimisation.html'>knnOptimisation</a></span><span class='op'>(</span><span class='va'>z</span>, times<span class='op'>=</span><span class='fl'>5</span>,</span>
+<span class='r-in'>                            fcol <span class='op'>=</span> <span class='st'>"markers.orig"</span>,</span>
+<span class='r-in'>                            verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>k</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>k</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>k</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> k k </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7 3 </span>
+<span class='r-in'><span class='co'>## reducing parameter search with theta = 1,</span></span>
+<span class='r-in'><span class='co'>## weights of only 1 or 0 will be considered</span></span>
+<span class='r-in'><span class='va'>opt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='knntlOptimisation.html'>knntlOptimisation</a></span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span>,</span>
+<span class='r-in'>                         fcol <span class='op'>=</span> <span class='st'>"markers.orig"</span>,</span>
+<span class='r-in'>                         times <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span class='r-in'>                         by <span class='op'>=</span> <span class='fl'>1</span>, k <span class='op'>=</span> <span class='va'>k</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 389 columns with only 0s.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Weigths:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   (0, 1)</span>
+<span class='r-in'><span class='va'>opt</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class "ThetaRegRes"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Algorithm: theta </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Theta hyper-parameters:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  weights: 0 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  k: 7 3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  nrow: 16 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Replication: 2 x 5-fold X-validation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Partitioning: 0.2/0.8 (test/train)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Results</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  macro F1:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  0.9025  0.9049  0.9073  0.9073  0.9097  0.9121 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  best theta:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          ER Golgi Mitochondrion PM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> weight:0  1     2             0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> weight:1  1     0             2  1</span>
+<span class='r-in'><span class='va'>th</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenRegRes-class.html'>getParams</a></span><span class='op'>(</span><span class='va'>opt</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>opt</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='knntlClassification-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>knntlClassification</span><span class='op'>(</span><span class='va'>andy2011</span>, <span class='va'>andy2011goCC</span>,</span>
+<span class='r-in'>                           fcol <span class='op'>=</span> <span class='st'>"markers.orig"</span>, <span class='va'>th</span>, <span class='va'>k</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>res</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> assayData: 1371 features, 8 samples </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   element names: exprs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> protocolData: none</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> phenoData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   sampleNames: X113 X114 ... X121 (8 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varLabels: Fraction.information</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> featureData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   featureNames: O00767 P51648 ... O75312 (1371 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarLabels: Accession.No. Protein.Description ... knntl (12 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> experimentData: use 'experimentData(object)'</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Annotation:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - - - Processing information - - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Loaded on Fri Sep 23 15:43:47 2016. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Normalised to sum of intensities. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added markers from  'mrk' marker vector. Fri Sep 23 15:43:47 2016 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  MSnbase version: 1.99.2 </span>
+<span class='r-in'><span class='co'># }</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

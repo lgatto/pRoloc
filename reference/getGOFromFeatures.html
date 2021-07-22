@@ -59,9 +59,6 @@ for a set of feature names." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ for a set of feature names." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,8 +148,8 @@ for a set of feature names." />
 for a set of feature names.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getGOFromFeatures</span><span class='op'>(</span><span class='va'>id</span>, namespace <span class='op'>=</span> <span class='st'>"cellular_component"</span>,
-  evidence <span class='op'>=</span> <span class='cn'>NULL</span>, params <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, nmax <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>getGOFromFeatures</span><span class='op'>(</span><span class='va'>id</span>, namespace <span class='op'>=</span> <span class='st'>"cellular_component"</span>,
+  evidence <span class='op'>=</span> <span class='cn'>NULL</span>, params <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, nmax <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,86 +201,102 @@ splits the input in chunks of length <code>nmax</code> (default is
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span>
-<span class='va'>dunkley2006params</span>
-</div><div class='co'>#&gt; Object of class "AnnotationParams"
-#&gt;  Using the 'plants_mart' BioMart database
-#&gt;  Using the 'athaliana_eg_gene' dataset
-#&gt;  Using 'tair_locus' as filter
-#&gt;  Created on Sat May  1 00:06:25 2021</div><div class='input'><span class='va'>fn</span> <span class='op'>&lt;-</span> <span class='fu'>featureNames</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-<span class='fu'>getGOFromFeatures</span><span class='op'>(</span><span class='va'>fn</span>, params <span class='op'>=</span> <span class='va'>dunkley2006params</span><span class='op'>)</span>
-</div><div class='co'>#&gt;    tair_locus      go_id     namespace_1003
-#&gt; 1   AT1G09210 GO:0005788 cellular_component
-#&gt; 2   AT1G09210 GO:0005773 cellular_component
-#&gt; 5   AT1G09210 GO:0005783 cellular_component
-#&gt; 10  AT1G09210 GO:0005783 cellular_component
-#&gt; 11  AT1G09210 GO:0005739 cellular_component
-#&gt; 12  AT1G09210 GO:0048046 cellular_component
-#&gt; 15  AT1G21750 GO:0000327 cellular_component
-#&gt; 18  AT1G21750 GO:0000326 cellular_component
-#&gt; 20  AT1G21750 GO:0005788 cellular_component
-#&gt; 21  AT1G21750 GO:0005623 cellular_component
-#&gt; 23  AT1G21750 GO:0005773 cellular_component
-#&gt; 24  AT1G21750 GO:0009505 cellular_component
-#&gt; 26  AT1G21750 GO:0005783 cellular_component
-#&gt; 28  AT1G21750 GO:0016020 cellular_component
-#&gt; 30  AT1G21750 GO:0009579 cellular_component
-#&gt; 31  AT1G21750 GO:0005783 cellular_component
-#&gt; 33  AT1G21750 GO:0009507 cellular_component
-#&gt; 39  AT1G51760 GO:0005788 cellular_component
-#&gt; 43  AT1G51760 GO:0005783 cellular_component
-#&gt; 44  AT1G51760 GO:0005886 cellular_component
-#&gt; 49  AT1G56340 GO:0005783 cellular_component
-#&gt; 51  AT1G56340 GO:0005788 cellular_component
-#&gt; 52  AT1G56340 GO:0009506 cellular_component
-#&gt; 57  AT1G56340 GO:0005783 cellular_component
-#&gt; 58  AT1G56340 GO:0009507 cellular_component
-#&gt; 59  AT1G56340 GO:0005739 cellular_component
-#&gt; 60  AT1G56340 GO:0048046 cellular_component
-#&gt; 62  AT1G56340 GO:0005774 cellular_component
-#&gt; 64  AT2G32920 GO:0005788 cellular_component
-#&gt; 65  AT2G32920 GO:0005623 cellular_component
-#&gt; 66  AT2G32920 GO:0005773 cellular_component
-#&gt; 69  AT2G32920 GO:0005783 cellular_component
-#&gt; 71  AT2G32920 GO:0005886 cellular_component
-#&gt; 73  AT2G32920 GO:0005794 cellular_component
-#&gt;                                       name_1006 go_linkage_type
-#&gt; 1                   endoplasmic reticulum lumen             IEA
-#&gt; 2                                       vacuole             IDA
-#&gt; 5                         endoplasmic reticulum             IEA
-#&gt; 10                        endoplasmic reticulum             IDA
-#&gt; 11                                mitochondrion             IDA
-#&gt; 12                                     apoplast             IDA
-#&gt; 15 lytic vacuole within protein storage vacuole             IDA
-#&gt; 18                      protein storage vacuole             IDA
-#&gt; 20                  endoplasmic reticulum lumen             IEA
-#&gt; 21                                obsolete cell             IEA
-#&gt; 23                                      vacuole             IDA
-#&gt; 24                         plant-type cell wall             IDA
-#&gt; 26                        endoplasmic reticulum             IEA
-#&gt; 28                                     membrane             IDA
-#&gt; 30                                    thylakoid             IDA
-#&gt; 31                        endoplasmic reticulum             IDA
-#&gt; 33                                  chloroplast             IDA
-#&gt; 39                  endoplasmic reticulum lumen             IEA
-#&gt; 43                        endoplasmic reticulum             IDA
-#&gt; 44                              plasma membrane             IDA
-#&gt; 49                        endoplasmic reticulum             IEA
-#&gt; 51                  endoplasmic reticulum lumen             IEA
-#&gt; 52                                  plasmodesma             IDA
-#&gt; 57                        endoplasmic reticulum             IDA
-#&gt; 58                                  chloroplast             IDA
-#&gt; 59                                mitochondrion             IDA
-#&gt; 60                                     apoplast             IDA
-#&gt; 62                            vacuolar membrane             IDA
-#&gt; 64                  endoplasmic reticulum lumen             IEA
-#&gt; 65                                obsolete cell             IEA
-#&gt; 66                                      vacuole             IDA
-#&gt; 69                        endoplasmic reticulum             IDA
-#&gt; 71                              plasma membrane             IDA
-#&gt; 73                              Golgi apparatus             IDA</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dunkley2006params</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class "AnnotationParams"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'plants_mart' BioMart database</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using the 'athaliana_eg_gene' dataset</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Using 'tair_locus' as filter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Created on Sat May  1 00:06:25 2021</span>
+<span class='r-in'><span class='va'>fn</span> <span class='op'>&lt;-</span> <span class='fu'>featureNames</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span></span>
+<span class='r-in'><span class='fu'>getGOFromFeatures</span><span class='op'>(</span><span class='va'>fn</span>, params <span class='op'>=</span> <span class='va'>dunkley2006params</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    tair_locus      go_id     namespace_1003</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   AT1G09210 GO:0005788 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   AT1G09210 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   AT1G09210 GO:0005789 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  AT1G09210 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13  AT1G09210 GO:0005576 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14  AT1G09210 GO:0005739 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15  AT1G09210 GO:0099503 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18  AT1G09210 GO:0005773 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20  AT1G21750 GO:0005788 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22  AT1G21750 GO:0000327 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24  AT1G21750 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25  AT1G21750 GO:0005634 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28  AT1G21750 GO:0005773 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31  AT1G21750 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32  AT1G21750 GO:0009579 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33  AT1G21750 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37  AT1G21750 GO:0000326 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40  AT1G21750 GO:0099503 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42  AT1G21750 GO:0005773 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44  AT1G51760 GO:0005788 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47  AT1G51760 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48  AT1G51760 GO:0005634 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49  AT1G51760 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52  AT1G51760 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53  AT1G51760 GO:0005886 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57  AT1G56340 GO:0005788 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60  AT1G56340 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65  AT1G56340 GO:0005634 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 67  AT1G56340 GO:0005789 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 70  AT1G56340 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 71  AT1G56340 GO:0005739 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 72  AT1G56340 GO:0005774 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 73  AT1G56340 GO:0099503 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 76  AT1G56340 GO:0009506 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 78  AT2G32920 GO:0005788 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80  AT2G32920 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 82  AT2G32920 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 83  AT2G32920 GO:0005886 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 85  AT2G32920 GO:0005794 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 87  AT2G32920 GO:0005773 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 89  AT2G32920 GO:0005783 cellular_component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       name_1006 go_linkage_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                   endoplasmic reticulum lumen             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                         endoplasmic reticulum             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9                endoplasmic reticulum membrane             IBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12                        endoplasmic reticulum             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13                         extracellular region             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14                                mitochondrion             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15                            secretory vesicle             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18                                      vacuole             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20                  endoplasmic reticulum lumen             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 lytic vacuole within protein storage vacuole             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24                        endoplasmic reticulum             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25                                      nucleus             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28                                      vacuole             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31                        endoplasmic reticulum             IBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32                                    thylakoid             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33                        endoplasmic reticulum             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37                      protein storage vacuole             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40                            secretory vesicle             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42                                      vacuole             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44                  endoplasmic reticulum lumen             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47                        endoplasmic reticulum             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48                                      nucleus             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49                        endoplasmic reticulum             IBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52                        endoplasmic reticulum             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53                              plasma membrane             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57                  endoplasmic reticulum lumen             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60                        endoplasmic reticulum             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65                                      nucleus             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 67               endoplasmic reticulum membrane             IBA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 70                        endoplasmic reticulum             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 71                                mitochondrion             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 72                            vacuolar membrane             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 73                            secretory vesicle             HDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 76                                  plasmodesma             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 78                  endoplasmic reticulum lumen             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80                        endoplasmic reticulum             IEA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 82                        endoplasmic reticulum             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 83                              plasma membrane             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 85                              Golgi apparatus             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 87                                      vacuole             IDA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 89                        endoplasmic reticulum             HDA</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

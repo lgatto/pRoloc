@@ -59,9 +59,6 @@ checking if (any items in) the input contains &quot;GO:&quot;." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ checking if (any items in) the input contains &quot;GO:&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,13 +148,13 @@ checking if (any items in) the input contains &quot;GO:&quot;." />
 checking if (any items in) the input contains <code>"GO:"</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='va'>x</span>, names <span class='op'>=</span> <span class='cn'>TRUE</span>, keepNA <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='va'>x</span>, names <span class='op'>=</span> <span class='cn'>TRUE</span>, keepNA <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'>goTermToId</span><span class='op'>(</span><span class='va'>x</span>, names <span class='op'>=</span> <span class='cn'>TRUE</span>, keepNA <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='va'>x</span>, names <span class='op'>=</span> <span class='cn'>TRUE</span>, keepNA <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>prettyGoTermId</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+<span class='fu'>prettyGoTermId</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,28 +185,40 @@ be replaced with a <code>NA</code>? Default is <code>TRUE</code>. If
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='st'>"GO:0000001"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                  GO:0000001 
-#&gt; "mitochondrion inheritance" </div><div class='input'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "mitochondrion inheritance"</div><div class='input'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, <span class='st'>"novalid"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                  GO:0000001                     novalid 
-#&gt; "mitochondrion inheritance"                          NA </div><div class='input'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, <span class='st'>"GO:0000002"</span>, <span class='st'>"notvalid"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                         GO:0000001                         GO:0000002 
-#&gt;        "mitochondrion inheritance" "mitochondrial genome maintenance" 
-#&gt;                           notvalid 
-#&gt;                                 NA </div><div class='input'><span class='fu'>goTermToId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; mitochondrion inheritance 
-#&gt;              "GO:0000001" </div><div class='input'><span class='fu'>goTermToId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span>, name <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "GO:0000001"</div><div class='input'><span class='fu'>goTermToId</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span>, <span class='st'>"notvalid"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; mitochondrion inheritance                  notvalid 
-#&gt;              "GO:0000001"                        NA </div><div class='input'><span class='fu'>prettyGoTermId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "mitochondrion inheritance (GO:0000001)"</div><div class='input'><span class='fu'>prettyGoTermId</span><span class='op'>(</span><span class='st'>"GO:0000001"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "mitochondrion inheritance (GO:0000001)"</div><div class='input'><span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; mitochondrion inheritance 
-#&gt;              "GO:0000001" </div><div class='input'><span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='st'>"GO:0000001"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                  GO:0000001 
-#&gt; "mitochondrion inheritance" </div><div class='input'><span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "mitochondrion inheritance"</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='st'>"GO:0000001"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  GO:0000001 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "mitochondrion inheritance" </span>
+<span class='r-in'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "mitochondrion inheritance"</span>
+<span class='r-in'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, <span class='st'>"novalid"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  GO:0000001                     novalid </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "mitochondrion inheritance"                          NA </span>
+<span class='r-in'><span class='fu'>goIdToTerm</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, <span class='st'>"GO:0000002"</span>, <span class='st'>"notvalid"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                         GO:0000001                         GO:0000002 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        "mitochondrion inheritance" "mitochondrial genome maintenance" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                           notvalid </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 NA </span>
+<span class='r-in'><span class='fu'>goTermToId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mitochondrion inheritance </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              "GO:0000001" </span>
+<span class='r-in'><span class='fu'>goTermToId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span>, name <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "GO:0000001"</span>
+<span class='r-in'><span class='fu'>goTermToId</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span>, <span class='st'>"notvalid"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mitochondrion inheritance                  notvalid </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              "GO:0000001"                        NA </span>
+<span class='r-in'><span class='fu'>prettyGoTermId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "mitochondrion inheritance (GO:0000001)"</span>
+<span class='r-in'><span class='fu'>prettyGoTermId</span><span class='op'>(</span><span class='st'>"GO:0000001"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "mitochondrion inheritance (GO:0000001)"</span>
+<span class='r-in'><span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='st'>"mitochondrion inheritance"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mitochondrion inheritance </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              "GO:0000001" </span>
+<span class='r-in'><span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='st'>"GO:0000001"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  GO:0000001 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "mitochondrion inheritance" </span>
+<span class='r-in'><span class='fu'>flipGoTermId</span><span class='op'>(</span><span class='st'>"GO:0000001"</span>, names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "mitochondrion inheritance"</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

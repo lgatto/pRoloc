@@ -66,9 +66,6 @@ The class is essentially a wrapper around several calls to
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -91,7 +88,7 @@ The class is essentially a wrapper around several calls to
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -165,7 +162,7 @@ The class is essentially a wrapper around several calls to
   outputs, and is likely to be updated in the future.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>methods</span>, <span class='va'>dims</span>, <span class='va'>methargs</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>methods</span>, <span class='va'>dims</span>, <span class='va'>methargs</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -241,34 +238,56 @@ The class is essentially a wrapper around several calls to
   <code><a href='plot2D.html'>plot2D</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='co'>## Default parameters for a set of methods</span>
-<span class='co'>## (in the interest of time, don't use t-SNE)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PCA"</span>, <span class='st'>"MDS"</span>, <span class='st'>"kpca"</span><span class='op'>)</span>
-<span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>, methods <span class='op'>=</span> <span class='va'>m</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Producting PCA visualisation...</div><div class='co'>#&gt; Producting MDS visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='input'><span class='va'>vis</span>
-</div><div class='co'>#&gt; Object of class "SpatProtVis"
-#&gt;  Data: dunkley2006 
-#&gt;  Visualisation methods: PCA, MDS, kpca</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span>
-</div><div class='img'><img src='SpatProtVis-class-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-3.png' alt='' width='700' height='433' /></div><div class='co'>#&gt; Done.</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span>, legend <span class='op'>=</span> <span class='st'>"topleft"</span><span class='op'>)</span>
-</div><div class='img'><img src='SpatProtVis-class-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='SpatProtVis-class-6.png' alt='' width='700' height='433' /></div><div class='co'>#&gt; Done.</div><div class='input'>
-<span class='co'>## Setting method arguments</span>
-<span class='va'>margs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>,
-           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>1.0</span><span class='op'>)</span><span class='op'>)</span>,
-           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,
-           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>,
-                   methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"kpca"</span>, <span class='fl'>4</span><span class='op'>)</span>,
-                   methargs <span class='op'>=</span> <span class='va'>margs</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='co'>#&gt; Producting kpca visualisation...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span>
-</div><div class='img'><img src='SpatProtVis-class-7.png' alt='' width='700' height='433' /></div><div class='co'>#&gt; Done.</div><div class='input'>
-<span class='co'>## Multiple PCA plots but different PCs</span>
-<span class='va'>dims</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>, methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PCA"</span>, <span class='st'>"PCA"</span><span class='op'>)</span>, dims <span class='op'>=</span> <span class='va'>dims</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Producting PCA visualisation...</div><div class='co'>#&gt; Producting PCA visualisation...</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Done.</div><div class='img'><img src='SpatProtVis-class-8.png' alt='' width='700' height='433' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'>## Default parameters for a set of methods</span></span>
+<span class='r-in'><span class='co'>## (in the interest of time, don't use t-SNE)</span></span>
+<span class='r-in'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PCA"</span>, <span class='st'>"MDS"</span>, <span class='st'>"kpca"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>, methods <span class='op'>=</span> <span class='va'>m</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting PCA visualisation...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting MDS visualisation...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting kpca visualisation...</span>
+<span class='r-in'><span class='va'>vis</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class "SpatProtVis"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Data: dunkley2006 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Visualisation methods: PCA, MDS, kpca</span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='SpatProtVis-class-1.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='SpatProtVis-class-2.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='SpatProtVis-class-3.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Done.</span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span>, legend <span class='op'>=</span> <span class='st'>"topleft"</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='SpatProtVis-class-4.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='SpatProtVis-class-5.png' alt='' width='700' height='433' /></span>
+<span class='r-plt'><img src='SpatProtVis-class-6.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Done.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Setting method arguments</span></span>
+<span class='r-in'><span class='va'>margs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>1.0</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>,</span>
+<span class='r-in'>                   methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"kpca"</span>, <span class='fl'>4</span><span class='op'>)</span>,</span>
+<span class='r-in'>                   methargs <span class='op'>=</span> <span class='va'>margs</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting kpca visualisation...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting kpca visualisation...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting kpca visualisation...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting kpca visualisation...</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='SpatProtVis-class-7.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Done.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Multiple PCA plots but different PCs</span></span>
+<span class='r-in'><span class='va'>dims</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>vis</span> <span class='op'>&lt;-</span> <span class='fu'>SpatProtVis</span><span class='op'>(</span><span class='va'>dunkley2006</span>, methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PCA"</span>, <span class='st'>"PCA"</span><span class='op'>)</span>, dims <span class='op'>=</span> <span class='va'>dims</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting PCA visualisation...</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Producting PCA visualisation...</span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>vis</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Done.</span>
+<span class='r-plt'><img src='SpatProtVis-class-8.png' alt='' width='700' height='433' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

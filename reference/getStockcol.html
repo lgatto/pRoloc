@@ -63,9 +63,6 @@ Lisa's colours) containing 30 colours and the old
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -88,7 +85,7 @@ Lisa's colours) containing 30 colours and the old
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -159,29 +156,29 @@ palettes are available: the default palette (previously
 (original) palette, containing 13 colours.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='getStockcol.html'>setLisacol</a></span><span class='op'>(</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>setLisacol</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>getLisacol</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>getLisacol</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>getOldcol</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>getOldcol</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>setOldcol</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>setOldcol</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>getStockcol</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>setStockcol</a></span><span class='op'>(</span><span class='va'>cols</span><span class='op'>)</span>
+<span class='fu'>setStockcol</span><span class='op'>(</span><span class='va'>cols</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>getStockpch</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>getStockpch</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>setStockpch</a></span><span class='op'>(</span><span class='va'>pchs</span><span class='op'>)</span>
+<span class='fu'>setStockpch</span><span class='op'>(</span><span class='va'>pchs</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>getUnknowncol</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>getUnknowncol</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>setUnknowncol</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span>
+<span class='fu'>setUnknowncol</span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>getUnknownpch</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>getUnknownpch</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='getStockcol.html'>setUnknownpch</a></span><span class='op'>(</span><span class='va'>pch</span><span class='op'>)</span></pre>
+<span class='fu'>setUnknownpch</span><span class='op'>(</span><span class='va'>pch</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,34 +217,43 @@ rather than <code>character</code>s.</p>
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## defaults for clusters</span>
-<span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;  [1] "#E41A1C" "#377EB8" "#309C17" "#FF7F00" "#FFD700" "#00CED1" "#A65628"
-#&gt;  [8] "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#FDAE6B" "#EBB7BE"
-#&gt; [15] "#3F8F8F" "#CF9802" "#6A51A3" "#21E8AC" "#0000FF" "#1D7A3E" "#BF2A6B"
-#&gt; [22] "#CD5B45" "#808000" "#F21D56" "#67000D" "#7A0C79" "#93EDF5" "#A66A6A"
-#&gt; [29] "#0E438A" "#DBBCF7"</div><div class='input'><span class='fu'><a href='getStockcol.html'>getStockpch</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;  [1] 19  1 15  0 17  2 18  5  7  9 13  3  4  8</div><div class='input'><span class='co'>## unknown features</span>
-<span class='fu'><a href='getStockcol.html'>getUnknownpch</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] 21</div><div class='input'><span class='fu'><a href='getStockcol.html'>getUnknowncol</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "#E0E0E0"</div><div class='input'><span class='co'>## an example</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, main <span class='op'>=</span> <span class='st'>'Default colours'</span><span class='op'>)</span>
-<span class='fu'><a href='getStockcol.html'>setUnknowncol</a></span><span class='op'>(</span><span class='st'>"black"</span><span class='op'>)</span>
-<span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, main <span class='op'>=</span> <span class='st'>'setUnknowncol("black")'</span><span class='op'>)</span>
-</div><div class='img'><img src='getStockcol-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='getStockcol.html'>getUnknowncol</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "black"</div><div class='input'><span class='fu'><a href='getStockcol.html'>setUnknowncol</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
-<span class='fu'><a href='getStockcol.html'>getUnknowncol</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "#E0E0E0"</div><div class='input'><span class='fu'><a href='getStockcol.html'>getStockcol</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;  [1] "#E41A1C" "#377EB8" "#309C17" "#FF7F00" "#FFD700" "#00CED1" "#A65628"
-#&gt;  [8] "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#FDAE6B" "#EBB7BE"
-#&gt; [15] "#3F8F8F" "#CF9802" "#6A51A3" "#21E8AC" "#0000FF" "#1D7A3E" "#BF2A6B"
-#&gt; [22] "#CD5B45" "#808000" "#F21D56" "#67000D" "#7A0C79" "#93EDF5" "#A66A6A"
-#&gt; [29] "#0E438A" "#DBBCF7"</div><div class='input'><span class='fu'><a href='getStockcol.html'>getOldcol</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;  [1] "#E41A1C" "#377EB8" "#4DAF4A" "#984EA3" "#FF7F00" "#FFFF33" "#A65628"
-#&gt;  [8] "#F781BF" "#999999" "#333333" "#A021EF" "#008A45" "#00008A"</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'>## defaults for clusters</span></span>
+<span class='r-in'><span class='fu'>getStockcol</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "#E41A1C" "#377EB8" "#309C17" "#FF7F00" "#FFD700" "#00CED1" "#A65628"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#FDAE6B" "#EBB7BE"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [15] "#3F8F8F" "#CF9802" "#6A51A3" "#21E8AC" "#0000FF" "#1D7A3E" "#BF2A6B"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [22] "#CD5B45" "#808000" "#F21D56" "#67000D" "#7A0C79" "#93EDF5" "#A66A6A"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [29] "#0E438A" "#DBBCF7"</span>
+<span class='r-in'><span class='fu'>getStockpch</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] 19  1 15  0 17  2 18  5  7  9 13  3  4  8</span>
+<span class='r-in'><span class='co'>## unknown features</span></span>
+<span class='r-in'><span class='fu'>getUnknownpch</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 21</span>
+<span class='r-in'><span class='fu'>getUnknowncol</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "#E0E0E0"</span>
+<span class='r-in'><span class='co'>## an example</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, main <span class='op'>=</span> <span class='st'>'Default colours'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>setUnknowncol</span><span class='op'>(</span><span class='st'>"black"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='plot2D.html'>plot2D</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, main <span class='op'>=</span> <span class='st'>'setUnknowncol("black")'</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='getStockcol-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>getUnknowncol</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "black"</span>
+<span class='r-in'><span class='fu'>setUnknowncol</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>getUnknowncol</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "#E0E0E0"</span>
+<span class='r-in'><span class='fu'>getStockcol</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "#E41A1C" "#377EB8" "#309C17" "#FF7F00" "#FFD700" "#00CED1" "#A65628"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] "#F781BF" "#984EA3" "#9ACD32" "#B0C4DE" "#00008A" "#FDAE6B" "#EBB7BE"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [15] "#3F8F8F" "#CF9802" "#6A51A3" "#21E8AC" "#0000FF" "#1D7A3E" "#BF2A6B"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [22] "#CD5B45" "#808000" "#F21D56" "#67000D" "#7A0C79" "#93EDF5" "#A66A6A"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [29] "#0E438A" "#DBBCF7"</span>
+<span class='r-in'><span class='fu'>getOldcol</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "#E41A1C" "#377EB8" "#4DAF4A" "#984EA3" "#FF7F00" "#FFFF33" "#A65628"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] "#F781BF" "#999999" "#333333" "#A021EF" "#008A45" "#00008A"</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

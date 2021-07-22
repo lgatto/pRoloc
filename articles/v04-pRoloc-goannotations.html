@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
 
       
 
-      </header><script src="v04-pRoloc-goannotations_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="v04-pRoloc-goannotations_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Annotating spatial proteomics data</h1>
@@ -125,13 +125,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#introduction" class="anchor" aria-hidden="true"></a>Introduction</h1>
 <p>Exploring protein annotations and defining sub-cellular localisation markers (i.e. known residents of a specific sub-cellular niche in a species, under a condition of interest) play important roles in the analysis of spatial proteomics data. The latter is essential for downstream supervised machine learning (ML) classification for protein localisation prediction (see <code>vignette("pRoloc-tutorial", package = "pRoloc")</code> and <code>vignette("pRoloc-ml", package = "pRoloc")</code> for information on available ML methods) and the former is interesting for initial biological interpretation through matching annotations to the data structure.</p>
 <p>Robust protein-localisation prediction is reliant on markers that reflect the true sub-cellular diversity of the multivariate data. The validity of markers is generally assured by expert curation. This can be time consuming and difficult owing to the limited number of marker proteins that exist in databases and elsewhere. The Gene Ontology (GO) database, and in particular the cellular compartment (CC) namespace provide a good starting point for protein annotation and marker definition. Nevertheless, automatic extraction from databases, and in particular GO CC, is only a first step in sub-cellular localisation analysis and requires additional curation to counter unreliable annotation based on data that is inaccurate or out of context for the biological question under investigation.</p>
-<p>To facilitate the above, we have developed an annotation retrieval and management system that provides a flexible framework for the exploration of the sub-cellular proteomics data. We have developed a method to correlate annotation information with the multivariate data space to identify densely annotated regions and assess cluster tightness. Given a set of proteins that share some property e.g. a specified GO term, a k-means clustering is used to fit the data (testing <code>k = 1:5</code>) and then for each number of <code>k</code> components tested, all pairwise Euclidean distances are calculated per component, and then normalised. The minimum mean normalised distance is then extracted and used as a measure of cluster tightness. This is repeated for all protein/annotation sets. These sets are then ranked according to minimum mean normalised distance and then can be displayed and explored using the <em><a href="https://bioconductor.org/packages/3.13/pRolocGUI" class="external-link">pRolocGUI</a></em> package.</p>
+<p>To facilitate the above, we have developed an annotation retrieval and management system that provides a flexible framework for the exploration of the sub-cellular proteomics data. We have developed a method to correlate annotation information with the multivariate data space to identify densely annotated regions and assess cluster tightness. Given a set of proteins that share some property e.g. a specified GO term, a k-means clustering is used to fit the data (testing <code>k = 1:5</code>) and then for each number of <code>k</code> components tested, all pairwise Euclidean distances are calculated per component, and then normalised. The minimum mean normalised distance is then extracted and used as a measure of cluster tightness. This is repeated for all protein/annotation sets. These sets are then ranked according to minimum mean normalised distance and then can be displayed and explored using the <em><a href="https://bioconductor.org/packages/3.14/pRolocGUI" class="external-link">pRolocGUI</a></em> package.</p>
 <p>In this vignette we present a step-by-step guide showing users how to (1) how to add protein annotations, here we use the GO database as an example, and (2) rank and order information (e.g. GO terms) according to their correlation with the data structure, for the extraction of optimal data specific annotated clusters.</p>
 </div>
 <div id="loading-the-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#loading-the-data" class="anchor" aria-hidden="true"></a>Loading the data</h1>
-<p>We will demonstrate our pipeline for adding and ranking annotation information using a LOPIT experiment on Pluripotent Mouse Embryonic stems (<a href="http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html" class="external-link">Christoforou et al 2016</a>), available and documented in the <em><a href="https://bioconductor.org/packages/3.13/pRolocdata" class="external-link">pRolocdata</a></em> data package as <code>hyperlopit2015</code>.</p>
+<p>We will demonstrate our pipeline for adding and ranking annotation information using a LOPIT experiment on Pluripotent Mouse Embryonic stems (<a href="http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html" class="external-link">Christoforou et al 2016</a>), available and documented in the <em><a href="https://bioconductor.org/packages/3.14/pRolocdata" class="external-link">pRolocdata</a></em> data package as <code>hyperlopit2015</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRoloc" class="external-link">"pRoloc"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRolocdata" class="external-link">"pRolocdata"</a></span><span class="op">)</span>
@@ -210,18 +210,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="va">dd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <pre><code>## Object of class "ClustDist"
 ## fcol =  GOAnnotations 
-##  term =  GO:0005634 
-##  id =  nucleus 
-##  nrow =  21 
+##  term =  GO:0005856 
+##  id =  cytoskeleton 
+##  nrow =  32 
 ## k's tested: 1 2 3 
-##   Size:  21 
-##   Size:  12 
-##   Size:  NA 
+##   Size:  32 
+##   Size:  24 
+##   Size:  24 
 ## Clusters info:
-##       ks.mean    mean ks.norm    norm
-## k = 1       1  0.3512       1  0.1273
-## k = 2       1 *0.2758       1 *0.1205
-## k = 3      NA      NA      NA      NA</code></pre>
+##       ks.mean    mean ks.norm     norm
+## k = 1       1  0.4208       1  0.13253
+## k = 2       1 *0.2104       1 *0.07293
+## k = 3       1  0.2104       1  0.07293</code></pre>
 <p>We can use the <code>plotClustDist</code> and <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Plot normalised distances</span>

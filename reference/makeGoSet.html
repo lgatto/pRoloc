@@ -59,9 +59,6 @@ with a GO term binary matrix based on an original object." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ with a GO term binary matrix based on an original object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,8 +148,8 @@ with a GO term binary matrix based on an original object." />
 with a GO term binary matrix based on an original <code>object</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeGoSet</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>params</span>, namespace <span class='op'>=</span> <span class='st'>"cellular_component"</span>,
-  evidence <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>makeGoSet</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>params</span>, namespace <span class='op'>=</span> <span class='st'>"cellular_component"</span>,
+  evidence <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,38 +185,41 @@ for the respective features in the original <code>object</code>.</p>
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span>
-<span class='va'>goset</span> <span class='op'>&lt;-</span> <span class='fu'>makeGoSet</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>,
-                   <span class='va'>dunkley2006params</span><span class='op'>)</span>
-<span class='va'>goset</span>
-</div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
-#&gt; assayData: 10 features, 22 samples 
-#&gt;   element names: exprs 
-#&gt; protocolData: none
-#&gt; phenoData: none
-#&gt; featureData
-#&gt;   featureNames: AT1G09210 AT1G21750 ... AT1G07810 (10 total)
-#&gt;   fvarLabels: assigned evidence ... markers (8 total)
-#&gt;   fvarMetadata: labelDescription
-#&gt; experimentData: use 'experimentData(object)'
-#&gt; Annotation:  
-#&gt; - - - Processing information - - -
-#&gt; Constructed GO set using cellular_component namespace [Sat May  1 11:58:50 2021] 
-#&gt;  MSnbase version: 2.17.7 </div><div class='input'><span class='fu'>exprs</span><span class='op'>(</span><span class='va'>goset</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-</div><div class='co'>#&gt;           GO:0005788 GO:0005773 GO:0005783 GO:0005739 GO:0048046
-#&gt; AT1G09210          1          1          1          1          1
-#&gt; AT1G21750          1          1          1          0          0
-#&gt; AT1G51760          1          0          1          0          0
-#&gt; AT1G56340          1          0          1          1          1
-#&gt; AT2G32920          1          1          1          0          0
-#&gt; AT2G47470          0          0          1          0          0
-#&gt; AT3G54960          1          0          1          0          0
-#&gt; AT4G24190          1          1          1          1          1
-#&gt; AT5G60640          1          0          1          1          0
-#&gt; AT1G07810          0          0          1          0          0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span><span class='op'>(</span><span class='va'>goset</span><span class='op'>)</span>
-</div><div class='img'><img src='makeGoSet-1.png' alt='' width='700' height='433' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006params</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>goset</span> <span class='op'>&lt;-</span> <span class='fu'>makeGoSet</span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>,</span>
+<span class='r-in'>                   <span class='va'>dunkley2006params</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>goset</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> assayData: 10 features, 24 samples </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   element names: exprs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> protocolData: none</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> phenoData: none</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> featureData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   featureNames: AT1G09210 AT1G21750 ... AT1G07810 (10 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarLabels: assigned evidence ... markers (8 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> experimentData: use 'experimentData(object)'</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Annotation:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - - - Processing information - - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Constructed GO set using cellular_component namespace [Thu Jul 22 14:51:05 2021] </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  MSnbase version: 2.19.1 </span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='va'>goset</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           GO:0005788 GO:0005783 GO:0005789 GO:0005576 GO:0005739</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G09210          1          1          1          1          1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G21750          1          1          0          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G51760          1          1          0          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G56340          1          1          1          0          1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G32920          1          1          0          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT2G47470          0          1          0          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT3G54960          1          1          0          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT4G24190          1          1          0          0          1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT5G60640          1          1          0          1          1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AT1G07810          0          1          1          1          0</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span><span class='op'>(</span><span class='va'>goset</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='makeGoSet-1.png' alt='' width='700' height='433' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

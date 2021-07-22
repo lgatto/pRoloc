@@ -95,9 +95,6 @@ Missing values only affect the fractions containing the NA when
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -120,7 +117,7 @@ Missing values only affect the fractions containing the NA when
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -309,282 +306,291 @@ Missing values only affect the fractions containing the NA when
     <p>Laurent Gatto &lt;lg390@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Test data from Christoforou et al. 2016</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>hyperLOPIT2015</span><span class='op'>)</span>
-
-<span class='co'>## Create the object and get a summary</span>
-<span class='va'>hlq</span> <span class='op'>&lt;-</span> <span class='fu'>QSep</span><span class='op'>(</span><span class='va'>hyperLOPIT2015</span><span class='op'>)</span>
-<span class='va'>hlq</span>
-</div><div class='co'>#&gt; Object of class 'QSep'.
-#&gt;  Data: hyperLOPIT2015 
-#&gt;  With 14 sub-cellular clusters.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
-</div><div class='co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.9458  3.6189  4.9075  5.1172  6.5779 11.4970 </div><div class='input'>
-<span class='co'>## mean distance matrix</span>
-<span class='fu'>qsep</span><span class='op'>(</span><span class='va'>hlq</span>, norm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                                       Actin cytoskeleton
-#&gt; Actin cytoskeleton                             0.1372312
-#&gt; Endoplasmic reticulum/Golgi apparatus          0.4690770
-#&gt; Mitochondrion                                  0.7536736
-#&gt; Extracellular matrix                           0.4030989
-#&gt; Nucleus - Chromatin                            0.8050828
-#&gt; Cytosol                                        0.5661409
-#&gt; Plasma membrane                                0.2164849
-#&gt; Nucleus - Non-chromatin                        0.7485378
-#&gt; Endosome                                       0.3955070
-#&gt; 60S Ribosome                                   0.4991471
-#&gt; Lysosome                                       0.3924089
-#&gt; Peroxisome                                     0.6861757
-#&gt; 40S Ribosome                                   0.5657759
-#&gt; Proteasome                                     0.6686545
-#&gt;                                       Endoplasmic reticulum/Golgi apparatus
-#&gt; Actin cytoskeleton                                                0.4690770
-#&gt; Endoplasmic reticulum/Golgi apparatus                             0.1315295
-#&gt; Mitochondrion                                                     0.4961792
-#&gt; Extracellular matrix                                              0.1676919
-#&gt; Nucleus - Chromatin                                               0.6674186
-#&gt; Cytosol                                                           0.8032906
-#&gt; Plasma membrane                                                   0.4314796
-#&gt; Nucleus - Non-chromatin                                           0.7266946
-#&gt; Endosome                                                          0.3298215
-#&gt; 60S Ribosome                                                      0.4405743
-#&gt; Lysosome                                                          0.3526493
-#&gt; Peroxisome                                                        0.4138766
-#&gt; 40S Ribosome                                                      0.6106558
-#&gt; Proteasome                                                        0.8685051
-#&gt;                                       Mitochondrion Extracellular matrix
-#&gt; Actin cytoskeleton                        0.7536736            0.4030989
-#&gt; Endoplasmic reticulum/Golgi apparatus     0.4961792            0.1676919
-#&gt; Mitochondrion                             0.1373421            0.5455040
-#&gt; Extracellular matrix                      0.5455040            0.1053434
-#&gt; Nucleus - Chromatin                       0.5424170            0.6929457
-#&gt; Cytosol                                   0.9585277            0.7755911
-#&gt; Plasma membrane                           0.7462545            0.3556568
-#&gt; Nucleus - Non-chromatin                   0.7106804            0.7267853
-#&gt; Endosome                                  0.7198622            0.2420721
-#&gt; 60S Ribosome                              0.5168101            0.4430401
-#&gt; Lysosome                                  0.7471831            0.2483814
-#&gt; Peroxisome                                0.2418018            0.4724549
-#&gt; 40S Ribosome                              0.6601247            0.6060881
-#&gt; Proteasome                                0.9917128            0.8497961
-#&gt;                                       Nucleus - Chromatin   Cytosol
-#&gt; Actin cytoskeleton                              0.8050828 0.5661409
-#&gt; Endoplasmic reticulum/Golgi apparatus           0.6674186 0.8032906
-#&gt; Mitochondrion                                   0.5424170 0.9585277
-#&gt; Extracellular matrix                            0.6929457 0.7755911
-#&gt; Nucleus - Chromatin                             0.1463443 0.9484646
-#&gt; Cytosol                                         0.9484646 0.1414339
-#&gt; Plasma membrane                                 0.8341281 0.7443767
-#&gt; Nucleus - Non-chromatin                         0.4154339 0.7974210
-#&gt; Endosome                                        0.8226749 0.7826439
-#&gt; 60S Ribosome                                    0.5602938 0.6438972
-#&gt; Lysosome                                        0.8451732 0.7995801
-#&gt; Peroxisome                                      0.5094584 0.9068309
-#&gt; 40S Ribosome                                    0.6518274 0.5331764
-#&gt; Proteasome                                      0.9718751 0.1600117
-#&gt;                                       Plasma membrane Nucleus - Non-chromatin
-#&gt; Actin cytoskeleton                          0.2164849               0.7485378
-#&gt; Endoplasmic reticulum/Golgi apparatus       0.4314796               0.7266946
-#&gt; Mitochondrion                               0.7462545               0.7106804
-#&gt; Extracellular matrix                        0.3556568               0.7267853
-#&gt; Nucleus - Chromatin                         0.8341281               0.4154339
-#&gt; Cytosol                                     0.7443767               0.7974210
-#&gt; Plasma membrane                             0.1148277               0.8199944
-#&gt; Nucleus - Non-chromatin                     0.8199944               0.1783578
-#&gt; Endosome                                    0.3425939               0.8135370
-#&gt; 60S Ribosome                                0.5616175               0.4546378
-#&gt; Lysosome                                    0.3274954               0.8365127
-#&gt; Peroxisome                                  0.6788467               0.6518952
-#&gt; 40S Ribosome                                0.6760487               0.4643483
-#&gt; Proteasome                                  0.8444952               0.8064265
-#&gt;                                        Endosome 60S Ribosome  Lysosome
-#&gt; Actin cytoskeleton                    0.3955070   0.49914711 0.3924089
-#&gt; Endoplasmic reticulum/Golgi apparatus 0.3298215   0.44057429 0.3526493
-#&gt; Mitochondrion                         0.7198622   0.51681006 0.7471831
-#&gt; Extracellular matrix                  0.2420721   0.44304012 0.2483814
-#&gt; Nucleus - Chromatin                   0.8226749   0.56029383 0.8451732
-#&gt; Cytosol                               0.7826439   0.64389721 0.7995801
-#&gt; Plasma membrane                       0.3425939   0.56161748 0.3274954
-#&gt; Nucleus - Non-chromatin               0.8135370   0.45463783 0.8365127
-#&gt; Endosome                              0.1804409   0.54561425 0.1706577
-#&gt; 60S Ribosome                          0.5456143   0.08250087 0.5709784
-#&gt; Lysosome                              0.1706577   0.57097838 0.1023701
-#&gt; Peroxisome                            0.6442550   0.41710740 0.6716427
-#&gt; 40S Ribosome                          0.6762709   0.22048766 0.7022256
-#&gt; Proteasome                            0.8642925   0.67687443 0.8858795
-#&gt;                                       Peroxisome 40S Ribosome Proteasome
-#&gt; Actin cytoskeleton                     0.6861757   0.56577585 0.66865454
-#&gt; Endoplasmic reticulum/Golgi apparatus  0.4138766   0.61065583 0.86850511
-#&gt; Mitochondrion                          0.2418018   0.66012471 0.99171284
-#&gt; Extracellular matrix                   0.4724549   0.60608808 0.84979611
-#&gt; Nucleus - Chromatin                    0.5094584   0.65182738 0.97187508
-#&gt; Cytosol                                0.9068309   0.53317641 0.16001172
-#&gt; Plasma membrane                        0.6788467   0.67604868 0.84449520
-#&gt; Nucleus - Non-chromatin                0.6518952   0.46434826 0.80642652
-#&gt; Endosome                               0.6442550   0.67627087 0.86429254
-#&gt; 60S Ribosome                           0.4171074   0.22048766 0.67687443
-#&gt; Lysosome                               0.6716427   0.70222557 0.88587953
-#&gt; Peroxisome                             0.1378630   0.57564364 0.94187426
-#&gt; 40S Ribosome                           0.5756436   0.08388726 0.53905744
-#&gt; Proteasome                             0.9418743   0.53905744 0.08625819</div><div class='input'>
-<span class='co'>## normalised average distance matrix</span>
-<span class='fu'>qsep</span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                                       Actin cytoskeleton
-#&gt; Actin cytoskeleton                              1.000000
-#&gt; Endoplasmic reticulum/Golgi apparatus           3.566325
-#&gt; Mitochondrion                                   5.487565
-#&gt; Extracellular matrix                            3.826523
-#&gt; Nucleus - Chromatin                             5.501293
-#&gt; Cytosol                                         4.002866
-#&gt; Plasma membrane                                 1.885302
-#&gt; Nucleus - Non-chromatin                         4.196833
-#&gt; Endosome                                        2.191892
-#&gt; 60S Ribosome                                    6.050204
-#&gt; Lysosome                                        3.833237
-#&gt; Peroxisome                                      4.977229
-#&gt; 40S Ribosome                                    6.744479
-#&gt; Proteasome                                      7.751780
-#&gt;                                       Endoplasmic reticulum/Golgi apparatus
-#&gt; Actin cytoskeleton                                                 3.418152
-#&gt; Endoplasmic reticulum/Golgi apparatus                              1.000000
-#&gt; Mitochondrion                                                      3.612725
-#&gt; Extracellular matrix                                               1.591860
-#&gt; Nucleus - Chromatin                                                4.560606
-#&gt; Cytosol                                                            5.679619
-#&gt; Plasma membrane                                                    3.757626
-#&gt; Nucleus - Non-chromatin                                            4.074365
-#&gt; Endosome                                                           1.827864
-#&gt; 60S Ribosome                                                       5.340238
-#&gt; Lysosome                                                           3.444845
-#&gt; Peroxisome                                                         3.002086
-#&gt; 40S Ribosome                                                       7.279483
-#&gt; Proteasome                                                        10.068668
-#&gt;                                       Mitochondrion Extracellular matrix
-#&gt; Actin cytoskeleton                         5.492000             2.937371
-#&gt; Endoplasmic reticulum/Golgi apparatus      3.772380             1.274937
-#&gt; Mitochondrion                              1.000000             3.971864
-#&gt; Extracellular matrix                       5.178342             1.000000
-#&gt; Nucleus - Chromatin                        3.706445             4.735038
-#&gt; Cytosol                                    6.777214             5.483772
-#&gt; Plasma membrane                            6.498905             3.097308
-#&gt; Nucleus - Non-chromatin                    3.984578             4.074873
-#&gt; Endosome                                   3.989463             1.341559
-#&gt; 60S Ribosome                               6.264298             5.370126
-#&gt; Lysosome                                   7.298839             2.426307
-#&gt; Peroxisome                                 1.753928             3.426989
-#&gt; 40S Ribosome                               7.869189             7.225032
-#&gt; Proteasome                                11.497028             9.851773
-#&gt;                                       Nucleus - Chromatin  Cytosol
-#&gt; Actin cytoskeleton                               5.866617 4.125454
-#&gt; Endoplasmic reticulum/Golgi apparatus            5.074288 6.107304
-#&gt; Mitochondrion                                    3.949387 6.979127
-#&gt; Extracellular matrix                             6.577972 7.362505
-#&gt; Nucleus - Chromatin                              1.000000 6.481050
-#&gt; Cytosol                                          6.706063 1.000000
-#&gt; Plasma membrane                                  7.264170 6.482553
-#&gt; Nucleus - Non-chromatin                          2.329217 4.470907
-#&gt; Endosome                                         4.559249 4.337398
-#&gt; 60S Ribosome                                     6.791368 7.804732
-#&gt; Lysosome                                         8.256053 7.810677
-#&gt; Peroxisome                                       3.695397 6.577769
-#&gt; 40S Ribosome                                     7.770279 6.355869
-#&gt; Proteasome                                      11.267046 1.855032
-#&gt;                                       Plasma membrane Nucleus - Non-chromatin
-#&gt; Actin cytoskeleton                           1.577520                5.454575
-#&gt; Endoplasmic reticulum/Golgi apparatus        3.280478                5.524955
-#&gt; Mitochondrion                                5.433546                5.174528
-#&gt; Extracellular matrix                         3.376167                6.899202
-#&gt; Nucleus - Chromatin                          5.699765                2.838743
-#&gt; Cytosol                                      5.263072                5.638118
-#&gt; Plasma membrane                              1.000000                7.141084
-#&gt; Nucleus - Non-chromatin                      4.597470                1.000000
-#&gt; Endosome                                     1.898649                4.508607
-#&gt; 60S Ribosome                                 6.807412                5.510703
-#&gt; Lysosome                                     3.199131                8.171452
-#&gt; Peroxisome                                   4.924068                4.728573
-#&gt; 40S Ribosome                                 8.059015                5.535385
-#&gt; Proteasome                                   9.790319                9.348985
-#&gt;                                        Endosome 60S Ribosome  Lysosome
-#&gt; Actin cytoskeleton                     2.882049     3.637272  2.859474
-#&gt; Endoplasmic reticulum/Golgi apparatus  2.507586     3.349623  2.681142
-#&gt; Mitochondrion                          5.241381     3.762940  5.440307
-#&gt; Extracellular matrix                   2.297934     4.205676  2.357826
-#&gt; Nucleus - Chromatin                    5.621503     3.828601  5.775239
-#&gt; Cytosol                                5.533638     4.552637  5.653384
-#&gt; Plasma membrane                        2.983548     4.890957  2.852059
-#&gt; Nucleus - Non-chromatin                4.561265     2.549022  4.690083
-#&gt; Endosome                               1.000000     3.023784  0.945782
-#&gt; 60S Ribosome                           6.613436     1.000000  6.920877
-#&gt; Lysosome                               1.667066     5.577587  1.000000
-#&gt; Peroxisome                             4.673155     3.025521  4.871813
-#&gt; 40S Ribosome                           8.061664     2.628381  8.371064
-#&gt; Proteasome                            10.019831     7.847074 10.270091
-#&gt;                                       Peroxisome 40S Ribosome Proteasome
-#&gt; Actin cytoskeleton                      5.000144     4.122794   4.872468
-#&gt; Endoplasmic reticulum/Golgi apparatus   3.146645     4.642729   6.603120
-#&gt; Mitochondrion                           1.760581     4.806427   7.220750
-#&gt; Extracellular matrix                    4.484904     5.753452   8.066916
-#&gt; Nucleus - Chromatin                     3.481232     4.454068   6.641018
-#&gt; Cytosol                                 6.411695     3.769793   1.131353
-#&gt; Plasma membrane                         5.911872     5.887504   7.354454
-#&gt; Nucleus - Non-chromatin                 3.654986     2.603465   4.521399
-#&gt; Endosome                                3.570449     3.747880   4.789893
-#&gt; 60S Ribosome                            5.055794     2.672549   8.204452
-#&gt; Lysosome                                6.560924     6.859672   8.653691
-#&gt; Peroxisome                              1.000000     4.175476   6.831959
-#&gt; 40S Ribosome                            6.862111     1.000000   6.425975
-#&gt; Proteasome                             10.919244     6.249348   1.000000</div><div class='input'>
-<span class='co'>## Update the organelle cluster names for better</span>
-<span class='co'>## rendering on the plots</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"/"</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>" - "</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
-</div><div class='co'>#&gt;  [1] "Actin cytoskeleton"                    
-#&gt;  [2] "Endoplasmic reticulum\nGolgi apparatus"
-#&gt;  [3] "Mitochondrion"                         
-#&gt;  [4] "Extracellular matrix"                  
-#&gt;  [5] "Nucleus\nChromatin"                    
-#&gt;  [6] "Cytosol"                               
-#&gt;  [7] "Plasma membrane"                       
-#&gt;  [8] "Nucleus\nNon-chromatin"                
-#&gt;  [9] "Endosome"                              
-#&gt; [10] "60S Ribosome"                          
-#&gt; [11] "Lysosome"                              
-#&gt; [12] "Peroxisome"                            
-#&gt; [13] "40S Ribosome"                          
-#&gt; [14] "Proteasome"                            </div><div class='input'>
-<span class='co'>## Heatmap of the normalised intensities</span>
-<span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
-</div><div class='img'><img src='QSep-class-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## Boxplot of the normalised intensities</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span>
-</div><div class='img'><img src='QSep-class-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## Boxplot of all between cluster average distances</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>hlq</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='img'><img src='QSep-class-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## Missing data example, for 4 proteins and 3 fractions</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.1</span>, <span class='fl'>1.2</span>, <span class='fl'>1.3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"P"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"F"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
-
-<span class='co'>## P1 is the reference, against which we will calculate distances. P2</span>
-<span class='co'>## has a complete profile, producing the *real* distance. P3 and P4 have</span>
-<span class='co'>## missing values in the first and last fraction respectively.</span>
-<span class='va'>x</span>
-</div><div class='co'>#&gt;     F1  F2  F3
-#&gt; P1 1.1 1.2 1.3
-#&gt; P2 1.0 1.0 1.0
-#&gt; P3  NA 1.0 1.0
-#&gt; P4 1.0 1.0  NA</div><div class='input'>
-<span class='co'>## If we drop F1 in P3, which represents a small difference of 0.1, the</span>
-<span class='co'>## distance only considers F2 and F3, and increases. If we drop F3 in</span>
-<span class='co'>## P4, which represents a large distance of 0.3, the distance only</span>
-<span class='co'>## considers F1 and F2, and decreases.  dist(x)</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'>## Test data from Christoforou et al. 2016</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>hyperLOPIT2015</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Create the object and get a summary</span></span>
+<span class='r-in'><span class='va'>hlq</span> <span class='op'>&lt;-</span> <span class='fu'>QSep</span><span class='op'>(</span><span class='va'>hyperLOPIT2015</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>hlq</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class 'QSep'.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Data: hyperLOPIT2015 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  With 14 sub-cellular clusters.</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  0.9458  3.6189  4.9075  5.1172  6.5779 11.4970 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## mean distance matrix</span></span>
+<span class='r-in'><span class='fu'>qsep</span><span class='op'>(</span><span class='va'>hlq</span>, norm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Actin cytoskeleton</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                             0.1372312</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus          0.4690770</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                  0.7536736</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                           0.4030989</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                            0.8050828</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                        0.5661409</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                                0.2164849</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                        0.7485378</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                       0.3955070</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                   0.4991471</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                       0.3924089</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                     0.6861757</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                   0.5657759</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                     0.6686545</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Endoplasmic reticulum/Golgi apparatus</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                                                0.4690770</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus                             0.1315295</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                                     0.4961792</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                                              0.1676919</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                                               0.6674186</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                                           0.8032906</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                                                   0.4314796</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                                           0.7266946</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                                          0.3298215</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                                      0.4405743</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                                          0.3526493</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                                        0.4138766</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                                      0.6106558</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                                        0.8685051</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Mitochondrion Extracellular matrix</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                        0.7536736            0.4030989</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus     0.4961792            0.1676919</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                             0.1373421            0.5455040</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                      0.5455040            0.1053434</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                       0.5424170            0.6929457</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                   0.9585277            0.7755911</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                           0.7462545            0.3556568</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                   0.7106804            0.7267853</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                  0.7198622            0.2420721</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                              0.5168101            0.4430401</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                  0.7471831            0.2483814</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                0.2418018            0.4724549</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                              0.6601247            0.6060881</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                0.9917128            0.8497961</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Nucleus - Chromatin   Cytosol</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                              0.8050828 0.5661409</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus           0.6674186 0.8032906</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                   0.5424170 0.9585277</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                            0.6929457 0.7755911</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                             0.1463443 0.9484646</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                         0.9484646 0.1414339</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                                 0.8341281 0.7443767</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                         0.4154339 0.7974210</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                        0.8226749 0.7826439</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                    0.5602938 0.6438972</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                        0.8451732 0.7995801</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                      0.5094584 0.9068309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                    0.6518274 0.5331764</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                      0.9718751 0.1600117</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Plasma membrane Nucleus - Non-chromatin</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                          0.2164849               0.7485378</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus       0.4314796               0.7266946</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                               0.7462545               0.7106804</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                        0.3556568               0.7267853</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                         0.8341281               0.4154339</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                     0.7443767               0.7974210</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                             0.1148277               0.8199944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                     0.8199944               0.1783578</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                    0.3425939               0.8135370</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                0.5616175               0.4546378</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                    0.3274954               0.8365127</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                  0.6788467               0.6518952</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                0.6760487               0.4643483</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                  0.8444952               0.8064265</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                        Endosome 60S Ribosome  Lysosome</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                    0.3955070   0.49914711 0.3924089</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus 0.3298215   0.44057429 0.3526493</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                         0.7198622   0.51681006 0.7471831</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                  0.2420721   0.44304012 0.2483814</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                   0.8226749   0.56029383 0.8451732</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                               0.7826439   0.64389721 0.7995801</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                       0.3425939   0.56161748 0.3274954</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin               0.8135370   0.45463783 0.8365127</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                              0.1804409   0.54561425 0.1706577</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                          0.5456143   0.08250087 0.5709784</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                              0.1706577   0.57097838 0.1023701</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                            0.6442550   0.41710740 0.6716427</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                          0.6762709   0.22048766 0.7022256</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                            0.8642925   0.67687443 0.8858795</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Peroxisome 40S Ribosome Proteasome</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                     0.6861757   0.56577585 0.66865454</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus  0.4138766   0.61065583 0.86850511</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                          0.2418018   0.66012471 0.99171284</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                   0.4724549   0.60608808 0.84979611</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                    0.5094584   0.65182738 0.97187508</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                0.9068309   0.53317641 0.16001172</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                        0.6788467   0.67604868 0.84449520</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                0.6518952   0.46434826 0.80642652</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                               0.6442550   0.67627087 0.86429254</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                           0.4171074   0.22048766 0.67687443</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                               0.6716427   0.70222557 0.88587953</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                             0.1378630   0.57564364 0.94187426</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                           0.5756436   0.08388726 0.53905744</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                             0.9418743   0.53905744 0.08625819</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## normalised average distance matrix</span></span>
+<span class='r-in'><span class='fu'>qsep</span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Actin cytoskeleton</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                              1.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus           3.566325</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                   5.487565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                            3.826523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                             5.501293</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                         4.002866</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                                 1.885302</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                         4.196833</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                        2.191892</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                    6.050204</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                        3.833237</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                      4.977229</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                    6.744479</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                      7.751780</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Endoplasmic reticulum/Golgi apparatus</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                                                 3.418152</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus                              1.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                                      3.612725</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                                               1.591860</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                                                4.560606</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                                            5.679619</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                                                    3.757626</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                                            4.074365</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                                           1.827864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                                       5.340238</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                                           3.444845</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                                         3.002086</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                                       7.279483</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                                        10.068668</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Mitochondrion Extracellular matrix</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                         5.492000             2.937371</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus      3.772380             1.274937</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                              1.000000             3.971864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                       5.178342             1.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                        3.706445             4.735038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                    6.777214             5.483772</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                            6.498905             3.097308</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                    3.984578             4.074873</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                   3.989463             1.341559</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                               6.264298             5.370126</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                   7.298839             2.426307</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                 1.753928             3.426989</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                               7.869189             7.225032</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                11.497028             9.851773</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Nucleus - Chromatin  Cytosol</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                               5.866617 4.125454</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus            5.074288 6.107304</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                    3.949387 6.979127</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                             6.577972 7.362505</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                              1.000000 6.481050</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                          6.706063 1.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                                  7.264170 6.482553</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                          2.329217 4.470907</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                         4.559249 4.337398</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                     6.791368 7.804732</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                         8.256053 7.810677</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                       3.695397 6.577769</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                     7.770279 6.355869</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                      11.267046 1.855032</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Plasma membrane Nucleus - Non-chromatin</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                           1.577520                5.454575</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus        3.280478                5.524955</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                                5.433546                5.174528</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                         3.376167                6.899202</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                          5.699765                2.838743</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                      5.263072                5.638118</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                              1.000000                7.141084</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                      4.597470                1.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                     1.898649                4.508607</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                                 6.807412                5.510703</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                     3.199131                8.171452</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                                   4.924068                4.728573</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                                 8.059015                5.535385</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                                   9.790319                9.348985</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                        Endosome 60S Ribosome  Lysosome</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                     2.882049     3.637272  2.859474</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus  2.507586     3.349623  2.681142</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                          5.241381     3.762940  5.440307</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                   2.297934     4.205676  2.357826</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                    5.621503     3.828601  5.775239</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                5.533638     4.552637  5.653384</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                        2.983548     4.890957  2.852059</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                4.561265     2.549022  4.690083</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                               1.000000     3.023784  0.945782</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                           6.613436     1.000000  6.920877</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                               1.667066     5.577587  1.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                             4.673155     3.025521  4.871813</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                           8.061664     2.628381  8.371064</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                            10.019831     7.847074 10.270091</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       Peroxisome 40S Ribosome Proteasome</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Actin cytoskeleton                      5.000144     4.122794   4.872468</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endoplasmic reticulum/Golgi apparatus   3.146645     4.642729   6.603120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mitochondrion                           1.760581     4.806427   7.220750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Extracellular matrix                    4.484904     5.753452   8.066916</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Chromatin                     3.481232     4.454068   6.641018</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cytosol                                 6.411695     3.769793   1.131353</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Plasma membrane                         5.911872     5.887504   7.354454</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nucleus - Non-chromatin                 3.654986     2.603465   4.521399</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Endosome                                3.570449     3.747880   4.789893</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60S Ribosome                            5.055794     2.672549   8.204452</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lysosome                                6.560924     6.859672   8.653691</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Peroxisome                              1.000000     4.175476   6.831959</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40S Ribosome                            6.862111     1.000000   6.425975</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Proteasome                             10.919244     6.249348   1.000000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Update the organelle cluster names for better</span></span>
+<span class='r-in'><span class='co'>## rendering on the plots</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"/"</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>" - "</span>, <span class='st'>"\n"</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "Actin cytoskeleton"                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [2] "Endoplasmic reticulum\nGolgi apparatus"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] "Mitochondrion"                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "Extracellular matrix"                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "Nucleus\nChromatin"                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [6] "Cytosol"                               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "Plasma membrane"                       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] "Nucleus\nNon-chromatin"                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "Endosome"                              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "60S Ribosome"                          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [11] "Lysosome"                              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [12] "Peroxisome"                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "40S Ribosome"                          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [14] "Proteasome"                            </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Heatmap of the normalised intensities</span></span>
+<span class='r-in'><span class='fu'><a href='GenRegRes-class.html'>levelPlot</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='QSep-class-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Boxplot of the normalised intensities</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>10</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>hlq</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='QSep-class-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Boxplot of all between cluster average distances</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>hlq</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='QSep-class-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Missing data example, for 4 proteins and 3 fractions</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.1</span>, <span class='fl'>1.2</span>, <span class='fl'>1.3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"P"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"F"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## P1 is the reference, against which we will calculate distances. P2</span></span>
+<span class='r-in'><span class='co'>## has a complete profile, producing the *real* distance. P3 and P4 have</span></span>
+<span class='r-in'><span class='co'>## missing values in the first and last fraction respectively.</span></span>
+<span class='r-in'><span class='va'>x</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     F1  F2  F3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> P1 1.1 1.2 1.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> P2 1.0 1.0 1.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> P3  NA 1.0 1.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> P4 1.0 1.0  NA</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## If we drop F1 in P3, which represents a small difference of 0.1, the</span></span>
+<span class='r-in'><span class='co'>## distance only considers F2 and F3, and increases. If we drop F3 in</span></span>
+<span class='r-in'><span class='co'>## P4, which represents a large distance of 0.3, the distance only</span></span>
+<span class='r-in'><span class='co'>## considers F1 and F2, and decreases.  dist(x)</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

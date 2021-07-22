@@ -60,9 +60,6 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -85,7 +82,7 @@ MSnSet instance. As a side effect, it prints out a prediction table." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -153,8 +150,8 @@ This function returns the predictions of an
 <code>MSnSet</code> instance. As a side effect, it prints out a prediction table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>fcol</span>, <span class='va'>scol</span>, mcol <span class='op'>=</span> <span class='st'>"markers"</span>, t <span class='op'>=</span> <span class='fl'>0</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>fcol</span>, <span class='va'>scol</span>, mcol <span class='op'>=</span> <span class='st'>"markers"</span>, t <span class='op'>=</span> <span class='fl'>0</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,99 +205,108 @@ thresholds.</p></div>
     <p>Laurent Gatto and Lisa Breckels</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='svmClassification.html'>svmClassification</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"pd.markers"</span>,
-                         sigma <span class='op'>=</span> <span class='fl'>0.1</span>, cost <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-<span class='fu'>fData</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>svm</span><span class='op'>[</span><span class='fl'>500</span><span class='op'>:</span><span class='fl'>510</span><span class='op'>]</span>
-</div><div class='co'>#&gt;  [1] Plastid     Plastid     ER membrane Ribosome    Ribosome    Ribosome   
-#&gt;  [7] Ribosome    Ribosome    Ribosome    Ribosome    Ribosome   
-#&gt; 9 Levels: ER lumen ER membrane Golgi Mitochondrion Plastid PM Ribosome ... vacuole</div><div class='input'><span class='fu'>fData</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>svm.scores</span><span class='op'>[</span><span class='fl'>500</span><span class='op'>:</span><span class='fl'>510</span><span class='op'>]</span>
-</div><div class='co'>#&gt;  [1] 0.6593303 0.7701427 0.6752305 0.4882591 0.5751725 0.5766412 0.6376513
-#&gt;  [8] 0.6215169 0.5313678 0.6123313 0.6602089</div><div class='input'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='co'>## all predictions</span>
-</div><div class='co'>#&gt; ans
-#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            16           188           101           101            52 
-#&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;           125            59            17            30 </div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
-#&gt; assayData: 689 features, 16 samples 
-#&gt;   element names: exprs 
-#&gt; protocolData: none
-#&gt; phenoData
-#&gt;   sampleNames: M1F1A M1F4A ... M2F11B (16 total)
-#&gt;   varLabels: membrane.prep fraction replicate
-#&gt;   varMetadata: labelDescription
-#&gt; featureData
-#&gt;   featureNames: AT1G09210 AT1G21750 ... AT4G39080 (689 total)
-#&gt;   fvarLabels: assigned evidence ... svm.pred (11 total)
-#&gt;   fvarMetadata: labelDescription
-#&gt; experimentData: use 'experimentData(object)'
-#&gt;   pubMedIds: 16618929 
-#&gt; Annotation:  
-#&gt; - - - Processing information - - -
-#&gt; Loaded on Thu Jul 16 22:53:08 2015. 
-#&gt; Normalised to sum of intensities. 
-#&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Sat May  1 11:58:25 2021 
-#&gt; Added svm predictions according to global threshold = 0 Sat May  1 11:58:25 2021 
-#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>.9</span><span class='op'>)</span> <span class='co'>## single threshold </span>
-</div><div class='co'>#&gt; ans
-#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            14            56            28            55            20 
-#&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            46            19            13           417            21 </div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
-#&gt; assayData: 689 features, 16 samples 
-#&gt;   element names: exprs 
-#&gt; protocolData: none
-#&gt; phenoData
-#&gt;   sampleNames: M1F1A M1F4A ... M2F11B (16 total)
-#&gt;   varLabels: membrane.prep fraction replicate
-#&gt;   varMetadata: labelDescription
-#&gt; featureData
-#&gt;   featureNames: AT1G09210 AT1G21750 ... AT4G39080 (689 total)
-#&gt;   fvarLabels: assigned evidence ... svm.pred (11 total)
-#&gt;   fvarMetadata: labelDescription
-#&gt; experimentData: use 'experimentData(object)'
-#&gt;   pubMedIds: 16618929 
-#&gt; Annotation:  
-#&gt; - - - Processing information - - -
-#&gt; Loaded on Thu Jul 16 22:53:08 2015. 
-#&gt; Normalised to sum of intensities. 
-#&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Sat May  1 11:58:25 2021 
-#&gt; Added svm predictions according to global threshold = 0.9 Sat May  1 11:58:25 2021 
-#&gt;  MSnbase version: 1.17.12 </div><div class='input'><span class='co'>## 50% top predictions per class</span>
-<span class='va'>ts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='orgQuants.html'>orgQuants</a></span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
-</div><div class='co'>#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;     0.2995766     0.8368847     0.7805362     0.7484314     0.7746137 
-#&gt;            PM      Ribosome           TGN       vacuole 
-#&gt;     0.7302249     0.5428105     0.5276547     0.5704931 </div><div class='input'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='va'>ts</span><span class='op'>)</span>
-</div><div class='co'>#&gt; ans
-#&gt;      ER lumen   ER membrane         Golgi Mitochondrion       Plastid 
-#&gt;            15           117            65            78            36 
-#&gt;            PM      Ribosome           TGN       unknown       vacuole 
-#&gt;            86            39            15           212            26 </div><div class='co'>#&gt; MSnSet (storageMode: lockedEnvironment)
-#&gt; assayData: 689 features, 16 samples 
-#&gt;   element names: exprs 
-#&gt; protocolData: none
-#&gt; phenoData
-#&gt;   sampleNames: M1F1A M1F4A ... M2F11B (16 total)
-#&gt;   varLabels: membrane.prep fraction replicate
-#&gt;   varMetadata: labelDescription
-#&gt; featureData
-#&gt;   featureNames: AT1G09210 AT1G21750 ... AT4G39080 (689 total)
-#&gt;   fvarLabels: assigned evidence ... svm.pred (11 total)
-#&gt;   fvarMetadata: labelDescription
-#&gt; experimentData: use 'experimentData(object)'
-#&gt;   pubMedIds: 16618929 
-#&gt; Annotation:  
-#&gt; - - - Processing information - - -
-#&gt; Loaded on Thu Jul 16 22:53:08 2015. 
-#&gt; Normalised to sum of intensities. 
-#&gt; Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 
-#&gt; Performed svm prediction (cost=0.5 sigma=0.1) Sat May  1 11:58:25 2021 
-#&gt; Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, Plastid = 0.77, PM = 0.73, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Sat May  1 11:58:25 2021 
-#&gt;  MSnbase version: 1.17.12 </div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>"pRolocdata"</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='svmClassification.html'>svmClassification</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, fcol <span class='op'>=</span> <span class='st'>"pd.markers"</span>,</span>
+<span class='r-in'>                         sigma <span class='op'>=</span> <span class='fl'>0.1</span>, cost <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>fData</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>svm</span><span class='op'>[</span><span class='fl'>500</span><span class='op'>:</span><span class='fl'>510</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] Plastid     Plastid     ER membrane Ribosome    Ribosome    Ribosome   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] Ribosome    Ribosome    Ribosome    Ribosome    Ribosome   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9 Levels: ER lumen ER membrane Golgi Mitochondrion PM Plastid Ribosome ... vacuole</span>
+<span class='r-in'><span class='fu'>fData</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>svm.scores</span><span class='op'>[</span><span class='fl'>500</span><span class='op'>:</span><span class='fl'>510</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] 0.6593303 0.7701427 0.6752305 0.4882591 0.5751725 0.5766412 0.6376513</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] 0.6215169 0.5313678 0.6123313 0.6602089</span>
+<span class='r-in'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='co'>## all predictions</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ans</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            16           188           101           101           125 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Plastid      Ribosome           TGN       vacuole </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            52            59            17            30 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> assayData: 689 features, 16 samples </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   element names: exprs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> protocolData: none</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> phenoData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   sampleNames: M1F1A M1F4A ... M2F11B (16 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varLabels: membrane.prep fraction replicate</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> featureData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   featureNames: AT1G09210 AT1G21750 ... AT4G39080 (689 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarLabels: assigned evidence ... svm.pred (11 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> experimentData: use 'experimentData(object)'</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   pubMedIds: 16618929 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Annotation:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - - - Processing information - - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Normalised to sum of intensities. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Performed svm prediction (cost=0.5 sigma=0.1) Thu Jul 22 14:50:44 2021 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added svm predictions according to global threshold = 0 Thu Jul 22 14:50:44 2021 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  MSnbase version: 1.17.12 </span>
+<span class='r-in'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>.9</span><span class='op'>)</span> <span class='co'>## single threshold </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ans</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            14            56            28            55            46 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Plastid      Ribosome           TGN       unknown       vacuole </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            20            19            13           417            21 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> assayData: 689 features, 16 samples </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   element names: exprs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> protocolData: none</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> phenoData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   sampleNames: M1F1A M1F4A ... M2F11B (16 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varLabels: membrane.prep fraction replicate</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> featureData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   featureNames: AT1G09210 AT1G21750 ... AT4G39080 (689 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarLabels: assigned evidence ... svm.pred (11 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> experimentData: use 'experimentData(object)'</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   pubMedIds: 16618929 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Annotation:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - - - Processing information - - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Normalised to sum of intensities. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Performed svm prediction (cost=0.5 sigma=0.1) Thu Jul 22 14:50:44 2021 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added svm predictions according to global threshold = 0.9 Thu Jul 22 14:50:44 2021 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  MSnbase version: 1.17.12 </span>
+<span class='r-in'><span class='co'>## 50% top predictions per class</span></span>
+<span class='r-in'><span class='va'>ts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='orgQuants.html'>orgQuants</a></span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.2995766     0.8368847     0.7805362     0.7484314     0.7302249 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Plastid      Ribosome           TGN       vacuole </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     0.7746137     0.5428105     0.5276547     0.5704931 </span>
+<span class='r-in'><span class='fu'>getPredictions</span><span class='op'>(</span><span class='va'>res</span>, fcol <span class='op'>=</span> <span class='st'>"svm"</span>, t <span class='op'>=</span> <span class='va'>ts</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ans</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            15           117            65            78            86 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Plastid      Ribosome           TGN       unknown       vacuole </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            36            39            15           212            26 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> assayData: 689 features, 16 samples </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   element names: exprs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> protocolData: none</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> phenoData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   sampleNames: M1F1A M1F4A ... M2F11B (16 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varLabels: membrane.prep fraction replicate</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   varMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> featureData</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   featureNames: AT1G09210 AT1G21750 ... AT4G39080 (689 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarLabels: assigned evidence ... svm.pred (11 total)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   fvarMetadata: labelDescription</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> experimentData: use 'experimentData(object)'</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   pubMedIds: 16618929 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Annotation:  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - - - Processing information - - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Normalised to sum of intensities. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Performed svm prediction (cost=0.5 sigma=0.1) Thu Jul 22 14:50:44 2021 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Added svm predictions according to thresholds: ER lumen = 0.30, ER membrane = 0.84, Golgi = 0.78, Mitochondrion = 0.75, PM = 0.73, Plastid = 0.77, Ribosome = 0.54, TGN = 0.53, vacuole = 0.57 Thu Jul 22 14:50:44 2021 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  MSnbase version: 1.17.12 </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

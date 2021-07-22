@@ -62,9 +62,6 @@
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -87,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -199,41 +196,53 @@
     <p>Lisa M Breckels &lt;lms79@cam.ac.uk&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='fu'>showClass</span><span class='op'>(</span><span class='st'>"ClustDist"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Class "ClustDist" [package "pRoloc"]
-#&gt; 
-#&gt; Slots:
-#&gt;                                                                         
-#&gt; Name:           k       dist       term         id       nrow    clustsz
-#&gt; Class:    numeric       list  character  character    numeric       list
-#&gt;                             
-#&gt; Name:  components       fcol
-#&gt; Class:     vector  character</div><div class='input'>  
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>'pRolocdata'</a></span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; This is pRolocdata version 1.29.0.
-#&gt; Use 'pRolocdata()' to list available data sets.</div><div class='input'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span>
-  <span class='va'>par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='AnnotationParams-class.html'>setAnnotationParams</a></span><span class='op'>(</span>inputs <span class='op'>=</span>
-                    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Arabidopsis thaliana genes"</span>,
-                      <span class='st'>"Gene stable ID"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Using species Arabidopsis thaliana genes (TAIR10)</div><div class='co'>#&gt; Using feature type Gene stable ID(s) [e.g. AT1G01010]</div><div class='co'>#&gt; Connecting to Biomart...</div><div class='input'>                    
-  <span class='co'>## add protein set/annotation information                  </span>
-  <span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='addGoAnnotations.html'>addGoAnnotations</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>par</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Loading required namespace: GO.db</div><div class='co'>#&gt; </div><div class='input'>  
-  <span class='co'>## filter</span>
-  <span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span><span class='op'>(</span><span class='va'>xx</span>, n <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Retaining 17 out of 178 in GOAnnotations</div><div class='input'>  <span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span><span class='op'>(</span><span class='va'>xx</span>, p <span class='op'>=</span> <span class='fl'>.25</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Retaining 12 out of 17 in GOAnnotations</div><div class='input'>  
-  <span class='co'>## get distances for protein sets</span>
-  <span class='va'>dd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span><span class='op'>(</span><span class='va'>xx</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======                                                                |   8%  |                                                                              |============                                                          |  17%  |                                                                              |==================                                                    |  25%  |                                                                              |=======================                                               |  33%  |                                                                              |=============================                                         |  42%  |                                                                              |===================================                                   |  50%  |                                                                              |=========================================                             |  58%  |                                                                              |===============================================                       |  67%  |                                                                              |====================================================                  |  75%  |                                                                              |==========================================================            |  83%  |                                                                              |================================================================      |  92%  |                                                                              |======================================================================| 100%</div><div class='input'>  
-  <span class='co'>## plot clusters for first 'ClustDist' object </span>
-  <span class='co'>## in the 'ClustDistList'</span>
-  <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>dd</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>xx</span><span class='op'>)</span>
-</div><div class='img'><img src='ClustDist-class-1.png' alt='' width='700' height='433' /></div><div class='input'>  
-  <span class='co'>## plot distances for all protein sets </span>
-  <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>dd</span><span class='op'>)</span>
-</div><div class='img'><img src='ClustDist-class-2.png' alt='' width='700' height='433' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'>  <span class='fu'>showClass</span><span class='op'>(</span><span class='st'>"ClustDist"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class "ClustDist" [package "pRoloc"]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slots:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:           k       dist       term         id       nrow    clustsz</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:    numeric       list  character  character    numeric       list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Name:  components       fcol</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class:     vector  character</span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lgatto/pRolocdata'>'pRolocdata'</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> This is pRolocdata version 1.31.0.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Use 'pRolocdata()' to list available data sets.</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>dunkley2006</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='AnnotationParams-class.html'>setAnnotationParams</a></span><span class='op'>(</span>inputs <span class='op'>=</span></span>
+<span class='r-in'>                    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Arabidopsis thaliana genes"</span>,</span>
+<span class='r-in'>                      <span class='st'>"Gene stable ID"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Using species Arabidopsis thaliana genes (TAIR10)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Using feature type Gene stable ID(s) [e.g. AT1G01010]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Connecting to Biomart...</span>
+<span class='r-in'>                    </span>
+<span class='r-in'>  <span class='co'>## add protein set/annotation information                  </span></span>
+<span class='r-in'>  <span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='addGoAnnotations.html'>addGoAnnotations</a></span><span class='op'>(</span><span class='va'>dunkley2006</span>, <span class='va'>par</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: GO.db</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='co'>## filter</span></span>
+<span class='r-in'>  <span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='filterMinMarkers.html'>filterMinMarkers</a></span><span class='op'>(</span><span class='va'>xx</span>, n <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Retaining 19 out of 189 in GOAnnotations</span>
+<span class='r-in'>  <span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='filterMaxMarkers.html'>filterMaxMarkers</a></span><span class='op'>(</span><span class='va'>xx</span>, p <span class='op'>=</span> <span class='fl'>.25</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Retaining 13 out of 19 in GOAnnotations</span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='co'>## get distances for protein sets</span></span>
+<span class='r-in'>  <span class='va'>dd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustDist.html'>clustDist</a></span><span class='op'>(</span><span class='va'>xx</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=====                                                                 |   8%  |                                                                              |===========                                                           |  15%  |                                                                              |================                                                      |  23%  |                                                                              |======================                                                |  31%  |                                                                              |===========================                                           |  38%  |                                                                              |================================                                      |  46%  |                                                                              |======================================                                |  54%  |                                                                              |===========================================                           |  62%  |                                                                              |================================================                      |  69%  |                                                                              |======================================================                |  77%  |                                                                              |===========================================================           |  85%  |                                                                              |=================================================================     |  92%  |                                                                              |======================================================================| 100%</span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='co'>## plot clusters for first 'ClustDist' object </span></span>
+<span class='r-in'>  <span class='co'>## in the 'ClustDistList'</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>dd</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>xx</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='ClustDist-class-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='co'>## plot distances for all protein sets </span></span>
+<span class='r-in'>  <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/plot-methods.html'>plot</a></span><span class='op'>(</span><span class='va'>dd</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='ClustDist-class-2.png' alt='' width='700' height='433' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

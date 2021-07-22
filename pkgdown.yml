@@ -1,11 +1,11 @@
 pandoc: 2.11.4
 pkgdown: 1.6.1.9001
-pkgdown_sha: b94fe3407a0b40a968425a64cdf7ae0c6705b1b1
+pkgdown_sha: ce9781a15c7ea07df9fb17a11295ba4abec0b54b
 articles:
   v01-pRoloc-tutorial: v01-pRoloc-tutorial.html
   v02-pRoloc-ml: v02-pRoloc-ml.html
   v03-pRoloc-bayesian: v03-pRoloc-bayesian.html
   v04-pRoloc-goannotations: v04-pRoloc-goannotations.html
   v05-pRoloc-transfer-learning: v05-pRoloc-transfer-learning.html
-last_built: 2021-05-01T11:56Z
+last_built: 2021-07-22T14:49Z
 

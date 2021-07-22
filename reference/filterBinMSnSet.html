@@ -59,9 +59,6 @@ number of 0 values." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ number of 0 values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,7 +148,7 @@ number of 0 values." />
 number of 0 values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>object</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>t</span>, <span class='va'>q</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>object</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>t</span>, <span class='va'>q</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,55 +191,66 @@ printed. Default is <code>TRUE</code>.</p></td>
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fl'>25</span>, replace<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span>
-<span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
-<span class='va'>m</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-<span class='va'>fd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>row.names <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a></span><span class='op'>(</span>exprs <span class='op'>=</span> <span class='va'>m</span>, fData <span class='op'>=</span> <span class='va'>fd</span>, pData <span class='op'>=</span> <span class='va'>fd</span><span class='op'>)</span>
-<span class='fu'>exprs</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   a b c d e
-#&gt; a 0 0 0 0 0
-#&gt; b 0 0 0 1 0
-#&gt; c 0 0 0 1 0
-#&gt; d 0 1 0 1 0
-#&gt; e 0 1 0 0 0</div><div class='input'><span class='co'>## Remove columns with no 1s</span>
-<span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Removing 3 column(s)</div><div class='co'>#&gt;   b d
-#&gt; a 0 0
-#&gt; b 0 1
-#&gt; c 0 1
-#&gt; d 1 1
-#&gt; e 1 0</div><div class='input'><span class='co'>## Remove columns with one 1 or less</span>
-<span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Removing 3 column(s)</div><div class='co'>#&gt;   b d
-#&gt; a 0 0
-#&gt; b 0 1
-#&gt; c 0 1
-#&gt; d 1 1
-#&gt; e 1 0</div><div class='input'><span class='co'>## Remove columns with two 1s or less</span>
-<span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Removing 4 column(s)</div><div class='co'>#&gt;   d
-#&gt; a 0
-#&gt; b 1
-#&gt; c 1
-#&gt; d 1
-#&gt; e 0</div><div class='input'><span class='co'>## Remove columns with three 1s </span>
-<span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Removing 5 column(s)</div><div class='co'>#&gt;  
-#&gt; a
-#&gt; b
-#&gt; c
-#&gt; d
-#&gt; e</div><div class='input'><span class='co'>## Remove columns that have half or less of 1s</span>
-<span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, q <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Removing 3 column(s)</div><div class='co'>#&gt;   b d
-#&gt; a 0 0
-#&gt; b 0 1
-#&gt; c 0 1
-#&gt; d 1 1
-#&gt; e 1 0</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fl'>25</span>, replace<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>m</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span></span>
+<span class='r-in'><span class='va'>m</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>fd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>row.names <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/MSnSet-class.html'>MSnSet</a></span><span class='op'>(</span>exprs <span class='op'>=</span> <span class='va'>m</span>, fData <span class='op'>=</span> <span class='va'>fd</span>, pData <span class='op'>=</span> <span class='va'>fd</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   a b c d e</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a 0 0 0 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> b 0 0 0 1 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c 0 0 0 1 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> d 0 1 0 1 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e 0 1 0 0 0</span>
+<span class='r-in'><span class='co'>## Remove columns with no 1s</span></span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 3 column(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   b d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> b 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> d 1 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e 1 0</span>
+<span class='r-in'><span class='co'>## Remove columns with one 1 or less</span></span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 3 column(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   b d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> b 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> d 1 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e 1 0</span>
+<span class='r-in'><span class='co'>## Remove columns with two 1s or less</span></span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 4 column(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> b 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> d 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e 0</span>
+<span class='r-in'><span class='co'>## Remove columns with three 1s </span></span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, t <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 5 column(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e</span>
+<span class='r-in'><span class='co'>## Remove columns that have half or less of 1s</span></span>
+<span class='r-in'><span class='fu'>exprs</span><span class='op'>(</span><span class='fu'>filterBinMSnSet</span><span class='op'>(</span><span class='va'>x</span>, MARGIN <span class='op'>=</span> <span class='fl'>2</span>, q <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 3 column(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   b d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a 0 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> b 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> d 1 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e 1 0</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

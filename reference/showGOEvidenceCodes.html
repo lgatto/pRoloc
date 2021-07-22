@@ -59,9 +59,6 @@ of the Gene Ontology evidence codes." />
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -84,7 +81,7 @@ of the Gene Ontology evidence codes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -151,9 +148,9 @@ of the Gene Ontology evidence codes." />
 of the Gene Ontology evidence codes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>showGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>showGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>getGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span></pre>
+<span class='fu'>getGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span></code></pre></div>
 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -165,38 +162,40 @@ evidence codes and their description.</p>
     <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>showGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; GO Term Evidence Code
-#&gt;  Experimental Evidence Codes
-#&gt;   EXP: Inferred from Experiment
-#&gt;    IDA: Inferred from Direct Assay
-#&gt;    IPI: Inferred from Physical Interaction
-#&gt;    IMP: Inferred from Mutant Phenotype
-#&gt;    IGI: Inferred from Genetic Interaction
-#&gt;    IEP: Inferred from Expression Pattern
-#&gt;  Computational Analysis Evidence Codes
-#&gt;   ISS: Inferred from Sequence or Structural Similarity
-#&gt;    ISO: Inferred from Sequence Orthology
-#&gt;    ISA: Inferred from Sequence Alignment
-#&gt;    ISM: Inferred from Sequence Model
-#&gt;    IGC: Inferred from Genomic Context
-#&gt;    IBA: Inferred from Biological aspect of Ancestor
-#&gt;    IBD: Inferred from Biological aspect of Descendant
-#&gt;    IKR: Inferred from Key Residues
-#&gt;    IRD: Inferred from Rapid Divergence
-#&gt;    RCA: inferred from Reviewed Computational Analysis
-#&gt;  Author Statement Evidence Codes
-#&gt;    TAS: Traceable Author Statement
-#&gt;    NAS: Non-traceable Author Statement
-#&gt;  Curator Statement Evidence Codes
-#&gt;    IC: Inferred by Curator
-#&gt;    ND: No biological Data available
-#&gt;  Automatically-assigned Evidence Codes
-#&gt;    IEA: Inferred from Electronic Annotation
-#&gt;  Obsolete Evidence Codes
-#&gt;    NR: Not Recorded</div><div class='input'><span class='fu'>getGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;  [1] "EXP" "IDA" "IPI" "IMP" "IGI" "IEP" "ISS" "ISO" "ISA" "ISM" "IGC" "IBA"
-#&gt; [13] "IBD" "IKR" "IRD" "RCA" "TAS" "NAS" "IC"  "ND"  "IEA" "NR" </div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>showGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GO Term Evidence Code</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Experimental Evidence Codes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   EXP: Inferred from Experiment</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IDA: Inferred from Direct Assay</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IPI: Inferred from Physical Interaction</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IMP: Inferred from Mutant Phenotype</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IGI: Inferred from Genetic Interaction</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IEP: Inferred from Expression Pattern</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Computational Analysis Evidence Codes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ISS: Inferred from Sequence or Structural Similarity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    ISO: Inferred from Sequence Orthology</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    ISA: Inferred from Sequence Alignment</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    ISM: Inferred from Sequence Model</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IGC: Inferred from Genomic Context</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IBA: Inferred from Biological aspect of Ancestor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IBD: Inferred from Biological aspect of Descendant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IKR: Inferred from Key Residues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IRD: Inferred from Rapid Divergence</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    RCA: inferred from Reviewed Computational Analysis</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Author Statement Evidence Codes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    TAS: Traceable Author Statement</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    NAS: Non-traceable Author Statement</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Curator Statement Evidence Codes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IC: Inferred by Curator</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    ND: No biological Data available</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Automatically-assigned Evidence Codes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    IEA: Inferred from Electronic Annotation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Obsolete Evidence Codes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    NR: Not Recorded</span>
+<span class='r-in'><span class='fu'>getGOEvidenceCodes</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "EXP" "IDA" "IPI" "IMP" "IGI" "IEP" "ISS" "ISO" "ISA" "ISM" "IGC" "IBA"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "IBD" "IKR" "IRD" "RCA" "TAS" "NAS" "IC"  "ND"  "IEA" "NR" </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

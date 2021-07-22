@@ -58,9 +58,6 @@
 
 
 
-<!-- dependencies from examples -->
-
-
   
 
   
@@ -83,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.31.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
       </span>
     </div>
 
@@ -149,7 +146,7 @@
     <p>This function extracts a stratified sample of an <code>MSnSet</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sampleMSnSet</span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, size <span class='op'>=</span> <span class='fl'>0.2</span>, <span class='va'>seed</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>sampleMSnSet</span><span class='op'>(</span><span class='va'>object</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span>, size <span class='op'>=</span> <span class='fl'>0.2</span>, <span class='va'>seed</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,26 +186,31 @@ about markers encoding.</p></div>
     <p>Lisa Breckels</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
-<span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/pSet-class.html'>dim</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] 888   4</div><div class='input'><span class='va'>smp</span> <span class='op'>&lt;-</span> <span class='fu'>sampleMSnSet</span><span class='op'>(</span><span class='va'>tan2009r1</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>New sample contains classes with &lt; 6 markers</div><div class='input'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/pSet-class.html'>dim</a></span><span class='op'>(</span><span class='va'>smp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] 182   4</div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span>
-</div><div class='co'>#&gt; organelleMarkers
-#&gt;  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-#&gt;             7            28            13             8            29 
-#&gt;       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-#&gt;            21             4            34            15            20 
-#&gt;  Ribosome 60S       unknown 
-#&gt;            32           677 </div><div class='input'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>smp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; organelleMarkers
-#&gt;  Cytoskeleton            ER         Golgi      Lysosome mitochondrion 
-#&gt;             2             6             3             2             6 
-#&gt;       Nucleus    Peroxisome            PM    Proteasome  Ribosome 40S 
-#&gt;             5             1             7             3             4 
-#&gt;  Ribosome 60S       unknown 
-#&gt;             7           136 </div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lgatto/pRolocdata'>pRolocdata</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/pSet-class.html'>dim</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 888   4</span>
+<span class='r-in'><span class='va'>smp</span> <span class='op'>&lt;-</span> <span class='fu'>sampleMSnSet</span><span class='op'>(</span><span class='va'>tan2009r1</span>, fcol <span class='op'>=</span> <span class='st'>"markers"</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>New sample contains classes with &lt; 6 markers</span>
+<span class='r-in'><span class='fu'><a href='https://lgatto.github.io/MSnbase/reference/pSet-class.html'>dim</a></span><span class='op'>(</span><span class='va'>smp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 182   4</span>
+<span class='r-in'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>tan2009r1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> organelleMarkers</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Cytoskeleton            ER         Golgi      Lysosome       Nucleus </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             7            28            13             8            21 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            PM    Peroxisome    Proteasome  Ribosome 40S  Ribosome 60S </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            34             4            15            20            32 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mitochondrion       unknown </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            29           677 </span>
+<span class='r-in'><span class='fu'><a href='getMarkers.html'>getMarkers</a></span><span class='op'>(</span><span class='va'>smp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> organelleMarkers</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Cytoskeleton            ER         Golgi      Lysosome       Nucleus </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             2             6             3             2             5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            PM    Peroxisome    Proteasome  Ribosome 40S  Ribosome 60S </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             7             1             3             4             7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mitochondrion       unknown </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             6           136 </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

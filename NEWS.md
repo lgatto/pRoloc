@@ -1,5 +1,8 @@
 # pRoloc 1.31
 
+## Changes in version 1.31.4
+- bug fix in SerialParam() inline with BiocParallel changes
+
 ## Changes in version 1.31.3
 - lopims() function moved to lgatto/lopims package on GitHub
 

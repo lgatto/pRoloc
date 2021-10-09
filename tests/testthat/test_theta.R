@@ -12,14 +12,14 @@ test_that("theta matrices passed to knntl are the same as those output and store
                            fcol = "markers.orig",
                            times = 1,
                            by = 1, k = c(3, 3),
-                           BPPARAM = SerialParam(),
+                           BPPARAM = SerialParam(RNGseed = 1),
                            method = "Breckels",
                            seed = seed)
   tl2 <- knntlOptimisation(andy2011, andy2011goCC,
                            fcol = "markers.orig",
                            times = 1,
                            by = 1, k = c(3, 3),
-                           BPPARAM = SerialParam(),
+                           BPPARAM = SerialParam(RNGseed = 1),
                            seed = seed)
   expect_equal(tl1, tl2)
 
@@ -46,7 +46,7 @@ test_that("theta matrices passed to knntl are the same as those output and store
                            fcol = "markers.orig",
                            times = 1, th = weights,
                            by = 1, k = c(3, 3),
-                           BPPARAM = SerialParam(),
+                           BPPARAM = SerialParam(RNGseed = 1),
                            seed = seed)
   expect_equal(tl1, tl3)
 
@@ -58,7 +58,7 @@ test_that("theta matrices passed to knntl are the same as those output and store
                             times = 1,
                             length.out = 4,
                             k = c(3, 3),
-                            BPPARAM = SerialParam(),
+                            BPPARAM = SerialParam(RNGseed = 1),
                             method = "Wu",
                             seed = seed)
   tl5 <-  knntlOptimisation(andy2011, andy2011goCC,
@@ -66,7 +66,7 @@ test_that("theta matrices passed to knntl are the same as those output and store
                             times = 1,
                             length.out = 4,
                             k = c(3, 3),
-                            BPPARAM = SerialParam(),
+                            BPPARAM = SerialParam(RNGseed = 1),
                             th = wuweights,
                             seed = seed)
   expect_equal(tl4, tl5)
@@ -80,14 +80,14 @@ test_that("theta matrices passed to knntl are the same as those output and store
                            fcol = "markers.orig",
                            times = 1,
                            by = 1, k = c(3, 3),
-                           BPPARAM = SerialParam(),
+                           BPPARAM = SerialParam(RNGseed = 1),
                            seed = seed)
 
   tl2 <- knntlOptimisation(andy2011, andy2011goCC,
                            fcol = "markers.orig",
                            times = 1,
                            by = 1, k = c(3, 3),
-                           BPPARAM = SerialParam(),
+                           BPPARAM = SerialParam(RNGseed = 1),
                            seed = seed)
 
   expect_identical(tl1, tl2)
@@ -100,7 +100,7 @@ test_that("theta matrices passed to knntl are the same as those output and store
                           fcol = "markers.orig",
                           times = 1,
                           by = 1, k = c(3, 3),
-                          BPPARAM = SerialParam(),
+                          BPPARAM = SerialParam(RNGseed = 1),
                           seed = seed)
   expect_true(validObject(tl))
 

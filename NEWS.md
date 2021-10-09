@@ -1,4 +1,13 @@
+# pRoloc 1.33
+
 # pRoloc 1.31
+
+## Changes in version 1.31.1
+- Fix failing unit test, by setting RNGseed in `SerialParam()` (fix by
+  ococrook, see #142).
+
+## Changes in version 1.31.0
+- New devel version (Bioc 3.14)
 
 ## Changes in version 1.31.3
 - lopims() function moved to lgatto/lopims package on GitHub

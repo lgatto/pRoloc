@@ -14,11 +14,11 @@ test_that("TAGM MCMC consistency", {
   set.seed(1)
   mcmc1 <- tagmMcmcTrain(object = d1, fcol = "markers",
                          numIter = .numIter,burnin = 0, thin = 1, numChains = 2,
-                         BPPARAM = SerialParam())
+                         BPPARAM = SerialParam(RNGseed = 1))
   set.seed(1)
   mcmc2 <- tagmMcmcTrain(object = d2, fcol = "xx",
                          numIter = .numIter, burnin = 0, thin = 1, numChains = 2,
-                         BPPARAM = SerialParam())
+                         BPPARAM = SerialParam(RNGsed = 1))
   expect_equal(mcmc1, mcmc2)
   mcmc1 <- tagmMcmcProcess(mcmc1)
   mcmc2 <- tagmMcmcProcess(mcmc2)

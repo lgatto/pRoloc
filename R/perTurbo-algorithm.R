@@ -34,7 +34,7 @@ constructDataSet <- function(theDataSet, theLabel = NULL){
   resultSet$nbInd <- nRow;
   if (!is.null(theLabel)){
     resultSet$label <- theLabel
-    resultSet$liLabel <- unique(resultSet$label);
+    resultSet$liLabel <- levels(resultSet$label);
     resultSet$nbLabel <- length(resultSet$liLabel);
   }
   return(resultSet);

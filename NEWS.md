@@ -1,3 +1,10 @@
+# pRoloc 1.37
+
+## Changes in version 1.37.1
+
+- Fix bug in PerTubro classifiction function (see #146 and #147),
+  contributed by mgerault.
+
 # pRoloc 1.33
 
 # pRoloc 1.31

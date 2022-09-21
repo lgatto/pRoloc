@@ -362,7 +362,7 @@ perTurboClassification <- function(object,
     tempScores[trainInd[i]] <- 1
     ## Add predicted labels
     i <- 1:length(testInd)
-    tempScores[testInd[i]] <- max(ans[i,])    
+    tempScores[testInd[i]] <- apply(ans, 1, max)
     fData(object)$perTurbo.scores <- tempScores    
   } ## else scores is "none"
   

@@ -1,3 +1,8 @@
+# pRoloc 1.39
+
+## Changes in version 1.39.0
+- New devel version (Bioc 3.17)
+
 # pRoloc 1.37
 
 ## Changes in version 1.37.1

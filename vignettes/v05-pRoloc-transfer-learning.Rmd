@@ -229,11 +229,9 @@ head(bm)
 library("hpar")
 
 ## using old version for traceability
-setHparOptions(hpadata = "hpaSubcellularLoc14")
-hpa <- getHpa(bm$ensembl_gene_id)
+hpa <- hpar::hpaSubcellularLoc14()
 hpa$Reliability <- droplevels(hpa$Reliability)
 colnames(hpa)[1] <- "ensembl_gene_id"
-
 hpa <- dplyr::left_join(hpa, bm)
 hpa <- hpa[!duplicated(hpa$uniprotswissprot), ]
 
@@ -269,7 +267,7 @@ makeHpaSet <- function(x, score2, locs = hpalocs) {
     for  (i in 1:nrow(hpamat)) {
         loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
         loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
-        score <- score2[fData(x)[i, "Reliability"]]
+        score <- score2[as.character(fData(x)[i, "Reliability"])]
         hpamat[i, loc] <- score
         hpamat[i, loc2] <- score
     }

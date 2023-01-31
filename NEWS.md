@@ -1,12 +1,14 @@
 # pRoloc 1.39
 
+## Changes in version 1.39.1
+- Update transfer learning vignette to use hpar 1.41.
+
 ## Changes in version 1.39.0
 - New devel version (Bioc 3.17)
 
 # pRoloc 1.37
 
 ## Changes in version 1.37.1
-
 - Fix bug in PerTubro classifiction function (see #146 and #147),
   contributed by mgerault.
 

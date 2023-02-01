@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,13 +87,15 @@
 
       
 
-      </header><script src="v02-pRoloc-ml_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Machine learning techniques available in pRoloc</h1>
-                        <h4 data-toc-skip class="author">Laurent Gatto</h4>
+      <h1 data-toc-skip>Machine learning techniques available in
+pRoloc</h1>
+                        <h4 data-toc-skip class="author">Laurent
+Gatto</h4>
             <address class="author_afil">
-      de Duve Institute, UCLouvain, Belgium<br><small class="dont-index">Source: <a href="https://github.com/lgatto/pRoloc/blob/master/vignettes/v02-pRoloc-ml.Rmd" class="external-link"><code>vignettes/v02-pRoloc-ml.Rmd</code></a></small>
+      de Duve Institute, UCLouvain, Belgium<br><small class="dont-index">Source: <a href="https://github.com/lgatto/pRoloc/blob/HEAD/vignettes/v02-pRoloc-ml.Rmd" class="external-link"><code>vignettes/v02-pRoloc-ml.Rmd</code></a></small>
       <div class="hidden name"><code>v02-pRoloc-ml.Rmd</code></div>
 
     </address>
@@ -102,7 +104,11 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      <p>This vignette provides a general background about machine learning (ML) methods and concepts, and their application to the analysis of spatial proteomics data in the <em>pRoloc</em> package. See the <code>pRoloc-tutorial</code> vignette for details about the package itself.</p>
+      <p>This vignette provides a general background about machine
+      learning (ML) methods and concepts, and their application to the
+      analysis of spatial proteomics data in the <em>pRoloc</em>
+      package. See the <code>pRoloc-tutorial</code> vignette for details
+      about the package itself.</p>
     </div>
     
 <script type="text/javascript">
@@ -116,155 +122,372 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><div id="sec:intro" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sec:intro" class="anchor" aria-hidden="true"></a>Introduction</h1>
-<p>For a general practical introduction to <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em>, readers are referred to the tutorial, available using <code>vignette("pRoloc-tutorial", package = "pRoloc")</code>. The following document provides a overview of the algorithms available in the package. The respective section describe unsupervised machine learning (USML), supervised machine learning (SML), semi-supervised machine learning (SSML) as implemented in the novelty detection algorithm and transfer learning.</p>
+</script><div class="section level2">
+<h2 id="sec:intro">Introduction<a class="anchor" aria-label="anchor" href="#sec:intro"></a>
+</h2>
+<p>For a general practical introduction to <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>,
+readers are referred to the tutorial, available using
+<code>vignette("pRoloc-tutorial", package = "pRoloc")</code>. The
+following document provides a overview of the algorithms available in
+the package. The respective section describe unsupervised machine
+learning (USML), supervised machine learning (SML), semi-supervised
+machine learning (SSML) as implemented in the novelty detection
+algorithm and transfer learning.</p>
 </div>
-<div id="data-sets" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-sets" class="anchor" aria-hidden="true"></a>Data sets</h1>
-<p>We provide 108 test data sets in the <em><a href="https://bioconductor.org/packages/3.14/pRolocdata" class="external-link">pRolocdata</a></em> package that can be readily used with <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em>. The data set can be listed with <em>pRolocdata</em> and loaded with the <em>data</em> function. Each data set, including its origin, is individually documented.</p>
-<p>The data sets are distributed as <em>MSnSet</em> instances. Briefly, these are dedicated containers for quantitation data as well as feature and sample meta-data. More details about <em>MSnSet</em>s are available in the <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> tutorial and in the <em><a href="https://bioconductor.org/packages/3.14/MSnbase" class="external-link">MSnbase</a></em> package, that defined the class.</p>
+<div class="section level2">
+<h2 id="data-sets">Data sets<a class="anchor" aria-label="anchor" href="#data-sets"></a>
+</h2>
+<p>We provide 140 test data sets in the <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>
+package that can be readily used with <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>.
+The data set can be listed with <em>pRolocdata</em> and loaded with the
+<em>data</em> function. Each data set, including its origin, is
+individually documented.</p>
+<p>The data sets are distributed as <em>MSnSet</em> instances. Briefly,
+these are dedicated containers for quantitation data as well as feature
+and sample meta-data. More details about <em>MSnSet</em>s are available
+in the <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+tutorial and in the <em><a href="https://bioconductor.org/packages/3.17/MSnbase" class="external-link">MSnbase</a></em>
+package, that defined the class.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRolocdata" class="external-link">"pRolocdata"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tan2009r1</span><span class="op">)</span>
-<span class="va">tan2009r1</span></code></pre></div>
-<pre><code>## MSnSet (storageMode: lockedEnvironment)
-## assayData: 888 features, 4 samples 
-##   element names: exprs 
-## protocolData: none
-## phenoData
-##   sampleNames: X114 X115 X116 X117
-##   varLabels: Fractions
-##   varMetadata: labelDescription
-## featureData
-##   featureNames: P20353 P53501 ... P07909 (888 total)
-##   fvarLabels: FBgn Protein.ID ... markers.tl (16 total)
-##   fvarMetadata: labelDescription
-## experimentData: use 'experimentData(object)'
-##   pubMedIds: 19317464 
-## Annotation:  
-## - - - Processing information - - -
-## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-##  MSnbase version: 1.17.12</code></pre>
-<div id="other-omics-data" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#other-omics-data" class="anchor" aria-hidden="true"></a>Other omics data</h2>
-<p>While our primary biological domain is quantitative proteomics, with special emphasis on spatial proteomics, the underlying class infrastructure on which <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> and implemented in the Bioconductor <em><a href="https://bioconductor.org/packages/3.14/MSnbase" class="external-link">MSnbase</a></em> package enables the conversion from/to transcriptomics data, in particular microarray data available as <em>ExpressionSet</em> objects using the <em>as</em> coercion methods (see the <em>MSnSet</em> section in the <code>MSnbase-development</code> vignette). As a result, it is straightforward to apply the methods summarised here in detailed in the other <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> vignettes to these other data structures.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRolocdata" class="external-link">"pRolocdata"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tan2009r1</span><span class="op">)</span></span>
+<span><span class="va">tan2009r1</span></span></code></pre></div>
+<pre><code><span><span class="co">## MSnSet (storageMode: lockedEnvironment)</span></span>
+<span><span class="co">## assayData: 888 features, 4 samples </span></span>
+<span><span class="co">##   element names: exprs </span></span>
+<span><span class="co">## protocolData: none</span></span>
+<span><span class="co">## phenoData</span></span>
+<span><span class="co">##   sampleNames: X114 X115 X116 X117</span></span>
+<span><span class="co">##   varLabels: Fractions</span></span>
+<span><span class="co">##   varMetadata: labelDescription</span></span>
+<span><span class="co">## featureData</span></span>
+<span><span class="co">##   featureNames: P20353 P53501 ... P07909 (888 total)</span></span>
+<span><span class="co">##   fvarLabels: FBgn Protein.ID ... markers.tl (16 total)</span></span>
+<span><span class="co">##   fvarMetadata: labelDescription</span></span>
+<span><span class="co">## experimentData: use 'experimentData(object)'</span></span>
+<span><span class="co">##   pubMedIds: 19317464 </span></span>
+<span><span class="co">## Annotation:  </span></span>
+<span><span class="co">## - - - Processing information - - -</span></span>
+<span><span class="co">## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 </span></span>
+<span><span class="co">##  MSnbase version: 1.17.12</span></span></code></pre>
+<div class="section level3">
+<h3 class="unnumbered" id="other-omics-data">Other omics data<a class="anchor" aria-label="anchor" href="#other-omics-data"></a>
+</h3>
+<p>While our primary biological domain is quantitative proteomics, with
+special emphasis on spatial proteomics, the underlying class
+infrastructure on which <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em> and
+implemented in the Bioconductor <em><a href="https://bioconductor.org/packages/3.17/MSnbase" class="external-link">MSnbase</a></em>
+package enables the conversion from/to transcriptomics data, in
+particular microarray data available as <em>ExpressionSet</em> objects
+using the <em>as</em> coercion methods (see the <em>MSnSet</em> section
+in the <code>MSnbase-development</code> vignette). As a result, it is
+straightforward to apply the methods summarised here in detailed in the
+other <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+vignettes to these other data structures.</p>
 </div>
 </div>
-<div id="sec:usml" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sec:usml" class="anchor" aria-hidden="true"></a>Unsupervised machine learning</h1>
-<p>Unsupervised machine learning refers to clustering, i.e. finding structure in a quantitative, generally multi-dimensional data set of unlabelled data.</p>
-<p>Currently, unsupervised clustering facilities are available through the <em>plot2D</em> function and the <em><a href="https://bioconductor.org/packages/3.14/MLInterfaces" class="external-link">MLInterfaces</a></em> package <span class="citation">(Carey et al., n.d.)</span>. The former takes an <em>MSnSet</em> instance and represents the data on a scatter plot along the first two principal components. Arbitrary feature meta-data can be represented using different colours and point characters. The reader is referred to the manual page available through <em>?plot2D</em> for more details and examples.</p>
-<p><em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> also implements a <em>MLean</em> method for <em>MSnSet</em> instances, allowing to use the relevant infrastructure with the organelle proteomics framework. Although provides a common interface to unsupervised and numerous supervised algorithms, we refer to the <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> tutorial for its usage to several clustering algorithms.</p>
-<p><strong>Note</strong> Current development efforts in terms of clustering are described on the <em>Clustering infrastructure</em> wiki page (<a href="https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure" class="external-link uri">https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure</a>) and will be incorporated in future version of the package.</p>
+<div class="section level2">
+<h2 id="sec:usml">Unsupervised machine learning<a class="anchor" aria-label="anchor" href="#sec:usml"></a>
+</h2>
+<p>Unsupervised machine learning refers to clustering, i.e. finding
+structure in a quantitative, generally multi-dimensional data set of
+unlabelled data.</p>
+<p>Currently, unsupervised clustering facilities are available through
+the <em>plot2D</em> function and the <em><a href="https://bioconductor.org/packages/3.17/MLInterfaces" class="external-link">MLInterfaces</a></em>
+package <span class="citation">(Carey et al., n.d.)</span>. The former
+takes an <em>MSnSet</em> instance and represents the data on a scatter
+plot along the first two principal components. Arbitrary feature
+meta-data can be represented using different colours and point
+characters. The reader is referred to the manual page available through
+<em>?plot2D</em> for more details and examples.</p>
+<p><em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+also implements a <em>MLean</em> method for <em>MSnSet</em> instances,
+allowing to use the relevant infrastructure with the organelle
+proteomics framework. Although provides a common interface to
+unsupervised and numerous supervised algorithms, we refer to the <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+tutorial for its usage to several clustering algorithms.</p>
+<p><strong>Note</strong> Current development efforts in terms of
+clustering are described on the <em>Clustering infrastructure</em> wiki
+page (<a href="https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure" class="external-link uri">https://github.com/lgatto/pRoloc/wiki/Clustering-infrastructure</a>)
+and will be incorporated in future version of the package.</p>
 </div>
-<div id="sec:sml" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sec:sml" class="anchor" aria-hidden="true"></a>Supervised machine learning</h1>
-<p>Supervised machine learning refers to a broad family of classification algorithms. The algorithms learns from a modest set of labelled data points called the training data. Each training data example consists of a pair of inputs: the actual data, generally represented as a vector of numbers and a class label, representing the membership to exactly 1 of multiple possible classes. When there are only two possible classes, on refers to binary classification. The training data is used to construct a model that can be used to classifier new, unlabelled examples. The model takes the numeric vectors of the unlabelled data points and return, for each of these inputs, the corresponding mapped class.</p>
-<div id="sec:algo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sec:algo" class="anchor" aria-hidden="true"></a>Algorithms used</h2>
-<p><strong>k-nearest neighbour (KNN)</strong> Function <em>knn</em> from package <em><a href="https://bioconductor.org/packages/3.14/class" class="external-link">class</a></em>. For each row of the test set, the <em>k</em> nearest (in Euclidean distance) training set vectors are found, and the classification is decided by majority vote over the <em>k</em> classes, with ties broken at random. This is a simple algorithm that is often used as baseline classifier. If there are ties for the <em>k</em>th nearest vector, all candidates are included in the vote.</p>
-<p><strong>Partial least square DA (PLS-DA)</strong> Function <em>plsda</em> from package . Partial least square discriminant analysis is used to fit a standard PLS model for classification.</p>
-<p><strong>Support vector machine (SVM)</strong> A support vector machine constructs a hyperplane (or set of hyperplanes for multiple-class problem), which are then used for classification. The best separation is defined as the hyperplane that has the largest distance (the margin) to the nearest data points in any class, which also reduces the classification generalisation error. To assure liner separation of the classes, the data is transformed using a <em>kernel function</em> into a high-dimensional space, permitting liner separation of the classes.</p>
-<p><em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> makes use of the functions <em>svm</em> from package  and <em>ksvm</em> from .</p>
-<p><strong>Artificial neural network (ANN)</strong> Function <em>nnet</em> from package . Fits a single-hidden-layer neural network, possibly with skip-layer connections.</p>
-<p><strong>Naive Bayes (NB)</strong> Function <em>naiveBayes</em> from package . Naive Bayes classifier that computes the conditional a-posterior probabilities of a categorical class variable given independent predictor variables using the Bayes rule. Assumes independence of the predictor variables, and Gaussian distribution (given the target class) of metric predictors.</p>
-<p><strong>Random Forest (RF)</strong> Function <em>randomForest</em> from package .</p>
-<p><strong>Chi-square (<span class="math inline">\(\chi^2\)</span>)</strong> Assignment based on squared differences between a labelled marker and a new feature to be classified. Canonical protein correlation profile method (PCP) uses squared differences between a labelled marker and new features. In <span class="citation">(Andersen et al. 2003)</span>, <span class="math inline">\(\chi^2\)</span> is defined as , i.e. <span class="math inline">\(\chi^{2} = \frac{\sum_{i=1}^{n} (x_i - m_i)^{2}}{n}\)</span>, whereas <span class="citation">(Wiese et al. 2007)</span> divide by the value the squared value by the value of the reference feature in each fraction, i.e. <span class="math inline">\(\chi^{2} = \sum_{i=1}^{n}\frac{(x_i - m_i)^{2}}{m_i}\)</span>, where <span class="math inline">\(x_i\)</span> is normalised intensity of feature <em>x</em> in fraction <em>i</em>, <span class="math inline">\(m_i\)</span> is the normalised intensity of marker <em>m</em> in fraction <em>i</em> and <em>n</em> is the number of fractions available. We will use the former definition.</p>
-<p><strong>PerTurbo </strong> From <span class="citation">(Courty, Burger, and Laurent 2011)</span>: PerTurbo, an original, non-parametric and efficient classification method is presented here. In our framework, the manifold of each class is characterised by its Laplace-Beltrami operator, which is evaluated with classical methods involving the graph Laplacian. The classification criterion is established thanks to a measure of the magnitude of the spectrum perturbation of this operator. The first experiments show good performances against classical algorithms of the state-of-the-art. Moreover, from this measure is derived an efficient policy to design sampling queries in a context of active learning. Performances collected over toy examples and real world datasets assess the qualities of this strategy.</p>
-<p>The PerTurbo implementation comes from the <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em> packages.</p>
+<div class="section level2">
+<h2 id="sec:sml">Supervised machine learning<a class="anchor" aria-label="anchor" href="#sec:sml"></a>
+</h2>
+<p>Supervised machine learning refers to a broad family of
+classification algorithms. The algorithms learns from a modest set of
+labelled data points called the training data. Each training data
+example consists of a pair of inputs: the actual data, generally
+represented as a vector of numbers and a class label, representing the
+membership to exactly 1 of multiple possible classes. When there are
+only two possible classes, on refers to binary classification. The
+training data is used to construct a model that can be used to
+classifier new, unlabelled examples. The model takes the numeric vectors
+of the unlabelled data points and return, for each of these inputs, the
+corresponding mapped class.</p>
+<div class="section level3">
+<h3 id="sec:algo">Algorithms used<a class="anchor" aria-label="anchor" href="#sec:algo"></a>
+</h3>
+<p><strong>k-nearest neighbour (KNN)</strong> Function <em>knn</em> from
+package <em><a href="https://bioconductor.org/packages/3.17/class" class="external-link">class</a></em>. For
+each row of the test set, the <em>k</em> nearest (in Euclidean distance)
+training set vectors are found, and the classification is decided by
+majority vote over the <em>k</em> classes, with ties broken at random.
+This is a simple algorithm that is often used as baseline classifier. If
+there are ties for the <em>k</em>th nearest vector, all candidates are
+included in the vote.</p>
+<p><strong>Partial least square DA (PLS-DA)</strong> Function
+<em>plsda</em> from package . Partial least square discriminant analysis
+is used to fit a standard PLS model for classification.</p>
+<p><strong>Support vector machine (SVM)</strong> A support vector
+machine constructs a hyperplane (or set of hyperplanes for
+multiple-class problem), which are then used for classification. The
+best separation is defined as the hyperplane that has the largest
+distance (the margin) to the nearest data points in any class, which
+also reduces the classification generalisation error. To assure liner
+separation of the classes, the data is transformed using a <em>kernel
+function</em> into a high-dimensional space, permitting liner separation
+of the classes.</p>
+<p><em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+makes use of the functions <em>svm</em> from package and <em>ksvm</em>
+from .</p>
+<p><strong>Artificial neural network (ANN)</strong> Function
+<em>nnet</em> from package . Fits a single-hidden-layer neural network,
+possibly with skip-layer connections.</p>
+<p><strong>Naive Bayes (NB)</strong> Function <em>naiveBayes</em> from
+package . Naive Bayes classifier that computes the conditional
+a-posterior probabilities of a categorical class variable given
+independent predictor variables using the Bayes rule. Assumes
+independence of the predictor variables, and Gaussian distribution
+(given the target class) of metric predictors.</p>
+<p><strong>Random Forest (RF)</strong> Function <em>randomForest</em>
+from package .</p>
+<p><strong>Chi-square (<span class="math inline">\(\chi^2\)</span>)</strong> Assignment based on
+squared differences between a labelled marker and a new feature to be
+classified. Canonical protein correlation profile method (PCP) uses
+squared differences between a labelled marker and new features. In <span class="citation">(Andersen et al. 2003)</span>, <span class="math inline">\(\chi^2\)</span> is defined as , i.e. <span class="math inline">\(\chi^{2} = \frac{\sum_{i=1}^{n} (x_i -
+m_i)^{2}}{n}\)</span>, whereas <span class="citation">(Wiese et al.
+2007)</span> divide by the value the squared value by the value of the
+reference feature in each fraction, i.e. <span class="math inline">\(\chi^{2} = \sum_{i=1}^{n}\frac{(x_i -
+m_i)^{2}}{m_i}\)</span>, where <span class="math inline">\(x_i\)</span>
+is normalised intensity of feature <em>x</em> in fraction <em>i</em>,
+<span class="math inline">\(m_i\)</span> is the normalised intensity of
+marker <em>m</em> in fraction <em>i</em> and <em>n</em> is the number of
+fractions available. We will use the former definition.</p>
+<p><strong>PerTurbo </strong> From <span class="citation">(Courty,
+Burger, and Laurent 2011)</span>: PerTurbo, an original, non-parametric
+and efficient classification method is presented here. In our framework,
+the manifold of each class is characterised by its Laplace-Beltrami
+operator, which is evaluated with classical methods involving the graph
+Laplacian. The classification criterion is established thanks to a
+measure of the magnitude of the spectrum perturbation of this operator.
+The first experiments show good performances against classical
+algorithms of the state-of-the-art. Moreover, from this measure is
+derived an efficient policy to design sampling queries in a context of
+active learning. Performances collected over toy examples and real world
+datasets assess the qualities of this strategy.</p>
+<p>The PerTurbo implementation comes from the <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+packages.</p>
 </div>
-<div id="estimating-algorithm-parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#estimating-algorithm-parameters" class="anchor" aria-hidden="true"></a>Estimating algorithm parameters</h2>
-<p>It is essential when applying any of the above classification algorithms, to wisely set the algorithm parameters, as these can have an important effect on the classification. Such parameters are for example the width <em>sigma</em> of the Radial Basis Function (Gaussian kernel) <span class="math inline">\(exp(-\sigma \| x - x' \|^2 )\)</span> and the <em>cost</em> (slack) parameter (controlling the tolerance to mis-classification) of our SVM classifier. The number of neighbours <em>k</em> of the KNN classifier is equally important as will be discussed in this sections.</p>
-<p>The <a href="#fig:knnboundaries">next figure</a> illustrates the effect of different choices of <span class="math inline">\(k\)</span> using organelle proteomics data from <span class="citation">(Dunkley et al. 2006)</span> (<em>dunkley2006</em> from <em><a href="https://bioconductor.org/packages/3.14/pRolocdata" class="external-link">pRolocdata</a></em>). As highlighted in the squared region, we can see that using a low <span class="math inline">\(k\)</span> (<em>k = 1</em> on the left) will result in very specific classification boundaries that precisely follow the contour or our marker set as opposed to a higher number of neighbours (<em>k = 8</em> on the right). While one could be tempted to believe that <em>optimised</em> classification boundaries are preferable, it is essential to remember that these boundaries are specific to the marker set used to construct them, while there is absolutely no reason to expect these regions to faithfully separate any new data points, in particular proteins that we wish to classify to an organelle. In other words, the highly specific <em>k = 1</em> classification boundaries are <em>over-fitted</em> for the marker set or, in other words, lack generalisation to new instances. We will demonstrate this using simulated data taken from <span class="citation">(James et al. 2013)</span> and show what detrimental effect <em>over-fitting</em> has on new data.</p>
+<div class="section level3">
+<h3 id="estimating-algorithm-parameters">Estimating algorithm parameters<a class="anchor" aria-label="anchor" href="#estimating-algorithm-parameters"></a>
+</h3>
+<p>It is essential when applying any of the above classification
+algorithms, to wisely set the algorithm parameters, as these can have an
+important effect on the classification. Such parameters are for example
+the width <em>sigma</em> of the Radial Basis Function (Gaussian kernel)
+<span class="math inline">\(exp(-\sigma \| x - x' \|^2 )\)</span>
+and the <em>cost</em> (slack) parameter (controlling the tolerance to
+mis-classification) of our SVM classifier. The number of neighbours
+<em>k</em> of the KNN classifier is equally important as will be
+discussed in this sections.</p>
+<p>The <a href="#fig:knnboundaries">next figure</a> illustrates the
+effect of different choices of <span class="math inline">\(k\)</span>
+using organelle proteomics data from <span class="citation">(Dunkley et
+al. 2006)</span> (<em>dunkley2006</em> from <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>).
+As highlighted in the squared region, we can see that using a low <span class="math inline">\(k\)</span> (<em>k = 1</em> on the left) will
+result in very specific classification boundaries that precisely follow
+the contour or our marker set as opposed to a higher number of
+neighbours (<em>k = 8</em> on the right). While one could be tempted to
+believe that <em>optimised</em> classification boundaries are
+preferable, it is essential to remember that these boundaries are
+specific to the marker set used to construct them, while there is
+absolutely no reason to expect these regions to faithfully separate any
+new data points, in particular proteins that we wish to classify to an
+organelle. In other words, the highly specific <em>k = 1</em>
+classification boundaries are <em>over-fitted</em> for the marker set
+or, in other words, lack generalisation to new instances. We will
+demonstrate this using simulated data taken from <span class="citation">(James et al. 2013)</span> and show what detrimental
+effect <em>over-fitting</em> has on new data.</p>
 <div class="figure">
-<img src="Figures/knnboundaries.png" id="fig:knnboundaries" alt=""><p class="caption">Classification boundaries using <span class="math inline">\(k=1\)</span> or <span class="math inline">\(k=8\)</span> on the <code>dunkley2006</code> data.</p>
+<img src="Figures/knnboundaries.png" id="fig:knnboundaries" alt=""><p class="caption">Classification boundaries using <span class="math inline">\(k=1\)</span> or <span class="math inline">\(k=8\)</span> on the <code>dunkley2006</code>
+data.</p>
 </div>
-<p>The <a href="#fig:ISL1">figure below</a> uses 2 <em>x</em> 100 simulated data points belonging to either of the orange or blue classes. The genuine classes for all the points is known (solid lines) and the KNN algorithm has been applied using <em>k = 1</em> (left) and <em>k = 100</em> (right) respectively (purple dashed lines). As in our organelle proteomics examples, we observe that when k = 1, the decision boundaries are overly flexible and identify patterns in the data that do not reflect to correct boundaries (in such cases, the classifier is said to have low bias but very high variance). When a large <em>k</em> is used, the classifier becomes inflexible and produces approximate and nearly linear separation boundaries (such a classifier is said to have low variance but high bias). On this simulated data set, neither <em>k = 1</em> nor <em>k = 100</em> give good predictions and have test error rates (i.e. the proportion of wrongly classified points) of 0.1695 and 0.1925, respectively.</p>
+<p>The <a href="#fig:ISL1">figure below</a> uses 2 <em>x</em> 100
+simulated data points belonging to either of the orange or blue classes.
+The genuine classes for all the points is known (solid lines) and the
+KNN algorithm has been applied using <em>k = 1</em> (left) and <em>k =
+100</em> (right) respectively (purple dashed lines). As in our organelle
+proteomics examples, we observe that when k = 1, the decision boundaries
+are overly flexible and identify patterns in the data that do not
+reflect to correct boundaries (in such cases, the classifier is said to
+have low bias but very high variance). When a large <em>k</em> is used,
+the classifier becomes inflexible and produces approximate and nearly
+linear separation boundaries (such a classifier is said to have low
+variance but high bias). On this simulated data set, neither <em>k =
+1</em> nor <em>k = 100</em> give good predictions and have test error
+rates (i.e. the proportion of wrongly classified points) of 0.1695 and
+0.1925, respectively.</p>
 <div class="figure">
-<img src="Figures/ISL-2_16.png" id="fig:ISL1" alt=""><p class="caption">The KNN classifier using <span class="math inline">\(k = 1\)</span> (left, solid classification boundaries) and <span class="math inline">\(k = 100\)</span> (right, solid classification boundaries) compared the Bayes decision boundaries (see original material for details). Reproduced with permission from <span class="citation">(James et al. 2013)</span>.</p>
+<img src="Figures/ISL-2_16.png" id="fig:ISL1" alt=""><p class="caption">The KNN classifier using <span class="math inline">\(k = 1\)</span> (left, solid classification
+boundaries) and <span class="math inline">\(k = 100\)</span> (right,
+solid classification boundaries) compared the Bayes decision boundaries
+(see original material for details). Reproduced with permission from
+<span class="citation">(James et al. 2013)</span>.</p>
 </div>
-<p>To quantify the effect of flexibility and lack thereof in defining the classification boundaries, <span class="citation">(James et al. 2013)</span> calculate the classification error rates using training data (training error rate) and testing data (testing error rate). The latter is completely new data that was not used to assess the model error rate when defining algorithm parameters; one often says that the model used for classification has not <em>seen</em> this data. If the model performs well on new data, it is said to generalise well. This is a quality that is required in most cases, and in particular in our organelle proteomics experiments where the training data corresponds to our marker sets. Figure @ref{fig:ISL2} plots the respective training and testing error rates as a function of <em>1/k</em> which is a reflection of the flexibility/complexity of our model; when <em>1/k = 1</em>, i.e. <em>k = 1</em> (far right), we have a very flexible model with the risk of over-fitting. Greater values of <em>k</em> (towards the left) characterise less flexible models. As can be seen, high values of <em>k</em> produce poor performance for both training and testing data. However, while the training error steadily decreases when the model complexity increases (smaller <em>k</em>), the testing error rate displays a typical U-shape: at a value around <em>k = 10</em>, the testing error rate reaches a minimum and then starts to increase due to over-fitting to the training data and lack of generalisation of the model.</p>
+<p>To quantify the effect of flexibility and lack thereof in defining
+the classification boundaries, <span class="citation">(James et al.
+2013)</span> calculate the classification error rates using training
+data (training error rate) and testing data (testing error rate). The
+latter is completely new data that was not used to assess the model
+error rate when defining algorithm parameters; one often says that the
+model used for classification has not <em>seen</em> this data. If the
+model performs well on new data, it is said to generalise well. This is
+a quality that is required in most cases, and in particular in our
+organelle proteomics experiments where the training data corresponds to
+our marker sets. Figure @ref{fig:ISL2} plots the respective training and
+testing error rates as a function of <em>1/k</em> which is a reflection
+of the flexibility/complexity of our model; when <em>1/k = 1</em>,
+i.e. <em>k = 1</em> (far right), we have a very flexible model with the
+risk of over-fitting. Greater values of <em>k</em> (towards the left)
+characterise less flexible models. As can be seen, high values of
+<em>k</em> produce poor performance for both training and testing data.
+However, while the training error steadily decreases when the model
+complexity increases (smaller <em>k</em>), the testing error rate
+displays a typical U-shape: at a value around <em>k = 10</em>, the
+testing error rate reaches a minimum and then starts to increase due to
+over-fitting to the training data and lack of generalisation of the
+model.</p>
 <div class="figure">
-<img src="Figures/ISL-2_17.png" id="fig:ISL2" alt=""><p class="caption">Effect of train and test error with respect to model complexity. The former decreases for lower values of <span class="math inline">\(k\)</span> while the test error reaches a minimum around <span class="math inline">\(k = 10\)</span> before increasing again. Reproduced with permission from <span class="citation">(James et al. 2013)</span>.</p>
+<img src="Figures/ISL-2_17.png" id="fig:ISL2" alt=""><p class="caption">Effect of train and test error with respect to model
+complexity. The former decreases for lower values of <span class="math inline">\(k\)</span> while the test error reaches a minimum
+around <span class="math inline">\(k = 10\)</span> before increasing
+again. Reproduced with permission from <span class="citation">(James et
+al. 2013)</span>.</p>
 </div>
-<p>These results show that adequate optimisation of the model parameters are essential to avoid either too flexible models (that do not generalise well to new data) or models that do not describe the decision boundaries adequately. Such parameter selection is achieved by cross validation, where the initial marker proteins are separated into training data used to build classification models and independent testing data used to assess the model on new data.</p>
-<p>We recommend the book <em>An Introduction to Statistical Learning</em> (<a href="http://www-bcf.usc.edu/~gareth/ISL/" class="external-link uri">http://www-bcf.usc.edu/~gareth/ISL/</a>) by <span class="citation">(James et al. 2013)</span> for a more detailed introduction of machine learning.</p>
+<p>These results show that adequate optimisation of the model parameters
+are essential to avoid either too flexible models (that do not
+generalise well to new data) or models that do not describe the decision
+boundaries adequately. Such parameter selection is achieved by cross
+validation, where the initial marker proteins are separated into
+training data used to build classification models and independent
+testing data used to assess the model on new data.</p>
+<p>We recommend the book <em>An Introduction to Statistical
+Learning</em> (<a href="http://www-bcf.usc.edu/~gareth/ISL/" class="external-link uri">http://www-bcf.usc.edu/~gareth/ISL/</a>) by <span class="citation">(James et al. 2013)</span> for a more detailed
+introduction of machine learning.</p>
 </div>
-<div id="default-analysis-scheme" class="section level2">
-<h2 class="hasAnchor">
-<a href="#default-analysis-scheme" class="anchor" aria-hidden="true"></a>Default analysis scheme</h2>
-<p>Below, we present a typical classification analysis using <em><a href="https://bioconductor.org/packages/3.14/pRoloc" class="external-link">pRoloc</a></em>. The analysis typically consists of two steps. The first one is to optimise the classifier parameters to be used for training and testing (see above). A range of parameters are tested using the labelled data, for which the labels are known. For each set of parameters, we hide the labels of a subset of labelled data and use the other part to train a model and apply in on the testing data with hidden labels. The comparison of the estimated and expected labels enables to assess the validity of the model and hence the adequacy if the parameters. Once adequate parameters have been identified, they are used to infer a model on the complete organelle marker set and used to infer the sub-cellular location of the unlabelled examples.</p>
+<div class="section level3">
+<h3 id="default-analysis-scheme">Default analysis scheme<a class="anchor" aria-label="anchor" href="#default-analysis-scheme"></a>
+</h3>
+<p>Below, we present a typical classification analysis using <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>.
+The analysis typically consists of two steps. The first one is to
+optimise the classifier parameters to be used for training and testing
+(see above). A range of parameters are tested using the labelled data,
+for which the labels are known. For each set of parameters, we hide the
+labels of a subset of labelled data and use the other part to train a
+model and apply in on the testing data with hidden labels. The
+comparison of the estimated and expected labels enables to assess the
+validity of the model and hence the adequacy if the parameters. Once
+adequate parameters have been identified, they are used to infer a model
+on the complete organelle marker set and used to infer the sub-cellular
+location of the unlabelled examples.</p>
 </div>
-<div id="parameter-optimisation" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#parameter-optimisation" class="anchor" aria-hidden="true"></a>Parameter optimisation</h2>
-<p>Algorithmic performance is estimated using a stratified 20/80 partitioning. The 80% partitions are subjected to 5-fold cross-validation in order to optimise free parameters via a grid search, and these parameters are then applied to the remaining 20%. The procedure is repeated <em>n = 100</em> <code>times</code> to sample <em>n</em> accuracy metrics (see below) values using <em>n</em>, possibly different, optimised parameters for evaluation.</p>
-<p>Models accuracy is evaluated using the F1 score, <span class="math inline">\(F1 = 2 ~ \frac{precision \times recall}{precision + recall}\)</span>, calculated as the harmonic mean of the precision (<span class="math inline">\(precision = \frac{tp}{tp+fp}\)</span>, a measure of <em>exactness</em> – returned output is a relevant result) and recall (<span class="math inline">\(recall=\frac{tp}{tp+fn}\)</span>, a measure of <em>completeness</em> – indicating how much was missed from the output). What we are aiming for are high generalisation accuracy, i.e high <span class="math inline">\(F1\)</span>, indicating that the marker proteins in the test data set are consistently correctly assigned by the algorithms.</p>
-<p>The results of the optimisation procedure are stored in an <em>GenRegRes</em> object that can be inspected, plotted and best parameter pairs can be extracted.</p>
-<p>For a given algorithm <code>alg</code>, the corresponding parameter optimisation function is names <em>algOptimisation</em> or, equivalently, <em>algOptimization</em>. See the table below for details. A description of each of the respective model parameters is provided in the optimisation function manuals, available through <em>?algOptimisation</em>.</p>
+<div class="section level3">
+<h3 class="unnumbered" id="parameter-optimisation">Parameter optimisation<a class="anchor" aria-label="anchor" href="#parameter-optimisation"></a>
+</h3>
+<p>Algorithmic performance is estimated using a stratified 20/80
+partitioning. The 80% partitions are subjected to 5-fold
+cross-validation in order to optimise free parameters via a grid search,
+and these parameters are then applied to the remaining 20%. The
+procedure is repeated <em>n = 100</em> <code>times</code> to sample
+<em>n</em> accuracy metrics (see below) values using <em>n</em>,
+possibly different, optimised parameters for evaluation.</p>
+<p>Models accuracy is evaluated using the F1 score, <span class="math inline">\(F1 = 2 ~ \frac{precision \times recall}{precision
++ recall}\)</span>, calculated as the harmonic mean of the precision
+(<span class="math inline">\(precision = \frac{tp}{tp+fp}\)</span>, a
+measure of <em>exactness</em> – returned output is a relevant result)
+and recall (<span class="math inline">\(recall=\frac{tp}{tp+fn}\)</span>, a measure of
+<em>completeness</em> – indicating how much was missed from the output).
+What we are aiming for are high generalisation accuracy, i.e high <span class="math inline">\(F1\)</span>, indicating that the marker proteins
+in the test data set are consistently correctly assigned by the
+algorithms.</p>
+<p>The results of the optimisation procedure are stored in an
+<em>GenRegRes</em> object that can be inspected, plotted and best
+parameter pairs can be extracted.</p>
+<p>For a given algorithm <code>alg</code>, the corresponding parameter
+optimisation function is names <em>algOptimisation</em> or,
+equivalently, <em>algOptimization</em>. See the table below for details.
+A description of each of the respective model parameters is provided in
+the optimisation function manuals, available through
+<em>?algOptimisation</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmOptimisation.html">svmOptimisation</a></span><span class="op">(</span><span class="va">tan2009r1</span>, times <span class="op">=</span> <span class="fl">10</span>,
-                          xval <span class="op">=</span> <span class="fl">5</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">params</span></code></pre></div>
-<pre><code>## Object of class "GenRegRes"
-## Algorithm: svm 
-## Hyper-parameters:
-##  cost: 0.0625 0.125 0.25 0.5 1 2 4 8 16
-##  sigma: 0.001 0.01 0.1 1 10 100
-## Design:
-##  Replication: 10 x 5-fold X-validation
-##  Partitioning: 0.2/0.8 (test/train)
-## Results
-##  macro F1:
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7438  0.7965  0.8256  0.8146  0.8360  0.8585 
-##  best sigma: 1 0.1   
-##  best cost: 8 16 2 4   
-## Use getWarnings() to see warnings.</code></pre>
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmOptimisation.html">svmOptimisation</a></span><span class="op">(</span><span class="va">tan2009r1</span>, times <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                          xval <span class="op">=</span> <span class="fl">5</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">params</span></span></code></pre></div>
+<pre><code><span><span class="co">## Object of class "GenRegRes"</span></span>
+<span><span class="co">## Algorithm: svm </span></span>
+<span><span class="co">## Hyper-parameters:</span></span>
+<span><span class="co">##  cost: 0.0625 0.125 0.25 0.5 1 2 4 8 16</span></span>
+<span><span class="co">##  sigma: 0.001 0.01 0.1 1 10 100</span></span>
+<span><span class="co">## Design:</span></span>
+<span><span class="co">##  Replication: 10 x 5-fold X-validation</span></span>
+<span><span class="co">##  Partitioning: 0.2/0.8 (test/train)</span></span>
+<span><span class="co">## Results</span></span>
+<span><span class="co">##  macro F1:</span></span>
+<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">##  0.7951  0.8121  0.8678  0.8656  0.8931  0.9748 </span></span>
+<span><span class="co">##  best sigma: 0.1 1   </span></span>
+<span><span class="co">##  best cost: 8 4 1 16   </span></span>
+<span><span class="co">## Use getWarnings() to see warnings.</span></span></code></pre>
 </div>
-<div id="classification" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#classification" class="anchor" aria-hidden="true"></a>Classification</h2>
+<div class="section level3">
+<h3 class="unnumbered" id="classification">Classification<a class="anchor" aria-label="anchor" href="#classification"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tan2009r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmClassification.html">svmClassification</a></span><span class="op">(</span><span class="va">tan2009r1</span>, <span class="va">params</span><span class="op">)</span>
-<span class="va">tan2009r1</span></code></pre></div>
-<pre><code>## MSnSet (storageMode: lockedEnvironment)
-## assayData: 888 features, 4 samples 
-##   element names: exprs 
-## protocolData: none
-## phenoData
-##   sampleNames: X114 X115 X116 X117
-##   varLabels: Fractions
-##   varMetadata: labelDescription
-## featureData
-##   featureNames: P20353 P53501 ... P07909 (888 total)
-##   fvarLabels: FBgn Protein.ID ... svm.scores (18 total)
-##   fvarMetadata: labelDescription
-## experimentData: use 'experimentData(object)'
-##   pubMedIds: 19317464 
-## Annotation:  
-## - - - Processing information - - -
-## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 
-## Performed svm prediction (sigma=1 cost=2) Thu Jul 22 14:54:01 2021 
-##  MSnbase version: 1.17.12</code></pre>
-</div>
-<div id="customising-model-parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#customising-model-parameters" class="anchor" aria-hidden="true"></a>Customising model parameters</h2>
-<p>Below we illustrate how to weight different classes according to the number of labelled instances, where large sets are down weighted. This strategy can help with imbalanced designs.</p>
+<code class="sourceCode R"><span><span class="va">tan2009r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmClassification.html">svmClassification</a></span><span class="op">(</span><span class="va">tan2009r1</span>, <span class="va">params</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "markers"</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="fu"><a href="../reference/markerMSnSet.html">markerMSnSet</a></span><span class="op">(</span><span class="va">dunkley2006</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">markers</span><span class="op">)</span>
-<span class="va">wpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmOptimisation.html">svmOptimisation</a></span><span class="op">(</span><span class="va">dunkley2006</span>, class.weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>
-<span class="va">wres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmClassification.html">svmClassification</a></span><span class="op">(</span><span class="va">dunkley2006</span>, <span class="va">wpar</span>, class.weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tan2009r1</span></span></code></pre></div>
+<pre><code><span><span class="co">## MSnSet (storageMode: lockedEnvironment)</span></span>
+<span><span class="co">## assayData: 888 features, 4 samples </span></span>
+<span><span class="co">##   element names: exprs </span></span>
+<span><span class="co">## protocolData: none</span></span>
+<span><span class="co">## phenoData</span></span>
+<span><span class="co">##   sampleNames: X114 X115 X116 X117</span></span>
+<span><span class="co">##   varLabels: Fractions</span></span>
+<span><span class="co">##   varMetadata: labelDescription</span></span>
+<span><span class="co">## featureData</span></span>
+<span><span class="co">##   featureNames: P20353 P53501 ... P07909 (888 total)</span></span>
+<span><span class="co">##   fvarLabels: FBgn Protein.ID ... svm.scores (18 total)</span></span>
+<span><span class="co">##   fvarMetadata: labelDescription</span></span>
+<span><span class="co">## experimentData: use 'experimentData(object)'</span></span>
+<span><span class="co">##   pubMedIds: 19317464 </span></span>
+<span><span class="co">## Annotation:  </span></span>
+<span><span class="co">## - - - Processing information - - -</span></span>
+<span><span class="co">## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 </span></span>
+<span><span class="co">## Performed svm prediction (sigma=1 cost=16) Wed Feb  1 05:44:48 2023 </span></span>
+<span><span class="co">##  MSnbase version: 1.17.12</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="customising-model-parameters">Customising model parameters<a class="anchor" aria-label="anchor" href="#customising-model-parameters"></a>
+</h3>
+<p>Below we illustrate how to weight different classes according to the
+number of labelled instances, where large sets are down weighted. This
+strategy can help with imbalanced designs.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="fu"><a href="../reference/markerMSnSet.html">markerMSnSet</a></span><span class="op">(</span><span class="va">dunkley2006</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">markers</span><span class="op">)</span></span>
+<span><span class="va">wpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmOptimisation.html">svmOptimisation</a></span><span class="op">(</span><span class="va">dunkley2006</span>, class.weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span>
+<span><span class="va">wres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/svmClassification.html">svmClassification</a></span><span class="op">(</span><span class="va">dunkley2006</span>, <span class="va">wpar</span>, class.weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="24%">
@@ -337,172 +560,302 @@ document.addEventListener("DOMContentLoaded", function() {
 </table>
 </div>
 </div>
-<div id="comparison-of-different-classifiers" class="section level1">
-<h1 class="hasAnchor">
-<a href="#comparison-of-different-classifiers" class="anchor" aria-hidden="true"></a>Comparison of different classifiers</h1>
-<p>Several supervised machine learning algorithms have already been applied to organelle proteomics data classification: partial least square discriminant analysis in <span class="citation">(Dunkley et al. 2006, Tan2009)</span>, support vector machines (SVMs) in <span class="citation">(Trotter et al. 2010)</span>, random forest in <span class="citation">(Ohta et al. 2010)</span>, neural networks in <span class="citation">(Tardif et al. 2012)</span>, naive Bayes <span class="citation">(Nikolovski et al. 2012)</span>. In our HUPO 2011 poster<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, we show that different classification algorithms provide very similar performance. We have extended this comparison on various datasets distributed in the <em><a href="https://bioconductor.org/packages/3.14/pRolocdata" class="external-link">pRolocdata</a></em> package. On figure @ref{fig:f1box}, we illustrate how different algorithms reach very similar performances on most of our test datasets.</p>
+<div class="section level2">
+<h2 id="comparison-of-different-classifiers">Comparison of different classifiers<a class="anchor" aria-label="anchor" href="#comparison-of-different-classifiers"></a>
+</h2>
+<p>Several supervised machine learning algorithms have already been
+applied to organelle proteomics data classification: partial least
+square discriminant analysis in <span class="citation">(Dunkley et al.
+2006, Tan2009)</span>, support vector machines (SVMs) in <span class="citation">(Trotter et al. 2010)</span>, random forest in <span class="citation">(Ohta et al. 2010)</span>, neural networks in <span class="citation">(Tardif et al. 2012)</span>, naive Bayes <span class="citation">(Nikolovski et al. 2012)</span>. In our HUPO 2011
+poster<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>,
+we show that different classification algorithms provide very similar
+performance. We have extended this comparison on various datasets
+distributed in the <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>
+package. On figure @ref{fig:f1box}, we illustrate how different
+algorithms reach very similar performances on most of our test
+datasets.</p>
 <div class="figure">
-<img src="Figures/F1boxplots.png" id="fig:f1box" alt=""><p class="caption">Comparison of classification performances of several contemporary classification algorithms on data from the <em><a href="https://bioconductor.org/packages/3.14/pRolocdata" class="external-link">pRolocdata</a></em> package.</p>
+<img src="Figures/F1boxplots.png" id="fig:f1box" alt=""><p class="caption">Comparison of classification performances of several
+contemporary classification algorithms on data from the <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>
+package.</p>
 </div>
 </div>
-<div id="sec:bayes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sec:bayes" class="anchor" aria-hidden="true"></a>Bayesian generative models</h1>
-<p>We also offer generative models that, as opposed to the descriptive classifier presented above, explicitly model the spatial proteomics data. In <code>pRoloc</code>, we probose two models using T-augmented Gaussian mixtures using repectively a Expectration-Maximisation approach to <em>maximum a posteriori</em> estimation of the model parameters (TAGM-MAP), and an MCMC approach (TAGM-MCMC) that enables a proteome-wide uncertainty quantitation. These methods are described in the <em>pRoloc-bayesian</em> vignette.</p>
-<p>For a details description of the methods and their validation, please refer to <span class="citation">(Crook et al. 2018)</span>:</p>
+<div class="section level2">
+<h2 id="sec:bayes">Bayesian generative models<a class="anchor" aria-label="anchor" href="#sec:bayes"></a>
+</h2>
+<p>We also offer generative models that, as opposed to the descriptive
+classifier presented above, explicitly model the spatial proteomics
+data. In <code>pRoloc</code>, we probose two models using T-augmented
+Gaussian mixtures using repectively a Expectration-Maximisation approach
+to <em>maximum a posteriori</em> estimation of the model parameters
+(TAGM-MAP), and an MCMC approach (TAGM-MCMC) that enables a
+proteome-wide uncertainty quantitation. These methods are described in
+the <em>pRoloc-bayesian</em> vignette.</p>
+<p>For a details description of the methods and their validation, please
+refer to <span class="citation">(Crook et al. 2018)</span>:</p>
 <blockquote>
-<p>A Bayesian Mixture Modelling Approach For Spatial Proteomics Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, Laurent Gatto bioRxiv 282269; doi: <a href="https://doi.org/10.1101/282269" class="external-link uri">https://doi.org/10.1101/282269</a></p>
+<p>A Bayesian Mixture Modelling Approach For Spatial Proteomics Oliver M
+Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, Laurent Gatto
+bioRxiv 282269; doi: <a href="https://doi.org/10.1101/282269" class="external-link uri">https://doi.org/10.1101/282269</a></p>
 </blockquote>
 </div>
-<div id="sec:ssml" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sec:ssml" class="anchor" aria-hidden="true"></a>Semi-supervised machine learning</h1>
-<p>The <em>phenoDisco</em> algorithm is a semi-supervised novelty detection method by <span class="citation">(Lisa M. Breckels et al. 2013)</span> (<a href="#fig:pd">figure below</a>). It uses the labelled (i.e. markers, noted <span class="math inline">\(D_L\)</span>) and unlabelled (i.e. proteins of unknown localisation, noted <span class="math inline">\(D_U\)</span>) sets of the input data. The algorithm is repeated <span class="math inline">\(N\)</span> times (the <code>times</code> argument in the <em>phenoDisco</em> function). At each iteration, each organelle class <span class="math inline">\(D_{L}^{i}\)</span> and the unlabelled complement are clustered using Gaussian mixture modelling. While unlabelled members that systematically cluster with <span class="math inline">\(D_{L}^{i}\)</span> and pass outlier detection are labelled as new putative members of class <span class="math inline">\(i\)</span>, any example of <span class="math inline">\(D_U\)</span> which are not merged with any any of the <span class="math inline">\(D_{L}^{i}\)</span> and are consistently clustered together throughout the <span class="math inline">\(N\)</span> iterations are considered members of a new phenotype.</p>
+<div class="section level2">
+<h2 id="sec:ssml">Semi-supervised machine learning<a class="anchor" aria-label="anchor" href="#sec:ssml"></a>
+</h2>
+<p>The <em>phenoDisco</em> algorithm is a semi-supervised novelty
+detection method by <span class="citation">(Lisa M. Breckels et al.
+2013)</span> (<a href="#fig:pd">figure below</a>). It uses the labelled
+(i.e. markers, noted <span class="math inline">\(D_L\)</span>) and
+unlabelled (i.e. proteins of unknown localisation, noted <span class="math inline">\(D_U\)</span>) sets of the input data. The
+algorithm is repeated <span class="math inline">\(N\)</span> times (the
+<code>times</code> argument in the <em>phenoDisco</em> function). At
+each iteration, each organelle class <span class="math inline">\(D_{L}^{i}\)</span> and the unlabelled complement
+are clustered using Gaussian mixture modelling. While unlabelled members
+that systematically cluster with <span class="math inline">\(D_{L}^{i}\)</span> and pass outlier detection are
+labelled as new putative members of class <span class="math inline">\(i\)</span>, any example of <span class="math inline">\(D_U\)</span> which are not merged with any any of
+the <span class="math inline">\(D_{L}^{i}\)</span> and are consistently
+clustered together throughout the <span class="math inline">\(N\)</span>
+iterations are considered members of a new phenotype.</p>
 <div class="figure">
 <img src="Figures/phenodisco.png" id="fig:pd" alt=""><p class="caption">The PhenoDisco iterative algorithm.</p>
 </div>
 </div>
-<div id="sec:tl" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sec:tl" class="anchor" aria-hidden="true"></a>Transfer learning</h1>
-<p>When multiple sources of data are available, it is often beneficial to take all or several into account with the aim of increasing the information to tackle a problem of interest. While it is at times possible to combine these different sources of data, this can lead to substantially harm to performance of the analysis when the different data sources are of variable signal-to-noise ratio or the data are drawn from different domains and recorded by different encoding (quantitative and binary, for example). If we defined the following two data source</p>
+<div class="section level2">
+<h2 id="sec:tl">Transfer learning<a class="anchor" aria-label="anchor" href="#sec:tl"></a>
+</h2>
+<p>When multiple sources of data are available, it is often beneficial
+to take all or several into account with the aim of increasing the
+information to tackle a problem of interest. While it is at times
+possible to combine these different sources of data, this can lead to
+substantially harm to performance of the analysis when the different
+data sources are of variable signal-to-noise ratio or the data are drawn
+from different domains and recorded by different encoding (quantitative
+and binary, for example). If we defined the following two data
+source</p>
 <ol style="list-style-type: decimal">
 <li>
-<em>primary</em> data, of high signal-to-noise ratio, but general available in limited amounts;</li>
+<em>primary</em> data, of high signal-to-noise ratio, but general
+available in limited amounts;</li>
 <li>
-<em>auxiliary</em> data, of limited signal-to-noise, and available in large amounts;</li>
+<em>auxiliary</em> data, of limited signal-to-noise, and available
+in large amounts;</li>
 </ol>
-<p>then, a <em>transfer learning</em> algorithm will efficiently support/complement the primary target domain with auxiliary data features without compromising the integrity of our primary data.</p>
-<p>We have developed a transfer learning framework <span class="citation">(L. M. Breckels et al. 2016)</span> and applied to the analysis of spatial proteomics data, as described in the <code>pRoloc-transfer-learning</code> vignette.</p>
+<p>then, a <em>transfer learning</em> algorithm will efficiently
+support/complement the primary target domain with auxiliary data
+features without compromising the integrity of our primary data.</p>
+<p>We have developed a transfer learning framework <span class="citation">(L. M. Breckels et al. 2016)</span> and applied to the
+analysis of spatial proteomics data, as described in the
+<code>pRoloc-transfer-learning</code> vignette.</p>
 </div>
-<div id="session-information" class="section level1">
-<h1 class="hasAnchor">
-<a href="#session-information" class="anchor" aria-hidden="true"></a>Session information</h1>
-<p>All software and respective versions used to produce this document are listed below.</p>
-<pre><code>## R version 4.1.0 (2021-05-18)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.04.2 LTS
-## 
-## Matrix products: default
-## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
-## 
-## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-## 
-## attached base packages:
-## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
-## [8] base     
-## 
-## other attached packages:
-##  [1] pRolocdata_1.31.0    pRoloc_1.33.0        BiocParallel_1.27.2 
-##  [4] MLInterfaces_1.73.0  cluster_2.1.2        annotate_1.71.0     
-##  [7] XML_3.99-0.6         AnnotationDbi_1.55.1 IRanges_2.27.0      
-## [10] MSnbase_2.19.1       ProtGenerics_1.25.1  S4Vectors_0.31.0    
-## [13] mzR_2.27.1           Rcpp_1.0.7           Biobase_2.53.0      
-## [16] BiocGenerics_0.39.1  knitr_1.33           BiocStyle_2.21.3    
-## 
-## loaded via a namespace (and not attached):
-##   [1] BiocFileCache_2.1.1    systemfonts_1.0.2      plyr_1.8.6            
-##   [4] splines_4.1.0          GenomeInfoDb_1.29.3    ggplot2_3.3.5         
-##   [7] digest_0.6.27          foreach_1.5.1          htmltools_0.5.1.1     
-##  [10] viridis_0.6.1          gdata_2.18.0           fansi_0.5.0           
-##  [13] magrittr_2.0.1         memoise_2.0.0          doParallel_1.0.16     
-##  [16] mixtools_1.2.0         limma_3.49.1           recipes_0.1.16        
-##  [19] Biostrings_2.61.1      gower_0.2.2            pkgdown_1.6.1.9001    
-##  [22] lpSolve_5.6.15         prettyunits_1.1.1      colorspace_2.0-2      
-##  [25] blob_1.2.1             rappdirs_0.3.3         textshaping_0.3.5     
-##  [28] xfun_0.24              dplyr_1.0.7            crayon_1.4.1          
-##  [31] RCurl_1.98-1.3         jsonlite_1.7.2         hexbin_1.28.2         
-##  [34] impute_1.67.0          survival_3.2-11        iterators_1.0.13      
-##  [37] glue_1.4.2             gtable_0.3.0           ipred_0.9-11          
-##  [40] zlibbioc_1.39.0        XVector_0.33.0         kernlab_0.9-29        
-##  [43] scales_1.1.1           vsn_3.61.0             mvtnorm_1.1-2         
-##  [46] DBI_1.1.1              viridisLite_0.4.0      xtable_1.8-4          
-##  [49] progress_1.2.2         clue_0.3-59            bit_4.0.4             
-##  [52] proxy_0.4-26           mclust_5.4.7           preprocessCore_1.55.2 
-##  [55] lava_1.6.9             prodlim_2019.11.13     MsCoreUtils_1.5.0     
-##  [58] sampling_2.9           httr_1.4.2             FNN_1.1.3             
-##  [61] RColorBrewer_1.1-2     ellipsis_0.3.2         pkgconfig_2.0.3       
-##  [64] nnet_7.3-16            sass_0.4.0             dbplyr_2.1.1          
-##  [67] utf8_1.2.1             caret_6.0-88           reshape2_1.4.4        
-##  [70] tidyselect_1.1.1       rlang_0.4.11           munsell_0.5.0         
-##  [73] tools_4.1.0            LaplacesDemon_16.1.6   cachem_1.0.5          
-##  [76] generics_0.1.0         RSQLite_2.2.7          evaluate_0.14         
-##  [79] stringr_1.4.0          fastmap_1.1.0          mzID_1.31.0           
-##  [82] yaml_2.2.1             ragg_1.1.3             ModelMetrics_1.2.2.2  
-##  [85] bit64_4.0.5            fs_1.5.0               randomForest_4.6-14   
-##  [88] purrr_0.3.4            KEGGREST_1.33.0        dendextend_1.15.1     
-##  [91] ncdf4_1.17             nlme_3.1-152           xml2_1.3.2            
-##  [94] biomaRt_2.49.2         compiler_4.1.0         filelock_1.0.2        
-##  [97] curl_4.3.2             png_0.1-7              e1071_1.7-7           
-## [100] affyio_1.63.1          tibble_3.1.2           bslib_0.2.5.1         
-## [103] stringi_1.7.3          highr_0.9              desc_1.3.0            
-## [106] lattice_0.20-44        Matrix_1.3-4           vctrs_0.3.8           
-## [109] pillar_1.6.1           lifecycle_1.0.0        BiocManager_1.30.16   
-## [112] jquerylib_0.1.4        MALDIquant_1.19.3      data.table_1.14.0     
-## [115] bitops_1.0-7           R6_2.5.0               pcaMethods_1.85.0     
-## [118] affy_1.71.0            bookdown_0.22          gridExtra_2.3         
-## [121] codetools_0.2-18       gtools_3.9.2           MASS_7.3-54           
-## [124] assertthat_0.2.1       rprojroot_2.0.2        withr_2.4.2           
-## [127] GenomeInfoDbData_1.2.6 parallel_4.1.0         hms_1.1.0             
-## [130] grid_4.1.0             rpart_4.1-15           timeDate_3043.102     
-## [133] coda_0.19-4            class_7.3-19           rmarkdown_2.9         
-## [136] segmented_1.3-4        pROC_1.17.0.1          lubridate_1.7.10</code></pre>
+<div class="section level2">
+<h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
+</h2>
+<p>All software and respective versions used to produce this document
+are listed below.</p>
+<pre><code><span><span class="co">## R Under development (unstable) (2023-01-26 r83699)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.1 LTS</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Matrix products: default</span></span>
+<span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## locale:</span></span>
+<span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: UTC</span></span>
+<span><span class="co">## tzcode source: system (glibc)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attached base packages:</span></span>
+<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">## [8] base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">##  [1] pRolocdata_1.37.0    pRoloc_1.39.1        BiocParallel_1.33.9 </span></span>
+<span><span class="co">##  [4] MLInterfaces_1.79.1  cluster_2.1.4        annotate_1.77.0     </span></span>
+<span><span class="co">##  [7] XML_3.99-0.13        AnnotationDbi_1.61.0 IRanges_2.33.0      </span></span>
+<span><span class="co">## [10] MSnbase_2.25.1       ProtGenerics_1.31.0  S4Vectors_0.37.3    </span></span>
+<span><span class="co">## [13] mzR_2.33.0           Rcpp_1.0.10          Biobase_2.59.0      </span></span>
+<span><span class="co">## [16] BiocGenerics_0.45.0  knitr_1.42           BiocStyle_2.27.1    </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## loaded via a namespace (and not attached):</span></span>
+<span><span class="co">##   [1] splines_4.3.0               bitops_1.0-7               </span></span>
+<span><span class="co">##   [3] filelock_1.0.2              tibble_3.1.8               </span></span>
+<span><span class="co">##   [5] hardhat_1.2.0               preprocessCore_1.61.0      </span></span>
+<span><span class="co">##   [7] pROC_1.18.0                 rpart_4.1.19               </span></span>
+<span><span class="co">##   [9] lifecycle_1.0.3             doParallel_1.0.17          </span></span>
+<span><span class="co">##  [11] rprojroot_2.0.3             globals_0.16.2             </span></span>
+<span><span class="co">##  [13] lattice_0.20-45             MASS_7.3-58.2              </span></span>
+<span><span class="co">##  [15] dendextend_1.16.0           magrittr_2.0.3             </span></span>
+<span><span class="co">##  [17] limma_3.55.4                plotly_4.10.1              </span></span>
+<span><span class="co">##  [19] sass_0.4.5                  rmarkdown_2.20             </span></span>
+<span><span class="co">##  [21] jquerylib_0.1.4             yaml_2.3.7                 </span></span>
+<span><span class="co">##  [23] MsCoreUtils_1.11.3          DBI_1.1.3                  </span></span>
+<span><span class="co">##  [25] RColorBrewer_1.1-3          lubridate_1.9.1            </span></span>
+<span><span class="co">##  [27] zlibbioc_1.45.0             GenomicRanges_1.51.4       </span></span>
+<span><span class="co">##  [29] purrr_1.0.1                 mixtools_2.0.0             </span></span>
+<span><span class="co">##  [31] RCurl_1.98-1.10             nnet_7.3-18                </span></span>
+<span><span class="co">##  [33] rappdirs_0.3.3              ipred_0.9-13               </span></span>
+<span><span class="co">##  [35] lava_1.7.1                  GenomeInfoDbData_1.2.9     </span></span>
+<span><span class="co">##  [37] listenv_0.9.0               gdata_2.18.0.1             </span></span>
+<span><span class="co">##  [39] parallelly_1.34.0           pkgdown_2.0.7.9000         </span></span>
+<span><span class="co">##  [41] ncdf4_1.21                  codetools_0.2-18           </span></span>
+<span><span class="co">##  [43] DelayedArray_0.25.0         xml2_1.3.3                 </span></span>
+<span><span class="co">##  [45] tidyselect_1.2.0            viridis_0.6.2              </span></span>
+<span><span class="co">##  [47] matrixStats_0.63.0          BiocFileCache_2.7.1        </span></span>
+<span><span class="co">##  [49] jsonlite_1.8.4              caret_6.0-93               </span></span>
+<span><span class="co">##  [51] e1071_1.7-12                ellipsis_0.3.2             </span></span>
+<span><span class="co">##  [53] survival_3.5-0              iterators_1.0.14           </span></span>
+<span><span class="co">##  [55] systemfonts_1.0.4           foreach_1.5.2              </span></span>
+<span><span class="co">##  [57] segmented_1.6-2             tools_4.3.0                </span></span>
+<span><span class="co">##  [59] progress_1.2.2              ragg_1.2.5                 </span></span>
+<span><span class="co">##  [61] glue_1.6.2                  prodlim_2019.11.13         </span></span>
+<span><span class="co">##  [63] gridExtra_2.3               xfun_0.37                  </span></span>
+<span><span class="co">##  [65] MatrixGenerics_1.11.0       GenomeInfoDb_1.35.13       </span></span>
+<span><span class="co">##  [67] dplyr_1.1.0                 withr_2.5.0                </span></span>
+<span><span class="co">##  [69] BiocManager_1.30.19         fastmap_1.1.0              </span></span>
+<span><span class="co">##  [71] fansi_1.0.4                 digest_0.6.31              </span></span>
+<span><span class="co">##  [73] timechange_0.2.0            R6_2.5.1                   </span></span>
+<span><span class="co">##  [75] textshaping_0.3.6           colorspace_2.1-0           </span></span>
+<span><span class="co">##  [77] gtools_3.9.4                lpSolve_5.6.17             </span></span>
+<span><span class="co">##  [79] biomaRt_2.55.0              RSQLite_2.2.20             </span></span>
+<span><span class="co">##  [81] utf8_1.2.3                  tidyr_1.3.0                </span></span>
+<span><span class="co">##  [83] generics_0.1.3              hexbin_1.28.2              </span></span>
+<span><span class="co">##  [85] data.table_1.14.6           recipes_1.0.4              </span></span>
+<span><span class="co">##  [87] FNN_1.1.3.1                 class_7.3-21               </span></span>
+<span><span class="co">##  [89] prettyunits_1.1.1           httr_1.4.4                 </span></span>
+<span><span class="co">##  [91] htmlwidgets_1.6.1           ModelMetrics_1.2.2.2       </span></span>
+<span><span class="co">##  [93] pkgconfig_2.0.3             gtable_0.3.1               </span></span>
+<span><span class="co">##  [95] timeDate_4022.108           blob_1.2.3                 </span></span>
+<span><span class="co">##  [97] impute_1.73.0               XVector_0.39.0             </span></span>
+<span><span class="co">##  [99] htmltools_0.5.4             bookdown_0.32              </span></span>
+<span><span class="co">## [101] MALDIquant_1.22             clue_0.3-64                </span></span>
+<span><span class="co">## [103] scales_1.2.1                png_0.1-8                  </span></span>
+<span><span class="co">## [105] gower_1.0.1                 reshape2_1.4.4             </span></span>
+<span><span class="co">## [107] coda_0.19-4                 nlme_3.1-161               </span></span>
+<span><span class="co">## [109] curl_5.0.0                  proxy_0.4-27               </span></span>
+<span><span class="co">## [111] cachem_1.0.6                stringr_1.5.0              </span></span>
+<span><span class="co">## [113] parallel_4.3.0              mzID_1.37.0                </span></span>
+<span><span class="co">## [115] vsn_3.67.0                  desc_1.4.2                 </span></span>
+<span><span class="co">## [117] pillar_1.8.1                grid_4.3.0                 </span></span>
+<span><span class="co">## [119] vctrs_0.5.2                 pcaMethods_1.91.0          </span></span>
+<span><span class="co">## [121] randomForest_4.7-1.1        dbplyr_2.3.0               </span></span>
+<span><span class="co">## [123] xtable_1.8-4                evaluate_0.20              </span></span>
+<span><span class="co">## [125] mvtnorm_1.1-3               cli_3.6.0                  </span></span>
+<span><span class="co">## [127] compiler_4.3.0              rlang_1.0.6                </span></span>
+<span><span class="co">## [129] crayon_1.5.2                future.apply_1.10.0        </span></span>
+<span><span class="co">## [131] LaplacesDemon_16.1.6        mclust_6.0.0               </span></span>
+<span><span class="co">## [133] affy_1.77.0                 plyr_1.8.8                 </span></span>
+<span><span class="co">## [135] fs_1.6.0                    stringi_1.7.12             </span></span>
+<span><span class="co">## [137] viridisLite_0.4.1           assertthat_0.2.1           </span></span>
+<span><span class="co">## [139] munsell_0.5.0               Biostrings_2.67.0          </span></span>
+<span><span class="co">## [141] lazyeval_0.2.2              Matrix_1.5-3               </span></span>
+<span><span class="co">## [143] hms_1.1.2                   bit64_4.0.5                </span></span>
+<span><span class="co">## [145] future_1.30.0               ggplot2_3.4.0              </span></span>
+<span><span class="co">## [147] KEGGREST_1.39.0             SummarizedExperiment_1.29.1</span></span>
+<span><span class="co">## [149] kernlab_0.9-32              memoise_2.0.1              </span></span>
+<span><span class="co">## [151] affyio_1.69.0               bslib_0.4.2                </span></span>
+<span><span class="co">## [153] sampling_2.9                bit_4.0.5</span></span></code></pre>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor" aria-hidden="true"></a>References</h1>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Andersen2003" class="csl-entry">
-Andersen, Jens S., Christopher J. Wilkinson, Thibault Mayor, Peter Mortensen, Erich A. Nigg, and Matthias Mann. 2003. <span>“Proteomic Characterization of the Human Centrosome by Protein Correlation Profiling.”</span> <em>Nature</em> 426 (6966): 570–74. <a href="https://doi.org/10.1038/nature02166" class="external-link">https://doi.org/10.1038/nature02166</a>.
+Andersen, Jens S., Christopher J. Wilkinson, Thibault Mayor, Peter
+Mortensen, Erich A. Nigg, and Matthias Mann. 2003. <span>“Proteomic
+Characterization of the Human Centrosome by Protein Correlation
+Profiling.”</span> <em>Nature</em> 426 (6966): 570–74. <a href="https://doi.org/10.1038/nature02166" class="external-link">https://doi.org/10.1038/nature02166</a>.
 </div>
 <div id="ref-Breckels:2016" class="csl-entry">
-Breckels, L M, S B Holden, D Wojnar, C M Mulvey, A Christoforou, A Groen, M W Trotter, O Kohlbacher, K S Lilley, and L Gatto. 2016. <span>“Learning from Heterogeneous Data Sources: An Application in Spatial Proteomics.”</span> <em>PLoS Comput Biol</em> 12 (5): e1004920. <a href="https://doi.org/10.1371/journal.pcbi.1004920" class="external-link">https://doi.org/10.1371/journal.pcbi.1004920</a>.
+Breckels, L M, S B Holden, D Wojnar, C M Mulvey, A Christoforou, A
+Groen, M W Trotter, O Kohlbacher, K S Lilley, and L Gatto. 2016.
+<span>“Learning from Heterogeneous Data Sources: An Application in
+Spatial Proteomics.”</span> <em>PLoS Comput Biol</em> 12 (5): e1004920.
+<a href="https://doi.org/10.1371/journal.pcbi.1004920" class="external-link">https://doi.org/10.1371/journal.pcbi.1004920</a>.
 </div>
 <div id="ref-Breckels2013" class="csl-entry">
-Breckels, Lisa M, Laurent Gatto, Andy Christoforou, Arnoud J Groen, Kathryn S Lilley, and Matthew W B Trotter. 2013. <span>“The Effect of Organelle Discovery Upon Sub-Cellular Protein Localisation.”</span> <em>J Proteomics</em>, March. <a href="https://doi.org/10.1016/j.jprot.2013.02.019" class="external-link">https://doi.org/10.1016/j.jprot.2013.02.019</a>.
+Breckels, Lisa M, Laurent Gatto, Andy Christoforou, Arnoud J Groen,
+Kathryn S Lilley, and Matthew W B Trotter. 2013. <span>“The Effect of
+Organelle Discovery Upon Sub-Cellular Protein Localisation.”</span>
+<em>J Proteomics</em>, March. <a href="https://doi.org/10.1016/j.jprot.2013.02.019" class="external-link">https://doi.org/10.1016/j.jprot.2013.02.019</a>.
 </div>
 <div id="ref-MLInterfaces" class="csl-entry">
-Carey, Vince, Robert Gentleman, Jess Mar, and contributions from Jason Vertrees, and Laurent Gatto. n.d. <em><span>MLInterfaces</span>: Uniform Interfaces to r Machine Learning Procedures for Data in Bioconductor Containers</em>.
+Carey, Vince, Robert Gentleman, Jess Mar, and contributions from Jason
+Vertrees, and Laurent Gatto. n.d. <em><span>MLInterfaces</span>: Uniform
+Interfaces to r Machine Learning Procedures for Data in Bioconductor
+Containers</em>.
 </div>
 <div id="ref-perturbo" class="csl-entry">
-Courty, Nicolas, Thomas Burger, and Johann Laurent. 2011. <span>“PerTurbo: A New Classification Algorithm Based on the Spectrum Perturbations of the Laplace-Beltrami Operator.”</span> In <em>In the Proceedings of ECML/PKDD (1)</em>, edited by Dimitrios Gunopulos, Thomas Hofmann, Donato Malerba, and Michalis Vazirgiannis, 6911:359–74. Lecture Notes in Computer Science. Springer.
+Courty, Nicolas, Thomas Burger, and Johann Laurent. 2011.
+<span>“PerTurbo: A New Classification Algorithm Based on the Spectrum
+Perturbations of the Laplace-Beltrami Operator.”</span> In <em>In the
+Proceedings of ECML/PKDD (1)</em>, edited by Dimitrios Gunopulos, Thomas
+Hofmann, Donato Malerba, and Michalis Vazirgiannis, 6911:359–74. Lecture
+Notes in Computer Science. Springer.
 </div>
 <div id="ref-Crook:2018" class="csl-entry">
-Crook, Oliver M, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, and Laurent Gatto. 2018. <span>“A Bayesian Mixture Modelling Approach for Spatial Proteomics.”</span> <em>bioRxiv</em>. <a href="https://doi.org/10.1101/282269" class="external-link">https://doi.org/10.1101/282269</a>.
+Crook, Oliver M, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, and
+Laurent Gatto. 2018. <span>“A Bayesian Mixture Modelling Approach for
+Spatial Proteomics.”</span> <em>bioRxiv</em>. <a href="https://doi.org/10.1101/282269" class="external-link">https://doi.org/10.1101/282269</a>.
 </div>
 <div id="ref-Dunkley2006" class="csl-entry">
-Dunkley, Tom P. J., Svenja Hester, Ian P. Shadforth, John Runions, Thilo Weimar, Sally L. Hanton, Julian L. Griffin, et al. 2006. <span>“Mapping the Arabidopsis Organelle Proteome.”</span> <em>Proc Natl Acad Sci USA</em> 103 (17): 6518–23. <a href="https://doi.org/10.1073/pnas.0506958103" class="external-link">https://doi.org/10.1073/pnas.0506958103</a>.
+Dunkley, Tom P. J., Svenja Hester, Ian P. Shadforth, John Runions, Thilo
+Weimar, Sally L. Hanton, Julian L. Griffin, et al. 2006. <span>“Mapping
+the Arabidopsis Organelle Proteome.”</span> <em>Proc Natl Acad Sci
+USA</em> 103 (17): 6518–23. <a href="https://doi.org/10.1073/pnas.0506958103" class="external-link">https://doi.org/10.1073/pnas.0506958103</a>.
 </div>
 <div id="ref-ISLwR" class="csl-entry">
-James, G., D. Witten, T. Hastie, and R. Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in r</em>. Springer Texts in Statistics. Springer.
+James, G., D. Witten, T. Hastie, and R. Tibshirani. 2013. <em>An
+Introduction to Statistical Learning: With Applications in r</em>.
+Springer Texts in Statistics. Springer.
 </div>
 <div id="ref-Nikolovski2012" class="csl-entry">
-Nikolovski, N, D Rubtsov, M P Segura, G P Miles, T J Stevens, T P Dunkley, S Munro, K S Lilley, and P Dupree. 2012. <span>“Putative Glycosyltransferases and Other Plant Golgi Apparatus Proteins Are Revealed by <span>LOPIT</span> Proteomics.”</span> <em>Plant Physiol</em> 160 (2): 1037–51. <a href="https://doi.org/10.1104/pp.112.204263" class="external-link">https://doi.org/10.1104/pp.112.204263</a>.
+Nikolovski, N, D Rubtsov, M P Segura, G P Miles, T J Stevens, T P
+Dunkley, S Munro, K S Lilley, and P Dupree. 2012. <span>“Putative
+Glycosyltransferases and Other Plant Golgi Apparatus Proteins Are
+Revealed by <span>LOPIT</span> Proteomics.”</span> <em>Plant
+Physiol</em> 160 (2): 1037–51. <a href="https://doi.org/10.1104/pp.112.204263" class="external-link">https://doi.org/10.1104/pp.112.204263</a>.
 </div>
 <div id="ref-Ohta2010" class="csl-entry">
-Ohta, S, J C Bukowski-Wills, L Sanchez-Pulido, Fde L Alves, L Wood, Z A Chen, M Platani, et al. 2010. <span>“The Protein Composition of Mitotic Chromosomes Determined Using Multiclassifier Combinatorial Proteomics.”</span> <em>Cell</em> 142 (5): 810–21. <a href="https://doi.org/10.1016/j.cell.2010.07.047" class="external-link">https://doi.org/10.1016/j.cell.2010.07.047</a>.
+Ohta, S, J C Bukowski-Wills, L Sanchez-Pulido, Fde L Alves, L Wood, Z A
+Chen, M Platani, et al. 2010. <span>“The Protein Composition of Mitotic
+Chromosomes Determined Using Multiclassifier Combinatorial
+Proteomics.”</span> <em>Cell</em> 142 (5): 810–21. <a href="https://doi.org/10.1016/j.cell.2010.07.047" class="external-link">https://doi.org/10.1016/j.cell.2010.07.047</a>.
 </div>
 <div id="ref-Tardif2012" class="csl-entry">
-Tardif, M, A Atteia, M Specht, G Cogne, N Rolland, S Brugière, M Hippler, et al. 2012. <span>“PredAlgo: A New Subcellular Localization Prediction Tool Dedicated to Green Algae.”</span> <em>Mol Biol Evol</em> 29 (12): 3625–39. <a href="https://doi.org/10.1093/molbev/mss178" class="external-link">https://doi.org/10.1093/molbev/mss178</a>.
+Tardif, M, A Atteia, M Specht, G Cogne, N Rolland, S Brugière, M
+Hippler, et al. 2012. <span>“PredAlgo: A New Subcellular Localization
+Prediction Tool Dedicated to Green Algae.”</span> <em>Mol Biol Evol</em>
+29 (12): 3625–39. <a href="https://doi.org/10.1093/molbev/mss178" class="external-link">https://doi.org/10.1093/molbev/mss178</a>.
 </div>
 <div id="ref-Trotter2010" class="csl-entry">
-Trotter, Matthew W. B., Pawel G. Sadowski, Tom P. J. Dunkley, Arnoud J. Groen, and Kathryn S. Lilley. 2010. <span>“Improved Sub-Cellular Resolution via Simultaneous Analysis of Organelle Proteomics Data Across Varied Experimental Conditions.”</span> <em>PROTEOMICS</em> 10 (23): 4213–19. <a href="https://doi.org/10.1002/pmic.201000359" class="external-link">https://doi.org/10.1002/pmic.201000359</a>.
+Trotter, Matthew W. B., Pawel G. Sadowski, Tom P. J. Dunkley, Arnoud J.
+Groen, and Kathryn S. Lilley. 2010. <span>“Improved Sub-Cellular
+Resolution via Simultaneous Analysis of Organelle Proteomics Data Across
+Varied Experimental Conditions.”</span> <em>PROTEOMICS</em> 10 (23):
+4213–19. <a href="https://doi.org/10.1002/pmic.201000359" class="external-link">https://doi.org/10.1002/pmic.201000359</a>.
 </div>
 <div id="ref-Wiese2007" class="csl-entry">
-Wiese, Sebastian, Thomas Gronemeyer, Rob Ofman, Markus Kunze, Cláudia P. Grou, José A. Almeida, Martin Eisenacher, et al. 2007. <span>“Proteomics Characterization of Mouse Kidney Peroxisomes by Tandem Mass Spectrometry and Protein Correlation Profiling.”</span> <em>Mol Cell Proteomics</em> 6 (12): 2045–57. <a href="https://doi.org/10.1074/mcp.M700169-MCP200" class="external-link">https://doi.org/10.1074/mcp.M700169-MCP200</a>.
+Wiese, Sebastian, Thomas Gronemeyer, Rob Ofman, Markus Kunze, Cláudia P.
+Grou, José A. Almeida, Martin Eisenacher, et al. 2007. <span>“Proteomics
+Characterization of Mouse Kidney Peroxisomes by Tandem Mass Spectrometry
+and Protein Correlation Profiling.”</span> <em>Mol Cell Proteomics</em>
+6 (12): 2045–57. <a href="https://doi.org/10.1074/mcp.M700169-MCP200" class="external-link">https://doi.org/10.1074/mcp.M700169-MCP200</a>.
 </div>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Gatto, Laurent; Breckels, Lisa M.; Trotter, Matthew W.B.; Lilley, Kathryn S. (2011): <code>pRoloc</code> - A unifying bioinformatics framework for organelle proteomics. <a href="https://doi.org/10.6084/m9.figshare.5042965.v1" class="external-link uri">https://doi.org/10.6084/m9.figshare.5042965.v1</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Gatto, Laurent; Breckels, Lisa M.; Trotter, Matthew
+W.B.; Lilley, Kathryn S. (2011): <code>pRoloc</code> - A unifying
+bioinformatics framework for organelle proteomics. <a href="https://doi.org/10.6084/m9.figshare.5042965.v1" class="external-link uri">https://doi.org/10.6084/m9.figshare.5042965.v1</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -524,7 +877,7 @@ Wiese, Sebastian, Thomas Gronemeyer, Rob Ofman, Markus Kunze, Cláudia P. Grou, 
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer>

@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.33.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -75,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/lgatto/pRoloc/">
+  <a href="https://github.com/lgatto/pRoloc/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,48 +94,48 @@
   <div class="contents col-md-9">
 
 
-<div id="a-unifying-bioinformatics-framework-for-spatial-proteomics" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#a-unifying-bioinformatics-framework-for-spatial-proteomics" class="anchor" aria-hidden="true"></a>A unifying bioinformatics framework for spatial proteomics</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="a-unifying-bioinformatics-framework-for-spatial-proteomics">A unifying bioinformatics framework for spatial proteomics<a class="anchor" aria-label="anchor" href="#a-unifying-bioinformatics-framework-for-spatial-proteomics"></a>
+</h1></div>
 <p><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRoloc.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocdata.png" height="200"><img src="https://raw.githubusercontent.com/Bioconductor/BiocStickers/master/pRoloc/pRolocGUI.png" height="200"></p>
 <p>The <code>pRoloc</code> suite set of software offers a complete software pipeline to analyse, visualise and interpret mass spectrometry-based spatial proteomics data such, for example, as LOPIT (Localization of Organelle Proteins by Isotope Tagging), PCP (Protein Correlation Profiling) or hyperLOPIT (hyperplexed LOPIT). The suite includes <a href="http://www.bioconductor.org/packages/release/bioc/html/pRoloc.html" class="external-link"><code>pRoloc</code></a>, the mail software that focuses on data analysis using state-of-the-art machine learning, <a href="http://bioconductor.org/packages/release/data/experiment/html/pRolocdata.html" class="external-link"><code>pRolocdata</code></a>, that distributes numerous datasets, and <a href="https://lgatto.github.io/pRolocGUI/" class="external-link"><code>pRolocGUI</code></a>, that offers interactive visualisations dedicated to spatial proteomics. The software are distributed as part of the R/<a href="http://bioconductor.org/" class="external-link">Bioconductor</a> project.</p>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor" aria-hidden="true"></a>Getting started</h2>
+<div class="section level2">
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
 <p>The <code>pRoloc</code> software comes with ample documentation. The <a href="https://lgatto.github.io/pRoloc/articles/v01-pRoloc-tutorial.html" class="external-link">main tutorial</a> provides a broad overview of the package and its functionality. See the <em>Articles</em> tab for additional manuals.</p>
 <p><a href="http://www.bioconductor.org/packages/release/bioc/html/pRolocGUI.html" class="external-link"><code>pRolocGUI</code></a> also offer several documentation files.</p>
 <p>Here are a set of <a href="https://www.youtube.com/playlist?list=PLvIXxpatSLA2loV5Srs2VBpJIYUlVJ4ow" class="external-link">video tutorial</a> that illustrate the <code>pRoloc</code> framework.</p>
 </div>
-<div id="help" class="section level2">
-<h2 class="hasAnchor">
-<a href="#help" class="anchor" aria-hidden="true"></a>Help</h2>
+<div class="section level2">
+<h2 id="help">Help<a class="anchor" aria-label="anchor" href="#help"></a>
+</h2>
 <p>Post your questions on the <a href="https://support.bioconductor.org/" class="external-link">Bioconductor support site</a>, tagging it with the package name <code>pRoloc</code> (the maintainer will automatically be notified by email). If you identify a bug or have a feature request, please open an <a href="https://github.com/lgatto/pRoloc/issues" class="external-link">issue</a> on the github development page.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>The preferred installation procedure uses the Bioconductor infrastructure:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="er">## unless BiocManager is already installed</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>install.packages(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>install<span class="op">.</span>packages<span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="er">## then</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>BiocManager::install(<span class="st">"pRoloc"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager::install(<span class="st">"pRolocdata"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>BiocManager::install(<span class="st">"pRolocGUI"</span>)</span></code></pre></div>
-<div id="pre-releasedevelopment-version" class="section level3">
-<h3 class="hasAnchor">
-<a href="#pre-releasedevelopment-version" class="anchor" aria-hidden="true"></a>Pre-release/development version</h3>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="op">::</span>install<span class="op">(</span><span class="st">"pRoloc"</span><span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="op">::</span>install<span class="op">(</span><span class="st">"pRolocdata"</span><span class="op">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="op">::</span>install<span class="op">(</span><span class="st">"pRolocGUI"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="pre-releasedevelopment-version">Pre-release/development version<a class="anchor" aria-label="anchor" href="#pre-releasedevelopment-version"></a>
+</h3>
 <p>The pre-release/development code on github can also be installed using <code><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">BiocManager::install</a></code>, as shown below. Note that this requires a working R build environment (i.e <code>Rtools</code> on Windows - see <a href="https://github.com/lgatto/teachingmaterial/wiki/R-package" class="external-link">here</a>). New pre-release features might not be documented not thoroughly tested and could substantially change prior to release. Use at your own risks.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">## unless BiocManager is already installed</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>install.packages(<span class="st">"BiocManager"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>install<span class="op">.</span>packages<span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="er">## then, install from github</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>BiocManager::install(<span class="st">"lgatto/pRoloc"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>BiocManager::install(<span class="st">"lgatto/pRolocdata"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>BiocManager::install(<span class="st">"lgatto/pRolocGUI"</span>)</span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="op">::</span>install<span class="op">(</span><span class="st">"lgatto/pRoloc"</span><span class="op">)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="op">::</span>install<span class="op">(</span><span class="st">"lgatto/pRolocdata"</span><span class="op">)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="op">::</span>install<span class="op">(</span><span class="st">"lgatto/pRolocGUI"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor" aria-hidden="true"></a>References:</h2>
+<div class="section level2">
+<h2 id="references">References:<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>For refences about the software, how to use it and spatial proteomics data analysis:</p>
 <ul>
 <li><p>Crook OM, Breckels LM, Lilley KS, Kirk PWD, Gatto L. A Bioconductor workflow for the Bayesian analysis of spatial proteomics [version 1; peer review: awaiting peer review]. F1000Research 2019, 8:446 (<a href="https://doi.org/10.12688/f1000research.18636.1" class="external-link uri">https://doi.org/10.12688/f1000research.18636.1</a>)</p></li>
@@ -149,18 +149,18 @@
 <li><p>Breckels LM, Holden S, Wojnar D, Mulvey CMM, Christoforou A, Groen AJ, Kohlbacher O, Lilley KS and Gatto L. <em>Learning from heterogeneous data sources: an application in spatial proteomics</em> 2015 biorXiv, doi: <a href="http://dx.doi.org/10.1101/022152" class="external-link uri">http://dx.doi.org/10.1101/022152</a></p></li>
 <li><p>Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk, Kathryn S Lilley, Laurent Gatto <em>A Bayesian Mixture Modelling Approach For Spatial Proteomics</em> PLOS Computational Biology <a href="doi:%5B10.1371/journal.pcbi.1006516" class="uri">doi:[10.1371/journal.pcbi.1006516</a>](<a href="https://doi.org/10.1371/journal.pcbi.1006516" class="external-link uri">https://doi.org/10.1371/journal.pcbi.1006516</a>)</p></li>
 </ul>
-<div id="more-resource" class="section level4">
-<h4 class="hasAnchor">
-<a href="#more-resource" class="anchor" aria-hidden="true"></a>More resource</h4>
+<div class="section level4">
+<h4 id="more-resource">More resource<a class="anchor" aria-label="anchor" href="#more-resource"></a>
+</h4>
 <ul>
 <li><p>R and Bioconductor for proteomics <a href="http://lgatto.github.io/RforProteomics/" class="external-link">web page</a> and <a href="http://www.bioconductor.org/packages/release/data/experiment/html/RforProteomics.html" class="external-link">package</a></p></li>
 <li><p>Bioconductor proteomics <a href="http://bioconductor.org/help/workflows/proteomics/" class="external-link">workflow</a></p></li>
 </ul>
 </div>
 </div>
-<div id="contributing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing" class="anchor" aria-hidden="true"></a>Contributing</h2>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
 <p>Contributions to the package are more than welcome. If you want to contribute to this package, you should follow the same conventions as the rest of the functions whenever it makes sense to do so. Feel free to get in touch (preferable opening a <a href="https://github.com/lgatto/pRoloc/issues/" class="external-link">github issue</a>) to discuss any suggestions.</p>
 <p>Please note that this project is released with a <a href="https://github.com/lgatto/pRoloc/blob/master/CONDUCT.md" class="external-link">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
@@ -172,19 +172,16 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/pRoloc">https://​www.bioconductor.org/​packages/​pRoloc</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/lgatto/pRoloc/">https://​github.com/​lgatto/​pRoloc/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/lgatto/pRoloc/issues">https://​github.com/​lgatto/​pRoloc/​issues</a>
-</li>
+<li><a href="https://www.bioconductor.org/packages/pRoloc" class="external-link">View on Bioconductor</a></li>
+<li><a href="https://github.com/lgatto/pRoloc/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/lgatto/pRoloc/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-2" class="external-link">GPL-2</a></li>
 </ul>
 </div>
 
@@ -192,7 +189,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing pRoloc</a></li>
+<li><a href="authors.html#citation">Citing pRoloc</a></li>
 </ul>
 </div>
 
@@ -202,7 +199,7 @@
 <li>Laurent Gatto <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Lisa Breckels <br><small class="roles"> Author </small>  </li>
 <li>Oliver Crook <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">More on authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -224,7 +221,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer>

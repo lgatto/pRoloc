@@ -17,15 +17,31 @@ each iteration of the EM algorithm to check for convergence.}
 
 logPosteriors(x)
 
-tagmMapTrain(object, fcol = "markers", method = "MAP", numIter = 100,
-  mu0 = NULL, lambda0 = 0.01, nu0 = NULL, S0 = NULL,
-  beta0 = NULL, u = 2, v = 10, seed = NULL)
+tagmMapTrain(
+  object,
+  fcol = "markers",
+  method = "MAP",
+  numIter = 100,
+  mu0 = NULL,
+  lambda0 = 0.01,
+  nu0 = NULL,
+  S0 = NULL,
+  beta0 = NULL,
+  u = 2,
+  v = 10,
+  seed = NULL
+)
 
-tagmMapPredict(object, params, fcol = "markers", probJoint = FALSE,
-  probOutlier = TRUE)
+tagmMapPredict(
+  object,
+  params,
+  fcol = "markers",
+  probJoint = FALSE,
+  probOutlier = TRUE
+)
 }
 \arguments{
-\item{object}{An \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the spatial
+\item{object}{An \code{\link[MSnbase:MSnSet-class]{MSnbase::MSnSet}} containing the spatial
 proteomics data to be passed to \code{tagmMapTrain} and
 \code{tagmPredict}.}
 
@@ -77,7 +93,7 @@ considered an outlier).}
 \code{tagmMapTrain} returns an instance of class \code{\link[=MAPParams]{MAPParams()}}.
 
 \code{tagmPredict} returns an instance of class
-\code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the localisation predictions as
+\code{\link[MSnbase:MSnSet-class]{MSnbase::MSnSet}} containing the localisation predictions as
 a new \code{tagm.map.allocation} feature variable.
 }
 \description{
@@ -88,7 +104,7 @@ using the maximum a posteriori (MAP) optimisation routine.
 \details{
 The \code{tagmMapTrain} function generates the MAP parameters (object or class
 \code{MAPParams}) based on an annotated quantitative spatial proteomics dataset
-(object of class \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}}). Both are then passed to the
+(object of class \code{\link[MSnbase:MSnSet-class]{MSnbase::MSnSet}}). Both are then passed to the
 \code{tagmPredict} function to predict the sub-cellular localisation of protein
 of unknown localisation. See the \emph{pRoloc-bayesian} vignette for details and
 examples. In this implementation, if numerical instability is detected in

@@ -4,8 +4,16 @@
 \alias{perTurboClassification}
 \title{perTurbo classification}
 \usage{
-perTurboClassification(object, assessRes, scores = c("prediction", "all",
-  "none"), pRegul, sigma, inv, reg, fcol = "markers")
+perTurboClassification(
+  object,
+  assessRes,
+  scores = c("prediction", "all", "none"),
+  pRegul,
+  sigma,
+  inv,
+  reg,
+  fcol = "markers"
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

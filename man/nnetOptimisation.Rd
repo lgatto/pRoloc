@@ -6,9 +6,19 @@
 \alias{nnetOptimization}
 \title{nnet parameter optimisation}
 \usage{
-nnetOptimisation(object, fcol = "markers", decay = c(0, 10^(-1:-5)),
-  size = seq(1, 10, 2), times = 100, test.size = 0.2, xval = 5,
-  fun = mean, seed, verbose = TRUE, ...)
+nnetOptimisation(
+  object,
+  fcol = "markers",
+  decay = c(0, 10^(-1:-5)),
+  size = seq(1, 10, 2),
+  times = 100,
+  test.size = 0.2,
+  xval = 5,
+  fun = mean,
+  seed,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

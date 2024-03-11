@@ -4,10 +4,21 @@
 \alias{plotDist}
 \title{Plots the distribution of features across fractions}
 \usage{
-plotDist(object, markers, fcol = NULL, mcol = "steelblue",
-  pcol = getUnknowncol(), alpha = 0.3, type = "b", lty = 1,
-  fractions = sampleNames(object), ylab = "Intensity",
-  xlab = "Fractions", ylim, ...)
+plotDist(
+  object,
+  markers,
+  fcol = NULL,
+  mcol = "steelblue",
+  pcol = getUnknowncol(),
+  alpha = 0.3,
+  type = "b",
+  lty = 1,
+  fractions = sampleNames(object),
+  ylab = "Intensity",
+  xlab = "Fractions",
+  ylim,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}

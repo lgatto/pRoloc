@@ -5,8 +5,15 @@
 \alias{nnetPrediction}
 \title{nnet classification}
 \usage{
-nnetClassification(object, assessRes, scores = c("prediction", "all",
-  "none"), decay, size, fcol = "markers", ...)
+nnetClassification(
+  object,
+  assessRes,
+  scores = c("prediction", "all", "none"),
+  decay,
+  size,
+  fcol = "markers",
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

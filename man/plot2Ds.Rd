@@ -8,9 +8,20 @@
 \alias{col2}
 \title{Draw 2 data sets on one PCA plot}
 \usage{
-plot2Ds(object, pcol, fcol = "markers", cex.x = 1, cex.y = 1,
-  pch.x = 21, pch.y = 23, col, mirrorX = FALSE, mirrorY = FALSE,
-  plot = TRUE, ...)
+plot2Ds(
+  object,
+  pcol,
+  fcol = "markers",
+  cex.x = 1,
+  cex.y = 1,
+  pch.x = 21,
+  pch.y = 23,
+  col,
+  mirrorX = FALSE,
+  mirrorY = FALSE,
+  plot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An \code{\linkS4class{MSnSet}} or a

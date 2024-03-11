@@ -4,8 +4,14 @@
 \alias{getGOFromFeatures}
 \title{Retrieve GO terms for feature names}
 \usage{
-getGOFromFeatures(id, namespace = "cellular_component",
-  evidence = NULL, params = NULL, verbose = FALSE, nmax = 500)
+getGOFromFeatures(
+  id,
+  namespace = "cellular_component",
+  evidence = NULL,
+  params = NULL,
+  verbose = FALSE,
+  nmax = 500
+)
 }
 \arguments{
 \item{id}{An \code{character} with feature names to be pulled from

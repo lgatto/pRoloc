@@ -4,8 +4,7 @@
 \alias{zerosInBinMSnSet}
 \title{Compute the number of non-zero values in each marker classes}
 \usage{
-zerosInBinMSnSet(object, fcol = "markers", as.matrix = TRUE,
-  percent = TRUE)
+zerosInBinMSnSet(object, fcol = "markers", as.matrix = TRUE, percent = TRUE)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet} with binary data.}

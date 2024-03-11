@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // dmvtCpp
 SEXP dmvtCpp(arma::mat X_, arma::vec mu_, arma::mat sigma_, double df_, bool log_, unsigned int ncores_, bool isChol_);
 RcppExport SEXP _pRoloc_dmvtCpp(SEXP X_SEXP, SEXP mu_SEXP, SEXP sigma_SEXP, SEXP df_SEXP, SEXP log_SEXP, SEXP ncores_SEXP, SEXP isChol_SEXP) {

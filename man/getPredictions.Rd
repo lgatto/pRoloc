@@ -4,8 +4,7 @@
 \alias{getPredictions}
 \title{Returns the predictions in an 'MSnSet'}
 \usage{
-getPredictions(object, fcol, scol, mcol = "markers", t = 0,
-  verbose = TRUE)
+getPredictions(object, fcol, scol, mcol = "markers", t = 0, verbose = TRUE)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

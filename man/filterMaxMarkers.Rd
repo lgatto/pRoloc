@@ -5,8 +5,7 @@
 \title{Removes class/annotation information from a matrix of candidate
 markers that appear in the \code{fData}.}
 \usage{
-filterMaxMarkers(object, n, p = 0.2, fcol = "GOAnnotations",
-  verbose = TRUE)
+filterMaxMarkers(object, n, p = 0.2, fcol = "GOAnnotations", verbose = TRUE)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}

@@ -6,9 +6,18 @@
 \alias{knnRegularisation}
 \title{knn parameter optimisation}
 \usage{
-knnOptimisation(object, fcol = "markers", k = seq(3, 15, 2),
-  times = 100, test.size = 0.2, xval = 5, fun = mean, seed,
-  verbose = TRUE, ...)
+knnOptimisation(
+  object,
+  fcol = "markers",
+  k = seq(3, 15, 2),
+  times = 100,
+  test.size = 0.2,
+  xval = 5,
+  fun = mean,
+  seed,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

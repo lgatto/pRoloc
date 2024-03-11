@@ -4,9 +4,15 @@
 \alias{addLegend}
 \title{Adds a legend}
 \usage{
-addLegend(object, fcol = "markers", where = c("bottomleft", "bottom",
-  "bottomright", "left", "topleft", "top", "topright", "right", "center",
-  "other"), col, bty = "n", ...)
+addLegend(
+  object,
+  fcol = "markers",
+  where = c("bottomleft", "bottom", "bottomright", "left", "topleft", "top", "topright",
+    "right", "center", "other"),
+  col,
+  bty = "n",
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}}

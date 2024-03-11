@@ -4,8 +4,14 @@
 \alias{addGoAnnotations}
 \title{Add GO annotations}
 \usage{
-addGoAnnotations(object, params, evidence, useID = FALSE,
-  fcol = "GOAnnotations", ...)
+addGoAnnotations(
+  object,
+  params,
+  evidence,
+  useID = FALSE,
+  fcol = "GOAnnotations",
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}

@@ -4,9 +4,16 @@
 \alias{spatial2D}
 \title{Uncertainty plot in localisation probabilities}
 \usage{
-spatial2D(object, dims = c(1, 2), cov.function = fields::wendland.cov,
-  theta = 1, derivative = 2, k = 1, breaks = c(0.99, 0.95, 0.9,
-  0.85, 0.8, 0.75, 0.7), aspect = 0.5)
+spatial2D(
+  object,
+  dims = c(1, 2),
+  cov.function = fields::wendland.cov,
+  theta = 1,
+  derivative = 2,
+  k = 1,
+  breaks = c(0.99, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7),
+  aspect = 0.5
+)
 }
 \arguments{
 \item{object}{A valid object of class \code{MSnset} with mcmc prediction

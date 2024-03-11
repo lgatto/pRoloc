@@ -5,8 +5,14 @@
 \alias{plsdaPrediction}
 \title{plsda classification}
 \usage{
-plsdaClassification(object, assessRes, scores = c("prediction", "all",
-  "none"), ncomp, fcol = "markers", ...)
+plsdaClassification(
+  object,
+  assessRes,
+  scores = c("prediction", "all", "none"),
+  ncomp,
+  fcol = "markers",
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

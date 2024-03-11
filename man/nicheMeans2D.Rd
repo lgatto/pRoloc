@@ -4,8 +4,14 @@
 \alias{nicheMeans2D}
 \title{Uncertainty plot organelle means}
 \usage{
-nicheMeans2D(object, params, priors, dims = c(1, 2), fcol = "markers",
-  aspect = 0.5)
+nicheMeans2D(
+  object,
+  params,
+  priors,
+  dims = c(1, 2),
+  fcol = "markers",
+  aspect = 0.5
+)
 }
 \arguments{
 \item{object}{A valid object of class \code{MSnset}}

@@ -4,8 +4,7 @@
 \alias{clustDist}
 \title{Pairwise Distance Computation for Protein Information Sets}
 \usage{
-clustDist(object, k = 1:5, fcol = "GOAnnotations", n = 5,
-  verbose = TRUE, seed)
+clustDist(object, k = 1:5, fcol = "GOAnnotations", n = 5, verbose = TRUE, seed)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}
@@ -48,7 +47,7 @@ the \code{kmeans} algorithm fits and tests \code{k = c(1:5)}
 the mean pairwise distance for each \code{k} tested.
 
 Note: currently distances are calcualted in Euclidean space, 
-but other distance metrics will be supported in the future).
+but other distance metrics will be supported in the future). 
 
 The output is a \code{list} of \code{ClustDist} objects, 
 one per information cluster. The \code{ClustDist} 

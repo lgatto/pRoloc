@@ -43,17 +43,13 @@ chains(object)
 
 \S4method{length}{MCMCParams}(x)
 
-\S4method{[[}{MCMCChains,ANY,ANY}(x, i, j = "missing",
-  drop = "missing")
+\S4method{[[}{MCMCChains,ANY,ANY}(x, i, j = "missing", drop = "missing")
 
-\S4method{[[}{MCMCParams,ANY,ANY}(x, i, j = "missing",
-  drop = "missing")
+\S4method{[[}{MCMCParams,ANY,ANY}(x, i, j = "missing", drop = "missing")
 
-\S4method{[}{MCMCChains,ANY,ANY,ANY}(x, i, j = "missing",
-  drop = "missing")
+\S4method{[}{MCMCChains,ANY,ANY,ANY}(x, i, j = "missing", drop = "missing")
 
-\S4method{[}{MCMCParams,ANY,ANY,ANY}(x, i, j = "missing",
-  drop = "missing")
+\S4method{[}{MCMCParams,ANY,ANY,ANY}(x, i, j = "missing", drop = "missing")
 
 \S4method{show}{MCMCChains}(object)
 }

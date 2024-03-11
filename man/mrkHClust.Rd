@@ -4,8 +4,15 @@
 \alias{mrkHClust}
 \title{Draw a dendrogram of subcellular clusters}
 \usage{
-mrkHClust(object, fcol = "markers", distargs, hclustargs,
-  method = mean, plot = TRUE, ...)
+mrkHClust(
+  object,
+  fcol = "markers",
+  distargs,
+  hclustargs,
+  method = mean,
+  plot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{MSnSet}.}

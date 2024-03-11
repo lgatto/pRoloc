@@ -6,8 +6,18 @@
 \alias{rfOptimization}
 \title{svm parameter optimisation}
 \usage{
-rfOptimisation(object, fcol = "markers", mtry = NULL, times = 100,
-  test.size = 0.2, xval = 5, fun = mean, seed, verbose = TRUE, ...)
+rfOptimisation(
+  object,
+  fcol = "markers",
+  mtry = NULL,
+  times = 100,
+  test.size = 0.2,
+  xval = 5,
+  fun = mean,
+  seed,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

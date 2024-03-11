@@ -6,8 +6,18 @@
 \alias{plsdaOptimization}
 \title{plsda parameter optimisation}
 \usage{
-plsdaOptimisation(object, fcol = "markers", ncomp = 2:6, times = 100,
-  test.size = 0.2, xval = 5, fun = mean, seed, verbose = TRUE, ...)
+plsdaOptimisation(
+  object,
+  fcol = "markers",
+  ncomp = 2:6,
+  times = 100,
+  test.size = 0.2,
+  xval = 5,
+  fun = mean,
+  seed,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

@@ -4,8 +4,15 @@
 \alias{knntlClassification}
 \title{knn transfer learning classification}
 \usage{
-knntlClassification(primary, auxiliary, fcol = "markers", bestTheta, k,
-  scores = c("prediction", "all", "none"), seed)
+knntlClassification(
+  primary,
+  auxiliary,
+  fcol = "markers",
+  bestTheta,
+  k,
+  scores = c("prediction", "all", "none"),
+  seed
+)
 }
 \arguments{
 \item{primary}{An instance of class \code{"\linkS4class{MSnSet}"}.}

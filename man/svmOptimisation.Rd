@@ -6,9 +6,19 @@
 \alias{svmOptimization}
 \title{svm parameter optimisation}
 \usage{
-svmOptimisation(object, fcol = "markers", cost = 2^(-4:4),
-  sigma = 10^(-3:2), times = 100, test.size = 0.2, xval = 5,
-  fun = mean, seed, verbose = TRUE, ...)
+svmOptimisation(
+  object,
+  fcol = "markers",
+  cost = 2^(-4:4),
+  sigma = 10^(-3:2),
+  times = 100,
+  test.size = 0.2,
+  xval = 5,
+  fun = mean,
+  seed,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

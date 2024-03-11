@@ -7,21 +7,44 @@
 \alias{tagmMcmcProcess}
 \title{Localisation of proteins using the TAGM MCMC method}
 \usage{
-tagmMcmcTrain(object, fcol = "markers", method = "MCMC",
-  numIter = 1000L, burnin = 100L, thin = 5L, mu0 = NULL,
-  lambda0 = 0.01, nu0 = NULL, S0 = NULL, beta0 = NULL, u = 2,
-  v = 10, numChains = 4L, BPPARAM = BiocParallel::bpparam())
+tagmMcmcTrain(
+  object,
+  fcol = "markers",
+  method = "MCMC",
+  numIter = 1000L,
+  burnin = 100L,
+  thin = 5L,
+  mu0 = NULL,
+  lambda0 = 0.01,
+  nu0 = NULL,
+  S0 = NULL,
+  beta0 = NULL,
+  u = 2,
+  v = 10,
+  numChains = 4L,
+  BPPARAM = BiocParallel::bpparam()
+)
 
-tagmMcmcPredict(object, params, fcol = "markers", probJoint = FALSE,
-  probOutlier = TRUE)
+tagmMcmcPredict(
+  object,
+  params,
+  fcol = "markers",
+  probJoint = FALSE,
+  probOutlier = TRUE
+)
 
-tagmPredict(object, params, fcol = "markers", probJoint = FALSE,
-  probOutlier = TRUE)
+tagmPredict(
+  object,
+  params,
+  fcol = "markers",
+  probJoint = FALSE,
+  probOutlier = TRUE
+)
 
 tagmMcmcProcess(params)
 }
 \arguments{
-\item{object}{An \code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the spatial
+\item{object}{An \code{\link[MSnbase:MSnSet-class]{MSnbase::MSnSet}} containing the spatial
 proteomics data to be passed to \code{tagmMcmcTrain} and
 \code{tagmPredict}.}
 
@@ -87,7 +110,7 @@ considered an outlier).}
 \code{MCMCParams}.
 
 \code{tagmMcmcPredict} returns an instance of class
-\code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}} containing the localisation predictions as
+\code{\link[MSnbase:MSnSet-class]{MSnbase::MSnSet}} containing the localisation predictions as
 a new \code{tagm.mcmc.allocation} feature variable. The allocation
 probability is encoded as \code{tagm.mcmc.probability}
 (corresponding to the mean of the distribution
@@ -112,7 +135,7 @@ using Markov-chain Monte-Carlo (MCMC) for inference.
 The \code{tagmMcmcTrain} function generates the samples from the
 posterior distributions (object or class \code{MCMCParams}) based on an
 annotated quantitative spatial proteomics dataset (object of class
-\code{\link[MSnbase:MSnSet]{MSnbase::MSnSet}}). Both are then passed to the \code{tagmPredict}
+\code{\link[MSnbase:MSnSet-class]{MSnbase::MSnSet}}). Both are then passed to the \code{tagmPredict}
 function to predict the sub-cellular localisation of protein of
 unknown localisation. See the \emph{pRoloc-bayesian} vignette for
 details and examples. In this implementation, if numerical instability

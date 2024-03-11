@@ -6,9 +6,18 @@
 \alias{nbOptimization}
 \title{nb paramter optimisation}
 \usage{
-nbOptimisation(object, fcol = "markers", laplace = seq(0, 5, 0.5),
-  times = 100, test.size = 0.2, xval = 5, fun = mean, seed,
-  verbose = TRUE, ...)
+nbOptimisation(
+  object,
+  fcol = "markers",
+  laplace = seq(0, 5, 0.5),
+  times = 100,
+  test.size = 0.2,
+  xval = 5,
+  fun = mean,
+  seed,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An instance of class \code{"\linkS4class{MSnSet}"}.}

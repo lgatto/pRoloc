@@ -7,8 +7,7 @@
 \usage{
 highlightOnPlot(object, foi, labels, args = list(), ...)
 
-highlightOnPlot3D(object, foi, labels, args = list(), radius = 0.1 * 3,
-  ...)
+highlightOnPlot3D(object, foi, labels, args = list(), radius = 0.1 * 3, ...)
 }
 \arguments{
 \item{object}{The main dataset described as an \code{MSnSet} or a
@@ -22,7 +21,7 @@ or, alternatively, a \code{character} of feautre names.}
 variable name to be used to label the features of
 interest. This is only valid if \code{object} is an
 \code{MSnSet}. Alternatively, if \code{TRUE}, then
-\code{featureNames(object)} (or code{rownames(object)}, if
+\code{featureNames(object)} (or \code{rownames(object)}, if
 \code{object} is a \code{matrix}) are used. Default is
 missing, which does not add any label.s}
 
@@ -48,7 +47,7 @@ NULL; used for its side effects.
 \description{
 Highlights a set of features of interest given as a
 \code{FeaturesOfInterest} instance on a PCA plot produced by
-code{plot2D} or \code{plot3D}. If none of the features of interest
+\code{plot2D} or \code{plot3D}. If none of the features of interest
 are found in the \code{MSnset}'s \code{featureNames}, an warning
 is thrown.
 }

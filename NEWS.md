@@ -1,3 +1,13 @@
+# pRoloc 1.43
+
+## Changes in version 1.43.1
+
+- Fix syntax in man pages.
+
+## Changes in version 1.43.0
+
+- New devel version
+
 # pRoloc 1.39
 
 ## Changes in version 1.39.1

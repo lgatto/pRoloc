@@ -36,6 +36,7 @@ setMethod("plot3D", "MSnSet",
               }
               invisible(xx)
           })
+
 ##' @param radius Radius of the spheres to be added to the
 ##'     visualisation produced by \code{plot3D}. Default is 0.3 (i.e
 ##'     \code{plot3D}'s \code{radius1} * 3), to emphasise the features

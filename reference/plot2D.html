@@ -22,7 +22,7 @@ avoid computing all components when analysing large datasets.'><!-- mathjax --><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -85,15 +85,40 @@ avoid computing all components when analysing large datasets.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot2D</span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, <span class="va">fpch</span>, unknown <span class="op">=</span> <span class="st">"unknown"</span>,</span>
-<span>  dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, score <span class="op">=</span> <span class="fl">1</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, <span class="va">methargs</span>,</span>
-<span>  axsSwitch <span class="op">=</span> <span class="cn">FALSE</span>, mirrorX <span class="op">=</span> <span class="cn">FALSE</span>, mirrorY <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">col</span>, <span class="va">pch</span>, <span class="va">cex</span>,</span>
-<span>  index <span class="op">=</span> <span class="cn">FALSE</span>, idx.cex <span class="op">=</span> <span class="fl">0.75</span>, <span class="va">addLegend</span>, identify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>, grid <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot2D</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  <span class="va">fpch</span>,</span>
+<span>  unknown <span class="op">=</span> <span class="st">"unknown"</span>,</span>
+<span>  dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span>
+<span>  score <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"PCA"</span>,</span>
+<span>  <span class="va">methargs</span>,</span>
+<span>  axsSwitch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mirrorX <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mirrorY <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">col</span>,</span>
+<span>  <span class="va">pch</span>,</span>
+<span>  <span class="va">cex</span>,</span>
+<span>  index <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  idx.cex <span class="op">=</span> <span class="fl">0.75</span>,</span>
+<span>  <span class="va">addLegend</span>,</span>
+<span>  identify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  grid <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for MSnSet</span></span>
-<span><span class="fu"><a href="https://lgatto.github.io/MSnbase/reference/MSmap-class.html" class="external-link">plot3D</a></span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>  radius1 <span class="op">=</span> <span class="fl">0.1</span>, radius2 <span class="op">=</span> <span class="va">radius1</span> <span class="op">*</span> <span class="fl">2</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://lgatto.github.io/MSnbase/reference/MSmap-class.html" class="external-link">plot3D</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  radius1 <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  radius2 <span class="op">=</span> <span class="va">radius1</span> <span class="op">*</span> <span class="fl">2</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@ component, and then normalised. The minimum mean normalised distance is
 then extracted and used as a measure of cluster tightness. This is
 repeated for all protein/annotation sets. These sets are then ranked
 according to minimum mean normalised distance and then can be displayed
-and explored using the <em><a href="https://bioconductor.org/packages/3.17/pRolocGUI" class="external-link">pRolocGUI</a></em>
+and explored using the <em><a href="https://bioconductor.org/packages/3.19/pRolocGUI" class="external-link">pRolocGUI</a></em>
 package.</p>
 <p>In this vignette we present a step-by-step guide showing users how to
 (1) how to add protein annotations, here we use the GO database as an
@@ -180,7 +180,7 @@ data specific annotated clusters.</p>
 <p>We will demonstrate our pipeline for adding and ranking annotation
 information using a LOPIT experiment on Pluripotent Mouse Embryonic
 stems (<a href="http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html" class="external-link">Christoforou
-et al 2016</a>), available and documented in the <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>
+et al 2016</a>), available and documented in the <em><a href="https://bioconductor.org/packages/3.19/pRolocdata" class="external-link">pRolocdata</a></em>
 data package as <code>hyperlopit2015</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRoloc" class="external-link">"pRoloc"</a></span><span class="op">)</span></span>
@@ -326,12 +326,12 @@ numer of component clusters tested.</p>
 <span><span class="co">## k's tested: 1 2 3 </span></span>
 <span><span class="co">##   Size:  32 </span></span>
 <span><span class="co">##   Size:  24 </span></span>
-<span><span class="co">##   Size:  21 </span></span>
+<span><span class="co">##   Size:  15, 11 </span></span>
 <span><span class="co">## Clusters info:</span></span>
 <span><span class="co">##       ks.mean    mean ks.norm     norm</span></span>
 <span><span class="co">## k = 1       1  0.4208       1  0.13253</span></span>
-<span><span class="co">## k = 2       1  0.2104       1  0.07293</span></span>
-<span><span class="co">## k = 3       1 *0.1601       1 *0.05803</span></span></code></pre>
+<span><span class="co">## k = 2       1 *0.2104       1 *0.07293</span></span>
+<span><span class="co">## k = 3       2  0.2181       2  0.09381</span></span></code></pre>
 <p>We can use the <code>plotClustDist</code> and
 <code>plotComponents</code> to visualise these results.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -75,11 +75,20 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">perTurboOptimisation</span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, pRegul <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span></span>
-<span>  <span class="op">-</span><span class="fl">1</span>, to <span class="op">=</span> <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, to <span class="op">=</span> <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">perTurboOptimisation</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  pRegul <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, to <span class="op">=</span> <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, to <span class="op">=</span> <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  inv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Inversion Cholesky"</span>, <span class="st">"Moore Penrose"</span>, <span class="st">"solve"</span>, <span class="st">"svd"</span><span class="op">)</span>,</span>
-<span>  reg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tikhonov"</span>, <span class="st">"none"</span>, <span class="st">"trunc"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">1</span>, test.size <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  xval <span class="op">=</span> <span class="fl">5</span>, fun <span class="op">=</span> <span class="va">mean</span>, <span class="va">seed</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  reg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tikhonov"</span>, <span class="st">"none"</span>, <span class="st">"trunc"</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  test.size <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  xval <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  fun <span class="op">=</span> <span class="va">mean</span>,</span>
+<span>  <span class="va">seed</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">

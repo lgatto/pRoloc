@@ -18,7 +18,7 @@ algorithm."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -77,8 +77,15 @@ algorithm.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nnetClassification</span><span class="op">(</span><span class="va">object</span>, <span class="va">assessRes</span>, scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prediction"</span>, <span class="st">"all"</span>,</span>
-<span>  <span class="st">"none"</span><span class="op">)</span>, <span class="va">decay</span>, <span class="va">size</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nnetClassification</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">assessRes</span>,</span>
+<span>  scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prediction"</span>, <span class="st">"all"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  <span class="va">decay</span>,</span>
+<span>  <span class="va">size</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -152,41 +159,42 @@ package <code>nnet</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  macro F1:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.8296  0.8918  0.9540  0.9208  0.9664  0.9788 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  best decay: 1e-05   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  best size: 10   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.7394  0.8434  0.9473  0.8956  0.9736  1.0000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  best decay: 1e-05 0.1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  best size: 5 10   </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nnetClassification-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="GenRegRes-class.html">f1Count</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1e-05  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        5 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1e-05  0  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.1   NA  1</span>
 <span class="r-in"><span><span class="fu"><a href="GenRegRes-class.html">levelPlot</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nnetClassification-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="GenRegRes-class.html">getParams</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> decay  size </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1e-05 1e+01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1  10.0 </span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">nnetClassification</span><span class="op">(</span><span class="va">dunkley2006</span>, <span class="va">params</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "markers"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # weights:  269</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> initial  value 648.337423 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  10 value 252.563213</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  20 value 36.595671</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  30 value 2.384476</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  40 value 0.432226</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  50 value 0.382619</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  60 value 0.338246</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  70 value 0.297770</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  80 value 0.259497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  90 value 0.241743</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter 100 value 0.228368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> final  value 0.228368 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> initial  value 683.283502 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  10 value 389.436994</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  20 value 249.736502</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  30 value 178.340493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  40 value 165.325969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  50 value 160.469658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  60 value 158.052692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  70 value 157.274930</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  80 value 156.907896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter  90 value 156.721932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iter 100 value 156.674206</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> final  value 156.674206 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stopped after 100 iterations</span>
 <span class="r-in"><span><span class="fu"><a href="getPredictions.html">getPredictions</a></span><span class="op">(</span><span class="va">res</span>, fcol <span class="op">=</span> <span class="st">"nnet"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ans</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            17           175            95           104           129 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            18           187            93           106           130 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Plastid      Ribosome           TGN       vacuole </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            51            60            26            32 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            49            51            21            34 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> assayData: 689 features, 16 samples </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   element names: exprs </span>
@@ -206,15 +214,15 @@ package <code>nnet</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Normalised to sum of intensities. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Performed nnet prediction (decay=1e-05 size=10) Wed Feb  1 05:41:36 2023 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Added nnet predictions according to global threshold = 0 Wed Feb  1 05:41:36 2023 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Performed nnet prediction (decay=0.1 size=10) Tue Mar 12 07:14:04 2024 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Added nnet predictions according to global threshold = 0 Tue Mar 12 07:14:04 2024 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  MSnbase version: 1.17.12 </span>
 <span class="r-in"><span><span class="fu"><a href="getPredictions.html">getPredictions</a></span><span class="op">(</span><span class="va">res</span>, fcol <span class="op">=</span> <span class="st">"nnet"</span>, t <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ans</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ER lumen   ER membrane         Golgi Mitochondrion            PM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            16           173            95           104           128 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            14           148            68            93            93 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Plastid      Ribosome           TGN       unknown       vacuole </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            51            59            24             7            32 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            41            31            13           160            28 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MSnSet (storageMode: lockedEnvironment)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> assayData: 689 features, 16 samples </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   element names: exprs </span>
@@ -234,8 +242,8 @@ package <code>nnet</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Normalised to sum of intensities. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Performed nnet prediction (decay=1e-05 size=10) Wed Feb  1 05:41:36 2023 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Added nnet predictions according to global threshold = 0.75 Wed Feb  1 05:41:36 2023 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Performed nnet prediction (decay=0.1 size=10) Tue Mar 12 07:14:04 2024 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Added nnet predictions according to global threshold = 0.75 Tue Mar 12 07:14:04 2024 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  MSnbase version: 1.17.12 </span>
 <span class="r-in"><span><span class="fu"><a href="plot2D.html">plot2D</a></span><span class="op">(</span><span class="va">res</span>, fcol <span class="op">=</span> <span class="st">"nnet"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nnetClassification-3.png" alt="" width="700" height="433"></span>

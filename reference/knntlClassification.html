@@ -18,7 +18,7 @@ of Wu and Dietterich's transfer learning schema"><!-- mathjax --><script src="ht
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -77,8 +77,15 @@ of Wu and Dietterich's transfer learning schema</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">knntlClassification</span><span class="op">(</span><span class="va">primary</span>, <span class="va">auxiliary</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, <span class="va">bestTheta</span>, <span class="va">k</span>,</span>
-<span>  scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prediction"</span>, <span class="st">"all"</span>, <span class="st">"none"</span><span class="op">)</span>, <span class="va">seed</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">knntlClassification</span><span class="op">(</span></span>
+<span>  <span class="va">primary</span>,</span>
+<span>  <span class="va">auxiliary</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  <span class="va">bestTheta</span>,</span>
+<span>  <span class="va">k</span>,</span>
+<span>  scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prediction"</span>, <span class="st">"all"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  <span class="va">seed</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -172,11 +179,11 @@ only, for all classes or none.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  macro F1:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.8893  0.8919  0.8945  0.8945  0.8971  0.8998 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.8789  0.8805  0.8821  0.8821  0.8838  0.8854 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  best theta:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          ER Golgi Mitochondrion PM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> weight:0  1     2             1  2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> weight:1  1     0             1  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> weight:0  1     2             0  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> weight:1  1     0             2  0</span>
 <span class="r-in"><span><span class="va">th</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenRegRes-class.html">getParams</a></span><span class="op">(</span><span class="va">opt</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">opt</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="knntlClassification-1.png" alt="" width="700" height="433"></span>

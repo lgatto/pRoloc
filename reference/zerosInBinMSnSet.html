@@ -24,7 +24,7 @@ annotations (GO terms) are likely not be be informative either."><!-- mathjax --
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -89,8 +89,7 @@ annotations (GO terms) are likely not be be informative either.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">zerosInBinMSnSet</span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, as.matrix <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">zerosInBinMSnSet</span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, as.matrix <span class="op">=</span> <span class="cn">TRUE</span>, percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -330,7 +329,7 @@ returned. Otherwise, absolute values.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21               1          0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22               1          0</span>
 <span class="r-in"><span><span class="va">pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://lattice.r-forge.r-project.org/" class="external-link">lattice</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lattice.r-forge.r-project.org/" class="external-link">lattice</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/levelplot.html" class="external-link">levelplot</a></span><span class="op">(</span><span class="fu">zerosInBinMSnSet</span><span class="op">(</span><span class="va">hyperLOPIT2015goCC</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          xlab <span class="op">=</span> <span class="st">"Number of non-0s"</span>,</span></span>
 <span class="r-in"><span>          ylab <span class="op">=</span> <span class="st">"Marker class"</span>,</span></span>

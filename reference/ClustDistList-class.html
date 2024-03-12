@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -158,9 +158,9 @@
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span>  <span class="co">## filter</span></span></span>
 <span class="r-in"><span>  <span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="filterMinMarkers.html">filterMinMarkers</a></span><span class="op">(</span><span class="va">xx</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 19 out of 196 in GOAnnotations</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 18 out of 165 in GOAnnotations</span>
 <span class="r-in"><span>  <span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="filterMaxMarkers.html">filterMaxMarkers</a></span><span class="op">(</span><span class="va">xx</span>, p <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 14 out of 19 in GOAnnotations</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 14 out of 18 in GOAnnotations</span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span>  <span class="co">## get distances for protein sets</span></span></span>
 <span class="r-in"><span>  <span class="va">dd</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustDist.html">clustDist</a></span><span class="op">(</span><span class="va">xx</span><span class="op">)</span></span></span>
@@ -171,11 +171,11 @@
 <span class="r-plt img"><img src="ClustDistList-class-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "endoplasmic reticulum membrane" "mitochondrion"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "plant-type vacuole"             "nucleus"                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "vacuole"                        "plasmodesma"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "cytosol"                        "chloroplast"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "plastid"                        "cytoplasm"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "mitochondrion"                  "plant-type vacuole"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "nucleus"                        "vacuole"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "plasmodesma"                    "cytosol"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "chloroplast"                    "plastid"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "endoplasmic reticulum membrane" "cytoplasm"                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11] "Golgi membrane"                 "endosome"                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "chloroplast envelope"           "trans-Golgi network"           </span>
 <span class="r-in"><span>  </span></span>
@@ -187,22 +187,22 @@
 <span class="r-in"><span>  <span class="va">dd</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Object of class "ClustDist"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fcol =  GOAnnotations </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  term =  GO:0005789 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  id =  endoplasmic reticulum membrane </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  nrow =  90 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  term =  GO:0005739 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  id =  mitochondrion </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  nrow =  160 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> k's tested: 1 2 3 4 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  90 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  76 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  75 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  160 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  106 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  106 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  80 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Size:  74 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters info:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ks.mean    mean ks.norm     norm</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> k = 1       1  0.2109       1  0.04706</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> k = 2       1  0.1562       1  0.03687</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> k = 3       1 *0.1444       1 *0.03424</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> k = 4      NA      NA      NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> k = 5      NA      NA      NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> k = 1       1  0.4410       1  0.08123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> k = 2       1  0.1844       1  0.03896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> k = 3       1  0.1844       1  0.03896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> k = 4       1  0.1515       1  0.03517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> k = 5       1 *0.1270       1 *0.03026</span>
 </code></pre></div>
     </div>
   </div>

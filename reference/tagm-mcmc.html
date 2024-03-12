@@ -19,7 +19,7 @@ using Markov-chain Monte-Carlo (MCMC) for inference."><!-- mathjax --><script sr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -79,16 +79,39 @@ using Markov-chain Monte-Carlo (MCMC) for inference.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tagmMcmcTrain</span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, method <span class="op">=</span> <span class="st">"MCMC"</span>,</span>
-<span>  numIter <span class="op">=</span> <span class="fl">1000L</span>, burnin <span class="op">=</span> <span class="fl">100L</span>, thin <span class="op">=</span> <span class="fl">5L</span>, mu0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lambda0 <span class="op">=</span> <span class="fl">0.01</span>, nu0 <span class="op">=</span> <span class="cn">NULL</span>, S0 <span class="op">=</span> <span class="cn">NULL</span>, beta0 <span class="op">=</span> <span class="cn">NULL</span>, u <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  v <span class="op">=</span> <span class="fl">10</span>, numChains <span class="op">=</span> <span class="fl">4L</span>, BPPARAM <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tagmMcmcTrain</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"MCMC"</span>,</span>
+<span>  numIter <span class="op">=</span> <span class="fl">1000L</span>,</span>
+<span>  burnin <span class="op">=</span> <span class="fl">100L</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">5L</span>,</span>
+<span>  mu0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  nu0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  S0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  beta0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  u <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  v <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  numChains <span class="op">=</span> <span class="fl">4L</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">BiocParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tagmMcmcPredict</span><span class="op">(</span><span class="va">object</span>, <span class="va">params</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, probJoint <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  probOutlier <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">tagmMcmcPredict</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">params</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  probJoint <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  probOutlier <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tagmPredict</span><span class="op">(</span><span class="va">object</span>, <span class="va">params</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, probJoint <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  probOutlier <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">tagmPredict</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">params</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  probJoint <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  probOutlier <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">tagmMcmcProcess</span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span></code></pre></div>
     </div>

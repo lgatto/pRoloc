@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@ particular, the goal is to support/complement the primary target domain
 (experimental data) with auxiliary data (annotation) features without
 compromising the integrity of our primary data. In this vignette, we
 describe the application of transfer learning algorithms for the
-localisation of proteins from the <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+localisation of proteins from the <em><a href="https://bioconductor.org/packages/3.19/pRoloc" class="external-link">pRoloc</a></em>
 package, as described in</p>
 <blockquote>
 <p>Breckels LM, Holden S, Wonjar D, Mulvey CM, Christoforou A, Groen A,
@@ -187,11 +187,11 @@ the GO terms associated to these features are retrieved and used to
 create a binary matrix where a one (zero) at position <span class="math inline">\((i,j)\)</span> indicates that term <span class="math inline">\(j\)</span> has (not) been used to annotate feature
 <span class="math inline">\(i\)</span>.</p>
 <p>The GO terms are retrieved from an appropriate repository using the
-<em><a href="https://bioconductor.org/packages/3.17/biomaRt" class="external-link">biomaRt</a></em>
+<em><a href="https://bioconductor.org/packages/3.19/biomaRt" class="external-link">biomaRt</a></em>
 package. The specific Biomart repository and query will depend on the
 species under study and the type of features. The first step is to
 prepare annotation parameters that will enable to perform the query. The
-<em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+<em><a href="https://bioconductor.org/packages/3.19/pRoloc" class="external-link">pRoloc</a></em>
 package provides a dedicated infrastructure to set up the query to the
 annotation resource and prepare the GO data for subsequent analyses.
 This infrastructure is composed of:</p>
@@ -203,7 +203,7 @@ the terms to prepare the auxiliary data.</li>
 </ol>
 <p>We will demonstrate these steps using a LOPIT experiment on Human
 Embryonic Kidney (HEK293T) fibroblast cells <span class="citation">(Lisa
-M. Breckels et al. 2013)</span>, available and documented in the <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>
+M. Breckels et al. 2013)</span>, available and documented in the <em><a href="https://bioconductor.org/packages/3.19/pRolocdata" class="external-link">pRolocdata</a></em>
 experiment package as <code>andy2011</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRolocdata" class="external-link">"pRolocdata"</a></span><span class="op">)</span></span>
@@ -215,10 +215,10 @@ experiment package as <code>andy2011</code>.</p>
 that are created with the <em>setAnnotationParams</em> function. The
 function will present a first menu with 486. Once the species has been
 selected, a set of possible identifier types is displayed.</p>
-<div class="figure">
-<img src="Figures/ap12.png" id="fig:apgui" alt=""><p class="caption">Selecting species (left) and feature type (right) to
-create an <code>AnnotationParams</code> instance for the human
-<code>andy2011</code> data.</p>
+<div class="float" id="fig:apgui">
+<img src="Figures/ap12.png" alt="Selecting species (left) and feature type (right) to create an AnnotationParams instance for the human andy2011 data."><div class="figcaption">Selecting species (left) and feature type
+(right) to create an <code>AnnotationParams</code> instance for the
+human <code>andy2011</code> data.</div>
 </div>
 <p>It is also possible to pass patterns to match against the species
 (<code>"Human genes"</code>) and feature type
@@ -230,7 +230,7 @@ create an <code>AnnotationParams</code> instance for the human
 <pre><code><span><span class="co">## Using species Human genes (GRCh38.p13)</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: Ensembl will soon enforce the use of https.</span></span>
 <span><span class="co">## Ensure the 'host' argument includes "https://"</span></span></code></pre>
-<pre><code><span><span class="co">## Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A024RBG1]</span></span></code></pre>
+<pre><code><span><span class="co">## Using feature type UniProtKB/Swiss-Prot ID(s) [e.g. A0A024R1R8]</span></span></code></pre>
 <pre><code><span><span class="co">## Connecting to Biomart...</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: Ensembl will soon enforce the use of https.</span></span>
 <span><span class="co">## Ensure the 'host' argument includes "https://"</span></span></code></pre>
@@ -240,7 +240,7 @@ create an <code>AnnotationParams</code> instance for the human
 <span><span class="co">##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database</span></span>
 <span><span class="co">##  Using the 'hsapiens_gene_ensembl' dataset</span></span>
 <span><span class="co">##  Using 'uniprotswissprot' as filter</span></span>
-<span><span class="co">##  Created on Wed Feb  1 05:46:08 2023</span></span></code></pre>
+<span><span class="co">##  Created on Tue Mar 12 07:18:50 2024</span></span></code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the
 annotation parameters globally so that the <code>ap</code> object does
 not need to be explicitly set later on. The default parameters can be
@@ -268,7 +268,7 @@ the query.</p>
 <code class="sourceCode R"><span><span class="va">andygoset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeGoSet.html">makeGoSet</a></span><span class="op">(</span><span class="va">andy2011</span><span class="op">)</span></span>
 <span><span class="va">andygoset</span></span></code></pre></div>
 <pre><code><span><span class="co">## MSnSet (storageMode: lockedEnvironment)</span></span>
-<span><span class="co">## assayData: 1371 features, 927 samples </span></span>
+<span><span class="co">## assayData: 1371 features, 914 samples </span></span>
 <span><span class="co">##   element names: exprs </span></span>
 <span><span class="co">## protocolData: none</span></span>
 <span><span class="co">## phenoData: none</span></span>
@@ -280,21 +280,21 @@ the query.</p>
 <span><span class="co">## experimentData: use 'experimentData(object)'</span></span>
 <span><span class="co">## Annotation:  </span></span>
 <span><span class="co">## - - - Processing information - - -</span></span>
-<span><span class="co">## Constructed GO set using cellular_component namespace [Wed Feb  1 05:46:11 2023] </span></span>
-<span><span class="co">##  MSnbase version: 2.25.1</span></span></code></pre>
+<span><span class="co">## Constructed GO set using cellular_component namespace [Tue Mar 12 07:18:53 2024] </span></span>
+<span><span class="co">##  MSnbase version: 2.29.3</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/exprs.html" class="external-link">exprs</a></span><span class="op">(</span><span class="va">andygoset</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##        GO:0016020 GO:0016021 GO:0005783 GO:0005789</span></span>
+<pre><code><span><span class="co">##        GO:0016020 GO:0005783 GO:0005789 GO:0005730</span></span>
 <span><span class="co">## O00767          1          1          1          1</span></span>
-<span><span class="co">## P51648          1          1          1          1</span></span>
-<span><span class="co">## Q2TAA5          1          1          1          1</span></span>
-<span><span class="co">## Q9UKV5          1          1          1          1</span></span>
-<span><span class="co">## Q12797          1          1          1          1</span></span>
-<span><span class="co">## P16615          1          1          1          1</span></span>
-<span><span class="co">## Q96SQ9          1          0          1          1</span></span></code></pre>
+<span><span class="co">## P51648          1          1          1          0</span></span>
+<span><span class="co">## Q2TAA5          1          1          1          0</span></span>
+<span><span class="co">## Q9UKV5          1          1          1          0</span></span>
+<span><span class="co">## Q12797          1          1          1          0</span></span>
+<span><span class="co">## P16615          1          1          1          0</span></span>
+<span><span class="co">## Q96SQ9          1          1          1          0</span></span></code></pre>
 <p>We now have a primary data set, composed of 1371 protein quantitative
 profiles for 8 fractions along the density gradient and an auxiliary
-data set for 927 cellular compartment GO terms for the same 1371
+data set for 914 cellular compartment GO terms for the same 1371
 features.</p>
 </div>
 <div class="section level4">
@@ -308,7 +308,7 @@ regular updates, does not guarantee reproducibility of feature/term
 association over time. It is recommended to save and store the
 <em>AnnotationParams</em> and auxiliary <em>MSnSet</em> instances.
 Alternatively, it is possible to use other Bioconductor infrastructure,
-such as specific organism annotations and the <em><a href="https://bioconductor.org/packages/3.17/GO.db" class="external-link">GO.db</a></em>
+such as specific organism annotations and the <em><a href="https://bioconductor.org/packages/3.19/GO.db" class="external-link">GO.db</a></em>
 package to use specific versioned (and thus traceable) annotations.</p>
 </div>
 </div>
@@ -326,7 +326,7 @@ In this section, we copy the experimental data to
 <span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fvarLabels</a></span><span class="op">(</span><span class="va">andyhpa</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"accession"</span> <span class="co">## for left_join matching</span></span>
 <span><span class="co">## convert protein accession numbers to ensembl gene identifiers</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"biomaRt"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/grimbough/biomaRt" class="external-link">"biomaRt"</a></span><span class="op">)</span></span>
 <span><span class="va">mart</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html" class="external-link">useMart</a></span><span class="op">(</span><span class="st">"ensembl"</span>, dataset <span class="op">=</span> <span class="st">"hsapiens_gene_ensembl"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">filter</span> <span class="op">&lt;-</span> <span class="st">"uniprotswissprot"</span></span>
@@ -346,35 +346,30 @@ In this section, we copy the experimental data to
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## HPA data</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"hpar"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## snapshotDate(): 2023-01-30</span></span></code></pre>
-<pre><code><span><span class="co">## This is hpar version 1.41.1,</span></span>
+<pre><code><span><span class="co">## This is hpar version 1.45.0,</span></span>
 <span><span class="co">## based on the Human Protein Atlas</span></span>
 <span><span class="co">##   Version: 21.1</span></span>
 <span><span class="co">##   Release data: 2022.05.31</span></span>
 <span><span class="co">##   Ensembl build: 103.38</span></span>
 <span><span class="co">## See '?hpar' or 'vignette('hpar')' for details.</span></span></code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## using old version for traceability</span></span>
 <span><span class="va">hpa</span> <span class="op">&lt;-</span> <span class="fu">hpar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/hpar/man/hpar-package.html" class="external-link">hpaSubcellularLoc14</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## see ?hpar and browseVignettes('hpar') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hpa</span><span class="op">$</span><span class="va">Reliability</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="va">hpa</span><span class="op">$</span><span class="va">Reliability</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">hpa</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ensembl_gene_id"</span></span>
 <span><span class="va">hpa</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">hpa</span>, <span class="va">bm</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Joining with `by = join_by(ensembl_gene_id)`</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in dplyr::left_join(hpa, bm): Each row in `x` is expected to match at most 1 row in `y`.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Row 85 of `x` matches multiple rows.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> If multiple matches are expected, set `multiple = "all"` to silence this</span></span>
-<span><span class="co">##   warning.</span></span></code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hpa</span> <span class="op">&lt;-</span> <span class="va">hpa</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">hpa</span><span class="op">$</span><span class="va">uniprotswissprot</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
 <span><span class="co">## match HPA/LOPIT</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">hpa</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"accession"</span></span>
 <span><span class="va">fd</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">andyhpa</span><span class="op">)</span>, <span class="va">hpa</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Joining with `by = join_by(accession)`</span></span></code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">fd</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureNames.html" class="external-link">featureNames</a></span><span class="op">(</span><span class="va">andyhpa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">andyhpa</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">fd</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/validObject.html" class="external-link">validObject</a></span><span class="op">(</span><span class="va">andyhpa</span><span class="op">)</span><span class="op">)</span></span>
@@ -386,7 +381,7 @@ the Human Protein sub-cellular Atlas, create the auxiliary binary data
 matrix (only localisations with reliability equal to <em>Supportive</em>
 are considered; <em>Uncertain</em> assignments are ignored - see <a href="http://www.proteinatlas.org/about/antibody+validation" class="external-link uri">http://www.proteinatlas.org/about/antibody+validation</a>
 for details) and filter proteins without any localisation data.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## HPA localisation</span></span>
 <span><span class="va">hpalocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">lopit</span><span class="op">)</span><span class="op">$</span><span class="va">Main.location</span><span class="op">)</span>,</span>
 <span>             <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">lopit</span><span class="op">)</span><span class="op">$</span><span class="va">Other.location</span><span class="op">)</span><span class="op">)</span></span>
@@ -412,10 +407,10 @@ for details) and filter proteins without any localisation data.</p>
 <span>                     score2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Supportive <span class="op">=</span> <span class="fl">1</span>, Uncertain <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">hpaset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterZeroCols.html">filterZeroRows</a></span><span class="op">(</span><span class="va">hpaset</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Removing 318 columns with only 0s.</span></span></code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">hpaset</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 669  18</span></span></code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/exprs.html" class="external-link">exprs</a></span><span class="op">(</span><span class="va">hpaset</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">200</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##        Endoplasmic reticulum Cytoplasm Vesicles</span></span>
 <span><span class="co">## O00767                     1         0        0</span></span>
@@ -429,14 +424,14 @@ for details) and filter proteins without any localisation data.</p>
 input to the transfer learning algorithm. Several sources can be used to
 do so directly from R:</p>
 <ul>
-<li><p>The <em><a href="https://bioconductor.org/packages/3.17/PSICQUIC" class="external-link">PSICQUIC</a></em>
+<li><p>The <em><a href="https://bioconductor.org/packages/3.19/PSICQUIC" class="external-link">PSICQUIC</a></em>
 package provides an R interfaces to the HUPO Proteomics Standard
 Initiative (HUPO-PSI) project, which standardises programmatic access to
 molecular interaction databases. This approach enables to query great
 many resources in one go but, as noted in the vignettes, for bulk
 interactions, it is recommended to directly download databases from
 individual PSICQUIC providers.</p></li>
-<li><p>The <em><a href="https://bioconductor.org/packages/3.17/STRINGdb" class="external-link">STRINGdb</a></em>
+<li><p>The <em><a href="https://bioconductor.org/packages/3.19/STRINGdb" class="external-link">STRINGdb</a></em>
 package provides a direct interface to the STRING protein-protein
 interactions database. This package can be used to generate a table as
 the one used below. The exact procedure is described in the
@@ -449,9 +444,9 @@ Below, we will described this case with PPI data in a tab-delimited
 format, as retrieved directly from the STRING database.</p></li>
 </ul>
 <p>Below, we access the PPI spreadsheet file for our test data, that is
-distributed with the <em><a href="https://bioconductor.org/packages/3.17/pRolocdata" class="external-link">pRolocdata</a></em>
+distributed with the <em><a href="https://bioconductor.org/packages/3.19/pRolocdata" class="external-link">pRolocdata</a></em>
 package.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/tabdelimited._gHentss2F9k.txt.gz"</span>, package <span class="op">=</span> <span class="st">"pRolocdata"</span><span class="op">)</span></span>
 <span><span class="va">ppidf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="va">ppif</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ppidf</span><span class="op">)</span></span></code></pre></div>
@@ -479,7 +474,7 @@ package.</p>
 <p>The file contains 18623 pairwise interactions and the STRING combined
 interaction score. Below, we create a contingency matrix that uses these
 scores to encode and weight interactions.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ppidf</span><span class="op">$</span><span class="va">X.node1</span>, <span class="va">ppidf</span><span class="op">$</span><span class="va">node2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">ppim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">uid</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">ppim</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ppim</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">uid</span></span>
@@ -503,7 +498,7 @@ are also available in our spatial proteomics data (renamed to
 <code>andyppi</code>), subset the PPI and LOPIT data, create the
 appropriate <code>MSnSet</code> object, and filter out proteins without
 any interaction scores.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">andyppi</span> <span class="op">&lt;-</span> <span class="va">andy2011</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureNames.html" class="external-link">featureNames</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"_HUMAN"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span><span class="op">$</span><span class="va">UniProtKB.entry.name</span><span class="op">)</span></span>
 <span><span class="va">cmn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureNames.html" class="external-link">featureNames</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ppim</span><span class="op">)</span><span class="op">)</span></span>
@@ -524,7 +519,7 @@ gradient (<code>andyppi</code>) and 520 auxiliary interaction profiles
 <h2 id="sec:svmtl">Support vector machine transfer learning<a class="anchor" aria-label="anchor" href="#sec:svmtl"></a>
 </h2>
 <p>The SVM-TL method descibed in <span class="citation">(L. M. Breckels
-et al. 2016)</span> has not yet been incorporated in the <em><a href="https://bioconductor.org/packages/3.17/pRoloc" class="external-link">pRoloc</a></em>
+et al. 2016)</span> has not yet been incorporated in the <em><a href="https://bioconductor.org/packages/3.19/pRoloc" class="external-link">pRoloc</a></em>
 package. The code implementing the method is currently available in its
 own repository:</p>
 <p><a href="https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code" class="external-link uri">https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code</a></p>
@@ -577,7 +572,7 @@ can be calculated with the <em>thetas</em> function:</p>
 <ul>
 <li>3 classes, 3 weights</li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/thetas.html">thetas</a></span><span class="op">(</span><span class="fl">3</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Weigths:</span></span>
 <span><span class="co">##   (0, 0.5, 1)</span></span></code></pre>
@@ -588,7 +583,7 @@ can be calculated with the <em>thetas</em> function:</p>
 <span><span class="co">## [4,]    0  0.5  0.0</span></span>
 <span><span class="co">## [5,]    0  0.5  0.5</span></span>
 <span><span class="co">## [6,]    0  0.5  1.0</span></span></code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="fu"><a href="../reference/thetas.html">thetas</a></span><span class="op">(</span><span class="fl">3</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Weigths:</span></span>
 <span><span class="co">##   (0, 0.5, 1)</span></span></code></pre>
@@ -596,7 +591,7 @@ can be calculated with the <em>thetas</em> function:</p>
 <ul>
 <li>5 classes, 4 weights</li>
 </ul>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="fu"><a href="../reference/thetas.html">thetas</a></span><span class="op">(</span><span class="fl">5</span>, length.out <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Weigths:</span></span>
 <span><span class="co">##   (0, 0.333333333333333, 0.666666666666667, 1)</span></span></code></pre>
@@ -605,14 +600,14 @@ can be calculated with the <em>thetas</em> function:</p>
 <li>for the human <code>andy2011</code> data, considering 4 weights,
 there are very many combinations:</li>
 </ul>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## marker classes for andy2011</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">andy2011</span><span class="op">)</span><span class="op">$</span><span class="va">markers.tl</span><span class="op">)</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="va">m</span><span class="op">[</span><span class="va">m</span> <span class="op">!=</span> <span class="st">"unknown"</span><span class="op">]</span></span>
 <span><span class="va">th</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thetas.html">thetas</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, length.out<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Weigths:</span></span>
 <span><span class="co">##   (0, 0.333333333333333, 0.666666666666667, 1)</span></span></code></pre>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1048576      10</span></span></code></pre>
 <p>The actual combination of weights to be tested can be defined in
@@ -640,7 +635,7 @@ of iterations, pre-analyse the results, proceed with further iterations
 and eventually combine the optimisation results data with the
 <em>combineThetaRegRes</em> function before proceeding with the
 selection of best weights.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">topt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knntlOptimisation.html">knntlOptimisation</a></span><span class="op">(</span><span class="va">andy2011</span>, <span class="va">andygoset</span>,</span>
 <span>                          th <span class="op">=</span> <span class="va">th</span>,</span>
 <span>                          k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span>
@@ -650,12 +645,12 @@ selection of best weights.</p>
 frame of this vignette. Below, we pass a very small subset of theta
 matrix to minimise the computation time. The <em>knntlOptimisation</em>
 function supports parallelised execution using various backends thanks
-to the <em><a href="https://bioconductor.org/packages/3.17/BiocParallel" class="external-link">BiocParallel</a></em>
+to the <em><a href="https://bioconductor.org/packages/3.19/BiocParallel" class="external-link">BiocParallel</a></em>
 package; an appropriate backend will be defined automatically according
 to the underlying architecture and user-defined backends can be defined
 through the <code>BPPARAM</code> argument<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Also, in the interest
 of time, the weights optimisation is repeated only 5 times below.</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span>, <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">topt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knntlOptimisation.html">knntlOptimisation</a></span><span class="op">(</span><span class="va">andy2011</span>, <span class="va">andygoset</span>,</span>
@@ -663,9 +658,9 @@ of time, the weights optimisation is repeated only 5 times below.</p>
 <span>                          k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>                          fcol <span class="op">=</span> <span class="st">"markers.tl"</span>,</span>
 <span>                          times <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Removing 501 columns with only 0s.</span></span></code></pre>
+<pre><code><span><span class="co">## Removing 498 columns with only 0s.</span></span></code></pre>
 <pre><code><span><span class="co">## Note: vector will be ordered according to classes: Cytosol Cytosol/Nucleus ER Golgi Lysosome Mitochondrion Nucleus PM Ribosome 40S Ribosome 60S (as names are not explicitly defined)</span></span></code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">topt</span></span></code></pre></div>
 <pre><code><span><span class="co">## Object of class "ThetaRegRes"</span></span>
 <span><span class="co">## Algorithm: theta </span></span>
@@ -679,18 +674,18 @@ of time, the weights optimisation is repeated only 5 times below.</p>
 <span><span class="co">## Results</span></span>
 <span><span class="co">##  macro F1:</span></span>
 <span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">##  0.7743  0.8179  0.8549  0.8371  0.8653  0.8732 </span></span>
+<span><span class="co">##  0.8101  0.8361  0.8396  0.8561  0.8899  0.9046 </span></span>
 <span><span class="co">##  best theta:</span></span>
 <span><span class="co">##             Cytosol Cytosol.Nucleus ER Golgi Lysosome Mitochondrion Nucleus PM</span></span>
-<span><span class="co">## weight:0          0               2  3     3        0             0       0  2</span></span>
-<span><span class="co">## weight:0.33       0               3  2     2        0             0       2  3</span></span>
-<span><span class="co">## weight:0.67       2               0  0     0        0             0       0  0</span></span>
-<span><span class="co">## weight:1          3               0  0     0        5             5       3  0</span></span>
+<span><span class="co">## weight:0          0               0  3     2        0             2       1  2</span></span>
+<span><span class="co">## weight:0.33       2               2  0     0        0             1       0  2</span></span>
+<span><span class="co">## weight:0.67       1               3  0     3        2             0       2  0</span></span>
+<span><span class="co">## weight:1          2               0  2     0        3             2       2  1</span></span>
 <span><span class="co">##             Ribosome.40S Ribosome.60S</span></span>
-<span><span class="co">## weight:0               5            0</span></span>
-<span><span class="co">## weight:0.33            0            3</span></span>
-<span><span class="co">## weight:0.67            0            0</span></span>
-<span><span class="co">## weight:1               0            2</span></span></code></pre>
+<span><span class="co">## weight:0               5            2</span></span>
+<span><span class="co">## weight:0.33            0            2</span></span>
+<span><span class="co">## weight:0.67            0            1</span></span>
+<span><span class="co">## weight:1               0            0</span></span></code></pre>
 <p>The optimisation is performed on the labelled marker examples only.
 When removing unlabelled non-marker proteins (the
 <code>unknowns</code>), some auxiliary GO columns end up containing only
@@ -706,12 +701,13 @@ predominantly are scored with height weights (2/3 and 1), consistent
 with high reliability of the primary data. The Golgi and the ribosomal
 clusters (and to a lesser extend the ER) favour smaller scores,
 indicating a substantial benefit of the auxiliary data.</p>
-<div class="figure">
-<img src="Figures/bubble-andy.png" id="fig:bubble" alt=""><p class="caption">Results obtained from an extensive optimisation on
-the primary <code>andy2011</code> and auxiliary <code>andygoset</code>
-data sets, as produced by <code>plot(topt)</code>. This figure is not
-the result for the previous code chunk, where only a random subset of 10
-candidate weights have been tested.</p>
+<div class="float" id="fig:bubble">
+<img src="Figures/bubble-andy.png" alt="Results obtained from an extensive optimisation on the primary andy2011 and auxiliary andygoset data sets, as produced by plot(topt). This figure is not the result for the previous code chunk, where only a random subset of 10 candidate weights have been tested."><div class="figcaption">Results obtained from an extensive optimisation
+on the primary <code>andy2011</code> and auxiliary
+<code>andygoset</code> data sets, as produced by
+<code>plot(topt)</code>. This figure is not the result for the previous
+code chunk, where only a random subset of 10 candidate weights have been
+tested.</div>
 </div>
 </div>
 <div class="section level3">
@@ -725,15 +721,15 @@ or automatically extracted with the <em>getParams</em> method<a href="#fn3" clas
 <em>?getParams</em> for details and the <em>favourPrimary</em> function,
 if it is desirable to systematically favour the primary data (i.e. high
 weights) when different weight combinations perform equally well.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/GenRegRes-class.html">getParams</a></span><span class="op">(</span><span class="va">topt</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##         Cytosol Cytosol/Nucleus              ER           Golgi        Lysosome </span></span>
-<span><span class="co">##       1.0000000       0.3333333       0.0000000       0.0000000       1.0000000 </span></span>
+<span><span class="co">##       0.6666667       0.6666667       0.0000000       0.6666667       1.0000000 </span></span>
 <span><span class="co">##   Mitochondrion         Nucleus              PM    Ribosome 40S    Ribosome 60S </span></span>
-<span><span class="co">##       1.0000000       1.0000000       0.3333333       0.0000000       0.3333333</span></span></code></pre>
+<span><span class="co">##       0.3333333       0.6666667       0.3333333       0.0000000       0.3333333</span></span></code></pre>
 <p>We provide the best parameters for the extensive parameter
 optimisation search, as provided by <em>getParams</em>:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/abstract.html" class="external-link">experimentData</a></span><span class="op">(</span><span class="va">andy2011</span><span class="op">)</span><span class="op">@</span><span class="va">other</span><span class="op">$</span><span class="va">knntl</span><span class="op">$</span><span class="va">thetas</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##         Cytosol Cytosol/Nucleus              ER           Golgi        Lysosome </span></span>
 <span><span class="co">##       0.6666667       0.6666667       0.3333333       0.3333333       0.6666667 </span></span>
@@ -750,7 +746,7 @@ on figure @ref(fig:andypca)), we pass the primary and auxiliary data
 sets, best weights, best k’s (and, on our case the marker’s feature
 variable we want to use, default would be <code>markers</code>) to the
 <em>knntlClassification</em> function.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">andy2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knntlClassification.html">knntlClassification</a></span><span class="op">(</span><span class="va">andy2011</span>, <span class="va">andygoset</span>,</span>
 <span>                                bestTheta <span class="op">=</span> <span class="va">bw</span>,</span>
 <span>                                k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span>
@@ -762,18 +758,18 @@ classifications scores of the transfer learning classification algorithm
 respectively). Below, we extract the former with the
 <em>getPrediction</em> function and plot the results of the
 classification.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">andy2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getPredictions.html">getPredictions</a></span><span class="op">(</span><span class="va">andy2011</span>, fcol <span class="op">=</span> <span class="st">"knntl"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ans</span></span>
 <span><span class="co">## Chromatin associated              Cytosol      Cytosol/Nucleus </span></span>
-<span><span class="co">##                   11                  283                   47 </span></span>
+<span><span class="co">##                   11                  275                   45 </span></span>
 <span><span class="co">##             Endosome                   ER                Golgi </span></span>
-<span><span class="co">##                   12                  198                   68 </span></span>
+<span><span class="co">##                   12                  199                   75 </span></span>
 <span><span class="co">##             Lysosome        Mitochondrion              Nucleus </span></span>
-<span><span class="co">##                   65                  254                  118 </span></span>
+<span><span class="co">##                   63                  257                  113 </span></span>
 <span><span class="co">##                   PM         Ribosome 40S         Ribosome 60S </span></span>
-<span><span class="co">##                  238                   19                   58</span></span></code></pre>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<span><span class="co">##                  248                   19                   54</span></span></code></pre>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getStockcol.html">setStockcol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="../reference/getStockcol.html">getStockcol</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"80"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">ptsze</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">andy2011</span><span class="op">)</span><span class="op">$</span><span class="va">knntl.scores</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
 <span><span class="fu"><a href="../reference/plot2D.html">plot2D</a></span><span class="op">(</span><span class="va">andy2011</span>, fcol <span class="op">=</span> <span class="st">"knntl"</span>, cex <span class="op">=</span> <span class="va">ptsze</span><span class="op">)</span></span>
@@ -811,9 +807,9 @@ data.</p>
 </h2>
 <p>All software and respective versions used to produce this document
 are listed below.</p>
-<pre><code><span><span class="co">## R Under development (unstable) (2023-01-26 r83699)</span></span>
-<span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.1 LTS</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-03-06 r86056)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -835,96 +831,97 @@ are listed below.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] hpar_1.41.1          biomaRt_2.55.0       class_7.3-21        </span></span>
-<span><span class="co">##  [4] pRolocdata_1.37.0    pRoloc_1.39.1        BiocParallel_1.33.9 </span></span>
-<span><span class="co">##  [7] MLInterfaces_1.79.1  cluster_2.1.4        annotate_1.77.0     </span></span>
-<span><span class="co">## [10] XML_3.99-0.13        AnnotationDbi_1.61.0 IRanges_2.33.0      </span></span>
-<span><span class="co">## [13] MSnbase_2.25.1       ProtGenerics_1.31.0  S4Vectors_0.37.3    </span></span>
-<span><span class="co">## [16] mzR_2.33.0           Rcpp_1.0.10          Biobase_2.59.0      </span></span>
-<span><span class="co">## [19] BiocGenerics_0.45.0  knitr_1.42           BiocStyle_2.27.1    </span></span>
+<span><span class="co">##  [1] hpar_1.45.0          biomaRt_2.59.1       class_7.3-22        </span></span>
+<span><span class="co">##  [4] pRolocdata_1.41.0    pRoloc_1.43.2        BiocParallel_1.37.1 </span></span>
+<span><span class="co">##  [7] MLInterfaces_1.83.0  cluster_2.1.6        annotate_1.81.2     </span></span>
+<span><span class="co">## [10] XML_3.99-0.16.1      AnnotationDbi_1.65.2 IRanges_2.37.1      </span></span>
+<span><span class="co">## [13] MSnbase_2.29.3       ProtGenerics_1.35.3  S4Vectors_0.41.4    </span></span>
+<span><span class="co">## [16] mzR_2.37.2           Rcpp_1.0.12          Biobase_2.63.0      </span></span>
+<span><span class="co">## [19] BiocGenerics_0.49.1  knitr_1.45           BiocStyle_2.31.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] later_1.3.0                   splines_4.3.0                </span></span>
-<span><span class="co">##   [3] bitops_1.0-7                  filelock_1.0.2               </span></span>
-<span><span class="co">##   [5] tibble_3.1.8                  hardhat_1.2.0                </span></span>
-<span><span class="co">##   [7] preprocessCore_1.61.0         pROC_1.18.0                  </span></span>
-<span><span class="co">##   [9] rpart_4.1.19                  lifecycle_1.0.3              </span></span>
-<span><span class="co">##  [11] doParallel_1.0.17             rprojroot_2.0.3              </span></span>
-<span><span class="co">##  [13] globals_0.16.2                lattice_0.20-45              </span></span>
-<span><span class="co">##  [15] MASS_7.3-58.2                 dendextend_1.16.0            </span></span>
-<span><span class="co">##  [17] magrittr_2.0.3                limma_3.55.4                 </span></span>
-<span><span class="co">##  [19] plotly_4.10.1                 sass_0.4.5                   </span></span>
-<span><span class="co">##  [21] rmarkdown_2.20                jquerylib_0.1.4              </span></span>
-<span><span class="co">##  [23] yaml_2.3.7                    httpuv_1.6.8                 </span></span>
-<span><span class="co">##  [25] MsCoreUtils_1.11.3            DBI_1.1.3                    </span></span>
-<span><span class="co">##  [27] RColorBrewer_1.1-3            lubridate_1.9.1              </span></span>
-<span><span class="co">##  [29] zlibbioc_1.45.0               GenomicRanges_1.51.4         </span></span>
-<span><span class="co">##  [31] purrr_1.0.1                   mixtools_2.0.0               </span></span>
-<span><span class="co">##  [33] RCurl_1.98-1.10               nnet_7.3-18                  </span></span>
-<span><span class="co">##  [35] rappdirs_0.3.3                ipred_0.9-13                 </span></span>
-<span><span class="co">##  [37] lava_1.7.1                    GenomeInfoDbData_1.2.9       </span></span>
-<span><span class="co">##  [39] listenv_0.9.0                 parallelly_1.34.0            </span></span>
-<span><span class="co">##  [41] pkgdown_2.0.7.9000            ncdf4_1.21                   </span></span>
-<span><span class="co">##  [43] codetools_0.2-18              DelayedArray_0.25.0          </span></span>
-<span><span class="co">##  [45] xml2_1.3.3                    tidyselect_1.2.0             </span></span>
-<span><span class="co">##  [47] viridis_0.6.2                 matrixStats_0.63.0           </span></span>
-<span><span class="co">##  [49] BiocFileCache_2.7.1           jsonlite_1.8.4               </span></span>
-<span><span class="co">##  [51] caret_6.0-93                  e1071_1.7-12                 </span></span>
-<span><span class="co">##  [53] ellipsis_0.3.2                survival_3.5-0               </span></span>
-<span><span class="co">##  [55] iterators_1.0.14              systemfonts_1.0.4            </span></span>
-<span><span class="co">##  [57] foreach_1.5.2                 segmented_1.6-2              </span></span>
-<span><span class="co">##  [59] tools_4.3.0                   progress_1.2.2               </span></span>
-<span><span class="co">##  [61] ragg_1.2.5                    glue_1.6.2                   </span></span>
-<span><span class="co">##  [63] prodlim_2019.11.13            gridExtra_2.3                </span></span>
-<span><span class="co">##  [65] xfun_0.37                     MatrixGenerics_1.11.0        </span></span>
-<span><span class="co">##  [67] GenomeInfoDb_1.35.13          dplyr_1.1.0                  </span></span>
-<span><span class="co">##  [69] withr_2.5.0                   BiocManager_1.30.19          </span></span>
-<span><span class="co">##  [71] fastmap_1.1.0                 fansi_1.0.4                  </span></span>
-<span><span class="co">##  [73] digest_0.6.31                 mime_0.12                    </span></span>
-<span><span class="co">##  [75] timechange_0.2.0              R6_2.5.1                     </span></span>
-<span><span class="co">##  [77] textshaping_0.3.6             colorspace_2.1-0             </span></span>
-<span><span class="co">##  [79] gtools_3.9.4                  lpSolve_5.6.17               </span></span>
-<span><span class="co">##  [81] RSQLite_2.2.20                utf8_1.2.3                   </span></span>
-<span><span class="co">##  [83] tidyr_1.3.0                   generics_0.1.3               </span></span>
-<span><span class="co">##  [85] hexbin_1.28.2                 data.table_1.14.6            </span></span>
-<span><span class="co">##  [87] recipes_1.0.4                 FNN_1.1.3.1                  </span></span>
-<span><span class="co">##  [89] prettyunits_1.1.1             httr_1.4.4                   </span></span>
-<span><span class="co">##  [91] htmlwidgets_1.6.1             ModelMetrics_1.2.2.2         </span></span>
-<span><span class="co">##  [93] pkgconfig_2.0.3               gtable_0.3.1                 </span></span>
-<span><span class="co">##  [95] timeDate_4022.108             blob_1.2.3                   </span></span>
-<span><span class="co">##  [97] impute_1.73.0                 XVector_0.39.0               </span></span>
-<span><span class="co">##  [99] htmltools_0.5.4               bookdown_0.32                </span></span>
-<span><span class="co">## [101] MALDIquant_1.22               clue_0.3-64                  </span></span>
-<span><span class="co">## [103] scales_1.2.1                  png_0.1-8                    </span></span>
-<span><span class="co">## [105] gower_1.0.1                   reshape2_1.4.4               </span></span>
-<span><span class="co">## [107] coda_0.19-4                   nlme_3.1-161                 </span></span>
-<span><span class="co">## [109] curl_5.0.0                    proxy_0.4-27                 </span></span>
-<span><span class="co">## [111] cachem_1.0.6                  stringr_1.5.0                </span></span>
-<span><span class="co">## [113] BiocVersion_3.17.1            parallel_4.3.0               </span></span>
-<span><span class="co">## [115] mzID_1.37.0                   vsn_3.67.0                   </span></span>
-<span><span class="co">## [117] desc_1.4.2                    pillar_1.8.1                 </span></span>
-<span><span class="co">## [119] grid_4.3.0                    vctrs_0.5.2                  </span></span>
-<span><span class="co">## [121] pcaMethods_1.91.0             promises_1.2.0.1             </span></span>
-<span><span class="co">## [123] randomForest_4.7-1.1          dbplyr_2.3.0                 </span></span>
-<span><span class="co">## [125] xtable_1.8-4                  evaluate_0.20                </span></span>
-<span><span class="co">## [127] mvtnorm_1.1-3                 cli_3.6.0                    </span></span>
-<span><span class="co">## [129] compiler_4.3.0                rlang_1.0.6                  </span></span>
-<span><span class="co">## [131] crayon_1.5.2                  future.apply_1.10.0          </span></span>
-<span><span class="co">## [133] LaplacesDemon_16.1.6          mclust_6.0.0                 </span></span>
-<span><span class="co">## [135] affy_1.77.0                   plyr_1.8.8                   </span></span>
-<span><span class="co">## [137] fs_1.6.0                      stringi_1.7.12               </span></span>
-<span><span class="co">## [139] viridisLite_0.4.1             assertthat_0.2.1             </span></span>
-<span><span class="co">## [141] munsell_0.5.0                 Biostrings_2.67.0            </span></span>
-<span><span class="co">## [143] lazyeval_0.2.2                Matrix_1.5-3                 </span></span>
-<span><span class="co">## [145] ExperimentHub_2.7.0           hms_1.1.2                    </span></span>
-<span><span class="co">## [147] bit64_4.0.5                   future_1.30.0                </span></span>
-<span><span class="co">## [149] ggplot2_3.4.0                 shiny_1.7.4                  </span></span>
-<span><span class="co">## [151] KEGGREST_1.39.0               highr_0.10                   </span></span>
-<span><span class="co">## [153] interactiveDisplayBase_1.37.0 AnnotationHub_3.7.0          </span></span>
-<span><span class="co">## [155] SummarizedExperiment_1.29.1   kernlab_0.9-32               </span></span>
-<span><span class="co">## [157] memoise_2.0.1                 affyio_1.69.0                </span></span>
-<span><span class="co">## [159] bslib_0.4.2                   sampling_2.9                 </span></span>
-<span><span class="co">## [161] bit_4.0.5</span></span></code></pre>
+<span><span class="co">##   [1] splines_4.4.0               bitops_1.0-7               </span></span>
+<span><span class="co">##   [3] filelock_1.0.3              tibble_3.2.1               </span></span>
+<span><span class="co">##   [5] hardhat_1.3.1               preprocessCore_1.65.0      </span></span>
+<span><span class="co">##   [7] pROC_1.18.5                 rpart_4.1.23               </span></span>
+<span><span class="co">##   [9] lifecycle_1.0.4             httr2_1.0.0                </span></span>
+<span><span class="co">##  [11] doParallel_1.0.17           globals_0.16.3             </span></span>
+<span><span class="co">##  [13] lattice_0.22-5              MASS_7.3-60.2              </span></span>
+<span><span class="co">##  [15] MultiAssayExperiment_1.29.1 dendextend_1.17.1          </span></span>
+<span><span class="co">##  [17] magrittr_2.0.3              limma_3.59.5               </span></span>
+<span><span class="co">##  [19] plotly_4.10.4               sass_0.4.8                 </span></span>
+<span><span class="co">##  [21] rmarkdown_2.26              jquerylib_0.1.4            </span></span>
+<span><span class="co">##  [23] yaml_2.3.8                  MsCoreUtils_1.15.4         </span></span>
+<span><span class="co">##  [25] DBI_1.2.2                   RColorBrewer_1.1-3         </span></span>
+<span><span class="co">##  [27] lubridate_1.9.3             abind_1.4-5                </span></span>
+<span><span class="co">##  [29] zlibbioc_1.49.0             GenomicRanges_1.55.3       </span></span>
+<span><span class="co">##  [31] purrr_1.0.2                 mixtools_2.0.0             </span></span>
+<span><span class="co">##  [33] AnnotationFilter_1.27.0     RCurl_1.98-1.14            </span></span>
+<span><span class="co">##  [35] nnet_7.3-19                 rappdirs_0.3.3             </span></span>
+<span><span class="co">##  [37] ipred_0.9-14                lava_1.8.0                 </span></span>
+<span><span class="co">##  [39] GenomeInfoDbData_1.2.11     listenv_0.9.1              </span></span>
+<span><span class="co">##  [41] parallelly_1.37.1           pkgdown_2.0.7.9000         </span></span>
+<span><span class="co">##  [43] ncdf4_1.22                  codetools_0.2-19           </span></span>
+<span><span class="co">##  [45] DelayedArray_0.29.9         xml2_1.3.6                 </span></span>
+<span><span class="co">##  [47] tidyselect_1.2.1            viridis_0.6.5              </span></span>
+<span><span class="co">##  [49] matrixStats_1.2.0           BiocFileCache_2.11.1       </span></span>
+<span><span class="co">##  [51] jsonlite_1.8.8              caret_6.0-94               </span></span>
+<span><span class="co">##  [53] e1071_1.7-14                survival_3.5-8             </span></span>
+<span><span class="co">##  [55] iterators_1.0.14            systemfonts_1.0.6          </span></span>
+<span><span class="co">##  [57] foreach_1.5.2               segmented_2.0-3            </span></span>
+<span><span class="co">##  [59] tools_4.4.0                 progress_1.2.3             </span></span>
+<span><span class="co">##  [61] ragg_1.2.7                  glue_1.7.0                 </span></span>
+<span><span class="co">##  [63] prodlim_2023.08.28          gridExtra_2.3              </span></span>
+<span><span class="co">##  [65] SparseArray_1.3.4           xfun_0.42                  </span></span>
+<span><span class="co">##  [67] MatrixGenerics_1.15.0       GenomeInfoDb_1.39.8        </span></span>
+<span><span class="co">##  [69] dplyr_1.1.4                 withr_3.0.0                </span></span>
+<span><span class="co">##  [71] BiocManager_1.30.22         fastmap_1.1.1              </span></span>
+<span><span class="co">##  [73] fansi_1.0.6                 digest_0.6.35              </span></span>
+<span><span class="co">##  [75] mime_0.12                   timechange_0.3.0           </span></span>
+<span><span class="co">##  [77] R6_2.5.1                    textshaping_0.3.7          </span></span>
+<span><span class="co">##  [79] colorspace_2.1-0            gtools_3.9.5               </span></span>
+<span><span class="co">##  [81] lpSolve_5.6.20              RSQLite_2.3.5              </span></span>
+<span><span class="co">##  [83] utf8_1.2.4                  tidyr_1.3.1                </span></span>
+<span><span class="co">##  [85] generics_0.1.3              hexbin_1.28.3              </span></span>
+<span><span class="co">##  [87] data.table_1.15.2           recipes_1.0.10             </span></span>
+<span><span class="co">##  [89] FNN_1.1.4                   prettyunits_1.2.0          </span></span>
+<span><span class="co">##  [91] PSMatch_1.7.1               httr_1.4.7                 </span></span>
+<span><span class="co">##  [93] htmlwidgets_1.6.4           S4Arrays_1.3.6             </span></span>
+<span><span class="co">##  [95] ModelMetrics_1.2.2.2        pkgconfig_2.0.3            </span></span>
+<span><span class="co">##  [97] gtable_0.3.4                timeDate_4032.109          </span></span>
+<span><span class="co">##  [99] blob_1.2.4                  impute_1.77.0              </span></span>
+<span><span class="co">## [101] XVector_0.43.1              htmltools_0.5.7            </span></span>
+<span><span class="co">## [103] bookdown_0.38               MALDIquant_1.22.2          </span></span>
+<span><span class="co">## [105] clue_0.3-65                 scales_1.3.0               </span></span>
+<span><span class="co">## [107] png_0.1-8                   gower_1.0.1                </span></span>
+<span><span class="co">## [109] reshape2_1.4.4              coda_0.19-4.1              </span></span>
+<span><span class="co">## [111] nlme_3.1-164                curl_5.2.1                 </span></span>
+<span><span class="co">## [113] proxy_0.4-27                cachem_1.0.8               </span></span>
+<span><span class="co">## [115] stringr_1.5.1               BiocVersion_3.19.1         </span></span>
+<span><span class="co">## [117] parallel_4.4.0              mzID_1.41.0                </span></span>
+<span><span class="co">## [119] vsn_3.71.1                  desc_1.4.3                 </span></span>
+<span><span class="co">## [121] pillar_1.9.0                grid_4.4.0                 </span></span>
+<span><span class="co">## [123] vctrs_0.6.5                 pcaMethods_1.95.0          </span></span>
+<span><span class="co">## [125] randomForest_4.7-1.1        dbplyr_2.4.0               </span></span>
+<span><span class="co">## [127] xtable_1.8-4                evaluate_0.23              </span></span>
+<span><span class="co">## [129] mvtnorm_1.2-4               cli_3.6.2                  </span></span>
+<span><span class="co">## [131] compiler_4.4.0              rlang_1.1.3                </span></span>
+<span><span class="co">## [133] crayon_1.5.2                future.apply_1.11.1        </span></span>
+<span><span class="co">## [135] LaplacesDemon_16.1.6        mclust_6.1                 </span></span>
+<span><span class="co">## [137] QFeatures_1.13.2            affy_1.81.0                </span></span>
+<span><span class="co">## [139] plyr_1.8.9                  fs_1.6.3                   </span></span>
+<span><span class="co">## [141] stringi_1.8.3               viridisLite_0.4.2          </span></span>
+<span><span class="co">## [143] munsell_0.5.0               Biostrings_2.71.3          </span></span>
+<span><span class="co">## [145] lazyeval_0.2.2              Matrix_1.6-5               </span></span>
+<span><span class="co">## [147] ExperimentHub_2.11.1        hms_1.1.3                  </span></span>
+<span><span class="co">## [149] future_1.33.1               bit64_4.0.5                </span></span>
+<span><span class="co">## [151] ggplot2_3.5.0               KEGGREST_1.43.0            </span></span>
+<span><span class="co">## [153] statmod_1.5.0               highr_0.10                 </span></span>
+<span><span class="co">## [155] AnnotationHub_3.11.1        SummarizedExperiment_1.33.3</span></span>
+<span><span class="co">## [157] kernlab_0.9-32              igraph_2.0.2               </span></span>
+<span><span class="co">## [159] memoise_2.0.1               affyio_1.73.0              </span></span>
+<span><span class="co">## [161] bslib_0.6.1                 sampling_2.10              </span></span>
+<span><span class="co">## [163] bit_4.0.5</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

@@ -18,7 +18,7 @@ detect new protein clusters."><!-- mathjax --><script src="https://cdnjs.cloudfl
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -77,10 +77,23 @@ detect new protein clusters.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">phenoDisco</span><span class="op">(</span><span class="va">object</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, times <span class="op">=</span> <span class="fl">100</span>, GS <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  allIter <span class="op">=</span> <span class="cn">FALSE</span>, p <span class="op">=</span> <span class="fl">0.05</span>, ndims <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  modelNames <span class="op">=</span> <span class="fu">mclust.options</span><span class="op">(</span><span class="st">"emModelNames"</span><span class="op">)</span>, G <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="va">BPPARAM</span>,</span>
-<span>  <span class="va">tmpfile</span>, <span class="va">seed</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, dimred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA"</span>, <span class="st">"t-SNE"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">phenoDisco</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  GS <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  allIter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  p <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  ndims <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  modelNames <span class="op">=</span> <span class="fu">mclust.options</span><span class="op">(</span><span class="st">"emModelNames"</span><span class="op">)</span>,</span>
+<span>  G <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,</span>
+<span>  <span class="va">BPPARAM</span>,</span>
+<span>  <span class="va">tmpfile</span>,</span>
+<span>  <span class="va">seed</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dimred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA"</span>, <span class="st">"t-SNE"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">

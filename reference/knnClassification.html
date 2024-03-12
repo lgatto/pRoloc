@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -75,8 +75,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">knnClassification</span><span class="op">(</span><span class="va">object</span>, <span class="va">assessRes</span>, scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prediction"</span>, <span class="st">"all"</span>,</span>
-<span>  <span class="st">"none"</span><span class="op">)</span>, <span class="va">k</span>, fcol <span class="op">=</span> <span class="st">"markers"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">knnClassification</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">assessRes</span>,</span>
+<span>  scores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prediction"</span>, <span class="st">"all"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  <span class="va">k</span>,</span>
+<span>  fcol <span class="op">=</span> <span class="st">"markers"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -184,8 +190,8 @@ package <code>class</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Normalised to sum of intensities. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Performed knn prediction (k=3) Wed Feb  1 05:40:48 2023 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Added knn predictions according to global threshold = 0 Wed Feb  1 05:40:48 2023 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Performed knn prediction (k=3) Tue Mar 12 07:13:32 2024 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Added knn predictions according to global threshold = 0 Tue Mar 12 07:13:32 2024 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  MSnbase version: 1.17.12 </span>
 <span class="r-in"><span><span class="fu"><a href="getPredictions.html">getPredictions</a></span><span class="op">(</span><span class="va">res</span>, fcol <span class="op">=</span> <span class="st">"knn"</span>, t <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ans</span>
@@ -212,8 +218,8 @@ package <code>class</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Loaded on Thu Jul 16 22:53:08 2015. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Normalised to sum of intensities. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Added markers from  'mrk' marker vector. Thu Jul 16 22:53:08 2015 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Performed knn prediction (k=3) Wed Feb  1 05:40:48 2023 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Added knn predictions according to global threshold = 0.75 Wed Feb  1 05:40:48 2023 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Performed knn prediction (k=3) Tue Mar 12 07:13:32 2024 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Added knn predictions according to global threshold = 0.75 Tue Mar 12 07:13:32 2024 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  MSnbase version: 1.17.12 </span>
 <span class="r-in"><span><span class="fu"><a href="plot2D.html">plot2D</a></span><span class="op">(</span><span class="va">res</span>, fcol <span class="op">=</span> <span class="st">"knn"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="knnClassification-3.png" alt="" width="700" height="433"></span>

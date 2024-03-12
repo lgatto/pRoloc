@@ -28,7 +28,7 @@ The chi2 methods implement this idea and compute such Chi^2
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -155,29 +155,29 @@ The chi2 methods implement this idea and compute such Chi^2
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mrk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">prot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">60</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">chi2</span><span class="op">(</span><span class="va">mrk</span>, <span class="va">prot</span>, method <span class="op">=</span> <span class="st">"Andersen2003"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5973439 1.6204618 3.1474448 3.8159721 1.9442386 2.8598635 0.9618657</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 2.4775154 1.9620390 1.1837790</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.0967902 1.1463540 1.4191266 0.2068751 1.0465213 0.4551556 0.5688080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.8372766 0.6537026 1.6546128</span>
 <span class="r-in"><span><span class="fu">chi2</span><span class="op">(</span><span class="va">mrk</span>, <span class="va">prot</span>, method <span class="op">=</span> <span class="st">"Wiese2007"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  -61.800616  -40.863913  -18.631162  -11.964521  -48.730051  -59.901604</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]   -9.380375 -183.807730  -78.874597  -35.056524</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -99.022514   1.259352   5.659525  -9.411881 -16.221333  -8.607184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  -8.761559 -12.617465 -16.665233 -61.464536</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">pepmark</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pepprot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">60</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">chi2</span><span class="op">(</span><span class="va">pepmark</span>, <span class="va">pepprot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]      [,2]      [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 2.4060471 0.7128013 0.9692423</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 1.7169127 1.2541456 3.1220592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 1.7974853 0.5822429 2.0619888</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 3.0617084 1.0692017 2.0215062</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 1.7684921 0.5954362 0.8037104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 1.3206710 0.6904117 2.4765364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 3.4272234 1.5089956 3.5153397</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.9959838 1.0816578 3.1640995</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 3.4955556 1.7019460 2.3328391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 2.4304560 0.4566767 1.6098192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 4.5988896 3.1499537 3.7396873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 1.6701143 1.3216528 1.6257841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] 2.2106985 1.0001274 1.3839472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 3.8488785 0.8428786 2.2532602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 3.4259609 3.3506198 4.4293366</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 0.7326039 1.1720762 0.5971256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 3.6745519 2.8268972 2.3971798</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 3.0170132 0.9467137 0.7544976</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.3171632 1.6979943 0.5115651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 2.4818172 1.3501409 1.4529782</span>
 <span class="r-in"><span><span class="fu">chi2</span><span class="op">(</span><span class="va">pepmark</span>, <span class="va">pepprot</span>, fun <span class="op">=</span> <span class="va">sum</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 4.088091 6.093117 4.441717 6.152416 3.167639 4.487619 8.451559 5.241741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 7.530341 4.496952</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 11.488531  4.617551  4.594773  6.945017 11.205917  2.501806  8.898629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8]  4.718224  2.526723  5.284936</span>
 </code></pre></div>
     </div>
   </div>

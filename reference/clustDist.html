@@ -18,7 +18,7 @@ distances for pre-defined sets of proteins."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pRoloc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.39.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.43.2</span>
       </span>
     </div>
 
@@ -77,8 +77,7 @@ distances for pre-defined sets of proteins.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clustDist</span><span class="op">(</span><span class="va">object</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, fcol <span class="op">=</span> <span class="st">"GOAnnotations"</span>, n <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">seed</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clustDist</span><span class="op">(</span><span class="va">object</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, fcol <span class="op">=</span> <span class="st">"GOAnnotations"</span>, n <span class="op">=</span> <span class="fl">5</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">seed</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -169,9 +168,9 @@ and <code>"<a href="ClustDist-class.html">ClustDist</a>"</code>.</p></div>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="addGoAnnotations.html">addGoAnnotations</a></span><span class="op">(</span><span class="va">dunkley2006</span>, <span class="va">par</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## filter</span></span></span>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="filterMinMarkers.html">filterMinMarkers</a></span><span class="op">(</span><span class="va">xx</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 19 out of 196 in GOAnnotations</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 18 out of 165 in GOAnnotations</span>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="filterMaxMarkers.html">filterMaxMarkers</a></span><span class="op">(</span><span class="va">xx</span>, p <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 14 out of 19 in GOAnnotations</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retaining 14 out of 18 in GOAnnotations</span>
 <span class="r-in"><span><span class="co">## get distances for protein sets </span></span></span>
 <span class="r-in"><span><span class="va">dd</span> <span class="op">&lt;-</span> <span class="fu">clustDist</span><span class="op">(</span><span class="va">xx</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=====                                                                 |   7%  |                                                                              |==========                                                            |  14%  |                                                                              |===============                                                       |  21%  |                                                                              |====================                                                  |  29%  |                                                                              |=========================                                             |  36%  |                                                                              |==============================                                        |  43%  |                                                                              |===================================                                   |  50%  |                                                                              |========================================                              |  57%  |                                                                              |=============================================                         |  64%  |                                                                              |==================================================                    |  71%  |                                                                              |=======================================================               |  79%  |                                                                              |============================================================          |  86%  |                                                                              |=================================================================     |  93%  |                                                                              |======================================================================| 100%</span>

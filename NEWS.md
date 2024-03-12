@@ -1,5 +1,9 @@
 # pRoloc 1.43
 
+## Changes in version 1.43.2
+
+- Fix/update dunkley2006param object.
+
 ## Changes in version 1.43.1
 
 - Fix syntax in man pages.

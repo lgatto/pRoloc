@@ -2,7 +2,7 @@
 
 ## Changes in version 1.45.1
 
-- Import mclust::estep().
+- Import 'mclust'.
 
 ## Changes in version 1.45.0
 

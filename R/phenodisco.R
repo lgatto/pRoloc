@@ -199,7 +199,7 @@ gmmOutlier <- function(L, X, N = 500, p=0.05) {
             ## Generate the test statistic, W, for round N
             ## (build up a distribution of W over N rounds)
         }
-                                        # Can plot to check normal using: plot(density(W))
+        ## Can plot to check normal using: plot(density(W))
     }
     ## Test unlabelled
     ## Test for G>1
@@ -447,7 +447,7 @@ phenoDisco <- function(object,
         object <- filterNA(object, pNA = 0)
     }
 
-        ## Remove duplicated rows (i.e. identical profiles and add back later)
+    ## Remove duplicated rows (i.e. identical profiles and add back later)
     duplicatedRows <- FALSE
     if (anyDuplicated(exprs(object))>0) {
         duplicatedRows <- TRUE

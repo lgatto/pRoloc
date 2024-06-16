@@ -1,7 +1,7 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.45.0
+Version: 1.45.1
 Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "laurent.gatto@uclouvain.be",
                     role = c("aut","cre")),
@@ -15,7 +15,7 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "samuel.wieczorek@cea.fr",
                     role = "ctb"),
              person(given = "Oliver", family ="Crook",
-                    email = "omc25@cam.ac.uk",
+                    email = "oliver.crook@stats.ox.ac.uk",
                     role = "aut"))
 Author: Laurent Gatto, Oliver Crook and Lisa M. Breckels with
     contributions from Thomas Burger and Samuel Wieczorek

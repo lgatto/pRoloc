@@ -51,8 +51,11 @@ importFrom(ggplot2, ggplot, geom_point, theme, scale_size_continuous,
            coord_fixed, geom_contour, scale_alpha, theme_minimal,
            element_rect, geom_density2d, xlim, stat)
 
-import("mclust")
-
+importFrom("mclust", "Mclust", "mclust.options", "mclustBIC",
+           "estep", "estepE", "estepEEE", "estepEEI", "estepEEV",
+           "estepEII", "estepEVE", "estepEVI", "estepEVV", "estepV",
+           "estepVEE", "estepVEI", "estepVEV", "estepVII", "estepVVE",
+           "estepVVI", "estepVVV")
 
 ## Importing to avoid 'no visible global function definition for' NOTES
 import(Biobase)

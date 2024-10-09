@@ -2,48 +2,53 @@
 ## data is in inst/extdata/marker_species.rda
 
 
-##' This function retrieves a list of organelle markers or, if no
-##' \code{species} is provided, prints a description of available
-##' marker sets. The markers can be added to and \code{MSnSet} using
-##' the \code{\link{addMarkers}} function.
+##' This function retrieves a list of organelle markers or, if no \code{species}
+##' is provided, prints a description of available marker sets. The markers can
+##' be added to and \code{MSnSet} using the \code{\link{addMarkers}} function.
 ##'
-##' The markers have been contributed by various members of the
-##' Cambridge Centre for Proteomics, in particular Dr Dan Nightingale
-##' for yeast, Dr Andy Christoforou and Dr Claire Mulvey for human, Dr
-##' Arnoud Groen for Arabodopsis and Dr Claire Mulvey for mouse. In
-##' addition, original (curated) markers from the \code{pRolocdata}
-##' datasets have been extracted (see \code{pRolocdata} for details
-##' and references).  Curation involved verification of publicly
-##' available subcellular localisation annotation based on the
-##' curators knowledge of the organelles/proteins considered and
-##' tracing the original statement in the literature.
+##' The markers have been contributed by various members of the Cambridge Centre
+##' for Proteomics, in particular Dr Dan Nightingale for yeast, Dr Andy
+##' Christoforou and Dr Claire Mulvey for human, Dr Arnoud Groen for Arabodopsis
+##' and Dr Claire Mulvey for mouse. In addition, original (curated) markers from
+##' the \code{pRolocdata} datasets have been extracted (see \code{pRolocdata}
+##' for details and references).  Curation involved verification of publicly
+##' available subcellular localisation annotation based on the curators
+##' knowledge of the organelles/proteins considered and tracing the original
+##' statement in the literature.
 ##'
-##' These markers are provided as a starting point to generate
-##' reliable sets of organelle markers but still need to be verified
-##' against any new data in the light of the quantitative data and the
-##' study conditions.
-##' 
+##' These markers are provided as a starting point to generate reliable sets of
+##' organelle markers but still need to be verified against any new data in the
+##' light of the quantitative data and the study conditions.
+##'
 ##' @title Organelle markers
-##' @param species The species of interest.
-##' @return Prints a description of the available marker lists if
-##' \code{species} is missing or a named character with organelle
-##' markers.
+##'
+##' @param species `character(1)` defining the species of interest.
+##'
+##' @param version `character(1)` defining the marker version.
+##'
+##' @return Prints a description of the available marker lists if \code{species}
+##'     is missing or a named character with organelle markers.
+##'
 ##' @author Laurent Gatto
-##' @seealso \code{\link{addMarkers}} to add markers to an
-##' \code{MSnSet} and \code{\link{markers}} for more information about
-##' marker encoding.
+##'
+##' @seealso \code{\link{addMarkers}} to add markers to an \code{MSnSet} and
+##'     \code{\link{markers}} for more information about marker encoding.
+##'
 ##' @examples
 ##' pRolocmarkers()
 ##' table(pRolocmarkers("atha"))
 ##' table(pRolocmarkers("hsap"))
-pRolocmarkers <- function(species) {
+pRolocmarkers <- function(species, version = "1") {
+    prefix <- switch(as.character(version),
+                     "1" = "marker_")
     fls <- dir(system.file("extdata", package = "pRoloc"),
-               full.names = TRUE, pattern = "marker_")
+               full.names = TRUE, pattern = prefix)
     if (missing(species)) {
-        cat(length(fls), "marker lists available:\n")
+        cat(length(fls), " marker lists (version ", version, ") available:\n",
+            sep = "")
         for (f in fls) {
             m <- readRDS(f)
-            x <- sub(".rds", "", sub("^.+marker_", "", f))
+            x <- sub(".rds", "", sub(prefix, "", basename(f)))
             cat(m$species, " [", x, "]:\n", sep = "")
             cat(" Ids: ", m$ids, ", ", length(m$markers),
                 " markers\n", sep = "")
@@ -52,7 +57,7 @@ pRolocmarkers <- function(species) {
         if (species == "scer")
             species <- "scer_uniprot"
         species <- tolower(species)
-        x <- sub(".rds", "", sub("^.+marker_", "", fls))
+        x <- sub(".rds", "", sub(prefix, "", basename(fls)))
         k <- match(species, x)
         if (is.na(k))
             stop("Available species: ", paste(x, collapse = ", "),

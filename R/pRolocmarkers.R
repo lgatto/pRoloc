@@ -6,15 +6,15 @@
 ##' is provided, prints a description of available marker sets. The markers can
 ##' be added to and \code{MSnSet} using the \code{\link{addMarkers}} function.
 ##'
-##' The markers have been contributed by various members of the Cambridge Centre
-##' for Proteomics, in particular Dr Dan Nightingale for yeast, Dr Andy
-##' Christoforou and Dr Claire Mulvey for human, Dr Arnoud Groen for Arabodopsis
-##' and Dr Claire Mulvey for mouse. In addition, original (curated) markers from
-##' the \code{pRolocdata} datasets have been extracted (see \code{pRolocdata}
-##' for details and references).  Curation involved verification of publicly
-##' available subcellular localisation annotation based on the curators
-##' knowledge of the organelles/proteins considered and tracing the original
-##' statement in the literature.
+##' Version 1 (current default) of the markers have been contributed by various
+##' members of the Cambridge Centre for Proteomics, in particular Dr Dan
+##' Nightingale for yeast, Dr Andy Christoforou and Dr Claire Mulvey for human,
+##' Dr Arnoud Groen for Arabodopsis and Dr Claire Mulvey for mouse. In addition,
+##' original (curated) markers from the \code{pRolocdata} datasets have been
+##' extracted (see \code{pRolocdata} for details and references).  Curation
+##' involved verification of publicly available subcellular localisation
+##' annotation based on the curators knowledge of the organelles/proteins
+##' considered and tracing the original statement in the literature.
 ##'
 ##' These markers are provided as a starting point to generate reliable sets of
 ##' organelle markers but still need to be verified against any new data in the
@@ -39,6 +39,22 @@
 ##' table(pRolocmarkers("atha"))
 ##' table(pRolocmarkers("hsap"))
 pRolocmarkers <- function(species, version = "1") {
+    ## To add new markers:
+    ##
+    ## 1. Add one or multiple rds files (one per species) in inst/extdata,
+    ##    making sure they all share the same prefix (say markers2_).
+    ##
+    ## 2. Add a new version in the supported_version character vector and the
+    ##    version and prefix to the switch() statement.
+    ##
+    ## 3. Unless the new markers are considered experimental and not yet ready
+    ##    for consumption, update the default version argument (using the
+    ##    version defined in 1. above.)
+    ##
+    ## 4. Update the documentation to describe the new markers and provide
+    ##    references.
+    supported_versions <- c("1")
+    stopifnot(version %in% supported_versions)
     prefix <- switch(as.character(version),
                      "1" = "marker_")
     fls <- dir(system.file("extdata", package = "pRoloc"),

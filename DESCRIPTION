@@ -67,7 +67,7 @@ Imports:
 Suggests:
     testthat,
     rmarkdown,
-    pRolocdata (>= 1.9.4),
+    pRolocdata (>= 1.43.2),
     roxygen2,
     xtable,
     rgl,

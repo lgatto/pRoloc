@@ -3,7 +3,10 @@
 ## Changes in version 1.45.2
 
 - `pRolocmarkers()` has a new `version` argument, to allow for new
-  markers versions to be added.
+  markers versions to be added. 
+- 14 new marker sets have been added to `pRolocmarkers()` under `version = 2`.
+- The default `version` for `pRolocmarkers()` is now `2` rather than `1`.
+- Documentation for `pRolocmarkers()` has been updated to include a description of `version = 2` markers.
 
 ## Changes in version 1.45.1
 

@@ -234,7 +234,6 @@ mcmc_thin_chains <- function(x, freq = 5) {
 ##' @param ... Currently ignored.
 ##' @return A ggplot2 object.
 ##' @rdname mcmc-helpers
-##' @rdname mcmc-plot
 setMethod("plot", c("MCMCParams", "character"),
           function(x, y, ...) {
               mcmc_plot_probs(x, y, n = 1)

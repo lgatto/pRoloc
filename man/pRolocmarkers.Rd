@@ -4,48 +4,101 @@
 \alias{pRolocmarkers}
 \title{Organelle markers}
 \usage{
-pRolocmarkers(species)
+pRolocmarkers(species, version = "2")
 }
 \arguments{
-\item{species}{The species of interest.}
+\item{species}{\code{character(1)} defining the species of interest. For
+reference species markers, this is just the species
+e.g. \code{"hsap"}. For published marker sets this is the species and
+author name e.g. \code{"hsap_geladaki"}.}
+
+\item{version}{\code{character(1)} defining the marker version. Default is
+"2".}
 }
 \value{
-Prints a description of the available marker lists if
-\code{species} is missing or a named character with organelle
-markers.
+Prints a description of the available marker lists if \code{species}
+    is missing or a named character with organelle markers.
 }
 \description{
-This function retrieves a list of organelle markers or, if no
-\code{species} is provided, prints a description of available
-marker sets. The markers can be added to and \code{MSnSet} using
-the \code{\link{addMarkers}} function.
+This function retrieves a list of organelle markers or, if no \code{species}
+is provided, prints a description of available marker sets. The markers can
+be added to and \code{MSnSet} using the \code{\link{addMarkers}} function.
 }
 \details{
-The markers have been contributed by various members of the
-Cambridge Centre for Proteomics, in particular Dr Dan Nightingale
-for yeast, Dr Andy Christoforou and Dr Claire Mulvey for human, Dr
-Arnoud Groen for Arabodopsis and Dr Claire Mulvey for mouse. In
-addition, original (curated) markers from the \code{pRolocdata}
-datasets have been extracted (see \code{pRolocdata} for details
-and references).  Curation involved verification of publicly
-available subcellular localisation annotation based on the
-curators knowledge of the organelles/proteins considered and
-tracing the original statement in the literature.
+Version 1 of the markers have been contributed by various members of the
+Cambridge Centre for Proteomics, in particular Dr Dan Nightingale for yeast,
+Dr Andy Christoforou and Dr Claire Mulvey for human, Dr Arnoud Groen for
+Arabodopsis and Dr Claire Mulvey for mouse. In addition, original (curated)
+markers from the \code{pRolocdata} datasets have been extracted (see
+\code{pRolocdata} for details and references).  Curation involved
+verification of publicly available subcellular localisation annotation based
+on the curators knowledge of the organelles/proteins considered and tracing
+the original statement in the literature.
 
-These markers are provided as a starting point to generate
-reliable sets of organelle markers but still need to be verified
-against any new data in the light of the quantitative data and the
-study conditions.
+Version 2 of the markers (current default) have been updated by Charlotte
+Hutchings from the Cambridge Centre for Proteomics. Reference species marker
+sets are the same as those in version 1 with minor corrections and an
+updated naming system. Version 2 also contains additional marker sets from
+spatial proteomics publications. References for the source publications are
+provided below:
+
+\itemize{
+
+\item Geladaki, A., Britovsek, N.K., Breckels, L.M., Smith, T.S., Vennard,
+   O.L., Mulvey, C.M., Crook, O.M., Gatto, L. and Lilley, K.S. (2019)
+   Combining LOPIT with differential ultracentrifugation for high-resolution
+   spatial proteomics.  Nature Communications. 10
+   (1). doi:10.1038/s41467-018-08191-w
+
+\item Christopher, J.A., Breckels, L.M., Crook, O.M., Vazquez--Chantada, M.,
+  Barratt, D. and Lilley, K.S. (2024) Global proteomics indicates
+  subcellular-specific anti-ferroptotic responses to ionizing
+  radiation.p.2024.09.12.611851. doi:10.1101/2024.09.12.611851
+
+\item Itzhak, D.N., Tyanova, S., Cox, J. and Borner, G.H. (2016) Global,
+  quantitative and dynamic mapping of protein subcellular localization.
+  eLife. 5. doi:10.7554/elife.16950
+
+\item Villanueva, E., Smith, T., Pizzinga, M., Elzek, M., Queiroz, R.M.L.,
+  Harvey, R.F., Breckels, L.M., Crook, O.M., Monti, M., Dezi, V., Willis,
+  A.E. and Lilley, K.S. (2023) System-wide analysis of RNA and protein
+  subcellular localization dynamics. Nature Methods. 1-12.
+  doi:10.1038/s41592-023-02101-9
+
+\item Christoforou, A., Mulvey, C.M., Breckels, L.M., Geladaki, A., Hurrell,
+  T., Hayward, P.C., Naake, T., Gatto, L., Viner, R., Arias, A.M. and Lilley,
+  K.S. (2016) A draft map of the mouse pluripotent stem cell spatial
+  proteome. Nature Communications. 7 (1). doi:10.1038/ncomms9992
+
+\item Barylyuk, K., Koreny, L., Ke, H., Butterworth, S., Crook, O.M.,
+  Lassadi, I., Gupta, V., Tromer, E., Mourier, T., Stevens, T.J., Breckels,
+  L.M., Pain, A., Lilley, K.S. and Waller, R.F. (2020) A Comprehensive
+  Subcellular Atlas of the Toxoplasma Proteome via hyperLOPIT Provides
+  Spatial Context for Protein Functions. Cell Host and Microbe. 28 (5),
+  752-766.e9. doi:10.1016/j.chom.2020.09.011
+
+\item Moloney, N.M., Barylyuk, K., Tromer, E., Crook, O.M., Breckels, L.M.,
+  Lilley, K.S., Waller, R.F. and MacGregor, P. (2023) Mapping diversity in
+  African trypanosomes using high resolution spatial proteomics. Nature
+  Communications. 14 (1), 4401. doi:10.1038/s41467-023-40125-z
+
+}
+
+Note: These markers are provided as a starting point to generate reliable sets of
+organelle markers but still need to be verified against any new data in the
+light of the quantitative data and the study conditions.
 }
 \examples{
 pRolocmarkers()
-table(pRolocmarkers("atha"))
+pRolocmarkers("hsap")
 table(pRolocmarkers("hsap"))
+
+## Old markers
+pRolocmarkers("hsap", version = "1")
 }
 \seealso{
-\code{\link{addMarkers}} to add markers to an
-\code{MSnSet} and \code{\link{markers}} for more information about
-marker encoding.
+\code{\link{addMarkers}} to add markers to an \code{MSnSet} and
+    \code{\link{markers}} for more information about marker encoding.
 }
 \author{
 Laurent Gatto

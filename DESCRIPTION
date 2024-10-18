@@ -67,7 +67,7 @@ Imports:
 Suggests:
     testthat,
     rmarkdown,
-    pRolocdata (>= 1.9.4),
+    pRolocdata (>= 1.43.2),
     roxygen2,
     xtable,
     rgl,
@@ -142,4 +142,5 @@ Collate:
     clusterdist-functions.R
     clusterdist-framework.R
     qsep.R
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
+Encoding: UTF-8

@@ -22,7 +22,9 @@ Prints a description of the available marker lists if \code{species}
 \description{
 This function retrieves a list of organelle markers or, if no \code{species}
 is provided, prints a description of available marker sets. The markers can
-be added to and \code{MSnSet} using the \code{\link{addMarkers}} function.
+be added to and \code{MSnSet} using the \code{\link{addMarkers}}
+function. Several marker version are provided (see Details for additional
+information).
 }
 \details{
 Version 1 of the markers have been contributed by various members of the
@@ -84,9 +86,9 @@ provided below:
 
 }
 
-Note: These markers are provided as a starting point to generate reliable sets of
-organelle markers but still need to be verified against any new data in the
-light of the quantitative data and the study conditions.
+Note: These markers are provided as a starting point to generate reliable
+sets of organelle markers but still need to be verified against any new data
+in the light of the quantitative data and the study conditions.
 }
 \examples{
 pRolocmarkers()
@@ -94,7 +96,8 @@ pRolocmarkers("hsap")
 table(pRolocmarkers("hsap"))
 
 ## Old markers
-pRolocmarkers("hsap", version = "1")
+pRolocmarkers("hsap", version = "2")["Q9BPW9"]
+pRolocmarkers("hsap", version = "1")["Q9BPW9"]
 }
 \seealso{
 \code{\link{addMarkers}} to add markers to an \code{MSnSet} and

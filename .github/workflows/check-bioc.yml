@@ -208,6 +208,12 @@ jobs:
           BiocManager::install("BiocCheck")
         shell: Rscript {0}
 
+      - name: Install latest pRolocdata (1.43.2) from github
+        run: |
+          BiocManager::install("lgatto/pRolocdata", ask = FALSE, force = TRUE)
+        continue-on-error: true
+        shell: Rscript {0}
+
       - name: Session info
         run: |
           options(width = 100)

@@ -21,7 +21,7 @@
 
 \description{
   A class for storing lists of \code{\linkS4class{ClustDist}}
-  instances. 
+  instances.
 }
 
 \section{Objects from the Class}{
@@ -31,7 +31,7 @@
 
 \section{Slots}{
   \describe{
-    
+
     \item{\code{x}:}{Object of class \code{list} containing valid
       \code{ClustDist} instances.}
 
@@ -43,7 +43,7 @@
       development purposes only. }
   }
 }
-  
+
 
 \section{Methods}{
   \describe{
@@ -76,25 +76,25 @@
   par <- setAnnotationParams(inputs =
                     c("Arabidopsis thaliana genes",
                     "Gene stable ID"))
-                    
-  ## add protein set/annotation information                  
+
+  ## add protein set/annotation information
   xx <- addGoAnnotations(dunkley2006, par)
-  
+
   ## filter
   xx <- filterMinMarkers(xx, n = 50)
   xx <- filterMaxMarkers(xx, p = .25)
-  
+
   ## get distances for protein sets
   dd <- clustDist(xx)
-  
-  ## plot distances for all protein sets 
+
+  ## plot distances for all protein sets
   plot(dd)
-  
+
   names(dd)
-  
-  ## Extract first 4 ClustDist objects of the ClustDistList
-  dd[1:4]
-  
+
+  ## Extract a sub-list of ClustDist objects
+  dd[1]
+
   ## Extract 1st ClustDist object
   dd[[1]]
 }

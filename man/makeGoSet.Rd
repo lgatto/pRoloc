@@ -34,7 +34,7 @@ data(dunkley2006params)
 goset <- makeGoSet(dunkley2006[1:10, ],
                    dunkley2006params)
 goset
-exprs(goset)[1:10, 1:5]
+exprs(goset)
 image(goset)
 }
 \author{

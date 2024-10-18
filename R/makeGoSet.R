@@ -1,5 +1,5 @@
 ##' The function pulls the gene ontology (GO) terms
-##' for a set of feature names. 
+##' for a set of feature names.
 ##'
 ##' @title Retrieve GO terms for feature names
 ##' @param id An \code{character} with feature names to be pulled from
@@ -104,7 +104,7 @@ getGOFromFeatures <- function(id,
 ##' goset <- makeGoSet(dunkley2006[1:10, ],
 ##'                    dunkley2006params)
 ##' goset
-##' exprs(goset)[1:10, 1:5]
+##' exprs(goset)
 ##' image(goset)
 makeGoSet <- function(object, params,
                       namespace = "cellular_component",
@@ -130,12 +130,12 @@ makeGoSet <- function(object, params,
                               evidence = evidence)
     attrs <- chooseAttributesX(params)
     l <- lapply(fn,
-                function(x) godf[godf[, params@filter] == x, attrs[1]]) 
+                function(x) godf[godf[, params@filter] == x, attrs[1]])
     allgo <- unique(unlist(l))
     gomat <- matrix(0, length(fn), length(allgo))
     rownames(gomat) <- fn
     colnames(gomat) <- allgo
-    for (i in 1:nrow(gomat)) 
+    for (i in 1:nrow(gomat))
         gomat[i, l[[i]]] <- 1
     goset <- new("MSnSet",
                  exprs = gomat)
@@ -144,6 +144,5 @@ makeGoSet <- function(object, params,
     msg <- paste0("Constructed GO set using ", namespace, " namespace")
     goset <- MSnbase:::logging(goset, msg)
     if (validObject(goset))
-        return(goset)  
+        return(goset)
 }
-

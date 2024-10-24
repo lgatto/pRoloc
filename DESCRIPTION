@@ -86,7 +86,8 @@ Suggests:
     Rtsne (>= 0.13),
     nipals,
     reshape,
-    magick
+    magick,
+    umap
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr

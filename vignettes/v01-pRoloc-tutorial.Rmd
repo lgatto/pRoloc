@@ -2,7 +2,7 @@
 title: "Using pRoloc for spatial proteomics data analysis"
 author:
 - name: Lisa M. Breckels
-  affiliation: Computational Proteomics Unit, Cambridge, UK
+  affiliation: Cambridge Centre for Proteomics, Univeristy of Cambridge, UK
 - name: Laurent Gatto
   affiliation: de Duve Institute, UCLouvain, Belgium
 package: pRoloc
@@ -191,12 +191,14 @@ that supplies several published organelle proteomics data sets.
 
 As a final setup step, we set the default colour palette for some of
 our custom plotting functionality to use semi-transparent colours in
-the code chunk below (see *?setStockcol* for details).  This
-facilitates visualisation of overlapping points.
+the code chunk below (see *?setStockcol* and *?setStockbg* for details).  
+This facilitates visualisation of overlapping points.
 
 ```{r setcols}
 setStockcol(NULL) ## reset first
+setUnknowncol(NULL)
 setStockcol(paste0(getStockcol(), 70))
+setUnknowncol(paste0(getUnknowncol(), 70))
 ```
 
 # Data structures {#sec:data}

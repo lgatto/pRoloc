@@ -19,14 +19,18 @@ plot2D(
   mirrorX = FALSE,
   mirrorY = FALSE,
   col,
+  bg,
+  palette = "light",
+  t = 0.3,
   pch,
   cex,
+  lwd,
   index = FALSE,
   idx.cex = 0.75,
   addLegend,
   identify = FALSE,
   plot = TRUE,
-  grid = TRUE,
+  grid = FALSE,
   ...
 )
 
@@ -121,10 +125,23 @@ should be mirrored?}
 \item{col}{A \code{character} of appropriate length defining
 colours.}
 
+\item{bg}{background (fill) color for the open plot symbols given 
+by \code{pch = 21:25}.}
+
+\item{palette}{A \code{character} defining which palette colour
+theme to use, can either defined as \code{"light"} (defualt) 
+or \code{"dark"}.}
+
+\item{t}{A \code{numeric} between 0 and 1. Defining the degree of
+lightening of the colours in the palette. Default is 0.3.}
+
 \item{pch}{A \code{character} of appropriate length defining point
 character.}
 
 \item{cex}{Character expansion.}
+
+\item{lwd}{A \code{numeric} defining the line width for drawing 
+symbols. Default is 1.5.}
 
 \item{index}{A \code{logical} (default is \code{FALSE}, indicating
 of the feature indices should be plotted on top of the
@@ -207,6 +224,7 @@ addLegend(dunkley2006,
           where = "topright",
           cex = 0.5, bty = "n", ncol = 3)
 title(main = "plot2D example")
+
 ## available methods
 plot2Dmethods
 plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black")
@@ -214,22 +232,53 @@ plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black",
        methargs = list(kpar = list(sigma = 1)))
 plot2D(dunkley2006, method = "lda")
 plot2D(dunkley2006, method = "hexbin")
+
 ## Using transparent colours
 setStockcol(paste0(getStockcol(), "80"))
+setStockbg(paste0(getStockbg(), "80"))
 plot2D(dunkley2006, fcol = "markers")
 ## New behavious in 1.3.6 when not enough colours
 setStockcol(c("blue", "red", "green"))
 getStockcol() ## only 3 colours to be recycled
 getMarkers(dunkley2006)
 plot2D(dunkley2006)
-## reset colours
+
+## Reset colours
 setStockcol(NULL)
+setStockbg(NULL)
 plot2D(dunkley2006, method = "none") ## plotting along 2 first fractions
 plot2D(dunkley2006, dims = c(3, 5), method = "none") ## plotting along fractions 3 and 5
+
+## Using different light and dark colour themes  
+plot2D(dunkley2006, palette = "dark")
+plot2D(dunkley2006, palette = "dark", t = .1)
+plot2D(dunkley2006, palette = "light")
+plot2D(dunkley2006, palette = "light", t = .6)
+
+## Changing the point characters
+plot2D(dunkley2006, pch = 22)
+setUnknownpch(22)
+plot2D(dunkley2006, pch = 22)
+setUnknownpch(NULL) ## reset unknowns pch back to default
+
 ## pre-calculate PC1 and PC2 coordinates
 pca <- plot2D(dunkley2006, plot=FALSE)
 head(pca)
 plot2D(pca, method = "none", methargs  = list(dunkley2006))
+
+## Adding a legend inside a plot
+plot2D(dunkley2006)
+addLegend(dunkley2006,  where = "topleft")
+
+## Adding a legend outside a plot
+par(mfrow = c(1, 2))
+plot2D(dunkley2006)
+addLegend(dunkley2006, where = "other")
+
+## Plotting information from the fData slot
+fvarLabels(dunkley2006)
+plot2D(dunkley2006, fcol = "assigned")
+addLegend(dunkley2006,  where = "topleft", ncol = 2, cex = .5)
 
 ## plotting in 3 dimenstions
 plot3D(dunkley2006)

@@ -13,6 +13,10 @@
 \alias{setUnknowncol}
 \alias{getUnknownpch}
 \alias{setUnknownpch}
+\alias{getStockbg}
+\alias{setStockbg}
+\alias{getUnknownbg}
+\alias{setUnknownbg}
 \title{Manage default colours and point characters}
 \usage{
 setLisacol()
@@ -38,6 +42,14 @@ setUnknowncol(col)
 getUnknownpch()
 
 setUnknownpch(pch)
+
+getStockbg()
+
+setStockbg(bg)
+
+getUnknownbg()
+
+setUnknownbg(bg)
 }
 \arguments{
 \item{cols}{A vector of colour \code{characters} or \code{NULL},
@@ -52,6 +64,10 @@ the default colour for unknown features.}
 
 \item{pch}{A \code{numeric} vector of length 1 or \code{NULL},
 which sets the point character to 21, the default.}
+
+\item{bg}{A colour \code{character} or \code{NULL},
+which sets the background (fill) colour for open plot symbols
+given by pch = 21:25 to the default colour for unknown features.}
 }
 \value{
 The \code{set} functions set (and invisibly returns)
@@ -70,19 +86,25 @@ palettes are available: the default palette (previously
 \examples{
 ## defaults for clusters
 getStockcol()
+getStockbg()
 getStockpch()
 ## unknown features
-getUnknownpch()
 getUnknowncol()
+getUnknownbg()
+getUnknownpch()
 ## an example
 library(pRolocdata)
 data(dunkley2006)
 par(mfrow = c(2, 1))
 plot2D(dunkley2006, fcol = "markers", main = 'Default colours')
 setUnknowncol("black")
-plot2D(dunkley2006, fcol = "markers", main = 'setUnknowncol("black")')
+setUnknownbg("grey")
+plot2D(dunkley2006, fcol = "markers", 
+      main = 'setUnknowncol("black") and setUnknownbg("grey")')
 getUnknowncol()
+getUnknownbg()
 setUnknowncol(NULL)
+setUnknownbg(NULL)
 getUnknowncol()
 getStockcol()
 getOldcol()

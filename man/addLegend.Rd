@@ -10,6 +10,11 @@ addLegend(
   where = c("bottomleft", "bottom", "bottomright", "left", "topleft", "top", "topright",
     "right", "center", "other"),
   col,
+  bg,
+  palette = "light",
+  t = 0.3,
+  pch,
+  lwd,
   bty = "n",
   ...
 )
@@ -28,6 +33,22 @@ legend. \code{"other"} opens a new graphics device, while the
 other locations are passed to \code{\link{legend}}.}
 
 \item{col}{A \code{character} defining point colours.}
+
+\item{bg}{background (fill) color for the open plot symbols given 
+by \code{pch = 21:25}.}
+
+\item{palette}{A \code{character} defining which palette colour
+theme to use, can either defined as \code{"light"} (defualt) 
+or \code{"dark"}.}
+
+\item{t}{A \code{numeric} between 0 and 1. Defining the degree of
+lightening of the colours in the palette. Default is 0.3.}
+
+\item{pch}{A \code{character} of appropriate length defining point
+character.}
+
+\item{lwd}{A \code{numeric} defining the line width for drawing 
+symbols. Default is 1.5.}
 
 \item{bty}{Box type, as in \code{legend}. Default is set to
 \code{"n"}.}

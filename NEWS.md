@@ -17,6 +17,9 @@
    the legend it instead plots the legend on an empty plot in the
    current window.
 -  The default of `grid` in `plot2D` has been changed to `FALSE`. 
+-  UMAP dimensionality reduction has been added as a `method` in
+   `plot2D`. The function is called from the `umap` package. 
+-  An UMAP example has been added to vignette v01. 
 
 ## Changes in version 1.45.2
 

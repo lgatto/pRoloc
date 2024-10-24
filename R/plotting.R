@@ -251,8 +251,8 @@ plotDist <- function(object,
 
 
 ## Available pRoloc visualisation methods
-pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "nipals",
-                      "hexbin", "none")
+pRolocVisMethods <- c("PCA", "MDS", "kpca", "lda", "t-SNE", "UMAP", 
+                      "nipals", "hexbin", "none")
 
 ## Available plot2D methods
 plot2Dmethods <- c(pRolocVisMethods, "scree")
@@ -309,16 +309,17 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     yet implemented).
 ##' @param method A \code{character} describe how to transform the
 ##'     data or what to plot. One of \code{"PCA"} (default),
-##'     \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"}
-##'     or \code{"lda"}, defining what dimensionality reduction is
-##'     applied: principal component analysis (see
+##'     \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"},
+##'     \code{"UMAP"}, or \code{"lda"}, defining what dimensionality 
+##'     reduction is applied: principal component analysis (see
 ##'     \code{\link{prcomp}}), classical multidimensional scaling (see
 ##'     \code{\link{cmdscale}}), kernel PCA (see
 ##'     \code{\link[kernlab]{kpca}}), nipals (principal component
 ##'     analysis by NIPALS, non-linear iterative partial least squares
 ##'     which support missing values; see
 ##'     \code{\link[nipals]{nipals}}) t-SNE (see
-##'     \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
+##'     \code{\link[Rtsne]{Rtsne}}), UMAP (see \code{\link[umap]{umap}})
+##'      or linear discriminant analysis
 ##'     (see \code{\link[MASS]{lda}}). The last method uses
 ##'     \code{fcol} to defined the sub-cellular clusters so that the
 ##'     ration between within ad between cluster variance is
@@ -619,6 +620,34 @@ plot2D <- function(object,
                        dims = k,
                        methargs))
     .data <- .data$Y[, dims]
+    .xlab <- paste("Dimension", dims[1])
+    .ylab <- paste("Dimension", dims[2])
+    colnames(.data) <- c(.xlab, .ylab)
+    rownames(.data) <- rownames(e)
+  } else if (method == "UMAP") {
+    if (!requireNamespace("umap") && packageVersion("umap") >= 0.2)
+      stop("Please install the umap (>= 0.2.10) package to make use if this functionality.")
+    if (missing(methargs)) {
+      nn_umap <- floor(sqrt(nrow(object)))
+      methargs <- list(n_neighbors = nn_umap,
+                       metric = "euclidean",
+                       n_epochs = 500,
+                       input = "data",
+                       preserve.seed = TRUE,
+                       n_components = 2,
+                       verbose = TRUE)
+    }
+    e <- exprs(object)
+    nr0 <- nrow(e)
+    e <- unique(e)
+    if (nrow(e) < nr0) {
+      message("Only keeping unique features, dropped ", nr0 - nrow(e), ".")
+      object <- object[rownames(e), ] ## see #108
+    }
+    .data <- do.call(umap::umap,
+                     c(list(d = e),
+                       methargs))
+    .data <- .data$layout
     .xlab <- paste("Dimension", dims[1])
     .ylab <- paste("Dimension", dims[2])
     colnames(.data) <- c(.xlab, .ylab)

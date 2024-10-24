@@ -1,5 +1,23 @@
 # pRoloc 1.45
 
+## Changes in version 1.45.3
+
+-  In this version there have been several new arguments to the
+   `plot2D` function to improve visualisation. Please see below.
+-  A new argument `bg` has been added to `plot2D` to allow the use 
+   of filled point characters see issue #153
+-  `plot2D` also has a new argument called `palette` to facilitate
+   the generation of nice colour schemes to work with filled
+   point characters
+-  The functions `setStockbg`, `getStockbg`, `setUnknownbg` and
+   `getUnknownbg` have been added for colour management
+-  The behaviour of the function `addLegend` when called with
+   argument `where = "other"`. The call to `dev.new()` has been
+   removed so that instead of opening a new device and plotting 
+   the legend it instead plots the legend on an empty plot in the
+   current window.
+-  The default of `grid` in `plot2D` has been changed to `FALSE`. 
+
 ## Changes in version 1.45.2
 
 - `pRolocmarkers()` has a new `version` argument, to allow for new

@@ -69,16 +69,17 @@ yet implemented).}
 
 \item{method}{A \code{character} describe how to transform the
     data or what to plot. One of \code{"PCA"} (default),
-    \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"}
-    or \code{"lda"}, defining what dimensionality reduction is
-    applied: principal component analysis (see
+    \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"},
+    \code{"UMAP"}, or \code{"lda"}, defining what dimensionality 
+    reduction is applied: principal component analysis (see
     \code{\link{prcomp}}), classical multidimensional scaling (see
     \code{\link{cmdscale}}), kernel PCA (see
     \code{\link[kernlab]{kpca}}), nipals (principal component
     analysis by NIPALS, non-linear iterative partial least squares
     which support missing values; see
     \code{\link[nipals]{nipals}}) t-SNE (see
-    \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
+    \code{\link[Rtsne]{Rtsne}}), UMAP (see \code{\link[umap]{umap}})
+     or linear discriminant analysis
     (see \code{\link[MASS]{lda}}). The last method uses
     \code{fcol} to defined the sub-cellular clusters so that the
     ration between within ad between cluster variance is

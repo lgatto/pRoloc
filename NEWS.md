@@ -1,5 +1,9 @@
 # pRoloc 1.45
 
+## Changes in version 1.45.3
+
+- Lisa Breckels is now maintainer.
+
 ## Changes in version 1.45.2
 
 - `pRolocmarkers()` has a new `version` argument, to allow for new

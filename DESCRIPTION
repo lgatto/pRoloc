@@ -4,10 +4,10 @@ Title: A unifying bioinformatics framework for spatial proteomics
 Version: 1.45.2
 Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "laurent.gatto@uclouvain.be",
-                    role = c("aut","cre")),
+                    role = "aut"),
              person(given = "Lisa", family ="Breckels",
                     email = "lms79@cam.ac.uk",
-                    role = "aut"),
+                    role = c("cre", "aut")),
              person(given = "Thomas", family ="Burger",
                     email = "Thomas.BURGER@cea.fr",
                     role = "ctb"),
@@ -22,7 +22,7 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
                     role = "aut"))
 Author: Laurent Gatto, Oliver Crook and Lisa M. Breckels with
     contributions from Thomas Burger and Samuel Wieczorek
-Maintainer: Laurent Gatto <laurent.gatto@uclouvain.be>
+Maintainer: Lisa Breckels <lms79@cam.ac.uk>
 Description: The pRoloc package implements machine learning and
              visualisation methods for the analysis and interogation
              of quantitiative mass spectrometry data to reliably infer

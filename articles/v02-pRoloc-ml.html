@@ -8,8 +8,8 @@
 <title>Machine learning techniques available in pRoloc • pRoloc</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Machine learning techniques available in pRoloc">
 </head>
 <body>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pRoloc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><div class="section level2">
 <h2 id="sec:intro">Introduction<a class="anchor" aria-label="anchor" href="#sec:intro"></a>
 </h2>
-<p>For a general practical introduction to <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>,
+<p>For a general practical introduction to <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>,
 readers are referred to the tutorial, available using
 <code>vignette("pRoloc-tutorial", package = "pRoloc")</code>. The
 following document provides a overview of the algorithms available in
@@ -105,16 +105,16 @@ algorithm and transfer learning.</p>
 <div class="section level2">
 <h2 id="data-sets">Data sets<a class="anchor" aria-label="anchor" href="#data-sets"></a>
 </h2>
-<p>We provide 144 test data sets in the <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>
-package that can be readily used with <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>.
+<p>We provide 144 test data sets in the <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>
+package that can be readily used with <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>.
 The data set can be listed with <em>pRolocdata</em> and loaded with the
 <em>data</em> function. Each data set, including its origin, is
 individually documented.</p>
 <p>The data sets are distributed as <em>MSnSet</em> instances. Briefly,
 these are dedicated containers for quantitation data as well as feature
 and sample meta-data. More details about <em>MSnSet</em>s are available
-in the <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
-tutorial and in the <em><a href="https://bioconductor.org/packages/3.20/MSnbase" class="external-link">MSnbase</a></em>
+in the <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
+tutorial and in the <em><a href="https://bioconductor.org/packages/3.21/MSnbase" class="external-link">MSnbase</a></em>
 package, that defined the class.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRolocdata" class="external-link">"pRolocdata"</a></span><span class="op">)</span></span>
@@ -143,14 +143,14 @@ package, that defined the class.</p>
 </h3>
 <p>While our primary biological domain is quantitative proteomics, with
 special emphasis on spatial proteomics, the underlying class
-infrastructure on which <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em> and
-implemented in the Bioconductor <em><a href="https://bioconductor.org/packages/3.20/MSnbase" class="external-link">MSnbase</a></em>
+infrastructure on which <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em> and
+implemented in the Bioconductor <em><a href="https://bioconductor.org/packages/3.21/MSnbase" class="external-link">MSnbase</a></em>
 package enables the conversion from/to transcriptomics data, in
 particular microarray data available as <em>ExpressionSet</em> objects
 using the <em>as</em> coercion methods (see the <em>MSnSet</em> section
 in the <code>MSnbase-development</code> vignette). As a result, it is
 straightforward to apply the methods summarised here in detailed in the
-other <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+other <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 vignettes to these other data structures.</p>
 </div>
 </div>
@@ -161,18 +161,18 @@ vignettes to these other data structures.</p>
 structure in a quantitative, generally multi-dimensional data set of
 unlabelled data.</p>
 <p>Currently, unsupervised clustering facilities are available through
-the <em>plot2D</em> function and the <em><a href="https://bioconductor.org/packages/3.20/MLInterfaces" class="external-link">MLInterfaces</a></em>
+the <em>plot2D</em> function and the <em><a href="https://bioconductor.org/packages/3.21/MLInterfaces" class="external-link">MLInterfaces</a></em>
 package <span class="citation">(Carey et al., n.d.)</span>. The former
 takes an <em>MSnSet</em> instance and represents the data on a scatter
 plot along the first two principal components. Arbitrary feature
 meta-data can be represented using different colours and point
 characters. The reader is referred to the manual page available through
 <em>?plot2D</em> for more details and examples.</p>
-<p><em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+<p><em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 also implements a <em>MLean</em> method for <em>MSnSet</em> instances,
 allowing to use the relevant infrastructure with the organelle
 proteomics framework. Although provides a common interface to
-unsupervised and numerous supervised algorithms, we refer to the <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+unsupervised and numerous supervised algorithms, we refer to the <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 tutorial for its usage to several clustering algorithms.</p>
 <p><strong>Note</strong> Current development efforts in terms of
 clustering are described on the <em>Clustering infrastructure</em> wiki
@@ -197,7 +197,7 @@ corresponding mapped class.</p>
 <h3 id="sec:algo">Algorithms used<a class="anchor" aria-label="anchor" href="#sec:algo"></a>
 </h3>
 <p><strong>k-nearest neighbour (KNN)</strong> Function <em>knn</em> from
-package <em><a href="https://bioconductor.org/packages/3.20/class" class="external-link">class</a></em>. For
+package <em><a href="https://bioconductor.org/packages/3.21/class" class="external-link">class</a></em>. For
 each row of the test set, the <em>k</em> nearest (in Euclidean distance)
 training set vectors are found, and the classification is decided by
 majority vote over the <em>k</em> classes, with ties broken at random.
@@ -216,7 +216,7 @@ also reduces the classification generalisation error. To assure liner
 separation of the classes, the data is transformed using a <em>kernel
 function</em> into a high-dimensional space, permitting liner separation
 of the classes.</p>
-<p><em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+<p><em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 makes use of the functions <em>svm</em> from package and <em>ksvm</em>
 from .</p>
 <p><strong>Artificial neural network (ANN)</strong> Function
@@ -263,7 +263,7 @@ algorithms of the state-of-the-art. Moreover, from this measure is
 derived an efficient policy to design sampling queries in a context of
 active learning. Performances collected over toy examples and real world
 datasets assess the qualities of this strategy.</p>
-<p>The PerTurbo implementation comes from the <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+<p>The PerTurbo implementation comes from the <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 packages.</p>
 </div>
 <div class="section level3">
@@ -282,7 +282,7 @@ discussed in this sections.</p>
 effect of different choices of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
 using organelle proteomics data from <span class="citation">(Dunkley et
-al. 2006)</span> (<em>dunkley2006</em> from <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>).
+al. 2006)</span> (<em>dunkley2006</em> from <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>).
 As highlighted in the squared region, we can see that using a low
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
 (<em>k = 1</em> on the left) will result in very specific classification
@@ -299,7 +299,7 @@ the marker set or, in other words, lack generalisation to new instances.
 We will demonstrate this using simulated data taken from <span class="citation">(James et al. 2013)</span> and show what detrimental
 effect <em>over-fitting</em> has on new data.</p>
 <div class="float" id="fig:knnboundaries">
-<img src="Figures%2Fknnboundaries.png" alt="Classification boundaries using k=1 or k=8 on the dunkley2006 data."><div class="figcaption">Classification boundaries using
+<img src="Figures/knnboundaries.png" alt="Classification boundaries using k=1 or k=8 on the dunkley2006 data."><div class="figcaption">Classification boundaries using
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k=1</annotation></semantics></math>
 or
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">k=8</annotation></semantics></math>
@@ -321,7 +321,7 @@ variance but high bias). On this simulated data set, neither <em>k =
 rates (i.e. the proportion of wrongly classified points) of 0.1695 and
 0.1925, respectively.</p>
 <div class="float" id="fig:ISL1">
-<img src="Figures%2FISL-2_16.png" alt="The KNN classifier using k = 1 (left, solid classification boundaries) and k = 100 (right, solid classification boundaries) compared the Bayes decision boundaries (see original material for details). Reproduced with permission from (James et al. 2013)."><div class="figcaption">The KNN classifier using
+<img src="Figures/ISL-2_16.png" alt="The KNN classifier using k = 1 (left, solid classification boundaries) and k = 100 (right, solid classification boundaries) compared the Bayes decision boundaries (see original material for details). Reproduced with permission from (James et al. 2013)."><div class="figcaption">The KNN classifier using
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k = 1</annotation></semantics></math>
 (left, solid classification boundaries) and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">k = 100</annotation></semantics></math>
@@ -353,7 +353,7 @@ testing error rate reaches a minimum and then starts to increase due to
 over-fitting to the training data and lack of generalisation of the
 model.</p>
 <div class="float" id="fig:ISL2">
-<img src="Figures%2FISL-2_17.png" alt="Effect of train and test error with respect to model complexity. The former decreases for lower values of k while the test error reaches a minimum around k = 10 before increasing again. Reproduced with permission from (James et al. 2013)."><div class="figcaption">Effect of train and test error with respect to
+<img src="Figures/ISL-2_17.png" alt="Effect of train and test error with respect to model complexity. The former decreases for lower values of k while the test error reaches a minimum around k = 10 before increasing again. Reproduced with permission from (James et al. 2013)."><div class="figcaption">Effect of train and test error with respect to
 model complexity. The former decreases for lower values of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
 while the test error reaches a minimum around
@@ -374,7 +374,7 @@ introduction of machine learning.</p>
 <div class="section level3">
 <h3 id="default-analysis-scheme">Default analysis scheme<a class="anchor" aria-label="anchor" href="#default-analysis-scheme"></a>
 </h3>
-<p>Below, we present a typical classification analysis using <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>.
+<p>Below, we present a typical classification analysis using <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>.
 The analysis typically consists of two steps. The first one is to
 optimise the classifier parameters to be used for training and testing
 (see above). A range of parameters are tested using the labelled data,
@@ -464,7 +464,7 @@ the optimisation function manuals, available through
 <span><span class="co">## Annotation:  </span></span>
 <span><span class="co">## - - - Processing information - - -</span></span>
 <span><span class="co">## Added markers from  'mrk' marker vector. Thu Jul 16 22:53:44 2015 </span></span>
-<span><span class="co">## Performed svm prediction (sigma=1 cost=2) Fri Oct 18 17:22:49 2024 </span></span>
+<span><span class="co">## Performed svm prediction (sigma=1 cost=2) Sat Nov 23 15:34:36 2024 </span></span>
 <span><span class="co">##  MSnbase version: 1.17.12</span></span></code></pre>
 </div>
 <div class="section level3">
@@ -561,13 +561,13 @@ W.B.; Lilley, Kathryn S. (2011): &lt;code&gt;pRoloc&lt;/code&gt; - A unifying
 bioinformatics framework for organelle proteomics. &lt;a href="https://doi.org/10.6084/m9.figshare.5042965.v1" class="external-link uri"&gt;https://doi.org/10.6084/m9.figshare.5042965.v1&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>,
 we show that different classification algorithms provide very similar
 performance. We have extended this comparison on various datasets
-distributed in the <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>
+distributed in the <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>
 package. On figure @ref{fig:f1box}, we illustrate how different
 algorithms reach very similar performances on most of our test
 datasets.</p>
 <div class="float" id="fig:f1box">
-<img src="Figures%2FF1boxplots.png" alt="Comparison of classification performances of several contemporary classification algorithms on data from the pRolocdata package."><div class="figcaption">Comparison of classification performances of
-several contemporary classification algorithms on data from the <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>
+<img src="Figures/F1boxplots.png" alt="Comparison of classification performances of several contemporary classification algorithms on data from the pRolocdata package."><div class="figcaption">Comparison of classification performances of
+several contemporary classification algorithms on data from the <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>
 package.</div>
 </div>
 </div>
@@ -618,7 +618,7 @@ and are consistently clustered together throughout the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 iterations are considered members of a new phenotype.</p>
 <div class="float" id="fig:pd">
-<img src="Figures%2Fphenodisco.png" alt="The PhenoDisco iterative algorithm."><div class="figcaption">The PhenoDisco iterative algorithm.</div>
+<img src="Figures/phenodisco.png" alt="The PhenoDisco iterative algorithm."><div class="figcaption">The PhenoDisco iterative algorithm.</div>
 </div>
 </div>
 <div class="section level2">
@@ -653,13 +653,13 @@ analysis of spatial proteomics data, as described in the
 </h2>
 <p>All software and respective versions used to produce this document
 are listed below.</p>
-<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-11-20 r87352)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.5 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.1 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -677,94 +677,95 @@ are listed below.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] pRolocdata_1.43.3    pRoloc_1.45.2        BiocParallel_1.39.0 </span></span>
-<span><span class="co">##  [4] MLInterfaces_1.85.0  cluster_2.1.6        annotate_1.83.0     </span></span>
-<span><span class="co">##  [7] XML_3.99-0.17        AnnotationDbi_1.67.0 IRanges_2.39.2      </span></span>
-<span><span class="co">## [10] MSnbase_2.31.1       ProtGenerics_1.37.1  S4Vectors_0.43.2    </span></span>
-<span><span class="co">## [13] mzR_2.39.2           Rcpp_1.0.13          Biobase_2.65.1      </span></span>
-<span><span class="co">## [16] BiocGenerics_0.51.3  knitr_1.48           BiocStyle_2.33.1    </span></span>
+<span><span class="co">##  [1] pRolocdata_1.45.0    pRoloc_1.45.3        BiocParallel_1.41.0 </span></span>
+<span><span class="co">##  [4] MLInterfaces_1.87.0  cluster_2.1.6        annotate_1.85.0     </span></span>
+<span><span class="co">##  [7] XML_3.99-0.17        AnnotationDbi_1.69.0 IRanges_2.41.1      </span></span>
+<span><span class="co">## [10] MSnbase_2.33.2       ProtGenerics_1.39.0  S4Vectors_0.45.2    </span></span>
+<span><span class="co">## [13] mzR_2.41.1           Rcpp_1.0.13-1        Biobase_2.67.0      </span></span>
+<span><span class="co">## [16] BiocGenerics_0.53.3  generics_0.1.3       knitr_1.49          </span></span>
+<span><span class="co">## [19] BiocStyle_2.35.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] splines_4.4.1               filelock_1.0.3             </span></span>
+<span><span class="co">##   [1] splines_4.5.0               filelock_1.0.3             </span></span>
 <span><span class="co">##   [3] tibble_3.2.1                hardhat_1.4.0              </span></span>
-<span><span class="co">##   [5] preprocessCore_1.67.1       pROC_1.18.5                </span></span>
+<span><span class="co">##   [5] preprocessCore_1.69.0       pROC_1.18.5                </span></span>
 <span><span class="co">##   [7] rpart_4.1.23                lifecycle_1.0.4            </span></span>
-<span><span class="co">##   [9] httr2_1.0.5                 doParallel_1.0.17          </span></span>
+<span><span class="co">##   [9] httr2_1.0.6                 doParallel_1.0.17          </span></span>
 <span><span class="co">##  [11] globals_0.16.3              lattice_0.22-6             </span></span>
-<span><span class="co">##  [13] MASS_7.3-61                 MultiAssayExperiment_1.31.5</span></span>
-<span><span class="co">##  [15] dendextend_1.18.1           magrittr_2.0.3             </span></span>
-<span><span class="co">##  [17] limma_3.61.12               plotly_4.10.4              </span></span>
-<span><span class="co">##  [19] sass_0.4.9                  rmarkdown_2.28             </span></span>
+<span><span class="co">##  [13] MASS_7.3-61                 MultiAssayExperiment_1.33.1</span></span>
+<span><span class="co">##  [15] dendextend_1.19.0           magrittr_2.0.3             </span></span>
+<span><span class="co">##  [17] limma_3.63.2                plotly_4.10.4              </span></span>
+<span><span class="co">##  [19] sass_0.4.9                  rmarkdown_2.29             </span></span>
 <span><span class="co">##  [21] jquerylib_0.1.4             yaml_2.3.10                </span></span>
-<span><span class="co">##  [23] MsCoreUtils_1.17.2          DBI_1.2.3                  </span></span>
+<span><span class="co">##  [23] MsCoreUtils_1.19.0          DBI_1.2.3                  </span></span>
 <span><span class="co">##  [25] RColorBrewer_1.1-3          lubridate_1.9.3            </span></span>
-<span><span class="co">##  [27] abind_1.4-8                 zlibbioc_1.51.1            </span></span>
-<span><span class="co">##  [29] GenomicRanges_1.57.2        purrr_1.0.2                </span></span>
-<span><span class="co">##  [31] mixtools_2.0.0              AnnotationFilter_1.29.0    </span></span>
+<span><span class="co">##  [27] abind_1.4-8                 zlibbioc_1.53.0            </span></span>
+<span><span class="co">##  [29] GenomicRanges_1.59.1        purrr_1.0.2                </span></span>
+<span><span class="co">##  [31] mixtools_2.0.0              AnnotationFilter_1.31.0    </span></span>
 <span><span class="co">##  [33] nnet_7.3-19                 rappdirs_0.3.3             </span></span>
 <span><span class="co">##  [35] ipred_0.9-15                lava_1.8.0                 </span></span>
 <span><span class="co">##  [37] GenomeInfoDbData_1.2.13     listenv_0.9.1              </span></span>
-<span><span class="co">##  [39] gdata_3.0.0                 parallelly_1.38.0          </span></span>
+<span><span class="co">##  [39] gdata_3.0.1                 parallelly_1.39.0          </span></span>
 <span><span class="co">##  [41] pkgdown_2.1.1.9000          ncdf4_1.23                 </span></span>
-<span><span class="co">##  [43] codetools_0.2-20            DelayedArray_0.31.14       </span></span>
+<span><span class="co">##  [43] codetools_0.2-20            DelayedArray_0.33.2        </span></span>
 <span><span class="co">##  [45] xml2_1.3.6                  tidyselect_1.2.1           </span></span>
-<span><span class="co">##  [47] UCSC.utils_1.1.0            viridis_0.6.5              </span></span>
-<span><span class="co">##  [49] matrixStats_1.4.1           BiocFileCache_2.13.2       </span></span>
+<span><span class="co">##  [47] UCSC.utils_1.3.0            viridis_0.6.5              </span></span>
+<span><span class="co">##  [49] matrixStats_1.4.1           BiocFileCache_2.15.0       </span></span>
 <span><span class="co">##  [51] jsonlite_1.8.9              caret_6.0-94               </span></span>
 <span><span class="co">##  [53] e1071_1.7-16                survival_3.7-0             </span></span>
 <span><span class="co">##  [55] iterators_1.0.14            systemfonts_1.1.0          </span></span>
-<span><span class="co">##  [57] foreach_1.5.2               segmented_2.1-2            </span></span>
-<span><span class="co">##  [59] tools_4.4.1                 progress_1.2.3             </span></span>
+<span><span class="co">##  [57] foreach_1.5.2               segmented_2.1-3            </span></span>
+<span><span class="co">##  [59] tools_4.5.0                 progress_1.2.3             </span></span>
 <span><span class="co">##  [61] ragg_1.3.3                  glue_1.8.0                 </span></span>
 <span><span class="co">##  [63] prodlim_2024.06.25          gridExtra_2.3              </span></span>
-<span><span class="co">##  [65] SparseArray_1.5.45          xfun_0.48                  </span></span>
-<span><span class="co">##  [67] MatrixGenerics_1.17.0       GenomeInfoDb_1.41.2        </span></span>
-<span><span class="co">##  [69] dplyr_1.1.4                 withr_3.0.1                </span></span>
+<span><span class="co">##  [65] SparseArray_1.7.2           xfun_0.49                  </span></span>
+<span><span class="co">##  [67] MatrixGenerics_1.19.0       GenomeInfoDb_1.43.1        </span></span>
+<span><span class="co">##  [69] dplyr_1.1.4                 withr_3.0.2                </span></span>
 <span><span class="co">##  [71] BiocManager_1.30.25         fastmap_1.2.0              </span></span>
 <span><span class="co">##  [73] fansi_1.0.6                 digest_0.6.37              </span></span>
 <span><span class="co">##  [75] timechange_0.3.0            R6_2.5.1                   </span></span>
 <span><span class="co">##  [77] textshaping_0.4.0           colorspace_2.1-1           </span></span>
-<span><span class="co">##  [79] gtools_3.9.5                lpSolve_5.6.21             </span></span>
-<span><span class="co">##  [81] biomaRt_2.61.3              RSQLite_2.3.7              </span></span>
+<span><span class="co">##  [79] gtools_3.9.5                lpSolve_5.6.22             </span></span>
+<span><span class="co">##  [81] biomaRt_2.63.0              RSQLite_2.3.8              </span></span>
 <span><span class="co">##  [83] utf8_1.2.4                  tidyr_1.3.1                </span></span>
-<span><span class="co">##  [85] generics_0.1.3              hexbin_1.28.4              </span></span>
-<span><span class="co">##  [87] data.table_1.16.2           recipes_1.1.0              </span></span>
-<span><span class="co">##  [89] FNN_1.1.4.1                 class_7.3-22               </span></span>
-<span><span class="co">##  [91] prettyunits_1.2.0           PSMatch_1.9.0              </span></span>
-<span><span class="co">##  [93] httr_1.4.7                  htmlwidgets_1.6.4          </span></span>
-<span><span class="co">##  [95] S4Arrays_1.5.11             ModelMetrics_1.2.2.2       </span></span>
-<span><span class="co">##  [97] pkgconfig_2.0.3             gtable_0.3.5               </span></span>
-<span><span class="co">##  [99] timeDate_4041.110           blob_1.2.4                 </span></span>
-<span><span class="co">## [101] impute_1.79.0               XVector_0.45.0             </span></span>
-<span><span class="co">## [103] htmltools_0.5.8.1           bookdown_0.41              </span></span>
-<span><span class="co">## [105] MALDIquant_1.22.3           clue_0.3-65                </span></span>
-<span><span class="co">## [107] scales_1.3.0                png_0.1-8                  </span></span>
-<span><span class="co">## [109] gower_1.0.1                 reshape2_1.4.4             </span></span>
-<span><span class="co">## [111] coda_0.19-4.1               nlme_3.1-166               </span></span>
-<span><span class="co">## [113] curl_5.2.3                  proxy_0.4-27               </span></span>
-<span><span class="co">## [115] cachem_1.1.0                stringr_1.5.1              </span></span>
-<span><span class="co">## [117] parallel_4.4.1              mzID_1.43.0                </span></span>
-<span><span class="co">## [119] vsn_3.73.0                  desc_1.4.3                 </span></span>
-<span><span class="co">## [121] pillar_1.9.0                grid_4.4.1                 </span></span>
-<span><span class="co">## [123] vctrs_0.6.5                 pcaMethods_1.97.0          </span></span>
-<span><span class="co">## [125] randomForest_4.7-1.2        dbplyr_2.5.0               </span></span>
-<span><span class="co">## [127] xtable_1.8-4                evaluate_1.0.1             </span></span>
-<span><span class="co">## [129] mvtnorm_1.3-1               cli_3.6.3                  </span></span>
-<span><span class="co">## [131] compiler_4.4.1              rlang_1.1.4                </span></span>
-<span><span class="co">## [133] crayon_1.5.3                future.apply_1.11.2        </span></span>
-<span><span class="co">## [135] LaplacesDemon_16.1.6        mclust_6.1.1               </span></span>
-<span><span class="co">## [137] QFeatures_1.15.3            affy_1.83.1                </span></span>
-<span><span class="co">## [139] plyr_1.8.9                  fs_1.6.4                   </span></span>
-<span><span class="co">## [141] stringi_1.8.4               viridisLite_0.4.2          </span></span>
-<span><span class="co">## [143] munsell_0.5.1               Biostrings_2.73.2          </span></span>
-<span><span class="co">## [145] lazyeval_0.2.2              Matrix_1.7-0               </span></span>
-<span><span class="co">## [147] hms_1.1.3                   bit64_4.5.2                </span></span>
-<span><span class="co">## [149] future_1.34.0               ggplot2_3.5.1              </span></span>
-<span><span class="co">## [151] KEGGREST_1.45.1             statmod_1.5.0              </span></span>
-<span><span class="co">## [153] SummarizedExperiment_1.35.4 kernlab_0.9-33             </span></span>
-<span><span class="co">## [155] igraph_2.0.3                memoise_2.0.1              </span></span>
-<span><span class="co">## [157] affyio_1.75.1               bslib_0.8.0                </span></span>
-<span><span class="co">## [159] sampling_2.10               bit_4.5.0</span></span></code></pre>
+<span><span class="co">##  [85] hexbin_1.28.5               data.table_1.16.2          </span></span>
+<span><span class="co">##  [87] recipes_1.1.0               FNN_1.1.4.1                </span></span>
+<span><span class="co">##  [89] class_7.3-22                prettyunits_1.2.0          </span></span>
+<span><span class="co">##  [91] PSMatch_1.11.0              httr_1.4.7                 </span></span>
+<span><span class="co">##  [93] htmlwidgets_1.6.4           S4Arrays_1.7.1             </span></span>
+<span><span class="co">##  [95] ModelMetrics_1.2.2.2        pkgconfig_2.0.3            </span></span>
+<span><span class="co">##  [97] gtable_0.3.6                timeDate_4041.110          </span></span>
+<span><span class="co">##  [99] blob_1.2.4                  impute_1.81.0              </span></span>
+<span><span class="co">## [101] XVector_0.47.0              htmltools_0.5.8.1          </span></span>
+<span><span class="co">## [103] bookdown_0.41               MALDIquant_1.22.3          </span></span>
+<span><span class="co">## [105] clue_0.3-66                 scales_1.3.0               </span></span>
+<span><span class="co">## [107] png_0.1-8                   gower_1.0.1                </span></span>
+<span><span class="co">## [109] reshape2_1.4.4              coda_0.19-4.1              </span></span>
+<span><span class="co">## [111] nlme_3.1-166                curl_6.0.1                 </span></span>
+<span><span class="co">## [113] proxy_0.4-27                cachem_1.1.0               </span></span>
+<span><span class="co">## [115] stringr_1.5.1               parallel_4.5.0             </span></span>
+<span><span class="co">## [117] mzID_1.45.0                 vsn_3.75.0                 </span></span>
+<span><span class="co">## [119] desc_1.4.3                  pillar_1.9.0               </span></span>
+<span><span class="co">## [121] grid_4.5.0                  vctrs_0.6.5                </span></span>
+<span><span class="co">## [123] pcaMethods_1.99.0           randomForest_4.7-1.2       </span></span>
+<span><span class="co">## [125] dbplyr_2.5.0                xtable_1.8-4               </span></span>
+<span><span class="co">## [127] evaluate_1.0.1              mvtnorm_1.3-2              </span></span>
+<span><span class="co">## [129] cli_3.6.3                   compiler_4.5.0             </span></span>
+<span><span class="co">## [131] rlang_1.1.4                 crayon_1.5.3               </span></span>
+<span><span class="co">## [133] future.apply_1.11.3         LaplacesDemon_16.1.6       </span></span>
+<span><span class="co">## [135] mclust_6.1.1                QFeatures_1.17.0           </span></span>
+<span><span class="co">## [137] affy_1.85.0                 plyr_1.8.9                 </span></span>
+<span><span class="co">## [139] fs_1.6.5                    stringi_1.8.4              </span></span>
+<span><span class="co">## [141] viridisLite_0.4.2           munsell_0.5.1              </span></span>
+<span><span class="co">## [143] Biostrings_2.75.1           lazyeval_0.2.2             </span></span>
+<span><span class="co">## [145] Matrix_1.7-1                hms_1.1.3                  </span></span>
+<span><span class="co">## [147] bit64_4.5.2                 future_1.34.0              </span></span>
+<span><span class="co">## [149] ggplot2_3.5.1               KEGGREST_1.47.0            </span></span>
+<span><span class="co">## [151] statmod_1.5.0               SummarizedExperiment_1.37.0</span></span>
+<span><span class="co">## [153] kernlab_0.9-33              igraph_2.1.1               </span></span>
+<span><span class="co">## [155] memoise_2.0.1               affyio_1.77.0              </span></span>
+<span><span class="co">## [157] bslib_0.8.0                 sampling_2.10              </span></span>
+<span><span class="co">## [159] bit_4.5.0</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

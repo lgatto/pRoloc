@@ -8,8 +8,8 @@
 <title>A transfer learning algorithm for spatial proteomics • pRoloc</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A transfer learning algorithm for spatial proteomics">
 </head>
 <body>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pRoloc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,7 +128,7 @@ particular, the goal is to support/complement the primary target domain
 (experimental data) with auxiliary data (annotation) features without
 compromising the integrity of our primary data. In this vignette, we
 describe the application of transfer learning algorithms for the
-localisation of proteins from the <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+localisation of proteins from the <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 package, as described in</p>
 <blockquote>
 <p>Breckels LM, Holden S, Wonjar D, Mulvey CM, Christoforou A, Groen A,
@@ -160,11 +160,11 @@ indicates that term
 has (not) been used to annotate feature
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>.</p>
 <p>The GO terms are retrieved from an appropriate repository using the
-<em><a href="https://bioconductor.org/packages/3.20/biomaRt" class="external-link">biomaRt</a></em>
+<em><a href="https://bioconductor.org/packages/3.21/biomaRt" class="external-link">biomaRt</a></em>
 package. The specific Biomart repository and query will depend on the
 species under study and the type of features. The first step is to
 prepare annotation parameters that will enable to perform the query. The
-<em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+<em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 package provides a dedicated infrastructure to set up the query to the
 annotation resource and prepare the GO data for subsequent analyses.
 This infrastructure is composed of:</p>
@@ -176,7 +176,7 @@ the terms to prepare the auxiliary data.</li>
 </ol>
 <p>We will demonstrate these steps using a LOPIT experiment on Human
 Embryonic Kidney (HEK293T) fibroblast cells <span class="citation">(Lisa
-M. Breckels et al. 2013)</span>, available and documented in the <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>
+M. Breckels et al. 2013)</span>, available and documented in the <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>
 experiment package as <code>andy2011</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRolocdata" class="external-link">"pRolocdata"</a></span><span class="op">)</span></span>
@@ -189,7 +189,7 @@ that are created with the <em>setAnnotationParams</em> function. The
 function will present a first menu with 486. Once the species has been
 selected, a set of possible identifier types is displayed.</p>
 <div class="float" id="fig:apgui">
-<img src="Figures%2Fap12.png" alt="Selecting species (left) and feature type (right) to create an AnnotationParams instance for the human andy2011 data."><div class="figcaption">Selecting species (left) and feature type
+<img src="Figures/ap12.png" alt="Selecting species (left) and feature type (right) to create an AnnotationParams instance for the human andy2011 data."><div class="figcaption">Selecting species (left) and feature type
 (right) to create an <code>AnnotationParams</code> instance for the
 human <code>andy2011</code> data.</div>
 </div>
@@ -213,7 +213,7 @@ human <code>andy2011</code> data.</div>
 <span><span class="co">##  Using the 'ENSEMBL_MART_ENSEMBL' BioMart database</span></span>
 <span><span class="co">##  Using the 'hsapiens_gene_ensembl' dataset</span></span>
 <span><span class="co">##  Using 'uniprotswissprot' as filter</span></span>
-<span><span class="co">##  Created on Fri Oct 18 17:23:42 2024</span></span></code></pre>
+<span><span class="co">##  Created on Sat Nov 23 15:35:26 2024</span></span></code></pre>
 <p>The <em>setAnnotationParams</em> function automatically sets the
 annotation parameters globally so that the <code>ap</code> object does
 not need to be explicitly set later on. The default parameters can be
@@ -253,8 +253,8 @@ the query.</p>
 <span><span class="co">## experimentData: use 'experimentData(object)'</span></span>
 <span><span class="co">## Annotation:  </span></span>
 <span><span class="co">## - - - Processing information - - -</span></span>
-<span><span class="co">## Constructed GO set using cellular_component namespace [Fri Oct 18 17:23:45 2024] </span></span>
-<span><span class="co">##  MSnbase version: 2.31.1</span></span></code></pre>
+<span><span class="co">## Constructed GO set using cellular_component namespace [Sat Nov 23 15:35:28 2024] </span></span>
+<span><span class="co">##  MSnbase version: 2.33.2</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/exprs.html" class="external-link">exprs</a></span><span class="op">(</span><span class="va">andygoset</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##        GO:0016020 GO:0005783 GO:0005789 GO:0005730</span></span>
@@ -281,7 +281,7 @@ regular updates, does not guarantee reproducibility of feature/term
 association over time. It is recommended to save and store the
 <em>AnnotationParams</em> and auxiliary <em>MSnSet</em> instances.
 Alternatively, it is possible to use other Bioconductor infrastructure,
-such as specific organism annotations and the <em><a href="https://bioconductor.org/packages/3.20/GO.db" class="external-link">GO.db</a></em>
+such as specific organism annotations and the <em><a href="https://bioconductor.org/packages/3.21/GO.db" class="external-link">GO.db</a></em>
 package to use specific versioned (and thus traceable) annotations.</p>
 </div>
 </div>
@@ -319,7 +319,7 @@ In this section, we copy the experimental data to
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## HPA data</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"hpar"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## This is hpar version 1.47.0,</span></span>
+<pre><code><span><span class="co">## This is hpar version 1.49.0,</span></span>
 <span><span class="co">## based on the Human Protein Atlas</span></span>
 <span><span class="co">##   Version: 21.1</span></span>
 <span><span class="co">##   Release data: 2022.05.31</span></span>
@@ -397,14 +397,14 @@ for details) and filter proteins without any localisation data.</p>
 input to the transfer learning algorithm. Several sources can be used to
 do so directly from R:</p>
 <ul>
-<li><p>The <em><a href="https://bioconductor.org/packages/3.20/PSICQUIC" class="external-link">PSICQUIC</a></em>
+<li><p>The <em><a href="https://bioconductor.org/packages/3.21/PSICQUIC" class="external-link">PSICQUIC</a></em>
 package provides an R interfaces to the HUPO Proteomics Standard
 Initiative (HUPO-PSI) project, which standardises programmatic access to
 molecular interaction databases. This approach enables to query great
 many resources in one go but, as noted in the vignettes, for bulk
 interactions, it is recommended to directly download databases from
 individual PSICQUIC providers.</p></li>
-<li><p>The <em><a href="https://bioconductor.org/packages/3.20/STRINGdb" class="external-link">STRINGdb</a></em>
+<li><p>The <em><a href="https://bioconductor.org/packages/3.21/STRINGdb" class="external-link">STRINGdb</a></em>
 package provides a direct interface to the STRING protein-protein
 interactions database. This package can be used to generate a table as
 the one used below. The exact procedure is described in the
@@ -417,7 +417,7 @@ Below, we will described this case with PPI data in a tab-delimited
 format, as retrieved directly from the STRING database.</p></li>
 </ul>
 <p>Below, we access the PPI spreadsheet file for our test data, that is
-distributed with the <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>
+distributed with the <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>
 package.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ppif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/tabdelimited._gHentss2F9k.txt.gz"</span>, package <span class="op">=</span> <span class="st">"pRolocdata"</span><span class="op">)</span></span>
@@ -474,7 +474,7 @@ any interaction scores.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">andyppi</span> <span class="op">&lt;-</span> <span class="va">andy2011</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureNames.html" class="external-link">featureNames</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"_HUMAN"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span><span class="op">$</span><span class="va">UniProtKB.entry.name</span><span class="op">)</span></span>
-<span><span class="va">cmn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureNames.html" class="external-link">featureNames</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ppim</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cmn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureNames.html" class="external-link">featureNames</a></span><span class="op">(</span><span class="va">andyppi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ppim</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">ppim</span> <span class="op">&lt;-</span> <span class="va">ppim</span><span class="op">[</span><span class="va">cmn</span>, <span class="op">]</span></span>
 <span><span class="va">andyppi</span> <span class="op">&lt;-</span> <span class="va">andyppi</span><span class="op">[</span><span class="va">cmn</span>, <span class="op">]</span></span>
 <span></span>
@@ -492,7 +492,7 @@ gradient (<code>andyppi</code>) and 520 auxiliary interaction profiles
 <h2 id="sec:svmtl">Support vector machine transfer learning<a class="anchor" aria-label="anchor" href="#sec:svmtl"></a>
 </h2>
 <p>The SVM-TL method descibed in <span class="citation">(L. M. Breckels
-et al. 2016)</span> has not yet been incorporated in the <em><a href="https://bioconductor.org/packages/3.20/pRoloc" class="external-link">pRoloc</a></em>
+et al. 2016)</span> has not yet been incorporated in the <em><a href="https://bioconductor.org/packages/3.21/pRoloc" class="external-link">pRoloc</a></em>
 package. The code implementing the method is currently available in its
 own repository:</p>
 <p><a href="https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code" class="external-link uri">https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code</a></p>
@@ -627,7 +627,7 @@ selection of best weights.</p>
 frame of this vignette. Below, we pass a very small subset of theta
 matrix to minimise the computation time. The <em>knntlOptimisation</em>
 function supports parallelised execution using various backends thanks
-to the <em><a href="https://bioconductor.org/packages/3.20/BiocParallel" class="external-link">BiocParallel</a></em>
+to the <em><a href="https://bioconductor.org/packages/3.21/BiocParallel" class="external-link">BiocParallel</a></em>
 package; an appropriate backend will be defined automatically according
 to the underlying architecture and user-defined backends can be defined
 through the <code>BPPARAM</code> argument<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Large scale applications of this algorithms were run on
@@ -686,7 +686,7 @@ with high reliability of the primary data. The Golgi and the ribosomal
 clusters (and to a lesser extend the ER) favour smaller scores,
 indicating a substantial benefit of the auxiliary data.</p>
 <div class="float" id="fig:bubble">
-<img src="Figures%2Fbubble-andy.png" alt="Results obtained from an extensive optimisation on the primary andy2011 and auxiliary andygoset data sets, as produced by plot(topt). This figure is not the result for the previous code chunk, where only a random subset of 10 candidate weights have been tested."><div class="figcaption">Results obtained from an extensive optimisation
+<img src="Figures/bubble-andy.png" alt="Results obtained from an extensive optimisation on the primary andy2011 and auxiliary andygoset data sets, as produced by plot(topt). This figure is not the result for the previous code chunk, where only a random subset of 10 candidate weights have been tested."><div class="figcaption">Results obtained from an extensive optimisation
 on the primary <code>andy2011</code> and auxiliary
 <code>andygoset</code> data sets, as produced by
 <code>plot(topt)</code>. This figure is not the result for the previous
@@ -793,13 +793,13 @@ third-party quantitative auxiliary data.</p>
 </h2>
 <p>All software and respective versions used to produce this document
 are listed below.</p>
-<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-11-20 r87352)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.5 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.1 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -817,96 +817,96 @@ are listed below.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] hpar_1.47.0          biomaRt_2.61.3       class_7.3-22        </span></span>
-<span><span class="co">##  [4] pRolocdata_1.43.3    pRoloc_1.45.2        BiocParallel_1.39.0 </span></span>
-<span><span class="co">##  [7] MLInterfaces_1.85.0  cluster_2.1.6        annotate_1.83.0     </span></span>
-<span><span class="co">## [10] XML_3.99-0.17        AnnotationDbi_1.67.0 IRanges_2.39.2      </span></span>
-<span><span class="co">## [13] MSnbase_2.31.1       ProtGenerics_1.37.1  S4Vectors_0.43.2    </span></span>
-<span><span class="co">## [16] mzR_2.39.2           Rcpp_1.0.13          Biobase_2.65.1      </span></span>
-<span><span class="co">## [19] BiocGenerics_0.51.3  knitr_1.48           BiocStyle_2.33.1    </span></span>
+<span><span class="co">##  [1] hpar_1.49.0          biomaRt_2.63.0       class_7.3-22        </span></span>
+<span><span class="co">##  [4] pRolocdata_1.45.0    pRoloc_1.45.3        BiocParallel_1.41.0 </span></span>
+<span><span class="co">##  [7] MLInterfaces_1.87.0  cluster_2.1.6        annotate_1.85.0     </span></span>
+<span><span class="co">## [10] XML_3.99-0.17        AnnotationDbi_1.69.0 IRanges_2.41.1      </span></span>
+<span><span class="co">## [13] MSnbase_2.33.2       ProtGenerics_1.39.0  S4Vectors_0.45.2    </span></span>
+<span><span class="co">## [16] mzR_2.41.1           Rcpp_1.0.13-1        Biobase_2.67.0      </span></span>
+<span><span class="co">## [19] BiocGenerics_0.53.3  generics_0.1.3       knitr_1.49          </span></span>
+<span><span class="co">## [22] BiocStyle_2.35.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] splines_4.4.1               filelock_1.0.3             </span></span>
+<span><span class="co">##   [1] splines_4.5.0               filelock_1.0.3             </span></span>
 <span><span class="co">##   [3] tibble_3.2.1                hardhat_1.4.0              </span></span>
-<span><span class="co">##   [5] preprocessCore_1.67.1       pROC_1.18.5                </span></span>
+<span><span class="co">##   [5] preprocessCore_1.69.0       pROC_1.18.5                </span></span>
 <span><span class="co">##   [7] rpart_4.1.23                lifecycle_1.0.4            </span></span>
-<span><span class="co">##   [9] httr2_1.0.5                 doParallel_1.0.17          </span></span>
+<span><span class="co">##   [9] httr2_1.0.6                 doParallel_1.0.17          </span></span>
 <span><span class="co">##  [11] globals_0.16.3              lattice_0.22-6             </span></span>
-<span><span class="co">##  [13] MASS_7.3-61                 MultiAssayExperiment_1.31.5</span></span>
-<span><span class="co">##  [15] dendextend_1.18.1           magrittr_2.0.3             </span></span>
-<span><span class="co">##  [17] limma_3.61.12               plotly_4.10.4              </span></span>
-<span><span class="co">##  [19] sass_0.4.9                  rmarkdown_2.28             </span></span>
+<span><span class="co">##  [13] MASS_7.3-61                 MultiAssayExperiment_1.33.1</span></span>
+<span><span class="co">##  [15] dendextend_1.19.0           magrittr_2.0.3             </span></span>
+<span><span class="co">##  [17] limma_3.63.2                plotly_4.10.4              </span></span>
+<span><span class="co">##  [19] sass_0.4.9                  rmarkdown_2.29             </span></span>
 <span><span class="co">##  [21] jquerylib_0.1.4             yaml_2.3.10                </span></span>
-<span><span class="co">##  [23] MsCoreUtils_1.17.2          DBI_1.2.3                  </span></span>
+<span><span class="co">##  [23] MsCoreUtils_1.19.0          DBI_1.2.3                  </span></span>
 <span><span class="co">##  [25] RColorBrewer_1.1-3          lubridate_1.9.3            </span></span>
-<span><span class="co">##  [27] abind_1.4-8                 zlibbioc_1.51.1            </span></span>
-<span><span class="co">##  [29] GenomicRanges_1.57.2        purrr_1.0.2                </span></span>
-<span><span class="co">##  [31] mixtools_2.0.0              AnnotationFilter_1.29.0    </span></span>
+<span><span class="co">##  [27] abind_1.4-8                 zlibbioc_1.53.0            </span></span>
+<span><span class="co">##  [29] GenomicRanges_1.59.1        purrr_1.0.2                </span></span>
+<span><span class="co">##  [31] mixtools_2.0.0              AnnotationFilter_1.31.0    </span></span>
 <span><span class="co">##  [33] nnet_7.3-19                 rappdirs_0.3.3             </span></span>
 <span><span class="co">##  [35] ipred_0.9-15                lava_1.8.0                 </span></span>
 <span><span class="co">##  [37] GenomeInfoDbData_1.2.13     listenv_0.9.1              </span></span>
-<span><span class="co">##  [39] parallelly_1.38.0           pkgdown_2.1.1.9000         </span></span>
+<span><span class="co">##  [39] parallelly_1.39.0           pkgdown_2.1.1.9000         </span></span>
 <span><span class="co">##  [41] ncdf4_1.23                  codetools_0.2-20           </span></span>
-<span><span class="co">##  [43] DelayedArray_0.31.14        xml2_1.3.6                 </span></span>
-<span><span class="co">##  [45] tidyselect_1.2.1            UCSC.utils_1.1.0           </span></span>
+<span><span class="co">##  [43] DelayedArray_0.33.2         xml2_1.3.6                 </span></span>
+<span><span class="co">##  [45] tidyselect_1.2.1            UCSC.utils_1.3.0           </span></span>
 <span><span class="co">##  [47] viridis_0.6.5               matrixStats_1.4.1          </span></span>
-<span><span class="co">##  [49] BiocFileCache_2.13.2        jsonlite_1.8.9             </span></span>
+<span><span class="co">##  [49] BiocFileCache_2.15.0        jsonlite_1.8.9             </span></span>
 <span><span class="co">##  [51] caret_6.0-94                e1071_1.7-16               </span></span>
 <span><span class="co">##  [53] survival_3.7-0              iterators_1.0.14           </span></span>
 <span><span class="co">##  [55] systemfonts_1.1.0           foreach_1.5.2              </span></span>
-<span><span class="co">##  [57] segmented_2.1-2             tools_4.4.1                </span></span>
+<span><span class="co">##  [57] segmented_2.1-3             tools_4.5.0                </span></span>
 <span><span class="co">##  [59] progress_1.2.3              ragg_1.3.3                 </span></span>
 <span><span class="co">##  [61] glue_1.8.0                  prodlim_2024.06.25         </span></span>
-<span><span class="co">##  [63] gridExtra_2.3               SparseArray_1.5.45         </span></span>
-<span><span class="co">##  [65] xfun_0.48                   MatrixGenerics_1.17.0      </span></span>
-<span><span class="co">##  [67] GenomeInfoDb_1.41.2         dplyr_1.1.4                </span></span>
-<span><span class="co">##  [69] withr_3.0.1                 BiocManager_1.30.25        </span></span>
+<span><span class="co">##  [63] gridExtra_2.3               SparseArray_1.7.2          </span></span>
+<span><span class="co">##  [65] xfun_0.49                   MatrixGenerics_1.19.0      </span></span>
+<span><span class="co">##  [67] GenomeInfoDb_1.43.1         dplyr_1.1.4                </span></span>
+<span><span class="co">##  [69] withr_3.0.2                 BiocManager_1.30.25        </span></span>
 <span><span class="co">##  [71] fastmap_1.2.0               fansi_1.0.6                </span></span>
 <span><span class="co">##  [73] digest_0.6.37               mime_0.12                  </span></span>
 <span><span class="co">##  [75] timechange_0.3.0            R6_2.5.1                   </span></span>
 <span><span class="co">##  [77] textshaping_0.4.0           colorspace_2.1-1           </span></span>
-<span><span class="co">##  [79] gtools_3.9.5                lpSolve_5.6.21             </span></span>
-<span><span class="co">##  [81] RSQLite_2.3.7               utf8_1.2.4                 </span></span>
-<span><span class="co">##  [83] tidyr_1.3.1                 generics_0.1.3             </span></span>
-<span><span class="co">##  [85] hexbin_1.28.4               data.table_1.16.2          </span></span>
-<span><span class="co">##  [87] recipes_1.1.0               FNN_1.1.4.1                </span></span>
-<span><span class="co">##  [89] prettyunits_1.2.0           PSMatch_1.9.0              </span></span>
-<span><span class="co">##  [91] httr_1.4.7                  htmlwidgets_1.6.4          </span></span>
-<span><span class="co">##  [93] S4Arrays_1.5.11             ModelMetrics_1.2.2.2       </span></span>
-<span><span class="co">##  [95] pkgconfig_2.0.3             gtable_0.3.5               </span></span>
-<span><span class="co">##  [97] timeDate_4041.110           blob_1.2.4                 </span></span>
-<span><span class="co">##  [99] impute_1.79.0               XVector_0.45.0             </span></span>
-<span><span class="co">## [101] htmltools_0.5.8.1           bookdown_0.41              </span></span>
-<span><span class="co">## [103] MALDIquant_1.22.3           clue_0.3-65                </span></span>
-<span><span class="co">## [105] scales_1.3.0                png_0.1-8                  </span></span>
-<span><span class="co">## [107] gower_1.0.1                 reshape2_1.4.4             </span></span>
-<span><span class="co">## [109] coda_0.19-4.1               nlme_3.1-166               </span></span>
-<span><span class="co">## [111] curl_5.2.3                  proxy_0.4-27               </span></span>
-<span><span class="co">## [113] cachem_1.1.0                stringr_1.5.1              </span></span>
-<span><span class="co">## [115] BiocVersion_3.20.0          parallel_4.4.1             </span></span>
-<span><span class="co">## [117] mzID_1.43.0                 vsn_3.73.0                 </span></span>
-<span><span class="co">## [119] desc_1.4.3                  pillar_1.9.0               </span></span>
-<span><span class="co">## [121] grid_4.4.1                  vctrs_0.6.5                </span></span>
-<span><span class="co">## [123] pcaMethods_1.97.0           randomForest_4.7-1.2       </span></span>
-<span><span class="co">## [125] dbplyr_2.5.0                xtable_1.8-4               </span></span>
-<span><span class="co">## [127] evaluate_1.0.1              mvtnorm_1.3-1              </span></span>
-<span><span class="co">## [129] cli_3.6.3                   compiler_4.4.1             </span></span>
-<span><span class="co">## [131] rlang_1.1.4                 crayon_1.5.3               </span></span>
-<span><span class="co">## [133] future.apply_1.11.2         LaplacesDemon_16.1.6       </span></span>
-<span><span class="co">## [135] mclust_6.1.1                QFeatures_1.15.3           </span></span>
-<span><span class="co">## [137] affy_1.83.1                 plyr_1.8.9                 </span></span>
-<span><span class="co">## [139] fs_1.6.4                    stringi_1.8.4              </span></span>
-<span><span class="co">## [141] viridisLite_0.4.2           munsell_0.5.1              </span></span>
-<span><span class="co">## [143] Biostrings_2.73.2           lazyeval_0.2.2             </span></span>
-<span><span class="co">## [145] Matrix_1.7-0                ExperimentHub_2.13.1       </span></span>
-<span><span class="co">## [147] hms_1.1.3                   bit64_4.5.2                </span></span>
-<span><span class="co">## [149] future_1.34.0               ggplot2_3.5.1              </span></span>
-<span><span class="co">## [151] KEGGREST_1.45.1             statmod_1.5.0              </span></span>
-<span><span class="co">## [153] highr_0.11                  AnnotationHub_3.13.3       </span></span>
-<span><span class="co">## [155] SummarizedExperiment_1.35.4 kernlab_0.9-33             </span></span>
-<span><span class="co">## [157] igraph_2.0.3                memoise_2.0.1              </span></span>
-<span><span class="co">## [159] affyio_1.75.1               bslib_0.8.0                </span></span>
-<span><span class="co">## [161] sampling_2.10               bit_4.5.0</span></span></code></pre>
+<span><span class="co">##  [79] gtools_3.9.5                lpSolve_5.6.22             </span></span>
+<span><span class="co">##  [81] RSQLite_2.3.8               utf8_1.2.4                 </span></span>
+<span><span class="co">##  [83] tidyr_1.3.1                 hexbin_1.28.5              </span></span>
+<span><span class="co">##  [85] data.table_1.16.2           recipes_1.1.0              </span></span>
+<span><span class="co">##  [87] FNN_1.1.4.1                 prettyunits_1.2.0          </span></span>
+<span><span class="co">##  [89] PSMatch_1.11.0              httr_1.4.7                 </span></span>
+<span><span class="co">##  [91] htmlwidgets_1.6.4           S4Arrays_1.7.1             </span></span>
+<span><span class="co">##  [93] ModelMetrics_1.2.2.2        pkgconfig_2.0.3            </span></span>
+<span><span class="co">##  [95] gtable_0.3.6                timeDate_4041.110          </span></span>
+<span><span class="co">##  [97] blob_1.2.4                  impute_1.81.0              </span></span>
+<span><span class="co">##  [99] XVector_0.47.0              htmltools_0.5.8.1          </span></span>
+<span><span class="co">## [101] bookdown_0.41               MALDIquant_1.22.3          </span></span>
+<span><span class="co">## [103] clue_0.3-66                 scales_1.3.0               </span></span>
+<span><span class="co">## [105] png_0.1-8                   gower_1.0.1                </span></span>
+<span><span class="co">## [107] reshape2_1.4.4              coda_0.19-4.1              </span></span>
+<span><span class="co">## [109] nlme_3.1-166                curl_6.0.1                 </span></span>
+<span><span class="co">## [111] proxy_0.4-27                cachem_1.1.0               </span></span>
+<span><span class="co">## [113] stringr_1.5.1               BiocVersion_3.21.1         </span></span>
+<span><span class="co">## [115] parallel_4.5.0              mzID_1.45.0                </span></span>
+<span><span class="co">## [117] vsn_3.75.0                  desc_1.4.3                 </span></span>
+<span><span class="co">## [119] pillar_1.9.0                grid_4.5.0                 </span></span>
+<span><span class="co">## [121] vctrs_0.6.5                 pcaMethods_1.99.0          </span></span>
+<span><span class="co">## [123] randomForest_4.7-1.2        dbplyr_2.5.0               </span></span>
+<span><span class="co">## [125] xtable_1.8-4                evaluate_1.0.1             </span></span>
+<span><span class="co">## [127] mvtnorm_1.3-2               cli_3.6.3                  </span></span>
+<span><span class="co">## [129] compiler_4.5.0              rlang_1.1.4                </span></span>
+<span><span class="co">## [131] crayon_1.5.3                future.apply_1.11.3        </span></span>
+<span><span class="co">## [133] LaplacesDemon_16.1.6        mclust_6.1.1               </span></span>
+<span><span class="co">## [135] QFeatures_1.17.0            affy_1.85.0                </span></span>
+<span><span class="co">## [137] plyr_1.8.9                  fs_1.6.5                   </span></span>
+<span><span class="co">## [139] stringi_1.8.4               viridisLite_0.4.2          </span></span>
+<span><span class="co">## [141] munsell_0.5.1               Biostrings_2.75.1          </span></span>
+<span><span class="co">## [143] lazyeval_0.2.2              Matrix_1.7-1               </span></span>
+<span><span class="co">## [145] ExperimentHub_2.15.0        hms_1.1.3                  </span></span>
+<span><span class="co">## [147] bit64_4.5.2                 future_1.34.0              </span></span>
+<span><span class="co">## [149] ggplot2_3.5.1               KEGGREST_1.47.0            </span></span>
+<span><span class="co">## [151] statmod_1.5.0               AnnotationHub_3.15.0       </span></span>
+<span><span class="co">## [153] SummarizedExperiment_1.37.0 kernlab_0.9-33             </span></span>
+<span><span class="co">## [155] igraph_2.1.1                memoise_2.0.1              </span></span>
+<span><span class="co">## [157] affyio_1.77.0               bslib_0.8.0                </span></span>
+<span><span class="co">## [159] sampling_2.10               bit_4.5.0</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

@@ -8,8 +8,8 @@
 <title>Annotating spatial proteomics data • pRoloc</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Annotating spatial proteomics data">
 </head>
 <body>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pRoloc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +135,7 @@ component, and then normalised. The minimum mean normalised distance is
 then extracted and used as a measure of cluster tightness. This is
 repeated for all protein/annotation sets. These sets are then ranked
 according to minimum mean normalised distance and then can be displayed
-and explored using the <em><a href="https://bioconductor.org/packages/3.20/pRolocGUI" class="external-link">pRolocGUI</a></em>
+and explored using the <em><a href="https://bioconductor.org/packages/3.21/pRolocGUI" class="external-link">pRolocGUI</a></em>
 package.</p>
 <p>In this vignette we present a step-by-step guide showing users how to
 (1) how to add protein annotations, here we use the GO database as an
@@ -149,7 +149,7 @@ data specific annotated clusters.</p>
 <p>We will demonstrate our pipeline for adding and ranking annotation
 information using a LOPIT experiment on Pluripotent Mouse Embryonic
 stems (<a href="http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html" class="external-link">Christoforou
-et al 2016</a>), available and documented in the <em><a href="https://bioconductor.org/packages/3.20/pRolocdata" class="external-link">pRolocdata</a></em>
+et al 2016</a>), available and documented in the <em><a href="https://bioconductor.org/packages/3.21/pRolocdata" class="external-link">pRolocdata</a></em>
 data package as <code>hyperlopit2015</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lgatto/pRoloc" class="external-link">"pRoloc"</a></span><span class="op">)</span></span>

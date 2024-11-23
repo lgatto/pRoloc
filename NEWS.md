@@ -1,8 +1,14 @@
-# pRoloc 1.45
+# pRoloc 1.47
 
-## Changes in version 1.45.3
+## Changes in version 1.47.1
 
 - Lisa Breckels is now maintainer.
+
+## Changes in version 1.47.0
+
+- New devel version
+
+# pRoloc 1.45
 
 ## Changes in version 1.45.2
 

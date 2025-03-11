@@ -2,7 +2,7 @@
 title: "Using pRoloc for spatial proteomics data analysis"
 author:
 - name: Lisa M. Breckels
-  affiliation: Computational Proteomics Unit, Cambridge, UK
+  affiliation: Cambridge Centre for Proteomics, University of Cambridge, UK
 - name: Laurent Gatto
   affiliation: de Duve Institute, UCLouvain, Belgium
 package: pRoloc
@@ -20,9 +20,11 @@ output:
 bibliography: pRoloc.bib
 vignette: >
   %\VignetteIndexEntry{Using pRoloc for spatial proteomics data analysis}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteKeywords{Bioinformatics, Machine learning, Organelle, Spatial Proteomics}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r style, echo = FALSE, results = 'asis'}
@@ -995,7 +997,7 @@ organelle association, are separated into *training* and
 *test/validation* partitions by sampling 80\% of the profile
 corresponding to each organelle (i.e. stratified) without replacement
 to form the training partition $S_{tr}$ with the remainder becoming
-the test/validation partition $S_{ts}$. The svm regularisation
+the test/validation partition $S_{ts}$. The SVM regularisation
 parameter $C$ and Gaussian kernel width $sigma$ are selected using a
 further round of stratified five-fold cross-validation on each
 training partition. All pairs of parameters $(C_i, sigma_j)$ under
@@ -1009,12 +1011,13 @@ estimated generalisation performance values (figures
 `svmOptimisation`. See `?svmOptimisation` for details, in particular
 the range of $C$ and $sigma$ parameters and how the relevant feature
 variable is defined by the `fcol` parameters, which defaults to
-`"markers"`.
+`"markers"`. 
 
 ```{r svmParamOptim, eval = FALSE, message = FALSE, tidy=FALSE}
-params <- svmOptimisation(tan2009r1, fcol = "markers.orig",
-              times = 100, xval = 5,
-              verbose = FALSE)
+params <- svmOptimisation(tan2009r1, 
+                          fcol = "markers.orig",
+                          times = 100, xval = 5,
+                          verbose = FALSE)
 ```
 
 In the interest of time, the optimisation is not executed
@@ -1038,7 +1041,6 @@ plot(params)
 ```{r params2, echo=TRUE, fig.cap="Assessing parameter optimisation. Visualisation of the averaged macro F1 scores, for the full range of parameter values."}
 levelPlot(params)
 ```
-
 
 
 
@@ -1097,14 +1099,17 @@ rather an algorithm-specific classification confidence score.}
 
 ```{r svmRes0, warning=FALSE, eval = FALSE, tidy = FALSE}
 ## manual setting of parameters
-svmres <- svmClassification(tan2009r1, fcol = "markers.orig",
-                sigma = 1, cost = 1)
+svmres <- svmClassification(tan2009r1, 
+                            fcol = "markers.orig",
+                            sigma = 1, cost = 1)
 ```
 
 ```{r svmRes, warning=FALSE, tidy = FALSE}
 ## using default best parameters
-svmres <- svmClassification(tan2009r1, fcol = "markers.orig",
-                assessRes = params)
+svmres <- svmClassification(tan2009r1, 
+                            fcol = "markers.orig",
+                            assessRes = params)
+
 processingData(svmres)
 tail(fvarLabels(svmres), 4)
 ```
@@ -1177,131 +1182,86 @@ addLegend(svmres, fcol = "svm",
       cex = .5)
 ```
 
+### Class imbalance
+
+Traditional ML methods assume datasets with an equal numbers of labelled
+instances per class, for example, here we would assume the same number of marker
+proteins per organelle class. In subcellular spatial proteomics data we see the
+number of marker proteins varies greatly from organelle to organelle, this is
+known as class imbalance in field of ML. 
+
+In the below code chunk we again load a dataset from a LOPIT experiment on
+Pluripotent Mouse Embryonic stems ([Christoforou et al 2016](http://www.nature.com/ncomms/2016/160112/ncomms9992/full/ncomms9992.html)),
+available and documented in the `r Biocpkg("pRolocdata")` data package as
+`hyperlopit2015`. We see from looking at the markers in the data we have over
+300 markers for some organelles e.g. the mitochondria, but only 13 for other
+compartments such as the endosome.
+
+```{r}
+data("hyperLOPIT2015")
+getMarkers(hyperLOPIT2015, fcol = "markers")
+```
+
+We can account for this class imbalance by setting specific class weights when
+generating the SVM model. In the code chunks below, we use class specific
+weights when creating the SVM model; the weights are set to be inversely
+proportional to class frequencies.
+
+```{r weights, eval = TRUE, echo = TRUE}
+w <- classWeights(hyperLOPIT2015, fcol = "markers")
+w
+```
+
+```{r svmParamOptim2, eval = FALSE, message = FALSE, tidy=FALSE}
+params2 <- svmOptimisation(hyperLOPIT2015, 
+                           fcol = "markers",
+                           times = 100, xval = 5,
+                           class.weights = w)
+```
+
+As above, in the interest of time the results are pre-computed and available in
+the extdata package directory.
+
+```{r}
+fn <- dir(system.file("extdata", package = "pRoloc"),
+      full.names = TRUE, pattern = "params2.rda")
+load(fn)
+```
+
+```{r}
+params2
+```
+
+```{r}
+hl <- svmClassification(hyperLOPIT2015, 
+                        params2, 
+                        fcol = "markers",
+                        class.weights = w)
+
+```
+
+The data is visualised as described previously, were we use the SVM
+classification a-posteriori probability to set the point size (figure \@ref(fig:plothl)).
+
+```{r plothl, fig.asp=1, echo=FALSE, fig.cap="The results of a class-weight SVM classification on LOPIT data produced from mouse embryonic stem cells."}
+## set point size of each protein to be proportional to the svm score
+ptsze <- exp(fData(hl)$svm.scores) - 1
+## plot new predictions
+plot2D(hl, fcol = "svm", cex = ptsze)
+addLegend(hl, fcol = "svm", where = "bottomleft", bty = "n", cex = .5)
+```
+
 ## Bayesian generative models {#sec:bayes}
 
 We also offer generative models that, as opposed to the descriptive
 classifier presented above, explicitly model the spatial proteomics
-data. In `pRoloc`, we probose two models using T-augmented Gaussian
+data. In `pRoloc`, we propose two models using T-augmented Gaussian
 mixtures using repectively a Expectration-Maximisation approach to
 *maximum a posteriori* estimation of the model parameters (TAGM-MAP),
 and an MCMC approach (TAGM-MCMC) that enables a proteome-wide
 uncertainty quantitation. These methods are described in the
 *pRoloc-bayesian* vignette. For a details description of the methods
 and their validation, please refer to [@Crook:2018].
-
-## Semi-supervised ML {#sec:ssml}
-
-It is obvious that the original set of markers initially used
-(`r paste(levels(fData(tan2009r1)$markers.orig)[1:4], collapse = ", ")`)
-is not a biologically realistic representation or the organelle
-diversity. Manually finding markers is however time consuming, as it
-requires careful verification of the annotation, and possibly critical
-for the subsequent analysis, as markers are directly used in the
-training phase of the supervised ML approach.
-
-As can be seen in the PCA plots above, there is inherent structure in
-the data that can be made use of to automate the detection of new
-clusters. The `phenoDisco` algorithm [@Breckels2013] is an iterative
-method, that combines classification of proteins to known groups and
-detection of new clusters. It is available in `r Biocpkg("pRoloc")`
-though the `phenoDisco` function.
-
-
-```{r runPhenoDisco, eval=FALSE, warning=FALSE}
-pdres <- phenoDisco(tan2009r1, GS = 10,
-                    times = 100, fcol = "PLSDA")
-```
-
-Again, in the interest of time, *phenoDisco* is not executed when the
-vignette is dynamically built. The data object can be located in the
-`extdata` direcoty and loaded with:
-
-
-```{r loadpdres, echo=TRUE}
-fn <- dir(system.file("extdata", package = "pRoloc"),
-      full.names = TRUE, pattern = "pdres.rda")
-load(fn)
-```
-
-The results are also appended to the `featureData` slot.
-
-```{r phenoDiscoFvar}
-processingData(pdres)
-tail(fvarLabels(pdres), 3)
-```
-
-The `plot2D` function, can, as previously, be utilised to visualise
-the results, as shown on figure \@ref(fig:pdres).
-
-
-```{r pdres, echo=TRUE, fig.asp=1, fig.cap="Representation of the phenoDisco prediction and cluster discovery results."}
-plot2D(pdres, fcol = "pd")
-addLegend(pdres, fcol = "pd", ncol = 2,
-      where = "bottomright",
-      cex = .5)
-```
-
-## Following up on novelty discovery {#sec:followup}
-
-The newly discovered phenotypes need to be carefully validated prior
-to further analysis.  Indeed, as the structure of the data is made use
-of in the discovery algorithm, some might represent peculiar structure
-in the data and not match with biologically relevant groups.  The
-`tan2009r1` data has been submitted to a careful `phenodisco` analysis
-and validation in [@Breckels2013]. The results of this new, augmented
-marker set is available in the `pd.markers` feature data. These
-markers represent a combined set of the original markers and validated
-proteins from the new phenotypes.
-
-```{r pdmarkers}
-getMarkers(tan2009r1, fcol = "pd.markers")
-```
-
-The augmented set of markers is now employed to repeat the
-classification using the support vector machine classifier. We apply a
-slightly different analysis than described in section
-\@ref(sec:sml). In the code chunks below, we use class specific
-weights when creating the svm model; the weights are set to be
-inversely proportional to class frequencies.
-
-```{r weights, eval = TRUE, echo = TRUE}
-w <- classWeights(tan2009r1, fcol = "pd.markers")
-w
-```
-
-```{r pdsvmParams, eval = FALSE, tidy = FALSE}
-params2 <- svmOptimisation(tan2009r1, fcol = "pd.markers",
-               times = 10, xval = 5,
-               class.weights = w,
-               verbose = FALSE)
-```
-
-As above, the results are pre-computed and available in the `extdata`
-package directory.
-
-```{r loadParams2, echo = TRUE}
-fn <- dir(system.file("extdata", package = "pRoloc"),
-      full.names = TRUE, pattern = "params2.rda")
-load(fn)
-```
-
-```{r pdsvm, cache = TRUE, message = FALSE, warning = FALSE, tidy = FALSE}
-tan2009r1 <- svmClassification(tan2009r1, params2,
-                               class.weights = w,
-                               fcol = "pd.markers")
-```
-
-The data is visualised as described previously, were we use the svm
-classification a-posteriori probability to set the point size.
-
-
-```{r pdres2, fig.asp=1, fig.cap="Classification results. The results of the second round of classification, using the augmented set of markers obtained using *phenoDisco* as detailed in [@Breckels2013] and a weighted svm classifier."}
-ptsze <- exp(fData(tan2009r1)$svm.scores) - 1
-plot2D(tan2009r1, fcol = "svm", cex = ptsze)
-addLegend(tan2009r1, fcol = "svm",
-      where = "bottomright",
-      ncol = 2, cex = .5)
-```
 
 
 # Conclusions {#sec:ccl}

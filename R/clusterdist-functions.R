@@ -61,7 +61,7 @@
 ##' @param k The number of clusters to try fitting to the protein set. 
 ##' Default is \code{k = 1:5}.
 ##' @param fcol The feature meta-data containing matrix of protein sets/
-##' marker definitions. Default is \code{markers}.
+##' marker definitions. Default is \code{GOAnnotations}.
 ##' @param n The minimum number of proteins per set. If protein sets
 ##' contain less than \code{n} instances they will be ignored. 
 ##' Defualt is 5.
@@ -103,7 +103,7 @@
 ##' }
 clustDist <- function(object,
                       k = 1:5,
-                      fcol = "markers",
+                      fcol = "GOAnnotations",
                       n = 5,
                       verbose = TRUE,
                       seed) {

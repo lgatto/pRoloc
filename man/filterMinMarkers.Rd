@@ -26,8 +26,16 @@ An updated \code{MSnSet}.
 Removes annotation information that contain less that a
 certain number/percentage of proteins
 }
-\seealso{
-\code{addGoAnnotations} and example therein.
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+xx <- dunkley2006
+## create a matrix of markers
+xx <- mrkVecToMat(xx, vfcol = "markers", mfcol = "Markers")
+## Remove marker classes with less than 15 members, from matrix of markers
+xx <- filterMinMarkers(xx, n = 15, fcol = "Markers")
+## Remove marker classes with more than 50 members, from matrix of markers
+xx <- filterMaxMarkers(xx, p = .2, fcol = "Markers")
 }
 \author{
 Lisa M Breckels

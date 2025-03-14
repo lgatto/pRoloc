@@ -77,7 +77,7 @@ plot(dd, method = "raw")
 minDist <- getNormDist(dd)
 ## Get new order according to lowest distance
 o <- order(minDist)
-## Re-order GOAnnotations 
+## Re-order annotations 
 fData(xx)$MM <- fData(xx)$MM[, o]
 if (interactive()) {
 pRolocVis(xx, fcol = "MM")

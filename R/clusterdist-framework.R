@@ -162,12 +162,18 @@ setMethod("plot", c("ClustDistList", "missing"),
           ) {
             opar <- par(no.readonly = TRUE)
             on.exit(par(opar))
-            if (!(method == "norm" | method == "mean"))
-              stop("method must be one of 'norm' or 'mean' see ?ClustDistList for details")
+            if (!(method == "norm" | method == "mean" | method == "raw"))
+              stop("method must be one of 'norm' 'mean' or 'raw' see ?ClustDistList for details")
             if (method == "norm")
               clusterdists <- lapply(x, normDist, best = FALSE, p = p)
             if (method == "mean")
               clusterdists <- lapply(x, meanDist, best = FALSE)
+            if (method == "raw") {
+              m <- lapply(x, function(z) as.matrix(z@dist[[1]][[1]]))
+              odiag <- function(x) x[col(x) - row(x) > 0]
+              clusterdists <- lapply(m, odiag)
+            }
+              
             orgnames <- sapply(x, function(z) z@id)
             ll <- sapply(orgnames, nchar)
             to.shorten <- which(ll > nchar)
@@ -175,15 +181,21 @@ setMethod("plot", c("ClustDistList", "missing"),
               replace.with <- paste0(substr(orgnames[to.shorten], 1, 37), "...")
               orgnames[to.shorten] <- replace.with
             }
-            min.dist <- sapply(clusterdists, min, na.rm = TRUE)
+            if (method != "raw") {
+              min.dist <- sapply(clusterdists, min, na.rm = TRUE)
+            } else {
+              min.dist <- sapply(clusterdists, mean)
+            }
             oo <- order(min.dist, decreasing = TRUE)
             names(clusterdists) <- orgnames
             orgnames <- orgnames[oo]
             clusterdists <- clusterdists[oo]
             if (method == "norm")
               ylab <- "Mean normalised \nEuclidean distance (per k)"
-            else
+            if (method == "mean")
               ylab <- "Mean Euclidean \ndistance (per k)"
+            if (method == "raw")
+              ylab <- "All pairwise Euclidean distances per class"
             par(mai = c(5, 1.1, .5, .56), mar = c(15, 6, 2, 2) + 0.1)
             boxplot(clusterdists, type = "p", pch = 19, cex = .5,
                     xaxt = "n", yaxt = "n", axt = "n", xlab = NA,

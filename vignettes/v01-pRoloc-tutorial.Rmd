@@ -450,7 +450,30 @@ proceeding with data visualisation and clustering (sections
 
 ## *pRoloc*'s organelle markers
 
-The `r Biocpkg("pRoloc")` package distributes a set of markers that
+Exploring protein annotations and defining sub-cellular localisation
+markers (i.e. known residents of a specific sub-cellular niche in a
+species, under a condition of interest) play important roles in the
+analysis of spatial proteomics data. The latter is essential for
+downstream supervised machine learning (ML) classification for protein
+localisation prediction (as discussed later and in the
+`vignette("pRoloc-ml", package = "pRoloc")`) and the former is interesting for
+initial biological interpretation through matching annotations to the
+data structure.
+
+Robust protein-localisation prediction is reliant on markers that
+reflect the true sub-cellular diversity of the multivariate data. The
+validity of markers is generally assured by expert curation. This can
+be time consuming and difficult owing to the limited number of marker
+proteins that exist in databases and elsewhere. The Gene Ontology (GO)
+database, and in particular the cellular compartment (CC) namespace
+provide a good starting point for protein annotation and marker
+definition. Nevertheless, automatic extraction from databases, and in
+particular GO CC, is only a first step in sub-cellular localisation
+analysis and requires additional curation to counter unreliable
+annotation based on data that is inaccurate or out of context for the
+biological question under investigation.
+
+The `r Biocpkg("pRoloc")` package distributes starting sets of markers that
 have been obtained by mining the `r Biocexptpkg("pRolocdata")`
 datasets and curation by various members of the
 [Cambridge Centre for Proteomics](http://proteomics.bio.cam.ac.uk/). The
@@ -466,7 +489,7 @@ table(pRolocmarkers("dmel"))
 These markers can then be added to a new *MSnSet* using the
 *addMarkers* function by matching the marker names (protein
 identifiers) and the feature names of the *MSnSet*. See *?addMarkers*
-for examples.
+for examples. 
 
 ## Data processing
 
@@ -603,7 +626,7 @@ representation is that it provides a quick snapshot of the average
 similarity between organelles using the complete profiles (as opposed
 to a PCA plot, discussed in the next section). The main drawback is
 that it ignores any variability in individual markers (cluster
-thighness). It is however a good guide for a more thorough exploration
+tightness). It is however a good guide for a more thorough exploration
 of the data, as described in the next sections.
 
 
@@ -854,20 +877,22 @@ online
 
 # Assessing sub-cellular resolution {#sec:qsep}
 
+## QSep metrics
+
 The sub-cellular resolution of a spatial proteomics experiment,
 i.e. the quantitation of how well the respective sub-cellular niches
 are separated, can be computed with the `QSep` function. Briefly, this
-function compares, for each pairs of sub-cellular niches, the ratio
+function compares, for each pairs ofx sub-cellular niches, the ratio
 between the the average Euclidean distance between niche *i* and *j* and
 the the average within distance of cluster *j*. A large ratio indicates
-that *i* and *j* are well separated with respect to the thighness of
+that *i* and *j* are well separated with respect to the tightness of
 cluster *j*. The larger the distances, the better the spatial proteomics
 experiment.
 
 Below, we calulate and visualise the *QSep* distances for the
 `hyperLOPIT2015` data:
 
-```{r qsep}
+```{r qsep, fig.asp=1}
 library("pRolocdata")
 data(hyperLOPIT2015)
 
@@ -882,6 +907,114 @@ See [Assessing sub-cellular resolution in spatial proteomics
 experiments](https://doi.org/10.1101/377630) [@Gatto:2018] for
 details, including a large meta-analysis on 29 different spatial
 proteomics experiments.
+
+## Euclidian distance metrics
+
+In addition to `QSep` metrics there exists the `ClustDist` framework which
+includes a set of classes and methods that given a set of proteins computes the
+(normalised) distances between protein correlation profiles. Whilst the
+motivation behind `QSep` is to assess the resolution of a correlation profiling
+experiment by looking at between cluster (relative to within cluster) distances,
+the `clustDist` method was developed to assess cluster tightness. Moreover,
+correlate annotation information e.g. markers or GO terms, with the multivariate
+data space to identify densely and sparsely annotated regions that reflect the
+fit of the markers. Given a set of proteins that share some property e.g. a
+specified GO term, or subcellular class label, the `clustDist` method performs
+an initial k-means clustering of all proteins annotated to the class (testing
+small values of `k`, the default is `k = 1:5`) and then for each number of `k`
+components tested, all pairwise Euclidean distances are calculated per
+component, and then normalised. The minimum mean normalised distance is then
+extracted and used as a measure of fit of the annotation or markers to the data.
+This is repeated for all terms/annotation sets. These sets can then be ranked
+according to minimum mean normalised distance and then displayed and explored
+using the `r `Biocpkg("pRolocGUI")` package.
+
+The motivation behind performing an initial clustering for each term/marker set
+is to account for sets which might have several distributions, for example,
+components of a protein complex or sub-compartment resolution. If the annotation
+is protein markers, the best `k` components per protein set is likely to be 1 as
+on average we expect residents of known organelles to co-fractionate in
+correlation profiling experiments. We may find 2, 3 or more components as the
+best `k` for when evaluating annotation sets that have multiple distributions or
+if the annotation is more ambiguous.
+
+Before running the `clustDist` algorithm a matrix of markers must be created
+where the number of rows in the matrix matches the same proteins in the `MSnSet`
+(as denoted by `featureNames`) and the columns denote if the protein is present
+in that term/organelle. A matrix of markers is used over a standard character
+vector (e.g. `fcol = "markers"`) to allow flexibility for proteins being allocated
+to multiple locations. If we wish to test an existing `fcol` in the `MSnSet`
+there is a convenience function that converts a character vector e.g. "markers"
+to a matrix of "markers", this is called `mrkVecToMat`. In the below code chunk
+we use the `mrkVecToMat` function to take the `"markers"` column from the
+`hyperLOPIT2015` dataset and convert it to a matrix of markers which we call
+`"MM"` in the `fData` slot of the `MSnSet`. A new object with this information
+is created called `hld`.
+
+```{r mrkframework}
+hld <- mrkVecToMat(hyperLOPIT2015, vfcol = "markers", mfcol = "MM")
+head(fData(hld)$MM)
+```
+
+We see the function has converted the `"markers`" vector in the `fData` 
+to a matrix of markers called `MM` where a 1 denotes the protein
+is annotated to that term/class and a 0 means it is not.
+
+In the below code chunk we run the `clustDist` function testing k's between 1
+and 3 per class. We also specify the minimum number of proteins per class to be
+5. If any of the k-means components result in less than `n` proteins per
+component a NA value is recorded.
+
+```{r clusterDist, eval = TRUE, verbose = FALSE}
+dd <- clustDist(hld, fcol = "MM", k = 1:3, n = 5, verbose = FALSE)
+dd
+```
+
+The output is a `"ClustDistList"` of length equal to the number of sets/classes
+tested. The `"ClustDist"` and `"ClustDistList"` class summarises the algorithm
+information including the number of k's components tested, size of each
+component, the mean and normalised pairwise Euclidean distances per number of
+component clusters tested. 
+
+```{r}
+dd[[1]]
+dd[[2]]
+```
+
+The plotting method for a `ClustDist` object is a boxplot of the normalised distances
+per term.
+
+```{r visualiseRes, fig.asp=1, eval = TRUE}
+plot(dd)
+```
+
+
+It is also possible to view the individual k-means component clusterings for
+each class by selecting an element in the `"ClustDistList"` by name or index.
+For example, in the code chunk below we look at the list of available classes
+from the matrix of markers we created `"MM"` and then select interesting terms
+to plot.
+
+```{r plotClusterings, fig.width=8, fig.height=4, eval = TRUE}
+getMarkerClasses(hld, "MM")
+plot(dd[["Endoplasmic reticulum/Golgi apparatus"]], hld)
+plot(dd[["Actin cytoskeleton"]], hld)
+```
+
+The output is a set of principal components analysis (PCA) plots, one for each
+`k` tested, highlighting the component clusters found according to the
+algorithm. We see for the first example, of the `k = 1:3` clusterings all
+combinations were fit, but for the second example only one clustering of `k = 1`
+was fit as the higher values of `k` gave rise to components with less than `n`
+members per cluster.
+
+It is also possible to plot the raw Euclidean distances by calling the
+argument `method = "raw"`.
+
+```{r visualiseRaw, fig.asp=1, eval = TRUE}
+plot(dd, method = "raw")
+```
+
 
 # Data analysis {#sec:analysis}
 
@@ -910,8 +1043,8 @@ classification problem described above is called semi-supervised
 learning. In this case, the training data consists of both labelled
 and unlabelled instances with the obvious goal of generating a better
 classifier than would be possible with the labelled data only. The
-`phenoDisco` algorithm, will be illustrated in that context (section
-\@ref(sec:ssml)).
+TAGM methods fall under this genre of algorithms and are available in
+`pRoloc` and described in the *pRoloc-bayesian* vignette. 
 
 ## Unsupervised ML {#sec:usml}
 
@@ -921,7 +1054,7 @@ omitting any marker definitions, as shown on figure
 definitions and concentrate on the data and its underlying structure
 itself.
 
-```{r plot2dnull, echo=TRUE, fig.cap="Plain PCA representation of the `tan2009r1` data."}
+```{r plot2dnull, echo=TRUE, fig.asp=1, fig.cap="Plain PCA representation of the `tan2009r1` data."}
 plot2D(tan2009r1, fcol = NULL)
 ```
 
@@ -929,7 +1062,7 @@ Alternatively, `r Biocpkg("pRoloc")` also gives access to
 `r Biocpkg("MLInterfaces")`'s `MLean` unified interface for, among
 others, unsupervised approaches using k-means (figure
 \@ref(fig:plotKmeans)), hierarchical (figure \@ref(fig:plotHclust)) or
-partitioning around medoids (figure \@ref(fig:plotPam)), clustering.
+partitioning around metiods (figure \@ref(fig:plotPam)), clustering.
 
 ```{r plotKmeans, echo=TRUE, fig.asp=1, fig.cap="k-means clustering on the `tan2009r1` data."}
 kcl <- MLearn( ~ ., tan2009r1,  kmeansI, centers=5)
@@ -1136,7 +1269,7 @@ table(p1, p2)
 
 To graphically illustrate the organelle-specific score distributions,
 we can use a boxplot and plot the scores for the respective predicted
-svm classes, as shown on figure \@ref(fig:predscores). As can be seen,
+SVM classes, as shown on figure \@ref(fig:predscores). As can be seen,
 different organelles are characterised by different score
 distributions. Using a unique threshold (`minprob` with value
 `r round(minprob, 2)` above) results in accepting
@@ -1223,9 +1356,10 @@ As above, in the interest of time the results are pre-computed and available in
 the extdata package directory.
 
 ```{r}
-fn <- dir(system.file("extdata", package = "pRoloc"),
-      full.names = TRUE, pattern = "params2.rda")
-load(fn)
+# fn <- dir(system.file("extdata", package = "pRoloc"),
+      # full.names = TRUE, pattern = "params2.rda")
+# load(fn)
+load("~/Desktop/params2.rda")
 ```
 
 ```{r}
@@ -1237,18 +1371,26 @@ hl <- svmClassification(hyperLOPIT2015,
                         params2, 
                         fcol = "markers",
                         class.weights = w)
-
 ```
 
-The data is visualised as described previously, were we use the SVM
-classification a-posteriori probability to set the point size (figure \@ref(fig:plothl)).
+We can set a classification threshold, below which we choose to not assign
+a localisation and leave the protein "unlabelled" i.e. in `pRoloc` terminology
+these are denoted by the term "unknown". In the below code chunk we use the
+`orgQuants` function to calculate an organelle specific threshold according
+to the the third quantile for each organelles SVM scores.
 
-```{r plothl, fig.asp=1, echo=FALSE, fig.cap="The results of a class-weight SVM classification on LOPIT data produced from mouse embryonic stem cells."}
-## set point size of each protein to be proportional to the svm score
-ptsze <- exp(fData(hl)$svm.scores) - 1
+```{r medscores3, tidy = FALSE}
+ts <- orgQuants(hl, fcol = "svm", t = .75)
+hl <- getPredictions(hl, fcol = "svm", scol = "svm.scores", t = ts)
+```
+
+The data is visualised as described previously, we plot the filtered
+SVM results using the `plot2D` function (figure \@ref(fig:plothl)).
+
+```{r plothl, fig.asp=1, echo=FALSE, fig.cap="Classification results following prediction from a class-weight SVM classifier on LOPIT data produced from mouse embryonic stem cells."}
 ## plot new predictions
-plot2D(hl, fcol = "svm", cex = ptsze)
-addLegend(hl, fcol = "svm", where = "bottomleft", bty = "n", cex = .5)
+plot2D(hl, fcol = "svm.pred")
+addLegend(hl, fcol = "svm.pred", where = "bottomleft", bty = "n", cex = .5)
 ```
 
 ## Bayesian generative models {#sec:bayes}

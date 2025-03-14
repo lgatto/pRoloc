@@ -8,15 +8,16 @@
     ids <- tapply(comps, comps, names)
     ll <- sapply(ids, length)
     torm <- names(which(ll < min.size)) ## Remove components where num of prots < min.size
-    if (length(torm) > 0) {
-      if (length(ll) != length(torm)) {
-        indrm <- sapply(torm, function(x) which(names(ids) == x))
-        ids <- ids[-indrm]
-      }
-    }
-    if (length(ll) != length(torm)) {
+    # if (length(torm) > 0) {
+    #   if (length(ll) != length(torm)) {
+    #     indrm <- sapply(torm, function(x) which(names(ids) == x))
+    #     ids <- ids[-indrm]
+    #   }
+    # }
+    # if (length(ll) != length(torm)) {
+    if (length(torm) == 0) {
       res <- lapply(ids,
-                    function(z) dist(x[z, ]))
+                    function(z) dist(x[z, ], diag = FALSE, upper = FALSE))
       list(res = res,
            comps = comps)
     } else {
@@ -152,7 +153,7 @@ clustDist <- function(object,
     ## component
     dist.res <- vector("list", length(k))
     for (m in 1:length(k)) {
-      dist.res[[m]] <- .clusterDistK(k = k[m], data, min.cs)
+      dist.res[[m]] <- .clusterDistK(k = k[m], data, min.size = n)
     }
     eucl <- lapply(dist.res, function(z) z$res)   ## Euclidean dist matrix
     comps <- lapply(dist.res, function(z) z$comps)  ## component ID

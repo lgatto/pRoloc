@@ -61,7 +61,7 @@
 ##' @param k The number of clusters to try fitting to the protein set. 
 ##' Default is \code{k = 1:5}.
 ##' @param fcol The feature meta-data containing matrix of protein sets/
-##' marker definitions. Default is \code{GOAnnotations}.
+##' marker definitions. Default is \code{markers}.
 ##' @param n The minimum number of proteins per set. If protein sets
 ##' contain less than \code{n} instances they will be ignored. 
 ##' Defualt is 5.
@@ -96,18 +96,18 @@
 ##' minDist <- getNormDist(dd)
 ##' ## Get new order according to lowest distance
 ##' o <- order(minDist)
-##' ## Re-order GOAnnotations 
+##' ## Re-order annotations 
 ##' fData(xx)$MM <- fData(xx)$MM[, o]
 ##' if (interactive()) {
 ##' pRolocVis(xx, fcol = "MM")
 ##' }
 clustDist <- function(object,
                       k = 1:5,
-                      fcol = "GOAnnotations",
+                      fcol = "markers",
                       n = 5,
                       verbose = TRUE,
                       seed) {
-  ## check min cluster size is not > available GO marker sets
+  ## check min cluster size is not > available marker sets
   min.cs <- min(colSums(fData(object)[, fcol]))
   if (min.cs < n)
     stop("There are some columns in fcol = ", fcol, " that have < n proteins.
@@ -168,38 +168,37 @@ clustDist <- function(object,
     
     ## GO term names and IDs
     termnames <- colnames(.pm)
-    if (length(grep("GO:", termnames)) > 0) {
-      term <- termnames
-      id <- goIdToTerm(term, names = FALSE, keepNA = FALSE)
-      if (length(grep("/ ", termnames)) > 0) {
-        id <- sapply(termnames, function(z) 
-          paste(goIdToTerm(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
-                collapse = "/ "))
-        names(id) <- NULL
-      }
-    } else {
-      term <- goTermToId(termnames, names = FALSE, keepNA = FALSE)
-      id <- termnames
-      if (length(grep("/ ", termnames)) > 0) {
-        term <- sapply(termnames, function(z)
-          paste(goTermToId(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
-                collapse = "/ "))
-        names(term) <- NULL
-      }
-    }
+    # if (length(grep("GO:", termnames)) > 0) {
+    #   term <- termnames
+    #   id <- goIdToTerm(term, names = FALSE, keepNA = FALSE)
+    #   if (length(grep("/ ", termnames)) > 0) {
+    #     id <- sapply(termnames, function(z) 
+    #       paste(goIdToTerm(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
+    #             collapse = "/ "))
+    #     names(id) <- NULL
+    #   }
+    # } else {
+    #   term <- goTermToId(termnames, names = FALSE, keepNA = FALSE)
+    #   id <- termnames
+    #   if (length(grep("/ ", termnames)) > 0) {
+    #     term <- sapply(termnames, function(z)
+    #       paste(goTermToId(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
+    #             collapse = "/ "))
+    #     names(term) <- NULL
+    #   }
+    # }
     
     ## Store results in a ClustDist object
     res[[i]] <- new("ClustDist",
                     k = k, dist = eucl, fcol = fcol, 
                     nrow = nrow(data), clustsz = cs, 
-                    components = comps, term = term[i], 
-                    id = id[i])
+                    components = comps, term = termnames[i])
   }
   if (verbose) {
     setTxtProgressBar(pb, ._k)
     close(pb)
   }
-  names(res) <- sapply(res, function(x) x@id)
+  names(res) <- sapply(res, function(x) x@term)
   res <- ClustDistList(res)
   if(validObject(res))
     return(res)
@@ -276,7 +275,7 @@ normDist <- function(object, ## ClustDist object
 getNormDist <- function(object, ## EucDist class
                         p = 1/3) {
   dists <- sapply(object, normDist, best = TRUE, k = FALSE, p = p)
-  names(dists) <- sapply(object, function(z) z@id)
+  names(dists) <- sapply(object, function(z) z@term)
   return(dists)
 }
 

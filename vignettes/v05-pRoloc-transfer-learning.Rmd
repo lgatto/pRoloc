@@ -2,7 +2,7 @@
 title: "A transfer learning algorithm for spatial proteomics"
 author:
 - name: Lisa M. Breckels
-  affiliation: Computational Proteomics Unit, Cambridge, UK
+  affiliation: Cambridge Centre for Proteomics, University of Cambridge, UK
 - name: Laurent Gatto
   affiliation: de Duve Institute, UCLouvain, Belgium
 package: pRoloc
@@ -61,8 +61,8 @@ particular the cellular compartment name space), quantitative features
 derived from protein sequences (such as pseudo amino acid composition)
 or the Human Protein Atlas [@Uhlen:2010] to cite a few. These
 data, while not optimised to a specific system at hand and, in the
-case of annotation feature, not as reliable as our experimental data,
-constitute an invaluable, often plentiful source of *auxiliary*
+case of annotation features, whilst not as reliable as our experimental
+data, constitute an invaluable, often plentiful source of *auxiliary*
 information.
 
 The aim of a *transfer learning* algorithm is to combine
@@ -90,197 +90,133 @@ vector machine algorithm, termed SVM-TL, described in section
 library("pRoloc")
 ```
 
-# Preparing the auxiliary data {#sec:aux}
+# Preparing the data
+
+To run the family of transfer learning algorithms in `pRoloc` 
+two datasets are required;
+
+(1) A primary dataset, constructed as an `MSnSet`,  
+(2) an auxiliary dataset, constructed as an `MSnSet`, and
+
+also a set of common protein markers.
+
+Example/test datasets are readily available in the 
+`r Biocexptpkg("pRolocdata")` package. We examine the structure of 
+these datasets in the subsequent sections.
+
+# Primary data {#sec:prim}
+
+We will not go into detail on how to construct a `MSnSet` from protein
+correlation profiling data. We refer users to the main *proloc-tutorial*
+vignette. We load a precomputed `MSnSet` called `andy2011`. This dataset was a
+proof-of-concept dataset from 2011, for the use of LOPIT with an adherent
+mammalian cell culture. Human embryonic kidney fibroblast cells (HEK293T) were
+used and LOPIT was employed with 8-plex iTRAQ reagents, thus returning eight
+values per protein profile within a single labelling experiment. Nuclei were
+discarded at an early stage in the fractionation scheme as previously described,
+and membranes were not carbonate washed in order to retain peripheral membrane
+and lumenal proteins for analysis.
+
+```{r}
+library("pRolocdata")
+data("andy2011")
+```
+
+If we first look at the LOPIT data we see we have 1371 proteins and 8 columns
+of quantitation data.
+
+```{r}
+andy2011
+```
+
+The quantitation information is stored in the `exprs` slot.
+
+```{r}
+head(exprs(andy2011))
+```
+
+The protein markers are found in the `"markers"` column of the `fData`.
+
+```{r}
+getMarkers(andy2011, fcol = "markers.tl")
+```
+
+# Auxiliary data {#sec:aux}
+
+Auxiliary data can be generated from a number of data sources and we give a few
+examples of some common sources in the proceeding sections. Whatever source of
+information is used the data must be constructed as an `MSnSet` to use with the
+`knntl` algorithms.
 
 ## The Gene Ontology {#sec:goaux}
 
-The auxiliary data is prepared from the primary data's features. All
-the GO terms associated to these features are retrieved and used to
-create a binary matrix where a one (zero) at position $(i,j)$
-indicates that term $j$ has (not) been used to annotate feature $i$.
+Gene Ontology (GO) terms can be used as a auxiliary source of information
+(providing they were not used to inform the proteins markers annotation). In
+Breckels et al 2016 the auxiliary data was prepared from the primary data's
+features i.e. the proteins in the dataset. All the GO terms associated to these
+proteins are retrieved and used to create a binary matrix where a one (zero) at
+position $(i,j)$ indicates that term $j$ has (not) been used to annotate feature
+$i$.
 
-The GO terms are retrieved from an appropriate repository using the
-`r Biocpkg("biomaRt")` package. The specific Biomart repository and query
-will depend on the species under study and the type of features. The
-first step is to prepare annotation parameters that will enable to
-perform the query. The `r Biocpkg("pRoloc")` package provides a dedicated
-infrastructure to set up the query to the annotation resource and
-prepare the GO data for subsequent analyses. This infrastructure is
-composed of:
+GO terms can be retrieved from an appropriate repository, for example, using the `r
+Biocpkg("biomaRt")` package. The specific Biomart repository and query will
+depend on the species under study and the type of features. See, the 
+[vignettes/documentation](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) 
+section of the R Bioconductor `biomaRt` package.
 
-
-1. define the annotation parameters based on the species and feature
-   types;
-2. query the resource defined in (1) to retrieve relevant terms and
-   use the terms to prepare the auxiliary data.
-
-
-We will demonstrate these steps using a LOPIT experiment on Human
-Embryonic Kidney (HEK293T) fibroblast cells [@Breckels2013],
-available and documented in the `r Biocexptpkg("pRolocdata")` experiment
-package as `andy2011`.
+The `r Biocexptpkg("pRolocdata")` package contains five example Gene Ontology
+auxiliary datasets that were used in [@Breckels:2016]. In the below code chunk
+the associated GO dataset to the `andy2011` dataset, this is called
+`andy2011goCC`.
 
 ```{r loaddata}
-library("pRolocdata")
-data(andy2011)
+data("andy2011goCC")
+andy2011goCC
 ```
 
-### Preparing the query parameters {#sec:ap}
+We see for the this GO set we have 1371 proteins and 569 columns. We pull just
+the first 10 rows and 10 columns below to show the binary structure of the data.
 
-The query parameters are stored as *AnnotationParams* objects that are
-created with the *setAnnotationParams* function. The function will
-present a first menu with `r nrow(pRoloc:::getMartTab())`. Once the
-species has been selected, a set of possible identifier types is
-displayed.
-
-![Selecting species (left) and feature type (right) to create an `AnnotationParams` instance for the human `andy2011` data.](./Figures/ap12.png){#fig:apgui}
-
-It is also possible to pass patterns\footnote{These patterns must
-match uniquely or an error will be thrown.} to match against the
-species (`"Human genes"`) and feature type (`"UniProtKB/Swiss-prot ID"`).
-
-```{r ap}
-ap <- setAnnotationParams(inputs =
-                              c("Human genes",
-                                "UniProtKB/Swiss-Prot ID"))
-ap
+```{r}
+dim(andy2011goCC)
+exprs(andy2011goCC)[1:10, 1:10]
 ```
 
-The *setAnnotationParams* function automatically sets the annotation
-parameters globally so that the `ap` object does not need to be
-explicitly set later on. The default parameters can be retrieved with
-*getAnnotationParams*.
+We note the we have the same proteins (and in the same order) in both datasets.
 
-### Preparing the auxiliary data from the GO ontology {#sec:auxgo}
+```{r}
+all(featureNames(andy2011) == featureNames(andy2011goCC))
 
-The feature names of the `andy2011` data are UniProt identifiers, as
-defined in the `ap` accession parameters.
-
-```{r pdata}
-data(andy2011)
 head(featureNames(andy2011))
+head(featureNames(andy2011goCC))
 ```
-
-The *makeGoSet* function takes an *MSnSet* class (from which the
-feature names will be extracted) or, directly a vector of characters
-containing the feature names of interest to retrieve the associated GO
-terms and construct an auxiliary `MSnSet`. By default, it downloads
-*cellular component* terms and does not do any filtering on the terms
-evidence codes (see the *makeGoSet* manual for details). Unless passed
-as argument, the default, globally set *AnnotationParams* are used to
-define the Biomart server and the query\footnote{The annotation
-parameters could also be passed explicitly through the `params`
-argument.}.
-
-```{r andgoset}
-andygoset <- makeGoSet(andy2011)
-andygoset
-exprs(andygoset)[1:7, 1:4]
-```
-
-```{r testandsamefeats, echo=FALSE}
-stopifnot(all.equal(featureNames(andy2011), featureNames(andygoset)))
-```
-
-We now have a primary data set, composed of `r nrow(andy2011)` protein
-quantitative profiles for `r ncol(andy2011)` fractions along the
-density gradient and an auxiliary data set for `r ncol(andygoset)`
-cellular compartment GO terms for the same `r nrow(andygoset)`
-features.
 
 ### A note on reproducibility {#sec:annotrepro}
 
-The generation of the auxiliary data relies on specific Biomart server
-*Mart* instances in the *AnnotationParams* class and the actual query
-to the server to obtain the GO terms associated with the features. The
-utilisation of online servers, which undergo regular updates, does not
-guarantee reproducibility of feature/term association over time. It is
-recommended to save and store the *AnnotationParams* and auxiliary
-*MSnSet* instances. Alternatively, it is possible to use other
-Bioconductor infrastructure, such as specific organism annotations and
-the `r Biocannopkg("GO.db")` package to use specific versioned (and
-thus traceable) annotations.
+The pulling of auxiliary data such as GO utilises online servers, which undergo
+regular updates, does not guarantee reproducibility of feature/term association
+over time. It is always recommended to save and store the data noting software
+version numbers and dates. In addition to the `r Biocpkg("biomaRt")` package
+other Bioconductor infrastructure is available, such as specific organism
+annotations and the `r Biocannopkg("GO.db")` package to use specific versioned
+(and thus traceable) annotations.
 
 ## The Human Protein Atlas {#sec:hpaaux}
 
-The feature names of our LOPIT experiment are UniProt identifiers,
-while the Human Protein Atlas uses Ensembl gene identifiers. This
-first code chunk matches both identifier types using the Ensembl
-Biomart server and `left_join` from the `r CRANpkg("dplyr")`
-package. In this section, we copy the experimental data to `andyhpa`.
+The Human Protein Atlas (HPA) provides another source of auxiliary data for the
+prediction of a proteins location from correlation data. The datasets
+`andy2011hpa` was constructed (with HPA, version 13, released on 11/06/2014) and
+we again load this directly from the `pRolocdata` package. 
 
-```{r hparprep, eval=TRUE}
-andyhpa <- andy2011
-fvarLabels(andyhpa)[1] <- "accession" ## for left_join matching
-## convert protein accession numbers to ensembl gene identifiers
-
-library("biomaRt")
-mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-
-filter <- "uniprotswissprot"
-attrib <- c("uniprot_gn_symbol", "uniprotswissprot", "ensembl_gene_id")
-bm <- getBM(attributes = attrib,
-            filters = filter,
-            values = fData(andyhpa)[, "accession"],
-            mart = mart)
-head(bm)
-
-## HPA data
-library("hpar")
-
-## using old version for traceability
-hpa <- hpar::hpaSubcellularLoc14()
-hpa$Reliability <- droplevels(hpa$Reliability)
-colnames(hpa)[1] <- "ensembl_gene_id"
-hpa <- dplyr::left_join(hpa, bm)
-hpa <- hpa[!duplicated(hpa$uniprotswissprot), ]
-
-## match HPA/LOPIT
-colnames(hpa)[7] <- "accession"
-fd <- dplyr::left_join(fData(andyhpa), hpa)
-rownames(fd) <- featureNames(andyhpa)
-fData(andyhpa) <- fd
-stopifnot(validObject(andyhpa))
-
-## Let's get rid of features without any hpa data
-lopit <- andyhpa[!is.na(fData(andyhpa)$Main.location), ]
+```{r}
+data("andy2011hpa")
+andy2011
 ```
 
-Below, we deparse the multiple ';'-delimited locations contained in
-the Human Protein sub-cellular Atlas, create the auxiliary binary data
-matrix (only localisations with reliability equal to *Supportive* are
-considered; *Uncertain* assignments are ignored - see
-http://www.proteinatlas.org/about/antibody+validation for details) and
-filter proteins without any localisation data.
-
-```{r hpadata, eval=TRUE}
-## HPA localisation
-hpalocs <- c(as.character(fData(lopit)$Main.location),
-             as.character(fData(lopit)$Other.location))
-hpalocs <- hpalocs[!is.na(hpalocs)]
-hpalocs <- unique(unlist(strsplit(hpalocs, ";")))
-
-makeHpaSet <- function(x, score2, locs = hpalocs) {
-    hpamat <- matrix(0, ncol = length(locs), nrow = nrow(x))
-    colnames(hpamat) <- locs
-    rownames(hpamat) <- featureNames(x)
-    for  (i in 1:nrow(hpamat)) {
-        loc <- unlist(strsplit(as.character(fData(x)[i, "Main.location"]), ";"))
-        loc2 <- unlist(strsplit(as.character(fData(x)[i, "Other.location"]), ";"))
-        score <- score2[as.character(fData(x)[i, "Reliability"])]
-        hpamat[i, loc] <- score
-        hpamat[i, loc2] <- score
-    }
-    new("MSnSet", exprs = hpamat,
-        featureData = featureData(x))
-}
-
-hpaset <- makeHpaSet(lopit,
-                     score2 = c(Supportive = 1, Uncertain = 0))
-hpaset <- filterZeroRows(hpaset)
-dim(hpaset)
-exprs(hpaset)[c(1, 6, 200), 1:3]
-```
+Similar to the structure of the GO `MSnSet`, this auxiliary data, was encoded as
+a binary matrix describing the localisation of 670 proteins in 18 sub-cellular
+localisations. Information for 192 of the 381 labelled marker proteins were
+available.
 
 ## Protein-protein interactions {#sec:ppi}
 
@@ -360,6 +296,10 @@ We now have two `MSnSet` objects containing respectively
 sub-cellular density gradient (`andyppi`) and `r nrow(ppi)` auxiliary
 interaction profiles (`ppi`).
 
+```{r}
+andyppi
+```
+
 # Support vector machine transfer learning {#sec:svmtl}
 
 The SVM-TL method descibed in [@Breckels:2016] has not yet been
@@ -374,6 +314,7 @@ https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code
 
 ```{r mclasses, echo=FALSE}
 data(andy2011) ## load clean LOPIT data
+
 ## marker classes for andy2011
 m <- unique(fData(andy2011)$markers.tl)
 m <- m[m != "unknown"]
@@ -475,7 +416,7 @@ data with the *combineThetaRegRes* function before
 proceeding with the selection of best weights.
 
 ```{r thetaopt0, eval=FALSE}
-topt <- knntlOptimisation(andy2011, andygoset,
+topt <- knntlOptimisation(andy2011, andy2011goCC,
                           th = th,
                           k = c(3, 3),
                           fcol = "markers.tl",
@@ -496,7 +437,7 @@ only 5 times below.
 ```{r thetaopt, eval=TRUE}
 set.seed(1)
 i <- sample(nrow(th), 12)
-topt <- knntlOptimisation(andy2011, andygoset,
+topt <- knntlOptimisation(andy2011, andy2011goCC,
                           th = th[i, ],
                           k = c(3, 3),
                           fcol = "markers.tl",
@@ -558,7 +499,7 @@ want to use, default would be `markers`) to the *knntlClassification*
 function.
 
 ```{r tlclass}
-andy2011 <- knntlClassification(andy2011, andygoset,
+andy2011 <- knntlClassification(andy2011, andy2011goCC,
                                 bestTheta = bw,
                                 k = c(3, 3),
                                 fcol = "markers.tl")

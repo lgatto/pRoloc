@@ -59,30 +59,28 @@ for more details.
 \examples{
 library(pRolocdata)
 data(dunkley2006)
-par <- setAnnotationParams(inputs =
-                   c("Arabidopsis thaliana genes",
-                   "Gene stable ID"))
-## add protein sets/annotation information
-xx <- addGoAnnotations(dunkley2006, par)
-## filter
-xx <- filterMinMarkers(xx, n = 50)
-xx <- filterMaxMarkers(xx, p = .25)
+## Convert annotation data e.g. markers, to a matrix e.g. MM
+xx <- mrkVecToMat(dunkley2006, vfcol = "markers", mfcol = "MM")
 ## get distances for protein sets 
-dd <- clustDist(xx)
+dd <- clustDist(xx, fcol = "MM", k = 1:3)
 ## plot clusters for first 'ClustDist' object 
 ## in the 'ClustDistList'
 plot(dd[[1]], xx)
-## plot distances for all protein sets 
+## plot normalised distances for all protein sets 
 plot(dd)
+## plot mean distances for all protein sets 
+plot(dd, method = "mean")
+##' ## plot raw distances for all protein sets 
+plot(dd, method = "raw")
 ## Extract normalised distances
-## Normalise by n^1/3
-minDist <- getNormDist(dd, p = 1/3)
+## Normalisation factor default is n^1/3
+minDist <- getNormDist(dd)
 ## Get new order according to lowest distance
 o <- order(minDist)
-## Re-order GOAnnotations 
-fData(xx)$GOAnnotations <- fData(xx)$GOAnnotations[, o]
+## Re-order annotations 
+fData(xx)$MM <- fData(xx)$MM[, o]
 if (interactive()) {
-pRolocVis(xx, fcol = "GOAnnotations")
+pRolocVis(xx, fcol = "MM")
 }
 }
 \seealso{

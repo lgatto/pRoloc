@@ -22,7 +22,7 @@ An updated \code{MSnSet}
 Subsets a matrix of markers by specific terms
 }
 \seealso{
-\code{addGoAnnotations} and example therein.
+\code{filterMinMarkers} and example therein.
 }
 \author{
 Lisa M Breckels

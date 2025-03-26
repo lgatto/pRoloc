@@ -61,7 +61,7 @@ labelled.}
 
 \item{dims}{A \code{numeric} of length 2 (or 3 for \code{plot3D})
 defining the dimensions to be plotted. Defaults are \code{c(1,
-2)} and \code{c(1, 2, 3)}.  Always \code{1:2} for MDS.}
+2)} and \code{c(1, 2, 3)}.}
 
 \item{score}{A numeric specifying the minimum organelle assignment
 score to consider features to be assigned an organelle. (not
@@ -93,11 +93,11 @@ yet implemented).}
     bivariate binning into hexagonal cells from
     \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 
-    If none is used, the data is plotted as is, i.e. without any
-    transformation. In this case, \code{object} can either be an
-    \code{MSnSet} or a \code{matrix} (as invisibly returned by
-    \code{plot2D}). This enables to re-generate the figure without
-    computing the dimensionality reduction over and over again,
+    If the character \code{"none"} is used, the data is plotted as 
+    is, i.e. without any transformation. In this case, \code{object} 
+    can either be an \code{MSnSet} or a \code{matrix} (as invisibly 
+    returned by \code{plot2D}). This enables to re-generate the figure 
+    without computing the dimensionality reduction over and over again,
     which can be time consuming for certain methods. If \code{object}
     is a \code{matrix}, an \code{MSnSet} containing the feature
     metadata must be provided in \code{methargs} (see below for
@@ -118,16 +118,16 @@ features with \code{object}.}
 should be switched.}
 
 \item{mirrorX}{A \code{logical} indicating whether the x axis
-should be mirrored?}
+should be mirrored.}
 
 \item{mirrorY}{A \code{logical} indicating whether the y axis
-should be mirrored?}
+should be mirrored.}
 
 \item{col}{A \code{character} of appropriate length defining
 colours.}
 
-\item{bg}{background (fill) color for the open plot symbols given 
-by \code{pch = 21:25}.}
+\item{bg}{Optional background (fill) color for the open plot symbols 
+i.e. can to be used when \code{pch = 21:25}.}
 
 \item{palette}{A \code{character} defining which palette colour
 theme to use, can either defined as \code{"light"} (defualt) 
@@ -137,9 +137,11 @@ or \code{"dark"}.}
 lightening of the colours in the palette. Default is 0.3.}
 
 \item{pch}{A \code{character} of appropriate length defining point
-character.}
+character. Default is 21 (filled circles). See \link{pch} for 
+details.}
 
-\item{cex}{Character expansion.}
+\item{cex}{Character expansion: a numerical vector. This works as 
+a multiple of \link{par}("cex").}
 
 \item{lwd}{A \code{numeric} defining the line width for drawing 
 symbols. Default is 1.5.}
@@ -153,7 +155,7 @@ symbols.}
 \code{index} is TRUE.}
 
 \item{addLegend}{A character indicating where to add the
-legend. See \code{\link{addLegend}}for details. If missing
+legend. See \code{\link{addLegend}} for details. If missing
 (default), no legend is added.}
 
 \item{identify}{A logical (default is \code{TRUE}) defining if
@@ -178,7 +180,7 @@ the data scale. See \code{\link[rgl]{plot3d}} for details.}
 feature. Default is \code{radius} * 2.}
 }
 \value{
-Used for its side effects of generating a plot.  Invisibly
+Used for its side effects of generating a plot. Invisibly
     returns the 2 or 3 dimensions that are plotted.
 }
 \description{
@@ -296,5 +298,5 @@ plot3D(dunkley2006, dims = c(2, 4, 6))
     to visualise TAGM models on PCA plots with ellipses.
 }
 \author{
-Laurent Gatto <lg390@cam.ac.uk>
+Laurent Gatto, Lisa Breckels
 }

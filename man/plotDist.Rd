@@ -17,6 +17,7 @@ plotDist(
   ylab = "Intensity",
   xlab = "Fractions",
   ylim,
+  unknown = "unknown",
   ...
 )
 }
@@ -61,6 +62,9 @@ axis. Default is to use \code{sampleNames(object)}.}
 
 \item{ylim}{A numeric vector of length 2, giving the y coordinates
 range.}
+
+\item{unknown}{Character defining how unlabelled points are defined 
+default is "unknown".}
 
 \item{...}{Additional parameters passed to \code{\link{plot}}.}
 }

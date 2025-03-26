@@ -16,6 +16,7 @@ addLegend(
   pch,
   lwd,
   bty = "n",
+  unknown = "unknown",
   ...
 )
 }
@@ -38,7 +39,7 @@ other locations are passed to \code{\link{legend}}.}
 by \code{pch = 21:25}.}
 
 \item{palette}{A \code{character} defining which palette colour
-theme to use, can either defined as \code{"light"} (defualt) 
+theme to use, can either defined as \code{"light"} (default) 
 or \code{"dark"}.}
 
 \item{t}{A \code{numeric} between 0 and 1. Defining the degree of
@@ -52,6 +53,10 @@ symbols. Default is 1.5.}
 
 \item{bty}{Box type, as in \code{legend}. Default is set to
 \code{"n"}.}
+
+\item{unknown}{A \code{character} (default is \code{"unknown"})
+defining how proteins of unknown/un-labelled localisation are
+labelled.}
 
 \item{...}{Additional parameters passed to \code{\link{legend}}.}
 }

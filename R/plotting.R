@@ -79,19 +79,20 @@ plotDist_fcol <- function(object,
                           ylab = "Intensity",
                           xlab = "Fractions",
                           ylim,
+                          unknown,
                           ...) {
   .data <- exprs(object)
   unkncol <- getUnknowncol()
   stockcol <- getStockcol()
   fData(object)[, fcol] <- factor(fData(object)[, fcol])
   lvs <- levels(fData(object)[, fcol])
-  if ("unknown" %in% lvs) {
-    i <- which(lvs == "unknown")
+  if (unknown %in% lvs) {
+    i <- which(lvs == unknown)
     lvs <- c(lvs[-i], lvs[i])
     fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                     levels = lvs)
   }
-  ukn <- fData(object)[, fcol] == "unknown"
+  ukn <- fData(object)[, fcol] == unknown
   .fcol <- fData(object)[, fcol]
   col <- stockcol[as.numeric(.fcol)]
   col[ukn] <- unkncol
@@ -136,6 +137,8 @@ plotDist_fcol <- function(object,
 ##' @param xlab x-axis label. Default is "Fractions".
 ##' @param ylim A numeric vector of length 2, giving the y coordinates
 ##'     range.
+##' @param unknown Character defining how unlabelled points are defined 
+##'        default is "unknown".
 ##' @param ... Additional parameters passed to \code{\link{plot}}.
 ##' @return Used for its side effect of producing a feature
 ##'     distribution plot. Invisibly returns the data matrix.
@@ -163,6 +166,7 @@ plotDist <- function(object,
                      ylab = "Intensity",
                      xlab = "Fractions",
                      ylim,
+                     unknown = "unknown",
                      ...) {
   .data <- exprs(object)
   if (missing(ylim))
@@ -180,7 +184,7 @@ plotDist <- function(object,
   axis(1, at = seq_len(m), labels = fractions)
   if (!is.null(fcol)) {
     ## plot and colour all profiles according to fcol
-    plotDist_fcol(object, fcol = fcol, ...)
+    plotDist_fcol(object, fcol = fcol, unknown = unknown, ...)
   } else {
     pcol <- col2hcl(pcol, alpha = alpha)
     matlines(t(.data),
@@ -210,11 +214,13 @@ plotDist <- function(object,
 ##' @param fcol Feature variable name used as markers
 ##' @param stockcol Vector of colours.
 ##' @param stockpch Vector of plotting characters.
+##' @param unknown Character defining how unlabelled points are defined 
+##'        default is "unknown".
 ##' @return A \code{list} of necessary variables for plot and legend
 ##' printing. See code for details.
 ##' @author Laurent Gatto
 ##' @noRd
-.isbig <- function(object, fcol, stockcol, stockpch, stockbg) {
+.isbig <- function(object, fcol, stockcol, stockpch, stockbg, unknown) {
   if (is.null(fcol))
     return(list(big = FALSE, toobig = FALSE,
                 nclst = NA,
@@ -222,7 +228,7 @@ plotDist <- function(object,
                 k = NA, kk = NA, jj = NA, ii = NA))
   ## number of clusters to be coloured
   clsts <- unique(fData(object)[, fcol])
-  nclst <- length(clsts[clsts != "unknown"])
+  nclst <- length(clsts[clsts != unknown])
   ## number of available colours
   ncol <- length(stockcol)
   ncolbg <- length(stockbg)
@@ -303,7 +309,7 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     labelled.
 ##' @param dims A \code{numeric} of length 2 (or 3 for \code{plot3D})
 ##'     defining the dimensions to be plotted. Defaults are \code{c(1,
-##'     2)} and \code{c(1, 2, 3)}.  Always \code{1:2} for MDS.
+##'     2)} and \code{c(1, 2, 3)}.
 ##' @param score A numeric specifying the minimum organelle assignment
 ##'     score to consider features to be assigned an organelle. (not
 ##'     yet implemented).
@@ -333,11 +339,11 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     bivariate binning into hexagonal cells from
 ##'     \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 ##'
-##'     If none is used, the data is plotted as is, i.e. without any
-##'     transformation. In this case, \code{object} can either be an
-##'     \code{MSnSet} or a \code{matrix} (as invisibly returned by
-##'     \code{plot2D}). This enables to re-generate the figure without
-##'     computing the dimensionality reduction over and over again,
+##'     If the character \code{"none"} is used, the data is plotted as 
+##'     is, i.e. without any transformation. In this case, \code{object} 
+##'     can either be an \code{MSnSet} or a \code{matrix} (as invisibly 
+##'     returned by \code{plot2D}). This enables to re-generate the figure 
+##'     without computing the dimensionality reduction over and over again,
 ##'     which can be time consuming for certain methods. If \code{object}
 ##'     is a \code{matrix}, an \code{MSnSet} containing the feature
 ##'     metadata must be provided in \code{methargs} (see below for
@@ -356,14 +362,16 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' @param axsSwitch A \code{logical} indicating whether the axes
 ##'     should be switched.
 ##' @param mirrorX A \code{logical} indicating whether the x axis
-##'     should be mirrored?
+##'     should be mirrored.
 ##' @param mirrorY A \code{logical} indicating whether the y axis
-##'     should be mirrored?
+##'     should be mirrored.
 ##' @param col A \code{character} of appropriate length defining
 ##'     colours.
 ##' @param pch A \code{character} of appropriate length defining point
-##'     character.
-##' @param cex Character expansion.
+##'     character. Default is 21 (filled circles). See \link{pch} for 
+##'     details.
+##' @param cex Character expansion: a numerical vector. This works as 
+##'     a multiple of \link{par}("cex").
 ##' @param index A \code{logical} (default is \code{FALSE}, indicating
 ##'     of the feature indices should be plotted on top of the
 ##'     symbols.
@@ -371,7 +379,7 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     (default is 0.75) for the feature indices. Only relevant when
 ##'     \code{index} is TRUE.
 ##' @param addLegend A character indicating where to add the
-##'     legend. See \code{\link{addLegend}}for details. If missing
+##'     legend. See \code{\link{addLegend}} for details. If missing
 ##'     (default), no legend is added.
 ##' @param identify A logical (default is \code{TRUE}) defining if
 ##'     user interaction will be expected to identify individual data
@@ -381,8 +389,8 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##'     \code{TRUE}.
 ##' @param grid A \code{logical} indicating whether a grid should
 ##'     be plotted. Default is \code{TRUE}.
-##' @param bg background (fill) color for the open plot symbols given 
-##'     by \code{pch = 21:25}.
+##' @param bg Optional background (fill) color for the open plot symbols 
+##'     i.e. can to be used when \code{pch = 21:25}.
 ##' @param palette A \code{character} defining which palette colour  
 ##'     theme to use, can either defined as \code{"light"} (defualt) 
 ##'     or \code{"dark"}.
@@ -392,9 +400,9 @@ plot2Dmethods <- c(pRolocVisMethods, "scree")
 ##' symbols. Default is 1.5.
 ##' @param ... Additional parameters passed to \code{plot} and
 ##'     \code{points}.
-##' @return Used for its side effects of generating a plot.  Invisibly
+##' @return Used for its side effects of generating a plot. Invisibly
 ##'     returns the 2 or 3 dimensions that are plotted.
-##' @author Laurent Gatto <lg390@@cam.ac.uk>
+##' @author Laurent Gatto, Lisa Breckels
 ##' @seealso \code{\link{addLegend}} to add a legend to \code{plot2D}
 ##'     figures (the legend is added by default on \code{plot3D}) and
 ##'     \code{\link{plotDist}} for alternative graphical
@@ -589,7 +597,7 @@ plot2D <- function(object,
     requireNamespace("MASS")
     X <- data.frame(exprs(object))
     gr <- getMarkers(object, fcol = fcol, verbose = FALSE)
-    train <- which(gr != "unknown")
+    train <- which(gr != unknown)
     if (missing(methargs)) {
       z <- MASS::lda(X, grouping = gr, subset = train)
     } else {
@@ -633,7 +641,7 @@ plot2D <- function(object,
                        metric = "euclidean",
                        n_epochs = 500,
                        input = "data",
-                       preserve.seed = TRUE,
+                       preserve.seed = FALSE,
                        n_components = 2,
                        verbose = TRUE)
     }
@@ -745,7 +753,7 @@ plot2D <- function(object,
     if (missing(cex)) {
       cex <- rep(1, nrow(.data))
     } else {
-      if (length(cex) == 1) {
+      if (length(cex) == 1.1) {
         cex <- rep(cex, nrow(.data))
       } else {
         .n <- nrow(.data) %/% length(cex)
@@ -759,8 +767,8 @@ plot2D <- function(object,
       nullfcol <- FALSE
       fData(object)[, fcol] <- factor(fData(object)[, fcol])
       lvs <- levels(fData(object)[, fcol])
-      if ("unknown" %in% lvs) {
-        i <- which(lvs == "unknown")
+      if (unknown %in% lvs) {
+        i <- which(lvs == unknown)
         lvs <- c(lvs[-i], lvs[i])
         fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                         levels = lvs)
@@ -785,7 +793,7 @@ plot2D <- function(object,
     ## we want all points to be plotted with the user-defined pch
     if (!(nullfcol & userpch))
       pch[ukn] <- unknownpch
-    isbig <- .isbig(object, fcol, stockcol, stockpch, stockbg)
+    isbig <- .isbig(object, fcol, stockcol, stockpch, stockbg, unknown)
     if (is.null(fcol)) {
       plot(.data, xlab = .xlab, ylab = .ylab, col = col, 
            bg = bg, pch = pch, cex = cex, ...)
@@ -797,7 +805,7 @@ plot2D <- function(object,
              pch = pch[ukn], cex = cex[ukn], 
              lwd = lwd, ...)
       clst <- levels(factor(fData(object)[, fcol]))
-      clst <- clst[clst != "unknown"]
+      clst <- clst[clst != unknown]
       for (i in 1:isbig[["nclst"]]) {
         sel <- fData(object)[, fcol] == clst[i]
         points(.data[sel, 1], .data[sel, 2],
@@ -861,7 +869,7 @@ plot2D <- function(object,
 ##' @param bg background (fill) color for the open plot symbols given 
 ##'     by \code{pch = 21:25}.
 ##' @param palette A \code{character} defining which palette colour  
-##'     theme to use, can either defined as \code{"light"} (defualt) 
+##'     theme to use, can either defined as \code{"light"} (default) 
 ##'     or \code{"dark"}.
 ##' @param t A \code{numeric} between 0 and 1. Defining the degree of
 ##'     lightening of the colours in the palette. Default is 0.3.
@@ -869,6 +877,9 @@ plot2D <- function(object,
 ##' symbols. Default is 1.5.
 ##' @param pch A \code{character} of appropriate length defining point
 ##'     character.
+##' @param unknown A \code{character} (default is \code{"unknown"})
+##'     defining how proteins of unknown/un-labelled localisation are
+##'     labelled.
 ##' @param ... Additional parameters passed to \code{\link{legend}}.
 ##' @return Invisibly returns \code{NULL}
 ##' @author Laurent Gatto
@@ -884,12 +895,13 @@ addLegend <- function(object,
                       pch,
                       lwd,
                       bty = "n",
+                      unknown = "unknown",
                       ...) {
   where <- match.arg(where)
   fData(object)[, fcol] <- as.factor(fData(object)[, fcol])
   lvs <- levels(fData(object)[, fcol])
-  if ("unknown" %in% lvs) {
-    i <- which(lvs == "unknown")
+  if (unknown %in% lvs) {
+    i <- which(lvs == unknown)
     lvs <- c(lvs[-i], lvs[i])
     fData(object)[, fcol] <- factor(fData(object)[, fcol],
                                     levels = lvs)
@@ -938,12 +950,12 @@ addLegend <- function(object,
   unknownpch <- getUnknownpch()
   unknownbg <- getUnknownbg()
   txt <- levels(as.factor(fData(object)[, fcol]))
-  isbig <- .isbig(object, fcol, stockcol, stockpch, stockbg)
+  isbig <- .isbig(object, fcol, stockcol, stockpch, stockbg, unknown)
   if (isbig[["big"]]) {
     col <- stockcol[isbig[["jj"]]]
     pch <- stockpch[isbig[["kk"]]]
     bg <- stockbg[isbig[["ii"]]]
-    if ("unknown" %in% txt) {
+    if (unknown %in% txt) {
       col <- c(col, unknowncol)
       pch <- c(pch, unknownpch)
       bg <- c(bg, unknownbg)
@@ -952,8 +964,8 @@ addLegend <- function(object,
     col <- stockcol[seq_len(length(txt))]
     bg <- stockbg[seq_len(length(txt))]
     pch <- rep(stockpch[1], length(txt))
-    if ("unknown" %in% txt) {
-      i <- which(txt == "unknown")
+    if (unknown %in% txt) {
+      i <- which(txt == unknown)
       col[-i] <- col[-length(col)]
       col[i] <- unknowncol
       bg[-i] <- bg[-length(bg)]
@@ -1123,16 +1135,16 @@ addConvexHulls <- function(object, fcol = "markers", ...) {
 }
 
 
-getMarkerCols <- function(object, fcol = "markers") {
+getMarkerCols <- function(object, fcol = "markers", unknown = "unknown") {
   stopifnot(fcol %in% fvarLabels(object))
   .fcol <- factor(fData(object)[, fcol])
   lvs <- levels(.fcol)
-  if ("unknown" %in% lvs) {
-    i <- which(lvs == "unknown")
+  if (unknown %in% lvs) {
+    i <- which(lvs == unknown)
     lvs <- c(lvs[-i], lvs[i])
     .fcol <- factor(.fcol, levels = lvs)
   }
-  ukn <- .fcol == "unknown"
+  ukn <- .fcol == unknown
   col <- getStockcol()[as.numeric(.fcol)]
   col[ukn] <- getUnknowncol()
   col

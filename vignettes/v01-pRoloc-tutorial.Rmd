@@ -1356,10 +1356,9 @@ As above, in the interest of time the results are pre-computed and available in
 the extdata package directory.
 
 ```{r}
-# fn <- dir(system.file("extdata", package = "pRoloc"),
-      # full.names = TRUE, pattern = "params2.rda")
-# load(fn)
-load("~/Desktop/params2.rda")
+fn <- dir(system.file("extdata", package = "pRoloc"),
+full.names = TRUE, pattern = "params2.rda")
+load(fn)
 ```
 
 ```{r}

@@ -1,5 +1,16 @@
 # pRoloc 1.47
 
+## Changes in version 1.47.3
+
+- Deprecate setAnnotationParam, getAnnotationParams, 
+  showGOEvidenceCodes, getGOEvidenceCodes, addGoAnnotations,
+  orderGoAnnotations and associated helper functions
+- Remove vignette v04 for adding GO annotations
+- Update getting started vignette v01 with clustDist 
+  (previously in v04)
+- Update the transfer learning vignettes to reflect the 
+  deprecation of GO functions  
+
 ## Changes in version 1.47.2
 
 - Bump version to propage to landing page

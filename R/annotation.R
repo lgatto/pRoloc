@@ -39,6 +39,7 @@ setMethod("show",
 setAnnotationParams <- function(params = NULL,
                                 inputs,
                                 graphics = getOption("menu.graphics")) {
+  .Deprecated()
   ## TODO: allow to directly pass a Mart instance or
   ##       martname and dataset or
   ##       filter or
@@ -134,7 +135,10 @@ setAnnotationParams <- function(params = NULL,
 }
 
 getAnnotationParams <-
-    function() get("params", envir=.pRolocEnv)
+    function() {
+      .Deprecated()
+      get("params", envir=.pRolocEnv)
+    }
 
 
 ##' This function prints a textual description
@@ -148,6 +152,7 @@ getAnnotationParams <-
 ##' showGOEvidenceCodes()
 ##' getGOEvidenceCodes()
 showGOEvidenceCodes <- function() {
+  .Deprecated()
   cat("GO Term Evidence Code\n")
   cat(" Experimental Evidence Codes\n")
   cat("  EXP: Inferred from Experiment\n")
@@ -180,17 +185,20 @@ showGOEvidenceCodes <- function() {
 }
 
 ##' @rdname showGOEvidenceCodes
-getGOEvidenceCodes <- function()
-    c("EXP", ## experimental evidence
-      "IDA", "IPI", "IMP", "IGI", "IEP",
-      "ISS", ## computational analysis evidence
-      "ISO", "ISA", "ISM", "IGC", "IBA",
-      "IBD", "IKR", "IRD", "RCA",
-      ## author statement - traceable or non-traceable
-      "TAS", "NAS",
-      ## curator statement - inferred by of no data
-      "IC", "ND",
-      ##  Automatically-assigned Evidence Codes
-      "IEA",
-      ## obsolete - not recorded
-      "NR")
+getGOEvidenceCodes <- function() {
+  .Deprecated()
+  c("EXP", ## experimental evidence
+    "IDA", "IPI", "IMP", "IGI", "IEP",
+    "ISS", ## computational analysis evidence
+    "ISO", "ISA", "ISM", "IGC", "IBA",
+    "IBD", "IKR", "IRD", "RCA",
+    ## author statement - traceable or non-traceable
+    "TAS", "NAS",
+    ## curator statement - inferred by of no data
+    "IC", "ND",
+    ##  Automatically-assigned Evidence Codes
+    "IEA",
+    ## obsolete - not recorded
+    "NR")
+}
+    

@@ -8,15 +8,16 @@
     ids <- tapply(comps, comps, names)
     ll <- sapply(ids, length)
     torm <- names(which(ll < min.size)) ## Remove components where num of prots < min.size
-    if (length(torm) > 0) {
-      if (length(ll) != length(torm)) {
-        indrm <- sapply(torm, function(x) which(names(ids) == x))
-        ids <- ids[-indrm]
-      }
-    }
-    if (length(ll) != length(torm)) {
+    # if (length(torm) > 0) {
+    #   if (length(ll) != length(torm)) {
+    #     indrm <- sapply(torm, function(x) which(names(ids) == x))
+    #     ids <- ids[-indrm]
+    #   }
+    # }
+    # if (length(ll) != length(torm)) {
+    if (length(torm) == 0) {
       res <- lapply(ids,
-                    function(z) dist(x[z, ]))
+                    function(z) dist(x[z, ], diag = FALSE, upper = FALSE))
       list(res = res,
            comps = comps)
     } else {
@@ -77,30 +78,28 @@
 ##' @examples
 ##' library(pRolocdata)
 ##' data(dunkley2006)
-##' par <- setAnnotationParams(inputs =
-##'                    c("Arabidopsis thaliana genes",
-##'                    "Gene stable ID"))
-##' ## add protein sets/annotation information
-##' xx <- addGoAnnotations(dunkley2006, par)
-##' ## filter
-##' xx <- filterMinMarkers(xx, n = 50)
-##' xx <- filterMaxMarkers(xx, p = .25)
+##' ## Convert annotation data e.g. markers, to a matrix e.g. MM
+##' xx <- mrkVecToMat(dunkley2006, vfcol = "markers", mfcol = "MM")
 ##' ## get distances for protein sets 
-##' dd <- clustDist(xx)
+##' dd <- clustDist(xx, fcol = "MM", k = 1:3)
 ##' ## plot clusters for first 'ClustDist' object 
 ##' ## in the 'ClustDistList'
 ##' plot(dd[[1]], xx)
-##' ## plot distances for all protein sets 
+##' ## plot normalised distances for all protein sets 
 ##' plot(dd)
+##' ## plot mean distances for all protein sets 
+##' plot(dd, method = "mean")
+##' ##' ## plot raw distances for all protein sets 
+##' plot(dd, method = "raw")
 ##' ## Extract normalised distances
-##' ## Normalise by n^1/3
-##' minDist <- getNormDist(dd, p = 1/3)
+##' ## Normalisation factor default is n^1/3
+##' minDist <- getNormDist(dd)
 ##' ## Get new order according to lowest distance
 ##' o <- order(minDist)
-##' ## Re-order GOAnnotations 
-##' fData(xx)$GOAnnotations <- fData(xx)$GOAnnotations[, o]
+##' ## Re-order annotations 
+##' fData(xx)$MM <- fData(xx)$MM[, o]
 ##' if (interactive()) {
-##' pRolocVis(xx, fcol = "GOAnnotations")
+##' pRolocVis(xx, fcol = "MM")
 ##' }
 clustDist <- function(object,
                       k = 1:5,
@@ -108,7 +107,7 @@ clustDist <- function(object,
                       n = 5,
                       verbose = TRUE,
                       seed) {
-  ## check min cluster size is not > available GO marker sets
+  ## check min cluster size is not > available marker sets
   min.cs <- min(colSums(fData(object)[, fcol]))
   if (min.cs < n)
     stop("There are some columns in fcol = ", fcol, " that have < n proteins.
@@ -152,7 +151,7 @@ clustDist <- function(object,
     ## component
     dist.res <- vector("list", length(k))
     for (m in 1:length(k)) {
-      dist.res[[m]] <- .clusterDistK(k = k[m], data, min.cs)
+      dist.res[[m]] <- .clusterDistK(k = k[m], data, min.size = n)
     }
     eucl <- lapply(dist.res, function(z) z$res)   ## Euclidean dist matrix
     comps <- lapply(dist.res, function(z) z$comps)  ## component ID
@@ -169,38 +168,37 @@ clustDist <- function(object,
     
     ## GO term names and IDs
     termnames <- colnames(.pm)
-    if (length(grep("GO:", termnames)) > 0) {
-      term <- termnames
-      id <- goIdToTerm(term, names = FALSE, keepNA = FALSE)
-      if (length(grep("/ ", termnames)) > 0) {
-        id <- sapply(termnames, function(z) 
-          paste(goIdToTerm(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
-                collapse = "/ "))
-        names(id) <- NULL
-      }
-    } else {
-      term <- goTermToId(termnames, names = FALSE, keepNA = FALSE)
-      id <- termnames
-      if (length(grep("/ ", termnames)) > 0) {
-        term <- sapply(termnames, function(z)
-          paste(goTermToId(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
-                collapse = "/ "))
-        names(term) <- NULL
-      }
-    }
+    # if (length(grep("GO:", termnames)) > 0) {
+    #   term <- termnames
+    #   id <- goIdToTerm(term, names = FALSE, keepNA = FALSE)
+    #   if (length(grep("/ ", termnames)) > 0) {
+    #     id <- sapply(termnames, function(z) 
+    #       paste(goIdToTerm(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
+    #             collapse = "/ "))
+    #     names(id) <- NULL
+    #   }
+    # } else {
+    #   term <- goTermToId(termnames, names = FALSE, keepNA = FALSE)
+    #   id <- termnames
+    #   if (length(grep("/ ", termnames)) > 0) {
+    #     term <- sapply(termnames, function(z)
+    #       paste(goTermToId(strsplit(z, split = "/ ")[[1]], names = FALSE, keepNA = FALSE),
+    #             collapse = "/ "))
+    #     names(term) <- NULL
+    #   }
+    # }
     
     ## Store results in a ClustDist object
     res[[i]] <- new("ClustDist",
                     k = k, dist = eucl, fcol = fcol, 
                     nrow = nrow(data), clustsz = cs, 
-                    components = comps, term = term[i], 
-                    id = id[i])
+                    components = comps, term = termnames[i])
   }
   if (verbose) {
     setTxtProgressBar(pb, ._k)
     close(pb)
   }
-  names(res) <- sapply(res, function(x) x@id)
+  names(res) <- sapply(res, function(x) x@term)
   res <- ClustDistList(res)
   if(validObject(res))
     return(res)
@@ -277,7 +275,7 @@ normDist <- function(object, ## ClustDist object
 getNormDist <- function(object, ## EucDist class
                         p = 1/3) {
   dists <- sapply(object, normDist, best = TRUE, k = FALSE, p = p)
-  names(dists) <- sapply(object, function(z) z@id)
+  names(dists) <- sapply(object, function(z) z@term)
   return(dists)
 }
 

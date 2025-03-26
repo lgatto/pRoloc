@@ -32,5 +32,5 @@ Removes annotation information that contain more that a
 certain number/percentage of proteins
 }
 \seealso{
-\code{addGoAnnotations} and example therein.
+\code{filterMinMarkers} and example therein.
 }

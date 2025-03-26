@@ -42,6 +42,7 @@
 addGoAnnotations <- function(object, params, evidence, 
                          useID = FALSE, fcol = "GOAnnotations",
                          ...) {
+  .Deprecated()
   if (missing(evidence))
     evidence = NULL
   if (!inherits(params, "AnnotationParams"))
@@ -72,7 +73,16 @@ addGoAnnotations <- function(object, params, evidence,
 ##' @param verbose Number of marker candidates retained after filtering.
 ##' @return An updated \code{MSnSet}.
 ##' @author Lisa M Breckels
-##' @seealso \code{addGoAnnotations} and example therein.
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' xx <- dunkley2006
+##' ## create a matrix of markers
+##' xx <- mrkVecToMat(xx, vfcol = "markers", mfcol = "Markers")
+##' ## Remove marker classes with less than 15 members, from matrix of markers
+##' xx <- filterMinMarkers(xx, n = 15, fcol = "Markers")
+##' ## Remove marker classes with more than 50 members, from matrix of markers
+##' xx <- filterMaxMarkers(xx, p = .2, fcol = "Markers")
 filterMinMarkers <- function(object, 
                              n = 10, 
                              p,
@@ -116,7 +126,7 @@ filterMinMarkers <- function(object,
 ##' \code{GOAnnotations}.
 ##' @param verbose Number of marker candidates retained after filtering.
 ##' @return An updated \code{MSnSet}
-##' @seealso \code{addGoAnnotations} and example therein.
+##' @seealso \code{filterMinMarkers} and example therein.
 filterMaxMarkers <- function(object, 
                              n, 
                              p = .2,
@@ -154,7 +164,7 @@ filterMaxMarkers <- function(object,
 ##' in the markers matrix, as defined by \code{fcol}. 
 ##' @return An updated \code{MSnSet}
 ##' @author Lisa M Breckels
-##' @seealso \code{addGoAnnotations} and example therein.
+##' @seealso \code{filterMinMarkers} and example therein.
 subsetMarkers <- function(object,
                           fcol = "GOAnnotations",
                           keep) {
@@ -237,6 +247,7 @@ orderGoAnnotations <- function(object,
                            p = 1/3,
                            verbose = TRUE,
                            seed) {
+  .Deprecated()
   ## set seed for reproducibility for kmeans
   if (missing(seed)) {
     seed <- sample(.Machine$integer.max, 1)

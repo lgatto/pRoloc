@@ -851,7 +851,7 @@ In addition to highlighting sub-cellular niches as coloured clusters
 on the PCA plot, it is also possible to define some arbitrary
 *features of interest* that represent, for example, proteins of a
 particular pathway or a set of interaction partners. Such sets of
-proteins are recorded as *FeaturesOfInterest* instances, as illstrated
+proteins are recorded as *FeaturesOfInterest* instances, as illustrated
 below (using the ten first features of our experiment):
 
 ```{r foi0}

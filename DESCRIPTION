@@ -7,7 +7,7 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
                     role = "aut"),
              person(given = "Lisa", family ="Breckels",
                     email = "lms79@cam.ac.uk",
-                    role = c("cre", "aut")),
+                    role = c("aut", "cre")),
              person(given = "Thomas", family ="Burger",
                     email = "Thomas.BURGER@cea.fr",
                     role = "ctb"),
@@ -20,9 +20,6 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
              person(given = "Oliver", family ="Crook",
                     email = "oliver.crook@stats.ox.ac.uk",
                     role = "aut"))
-Author: Laurent Gatto, Oliver Crook and Lisa M. Breckels with
-    contributions from Thomas Burger and Samuel Wieczorek
-Maintainer: Lisa Breckels <lms79@cam.ac.uk>
 Description: The pRoloc package implements machine learning and
              visualisation methods for the analysis and interogation
              of quantitiative mass spectrometry data to reliably infer

@@ -71,21 +71,22 @@
 
 
 \examples{
-  library('pRolocdata')
-  data(dunkley2006)
-  par <- setAnnotationParams(inputs =
-                    c("Arabidopsis thaliana genes",
-                    "Gene stable ID"))
 
-  ## add protein set/annotation information
-  xx <- addGoAnnotations(dunkley2006, par)
+  library(pRolocdata)
+  data(dunkley2006)
+
+  ## Convert annotation data e.g. markers, to a matrix e.g. MM
+  xx <- mrkVecToMat(dunkley2006, vfcol = "markers", mfcol = "MM")
+  
+  ## get distances for protein sets 
+  dd <- clustDist(xx, fcol = "MM", k = 1:3)
 
   ## filter
-  xx <- filterMinMarkers(xx, n = 50)
-  xx <- filterMaxMarkers(xx, p = .25)
-
+  xx <- filterMinMarkers(xx, n = 50, fcol = "MM")
+  xx <- filterMaxMarkers(xx, p = .25, fcol = "MM")
+  
   ## get distances for protein sets
-  dd <- clustDist(xx)
+  dd <- clustDist(xx, fcol = "MM")
 
   ## plot distances for all protein sets
   plot(dd)

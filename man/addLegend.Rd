@@ -10,7 +10,13 @@ addLegend(
   where = c("bottomleft", "bottom", "bottomright", "left", "topleft", "top", "topright",
     "right", "center", "other"),
   col,
+  bg,
+  palette = "light",
+  t = 0.3,
+  pch,
+  lwd,
   bty = "n",
+  unknown = "unknown",
   ...
 )
 }
@@ -29,8 +35,28 @@ other locations are passed to \code{\link{legend}}.}
 
 \item{col}{A \code{character} defining point colours.}
 
+\item{bg}{background (fill) color for the open plot symbols given 
+by \code{pch = 21:25}.}
+
+\item{palette}{A \code{character} defining which palette colour
+theme to use, can either defined as \code{"light"} (default) 
+or \code{"dark"}.}
+
+\item{t}{A \code{numeric} between 0 and 1. Defining the degree of
+lightening of the colours in the palette. Default is 0.3.}
+
+\item{pch}{A \code{character} of appropriate length defining point
+character.}
+
+\item{lwd}{A \code{numeric} defining the line width for drawing 
+symbols. Default is 1.5.}
+
 \item{bty}{Box type, as in \code{legend}. Default is set to
 \code{"n"}.}
+
+\item{unknown}{A \code{character} (default is \code{"unknown"})
+defining how proteins of unknown/un-labelled localisation are
+labelled.}
 
 \item{...}{Additional parameters passed to \code{\link{legend}}.}
 }
@@ -45,6 +71,20 @@ The function has been updated in version 1.3.6 to recycle the
 default colours when more organelle classes are provided. See
 \code{\link{plot2D}} for details.
 }
+\examples{
+## Load an example MSnSet
+library("pRolocdata")
+data(dunkley2006)
+
+## Adding a legend inside a plot
+plot2D(dunkley2006)
+addLegend(dunkley2006,  where = "topleft")
+
+## Adding a legend outside a plot
+par(mfrow = c(1, 2))
+plot2D(dunkley2006)
+addLegend(dunkley2006, where = "other")
+}
 \author{
-Laurent Gatto
+Laurent Gatto, Lisa Breckels
 }

@@ -19,14 +19,18 @@ plot2D(
   mirrorX = FALSE,
   mirrorY = FALSE,
   col,
+  bg,
+  palette = "light",
+  t = 0.3,
   pch,
   cex,
+  lwd,
   index = FALSE,
   idx.cex = 0.75,
   addLegend,
   identify = FALSE,
   plot = TRUE,
-  grid = TRUE,
+  grid = FALSE,
   ...
 )
 
@@ -57,7 +61,7 @@ labelled.}
 
 \item{dims}{A \code{numeric} of length 2 (or 3 for \code{plot3D})
 defining the dimensions to be plotted. Defaults are \code{c(1,
-2)} and \code{c(1, 2, 3)}.  Always \code{1:2} for MDS.}
+2)} and \code{c(1, 2, 3)}.}
 
 \item{score}{A numeric specifying the minimum organelle assignment
 score to consider features to be assigned an organelle. (not
@@ -65,16 +69,17 @@ yet implemented).}
 
 \item{method}{A \code{character} describe how to transform the
     data or what to plot. One of \code{"PCA"} (default),
-    \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"}
-    or \code{"lda"}, defining what dimensionality reduction is
-    applied: principal component analysis (see
+    \code{"MDS"}, \code{"kpca"}, \code{"nipals"}, \code{"t-SNE"},
+    \code{"UMAP"}, or \code{"lda"}, defining what dimensionality 
+    reduction is applied: principal component analysis (see
     \code{\link{prcomp}}), classical multidimensional scaling (see
     \code{\link{cmdscale}}), kernel PCA (see
     \code{\link[kernlab]{kpca}}), nipals (principal component
     analysis by NIPALS, non-linear iterative partial least squares
     which support missing values; see
     \code{\link[nipals]{nipals}}) t-SNE (see
-    \code{\link[Rtsne]{Rtsne}}) or linear discriminant analysis
+    \code{\link[Rtsne]{Rtsne}}), UMAP (see \code{\link[umap]{umap}})
+     or linear discriminant analysis
     (see \code{\link[MASS]{lda}}). The last method uses
     \code{fcol} to defined the sub-cellular clusters so that the
     ration between within ad between cluster variance is
@@ -88,11 +93,11 @@ yet implemented).}
     bivariate binning into hexagonal cells from
     \code{\link[hexbin]{hexbin}} to emphasise cluster density.
 
-    If none is used, the data is plotted as is, i.e. without any
-    transformation. In this case, \code{object} can either be an
-    \code{MSnSet} or a \code{matrix} (as invisibly returned by
-    \code{plot2D}). This enables to re-generate the figure without
-    computing the dimensionality reduction over and over again,
+    If the character \code{"none"} is used, the data is plotted as 
+    is, i.e. without any transformation. In this case, \code{object} 
+    can either be an \code{MSnSet} or a \code{matrix} (as invisibly 
+    returned by \code{plot2D}). This enables to re-generate the figure 
+    without computing the dimensionality reduction over and over again,
     which can be time consuming for certain methods. If \code{object}
     is a \code{matrix}, an \code{MSnSet} containing the feature
     metadata must be provided in \code{methargs} (see below for
@@ -113,18 +118,33 @@ features with \code{object}.}
 should be switched.}
 
 \item{mirrorX}{A \code{logical} indicating whether the x axis
-should be mirrored?}
+should be mirrored.}
 
 \item{mirrorY}{A \code{logical} indicating whether the y axis
-should be mirrored?}
+should be mirrored.}
 
 \item{col}{A \code{character} of appropriate length defining
 colours.}
 
-\item{pch}{A \code{character} of appropriate length defining point
-character.}
+\item{bg}{Optional background (fill) color for the open plot symbols 
+i.e. can to be used when \code{pch = 21:25}.}
 
-\item{cex}{Character expansion.}
+\item{palette}{A \code{character} defining which palette colour
+theme to use, can either defined as \code{"light"} (defualt) 
+or \code{"dark"}.}
+
+\item{t}{A \code{numeric} between 0 and 1. Defining the degree of
+lightening of the colours in the palette. Default is 0.3.}
+
+\item{pch}{A \code{character} of appropriate length defining point
+character. Default is 21 (filled circles). See \link{pch} for 
+details.}
+
+\item{cex}{Character expansion: a numerical vector. This works as 
+a multiple of \link{par}("cex").}
+
+\item{lwd}{A \code{numeric} defining the line width for drawing 
+symbols. Default is 1.5.}
 
 \item{index}{A \code{logical} (default is \code{FALSE}, indicating
 of the feature indices should be plotted on top of the
@@ -135,7 +155,7 @@ symbols.}
 \code{index} is TRUE.}
 
 \item{addLegend}{A character indicating where to add the
-legend. See \code{\link{addLegend}}for details. If missing
+legend. See \code{\link{addLegend}} for details. If missing
 (default), no legend is added.}
 
 \item{identify}{A logical (default is \code{TRUE}) defining if
@@ -160,7 +180,7 @@ the data scale. See \code{\link[rgl]{plot3d}} for details.}
 feature. Default is \code{radius} * 2.}
 }
 \value{
-Used for its side effects of generating a plot.  Invisibly
+Used for its side effects of generating a plot. Invisibly
     returns the 2 or 3 dimensions that are plotted.
 }
 \description{
@@ -207,6 +227,7 @@ addLegend(dunkley2006,
           where = "topright",
           cex = 0.5, bty = "n", ncol = 3)
 title(main = "plot2D example")
+
 ## available methods
 plot2Dmethods
 plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black")
@@ -214,22 +235,53 @@ plot2D(dunkley2006, fcol = NULL, method = "kpca", col = "black",
        methargs = list(kpar = list(sigma = 1)))
 plot2D(dunkley2006, method = "lda")
 plot2D(dunkley2006, method = "hexbin")
+
 ## Using transparent colours
 setStockcol(paste0(getStockcol(), "80"))
+setStockbg(paste0(getStockbg(), "80"))
 plot2D(dunkley2006, fcol = "markers")
 ## New behavious in 1.3.6 when not enough colours
 setStockcol(c("blue", "red", "green"))
 getStockcol() ## only 3 colours to be recycled
 getMarkers(dunkley2006)
 plot2D(dunkley2006)
-## reset colours
+
+## Reset colours
 setStockcol(NULL)
+setStockbg(NULL)
 plot2D(dunkley2006, method = "none") ## plotting along 2 first fractions
 plot2D(dunkley2006, dims = c(3, 5), method = "none") ## plotting along fractions 3 and 5
+
+## Using different light and dark colour themes  
+plot2D(dunkley2006, palette = "dark")
+plot2D(dunkley2006, palette = "dark", t = .1)
+plot2D(dunkley2006, palette = "light")
+plot2D(dunkley2006, palette = "light", t = .6)
+
+## Changing the point characters
+plot2D(dunkley2006, pch = 22)
+setUnknownpch(22)
+plot2D(dunkley2006, pch = 22)
+setUnknownpch(NULL) ## reset unknowns pch back to default
+
 ## pre-calculate PC1 and PC2 coordinates
 pca <- plot2D(dunkley2006, plot=FALSE)
 head(pca)
 plot2D(pca, method = "none", methargs  = list(dunkley2006))
+
+## Adding a legend inside a plot
+plot2D(dunkley2006)
+addLegend(dunkley2006,  where = "topleft")
+
+## Adding a legend outside a plot
+par(mfrow = c(1, 2))
+plot2D(dunkley2006)
+addLegend(dunkley2006, where = "other")
+
+## Plotting information from the fData slot
+fvarLabels(dunkley2006)
+plot2D(dunkley2006, fcol = "assigned")
+addLegend(dunkley2006,  where = "topleft", ncol = 2, cex = .5)
 
 ## plotting in 3 dimenstions
 plot3D(dunkley2006)
@@ -246,5 +298,5 @@ plot3D(dunkley2006, dims = c(2, 4, 6))
     to visualise TAGM models on PCA plots with ellipses.
 }
 \author{
-Laurent Gatto <lg390@cam.ac.uk>
+Laurent Gatto, Lisa Breckels
 }

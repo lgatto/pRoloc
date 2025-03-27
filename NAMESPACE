@@ -82,6 +82,7 @@ importFrom(nnet, nnet)
 importFrom(randomForest, randomForest)
 importFrom(gtools, permutations)
 importFrom(plyr, colwise, catcolwise, ddply)
+importFrom(colorspace, lighten, darken)
 
 exportClasses(GenRegRes,
               ThetaRegRes,
@@ -122,12 +123,12 @@ export(## MSnSet manipulation
     addMarkers,
     pRolocmarkers,
     empPvalues,
-    getStockcol, getStockpch,
-    setStockcol, setStockpch,
+    getStockcol, getStockpch, getStockbg,
+    setStockcol, setStockpch, setStockbg,
     getLisacol, setLisacol,
     getOldcol, setOldcol,
-    getUnknowncol, getUnknownpch,
-    setUnknowncol, setUnknownpch,
+    getUnknowncol, getUnknownpch, getUnknownbg,
+    setUnknowncol, setUnknownpch, setUnknownbg,
     zerosInBinMSnSet,
     filterBinMSnSet,
     filterZeroCols, filterZeroRows,

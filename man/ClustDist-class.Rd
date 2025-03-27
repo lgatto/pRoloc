@@ -30,8 +30,6 @@
       the list of distance matrices. }
     \item{\code{term}:}{Object of class \code{"character"} describing
       GO term name.}
-    \item{\code{id}:}{Object of class \code{"character"} describing
-      the GO term ID.}
     \item{\code{nrow}:}{Object of class \code{"numeric"} showing
       the number of instances in the set}
     \item{\code{clustsz}:}{Object of class \code{"list"} describing
@@ -60,21 +58,21 @@
 \examples{
   showClass("ClustDist")
   
-  library('pRolocdata')
+  library(pRolocdata)
   data(dunkley2006)
-  par <- setAnnotationParams(inputs =
-                    c("Arabidopsis thaliana genes",
-                      "Gene stable ID"))
-                    
-  ## add protein set/annotation information                  
-  xx <- addGoAnnotations(dunkley2006, par)
+
+  ## Convert annotation data e.g. markers, to a matrix e.g. MM
+  xx <- mrkVecToMat(dunkley2006, vfcol = "markers", mfcol = "MM")
   
+  ## get distances for protein sets 
+  dd <- clustDist(xx, fcol = "MM", k = 1:3)
+
   ## filter
-  xx <- filterMinMarkers(xx, n = 50)
-  xx <- filterMaxMarkers(xx, p = .25)
+  xx <- filterMinMarkers(xx, n = 50, fcol = "MM")
+  xx <- filterMaxMarkers(xx, p = .25, fcol = "MM")
   
   ## get distances for protein sets
-  dd <- clustDist(xx)
+  dd <- clustDist(xx, fcol = "MM")
   
   ## plot clusters for first 'ClustDist' object 
   ## in the 'ClustDistList'

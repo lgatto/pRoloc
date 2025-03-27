@@ -1,13 +1,13 @@
 Package: pRoloc
 Type: Package
 Title: A unifying bioinformatics framework for spatial proteomics
-Version: 1.47.3
+Version: 1.47.4
 Authors@R: c(person(given = "Laurent", family = "Gatto",
                     email = "laurent.gatto@uclouvain.be",
                     role = "aut"),
              person(given = "Lisa", family ="Breckels",
                     email = "lms79@cam.ac.uk",
-                    role = c("cre", "aut")),
+                    role = c("aut", "cre")),
              person(given = "Thomas", family ="Burger",
                     email = "Thomas.BURGER@cea.fr",
                     role = "ctb"),
@@ -20,9 +20,6 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
              person(given = "Oliver", family ="Crook",
                     email = "oliver.crook@stats.ox.ac.uk",
                     role = "aut"))
-Author: Laurent Gatto, Oliver Crook and Lisa M. Breckels with
-    contributions from Thomas Burger and Samuel Wieczorek
-Maintainer: Lisa Breckels <lms79@cam.ac.uk>
 Description: The pRoloc package implements machine learning and
              visualisation methods for the analysis and interogation
              of quantitiative mass spectrometry data to reliably infer
@@ -66,7 +63,8 @@ Imports:
     biomaRt,
     utils,
     grDevices,
-    graphics
+    graphics,
+    colorspace
 Suggests:
     testthat,
     rmarkdown,
@@ -85,7 +83,8 @@ Suggests:
     Rtsne (>= 0.13),
     nipals,
     reshape,
-    magick
+    magick,
+    umap
 LinkingTo: Rcpp, RcppArmadillo
 License: GPL-2
 VignetteBuilder: knitr

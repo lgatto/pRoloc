@@ -28,9 +28,10 @@ getOldcol <- function() get("oldcol", envir = .pRolocEnv)
 
 ##' @rdname getStockcol
 setOldcol <- function()
-    assign("stockcol", oldcol, envir = .pRolocEnv)
+  assign("stockcol", oldcol, envir = .pRolocEnv)
 
-stockpch <- c(19, 1, 15, 0, 17, 2, 18, 5, 7, 9, 13, 3:4,  8)
+stockpch <- c(21:25, 19, 1, 15, 0, 17, 2, 18, 5, 7, 9, 13, 3:4,  8)
+# stockpch <- c(19, 1, 15, 0, 17, 2, 18, 5, 7, 9, 13, 3:4,  8)
 assign("stockpch", stockpch, envir = .pRolocEnv)
 
 unknowncol <- "#E0E0E0" ## grey88
@@ -38,6 +39,12 @@ assign("unknowncol", unknowncol, envir = .pRolocEnv)
 
 unknownpch <- 21
 assign("unknownpch", unknownpch, envir = .pRolocEnv)
+
+stockbg <- lighten(stockcol, amount = .2)
+assign("stockbg", stockbg, envir = .pRolocEnv)
+
+unknownbg <- lighten("#E0E0E0", amount = .4)
+assign("unknownbg", unknownbg, envir = .pRolocEnv)
 
 ##' These functions allow to get/set the colours and point character
 ##' that are used when plotting organelle clusters and unknown
@@ -56,19 +63,25 @@ assign("unknownpch", unknownpch, envir = .pRolocEnv)
 ##' @examples
 ##' ## defaults for clusters
 ##' getStockcol()
+##' getStockbg()
 ##' getStockpch()
 ##' ## unknown features
-##' getUnknownpch()
 ##' getUnknowncol()
+##' getUnknownbg()
+##' getUnknownpch()
 ##' ## an example
 ##' library(pRolocdata)
 ##' data(dunkley2006)
 ##' par(mfrow = c(2, 1))
 ##' plot2D(dunkley2006, fcol = "markers", main = 'Default colours')
 ##' setUnknowncol("black")
-##' plot2D(dunkley2006, fcol = "markers", main = 'setUnknowncol("black")')
+##' setUnknownbg("grey")
+##' plot2D(dunkley2006, fcol = "markers", 
+##'       main = 'setUnknowncol("black") and setUnknownbg("grey")')
 ##' getUnknowncol()
+##' getUnknownbg()
 ##' setUnknowncol(NULL)
+##' setUnknownbg(NULL)
 ##' getUnknowncol()
 ##' getStockcol()
 ##' getOldcol()
@@ -78,13 +91,13 @@ getStockcol <- function() get("stockcol", envir = .pRolocEnv)
 ##' which sets the colours to the default values.
 ##' @rdname getStockcol
 setStockcol <- function(cols) {
-    prevcols <- getStockcol()
-    if (is.null(cols)) {
-        assign("stockcol", stockcol, envir = .pRolocEnv)
-    } else if (cols[1] == "lisacol") {
-        setLisacol()
-    } else assign("stockcol", cols, envir = .pRolocEnv)
-    invisible(prevcols)
+  prevcols <- getStockcol()
+  if (is.null(cols)) {
+    assign("stockcol", stockcol, envir = .pRolocEnv)
+  } else if (cols[1] == "lisacol") {
+    setLisacol()
+  } else assign("stockcol", cols, envir = .pRolocEnv)
+  invisible(prevcols)
 }
 
 ##' @rdname getStockcol
@@ -94,10 +107,10 @@ getStockpch <- function() get("stockpch", envir=.pRolocEnv)
 ##' which sets the point characters to the default values.
 ##' @rdname getStockcol
 setStockpch <- function(pchs) {
-    prevpch <- getStockpch()
-    if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
-    else assign("stockpch", pchs, envir = .pRolocEnv)
-    invisible(prevpch)
+  prevpch <- getStockpch()
+  if (is.null(pchs)) assign("stockpch", stockpch, envir = .pRolocEnv)
+  else assign("stockpch", pchs, envir = .pRolocEnv)
+  invisible(prevpch)
 }
 
 ##' @rdname getStockcol
@@ -109,10 +122,10 @@ getUnknowncol <- function() get("unknowncol", envir=.pRolocEnv)
 ##' the default colour for unknown features.
 ##' @rdname getStockcol
 setUnknowncol <- function(col) {
-    prevcol <- getUnknowncol()
-    if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
-    else assign("unknowncol", col, envir = .pRolocEnv)
-    invisible(prevcol)
+  prevcol <- getUnknowncol()
+  if (is.null(col)) assign("unknowncol", unknowncol, envir = .pRolocEnv)
+  else assign("unknowncol", col, envir = .pRolocEnv)
+  invisible(prevcol)
 }
 
 ##' @rdname getStockcol
@@ -122,10 +135,41 @@ getUnknownpch <- function() get("unknownpch", envir=.pRolocEnv)
 ##' which sets the point character to 21, the default.
 ##' @rdname getStockcol
 setUnknownpch <- function(pch) {
-    prevpch <- getUnknownpch()
-    if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
-    else assign("unknownpch", pch, envir = .pRolocEnv)
-    invisible(prevpch)
+  prevpch <- getUnknownpch()
+  if (is.null(pch)) assign("unknownpch", unknownpch, envir = .pRolocEnv)
+  else assign("unknownpch", pch, envir = .pRolocEnv)
+  invisible(prevpch)
+}
+
+##' @rdname getStockcol
+getStockbg <- function() get("stockbg", envir = .pRolocEnv)
+
+##' @param bg A vector of colour \code{characters} or \code{NULL},
+##' which sets the background (fill) color for the open plot symbols 
+##' given by pch = 21:25. to the default values.
+##' @rdname getStockcol
+setStockbg <- function(bg) {
+  prevcols <- getStockbg()
+  if (is.null(bg)) {
+    assign("stockbg", stockbg, envir = .pRolocEnv)
+  } else if (bg[1] == "lisacol") {
+    setLisacol()
+  } else assign("stockbg", bg, envir = .pRolocEnv)
+  invisible(prevcols)
+}
+
+##' @rdname getStockcol
+getUnknownbg <- function() get("unknownbg", envir=.pRolocEnv)
+
+##' @param bg A colour \code{character} or \code{NULL},
+##' which sets the background (fill) colour for open plot symbols
+##' given by pch = 21:25 to the default colour for unknown features.
+##' @rdname getStockcol
+setUnknownbg <- function(bg) {
+  prevcol <- getUnknownbg()
+  if (is.null(bg)) assign("unknownbg", unknownbg, envir = .pRolocEnv)
+  else assign("unknownbg", bg, envir = .pRolocEnv)
+  invisible(prevcol)
 }
 
 ## -------------------------------

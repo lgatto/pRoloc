@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotting.R
 \name{plotConsProfiles}
 \alias{plotConsProfiles}
-\title{Plot marker consenses profiles.}
+\title{Plot marker consensus profiles.}
 \usage{
 plotConsProfiles(object, order = NULL, plot = TRUE)
 }

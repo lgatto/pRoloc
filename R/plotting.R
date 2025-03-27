@@ -882,7 +882,20 @@ plot2D <- function(object,
 ##'     labelled.
 ##' @param ... Additional parameters passed to \code{\link{legend}}.
 ##' @return Invisibly returns \code{NULL}
-##' @author Laurent Gatto
+##' @author Laurent Gatto, Lisa Breckels
+##' @examples
+##' ## Load an example MSnSet
+##' library("pRolocdata")
+##' data(dunkley2006)
+##' 
+##' ## Adding a legend inside a plot
+##' plot2D(dunkley2006)
+##' addLegend(dunkley2006,  where = "topleft")
+##' 
+##' ## Adding a legend outside a plot
+##' par(mfrow = c(1, 2))
+##' plot2D(dunkley2006)
+##' addLegend(dunkley2006, where = "other")
 addLegend <- function(object,
                       fcol = "markers",
                       where = c("bottomleft", "bottom", "bottomright",
@@ -1153,7 +1166,7 @@ getMarkerCols <- function(object, fcol = "markers", unknown = "unknown") {
 
 ##' The function plots marker consensus profiles obtained from mrkConsProfile
 ##'
-##' @title Plot marker consenses profiles.
+##' @title Plot marker consensus profiles.
 ##' @param object A `matrix` containing marker consensus profiles as output from
 ##'     [mrkConsProfiles()].
 ##' @param order Order for markers (optional).

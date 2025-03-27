@@ -71,6 +71,20 @@ The function has been updated in version 1.3.6 to recycle the
 default colours when more organelle classes are provided. See
 \code{\link{plot2D}} for details.
 }
+\examples{
+## Load an example MSnSet
+library("pRolocdata")
+data(dunkley2006)
+
+## Adding a legend inside a plot
+plot2D(dunkley2006)
+addLegend(dunkley2006,  where = "topleft")
+
+## Adding a legend outside a plot
+par(mfrow = c(1, 2))
+plot2D(dunkley2006)
+addLegend(dunkley2006, where = "other")
+}
 \author{
-Laurent Gatto
+Laurent Gatto, Lisa Breckels
 }

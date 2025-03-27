@@ -101,7 +101,6 @@ contains additional vignettes and reference material:
 * *pRoloc-tutorial*: pRoloc tutorial (this vignette).
 * *pRoloc-ml*: Machine learning techniques available in pRoloc.
 * *pRoloc-transfer-learning*: A transfer learning algorithm for spatial proteomics.
-* *pRoloc-goannotations*: Annotating spatial proteomics data.
 * *pRoloc-bayesian*: Bayesian spatial proteomics with pRoloc.
 
 # Questions and bugs {-}
@@ -164,7 +163,7 @@ technologies to analyse organelle proteomics data.
 
 Among the advantages of R are robust statistical procedures, good
 visualisation capabilities, excellent documentation, reproducible
-research^[The content of this document is compiled (the code is executed and its output, text and figures, is displayed dynamically) to generate the pdf file.],
+research^[The content of this document is compiled (the code is executed and its output, text and figures, is displayed dynamically) to generate the html file.],
 power and flexibility of the R language and environment itself and a
 rich environment for specialised functionality in many domains of
 bioinformatics: tools for many omics technologies, including
@@ -190,18 +189,6 @@ library("pRolocdata")
 `r Biocpkg("MSnbase")` implements the data containers that are used by
 `r Biocpkg("pRoloc")`. `r Biocexptpkg("pRolocdata")` is a data package
 that supplies several published organelle proteomics data sets.
-
-As a final setup step, we set the default colour palette for some of
-our custom plotting functionality to use semi-transparent colours in
-the code chunk below (see *?setStockcol* and *?setStockbg* for details).  
-This facilitates visualisation of overlapping points.
-
-```{r setcols}
-setStockcol(NULL) ## reset first
-setUnknowncol(NULL)
-setStockcol(paste0(getStockcol(), 70))
-setUnknowncol(paste0(getUnknowncol(), 70))
-```
 
 # Data structures {#sec:data}
 
@@ -784,7 +771,7 @@ parameter along the suggested range, including the default value of
 ```{r tsne, eval=FALSE}
 data(dunkley2006)
 perps <- sort(c(30, seq(5, 50, 15)))
-par(mfrow = c(2, 3))
+par(mfrow = c(3, 2))
 plot2D(dunkley2006, main = "PCA")
 sapply(perps,
        function(perp) {
@@ -826,13 +813,13 @@ total number of proteins or peptides in the data and also the number of
 subcellular classes in the data. The default number of training 
 epochs should also been explored. This is the number of iterations to 
 be used in the initial low dimensional embedding. This is set to 200 
-i.e. `n_epochs = 200`. Large values are expected to give more accurate 
-embeddings. See the umap vignette^[<https://cran.r-project.org/web/packages/umap/vignettes/umap.html>] 
+i.e. `n_epochs = 200`. Large values are expected to give a more accurate 
+embedding. See the `umap` vignette^[<https://cran.r-project.org/web/packages/umap/vignettes/umap.html>] 
 for more details.
 
 ```{r umap, eval=FALSE}
 nn <- c(5, 10, 30, 75, 100)
-par(mfrow = c(2, 3))
+par(mfrow = c(3, 2))
 plot2D(dunkley2006, main = "PCA")
 sapply(nn,
        function(nn) {

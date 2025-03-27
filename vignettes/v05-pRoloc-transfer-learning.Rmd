@@ -338,7 +338,7 @@ expected to benefit from another data source, while the latter should
 benefit from additional information.
 
 
-```{r andypca, echo=FALSE, fig.cap = "PCA plot of `andy2011`. The multivariate protein profiles are summarised along the two first principal components. Proteins of unknown localisation are represented by empty grey points. Protein markers, which are well-known residents of specific sub-cellular niches are colour-coded and form clusters on the figure."}
+```{r andypca, fig.width=6, fig.height=6, echo=FALSE, fig.cap = "PCA plot of `andy2011`. The multivariate protein profiles are summarised along the two first principal components. Proteins of unknown localisation are represented by empty grey points. Protein markers, which are well-known residents of specific sub-cellular niches are colour-coded and form clusters on the figure."}
 setStockcol(paste0(getStockcol(), "80"))
 plot2D(andy2011, fcol = "markers.tl")
 setStockcol(NULL)

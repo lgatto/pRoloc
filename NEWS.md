@@ -1,6 +1,10 @@
 # pRoloc 1.47
 
-## Changed in version 1.47.4
+## Changes in version 1.47.5
+
+-  Remove long title in mcmc_plot_probs
+
+## Changes in version 1.47.4
 
 -  Addition of UMAP as a dimensionality reduction method
    in plot2D

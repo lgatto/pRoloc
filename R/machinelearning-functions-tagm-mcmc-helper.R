@@ -262,7 +262,7 @@ mcmc_plot_probs <- function(param, fname, n = 1) {
               axis.title.x = element_blank())
     gg2 <- gg2 +
         ylab("Membership Probability") +
-        ggtitle(paste0("Distribution of Subcellular Membership for Protein ", fname ))
+        ggtitle(paste0("Protein ", fname ))
     gg2 <- gg2 +
         theme(legend.position = "none")
     return(gg2)

@@ -21,3 +21,19 @@ dmvtCpp <- function(X_, mu_, sigma_, df_, log_, ncores_, isChol_) {
     .Call('_pRoloc_dmvtCpp', PACKAGE = 'pRoloc', X_, mu_, sigma_, df_, log_, ncores_, isChol_)
 }
 
+dmvt_log_batch <- function(X, mu, Sigma, df) {
+    .Call('_pRoloc_dmvt_log_batch', PACKAGE = 'pRoloc', X, mu, Sigma, df)
+}
+
+dmvt_log_row_multi <- function(x, MU, SIGMA_list, df) {
+    .Call('_pRoloc_dmvt_log_row_multi', PACKAGE = 'pRoloc', x, MU, SIGMA_list, df)
+}
+
+dmvt_log_batch_consistent <- function(X, mu, Sigma, df) {
+    .Call('_pRoloc_dmvt_log_batch_consistent', PACKAGE = 'pRoloc', X, mu, Sigma, df)
+}
+
+dmvt_log_row_multi_consistent <- function(x, MU, SIGMA_list, df) {
+    .Call('_pRoloc_dmvt_log_row_multi_consistent', PACKAGE = 'pRoloc', x, MU, SIGMA_list, df)
+}
+

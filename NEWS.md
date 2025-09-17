@@ -1,4 +1,9 @@
-# pRoloc 1.47
+# pRoloc 1.49
+
+## changes Version: 1.49.1
+
+-   an optimised version of tagm_mcmc was implemented it should be faster and more 
+    memory efficient
 
 ## Changes in version 1.47.5
 

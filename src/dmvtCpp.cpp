@@ -181,7 +181,80 @@ SEXP dmvtCpp( arma::mat X_,
   return wrap(NA_REAL);
   }
 
+// Consistent with dmvtCpp: A = R^T R (R upper); use L = R^T (lower)
+// log pdf of multivariate t for all rows of X, one (mu,Sigma,df)
+// [[Rcpp::export]]
+arma::vec dmvt_log_batch_consistent(const arma::mat& X,           // n x D
+                                    const arma::rowvec& mu,       // 1 x D
+                                    const arma::mat& Sigma,       // D x D (SPD) -- SCALE matrix
+                                    const double df) {
+  const int n = X.n_rows;
+  const int D = X.n_cols;
+  arma::vec out(n);
+  
+  // 1) Cholesky (upper), with jitter like dmvtCpp should have
+  arma::mat R;
+  bool ok = arma::chol(R, Sigma); // upper, Sigma = R^T R
+  if (!ok) {
+    arma::mat Sj = Sigma + 1e-8 * arma::eye<arma::mat>(D, D);
+    if (!arma::chol(R, Sj))
+      Rcpp::stop("Cholesky failed in dmvt_log_batch_consistent");
+  }
+  
+  // 2) Lower factor L = R^T (so Sigma = L L^T), for forward solve
+  arma::mat L = R.t();
+  const double log_det_half = arma::sum(arma::log(L.diag())); // = sum log diag(R)
+  
+  // 3) Normalization constant (scale parametrization)
+  const double halfD = 0.5 * static_cast<double>(D);
+  const double a     = 0.5 * (df + D);
+  const double c     = std::lgamma(a) - ( std::lgamma(0.5 * df)
+                                            + log_det_half + halfD * std::log(M_PI * df) );
+  
+  // 4) Rowwise forward solve: L * y = (x - mu)
+  for (int i = 0; i < n; ++i) {
+    arma::rowvec z = X.row(i) - mu;     // 1 x D
+    arma::vec y    = arma::solve(arma::trimatl(L), z.t(), arma::solve_opts::fast);
+    const double d2 = arma::dot(y, y);  // Mahalanobis^2
+    out(i) = c - 0.5 * (df + D) * std::log1p(d2 / df);
+  }
+  return out;
+}
 
+// One x (1xD), many components: Σ_j are *scale* matrices
+// Mirrors dmvtCpp math: upper chol -> L = R^T (lower) -> forward solve
+// [[Rcpp::export]]
+arma::vec dmvt_log_row_multi_consistent(const arma::rowvec& x,
+                                        const arma::mat& MU,     // K x D
+                                        const List& SIGMA_list,  // length K, each DxD (scale)
+                                        const arma::vec& df) {
+  const int K = MU.n_rows;
+  const int D = MU.n_cols;
+  arma::vec out(K);
+  
+  for (int j = 0; j < K; ++j) {
+    arma::mat Sigma = as<arma::mat>(SIGMA_list[j]);     // DxD
+    arma::mat R;
+    if (!arma::chol(R, Sigma)) {                        // upper
+      Sigma.diag() += 1e-8;
+      if (!arma::chol(R, Sigma)) stop("Cholesky failed");
+    }
+    arma::mat L = R.t();                                // lower
+    const double log_det_half = arma::sum(arma::log(L.diag()));
+    const double dfj = df[j];
+    const double halfD = 0.5 * D;
+    const double a = 0.5 * (dfj + D);
+    const double c = std::lgamma(a) - ( std::lgamma(0.5 * dfj)
+                                          + log_det_half + halfD * std::log(M_PI * dfj) );
+    
+    arma::rowvec z = x - MU.row(j);
+    arma::vec y = arma::solve(arma::trimatl(L), z.t(), arma::solve_opts::fast);
+    const double d2 = arma::dot(y, y);
+    
+    out[j] = c - 0.5 * (dfj + D) * std::log1p(d2 / dfj);
+  }
+  return out;
+}
 
 
 

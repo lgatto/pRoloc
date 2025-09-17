@@ -166,7 +166,7 @@ rfOptimization <-
   rfOptimisation
 
 rfRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'rfOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'rfOptimisation'.")
   rfOptimisation(...)  
 }
 
@@ -246,6 +246,6 @@ rfClassification <- function(object,
 }
 
 rfPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'rfClassification'.")
+  .Defunct(msg = "This function has been replaced by 'rfClassification'.")
   rfClassification(...)
 }

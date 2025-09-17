@@ -169,7 +169,7 @@ nnetOptimization <-
   nnetOptimisation
 
 nnetRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'nnetOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'nnetOptimisation'.")
   nnetOptimisation(...)  
 }
 
@@ -258,7 +258,7 @@ nnetClassification <- function(object,
 }
 
 nnetPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'nnetClassification'.")
+  .Defunct(msg = "This function has been replaced by 'nnetClassification'.")
   nnetClassification(...)
 }
 

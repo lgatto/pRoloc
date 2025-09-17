@@ -9,9 +9,6 @@
 \alias{setAnnotationParams}
 \alias{getAnnotationParams}
 
-\alias{dunkley2006params}
-\alias{andy2011params}
-
 \title{Class \code{"AnnotationParams"}}
 
 \description{
@@ -104,21 +101,20 @@
 
 \seealso{
 
-  \code{\link{getGOFromFeatures}}, \code{\link{makeGoSet}} and the
-  \code{pRoloc-theta} vignette.
+  The \code{pRoloc-theta} vignette.
 
 }
 
 \examples{
-data(andy2011params)
-andy2011params
-data(dunkley2006params)
-dunkley2006params
+#data(andy2011params)
+#data(dunkley2006params)
+#andy2011params
+#dunkley2006params
 
-try(setAnnotationParams(inputs = c("nomatch1", "nomatch2")))
-setAnnotationParams(inputs = c("Human genes",
-			       "UniProtKB/Swiss-Prot ID"))
-getAnnotationParams()
+#try(setAnnotationParams(inputs = c("nomatch1", "nomatch2")))
+#setAnnotationParams(inputs = c("Human genes",
+#			       "UniProtKB/Swiss-Prot ID"))
+#getAnnotationParams()
 }
 
 \keyword{classes}

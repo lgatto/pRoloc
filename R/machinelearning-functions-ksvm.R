@@ -165,7 +165,7 @@ ksvmOptimization <-
   ksvmOptimisation
 
 ksvmRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'ksvmOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'ksvmOptimisation'.")
   ksvmOptimisation(...)  
 }
   
@@ -244,6 +244,6 @@ ksvmClassification <- function(object,
 }
 
 ksvmPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'ksvmClassification'.")
+  .Defunct(msg = "This function has been replaced by 'ksvmClassification'.")
   ksvmClassification(...)
 }

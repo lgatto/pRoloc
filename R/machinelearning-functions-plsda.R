@@ -161,7 +161,7 @@ plsdaOptimization <-
   plsdaOptimisation
 
 plsdaRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'plsdaOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'plsdaOptimisation'.")
   plsdaOptimisation(...)  
 }
 
@@ -245,6 +245,6 @@ plsdaClassification <- function(object,
 }
 
 plsdaPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'plsdaClassification'.")
+  .Defunct(msg = "This function has been replaced by 'plsdaClassification'.")
   plsdaClassification(...)
 }

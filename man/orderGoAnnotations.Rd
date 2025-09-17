@@ -67,11 +67,7 @@ high density, tight clusters to have the smallest mean
 normalised distance.
 
 This function is a wrapper for running \code{clustDist},
-\code{getNormDist}, see the "Annotating spatial proteomics data"
-vignette for more details.
-}
-\seealso{
-\code{addGoAnnotations} and example therein.
+and \code{getNormDist}.
 }
 \author{
 Lisa M Breckels

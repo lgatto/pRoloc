@@ -156,7 +156,7 @@ knnOptimization <-
   knnOptimisation
 
 knnRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'knnOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'knnOptimisation'.")
   knnOptimisation(...)  
 }
 
@@ -236,6 +236,6 @@ knnClassification <- function(object,
 }
 
 knnPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'knnClassification'.")
+  .Defunct(msg = "This function has been replaced by 'knnClassification'.")
   knnClassification(...)
 }

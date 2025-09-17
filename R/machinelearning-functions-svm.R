@@ -162,7 +162,7 @@ svmOptimization <-
   svmOptimisation
 
 svmRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'svmOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'svmOptimisation'.")
   svmOptimisation(...)  
 }
 
@@ -248,7 +248,7 @@ svmClassification <- function(object,
 }
 
 svmPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'svmClassification'.")
+  .Defunct(msg = "This function has been replaced by 'svmClassification'.")
   svmClassification(...)
 }
 

@@ -154,7 +154,7 @@ nbOptimization <-
   nbOptimisation
 
 nbRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'nbOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'nbOptimisation'.")
   nbOptimisation(...)  
 }
 
@@ -234,7 +234,7 @@ nbClassification <- function(object,
 }
 
 nbPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'nbClassification'.")
+  .Defunct(msg = "This function has been replaced by 'nbClassification'.")
   nbClassification(...)
 }
 

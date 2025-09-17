@@ -1,3 +1,18 @@
+# pRoloc 1.49
+
+## Changes in version 1.49.1
+
+- Add citation for new f1000 subcellular workflow
+- Make defunct setAnnotationParam, getAnnotationParams,
+  showGOEvidenceCodes, getGOEvidenceCodes, addGoAnnotations,
+  orderGoAnnotations and associated helper functions 
+
+
+## Changes in version 1.49.0
+
+- New Bioc release
+
+
 # pRoloc 1.47
 
 ## Changes in version 1.47.5

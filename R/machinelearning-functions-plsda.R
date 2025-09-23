@@ -26,6 +26,22 @@
 ##' @seealso \code{\link{plsdaClassification}} and example therein.
 ##' @aliases plsdaRegularisation plsdaOptimization
 ##' @author Laurent Gatto
+##' \donttest{
+##' ## not running this one for time considerations
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and iterations 
+##' params <- plsdaOptimisation(dunkley2006, ncomp = c(3, 10),  times = 2)
+##' params
+##' plot(params)
+##' f1Count(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- plsdaClassification(dunkley2006, params)
+##' getPredictions(res, fcol = "plsda")
+##' getPredictions(res, fcol = "plsda", t = 0.9)
+##' plot2D(res, fcol = "plsda")
+##' }
 plsdaOptimisation <- function(object,
                               fcol = "markers",
                               ncomp = 2:6,
@@ -161,7 +177,7 @@ plsdaOptimization <-
   plsdaOptimisation
 
 plsdaRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'plsdaOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'plsdaOptimisation'.")
   plsdaOptimisation(...)  
 }
 
@@ -245,6 +261,6 @@ plsdaClassification <- function(object,
 }
 
 plsdaPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'plsdaClassification'.")
+  .Defunct(msg = "This function has been replaced by 'plsdaClassification'.")
   plsdaClassification(...)
 }

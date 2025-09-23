@@ -57,6 +57,21 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and iterations 
+params <- nbOptimisation(dunkley2006, laplace = c(0, 5),  times = 3)
+params
+plot(params)
+f1Count(params)
+levelPlot(params)
+getParams(params)
+res <- nbClassification(dunkley2006, params)
+getPredictions(res, fcol = "naiveBayes")
+getPredictions(res, fcol = "naiveBayes", t = 1)
+plot2D(res, fcol = "naiveBayes")
+}
 \seealso{
 \code{\link{nbClassification}} and example therein.
 }

@@ -1,9 +1,24 @@
 # pRoloc 1.49
 
-## changes Version: 1.49.1
+## changes Version: 1.49.2
 
--   an optimised version of tagm_mcmc was implemented it should be faster and more 
+-   An optimised version of tagm_mcmc was implemented. It should be faster and more 
     memory efficient
+
+## Changes in version 1.49.1
+
+- Add citation for new f1000 subcellular workflow
+- Make defunct setAnnotationParam, getAnnotationParams,
+  showGOEvidenceCodes, getGOEvidenceCodes, addGoAnnotations,
+  orderGoAnnotations and associated helper functions 
+
+
+## Changes in version 1.49.0
+
+- New Bioc release
+
+
+# pRoloc 1.47
 
 ## Changes in version 1.47.5
 

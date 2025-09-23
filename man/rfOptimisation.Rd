@@ -57,6 +57,21 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and iterations 
+params <- rfOptimisation(dunkley2006, mtry = c(2, 5, 10),  times = 3)
+params
+plot(params)
+f1Count(params)
+levelPlot(params)
+getParams(params)
+res <- rfClassification(dunkley2006, params)
+getPredictions(res, fcol = "rf")
+getPredictions(res, fcol = "rf", t = 0.75)
+plot2D(res, fcol = "rf")
+}
 \seealso{
 \code{\link{rfClassification}} and example therein.
 }

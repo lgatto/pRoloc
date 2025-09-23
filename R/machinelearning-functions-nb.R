@@ -25,6 +25,20 @@
 ##' @seealso \code{\link{nbClassification}} and example therein.
 ##' @aliases nbRegularisation nbOptimization
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and iterations 
+##' params <- nbOptimisation(dunkley2006, laplace = c(0, 5),  times = 3)
+##' params
+##' plot(params)
+##' f1Count(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- nbClassification(dunkley2006, params)
+##' getPredictions(res, fcol = "naiveBayes")
+##' getPredictions(res, fcol = "naiveBayes", t = 1)
+##' plot2D(res, fcol = "naiveBayes")
 nbOptimisation <- function(object,
                            fcol = "markers",
                            laplace = seq(0, 5, 0.5), 
@@ -154,7 +168,7 @@ nbOptimization <-
   nbOptimisation
 
 nbRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'nbOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'nbOptimisation'.")
   nbOptimisation(...)  
 }
 
@@ -234,7 +248,7 @@ nbClassification <- function(object,
 }
 
 nbPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'nbClassification'.")
+  .Defunct(msg = "This function has been replaced by 'nbClassification'.")
   nbClassification(...)
 }
 

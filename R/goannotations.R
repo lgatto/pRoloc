@@ -1,64 +1,24 @@
-##' Adds GO annotations to the feature data
-##' 
-##' @title Add GO annotations
-##' @param object An instance of class \code{MSnSet}.
-##' @param params An instance of class \code{AnnotationParams}. 
-##' If missing, \code{\link{getAnnotationParams}} will be used.
-##' @param evidence GO evidence filtering.
-##' @param useID Logical. Should GO term names or identifiers be used?
-##' If \code{TRUE}, identifiers will be used. If \code{FALSE} GO term 
-##' names will be used.
-##' @param fcol Character. Name of the matrix of annotations to be added to the 
-##' \code{fData} default is \code{GOAnnotations}
-##' @param ... Other arguments passed to \code{makeGoSet}
-##' @return An updated \code{MSnSet} with new feature data column
-##' called \code{GOAnnotations} containing a matrix of GO
-##' annotations
-##' @author Lisa M Breckels
-##' @examples
-##' library(pRolocdata)
-##' data(dunkley2006)
-##' 
-##' # This function is deprecated
-##' # par <- setAnnotationParams(inputs =
-##' #                    c("Arabidopsis thaliana genes",
-##' #                    "Gene stable ID"))
-##' ## add protein sets/annotation information
-##' # xx <- addGoAnnotations(dunkley2006, par)
-##' # dim(fData(xx)$GOAnnotations)
-##' 
-##' ## filter sets
-##' # xx <- filterMinMarkers(xx, n = 50)
-##' # dim(fData(xx)$GOAnnotations)
-##' # xx <- filterMaxMarkers(xx, p = .25)
-##' # dim(fData(xx)$GOAnnotations)
-##' 
-##' ## Subset for specific protein sets
-##' # sub <- subsetMarkers(xx, keep = c("vacuole"))
-##' 
-##' ## Order protein sets
-##' # res <- orderGoAnnotations(xx, k = 1:3, p = 1/3, verbose = FALSE)
-##' # if (interactive()) {
-##' # pRolocVis(res, fcol = "GOAnnotations")
-##' # }
+##' @noRd
+##'
+##' @export
 addGoAnnotations <- function(object, params, evidence, 
                          useID = FALSE, fcol = "GOAnnotations",
                          ...) {
-  .Deprecated()
-  if (missing(evidence))
-    evidence = NULL
-  if (!inherits(params, "AnnotationParams"))
-    stop("params must be of class AnnotationParams")
-  if (any(fvarLabels(object) == fcol))
-    stop(paste("colname", fcol, "already exists in fData"))
-  goSet <- makeGoSet(object, params, evidence = evidence, ...)
-  goSet <- filterZeroCols(goSet)
-  fData(object)[, fcol] <- exprs(goSet)
-  id <- colnames(fData(object)[, fcol])
-  orgnames <- goIdToTerm(id, names = FALSE, keepNA = FALSE)
-  colnames(fData(object)[, fcol]) <- orgnames
-  #object <- filterGOAnnotations(object) ## Remove any obselete terms
-  return (object)
+  .Defunct()
+  # if (missing(evidence))
+  #   evidence = NULL
+  # if (!inherits(params, "AnnotationParams"))
+  #   stop("params must be of class AnnotationParams")
+  # if (any(fvarLabels(object) == fcol))
+  #   stop(paste("colname", fcol, "already exists in fData"))
+  # goSet <- makeGoSet(object, params, evidence = evidence, ...)
+  # goSet <- filterZeroCols(goSet)
+  # fData(object)[, fcol] <- exprs(goSet)
+  # id <- colnames(fData(object)[, fcol])
+  # orgnames <- goIdToTerm(id, names = FALSE, keepNA = FALSE)
+  # colnames(fData(object)[, fcol]) <- orgnames
+  # #object <- filterGOAnnotations(object) ## Remove any obselete terms
+  # return (object)
 }
 
 
@@ -225,8 +185,7 @@ subsetMarkers <- function(object,
 ##' normalised distance.
 ##' 
 ##' This function is a wrapper for running \code{clustDist},
-##' \code{getNormDist}, see the "Annotating spatial proteomics data"
-##' vignette for more details.
+##' and \code{getNormDist}.
 ##' 
 ##' @title Orders annotation information
 ##' @param object An instance of class \code{MSnSet}.
@@ -241,7 +200,6 @@ subsetMarkers <- function(object,
 ##' @return An updated \code{MSnSet} containing the newly ordered 
 ##' \code{fcol} matrix.
 ##' @author Lisa M Breckels
-##' @seealso \code{addGoAnnotations} and example therein.
 orderGoAnnotations <- function(object,
                            fcol = "GOAnnotations",
                            k = 1:5,
@@ -249,7 +207,6 @@ orderGoAnnotations <- function(object,
                            p = 1/3,
                            verbose = TRUE,
                            seed) {
-  .Deprecated()
   ## set seed for reproducibility for kmeans
   if (missing(seed)) {
     seed <- sample(.Machine$integer.max, 1)

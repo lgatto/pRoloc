@@ -7,13 +7,13 @@ setGeneric("getParams", function(object, ...) standardGeneric("getParams"))
 
 setGeneric("getRegularisedParams",
            function(object) {
-               .Deprecated("getParams", "pRoloc")
+               .Defunct("getParams", "pRoloc")
                getParams(object)
            })
 
 setGeneric("getRegularizedParams",
            function(object) {
-               .Deprecated("getParams", "pRoloc")
+               .Defunct("getParams", "pRoloc")
                getParams(object)
            })
 

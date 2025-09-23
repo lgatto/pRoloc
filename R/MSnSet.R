@@ -205,7 +205,7 @@ minClassScore <- function(object,
                           fcol,
                           scol,
                           t = 0) {
-    .Deprecated("getPredictions")
+    .Defunct("getPredictions")
     stopifnot(!missing(fcol))
     lv <- c(levels(fData(object)[, fcol]),
             "unknown")

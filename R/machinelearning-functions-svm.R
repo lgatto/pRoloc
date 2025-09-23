@@ -27,6 +27,20 @@
 ##' @seealso \code{\link{svmClassification}} and example therein.
 ##' @aliases svmRegularisation svmOptimization
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and iterations 
+##' params <- svmOptimisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
+##' params
+##' plot(params)
+##' f1Count(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- svmClassification(dunkley2006, params)
+##' getPredictions(res, fcol = "svm")
+##' getPredictions(res, fcol = "svm", t = 0.75)
+##' plot2D(res, fcol = "svm")
 svmOptimisation <- function(object,
                             fcol = "markers",
                             cost = 2^(-4:4), 
@@ -162,7 +176,7 @@ svmOptimization <-
   svmOptimisation
 
 svmRegularisation <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'svmOptimisation'.")
+  .Defunct(msg = "This function has been replaced by 'svmOptimisation'.")
   svmOptimisation(...)  
 }
 
@@ -248,7 +262,7 @@ svmClassification <- function(object,
 }
 
 svmPrediction <- function(...) {
-  .Deprecated(msg = "This function has been replaced by 'svmClassification'.")
+  .Defunct(msg = "This function has been replaced by 'svmClassification'.")
   svmClassification(...)
 }
 

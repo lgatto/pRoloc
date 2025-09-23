@@ -19,6 +19,33 @@ An numeric of normalised distances, one per protein set in the
 This function computes and outputs normalised distances from a
 \code{"\linkS4class{ClustDistList}"} object.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## Convert annotation data e.g. markers, to a matrix e.g. MM
+xx <- mrkVecToMat(dunkley2006, vfcol = "markers", mfcol = "MM")
+## get distances for protein sets 
+dd <- clustDist(xx, fcol = "MM", k = 1:3)
+## plot clusters for first 'ClustDist' object 
+## in the 'ClustDistList'
+plot(dd[[1]], xx)
+## plot normalised distances for all protein sets 
+plot(dd)
+## plot mean distances for all protein sets 
+plot(dd, method = "mean")
+## plot raw distances for all protein sets 
+plot(dd, method = "raw")
+## Extract normalised distances
+## Normalisation factor default is n^1/3
+minDist <- getNormDist(dd)
+## Get new order according to lowest distance
+o <- order(minDist)
+## Re-order annotations 
+fData(xx)$MM <- fData(xx)$MM[, o]
+if (interactive()) {
+pRolocVis(xx, fcol = "MM")
+}
+}
 \seealso{
 \code{"\linkS4class{ClustDistList}"}, \code{"\linkS4class{ClustDist}"},
 and examples in \code{clustDist}.

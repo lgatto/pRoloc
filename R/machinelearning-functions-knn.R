@@ -26,6 +26,20 @@
 ##' @seealso \code{\link{knnClassification}} and example therein.
 ##' @aliases knnOptimization knnRegularisation
 ##' @author Laurent Gatto
+##' @examples
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' ## reducing parameter search space and iterations 
+##' params <- knnOptimisation(dunkley2006, k = c(3, 10), times = 3)
+##' params
+##' plot(params)
+##' f1Count(params)
+##' levelPlot(params)
+##' getParams(params)
+##' res <- knnClassification(dunkley2006, params)
+##' getPredictions(res, fcol = "knn")
+##' getPredictions(res, fcol = "knn", t = 0.75)
+##' plot2D(res, fcol = "knn")
 knnOptimisation <- function(object,
                             fcol = "markers",
                             k = seq(3, 15, 2),

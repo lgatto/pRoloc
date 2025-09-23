@@ -45,10 +45,11 @@ Classification using a variation of the KNN implementation
 of Wu and Dietterich's transfer learning schema
 }
 \examples{
-\donttest{
+## Load example primary and auxiliary data from pRolocdata
 library(pRolocdata)
 data(andy2011)
 data(andy2011goCC)
+
 ## reducing calculation time of k by pre-running knnOptimisation
 x <- c(andy2011, andy2011goCC)
 k <- lapply(x, function(z)
@@ -56,20 +57,25 @@ k <- lapply(x, function(z)
                             fcol = "markers.orig",
                             verbose = FALSE))
 k <- sapply(k, function(z) getParams(z))
-k
-## reducing parameter search with theta = 1,
-## weights of only 1 or 0 will be considered
+
+## Use by = 1 in optimisation i.e. give full weight to the 
+## primary (indicated by 1) or full weight to auxiliary 
+## (indicated by 0) reducing parameter search for example
+## in this documentation only. See the transfer learning
+## vignette for examples and details. 
 opt <- knntlOptimisation(andy2011, andy2011goCC,
                          fcol = "markers.orig",
                          times = 2,
-                         by = 1, k = k)
-opt
+                         by = 1, 
+                         k = k)
 th <- getParams(opt)
 plot(opt)
+
+## Now perform classification after finding the best weights
 res <- knntlClassification(andy2011, andy2011goCC,
-                           fcol = "markers.orig", th, k)
-res
-}
+                           fcol = "markers.orig", 
+                           th, 
+                           k)
 }
 \seealso{
 \code{\link{knntlOptimisation}}

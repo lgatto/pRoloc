@@ -61,6 +61,21 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
+\examples{
+library(pRolocdata)
+data(dunkley2006)
+## reducing parameter search space and iterations 
+params <- svmOptimisation(dunkley2006, cost = 2^seq(-2,2,2), sigma = 10^seq(-1, 1, 1),  times = 3)
+params
+plot(params)
+f1Count(params)
+levelPlot(params)
+getParams(params)
+res <- svmClassification(dunkley2006, params)
+getPredictions(res, fcol = "svm")
+getPredictions(res, fcol = "svm", t = 0.75)
+plot2D(res, fcol = "svm")
+}
 \seealso{
 \code{\link{svmClassification}} and example therein.
 }

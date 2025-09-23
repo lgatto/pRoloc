@@ -126,6 +126,20 @@ and log-posterior of the model.}
 \item{\code{datasize}}{A \code{list()} with details about size of data}
 }}
 
+\examples{
+## Load example data
+library(pRolocdata)
+data(dunkley2006)
+
+## Generate MAP parameters (use numIter = 5 for example only) 
+par <- tagmMapTrain(dunkley2006, numIter = 5)
+
+## Perform classification
+dunkley2006 <- tagmMapPredict(dunkley2006,
+                              params = par, 
+                              probJoint = TRUE, 
+                              probOutlier = TRUE)
+}
 \references{
 \emph{A Bayesian Mixture Modelling Approach For Spatial
 Proteomics} Oliver M Crook, Claire M Mulvey, Paul D. W. Kirk,

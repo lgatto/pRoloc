@@ -45,6 +45,19 @@
 ##'     TAGM models on PCA plots with ellipses. The [tagmMapTrain()]
 ##'     function to use the TAGM MAP method.
 ##' @rdname tagm-map
+##' @examples
+##' ## Load example data
+##' library(pRolocdata)
+##' data(dunkley2006)
+##' 
+##' ## Generate MAP parameters (use numIter = 5 for example only) 
+##' par <- tagmMapTrain(dunkley2006, numIter = 5)
+##' 
+##' ## Perform classification
+##' dunkley2006 <- tagmMapPredict(dunkley2006,
+##'                               params = par, 
+##'                               probJoint = TRUE, 
+##'                               probOutlier = TRUE)
 tagmMapTrain <- function(object,
                          fcol = "markers",
                          method = "MAP",

@@ -47,8 +47,9 @@
 ##'     parameter instance: `SnowParam`, `MulticoreParam`,
 ##'     `DoparParam`, ... see the `BiocParallel` package for
 ##'     details.
-##' @param V2 To use updated and optimised version of the model code. Default is
-##'         False    
+##' @param version A new version that is faster and more memory efficient is 
+##' implemented as default by setting version == 2. Legacy version is indicated 
+##' with a 1.    
 ##' @return `tagmMcmcTrain` returns an instance of class
 ##'     `MCMCParams`.
 ##' @md
@@ -74,7 +75,7 @@ tagmMcmcTrain <- function(object,
                           v = 10,
                           numChains = 4L,
                           BPPARAM = BiocParallel::bpparam(),
-                          V2 = FALSE) {
+                          version = 2) {
 
     ## get expression marker data
     markersubset <- markerMSnSet(object, fcol = fcol)
@@ -109,7 +110,7 @@ tagmMcmcTrain <- function(object,
 
     ## chains run in parallel, repeating number of iterations
     
-    if (isFALSE(V2)){
+    if (version == 1){
       
     .res <- bplapply(rep(numIter, numChains),
                      FUN = tagmMcmcChain,
@@ -126,7 +127,7 @@ tagmMcmcTrain <- function(object,
                      u = u,
                      v = v,
                      BPPARAM = BPPARAM)
-    } else{
+    } else if(version == 2){
       
     .res <- bplapply(rep(numIter, numChains),
                      FUN = tagmMcmcChainPlus,

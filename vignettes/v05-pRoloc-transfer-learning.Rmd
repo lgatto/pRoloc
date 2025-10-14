@@ -92,16 +92,16 @@ library("pRoloc")
 
 # Preparing the data
 
-To run the family of transfer learning algorithms in `pRoloc` 
+To run the family of transfer learning algorithms in `pRoloc`
 two datasets are required;
 
-(1) A primary dataset, constructed as an `MSnSet`,  
+(1) A primary dataset, constructed as an `MSnSet`,
 (2) an auxiliary dataset, constructed as an `MSnSet`, and
 
 also a set of common protein markers.
 
-Example/test datasets are readily available in the 
-`r Biocexptpkg("pRolocdata")` package. We examine the structure of 
+Example/test datasets are readily available in the
+`r Biocexptpkg("pRolocdata")` package. We examine the structure of
 these datasets in the subsequent sections.
 
 # Primary data {#sec:prim}
@@ -160,8 +160,8 @@ $i$.
 
 GO terms can be retrieved from an appropriate repository, for example, using the `r
 Biocpkg("biomaRt")` package. The specific Biomart repository and query will
-depend on the species under study and the type of features. See, the 
-[vignettes/documentation](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) 
+depend on the species under study and the type of features. See, the
+[vignettes/documentation](https://bioconductor.org/packages/release/bioc/html/biomaRt.html)
 section of the R Bioconductor `biomaRt` package.
 
 The `r Biocexptpkg("pRolocdata")` package contains five example Gene Ontology
@@ -206,7 +206,7 @@ annotations and the `r Biocannopkg("GO.db")` package to use specific versioned
 The Human Protein Atlas (HPA) provides another source of auxiliary data for the
 prediction of a proteins location from correlation data. The datasets
 `andy2011hpa` was constructed (with HPA, version 13, released on 11/06/2014) and
-we again load this directly from the `pRolocdata` package. 
+we again load this directly from the `pRolocdata` package.
 
 ```{r}
 data("andy2011hpa")
@@ -306,7 +306,8 @@ The SVM-TL method descibed in [@Breckels:2016] has not yet been
 incorporated in the `r Biocpkg("pRoloc")` package. The code
 implementing the method is currently available in its own repository:
 
-https://github.com/ComputationalProteomicsUnit/lpsvm-tl-code
+https://codeberg.org/lgatto/lpsvm-tl-code
+
 
 # Nearest neighbour transfer learning {#sec:knntl}
 

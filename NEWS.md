@@ -1,22 +1,21 @@
 # pRoloc 1.49
 
-## changes Version: 1.49.2
+## Changes in version 1.49.2
 
--   An optimised version of tagm_mcmc was implemented. It should be faster and more 
-    memory efficient
+- Change link to codeberg/lpsvm-tl-code
+- An optimised version of tagm_mcmc was implemented. It should 
+  be faster and more memory efficient
 
 ## Changes in version 1.49.1
 
 - Add citation for new f1000 subcellular workflow
 - Make defunct setAnnotationParam, getAnnotationParams,
   showGOEvidenceCodes, getGOEvidenceCodes, addGoAnnotations,
-  orderGoAnnotations and associated helper functions 
-
+  orderGoAnnotations and associated helper functions
 
 ## Changes in version 1.49.0
 
 - New Bioc release
-
 
 # pRoloc 1.47
 
@@ -44,19 +43,19 @@
    current window.
 -  The default of `grid` in `plot2D` has been changed to `FALSE`.
 -  All plotting arguments now have an argument unknown for the
-   specification of how unlabelled points are defined. Default 
-   is still "unknown". 
+   specification of how unlabelled points are defined. Default
+   is still "unknown".
 
 ## Changes in version 1.47.3
 
-- Deprecate setAnnotationParam, getAnnotationParams, 
+- Deprecate setAnnotationParam, getAnnotationParams,
   showGOEvidenceCodes, getGOEvidenceCodes, addGoAnnotations,
   orderGoAnnotations and associated helper functions
 - Remove vignette v04 for adding GO annotations
-- Update getting started vignette v01 with clustDist 
+- Update getting started vignette v01 with clustDist
   (previously in v04)
-- Update the transfer learning vignettes to reflect the 
-  deprecation of GO functions  
+- Update the transfer learning vignettes to reflect the
+  deprecation of GO functions
 
 ## Changes in version 1.47.2
 

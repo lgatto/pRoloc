@@ -47,6 +47,9 @@
 ##'     parameter instance: `SnowParam`, `MulticoreParam`,
 ##'     `DoparParam`, ... see the `BiocParallel` package for
 ##'     details.
+##' @param version A new version that is faster and more memory efficient is 
+##' implemented as default by setting version == 2. Legacy version is indicated 
+##' with a 1.    
 ##' @return `tagmMcmcTrain` returns an instance of class
 ##'     `MCMCParams`.
 ##' @md
@@ -71,7 +74,8 @@ tagmMcmcTrain <- function(object,
                           u = 2,
                           v = 10,
                           numChains = 4L,
-                          BPPARAM = BiocParallel::bpparam()) {
+                          BPPARAM = BiocParallel::bpparam(),
+                          version = 2) {
 
     ## get expression marker data
     markersubset <- markerMSnSet(object, fcol = fcol)
@@ -105,6 +109,9 @@ tagmMcmcTrain <- function(object,
                     beta0 = beta0)
 
     ## chains run in parallel, repeating number of iterations
+    
+    if (version == 1){
+      
     .res <- bplapply(rep(numIter, numChains),
                      FUN = tagmMcmcChain,
                      object = object,
@@ -120,6 +127,25 @@ tagmMcmcTrain <- function(object,
                      u = u,
                      v = v,
                      BPPARAM = BPPARAM)
+    } else if(version == 2){
+      
+    .res <- bplapply(rep(numIter, numChains),
+                     FUN = tagmMcmcChainPlus,
+                     object = object,
+                     fcol = fcol,
+                     method = "MCMC",
+                     burnin = burnin,
+                     thin = thin,
+                     mu0 = mu0,
+                     lambda0 = lambda0,
+                     nu0 = nu0,
+                     S0 = S0,
+                     beta0 = beta0,
+                     u = u,
+                     v = v,
+                     BPPARAM = BPPARAM)  
+    
+    }
 
     ## Construct class MCMCChains
     .ans <- .MCMCChains(chains = .res)
@@ -607,3 +633,319 @@ tagmMcmcChain <- function(object,
 
     return(.MCMCChain)
 }
+
+## ---------- helpers ----------
+softmax_logvec <- function(logw) {
+  m <- max(logw)
+  z <- exp(logw - m)
+  z / sum(z)
+}
+chol_safe <- function(S, eps = 1e-8, max_tries = 5L) {
+  k <- 0L
+  while (k <= max_tries) {
+    out <- try(chol(S, pivot = FALSE), silent = TRUE)
+    if (!inherits(out, "try-error")) return(out)
+    S <- S + diag(eps * (10^k), nrow(S))
+    k <- k + 1L
+  }
+  chol(S, pivot = FALSE)
+}
+dmvt_log <- function(xrow, mu, Sigma, df) {
+  R <- chol_safe(Sigma)
+  dmvtCpp(xrow, mu_ = mu, sigma_ = R, df_ = df, log_ = TRUE,
+          ncores_ = 1L, isChol_ = TRUE)
+}
+##' @param object An [`MSnbase::MSnSet`] containing the spatial
+##'     proteomics data to be passed to `tagmMcmcTrain` and
+##'     `tagmPredict`.
+##' @param fcol The feature meta-data containing marker definitions.
+##'     Default is `markers`.
+##' @param method A `charachter()` describing the inference method for
+##'     the TAGM algorithm. Default is `"MCMC"`.
+##' @param numIter The number of iterations of the MCMC
+##'     algorithm. Default is 1000.
+##' @param burnin The number of samples to be discarded from the
+##'     begining of the chain. Default is 100.
+##' @param thin The thinning frequency to be applied to the MCMC
+##'     chain.  Default is 5.
+##' @param mu0 The prior mean. Default is `colMeans` of the expression
+##'     data.
+##' @param lambda0 The prior shrinkage. Default is 0.01.
+##' @param nu0 The prior degreed of freedom. Default is
+##'     `ncol(exprs(object)) + 2`
+##' @param S0 The prior inverse-wishart scale matrix. Empirical prior
+##'     used by default.
+##' @param beta0 The prior Dirichlet distribution
+##'     concentration. Default is 1 for each class.
+##' @param u The prior shape parameter for Beta(u, v). Default is 2
+##' @param v The prior shape parameter for Beta(u, v). Default is 10.
+##' @return `tagmMcmcChain` returns an instance of class
+##'     [MCMCChain()].
+##' @md
+##' @noRd
+tagmMcmcChainPlus <- function(object,
+                              fcol    = "markers",
+                              method  = "MCMC",
+                              numIter = 1000L,
+                              burnin  = 100L,
+                              thin    = 5L,
+                              mu0     = NULL,
+                              lambda0 = 0.01,
+                              nu0     = NULL,
+                              S0      = NULL,
+                              beta0   = NULL,
+                              u       = 2,
+                              v       = 10) {
+  
+  if (burnin >= numIter)
+    stop("Burnin is >= total iterations; no samples would be retained.")
+  
+  ## indices to keep
+  retained <- seq.int(burnin + 1L, numIter, by = thin)
+  keep_mask  <- logical(numIter); keep_mask[retained] <- TRUE
+  n_keep     <- length(retained)
+  
+  ## pull once
+  EXPR <- exprs(object) # quant data
+  FD   <- fData(object) # fcol
+  
+  ## marker/unknown splits (from MSnbase-like helpers)
+  markersubset <- markerMSnSet(object, fcol = fcol)
+  markers      <- getMarkerClasses(markersubset, fcol = fcol)
+  
+  mydata <- exprs(markersubset)
+  X      <- exprs(unknownMSnSet(object, fcol = fcol))
+  
+  ## sizes
+  N <- nrow(mydata)
+  D <- ncol(mydata)
+  K <- length(markers)
+  nX <- nrow(X)
+  
+  
+  ## empirical/weakly-informative priors
+  if (is.null(nu0))     nu0  <- D + 2
+  if (is.null(mu0))     mu0  <- colMeans(mydata)
+  if (is.null(beta0))   beta0 <- rep(1, K)
+  
+  if (is.null(S0)) {
+    ## scaled diagonal based on overall variance; cheap & robust
+    colvar <- colSums((mydata - mean(mydata))^2) / N
+    S0 <- diag(colvar / (K^(1 / D)), D)
+  }
+  
+  .priors <- list(mu0 = mu0, lambda0 = lambda0, nu0 = nu0, S0 = S0, beta0 = beta0)
+  
+  ## per-class row indices (avoid repeatedly scanning fData)
+  mvec <- fData(markersubset)[, fcol]
+  idx_by_class <- lapply(markers, function(mk) which(mvec == mk))
+  
+  ## counts
+  nk <- vapply(idx_by_class, length, integer(1))
+  
+  ## class means from markers
+  xk <- matrix(0, nrow = K, ncol = D)
+  for (j in seq_len(K)) {
+    rows <- idx_by_class[[j]]
+    xk[j, ] <- colSums(mydata[rows, , drop = FALSE]) / nk[j]
+  }
+  
+  
+  ## posterior hyperparams after marker data
+  lambdak <- lambda0 + nk
+  nuk     <- nu0 + nk
+  mk      <- sweep(nk * xk, 2, lambda0 * mu0, `+`)
+  mk      <- mk / lambdak
+  betak   <- beta0 + nk
+  
+  
+  ## scatter matrices S_k
+  sk <- array(0, dim = c(K, D, D))
+  for (j in seq_len(K)) {
+    rows <- idx_by_class[[j]]
+    Y    <- mydata[rows, , drop = FALSE]
+    Sj   <- crossprod(Y) + lambda0 * tcrossprod(mu0) - lambdak[j] * tcrossprod(mk[j, ])
+    sk[j, , ] <- S0 + Sj
+  }
+  
+  ## global outlier (background) parameters
+  M <- colMeans(EXPR)
+  V <- stats::cov(EXPR) / 2
+  eigV <- eigen(V, symmetric = TRUE, only.values = TRUE)$values
+  if (min(eigV) < .Machine$double.eps) {
+    V <- stats::cov(EXPR) / 2 + diag(1e-6, D)
+    message("Near-singular global covariance; added 1e-6 * I_D for stability.")
+  }
+  
+  ## ====== INITIALISATION ======
+  init_logdens <- matrix(NA_real_, nrow = nX, ncol = K)
+  for (j in seq_len(K)) {
+    dfj <- max(1, nuk[j] - D + 1)
+    Sig <- (1 + lambdak[j]) * sk[j, , ] / (lambdak[j] * dfj)
+    init_logdens[, j] <- dmvt_log_batch_consistent(X, mk[j, ], Sig, dfj)
+  }
+  prev_Component <- max.col(init_logdens, ties.method = "first")
+  prev_Outlier   <- integer(nX) # all 0 initially (non-outliers)
+  
+  tau1 <- sum(prev_Outlier == 1L) + N  # marker points always in components
+  tau2 <- sum(prev_Outlier == 0L)
+  
+  n_total <- nrow(object)
+  
+  logdens_global <- dmvt_log_batch_consistent(X, M, V, 4)
+  
+  ## ====== STORAGE  ======
+  Component     <- matrix(0L, nrow = nX, ncol = n_keep)
+  Outlier       <- matrix(0L, nrow = nX, ncol = n_keep)
+  ComponentProb <- array(0, dim = c(nX, n_keep, K))
+  OutlierProb   <- array(0, dim = c(nX, n_keep, 2))
+  
+  keep_idx <- 0L
+  
+  ## ====== MCMC ======
+  for (t in seq.int(2L, numIter)) {
+    
+    ## per-iteration buffers
+    curr_Component   <- integer(nX)
+    curr_Outlier     <- integer(nX)
+    curr_prob_comp   <- matrix(0, nX, K)
+    curr_prob_phi    <- matrix(0, nX, 2)
+    
+    for (i in seq_len(nX)) {
+      
+      ## remove if previously in component
+      was_in_comp <- (prev_Outlier[i] == 1L)
+      if (was_in_comp) {
+        idx <- prev_Component[i]
+        tempS <- tcrossprod(mk[idx, ])
+        mk[idx, ]    <- (lambdak[idx] * mk[idx, ] - X[i, ]) / (lambdak[idx] - 1)
+        lambdak[idx] <- lambdak[idx] - 1
+        nuk[idx]     <- nuk[idx] - 1
+        nk[idx]      <- nk[idx] - 1
+        tau1         <- tau1 - 1
+        sk[idx, , ]  <- sk[idx, , ] -
+          tcrossprod(X[i, ]) +
+          (lambdak[idx] + 1) * tempS -
+          lambdak[idx] * tcrossprod(mk[idx, ])
+      } else {
+        if (t > 2L) tau2 <- tau2 - 1L
+      }
+      
+      total_mass <- sum(nk) + sum(betak)
+      w <- (nk + betak) / total_mass 
+      
+      ## build per-component df and Sigma for the *current* state
+      df_vec   <- pmax(1, nuk - D + 1)
+      SIG_list <- lapply(seq_len(K), function(j) {
+        ((1 + lambdak[j]) * sk[j, , ]) / (lambdak[j] * df_vec[j])
+      })
+      
+      ## one C++ call returns all K log-densities at x_i
+      logdensK <- dmvt_log_row_multi_consistent(
+        x  = X[i, , drop = FALSE],
+        MU = mk,                   # K x D
+        SIGMA_list = SIG_list,     # length K, each DxD
+        df = df_vec                # length K
+      )
+      
+      ## add log-weights and softmax
+      logp      <- log(w) + logdensK
+      m         <- max(logp); z <- exp(logp - m); prob_comp <- z / sum(z)
+      z_i       <- sample.int(K, 1L, prob = prob_comp)
+      
+      ## outlier vs component
+      dfk  <- max(1, nuk[z_i] - D + 1)
+      Sigk <- (1 + lambdak[z_i]) * sk[z_i, , ] / (lambdak[z_i] * dfk)
+      
+      
+      
+      ## component branch (phi = 1): still single-row
+      log_phi1 <- log((tau1 + v) / (n_total + u + v - 1L)) +
+        dmvt_log_row_multi_consistent(
+          x  = X[i, , drop = FALSE],
+          MU = mk[z_i, , drop = FALSE],       # 1 x D
+          SIGMA_list = list(Sigk),            # length-1 list
+          df = dfk
+        )[1]  # extract scalar
+      
+      ## global branch (phi = 0): use precomputed logdens_global[i]
+      log_phi0 <- log((tau2 + u) / (n_total + u + v - 1L)) + logdens_global[i]
+      
+      prob_phi <- softmax_logvec(c(log_phi1, log_phi0))
+      phi_i    <- sample(x = c(1L, 0L), size = 1L, prob = prob_phi)  # (1,0) mapping
+      
+      ## write current row buffers
+      curr_Component[i] <- z_i
+      curr_Outlier[i]   <- phi_i
+      curr_prob_comp[i, ] <- prob_comp
+      curr_prob_phi[i, ]  <- prob_phi
+      
+      ## add back to sufficient stats if phi=1
+      if (phi_i == 1L) {
+        idx <- z_i
+        tempS <- tcrossprod(mk[idx, ])
+        mk[idx, ]    <- (lambdak[idx] * mk[idx, ] + X[i, ]) / (lambdak[idx] + 1)
+        lambdak[idx] <- lambdak[idx] + 1
+        nuk[idx]     <- nuk[idx] + 1
+        nk[idx]      <- nk[idx] + 1
+        tau1         <- tau1 + 1
+        if (t == 2L) tau2 <- tau2 - 1L   # first round default phi=0
+        sk[idx, , ]  <- sk[idx, , ] +
+          tcrossprod(X[i, ]) +
+          (lambdak[idx] - 1) * tempS -
+          lambdak[idx] * tcrossprod(mk[idx, ])
+      } else {
+        if (t > 2L) tau2 <- tau2 + 1L
+      }
+    } # end loop over i
+    
+    ## store only if retained
+    if (keep_mask[t]) {
+      keep_idx <- keep_idx + 1L
+      Component[, keep_idx]       <- curr_Component
+      Outlier[, keep_idx]         <- curr_Outlier
+      ComponentProb[, keep_idx, ] <- curr_prob_comp
+      OutlierProb[, keep_idx, ]   <- curr_prob_phi
+    }
+    
+    ## advance working state
+    prev_Component <- curr_Component
+    prev_Outlier   <- curr_Outlier
+  } # end iterations
+  
+  ## names/dimnames
+  rownames(mk) <- names(lambdak) <- names(nuk) <- dimnames(sk)[[1]] <- markers
+  colnames(mk) <- dimnames(sk)[[2]] <- dimnames(sk)[[3]] <- sampleNames(object)
+  
+  p_names <- rownames(X)
+  rownames(Component)     <- p_names
+  rownames(Outlier)       <- p_names
+  rownames(ComponentProb) <- p_names
+  rownames(OutlierProb)   <- p_names
+  dimnames(ComponentProb)[[3]] <- markers
+  
+  ## bundle component parameters (final state)
+  .ComponentParam <- .ComponentParam(K = K, D = D,
+                                     mk = mk,
+                                     lambdak = lambdak,
+                                     nuk = nuk,
+                                     sk = sk)
+  
+  ## build MCMCChain object (retained only)
+  .MCMCChain <- .MCMCChain(n = n_keep,
+                           K = K,
+                           N = nX,
+                           Component     = Component,
+                           ComponentProb = ComponentProb,
+                           Outlier       = Outlier,
+                           OutlierProb   = OutlierProb,
+                           ComponentParam = .ComponentParam)
+  
+  return(.MCMCChain)
+}
+
+  
+  
+  
+  
+  

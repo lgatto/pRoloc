@@ -28,11 +28,41 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dmvt_log_batch_consistent
+arma::vec dmvt_log_batch_consistent(const arma::mat& X, const arma::rowvec& mu, const arma::mat& Sigma, const double df);
+RcppExport SEXP _pRoloc_dmvt_log_batch_consistent(SEXP XSEXP, SEXP muSEXP, SEXP SigmaSEXP, SEXP dfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Sigma(SigmaSEXP);
+    Rcpp::traits::input_parameter< const double >::type df(dfSEXP);
+    rcpp_result_gen = Rcpp::wrap(dmvt_log_batch_consistent(X, mu, Sigma, df));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dmvt_log_row_multi_consistent
+arma::vec dmvt_log_row_multi_consistent(const arma::rowvec& x, const arma::mat& MU, const List& SIGMA_list, const arma::vec& df);
+RcppExport SEXP _pRoloc_dmvt_log_row_multi_consistent(SEXP xSEXP, SEXP MUSEXP, SEXP SIGMA_listSEXP, SEXP dfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type MU(MUSEXP);
+    Rcpp::traits::input_parameter< const List& >::type SIGMA_list(SIGMA_listSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type df(dfSEXP);
+    rcpp_result_gen = Rcpp::wrap(dmvt_log_row_multi_consistent(x, MU, SIGMA_list, df));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP C_setOfOnePerturbation(SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_pRoloc_dmvtCpp", (DL_FUNC) &_pRoloc_dmvtCpp, 7},
+    {"_pRoloc_dmvt_log_batch_consistent", (DL_FUNC) &_pRoloc_dmvt_log_batch_consistent, 4},
+    {"_pRoloc_dmvt_log_row_multi_consistent", (DL_FUNC) &_pRoloc_dmvt_log_row_multi_consistent, 4},
     {"C_setOfOnePerturbation", (DL_FUNC) &C_setOfOnePerturbation, 3},
     {NULL, NULL, 0}
 };

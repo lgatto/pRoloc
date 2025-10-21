@@ -3,6 +3,8 @@
 ## Changes in version 1.49.2
 
 - Change link to codeberg/lpsvm-tl-code
+- An optimised version of tagm_mcmc was implemented. It should 
+  be faster and more memory efficient
 
 ## Changes in version 1.49.1
 

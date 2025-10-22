@@ -1,5 +1,10 @@
 # pRoloc 1.49
 
+## Changes in version 1.49.3
+
+- Bump version for Bioc devel
+
+
 ## Changes in version 1.49.2
 
 - Change link to codeberg/lpsvm-tl-code

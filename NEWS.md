@@ -1,3 +1,9 @@
+# pRoloc 1.51
+
+## Changes in version 1.51.0
+
+- New version for devel
+
 # pRoloc 1.49
 
 ## Changes in version 1.49.3

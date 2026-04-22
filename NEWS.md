@@ -1,5 +1,9 @@
 # pRoloc 1.51
 
+## Changes in version 1.51.1
+
+- Bump version for Bioc devel
+
 ## Changes in version 1.51.0
 
 - New version for devel

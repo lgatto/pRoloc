@@ -58,11 +58,7 @@ eventually, a NA macro F1 (i.e. mean(F1)). Replacing NAs by 0s
 leads to F1 values of 0 and a reduced yet defined final macro F1
 score.
 }
-\seealso{
-\code{\link{plsdaClassification}} and example therein.
-}
-\author{
-Laurent Gatto
+\examples{
 \donttest{
 ## not running this one for time considerations
 library(pRolocdata)
@@ -79,4 +75,10 @@ getPredictions(res, fcol = "plsda")
 getPredictions(res, fcol = "plsda", t = 0.9)
 plot2D(res, fcol = "plsda")
 }
+}
+\seealso{
+\code{\link{plsdaClassification}} and example therein.
+}
+\author{
+Laurent Gatto
 }

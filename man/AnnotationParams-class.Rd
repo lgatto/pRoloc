@@ -5,7 +5,6 @@
 \alias{AnnotationParams}
 \alias{AnnotationParams-class}
 \alias{show,AnnotationParams-method}
-\alias{AnnotationParams}
 \alias{setAnnotationParams}
 \alias{getAnnotationParams}
 

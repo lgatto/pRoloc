@@ -26,6 +26,7 @@
 ##' @seealso \code{\link{plsdaClassification}} and example therein.
 ##' @aliases plsdaRegularisation plsdaOptimization
 ##' @author Laurent Gatto
+##' @examples
 ##' \donttest{
 ##' ## not running this one for time considerations
 ##' library(pRolocdata)

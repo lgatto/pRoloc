@@ -5,17 +5,32 @@
 \alias{pRoloc-defunct}
 
 \alias{minClassScore}
+\alias{goIdToTerm}
+\alias{goTermToId}
+\alias{flipGoTermId}
+\alias{prettyGoTermId}
+\alias{showGOEvidenceCodes}
+\alias{getGOEvidenceCodes}
+\alias{getGOFromFeatures}
+\alias{makeGoSet}
+\alias{addGoAnnotations}
+\alias{andy2011params}
+\alias{dunkley2006params}
 
 \description{
   The function, class, or data object you have asked for has been
   deprecated or made defunct. 
 
-  Deprecated: \code{minClassScore}; use the replacement \code{\link{getPredictions}}
-  
-  Defunct: 
+  Defunct: \code{minClassScore}; use the replacement \code{\link{getPredictions}}.
 
-  Deprecated functions are provided for compatibility with older versions of the
-  \code{pRoloc} package only, and will be defunct at the next release.
-}
+  Defunct: \code{goIdToTerm}, \code{goTermToId}, \code{flipGoTermId},
+  \code{prettyGoTermId}, \code{showGOEvidenceCodes},
+  \code{getGOEvidenceCodes}, \code{getGOFromFeatures}, \code{makeGoSet}
+  and \code{addGoAnnotations} (GO annotation functions).
+
+  Defunct: \code{andy2011params} and \code{dunkley2006params} (example
+  GO annotation parameters).
+
+} 
 
 \keyword{internal}

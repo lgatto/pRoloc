@@ -1,5 +1,9 @@
 # pRoloc 1.53
 
+## Changes in version 1.53.3
+
+- Bump version
+
 ## Changes in version 1.53.2
 
 - Fix documentation
